@@ -1,0 +1,326 @@
+"
+set mouse =a
+set number
+set autowrite
+
+set backspace=indent,eol,start " allow backspace in insert mode
+set autoindent    " text indenting
+set smartindent   " as above
+set tabstop=4     " number of spaces in a tab
+set softtabstop=4 " as above
+set shiftwidth=4  " as above
+
+set history=100   " lines of command history
+set showcmd       " show incomplete commands
+set hlsearch      " highlight searched-for phrases
+set incsearch     " highlight search as you type
+"set smarttab
+"set expandtab
+set tabstop=2
+set shiftwidth=2
+"set list " affiche les caracteres louches
+
+" highlight current position
+set cursorline
+highlight CursorLine guibg=#001000
+
+colorscheme  evening " set up a color scheme in the gvim interface 
+syntax on " active the syntaxic coloration
+let mywinfont="Monospace:h8:cANSI"
+" Switch to alternate file
+map <C-Tab> :bnext<cr>
+map <C-S-Tab> :bprevious<cr>
+map <C-s> :w<cr> 
+map <C-d> <C-]>
+map <C-Q> <Esc>0i//<Esc>
+
+" vim shell to use bash: DO NOT WORK
+"set shell=/bin/bash\ -l
+
+" Search CArrier return
+" /\n
+" Then replace it by litteral CR
+" :%s//\<CR\>/g
+
+" recursive grep of visual register then open result list
+map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
+
+
+:command BW bp | sp | bn | bd
+
+" revert selection in a line: type r quickly after ;
+vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
+
+" Python ab
+ab headerY #! /usr/bin/env python
+\<CR># -*- coding: UTF-8 -*-
+
+ab  forK          for (0 => int i; i <       ; i++) {
+\<CR>}
+\<CR>
+
+ab  funK          fun void f1 (){ 
+\<CR>
+\<CR> } 
+\<CR>spork ~ f1 ();
+\<CR>
+
+ab  whileK           while(1) {
+\<CR>     100::ms => now;
+\<CR>}
+\<CR>
+
+ab  syncK          => dur Tsync; Tsync - (now % Tsync ) => now; 
+\<CR>
+
+ab  seqK seqSndBuf s2 =>Gain g=> dac;
+\<CR>.2=>g.gain;
+\<CR>1=>s2.gain;
+\<CR>"../../examples/data/snare-hop.wav"=> s2.read;
+\<CR>s2.rel_dur  << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5        << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5  ;
+\<CR>s2.g        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0     ;
+\<CR>//s2.r        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.  ;
+\<CR>data.bpm => s2.bpm;
+\<CR>0 => s2.sync_on;
+\<CR>s2.go();
+\<CR>data.meas_size * data.tick => now;
+\<CR>
+
+
+ab seq4K seqSndBuf s2 =>Gain g=> dac;
+\<CR>.2=>g.gain;
+\<CR>1=>s2.gain;
+\<CR>"../../examples/data/amen-hit.wav"=> s2.read;
+\<CR>s2.rel_dur  << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5        << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5  ;
+\<CR>s2.g        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0     ;
+\<CR>//s2.r        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.  ;
+\<CR>data.bpm => s2.bpm;
+\<CR>0 => s2.sync_on;
+\<CR>s2.go();
+\<CR>
+\<CR>seqSndBuf s3 =>g;
+\<CR>.2=>g.gain;
+\<CR>1=>s3.gain;
+\<CR>"../../examples/data/amen-snare.wav"=> s3.read;
+\<CR>s3.rel_dur  << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5        << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5  ;
+\<CR>s3.g        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0     ;
+\<CR>//s3.r        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.  ;
+\<CR>data.bpm => s3.bpm;
+\<CR>0 => s3.sync_on;
+\<CR>s3.go();
+\<CR>
+\<CR>seqSndBuf s4 =>g;
+\<CR>.2=>g.gain;
+\<CR>1=>s4.gain;
+\<CR>"../../examples/data/amen-kick.wav"=> s4.read;
+\<CR>s4.rel_dur  << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5        << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5  ;
+\<CR>s4.g        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0     ;
+\<CR>//s4.r        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.  ;
+\<CR>data.bpm => s4.bpm;
+\<CR>0 => s4.sync_on;
+\<CR>s4.go();
+\<CR>
+\<CR>seqSndBuf s5 =>g;
+\<CR>.2=>g.gain;
+\<CR>1=>s5.gain;
+\<CR>"../../examples/data/amen-hat.wav"=> s5.read;
+\<CR>s5.rel_dur  << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5        << .5 << .5 << .5 << .5      << .5 << .5 << .5 << .5  ;
+\<CR>s5.g        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0        << .0 << .0 << .0 << .0      << .0 << .0 << .0 << .0     ;
+\<CR>//s5.r        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.        << 1. << 1. << 1. << 1.      << 1. << 1. << 1. << 1.  ;
+\<CR>data.bpm => s5.bpm;
+\<CR>0 => s5.sync_on;
+\<CR>s5.go();
+\<CR>data.meas_size * data.tick => now;
+\<CR> 
+\<CR>
+\<CR>
+ 
+
+
+ab freqK class synt_def extends Chubgraph{
+\<CR>
+\<CR>// ****  SYNT *****
+\<CR>inlet => SinOsc s => outlet;	
+\<CR>
+\<CR>    fun void on(/* float p1 */)  {   /*<<<"synt_def on">>>; */	         }
+\<CR>fun void off() {	    /* <<<"synt_def off">>>;*/         }
+\<CR>fun void new_note(/* float p1 */)  {   	/* <<<"synt_def new_note">>>;*/         }
+\<CR>}
+\<CR>
+\<CR>// SEQ
+\<CR>
+\<CR>FREQ freq_seq;
+\<CR>freq_seq.freq => synt_def  synt_u=> freq_seq.adsr => Gain g => dac;
+\<CR>
+\<CR>0=> freq_seq.sync_on;
+\<CR>.03 => g.gain;
+\<CR>freq_seq.rel_note  << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>freq_seq.g         <<.9 <<.9 <<.9 <<.9      <<.9 <<.9 <<.9 <<.9      <<.9 <<.9 <<.9 <<.9     <<.9 <<.9 <<.9 <<.9     ;
+\<CR>//freq_seq.g         <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>//freq_seq.slide     << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>//freq_seq.rel_dur   <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>//freq_seq.note      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>//freq_seq.param[0]    <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>
+\<CR>data.ref_note => freq_seq.base_note;
+\<CR>data.scale.my_string => freq_seq.scale;
+\<CR>data.bpm => freq_seq.bpm;
+\<CR>
+\<CR>// On off synt_def management
+\<CR>fun void call_on() {  while (1){ freq_seq.start_ev => now;  spork ~ synt_u.on(/*freq_seq.get_param(0)*/);	}  } spork ~ call_on();
+\<CR>fun void call_off(){  while (1){ freq_seq.stop_ev => now;   spork ~ synt_u.off();	}  } spork ~ call_off();
+\<CR>fun void new_note(){  while (1){ freq_seq.new_ev => now;   spork ~ synt_u.new_note(/*freq_seq.get_param(0)*/);		}  } spork ~ new_note();
+\<CR>
+\<CR>freq_seq.go();
+\<CR>
+\<CR>data.meas_size * data.tick => now;
+
+ab seqsK seq_script seq_s;
+\<CR>"./script.ck" => seq_s.read;
+\<CR>0=> seq_s.sync_on;
+\<CR>seq_s.g         << 0. << 0. << 0. << 0.       << 0. << 0. << 0. << 0.       << 0. << 0. << 0. << 0.      << 0. << 0. << 0. << 0.; 
+\<CR>//seq_s.rel_dur   << 0. << 0. << 0. << 0.       << 0. << 0. << 0. << 0.       << 0. << 0. << 0. << 0.      << 0. << 0. << 0. << 0.; 
+\<CR>data.bpm => seq_s.bpm;
+\<CR>
+\<CR>seq_s.go();
+\<CR>
+\<CR>data.meas_size * data.tick => now;
+
+
+ab seqcK class synt_chord extends Chubgraph{
+\<CR>
+\<CR>	// ****  SYNT *****
+\<CR>	inlet => SinOsc s => outlet;	
+\<CR>
+\<CR>    fun void on(/* float p1 */)  {   /*<<<"synt_def on">>>; */	         }
+\<CR>fun void off() {	    /* <<<"synt_def off">>>;*/         }
+\<CR>fun void new_note(/* float p1 */)  {   	/* <<<"synt_def new_note">>>;*/         }
+\<CR>}
+\<CR>
+\<CR>// SEQ
+\<CR>
+\<CR>chord chord_1;
+\<CR>FREQ freq_chord;
+\<CR>freq_chord.freq => chord_1.fondamental =>  synt_chord  s0 => Gain plus => freq_chord.adsr => Gain g => dac;
+\<CR>chord_1.third() => synt_chord  s1 => plus; 
+\<CR>chord_1.fifth() => synt_chord  s2 => plus; 
+\<CR>chord_1.seventh() => synt_chord s3 => plus; 
+\<CR>
+\<CR>chord_1.set_chord(2);
+\<CR>
+\<CR>/* Chords number
+\<CR>0  reset chord 
+\<CR>
+\<CR>1 Major triad
+\<CR>2 Minor triad
+\<CR>3 Augmented triad
+\<CR>4 Diminished triad
+\<CR>
+\<CR>5  Diminished seventh
+\<CR>6  Half-diminished seventh 
+\<CR>7  Minor seventh
+\<CR>8  Minor major seventh
+\<CR>9  Dominant seventh
+\<CR>10 Major seventh
+\<CR>11 Augmented seventh
+\<CR>12 Augmented major seventh
+\<CR>*/
+\<CR>
+\<CR>0=> freq_chord.sync_on;
+\<CR>.03 => g.gain;
+\<CR>
+\<CR>freq_chord.rel_note  << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>freq_chord.g         <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>//freq_chord.g         <<.9 <<.9 <<.9 <<.9      <<.9 <<.9 <<.9 <<.9      <<.9 <<.9 <<.9 <<.9     <<.9 <<.9 <<.9 <<.9     ;
+\<CR>//freq_chord.slide     << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>//freq_chord.rel_dur   <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>//freq_chord.note      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0      << 0 << 0 << 0 << 0     << 0 << 0 << 0 << 0     ;
+\<CR>//freq_chord.param[0]    <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0      <<.0 <<.0 <<.0 <<.0     <<.0 <<.0 <<.0 <<.0     ;
+\<CR>
+\<CR>data.ref_note => freq_chord.base_note;
+\<CR>data.scale.my_string => freq_chord.scale;
+\<CR>data.bpm  => freq_chord.bpm;
+\<CR>
+\<CR>// On off synt_chord management
+\<CR>fun void call_on() {  while (1){ freq_chord.start_ev => now;   spork ~ s0.on(/*freq_chord.get_param(0)*/);  spork ~ s1.on(/*freq_chord.get_param(0)*/);  spork ~ s2.on(/*freq_chord.get_param(0)*/);	spork ~ s3.on(/*freq_chord.get_param(0)*/);		}  } spork ~ call_on();
+\<CR>fun void call_off(){  while (1){ freq_chord.stop_ev => now;   spork ~ s0.off();	spork ~ s1.off();	spork ~ s2.off();	spork ~ s3.off();		}  } spork ~ call_off();
+\<CR>fun void new_note(){  while (1){ freq_chord.new_ev => now;   spork ~ s0.new_note(/*freq_chord.get_param(0)*/);	spork ~ s1.new_note(/*freq_chord.get_param(0)*/);	spork ~ s2.new_note(/*freq_chord.get_param(0)*/);	spork ~ s3.new_note(/*freq_chord.get_param(0)*/);		}  } spork ~ new_note();
+\<CR>
+\<CR>freq_chord.go();
+\<CR>
+\<CR>data.meas_size * data.tick => now;  
+
+
+ab lpd8K class lpd8_ext extends lpd8 {
+\<CR>    // PADS
+\<CR>fun void pad_ext (int group_no, int pad_nb, int val) {
+\<CR>   if (group_no == 144) {
+\<CR>36-=> pad_nb;
+\<CR>
+\<CR>if (pad_nb  == 0)      {}   
+\<CR>else if (pad_nb  == 1) {}
+\<CR>else if (pad_nb  == 2) {}
+\<CR>else if (pad_nb  == 3) {}
+\<CR>else if (pad_nb  == 4) {}
+\<CR>else if (pad_nb  == 5) {}
+\<CR>else if (pad_nb  == 6) {}
+\<CR>else if (pad_nb  == 7) {}
+\<CR>    }
+\<CR>}
+\<CR>
+\<CR>    // POTARS
+\<CR>fun void potar_ext (int group_no, int pad_nb, int val) {
+\<CR>    if (group_no == 176) {
+\<CR>
+\<CR>if (pad_nb  == 0)      {}   
+\<CR>else if (pad_nb  == 1) {}
+\<CR>else if (pad_nb  == 2) {}
+\<CR>else if (pad_nb  == 3) {}
+\<CR>else if (pad_nb  == 4) {}
+\<CR>else if (pad_nb  == 5) {}
+\<CR>else if (pad_nb  == 6) {}
+\<CR>else if (pad_nb  == 7) {}
+\<CR>	}    
+\<CR>}
+\<CR>}
+\<CR>
+\<CR>lpd8_ext lpd;
+\<CR>
+\<CR>while (1) 1::second => now;
+ 
+
+ab multiK 8 => int synt_nb; 0 => int i;
+\<CR>Gain detune[synt_nb];
+\<CR>SinOsc s[synt_nb];
+\<CR>Gain final => outlet; .3 => final.gain;
+\<CR>
+\<CR>inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .6 => s[i].gain; i++; 
+
+
+ab SYNTK class synt0 extends SYNT{
+\<CR>
+\<CR>	inlet => SinOsc s =>  outlet;	
+\<CR>	.5 => s.gain;
+\<CR>
+\<CR>	fun void on()  { } 	fun void off() { } 	fun void new_note(int idx)  {	}
+\<CR>}
+
+
+ab FREQ_STRK class synt0 extends SYNT{
+\<CR>
+\<CR>	inlet => SinOsc s =>  outlet;	
+\<CR>	.5 => s.gain;
+\<CR>
+\<CR>	fun void on()  { } 	fun void off() { } 	fun void new_note(int idx)  {	}
+\<CR>}
+\<CR>
+\<CR>
+\<CR>FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
+\<CR>"" =>     f0.seq;     
+\<CR>f0.reg(synt0 s0);
+\<CR>//f0.post()  => dac;
+\<CR>
+\<CR>while(1) {  100::ms => now; }
+\<CR>//data.meas_size * data.tick => now;
+
+

@@ -1,0 +1,27 @@
+alias cdc='cd ~/Chuck/dev'
+alias srb='source ~/.bashrc' 
+
+alias vib='gvim ~/.bash_aliases'
+alias vimrc='gvim ~/.vimrc'
+alias vi='gvim'
+alias u='cd ..'
+
+alias chuckcfg='sudo chmod o+r /dev/input/by-path/pci-0000:00:1d.0-usb-0:1.6:1.0-event-kbd'
+alias ctop='chuck song_top.ck' 
+
+alias l='ls'
+alias ll='ls -l'
+alias la='ls -a'
+alias f='find . -type f -name'
+alias ctap='chuck song_top.ck --bufsize64'
+alias ctapj='chuckj song_top.ck --bufsize64'
+
+
+function csav {
+	vi $1 &
+	chuck save_replace.ck:$1  
+}
+function csavj {
+	vi $1 &
+	chuckj save_replace.ck:$1  
+}
