@@ -10,6 +10,7 @@ class END extends end { fun void kill_me () {
 
 
 while(1) {
-	     100::ms => now;
+	     2000::ms => now;
+	killer.kill(me.id());
 }
  

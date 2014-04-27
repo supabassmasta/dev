@@ -27,8 +27,25 @@ public class killer {
 
 		fun static void kill_all() {
 				for (0 => int i; i < list.size()      ; i++) {
-					list[i].kill_me_bad();	
+					spork~list[i].kill_me_bad();	
 			    rem(i);	
+				}
+				
+		}
+
+		fun static void kill(int id) {
+				0=> int inside;
+				for (0 => int i; i < list.size()      ; i++) {
+					if (list[i].shred_id == id ) {
+						spork~list[i].kill_me_bad();	
+						rem(i);	
+						1 => inside;
+					}
+				}
+
+				if (!inside) {
+						// not registered kill it directly
+						Machine.remove(id);
 				}
 				
 		}
@@ -40,6 +57,6 @@ end bar[0] @=> killer.list;
 
 while(1) {
 	     100::ms => now;
-			 killer.kill_all();
+//			 killer.kill(3);
 }
  
