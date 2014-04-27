@@ -8,6 +8,8 @@ Machine.add( "../nanomidi_5.ck" );
 Machine.add( "../lpd8/lpd8.ck" );
 Machine.add("../include/data_updater.ck");
 Machine.add( "../launcher/launcher_hold.ck" );
+Machine.add( "../include/killer.ck" );
+
 
 Machine.add("../VCF_LPF_light.ck");
 Machine.add("../chord/chord.ck");
