@@ -1,0 +1,9 @@
+Machine.add("../scales/scales.ck");
+ me.yield();
+Machine.add("top_seq.ck");
+ me.yield();
+//Machine.add("seq.ck");
+//Machine.add("seqSndBuf.ck");
+Machine.add("test.ck");
+Machine.add("test2.ck");
+Machine.add("test_freq.ck");

@@ -1,0 +1,9 @@
+../../examples/otf_01.ck ON
+../../examples/otf_02.ck ON
+../../examples/otf_03.ck
+../../examples/otf_04.ck
+../../examples/otf_05.ck ON
+../../examples/otf_06.ck
+../../examples/otf_07.ck
+../../examples/otf_08.ck SINGLE
+

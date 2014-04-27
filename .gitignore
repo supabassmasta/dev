@@ -1,4 +1,7 @@
 *.swp
 *.wav
 *.WAV
+*~
+*.au
+*.aup
 

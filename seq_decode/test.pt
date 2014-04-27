@@ -1,0 +1,19 @@
+../../examples/data/kick.wav
+../../examples/data/snare-chili.wav
+../../examples/data/hihat.wav
+
+SEQ
+
+ .3  ._  .2
+ ._  ._  .3
+ .3  ._  .2
+ ._  ._  .3
+
+
+ .3  .5  .2
+ ._  .0  .3
+ .3  ._  .2
+ ._  ._  .3 DUR 0.5
+ ._  ._  .3 DUR 0.5
+
+ 

@@ -1,0 +1,4 @@
+bpm 150
+meas_nb 4
+meas_size 4
+granularity 2

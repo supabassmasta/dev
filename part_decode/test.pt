@@ -1,0 +1,40 @@
+# REF_NOTE 30
+# SCALE MAJ
+# #####################################
+NOTE_REL 0           DUR 1.5
+REST                 DUR 0.5
+NOTE_REL 0           DUR 1.5
+REST                 DUR 0.5
+NOTE_REL 0           DUR 1.5
+REST                 DUR 2.5
+
+
+# ####################################
+# REST DUR 1
+NOTE_REL 0 DUR 1
+NOTE_REL 2 DUR 1.5
+REST DUR 0.5
+NOTE_REL 2 DUR 1.5
+REST DUR 0.5
+NOTE_REL 3 DUR 1
+NOTE_REL 1 DUR 1
+NOTE_REL 2 DUR 1
+
+# # #####################################
+# NOTE_REL 0 DUR 1.5
+# REST DUR 0.5
+# NOTE_REL 0 DUR 1.5
+# REST DUR 0.5
+# NOTE_REL 0 DUR 1.5
+# REST DUR 2.5
+# # #####################################
+# NOTE_REL 0 DUR 0
+# SLIDE_REL 2 DUR 1
+# SLIDE_REL 3 DUR 1
+# SLIDE_REL 1 DUR 1
+# SLIDE_REL 2 DUR 1
+# NOTE_REL 0 DUR 0
+# SLIDE_REL 2 DUR 1
+# SLIDE_REL 3 DUR 1
+# SLIDE_REL 1 DUR 1
+# SLIDE_REL 2 DUR 1
