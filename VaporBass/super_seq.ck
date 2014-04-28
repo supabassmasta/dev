@@ -4,39 +4,7 @@ seq_script s[12];
 
 // s0.ck vap_loop
 "./s" + i + ".ck" => s[i].read;
-s[i].g       << 0.  ;
-i++;
-// S1.ck BASS 1
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. ;
-i++;
-
-// s2.ck CHORD                                                                          
-"./s" + i + ".ck" => s[i].read;
-s[i].g      << 0. ;
-i++;
-// s3.ck BEAT HIP HOP
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. ;
-i++;
- // s4: 2nd Bass -1 octave
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. ;
-i++;
-
-// s5.ck string
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. << 0. << 0. << 0.;
-i++;
-
-
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. ;
-i++;
-
-// s7
-"./s" + i + ".ck" => s[i].read;
-s[i].g       << 0. ;
+s[i].g       << 1.  << 0. ;
 i++;
 
 

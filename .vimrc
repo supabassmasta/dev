@@ -328,3 +328,6 @@ ab ENDK class END extends end { fun void kill_me () {
 \<CR>		1500::ms => now;	
 \<CR>		<<<"THE real END">>>; 	
 \<CR>}}; END the_end; me.id() => the_end.shred_id; killer.reg(the_end); 
+
+ab <<< <<<"">>>;
+

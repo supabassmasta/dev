@@ -12,5 +12,16 @@ s2.g        << .6  ;
 data.bpm => s2.bpm;
 0 => s2.sync_on;
 s2.go();
-2 * data.meas_size * data.tick => now;
  
+
+class END extends end { fun void kill_me () {
+				<<<"THE END">>>;		
+//								1500::ms => now;		
+												<<<"THE real END">>>;		
+}}; END the_end; me.id() => the_end.shred_id; killer.reg(the_end);  
+
+while(1) {
+	     100::ms => now;
+}
+ 
+

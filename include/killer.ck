@@ -10,7 +10,7 @@ public class killer {
 				 
 				if (!inside) {
 						list << in;
-						<<< in , "Registred in killer">>>;
+						<<< in.shred_id , "Registred in killer">>>;
 				}
 		}
 
@@ -34,17 +34,20 @@ public class killer {
 		}
 
 		fun static void kill(int id) {
+			<<<"attempt to kill", id>>>; 
 				0=> int inside;
 				for (0 => int i; i < list.size()      ; i++) {
 					if (list[i].shred_id == id ) {
-						spork~list[i].kill_me_bad();	
+						<<<"kill", id>>>;
+//						spork~list[i].kill_me_bad();	
+						list[i].kill_me_bad();	
 						rem(i);	
 						1 => inside;
 					}
 				}
 
 				if (!inside) {
-						// not registered kill it directly
+						<<< id,  "not registered kill it directly">>>;
 						Machine.remove(id);
 				}
 				
