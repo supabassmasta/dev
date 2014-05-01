@@ -120,7 +120,8 @@ public class launcher {
         if (shred_group[shred_num] != 0) {
             for (0=> int i; i<max_file_nb; i++) {
                 if ((shred_group[shred_num] == shred_group[i]) && (shred_active[i] == 1)){
-                    Machine.remove(shred_id[i]);
+//                    Machine.remove(shred_id[i]);
+										killer.kill(shred_id[i]);
                     0=>shred_active[i];
                 }
             }
@@ -177,7 +178,8 @@ public class launcher {
                     	   }
                     	   else {
                     	       if (!replace) {
-                    	 	   Machine.remove(shred_id[num]);
+//                    	 	   Machine.remove(shred_id[num]);
+												   killer.kill(shred_id[num]);
                     	 	   0=>shred_active[num];
                     	 	   
                     	 	   if (num == last_shred_active){

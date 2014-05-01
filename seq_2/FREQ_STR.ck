@@ -30,6 +30,7 @@ FREQ2 freq_seq;
 0=> freq_seq.sync_on;
 
 fun void sync(int in) {in => freq_seq.sync_on ;}
+fun void stop() {; freq_seq.stop(); }
 
 data.ref_note => freq_seq.base_note;
 data.scale.my_string => freq_seq.scale;

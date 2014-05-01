@@ -22,6 +22,7 @@ public class FREQ2  {
     fun dur timing_offset (dur in) {in => int_seq.timing_offset; return int_seq.timing_offset;}
 
 		fun float get_param(int i) { return int_seq.get_param (i); }
+		fun void stop() { int_seq.stop(); }
 
 //    int_seq.start_ev @=> Event start_ev;
 //    int_seq.stop_ev @=> Event stop_ev;

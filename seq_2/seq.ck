@@ -135,6 +135,7 @@ public class seq {
 						me.yield();
             idx++;
         }
+//				<<<"STOOOP PLAYING 0">>>; 
     }
 
     fun void go() {
@@ -146,6 +147,7 @@ public class seq {
 
 		fun void stop() {
 				0 => play_on;
+//				<<<"STOOOP PLAYING 1">>>;
 		}
 
     // PARAMS
