@@ -47,7 +47,7 @@ fun void gain(int nb, float g){
 }
 
 fun void reg(string  char , string in){
-			new seqSndBuf => seq_main[char];
+			new seqSndBuf @=> seq_main[char];
 			seq_special << char;
 			seq_main[char] => final;
 			1. => seq_main[char].gain;
@@ -60,9 +60,9 @@ fun void gain(string  char, float g){
 		 g=> seq_main[char].gain;
 }
 
-fun int special_exists(string char){
+fun int special_exists(int char){
 	for (0 => int i; i < seq_special.size()      ; i++) {
-		if (char == seq_special[i]) return 1;
+		if (char == seq_special[i].charAt(0)) return 1;
 	}
 
 	return 0;
@@ -143,8 +143,32 @@ fun void set_main(int nb, float g, float d, float r){
 				  seq_main[i].rel_dur << d;
 				  seq_main[i].r << r;
 				}
+
+				for (0 => int i; i < seq_special.size()      ; i++) {
+						seq_main[ seq_special[i] ].g << 0.;
+						seq_main[ seq_special[i] ].rel_dur << d;
+						seq_main[ seq_special[i] ].r << r;
+				}
 }
 
+fun void set_special(int nb, float g, float d, float r){
+
+		for (0 => int i; i < seq_special.size()      ; i++) {
+				if (nb ==  seq_special[i].charAt(0))
+						seq_main[ seq_special[i] ].g << g;
+				else
+						seq_main[ seq_special[i] ].g << 0.;
+
+				seq_main[ seq_special[i] ].rel_dur << d;
+				seq_main[ seq_special[i] ].r << r;
+		}
+			
+		for (0 => int i; i < 5; i++) {
+			seq_main[i].g << 0.;
+		  seq_main[i].rel_dur << d;
+		  seq_main[i].r << r;
+		}
+}
 
 fun void seq(string in) {
 		0=> int i;
@@ -163,7 +187,10 @@ fun void seq(string in) {
 		  	if (c == ' ' ){
 					// do nothing
 				}
-//			  else if (special_exists(c) ) { }
+			  else if (special_exists(c) ) {
+					set_special(c,get_seq_main_gain(c) ,set_dur(duration) ,1. );
+					
+				}
 			  else if ( get_seq_main(c) != -1 ) { 
 						set_main(get_seq_main(c), get_seq_main_gain(c), set_dur(duration), 1.);
 				
@@ -191,13 +218,20 @@ fun void seq(string in) {
 		fun void go(){
 				for (0 => int i; i <  5     ; i++) {
 						seq_main[i].reset_pos() ;
-				
 				}
+
+				for (0 => int i; i < seq_special.size()      ; i++) {
+						seq_main[ seq_special[i] ].reset_pos();
+				}
+
 				for (0 => int i; i <  5     ; i++) {
 					seq_main[i].go();	
 				
 				}
 				 
+				for (0 => int i; i < seq_special.size()      ; i++) {
+						seq_main[ seq_special[i] ].go();
+				}
 		}
 
 }
@@ -208,15 +242,16 @@ s0.reg(0, "../_SAMPLES/amen_kick.wav");
 s0.reg(1, "../_SAMPLES/amen_snare.wav");
 s0.reg(2, "../_SAMPLES/amen_snare2.wav");
 s0.reg(3, "../_SAMPLES/amen_hit.wav");
-//s0.reg(A, "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+//s0.reg("B", "../_SAMPLES/REGGAE_SET_2/Vibraslap_Velo08_Reggae1.wav");
 //0 => s0.sync_on;
 
-"*8 3Al_ d_lE  lE3l d_ll" => s0.seq;
-"*8 3A3_ d_lE  lE3l d_ll" => s0.seq;
-"*8 3A_3 d_3E  lE3l d_ll" => s0.seq;
+"*8 3Al_ d_lE  lE3l dBll" => s0.seq;
+"*8 3A3_ d_lE  lE3l dBll" => s0.seq;
+"*8 3A_3 d_3E  lE3l dBll" => s0.seq;
 4 => s0.max;
-"*4 dA3d3A*2d3d_Alld3A3ldAlA_dd____________" => s0.seq;
-1 => s0.sync;
+"*4 dA3d3A*2d3d_AlBd3A3ldAlABdd____________" => s0.seq;
+0 => s0.sync;
 s0.go();
 
 
