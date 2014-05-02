@@ -30,6 +30,11 @@ public class seqSndBuf extends SndBuf  {
         samples() => pos;
         int_seq.go();
         }
+		
+		fun void reset_pos() {
+        samples() => pos;
+		}
+
 
   fun void stop(){
         int_seq.stop();

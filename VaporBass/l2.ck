@@ -69,6 +69,21 @@ fun int special_exists(string char){
 
 }
 
+fun void sync(int in) {
+/*		for (0 => int i; i < seq_special.size()      ; i++) {
+			in => seq_main[ seq_special[i] ].sync_on;
+		}
+
+		for (0 => int i; i < seq_main.size()  ; i++) {
+			in => seq_main[i].sync_on;
+		}
+	*/
+
+		in => seq_main[0].sync_on;
+
+
+}
+
 fun int get_seq_main(int c) {
 		 if ((c >= '0') && (c <= '9')) 
 			 return  0;
@@ -175,6 +190,10 @@ fun void seq(string in) {
 
 		fun void go(){
 				for (0 => int i; i <  5     ; i++) {
+						seq_main[i].reset_pos() ;
+				
+				}
+				for (0 => int i; i <  5     ; i++) {
 					seq_main[i].go();	
 				
 				}
@@ -189,13 +208,15 @@ s0.reg(0, "../_SAMPLES/amen_kick.wav");
 s0.reg(1, "../_SAMPLES/amen_snare.wav");
 s0.reg(2, "../_SAMPLES/amen_snare2.wav");
 s0.reg(3, "../_SAMPLES/amen_hit.wav");
+//s0.reg(A, "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
 //0 => s0.sync_on;
 
-"*8 3_l_ d_lE  lE3l d_ll" => s0.seq;
-"*8 3_3_ d_lE  lE3l d_ll" => s0.seq;
-"*8 3__3 d_3E  lE3l d_ll" => s0.seq;
+"*8 3Al_ d_lE  lE3l d_ll" => s0.seq;
+"*8 3A3_ d_lE  lE3l d_ll" => s0.seq;
+"*8 3A_3 d_3E  lE3l d_ll" => s0.seq;
 4 => s0.max;
-"*4 d33d33*2d3d_dlld3_3ld_ld_dd____________" => s0.seq;
+"*4 dA3d3A*2d3d_Alld3A3ldAlA_dd____________" => s0.seq;
+1 => s0.sync;
 s0.go();
 
 

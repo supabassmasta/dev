@@ -4,7 +4,7 @@ seq_script s[12];
 
 // s0.ck vap_loop
 "./s" + i + ".ck" => s[i].read;
-s[i].g       << 1.  << 0. ;
+s[i].g       << 0.  << 0. ;
 i++;
 
 
