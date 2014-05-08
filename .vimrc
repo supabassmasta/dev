@@ -47,6 +47,8 @@ map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 
 
 :command BW bp | sp | bn | bd
+:command VIMRC e ~/.vimrc 
+:command SRC  source ~/.vimrc
 
 " revert selection in a line: type r quickly after ;
 vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
@@ -331,3 +333,16 @@ ab ENDK class END extends end { fun void kill_me () {
 
 ab <<< <<<"">>>;
 
+ab SEQ_STRK SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
+\<CR>
+\<CR>s0.reg(0, "../_SAMPLES/amen_kick.wav");
+\<CR>s0.reg(1, "../_SAMPLES/amen_snare.wav");
+\<CR>s0.reg(2, "../_SAMPLES/amen_snare2.wav");
+\<CR>s0.reg(3, "../_SAMPLES/amen_hit.wav");
+\<CR>//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+\<CR>
+\<CR>"" => s0.seq;
+\<CR>
+\<CR>s0.go();
+\<CR>while(1) { 100::ms => now; }
+\<CR>//data.meas_size * data.tick => now;
