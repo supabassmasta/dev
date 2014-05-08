@@ -341,7 +341,7 @@ ab SEQ_STRK SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
 \<CR>s0.reg(3, "../_SAMPLES/amen_hit.wav");
 \<CR>//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
 \<CR>
-\<CR>"" => s0.seq;
+\<CR>"" => s0.seq; //s0.post() =>  dac;
 \<CR>
 \<CR>s0.go();
 \<CR>while(1) { 100::ms => now; }

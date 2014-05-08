@@ -30,6 +30,11 @@ string    seq_special[0];
 Gain final => dac;
 .2 => final.gain;
 
+fun UGen post() {
+		final =< dac;
+		return final;
+}
+
 fun void reg(int nb, string in){
 
 		if (nb>4) <<<"ERROR, maximum 5 main sequences in SEQ_STR\n">>>;
