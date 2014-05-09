@@ -8,13 +8,17 @@ s0.reg(3, "../_SAMPLES/amen_hit.wav");
 
 "*4 5__e__n_" => s0.seq;
 
-s0.post()=> convolution c =>  dac;
-
+s0.post()=> Gain inter => convolution c =>  dac;
+inter => Gain direct => dac;
+.4 => direct.gain;
 .1 => c.gain;
 
-for (0 => int i; i <  8000     ; i++) {
+for (0 => int i; i <  106     ; i++) {
 1. => c.add_tap;
-
+}
+ 
+for (0 => int i; i <  100    ; i++) {
+//Std.randf() => c.add_tap;
 }
  
 
