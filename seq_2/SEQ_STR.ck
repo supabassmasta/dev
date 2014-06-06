@@ -1,4 +1,5 @@
-public class SEQ_STR {
+//public class SEQ_STR {
+ class SEQ_STR {
 
 0. => float max_v;//private
 0. => float remaining;//private
@@ -155,7 +156,10 @@ fun void set_main(int nb, float g, float d, float r){
 						seq_main[ seq_special[i] ].r << r;
 				}
 }
-
+fun void set_main_bis(int nb, float g, float d, float r){
+	// add one other wav on last index
+	g => seq_main[nb].g[ seq_main[nb].g.size() -1 ] ;
+}
 fun void set_special(int nb, float g, float d, float r){
 
 		for (0 => int i; i < seq_special.size()      ; i++) {
@@ -187,31 +191,38 @@ fun void seq(string in) {
 
 		while(i< in.length()) {
 
+			in.charAt(i)=> c;
+			//		<<<"c", c>>>;	
+			if (c == ' ' ){
+				// do nothing
+			}
+			else if (special_exists(c) ) {
+				set_special(c,get_seq_main_gain(c) ,set_dur(duration) ,1. );
+
+			}
+			else if ( get_seq_main(c) != -1 ) { 
+				set_main(get_seq_main(c), get_seq_main_gain(c), set_dur(duration), 1.);
+
+			}
+			else if (in.charAt(i) == '_') {
+				set_main(-1, 0., set_dur(duration), 1.);
+			}
+			else if (in.charAt(i) == '*') {
+				i++;
 				in.charAt(i)=> c;
-//		<<<"c", c>>>;	
-		  	if (c == ' ' ){
-					// do nothing
-				}
-			  else if (special_exists(c) ) {
-					set_special(c,get_seq_main_gain(c) ,set_dur(duration) ,1. );
-					
-				}
-			  else if ( get_seq_main(c) != -1 ) { 
-						set_main(get_seq_main(c), get_seq_main_gain(c), set_dur(duration), 1.);
-				
-				}
-				else if (in.charAt(i) == '_') {
-						set_main(-1, 0., set_dur(duration), 1.);
-				}
-				else if (in.charAt(i) == '*') {
-						i++;
-						in.charAt(i)=> c;
-						duration /( (convert_note (c) ) $ float) => duration;
-				}
-				else if (in.charAt(i) == ':') {
-						i++;
-						in.charAt(i)=> c;
-						duration * ( (convert_note (c)  ) $ float) => duration;
+				duration /( (convert_note (c) ) $ float) => duration;
+			}
+			else if (in.charAt(i) == ':') {
+				i++;
+				in.charAt(i)=> c;
+				duration * ( (convert_note (c)  ) $ float) => duration;
+			}
+			else if (in.charAt(i) == '|') {
+				i++;
+				in.charAt(i)=> c;
+				set_main_bis(get_seq_main(c), get_seq_main_gain(c), set_dur(duration), 1.);
+
+
 				}
 					
 	      i++;	
@@ -241,7 +252,7 @@ fun void seq(string in) {
 
 }
 
-/*
+///*
 
 // TEST
 
@@ -255,11 +266,12 @@ s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
 //s0.reg("B", "../_SAMPLES/REGGAE_SET_2/Vibraslap_Velo08_Reggae1.wav");
 //0 => s0.sync_on;
 
-"*8 3Al_ d_lE  lE3l dBll" => s0.seq;
-"*8 3A3_ d_lE  lE3l dBll" => s0.seq;
-"*8 3A_3 d_3E  lE3l dBll" => s0.seq;
+//"*8 3Al_ d_lE  lE3l dBll" => s0.seq;
+//"*8 3A3_ d_lE  lE3l dBll" => s0.seq;
+//"*8 3A_3 d_3E  lE3l dBll" => s0.seq;
 4 => s0.max;
-"*4 dA3d3A*2d3d_AlBd3A3ldAlABdd____________" => s0.seq;
+//"*4 dA3d3A*2d3d_AlBd3A3ldAlABdd____________" => s0.seq;
+"*4 3___3|d___" => s0.seq;
 0 => s0.sync;
 s0.go();
 
@@ -268,4 +280,4 @@ s0.go();
 while(1) { 100::ms => now; }
  //data.meas_size * data.tick => now;
 
-*/ 
+//*/ 
