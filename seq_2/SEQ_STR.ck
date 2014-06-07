@@ -252,7 +252,7 @@ fun void seq(string in) {
 
 }
 
-///*
+/*
 
 // TEST
 
@@ -280,4 +280,4 @@ s0.go();
 while(1) { 100::ms => now; }
  //data.meas_size * data.tick => now;
 
-//*/ 
+*/ 
