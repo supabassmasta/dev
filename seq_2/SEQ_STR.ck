@@ -1,5 +1,4 @@
-//public class SEQ_STR {
- class SEQ_STR {
+public class SEQ_STR {
 
 0. => float max_v;//private
 0. => float remaining;//private
