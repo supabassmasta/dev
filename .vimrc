@@ -346,3 +346,11 @@ ab SEQ_STRK SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
 \<CR>s0.go();
 \<CR>while(1) { 100::ms => now; }
 \<CR>//data.meas_size * data.tick => now;
+
+
+ab gverbK GVerb gverb0  =>
+\<CR>30 => gverb0.roomsize;        // roomsize: (float) [1.0 - 300.0], default 30.0   
+\<CR>1::second => gverb0.revtime;   // revtime: (dur), default 5::second
+\<CR>0.8 => gverb0.dry;             // dry (float) [0.0 - 1.0], default 0.6                
+\<CR>0.5 => gverb0.early;           // early (float) [0.0 - 1.0], default 0.4
+\<CR>0.3 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5      
