@@ -17,7 +17,11 @@ s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Triangle.wa
 " *4 6|C_C_d|C_C6  6|C_6|C_d|C_p|Cd " => s0.seq; //s0.post() =>  dac;
 
 
-
+// Trap
+s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (3).wav");
+s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (12).wav");
+s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (16).wav");
+s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (21).wav");
 
 
 
