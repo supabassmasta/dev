@@ -1,487 +1,457 @@
-4=> int granularity;
-16 => int meas_nb;
-
-class synt extends Chubgraph{
-
-// ****  SYNT *****
-	
-	8 => int synt_nb; 0 => int i;
-	Gain detune[synt_nb];
-	ibniz s[synt_nb];
-	Gain final => outlet; .1 => final.gain;
-
-  1.002 => float inharm;
-	inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .6 => s[i].gain;   ".99&"=>s[i].code ;i++;
-	inlet => detune[i] => s[i] => final;    1.01 => detune[i].gain;    .6 => s[i].gain;   ".97&"=>s[i].code ;i++;
-	inlet => detune[i] => s[i] => final;    1.02 => detune[i].gain;    .6 => s[i].gain;   ".84&"=>s[i].code ;i++;
-
-//	inlet => detune[i] => s[i] => final;    (i + 1) * inharm => detune[i].gain;    .2 => s[i].gain; i++;  
-//	inlet => detune[i] => s[i] => final;    (i + 1) * inharm => detune[i].gain;    .3 => s[i].gain; i++;  
-//	inlet => detune[i] => s[i] => final;    (i + 1) * inharm => detune[i].gain;    .2 => s[i].gain; i++;  
-		
-		
-		0 => int toggle_on;
-
-    fun void on() {
-	if (!toggle_on){
-	    1=> toggle_on;	
-            //<<<"synt on">>>;
-	    
-	    
-
-	}
-    }
-    
-    fun void off() {
-	if (toggle_on){
-	    0=> toggle_on;	
-            //<<<"synt off">>>;
-	    
-	    
-	    
-	}    
-    }
-
-}
-// ****  SLIDE *****
-
-
-class slide extends Chubgraph{
-
-		Step step => LPF lpf => outlet;
-		0 => step.next;
-		10 => lpf.freq;
-
-		0 => int active;
-
-		1 => int unknow_flag;
-		0 => int ref_val;
-		0 => int dif_val;
-		0 => int delta_val;
-
-		fun int set (int val, int note){
-				if (active){
-						if (unknow_flag) {
-								0=>unknow_flag;
-								val => ref_val;
-						}
-						else {
-							  val => dif_val;
-								dif_val - ref_val => delta_val;
-								
-								Std.mtof (note + delta_val) - Std.mtof(note) => step.next;
-						}
-				}
-				else {
-						val => ref_val;
-				}
-
-				return delta_val;
-		}		
-
-		fun void reset(){
-				0 => step.next;
-				dif_val => ref_val;
-		}
-
-		fun void activate(){1 => active;}
-		fun void deactivate(){0 => active; reset();}
-
-
-
-}
-
-// ****  REQ *****
-
-class RecSeqFREQ extends FREQ  {
-
-// SYNC
-    2 => sync_on;
-    0 => int delta_slide;
-    fun void play_n_rec (int n, int rec_mode) {
-    
-        // Play note
-        Std.mtof (n) => freq.value;
-        // <<<"note and freq:", n , Std.mtof(n)>>>;
-        1. => adsr.gain;
-        adsr.keyOn();        
-        1 => suspend_control; // suspend control from freq sequencer
-        // <<<"PLAY">>>;
-
-				// Manage index
-				0 => int index;
-				if (idx()%2 == 0){
-						// slide origin note case (duration == 0)
-						idx() => index;
-				}
-				else {
-						idx()-1 => index;
-				}
-
-
-        if (rec_mode == 0){
-            // do nothing
-        }
-        else if (rec_mode == 1){
-            // REC
-            spork ~ spork_rec(n, index);
-        }
-        else if (rec_mode == 2){
-            spork ~ spork_del(index);
-        }
-        else if (rec_mode == 3){
-            <<<"toto">>>;
-        
-            spork ~ spork_rec_continuous(n, index);
-        }
-        else if (rec_mode == 4){
-            spork ~ spork_del_continuous(index);
-        }
-    }
-
-    fun void spork_rec (int n, int i) {
-    
-        if ((now % tick ()) > (tick() / 2)) 2+=>i;
-        
-        // wait 2 tick to avoid double play
-        tick() * 2 => now;
-        // Store note
-        1. => g[i%g.size()];
-        0 => slide[i%slide.size()];
-         n => note[i%g.size()];
-        1. => g[(i+1)%g.size()];
-        0 => slide[(i+1)%slide.size()];
-         n => note[(i+1)%g.size()];
-     }
-
-    fun void spork_del (int i) {
-    
-        if ((now % tick ()) > (tick() / 2)) 2+=>i;
-        
-        // wait 2 tick to avoid double play
-        tick() * 2 => now;
-        // Store note
-        0. => g[i%g.size()];
-        0 => slide[i%slide.size()];
-        0. => g[(i+1)%g.size()];
-        0 => slide[(i+1)%slide.size()];
-      }
-
-    
-    0 => int rec_continuous;
-    
-    fun void spork_rec_continuous (int n, int i) {
-    
-           rec_continuous ++;
-				0=>delta_slide;
-	   rec_continuous => int ref_rec_cont;
-           // Store first note (double play possible)
-           if ((now % tick ()) > (tick() / 2)) {  
-								1. => g[(i+2)%g.size()];n => note[(i+2)%note.size()]; 
-		           // wait end of note N-1
-							 tick() - now%tick() => now;
-								// wait end of note N
-								tick() => now;
-  						1. => g[(i+3)%g.size()];
-							n + delta_slide=> note[(i+3)%note.size()];
-							if (delta_slide != 0) 1=> slide[(i+3)%slide.size()];
-							else 0=> slide[(i+3)%slide.size()];
-							}
-           else     {
-							 1. => g[i%g.size()];         n => note[i%note.size()]; 
-							 // wait end of note N
-							 tick() - now%tick() => now;
-						   1. => g[(i+1)%g.size()];        
-							 n + delta_slide => note[(i+1)%note.size()]; 
-							if (delta_slide != 0) 1=> slide[(i+1)%slide.size()];
-								else 0=> slide[(i+1)%slide.size()];
-							 }
-
-     
-            // sync just before next tick: to force seq to play the correct note.
-//            tick() - now%tick() - 1::ms => now;
-        
-            while (rec_continuous == ref_rec_cont){
-                2+=>i;
-                1. => g[i%g.size()];
-                n+ delta_slide => note[i%note.size()];
-			          if (delta_slide != 0) 1=> slide[i%slide.size()];
-								else 0=> slide[i%slide.size()];
-				 		    // wait end of note N
-                 tick() => now;
- 	              1. => g[(i+1)%g.size()];
-                n+ delta_slide => note[(i+1)%note.size()];
-							if (delta_slide != 0) 1=> slide[(i+1)%slide.size()];
-						  else 0=> slide[(i+1)%slide.size()];
-
-           }
-    }
-
-    0 => int del_continuous;
-    
-    fun void spork_del_continuous (int i) {
-    
-        del_continuous++;
-
-	del_continuous => int ref_del_cont;
-           // del first note (double play possible)
-           if ((now % tick ()) > (tick() / 2)) {
-								0. => g[(i+2)%g.size()];
-								0 => slide[(i+2)%slide.size()];
-								0. => g[(i+3)%g.size()];
-								0 => slide[(i+3)%slide.size()];
-					 }
-           else {
-								0. => g[i%g.size()];
-								0 => slide[i%slide.size()];
-								0. => g[(i+1)%g.size()];
-								0 => slide[(i+1)%slide.size()];
-						 }
-     
-            // sync to next tick
-            tick() - now%tick() - 1::ms => now;
-        
-            while (del_continuous == ref_del_cont){
-                i++;
-                0. => g[i%g.size()];
-                0 => slide[i%slide.size()];
-                 0. => g[(i+1)%g.size()];
-                0 => slide[(i+1)%slide.size()];
-                 tick() => now;
-            }
-    }
-
-    fun void stop(){
-    
-        adsr.keyOff();
-
-        0 => suspend_control; // reset control to freq sequencer
-       // <<<"STOP">>>;
-    }
-}
-
-
-
-
-class lpd8_ext extends lpd8 {
- 
-//    rythm rythm_o;
-//    rythm_o.constructor();
-// rythm_o.bpm;
-
-
-   
-    0 => int rec_mode;
-    
-// NOTE
-    data.scale.my_string => string scale;
-   ( (data.ref_note $ int) /12 -1 ) *12  => int octave;
-    data.ref_note % 12 => int note_offset;
-    0 => int note;
-
- 
-
-// SYNT
-    RecSeqFREQ f;
-    f.freq => synt s1 => f.adsr => Gain g => global_mixer.line6;
-    .48 => g.gain;
-
-   f.adsr.set(2::ms, 15::ms, 0.85,10::ms);
-
-// SLIDE
-		slide sl => s1;
-
-
-    fun void call_on() {
-        while (1){
-	    f.start_ev => now;
-	    spork ~ s1.on();	
-	}
-    }
-    
-    fun void call_off() {
-        while (1){
-	    f.stop_ev => now;
-	    spork ~ s1.off();	
-	}
-    }
-    
-    spork ~ call_on();
-    spork ~ call_off();
-
-    // Config seq and start it
-    data.bpm  * granularity=> f.bpm;
-    granularity * meas_nb * 2 => f.g.size  => f.note.size => f.slide.size; 
-		f.rel_dur << 0. << 1.;
-
-    f.go();
-
-
-    // HOLD Mode management	
-    0 => int hold_mode;
-    me.id() => int mother_shred_id;
-    
-    fun void manage_hold() {
-    	while (1){
-	    global_event.hold_event => now;
-	    if (global_event.hold_shred_id == mother_shred_id){
-	        if (hold_mode) 0=> hold_mode; else 1=> hold_mode;	
-	    }
-	}
-    }    
-    spork ~  manage_hold();
-
-    0 => int play_on;	
-
-    // PADS
-    fun void pad_ext (int group_no, int pad_nb, int val) {
-    	
-	if (!hold_mode) {
-	       36-=> pad_nb;
-    	   // <<<"hey1", group_no, pad_nb, val>>>;
-    	   if (group_no == 144) 
-    	   {
-    	       // <<<"hey2", group_no, pad_nb>>>;
-
-    	       scales.conv_to_note(pad_nb, scale, octave + note_offset) => note;
-    	   
-    	       play_on ++;
-    	       f.play_n_rec (note, rec_mode);	     
-					   sl.activate();
-    	       spork ~ s1.on();
-    	   
-    	   }
-    	   else {
-    		   
-    		 play_on --;
-
-    	       if (play_on < 1) {		   
-    		   0=> f.rec_continuous;
-    		   0=> f.del_continuous;
-    		   f.stop();
-					 sl.deactivate();
-					// 0=> f.delta_slide;
-    		   spork ~ s1.off();
-    	       }
-    	   }
-       }
-    }
-
-    // POTARS
-    fun void potar_ext (int group_no, int pad_nb, int val) {
-    
-	if (!hold_mode) {
-        // <<<"hey3", group_no, pad_nb>>>;
-            if (group_no == 176) {
-        // <<<"hey4", group_no, pad_nb>>>;
-//            0-=> pad_nb
-                if (pad_nb  == 1) {
-                    (val $ float) / 256. => g.gain; 
-                
-                }
-                else if (pad_nb  == 2) {
-                
-                    if (val == 0) {
-                        2 => rec_mode;
-                        <<<"DELETE">>>;
-                    }
-                    else if (val < 40) {
-                        4 => rec_mode;
-                        <<<"DELETE CONTINUOUS">>>;                    
-                    }
-                    else if (val<80){
-                        0 => rec_mode;
-                        <<<"No rec Standby">>>;
-                    }
-                    else if (val < 126) {
-                       3 => rec_mode;
-                        <<<"REC CONTINUOUS">>>;                    
-                    }
-                    else {
-                        1 => rec_mode;
-                        <<<"REC">>>;
-                    }
-                
-                }
-                else if (pad_nb  == 3) {
-                    (val / 12) * 12 => octave;
-                    <<<"octave", octave, "offset", note_offset>>>;
-                }
-                else if (pad_nb  == 4) {
-                    (val / 10)  => note_offset;
-                    <<<"octave", octave, "offset", note_offset>>>;
-                }
-                else if (pad_nb  == 5) {
-										sl.set(val, note) => f.delta_slide;
-                }
-								else if (pad_nb  == 6) {
-                }
-
-								else if (pad_nb  == 7) {
-                }
-
-								else if (pad_nb  == 8) {
-                }
-                  
-                
-            }
-	    
-	 }       
-    }
-}
-
-lpd8_ext lpd;
-
-// TEST
-/*
-    rythm rythm_o;
-    rythm_o.constructor();
-
-
-lpd.potar_ext (176, 2, 90); // rec continuous
-rythm_o.tick_delay * .3 => now;
-
-fun void test_note (int offset, float d){
-lpd.pad_ext(144, 36+ offset , 127);
-<<<"on">>>;
-rythm_o.tick_delay * d => now;
-lpd.pad_ext(0, 36+ offset , 0);
-<<<"off">>>;
-}
-
-test_note (0, 2.);
-rythm_o.tick_delay * 1 => now;
-
-test_note (0, 1.);
-rythm_o.tick_delay * 1 => now;
-
-test_note (0, 1.);
-rythm_o.tick_delay * 3 => now;
-
-test_note (1, .5);
-rythm_o.tick_delay * 1 => now;
-
-test_note (3, .5);
-rythm_o.tick_delay * 1 => now;
-
-test_note (4, 1);
-rythm_o.tick_delay * 1 => now;
-
-rythm_o.tick_delay * 12.5 => now;
-test_note (6, .5);
-
-lpd.potar_ext (176, 2, 30); // delete continuous
-
-rythm_o.tick_delay * 15.5 => now;
-test_note (3, .5);
-
-
-for(0=> int i; i< lpd.f.g.size(); i++){
-
-<<<lpd.f.g[i], lpd.f.note[i]>>>;
-
-}
-*/
-
-while (1) 1::second => now;
-
+SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
+
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ac_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Afr_Kick.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Amb_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ban_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bar_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bck_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bef_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ben_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bl_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bmb_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bnc_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bnk_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bnk_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Brk_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bub_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Bzz_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Cmb_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Cp_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Crsh_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dbn_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dep_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Des_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dest_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/DK_K1.WAV");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dnl_Kick.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Do_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dsc_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Dts_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Fky_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Fla_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Flt_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Fm_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Fm_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Grnd_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Grt_Kck.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hbc_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hif_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hig_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hi_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hi_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hil_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hir_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hki_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Hvy_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Iso_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ixl_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jb_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jb_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jk_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jl_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jl_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Jud_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kbl_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kc_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kil_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kld_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kld_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kna_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kng_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Knt_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ko_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Kwl_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lbc_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/list.txt");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lmo_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lop_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lop_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Low_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lsr_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Lvb_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mb_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mid_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mkn_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mnd_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mnd_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mnk_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Mstr_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Nda_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Nkh_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Od_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Ok_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Omg_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pe_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pel_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pel_K3.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pen_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pen_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pkl_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pm_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pnch_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pop_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Prm_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Pw_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Qck_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Qtr_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Raw_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rca_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rck_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rck_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rep_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rmb_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K3.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K4.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K5.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rnd_K6.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rol_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Rtf_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Sh808_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Shp_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Sms_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Sol_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Son_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Sqr_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Stal_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Sun_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tgh_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thk_K3.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thk_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thnd_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thn_K3.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thn_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Thp_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tk_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tk_K2.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tn_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tub_K.wav");
+s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wob_K1.wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wsh_K.wav");
+
+
+
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Aco_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Acu_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Bb_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Bck_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Bik_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Bnt_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Box_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Box_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Brk_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Brk_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Cap_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Cel_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Chc_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Clp_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Cn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Com_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Cp_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Crc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Crt_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Csp_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Csp_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Csp_Snr3.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Cyl_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Des_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dhi_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dis_Snr1.WAV");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dis_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dl_Sn2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dl_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Do_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Do_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dr_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Drt_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Drt_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dry_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Dsc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Fkc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Fky_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Flt_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Fm_Rim.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Fnl_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Fun_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Gem_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Glv_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Grov_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Hbn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Him_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Hme_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Hol_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Hol_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Hrd_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Ipi_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Irn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Isu_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Jb_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Jl_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Jl_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kid_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kid_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kil_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kil_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Klt_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Koc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kos_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kos_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Kv_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lad_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lad_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lef_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/list.txt");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Ln_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lof_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lof_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lok_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lop_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lop_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lop_Snr3.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lop_Snr4.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lo_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Lo_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mek_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mek_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mes_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Met_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Met_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mok_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mxr_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Mxr_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/New_Sn1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Np_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Nt_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Nv_Sn1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Nv_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Ok_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Osc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pch_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pel_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pel_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pe_Sn1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pga_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Phn_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Phn_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pka_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pls_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pls_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pnc_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pro_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Psh_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Pty_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Qck_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Rag_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Rb_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Rim_SnrD.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Rim_SnrV.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Rld_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Shl_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Slm_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Slp_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Smk_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Spn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Spt_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Str_Slp2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Str_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Su_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Svb_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tel_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Ten_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thk_Snr1.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thk_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thk_Snr3.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thp_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Thu_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tin_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tin_Snr3.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tin_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tk_Sn.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tmb_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tms_Rim.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Tn_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Ton_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Trl_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wdd_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wd_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wm_Rim.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wnd_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wod_Snr3.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wod_Snr.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr1.wav");
+s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr3.wav");
+
+
+
+
+
+
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Ac_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Aki_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Aki_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Aki_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Aki_H4.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bld_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bld_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bld_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bls_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Brw_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cal_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cd_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cev_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cev_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cev_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cid_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Clb_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Clk_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Clk_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cln_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cln_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cln_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Cln_H4.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Crp_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Do_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Dol_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Dol_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Dry_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Dsc_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Ds_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Dug_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Flc_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Flc_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Flc_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Fm_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Grt_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Hgh_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Hgh_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Him_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Hus_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Jl_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Jls_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Jz_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Kis_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Kl_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/list.txt");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lm_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lm_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lof_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lof_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lofi_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lop_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lop_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Lot_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Man_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Mb_Hh1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Mb_Hh2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Met_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Mic_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Nof_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Ns_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Ok_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pe_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pel_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pel_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Phn_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pin_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pm_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pm_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Pm_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Rte_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Shh_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Sli_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Slz_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Sm_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Sm_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Sm_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Sms_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Smt_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Spk_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Spk_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Spk_H3.wav");
+s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H3.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H4.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Tem_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Tem_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Thm_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Thm_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Thm_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Tis_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Tis_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Vrb_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Vrb_H2.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Wnd_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Wng_H.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Wsh_H1.wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Wsh_H2.wav");
+
+
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Bngo_1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Bngo_2.wav");
+s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Bngo_3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Bngo_4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_5.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_6.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_7.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Conga_8.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Crs_Tmb.WAV");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Hi_Tom1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Hi_Tom2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Lc_Tam.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/list.txt");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Lo_Tom1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Lo_Tom2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Mid_Tom1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Mid_Tom2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/PercLoop1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Slp_Bng.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Str_Chim.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_01.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_02.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_03.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_04.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_05.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_06.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_07.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_08.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_09.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_10.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tab_11.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Thk_Tmb.WAV");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Thumbs.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tim_1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tim_2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Triangle.wav");
+
+
+
+
+
+
+
+
+
+
+
+//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+
+" *4 6|C_C_d|C_C6  6|C_6|C_d|C_t|Cd " => s0.seq; //s0.post() =>  dac;
+
+s0.go();
+while(1) { 100::ms => now; }
+//data.meas_size * data.tick => now; 
