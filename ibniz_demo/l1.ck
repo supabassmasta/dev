@@ -428,9 +428,9 @@ class synt0 extends SYNT{
 }
 
 
-lpd8_synt l;
-
-l.reg(synt0 s);
+//lpd8_synt l;
+//synt0 s;
+//l.reg(s);
 
 // TEST
 /*

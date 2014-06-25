@@ -436,21 +436,115 @@ s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_1.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_2.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Tmb_3.wav");
-s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Triangle.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/Triangle.wav");
 
 
 
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Bg_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Crk_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Hnd_Clp2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Lad_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Mpl_Clp.wav");
+////s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Mxr_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Nc_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Ol_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Osc_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Phn_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Pil_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Sm_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Sml_Clp1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Sml_Clp2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Sml_Clp3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Snp_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Strg_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Thk_Clp1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Thk_Clp2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Thk_Clp3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Tw_clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Ug_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Vc_Clp.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Vrb_Clp1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Vrb_Clp2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Wsh_Clp1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Wsh_Clp2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Wsh_Clp3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Wsh_Clp4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/Wsh_Clp5.wav");
 
 
 
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shk1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shk2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shk3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shk4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shk6.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Hi_Shkr5.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/list");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Lng_Shk1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Lng_Shk2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk5.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk6.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk7.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Ml_Shk8.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Shk_2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Str_Rat.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Thk_Shk1.WAV");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Thk_Shk2.WAV");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Tick_Shk.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk4.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk5.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk6.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk7.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk8.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/Vb_Shk9.wav");
 
 
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/CL_OHH1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/CL_OHH2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Cre_Crsh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Dks_Cym.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Dry_Ohh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Dsc_Oh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/FM_OHH.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Hgh_Cy1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Hgh_Cy2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Hi_Crsh.wav");
+s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Lo_Crsh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Lod_Crsh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Lofi_Oh1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/MAC_OHH.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Rev_Crsh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Ride_01.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Ride_02.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Ride_03.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Ride_04.wav");
+////s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Splsh_Cy.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Crsh1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Crsh2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Cym1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Cym2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Cym3.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Oh1.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Oh2.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Str_Ohh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Tis_Ohh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Tis_Rid.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Tk_Ohh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Tn_Ohh.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/Wan_Ohh.wav");
 
 
 
 //s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
 
-" *4 6|C_C_d|C_C6  6|C_6|C_d|C_p|Cd " => s0.seq; //s0.post() =>  dac;
+" *4 p|6|C_C_d|C_C6  6|C_6|C_d|C_Cd " => s0.seq; //s0.post() =>  dac;
 
 s0.go();
 while(1) { 100::ms => now; }
