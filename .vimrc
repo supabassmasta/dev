@@ -45,10 +45,22 @@ map <C-Q> <Esc>0i//<Esc>
 " recursive grep of visual register then open result list
 map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 
+" Dirty uncomment
+"map   <C-E>         0xx
+
+" Comment line, go next line, uncomment
+"map	 <C-C>         <C-Q>j<C-E>
+
+" Copy buffer 'a' at begining of line, buffer 'z' at end
+"map   <C-G>         0"aP$"zpj   
 
 :command BW bp | sp | bn | bd
 :command VIMRC e ~/.vimrc 
 :command SRC  source ~/.vimrc
+   
+	 
+
+
 
 " revert selection in a line: type r quickly after ;
 vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
