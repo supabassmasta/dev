@@ -12,6 +12,17 @@ easy_beat_Dub.ck
 easy_beat_African.ck
 easy_beat_Volca.ck
 easy_beat_double.ck
+easy_beat_trap.ck
+easy_beat_trap_all.ck
+easy_beat_trap_all_2.ck
+easy_beat_break.ck
+easy_beat_old_school_hip_hop.ck
+easy_beat_9th_wonder.ck
+easy_beat_9th_wonder_2.ck
+easy_beat_9th_wonder_3.ck
+easy_beat_9th_wonder_4.ck
+easy_beat_9th_wonder_5.ck
+
 lpd8_loop_slide_bass_slide.ck
 click.ck
 beat_track.ck

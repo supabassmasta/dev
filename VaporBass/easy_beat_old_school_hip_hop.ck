@@ -1,47 +1,9 @@
 class lpd8_ext extends lpd8 {
 		string WAV[0];
-		WAV << "../_SAMPLES/amen_kick.wav";
-		WAV << "../_SAMPLES/amen_snare.wav";
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tub_K.wav"
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Smk_Sn.wav"
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav"
 
-		WAV << "../_SAMPLES/amen_snare2.wav";
-		WAV << "../_SAMPLES/amen_kick2.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_10.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_5.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_10.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_1.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_1.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_11.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_11.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_12.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_2.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_13.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_3.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_2.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_4.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_3.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_5.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_4.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_6.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_5.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_7.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_6.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_8.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_7.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Snare_9.wav";
-
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_8.wav";
-		WAV << "../_SAMPLES/Dubstep_Drum_Kit/Dubstep_Kick_9.wav";
 //		WAV << ;
 
 		0 => int wav_index;
@@ -49,7 +11,6 @@ class lpd8_ext extends lpd8 {
     1 => int ratio_fact;
 
 		Gain final => global_mixer.line4;
-		.5 => final.gain;
 
 // SHRED Management
 int shred_to_kill_a[0];

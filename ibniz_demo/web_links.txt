@@ -1,0 +1,17 @@
+
+IBNIZ
+http://pelulamu.net/ibniz/
+
+
+ChucK
+http://chuck.cs.princeton.edu/
+
+
+Ibniz Chugin for ChucK:
+https://github.com/GrandJu/chugins/tree/master/ibniz
+
+
+My ChucK code:
+https://github.com/supabassmasta/dev
+
+

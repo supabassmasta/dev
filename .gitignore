@@ -6,4 +6,5 @@
 *.au
 *.aup
 *.chug
+*.o
 nano_save.txt
