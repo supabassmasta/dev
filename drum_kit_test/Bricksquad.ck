@@ -8,7 +8,7 @@ SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (12).wav");
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (13).wav");
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (2).wav");
-s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (3).wav");
+//s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (3).wav");
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (4).wav");
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (5).wav");
 //s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (6).wav");
@@ -21,7 +21,7 @@ s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (1).wav");
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (10).wav");
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (11).wav");
-s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (12).wav");
+//s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (12).wav");
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (13).wav");
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (14).wav");
 //s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (15).wav");
@@ -47,7 +47,7 @@ s0.reg(1, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (13).wav");
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (14).wav");
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (15).wav");
-s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (16).wav");
+//s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (16).wav");
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (17).wav");
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (18).wav");
 //s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (19).wav");
@@ -99,7 +99,7 @@ s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 
 
 
-////s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (1).wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (1).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (10).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (11).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (12).wav");
@@ -112,7 +112,7 @@ s0.reg(2, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (19).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (2).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (20).wav");
-s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (21).wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (21).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (3).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (4).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/808 (5).wav");
@@ -175,7 +175,7 @@ s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 
 
 
-////s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bark.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bark.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch I'm Bustin' At Em.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bounce.wav");
@@ -185,7 +185,7 @@ s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSqu
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/DAMNNNNNNN.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop That Bitch.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop This Shit For These Fuck Niggas.wav");
-////s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Flocka.wav");
+//s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Flocka.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Fuck The Club Up.wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (1).wav");
 //s0.reg(3, "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (2).wav");
