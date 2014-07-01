@@ -86,7 +86,7 @@ class nano_sampler extends Chubgraph {
  
 Gain dig_in => disto dist => dig.connect => Gain tampon_phaser => PRCRev rev1 => PRCRev rev2 => Gain tampon => Gain tampon_in => Gain tampon_out => Gain tampon_bpf => LPF filt=> Gain out_effect => nano_sampler sp =>  ducking => duck =>  dac_temp;
 
-sp.set_dur(16 * data.tick);
+sp.set_dur(8 * data.tick);
 
 
 Std.mtof(127)=> filt.freq;
