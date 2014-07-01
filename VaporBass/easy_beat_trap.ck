@@ -1,16 +1,17 @@
 class lpd8_ext extends lpd8 {
 		string WAV[0];
-		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (3).wav"
-		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (12).wav"
-		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (16).wav"
+		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/Kick (3).wav";
+		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/Sanre (12).wav";
+		WAV << "../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/Pers (16).wav";
 
 //		WAV << ;
 
 		0 => int wav_index;
 
-    1 => int ratio_fact;
+    .5 => float ratio_fact;
 
 		Gain final => global_mixer.line4;
+		.3 => final.gain;
 
 // SHRED Management
 int shred_to_kill_a[0];
@@ -82,9 +83,9 @@ int pad_shred_id[8];
 				   if (group_no == 144) {
 
 								if (pad_nb == 0)    (spork~play_hh( 1.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
-								if (pad_nb == 1)    (spork~play_hh( 2.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
-								if (pad_nb == 2)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
-								if (pad_nb == 3)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
+								if (pad_nb == 1)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
+								if (pad_nb == 2)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
+								if (pad_nb == 3)    (spork~play_hh( 16.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 
 								if (pad_nb == 4)    (spork~play_hh( 1.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 1 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 								if (pad_nb == 5)    (spork~play_hh( 2.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 1 /* wav_offset */ )).id() => pad_shred_id[pad_nb];

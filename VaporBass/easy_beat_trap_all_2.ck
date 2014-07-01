@@ -1,65 +1,65 @@
 class lpd8_ext extends lpd8 {
 		string WAV[0];
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Car Crash And Siren.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Cell Phone.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Drop Effect.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Film Projector.mp3"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cock.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (1).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (2).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Heartbeat.mp3"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Mixtape Effect.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Music Box.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Noisefall.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Pitch Tick.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/School Bell.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Startup Effect.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Windchimes.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/D. Rich.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Drumma Boy.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Lex Luger FX 1.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Lex Luger FX 2.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Southside.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Vette Boyz.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Zaytoven.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bark.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch I'm Bustin' At Em.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bounce.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Breath.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bricksquad Monopoly.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Crowd Chant.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/DAMNNNNNNN.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop That Bitch.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop This Shit For These Fuck Niggas.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Flocka.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Fuck The Club Up.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (1).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (2).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Hhrruuuuu!!!.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Hi.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/OJ Damn.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Play This Record.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Rrrrat.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Shawty Redd Chant.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Trapaholic Mixtapes.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (1).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (1)_2.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (10).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (10)_2.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (2).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (3).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (4).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (5).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (6).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (7).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (8).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (9).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/What.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yeah.wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yep (1).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yep (2).wav"
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yup.wav"
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Car Crash And Siren.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Cell Phone.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Drop Effect.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Film Projector.mp3";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cock.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (1).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (2).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Heartbeat.mp3";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Mixtape Effect.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Music Box.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Noisefall.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Pitch Tick.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/School Bell.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Startup Effect.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Windchimes.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/D. Rich.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Drumma Boy.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Lex Luger FX 1.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Lex Luger FX 2.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Southside.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Vette Boyz.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/Zaytoven.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bark.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch I'm Bustin' At Em.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bitch.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bounce.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Breath.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Bricksquad Monopoly.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Crowd Chant.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/DAMNNNNNNN.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop That Bitch.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Drop This Shit For These Fuck Niggas.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Flocka.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Fuck The Club Up.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (1).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Gucci Mane Yeah (2).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Hhrruuuuu!!!.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Hi.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/OJ Damn.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Play This Record.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Rrrrat.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Shawty Redd Chant.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Trapaholic Mixtapes.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (1).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (1)_2.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (10).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (10)_2.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (2).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (3).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (4).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (5).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (6).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (7).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (8).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Waka Flocka Vocal (9).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/What.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yeah.wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yep (1).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yep (2).wav";
+WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/Yup.wav";
 //		WAV << ;
 
 		0 => int wav_index;

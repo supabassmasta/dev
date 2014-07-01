@@ -1,16 +1,17 @@
 class lpd8_ext extends lpd8 {
 		string WAV[0];
-		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tub_K.wav"
-		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Smk_Sn.wav"
-		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav"
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tub_K.wav";
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Smk_Sn.wav";
+		WAV << "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav";
 
 //		WAV << ;
 
 		0 => int wav_index;
 
-    1 => int ratio_fact;
+    .5 => float ratio_fact;
 
 		Gain final => global_mixer.line4;
+		.3 => final.gain;
 
 // SHRED Management
 int shred_to_kill_a[0];
