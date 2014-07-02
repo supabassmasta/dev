@@ -3,11 +3,9 @@ class lpd8_ext extends lpd8 {
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Car Crash And Siren.wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Cell Phone.wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Drop Effect.wav";
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Film Projector.mp3";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cock.wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (1).wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Gun Cockback (2).wav";
-WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Heartbeat.mp3";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Mixtape Effect.wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Music Box.wav";
 WAV <<"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/Noisefall.wav";
@@ -117,7 +115,8 @@ int pad_shred_id[8];
 
    fun void play_hh(float ratio, int contre_temp, int wav_offset){
 				// sync
-				if (!contre_temp)
+				SndBuf s 	;
+		if (!contre_temp)
 		        data.tick/ratio - ((now - data.wait_before_start) % ( data.tick / ratio )) => now;
 				else
 						data.tick/ratio - ((now - data.wait_before_start -  data.tick / (2 *ratio) ) % ( data.tick / ratio )) => now;
@@ -126,6 +125,12 @@ int pad_shred_id[8];
 					spork ~ f1 (wav_offset);
 				  data.tick/ ratio => now;
 				}
+		
+				WAV[wav_index + wav_offset] => s.read;
+				// don't play this one
+				0 => s.pos;
+				// Just wait every others to terminate
+				s.length() => now;
 
 	 }
 
@@ -148,11 +153,15 @@ int pad_shred_id[8];
 
 			    // POTARS
 					fun void potar_ext (int group_no, int pad_nb, int val) {
-						    if (group_no == 176) {
+								int size;
+						
+								if (group_no == 176) {
 
 									if (pad_nb  == 1)      { val $ float / 64. => final.gain;}   
 									else if (pad_nb  == 2) {
-												val / (127 / WAV.size()) => wav_index;
+												WAV.size() => size;
+												if (size > 127  ) 127 => size;
+												val / (127 / size) => wav_index;
 												if (wav_index >= WAV.size() - 1) WAV.size() - 2 => wav_index;
 												<<<wav_index, WAV[wav_index] >>>;
 										}
