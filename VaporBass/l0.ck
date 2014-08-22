@@ -1,18 +1,36 @@
 class synt0 extends SYNT{
 
-		inlet => SinOsc s =>  outlet;		
-				.2=> s.gain;
+		inlet => SqrOsc s => BPF lpf =>  outlet;		
+		.1 => s.width;
+				.1=> s.gain;
+		4 => lpf.gain;
+		Step step => ADSR ad => blackhole;
+		4 => lpf.Q;
+		1 => step.next;
+		ad.set(50::ms, 50::ms, .1, 20::ms);
 
-						fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
+		fun void f1 (){ 
+				while(1) {
+						ad.last() *1500 +300  => lpf.freq;
+//						(ad.last()/3 + .1 )	 => s.width;
+					     1::ms => now;
+				}
+				 
+	 } 
+	 spork ~ f1 ();
+	  
+						fun void on()  { }	fun void off() { }	
+						
+		fun void new_note(int idx)  {	ad.keyOn();	}
 }
 
 
 FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
-"0_3_3_ _4_4" =>     f0.seq;     
+"*4 0525 2645 2435 4361 " =>     f0.seq;     
 f0.reg(synt0 s0);
-f0.adsr.set(100::ms, 0::ms, 1., 200::ms);
-f0.post() => GVerb gverb0  => dac;
-//f0.post()    => dac;GVerb gverb0;
+f0.adsr.set(10::ms, 5::ms, .8, 20::ms);
+//f0.post() => GVerb gverb0  => dac;
+f0.post()    => dac;GVerb gverb0;
 
 30 => gverb0.roomsize;        // roomsize: (float) [1.0 - 300.0], default 30.0   
 1::second => gverb0.revtime;   // revtime: (dur), default 5::second

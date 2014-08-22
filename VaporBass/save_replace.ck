@@ -1,6 +1,8 @@
 Machine.add("../include/include.ck");
 me.yield();
 
+1::ms => now;
+
 if( me.args() == 0) {
     <<<"please set a .ck as input">>>;
     me.exit;   
