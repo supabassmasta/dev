@@ -25,6 +25,8 @@ Machine.add("../seq_2/freq.ck");
 Machine.add("../seq_2/freq2.ck");
 Machine.add("../seq_2/seq_script.ck");
 Machine.add("../break/break.ck");
+Machine.add("../lpd8/lpd8_master.ck");
+
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

@@ -12,7 +12,9 @@ class synt0 extends SYNT{
 		fun void f1 (){ 
 				while(1) {
 						ad.last() *1500 +300 + (Math.sin (.9 * pi * (now / 1::second) )  ) * 300 + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 800  => lpf.freq;
-						(ad.last()/3 + .1 )	 => s.width;
+//						(ad.last()/3 + .1 )	 => s.width;
+								lpd8_master.pot[0][0] / 127.	 => s.width;
+//								<<<s.width(), lpd8_master.pot[0][0]>>>; 
 					     1::ms => now;
 				}
 				 

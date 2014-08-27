@@ -25,7 +25,7 @@ public class lpd8 {
 
             while( min.recv(msg) )
             {
-                //<<< msg.data1, msg.data2, msg.data3 >>>;
+                <<< msg.data1, msg.data2, msg.data3 >>>;
 
                 msg.data1  => group_no_;
                 msg.data2 => pad_nb_;
