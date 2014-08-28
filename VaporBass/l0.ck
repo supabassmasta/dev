@@ -6,14 +6,17 @@ class synt0 extends SYNT{
 		4 => lpf.gain;
 		Step step => ADSR ad => blackhole;
 		4 => lpf.Q;
+		2000 => lpf.freq;
 		1 => step.next;
 		ad.set(50::ms, 50::ms, .1, 20::ms);
 
 		fun void f1 (){ 
 				while(1) {
-						ad.last() *1500 +300 + (Math.sin (.9 * pi * (now / 1::second) )  ) * 300 + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 800  => lpf.freq;
+//						ad.last() *1500 +300 + (Math.sin (.9 * pi * (now / 1::second) )  ) * 300 + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 800  => lpf.freq;
 //						(ad.last()/3 + .1 )	 => s.width;
-								lpd8_master.pot[0][0] / 127.	 => s.width;
+								LPD8.k(1,1) / 127.	 => s.width;
+//								lpd8_master.pot[0][1] * 20.	 => lpf.freq;
+								LPD8.k(1,8) * 20.	 => lpf.freq;
 //								<<<s.width(), lpd8_master.pot[0][0]>>>; 
 					     1::ms => now;
 				}
