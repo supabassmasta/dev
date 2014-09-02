@@ -1,4 +1,4 @@
-class synt0 extends SYNT{
+public class SUPERSAW extends SYNT{
 
 	8 => int synt_nb; 0 => int i;
 	Gain detune[synt_nb];
@@ -50,8 +50,8 @@ class synt0 extends SYNT{
 } 
 
 
-
-
+// TEST
+/*
 FREQ_STR f0; 8 => f0.max; 0=> f0.sync;
 "<c 0234 *26//0 _2_2_2 ___________" =>     f0.seq;     
 f0.reg(synt0 s0);
@@ -59,5 +59,5 @@ f0.reg(synt0 s0);
 
 while(1) {  100::ms => now; }
 //data.meas_size * data.tick => now; 
-
+*/
 

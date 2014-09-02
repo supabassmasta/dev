@@ -13,10 +13,11 @@ class synt0 extends SYNT{
 		fun void f1 (){ 
 				while(1) {
 //						ad.last() *1500 +300 + (Math.sin (.9 * pi * (now / 1::second) )  ) * 300 + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 800  => lpf.freq;
+						ad.last() *2500 +300 + LPD8.k(1,2) * 40  => lpf.freq;
 //						(ad.last()/3 + .1 )	 => s.width;
 								LPD8.k(1,1) / 127.	 => s.width;
 //								lpd8_master.pot[0][1] * 20.	 => lpf.freq;
-								LPD8.k(1,8) * 20.	 => lpf.freq;
+//								LPD8.k(1,8) * 20.	 => lpf.freq;
 //								<<<s.width(), lpd8_master.pot[0][0]>>>; 
 					     1::ms => now;
 				}
@@ -34,8 +35,8 @@ FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
 "*4 0525 2645 2435 4361 2958 6709 3749 3749 " =>     f0.seq;     
 f0.reg(synt0 s0);
 f0.adsr.set(10::ms, 5::ms, .8, 20::ms);
-f0.post() => Gain fb => GVerb gverb0  => dac;
-//f0.post()    => dac;GVerb gverb0;
+//f0.post() => Gain fb => GVerb gverb0  => dac;
+f0.post()    => dac;GVerb gverb0;
 
 //fb => Delay d => fb;
 //data.tick => d.max => d.delay;
