@@ -17,6 +17,8 @@ Machine.add("../chord/chord.ck");
 Machine.add( "../digit.ck" );
 Machine.add( "../scales/scales.ck");
 Machine.add( "../sampler/sampler.ck");
+Machine.add( "../EFFECTS/DUCK_MASTER.ck");
+
 me.yield();
 //Machine.add("../seq_2/top_seq.ck");
 Machine.add("../seq_2/seq.ck");
@@ -26,6 +28,7 @@ Machine.add("../seq_2/freq2.ck");
 Machine.add("../seq_2/seq_script.ck");
 Machine.add("../break/break.ck");
 Machine.add("../lpd8/lpd8_master.ck");
+Machine.add("../EFFECTS/DUCK.ck");
 
 // SYNT
 Machine.add("../SYNT/SUPERSAW.ck");
