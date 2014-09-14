@@ -43,7 +43,7 @@ fun void reg(int nb, string in){
 			1. => seq_main[nb].gain;
 			in => seq_main[nb].read;
 			data.bpm =>seq_main[nb].bpm;
-			0 =>seq_main[nb].sync_on;
+//			0 =>seq_main[nb].sync_on;
 		}
 }
 
@@ -58,7 +58,7 @@ fun void reg(string  char , string in){
 			1. => seq_main[char].gain;
 			in => seq_main[char].read;
 			data.bpm =>seq_main[char].bpm;
-			0 => seq_main[char].sync_on;
+//			0 => seq_main[char].sync_on;
 }
 
 fun void gain(string  char, float g){

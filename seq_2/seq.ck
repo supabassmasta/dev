@@ -31,7 +31,7 @@ public class seq {
     0 => int tick_mode; // off by default
 
 // SYNC
-    1 => int sync_on;
+    0 => int sync_on;
 
     fun void sync(int sync_mode){
         if (sync_mode==1) { // sync on full part
