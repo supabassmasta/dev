@@ -133,7 +133,7 @@ fun int convert_note(int c) {
 		else if	((c >= 'A') && (c <= 'Z'))
 				 return -1 - (c - 'A');
 		else
-				return 0;
+				return 1;
 
 }
 fun void set_main(int nb, float g, float d, float r){
