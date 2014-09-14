@@ -1,4 +1,4 @@
-class synt0 extends SYNT{
+public class CHILL extends SYNT{
 
 		inlet => SqrOsc s => BPF lpf => /* BPF bpf2 =>*/  outlet;		
 		.1 => s.width;
@@ -15,11 +15,11 @@ class synt0 extends SYNT{
 		fun void f1 (){ 
 				while(1) {
 //						ad.last() *1500 +300 + (Math.sin (.9 * pi * (now / 1::second) )  ) * 300 + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 800  => lpf.freq;
-						ad.last() *2500 +300 + LPD8.k(1,2) * 40 +  (Math.sin (.9 * pi * (now / 1::second) )  ) * 15 * LPD8.k(1,3)  + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 20 * LPD8.k(1,4) => lpf.freq ;//  => bpf2.freq;
+						ad.last() *2500 +300 + LPD8.k(2,2) * 40 +  (Math.sin (.9 * pi * (now / 1::second) )  ) * 15 * LPD8.k(2,3)  + (Math.sin (.2 * pi * (now / 1::second) ) + 1 ) * 20 * LPD8.k(2,4) => lpf.freq ;//  => bpf2.freq;
 //						(ad.last()/3 + .1 )	 => s.width;
-								LPD8.k(1,1) / 127.	 => s.width;
+								LPD8.k(2,1) / 127.	 => s.width;
 //								lpd8_master.pot[0][1] * 20.	 => lpf.freq;
-//								LPD8.k(1,8) * 20.	 => lpf.freq;
+//								LPD8.k(2,8) * 20.	 => lpf.freq;
 //								<<<s.width(), lpd8_master.pot[0][0]>>>; 
 					     1::ms => now;
 				}
@@ -31,7 +31,7 @@ class synt0 extends SYNT{
 						
 		fun void new_note(int idx)  {	ad.keyOn();	}
 }
-
+/*
 
 FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
 "*4 <7 0525 2645 2435 4361 2958 6709 3749 3749 " =>     f0.seq;     
@@ -57,4 +57,4 @@ f0.post()    => global_mixer.line4;GVerb gverb0;
 
 while(1) {  100::ms => now; }
 //data.meas_size * data.tick => now; :w
-
+*/

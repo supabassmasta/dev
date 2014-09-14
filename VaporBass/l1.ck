@@ -53,7 +53,7 @@ class synt0 extends SYNT{
 
 
 FREQ_STR f0; 8 => f0.max; 0=> f0.sync;
-"<c 0234 *26//0 _2_2_2 ___________" =>     f0.seq;     
+"<f 0234 *26//0 _2_2_2 ___________" =>     f0.seq;     
 f0.reg(synt0 s0);
 //f0.post()  => dac;
 

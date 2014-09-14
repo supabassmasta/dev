@@ -29,6 +29,7 @@ Machine.add("../lpd8/lpd8_master.ck");
 
 // SYNT
 Machine.add("../SYNT/SUPERSAW.ck");
+Machine.add("../SYNT/CHILL.ck");
 
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
