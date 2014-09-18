@@ -34,6 +34,7 @@ Machine.add("../EFFECTS/DUCK.ck");
 Machine.add("../SYNT/SUPERSAW.ck");
 Machine.add("../SYNT/CHILL.ck");
 Machine.add("../SYNT/HORROR.ck");
+Machine.add("../SYNT/GRAIN.ck");
 
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
