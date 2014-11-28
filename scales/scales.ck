@@ -45,9 +45,21 @@ static int a[][];
         //
                     else if (val_s == "HONCHOSHI_PLAGAL_FORM") 16=> scale_nb;
         //
+                    else if (val_s == "LYD") 17 => scale_nb;
+        //
+                    else if (val_s == "ION") 18 => scale_nb;
+        //
+                    else if (val_s == "MIX") 19 => scale_nb;
+        //
+                    else if (val_s == "DOR") 20 => scale_nb;
+        //
+                    else if (val_s == "AEO") 21 => scale_nb;
+        //
+                    else if (val_s == "PHR") 22 => scale_nb;
+        //
+                    else if (val_s == "LOC") 23 => scale_nb;
+        //
 
-        
-        
         
         /* Compute distance to note */
         if (rel_notes_i == 0)
@@ -103,6 +115,13 @@ static int a[][];
 	 ,[2,1,4,2,2,1] // HAWAIIAN
 	 ,[2,1,4,1,4] // HIRA_JOSHI (Japan)
 	 ,[1,2,2,1,4,2] // HONCHOSHI_PLAGAL_FORM (Japan)
+   ,[2,2,2,1,2,2,1] // LYD
+   ,[2,2,1,2,2,2,1] // ION
+   ,[2,2,1,2,2,1,2] // MIX
+   ,[2,1,2,2,2,1,2] // DOR
+   ,[2,1,2,2,1,2,2] // AEO
+   ,[1,2,2,2,1,2,2] // PHR	
+   ,[1,2,2,1,2,2,2] // LOC
 ]@=> int foo[][];
 
 foo @=> scales.a;
