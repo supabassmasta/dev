@@ -37,7 +37,7 @@ data.ref_note => freq_seq.base_note;
 data.scale.my_string => freq_seq.scale;
 data.bpm => freq_seq.bpm;
 
-fun void set_scale (string in) {
+fun void scale (string in) {
 	in => freq_seq.scale;
 }
 

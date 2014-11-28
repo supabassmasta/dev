@@ -1,11 +1,25 @@
-SEQ_STR s0; // 4 => s0.max;
-0 => s0.sync;
+class synt0 extends SYNT{
 
-s0.reg(0, "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav");
-//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+		inlet => SinOsc s =>  outlet;		
+				.5 => s.gain;
 
-"444 2* 44" => s0.seq; //s0.post() =>  dac;
+						fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
+}
 
-s0.go();
-while(1) { 100::ms => now; }
+
+FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
+"PHR" => f0.scale;
+"*2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+">5 *2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+"*2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+">5 *2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+
+"*2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+">7 *2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+">2 *2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+">7 *2 CBA0 0_4_ 1_5_ 2_0_" =>     f0.seq;     
+f0.reg(synt0 s0);
+//f0.post()  => dac;
+
+while(1) {  100::ms => now; }
 //data.meas_size * data.tick => now; 
