@@ -37,6 +37,11 @@ data.ref_note => freq_seq.base_note;
 data.scale.my_string => freq_seq.scale;
 data.bpm => freq_seq.bpm;
 
+fun void scale (string in) {
+	in => freq_seq.scale;
+}
+
+
 fun int is_note(int c) {
 		 if (((c >= '0') && (c <= '9')) || 
 			   ((c >= 'a') && (c <= 'z')) ||
