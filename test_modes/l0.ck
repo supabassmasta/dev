@@ -10,7 +10,7 @@ class synt0 extends SYNT{
 FREQ_STR f0; //8 => f0.max; 
 1=> f0.sync;
 
-"DOR" => f0.set_scale;
+"DOR" => f0.scale;
 "*2 04050406" =>     f0.seq;     
 "<5 *2 04050406" =>     f0.seq;     
 "*2 04050406" =>     f0.seq;     

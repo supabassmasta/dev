@@ -1,102 +1,74 @@
-/*********************************************
-                SIREN-
-*********************************************/
 
-// Main
-Gain freq_in => SqrOsc osc  => ADSR env_out => Gain Tampon => LPF lpf => Gain final => dac ; 
-.03=> osc.gain;
-10000 => lpf.freq;
-env_out.set(20::ms, 0::ms, 1, 20::ms);
-env_out.keyOff();
+    // RYTHM
+//    rythm rythm_o;
+    
+    // init rythm
+//     rythm_o.constructor();
+     //rythm_o.tick_delay
 
-// Mod
-Step offset_freq => freq_in;
-10 => offset_freq.next;
-Phasor mod => freq_in;
-1000 => mod.gain;
-0.5 => mod.freq;
+     // REC duration
+//      rythm_o.tick_nb * rythm_o.tick_delay * 4 => dur rec_dur;
 
+	0 => int flag_rec;
+      
 
-// Noise 
-Noise noise => freq_in;
-0 => noise.gain;
+    //--------------------------------------------//
+    //               kb Init                      //
+    //--------------------------------------------//
+    Hid hi;
+    HidMsg msg; 
 
-// ECHO
-Tampon => Delay del => Tampon;
-4::second => del.max;
-data.tick => del.delay ;
-0.8 => del.gain;
+    // open keyboard 0
+    if( !hi.openKeyboard( 0 ) ) me.exit();
+    <<< "keyboard '" + hi.name() + "' ready", "" >>>;
+ 
+fun void fun_rec() {
+    3::ms => dur anticrousti;
+    1 => flag_rec;
 
-/*********************************************
-                NANO
-*********************************************/
-class nanomidi_ext extends nanomidi{
-   
-   fun void potar_ext (int bank, int group, int val) {
-       // <<<"potar: ", bank, group, val>>>;
-    if (bank ==2 ) {
-      if (group ==1 ) {
-            Std.mtof(val)   => lpf.freq;          
-		}
-       else if (group ==2 ) {
-            Std.mtof(val)   => mod.gain;
-		<<<"mod.gain",mod.gain()>>>;
-        }
-       else if (group ==3 ) {
-            4./ ((data.tick/1::second)*(val+1))   => mod.freq;
-        }
-       else if (group ==4 ) {
-            (val + 1) * data.tick /2  => del.delay ;
-        }
+    dac.right => ADSR ar =>  WvOut wr => blackhole;
+    ar.set (anticrousti, 0::ms, 1, anticrousti);
+    "chuck-session-RIGHT" => wr.autoPrefix;
+    "special:auto" => wr.wavFilename;
+
+    dac.left => ADSR al =>  WvOut wl => blackhole;
+    al.set (anticrousti, 0::ms, 1, anticrousti);
+    "chuck-session-LEFT" => wl.autoPrefix;
+    "special:auto" => wl.wavFilename;
+    
+    ar.keyOn();
+    al.keyOn();
+
+    while (flag_rec) 1::ms => now;	
      }
-   }
 
-   fun void fader_ext (int bank, int group, int val) {
-       // <<<"potar: ", bank, group, val>>>;
-     if (bank ==2 ) {
-       if (group ==1 ) {
-          	(val $ float)/127   => final.gain;
-       }
-       else if (group ==2 ) {
-            Std.mtof(val)   => offset_freq.next;
-        }
-       else if (group ==3 ) {
-            val * 50   => noise.gain;
-        }
 
-        else if (group ==4 ) {
-            (val $ float) / 127. => del.gain;
-        }
-      }
-   }
+     
+    while( true )
+    {
+            // wait on event
+        hi => now;
+    
+        // get one or more messages
+        while( hi.recv( msg ) )
+        {
 
-   
-    fun void button_play_ext (int val) {
-        <<<"button play: ",val>>>;
-        
-        if (val != 0) {
-            0=> mod.phase;
-            env_out.keyOn();
-        }
-        else {
-            env_out.keyOff();
+            if( msg.isButtonDown() ) {
+            // <<< "down:", msg.which, "(code)", msg.key, "(usb key)", msg.ascii, "(ascii)" >>>;
+                if (msg.which == 57) {
+		   if (flag_rec == 0) {
+                    <<<"REC">>>;
+                    spork ~ fun_rec();
+		   }
+                   else {
+                       0 => flag_rec;
+                    <<<"REC STOP">>>;
+                   }
+  
+     
+                }
+            }
         }
         
         
     }
-
-
-}
-
-nanomidi_ext nano;
-
-// Test
-            // 0=> mod.phase;
-            // env_out.keyOn();
- // 1::second => now;
-             // env_out.keyOff();
-// 4::second=> now;
-
-while (1) 1::second => now;
-
- 

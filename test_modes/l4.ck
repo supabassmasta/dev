@@ -1,27 +1,23 @@
-SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
+class synt0 extends SYNT{
 
-s0.reg(0, "../_SAMPLES/amen_kick.wav");
-s0.reg(1, "../_SAMPLES/amen_snare.wav");
-s0.reg(2, "../_SAMPLES/amen_snare2.wav");
-s0.reg(3, "../_SAMPLES/amen_hit.wav");
-//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
+8 => int synt_nb; 0 => int i;
+Gain detune[synt_nb];
+SqrOsc s[synt_nb];
+Gain final => outlet; .3 => final.gain;
 
-"*4 5__e__n_" => s0.seq;
+inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .6 => s[i].gain; .3 => s[i].width; i++;  
+inlet => detune[i] => s[i] => final;    1.001 => detune[i].gain;    .6 => s[i].gain; .23 => s[i].width; i++;  
 
-s0.post()=> Gain inter => convolution c =>  dac;
-inter => Gain direct => dac;
-.4 => direct.gain;
-.1 => c.gain;
 
-for (0 => int i; i <  106     ; i++) {
-1. => c.add_tap;
+						fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
 }
- 
-for (0 => int i; i <  100    ; i++) {
-//Std.randf() => c.add_tap;
-}
- 
 
-s0.go();
-while(1) { 100::ms => now; }
+
+FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
+"<c 0000 00__ 4465 34__ " =>     f0.seq;     
+f0.adsr.set(300::ms, 40::ms, .8, 500::ms);
+f0.reg(synt0 s0);
+//f0.post()  => dac;
+
+while(1) {  100::ms => now; }
 //data.meas_size * data.tick => now; 
