@@ -1,14 +1,35 @@
 public class lpd8 {
     // device number
-    1 => int device;
+    "LPD8 MIDI 1" => string device;
 
     MidiIn min;
     MidiMsg msg;
 
-   if( !min.open( device ) ) me.exit();
+//   if( !min.open( device ) ) me.exit();
 
- <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
+// <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
     // <<< "MIDI device not open for test!!!" >>>;
+for(0 =>  int i; i < 8; i++ )
+{
+    // no print err
+//    min.printerr( 0 );
+
+    // open the device
+    if( min.open( i ) )
+    {
+				if ( min.name() == device ) {
+        <<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
+				break;
+				}
+				else {
+//					min.close();
+				}
+
+   }
+    else break;
+}
+
+<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
 
     fun void potar_ext (int group_no, int pad_nb, int val) {}
