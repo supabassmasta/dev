@@ -35,6 +35,7 @@ Machine.add("../SYNT/SUPERSAW.ck");
 Machine.add("../SYNT/CHILL.ck");
 Machine.add("../SYNT/HORROR.ck");
 Machine.add("../SYNT/GRAIN.ck");
+Machine.add("../SYNT/TB303.ck");
 
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
