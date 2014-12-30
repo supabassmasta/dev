@@ -1,4 +1,4 @@
-class GRAIN extends SYNT{
+public class GRAIN extends SYNT{
 
 		inlet => SqrOsc s => Gain out; 
 	 out => 	BRF fi => LPF lpf =>	GVerb gverb0  =>	outlet;		
