@@ -1,19 +1,33 @@
 class POLY extends SYNTA {
 
-		8 => int nb_voice;
-		SinOsc s[nb_voice];
-		ADSR a[nb_voice];
-		int note[nb_voice];
+		0 => int nb_voice;
+		ADSR a[0];
+		Step f[0];
+		int note[0];
+		
+		SYNT @ s[];
 
+		
+		fun void reg(SYNT in[]) {
+//		in @=> s;
+		in.size() => nb_voice;
 		for (0 => int i; i < nb_voice       ; i++) {
+		  
+			a.size() + 1 => a.size;
+			f.size() + 1 => f.size;
+//			s.size() + 1 => s.size;
+//      in[i] @=> s[i];
+//				s << in[i];
+
 			a[i].keyOff();
-			s[i] => a[i] => dac;
-			.2 => s[i].gain;
+			f[i] => /* in[i] => */ a[i] => dac;
+//			.2 => in[i].gain;
 		  a[i].set(3::ms, 30::ms, .7, 100::ms);
 
 			0 => note[i];
 		}
-		 
+}
+
 
 	fun void in(	MidiMsg msg){
 		if (msg.data1 == 144){		
@@ -28,7 +42,7 @@ class POLY extends SYNTA {
 		 }
 		 else {
 				msg.data3 / 256. + .2 => a[i].gain;
-				Std.mtof (msg.data2) => s[i].freq;
+				Std.mtof (msg.data2) => f[i].next;
         msg.data2 => note[i];
 				a[i].keyOn();
 		 }
@@ -54,7 +68,8 @@ class POLY extends SYNTA {
 mpk25 m;
 
 m.reg(POLY p);
-
+GRAIN g[4];
+p.reg(g);
 while(1) {
 	     100::ms => now;
 }
