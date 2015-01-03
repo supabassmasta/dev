@@ -1,4 +1,4 @@
-public class mpk25 {
+public class lpk25 {
 
 	"LPK25 MIDI 1" => string device;
 

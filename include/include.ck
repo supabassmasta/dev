@@ -7,7 +7,7 @@ Machine.add( "../SYNTA/SYNTA.ck" );
 //Machine.add( "../part_decode/part_decode_new.ck" );
 Machine.add( "../nanomidi_5.ck" );
 Machine.add( "../lpd8/lpd8.ck" );
-Machine.add( "../mpk25/mpk25.ck"); 
+Machine.add( "../lpk25/lpk25.ck"); 
 Machine.add("../include/data_updater.ck");
 Machine.add( "../include/end.ck" );
 Machine.add( "../include/killer.ck" );
@@ -34,6 +34,7 @@ Machine.add("../EFFECTS/DUCK.ck");
 
 // SYNTA
 Machine.add("../SYNTA/GLIDE.ck");
+Machine.add("../SYNTA/POLY.ck");
 
 
 // SYNT

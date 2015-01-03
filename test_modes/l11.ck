@@ -1,32 +1,11 @@
-// array pass by reference test - should change values?
+lpk25 l;
+l.reg(POLY p);
+p.reg(HORROR h0);
+p.reg(HORROR h1);
+p.reg(HORROR h2);
+p.reg(HORROR h3);
 
-class A {
-		int a;
+while(1) {
+	     100::ms => now;
 }
-
-class B extends A {
-
-int b;
-
-}
-
-
-// function that takes array
-fun void mirror( A arg[] )
-{
-    // assign 0th element to 1st element
-    arg[0].a => arg[1].a;
-}
-
-// declare array
-B foo[2];
-2 => foo[0].a;
-1 => foo[1].a;
-
-// call the function
-B $ A[]  @=>  A @ foo2;
-mirror( foo2 );
-
-// test
-if ( foo[0].a == foo[1].a ) <<<"success">>>;
-
+ 
