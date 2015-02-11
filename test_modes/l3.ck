@@ -1,18 +1,50 @@
-SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
+class synt0 extends SYNT{
+LPF lpf;
+		inlet => Gain f => SqrOsc s => Gain out =>   lpf =>   outlet;		
+	 0.405 => s.width;	
 
-s0.reg(0, "../_SAMPLES/amen_kick.wav");
-s0.reg(1, "../_SAMPLES/amen_snare.wav");
-s0.reg(2, "../_SAMPLES/amen_snare2.wav");
-s0.reg(3, "../_SAMPLES/amen_hit.wav");
-//s0.reg("A", "../_SAMPLES/REGGAE_SET_1/Timbales1_Reaggae1.wav");
 
-"*4 5_5_e_5_" => s0.seq; 
-"*4 __55e5__" => s0.seq; 
-"*4 __5_e__5" => s0.seq; 
-"*4 5___e___" => s0.seq; 
-1 => s0.sync;
-s0.post() => Gain g => dac;
-.3 => g.gain;
 
-s0.go();
-while(1) { 100::ms => now; }
+				.3 => s.gain;
+		f => Gain two => SinOsc s2 =>  out;		
+				.1 => s2.gain;
+				2. => two.gain;
+
+		TriOsc mod => ADSR moda => f;
+		7 * 100 => mod.gain;
+		7 * 100 => mod.freq;
+		moda.set(3::ms, 83::ms , .00001, 10::ms);
+
+		SawOsc mod2 => moda;
+		6*100 => mod2.gain;
+		4*100 => mod2.freq;
+
+						3000 => lpf.freq;
+						4 => lpf.Q;
+						Step st;
+		inlet => ADSR adlpf => blackhole;
+		490 => st.next;
+		adlpf.set(265::ms, 200::ms, 1, 11::ms);
+		12 => 		adlpf.gain;
+		fun void f1 (){ 
+			while(1) {
+						adlpf.last() => lpf.freq;
+				     1::ms => now;
+			}
+			 
+			 } 
+		 spork ~ f1 ();	 
+			  
+
+						fun void on()  { }	fun void off() { moda.keyOff();	adlpf.keyOff();}	fun void new_note(int idx)  {moda.keyOn();	adlpf.keyOn();}
+}
+
+
+FREQ_STR f0; //8 => f0.max; 1=> f0.sync;
+"DOR" => f0.scale;
+"<f *4 0426  6453 5342 1020 " =>     f0.seq;     
+f0.reg(synt0 s0);
+//f0.post()  => dac;
+
+while(1) {  100::ms => now; }
+//data.meas_size * data.tick => now; 

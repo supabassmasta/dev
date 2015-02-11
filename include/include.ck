@@ -2,10 +2,12 @@ Machine.add( "../include/global_data.ck" );
 Machine.add( "../include/global_mixer.ck" );
 Machine.add( "../include/global_event.ck" );
 Machine.add( "../include/synt_interface.ck" );
+Machine.add( "../SYNTA/SYNTA.ck" );
 //Machine.add( "../seq_decode/seq_decode.ck" );
 //Machine.add( "../part_decode/part_decode_new.ck" );
 Machine.add( "../nanomidi_5.ck" );
 Machine.add( "../lpd8/lpd8.ck" );
+Machine.add( "../lpk25/lpk25.ck"); 
 Machine.add("../include/data_updater.ck");
 Machine.add( "../include/end.ck" );
 Machine.add( "../include/killer.ck" );
@@ -30,10 +32,18 @@ Machine.add("../break/break.ck");
 Machine.add("../lpd8/lpd8_master.ck");
 Machine.add("../EFFECTS/DUCK.ck");
 
+// SYNTA
+Machine.add("../SYNTA/GLIDE.ck");
+Machine.add("../SYNTA/POLY.ck");
+
+
 // SYNT
 Machine.add("../SYNT/SUPERSAW.ck");
 Machine.add("../SYNT/CHILL.ck");
 Machine.add("../SYNT/HORROR.ck");
+Machine.add("../SYNT/GRAIN.ck");
+Machine.add("../SYNT/TB303.ck");
+Machine.add("../SYNT/TB303C.ck");
 
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");

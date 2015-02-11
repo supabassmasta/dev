@@ -1,4 +1,4 @@
-class POLY extends SYNTA {
+public class POLY extends SYNTA {
 
 		0 => int nb_voice;
 		ADSR a[0];
@@ -67,7 +67,7 @@ class POLY extends SYNTA {
   }
 }
 
-
+/*
 mpk25 m;
 
 m.reg(POLY p);
@@ -80,3 +80,4 @@ while(1) {
 	     100::ms => now;
 }
  
+*/

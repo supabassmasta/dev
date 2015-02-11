@@ -1,4 +1,4 @@
-class synt0 extends SYNT{
+public class TB303C extends SYNT{
 
 		inlet =>  LPF sli  => SqrOsc s => LPF f => LPF f2 =>  outlet;		
 				.4 => s.gain;
@@ -61,14 +61,3 @@ class synt0 extends SYNT{
 }
 
 
-FREQ_STR f0; //8 => f0.max; 
-1=> f0.sync;
-"ALL" => f0.scale;
-"<a *4 030_ 55_7 0_05 0707" =>     f0.seq;     
-f0.reg(synt0 s0);
-f0.post() => DUCK d => global_mixer.line4;
-DUCK_MASTER.auto();
-d.set(2::ms, 40::ms, .4, 8::ms);
-
-while(1) {  100::ms => now; }
-//data.meas_size * data.tick => now; 

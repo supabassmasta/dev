@@ -95,7 +95,7 @@ int pad_shred_id[8];
 								if (pad_nb == 2)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 								if (pad_nb == 3)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 0 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 
-								if (pad_nb == 4)    (spork~play_hh( 1.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 1 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
+								if (pad_nb == 4)    (spork~play_hh( .5*ratio_fact /*ratio*/, 1 /*contre_temp*/, 1 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 								if (pad_nb == 5)    (spork~play_hh( 2.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 1 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 								if (pad_nb == 6)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 0 /*contre_temp*/, 2 /* wav_offset */ )).id() => pad_shred_id[pad_nb];
 								if (pad_nb == 7)    (spork~play_hh( 4.*ratio_fact /*ratio*/, 1 /*contre_temp*/, 2 /* wav_offset */ )).id() => pad_shred_id[pad_nb];

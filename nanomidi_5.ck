@@ -1,8 +1,8 @@
 
 public class nanomidi {
 
-    // NanoKontrol device number
-    2 => int device;
+    // NanoKontrol device name
+    "nanoKONTROL MIDI 1" => string device;
 
     MidiIn min;
     MidiMsg msg;
@@ -36,10 +36,31 @@ public class nanomidi {
     
     0=>int midi_rcv_on;
     
-    if( !min.open( device ) ) me.exit();
+//    if( !min.open( device ) ) me.exit();
 
-   <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
+//   <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 //    <<< "MIDI device not open for test!!!" >>>;
+for(0 =>  int i; i < 8; i++ )
+{
+    // no print err
+//    min.printerr( 0 );
+
+    // open the device
+    if( min.open( i ) )
+    {
+				if ( min.name() == device ) {
+        <<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
+				break;
+				}
+				else {
+//					min.close();
+				}
+
+   }
+    else break;
+}
+
+<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
     fun void button_up_ext (int bank, int group, int val) {<<<"button up ", bank, group," : ",val>>>;}
     fun void button_down_ext (int bank, int group, int val) {<<<"button down ", bank, group," : ",val>>>;}

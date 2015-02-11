@@ -121,10 +121,14 @@ public class FREQ2  {
 
                 // Target freq
                 if ( rel_note.size() != 0 ) {
+									if (toggle_on) {
                     Std.mtof (scales.conv_to_note(rel_note[int_seq.idx % rel_note.size()], scale, base_note + note_offset_v)) => target_freq;
+									}
                 }
                 else if (note.size() != 0 ) {
+									if (toggle_on) {
                     Std.mtof (note[int_seq.idx % note.size()]) => target_freq;
+									}
                 }
                 
                 // slides
