@@ -4,9 +4,6 @@ public class LAUNCHPAD_KEY {
 		int key;
 		int state;
 
-		fun void red() {}
-		fun void green() {}
-		fun void clear() {}
 
 		fun int on() {
 			

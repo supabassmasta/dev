@@ -9,7 +9,7 @@ public class SAVE {
 
     path.rfind('.') =>  pos;
     path.substring(0, pos) => path;
-    //<<<path>>>;
+//    <<<path>>>;
 
     path => dir;  
   }
@@ -80,6 +80,7 @@ public class SAVE {
     if( !fout.good() )
     {
       <<<"Parameter", p, "doesn't exists return 0">>>; 
+			return 0;
     }
     else {
       fout => int val;
@@ -100,6 +101,7 @@ public class SAVE {
     if( !fout.good() )
     {
       <<<"Parameter", p, "doesn't exists return 0">>>; 
+			return 0.0;
     }
     else {
       fout => float val;
@@ -122,6 +124,7 @@ public class SAVE {
     if( !fout.good() )
     {
       <<<"Parameter", p, "doesn't exists return 0">>>; 
+			return "";
     }
     else {
       fout.readLine()=> string val;
