@@ -42,6 +42,19 @@ public class LAUNCHPAD {
 		LAUNCHPAD_KEY @ keys[121];
 		LAUNCHPAD_KEY @ controls[112];
 
+// Dummy key to avoid null pointer exception when not connected
+		class dummy extends LAUNCHPAD_KEY {
+				fun int on() {
+						<<<"Dummy not affected">>>; 
+						return 2; //red
+				}
+			} 
+
+		for (0 => int i; i < keys.size()      ; i++) { new dummy @=> keys[i];	}
+		for (0 => int i; i < controls.size()      ; i++) { new dummy @=> controls[i];	}
+		 
+
+
 		0 => int last_key;
 		0 => int last_control;
 
@@ -54,7 +67,7 @@ public class LAUNCHPAD {
 
             while( min.recv(msg) )
             {
-                <<< msg.data1, msg.data2, msg.data3 >>>;
+//                <<< msg.data1, msg.data2, msg.data3 >>>;
 
                 
                 if (msg.data1 == 144)

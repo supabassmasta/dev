@@ -224,7 +224,25 @@ class pad extends LAUNCHPAD_KEY {
 class sample_up extends LAUNCHPAD_KEY {
 		  0 => int idx;
 			SAVE save;
-		
+			Shred hold_id;
+
+		 fun void hold() {
+				pad @ p;	
+						
+				500::ms =>now;
+
+				while(1) {
+					10 +=> idx;
+				if (idx>sample_list.size()) 0=> idx;
+					<<<"INDEX : ", idx >>>;
+					save.savei("pad_sample_index"+l.last_key, idx);
+					l.keys[l.last_key] $ pad @=> p;
+					p.set_sample(sample_list[idx % sample_list.size()]);		
+					p.on();
+					100::ms => now;
+				}
+		 }
+
 			fun int on() {
 				pad @ p;	
 				
@@ -232,21 +250,52 @@ class sample_up extends LAUNCHPAD_KEY {
 
 				save.readi("pad_sample_index"+l.last_key) => idx;
 				idx ++;
+				if (idx>sample_list.size()) 0=> idx;
+				<<<"INDEX : ", idx >>>;
 				save.savei("pad_sample_index"+l.last_key, idx);
 				l.keys[l.last_key] $ pad @=> p;
 				p.set_sample(sample_list[idx % sample_list.size()]);		
 				p.on();
+				
+				spork ~ hold() @=> hold_id;
 
 				return 2;
 			}
 		
+			fun int off() {
+					Machine.remove(hold_id.id());	
+				return 0;
+			}
+
 
 }
 
 class sample_down extends LAUNCHPAD_KEY {
 		  0 => int idx;
 			SAVE save;
-		
+			Shred hold_id;
+
+			 fun void hold() {
+				pad @ p;	
+						
+				500::ms =>now;
+
+				while(1) {
+					10 -=> idx;
+					if (idx <= 0)
+						sample_list.size() => idx;
+
+
+					<<<"INDEX : ", idx >>>;
+					save.savei("pad_sample_index"+l.last_key, idx);
+					l.keys[l.last_key] $ pad @=> p;
+					p.set_sample(sample_list[idx % sample_list.size()]);		
+					p.on();
+					100::ms => now;
+				}
+		 }
+
+	
 			fun int on() {
 				pad @ p;	
 				
@@ -257,15 +306,23 @@ class sample_down extends LAUNCHPAD_KEY {
 					sample_list.size() => idx;
 				else
 				  idx --;
+				<<<"INDEX : ", idx >>>;
 		
 				save.savei("pad_sample_index"+l.last_key, idx);
 				l.keys[l.last_key] $ pad @=> p;
 				p.set_sample(sample_list[idx % sample_list.size()]);		
 				p.on();
 
+				spork ~ hold() @=> hold_id;
+
 				return 2;
 			}
 		
+			fun int off() {
+					Machine.remove(hold_id.id());	
+				return 0;
+			}
+
 
 }
 /*
