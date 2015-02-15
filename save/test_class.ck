@@ -1,10 +1,13 @@
 SAVE s;
 s.init(me.path());
-//s.save("toto", 33);
-s.save("to", 35.1);
+s.savei("toto", 33);
+s.savef("to", 35.1);
 
-s.read("toto") => int i;
+s.readi("toto") => int i;
 
 <<<"result", i>>>;
-s.read_float("to")=> float v;
+s.readf("to")=> float v;
 <<<v>>>;
+
+s.saves("tata","lel dev rrfg /frefé");
+<<<s.reads("tata")>>>; 

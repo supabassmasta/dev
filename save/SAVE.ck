@@ -18,7 +18,7 @@ public class SAVE {
 //  get_file_name_wo_ext() => dir;
 //  <<<"file name:", dir>>>;
 
-  fun void save(string p, int i) {
+  fun void savei(string p, int i) {
     FileIO fout;
 
     // open for write
@@ -35,7 +35,7 @@ public class SAVE {
     }
   }
 
-  fun void save(string p, float i) {
+  fun void savef(string p, float i) {
     FileIO fout;
 
     // open for write
@@ -52,7 +52,24 @@ public class SAVE {
     }
   }
 
-  fun int read(string p){
+  fun void saves(string p, string i) {
+    FileIO fout;
+
+    // open for write
+    fout.open( dir + "/" + p, FileIO.WRITE );
+
+    // test
+    if( !fout.good() )
+    {
+      <<<"Can't open file to sav param, check ", dir, " directory exists">>>; 
+    }
+    else {
+      fout.write(i);
+      fout.close();
+    }
+  }
+
+  fun int readi(string p){
 
     FileIO fout;
 
@@ -72,7 +89,7 @@ public class SAVE {
 
   }
 
-  fun float read_float(string p){
+  fun float readf(string p){
 
     FileIO fout;
 
@@ -93,6 +110,27 @@ public class SAVE {
 
   }
 
+
+  fun string reads(string p){
+
+    FileIO fout;
+
+    // open for write
+    fout.open( dir + "/" + p, FileIO.READ );
+
+    // test
+    if( !fout.good() )
+    {
+      <<<"Parameter", p, "doesn't exists return 0">>>; 
+    }
+    else {
+      fout.readLine()=> string val;
+
+      fout.close();
+      return val;
+    }
+
+  }
 
 
 }

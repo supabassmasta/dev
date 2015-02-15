@@ -11,6 +11,7 @@ Machine.add( "../lpk25/lpk25.ck");
 Machine.add("../include/data_updater.ck");
 Machine.add( "../include/end.ck" );
 Machine.add( "../include/killer.ck" );
+Machine.add( "../save/SAVE.ck" );
 
 Machine.add( "../launcher/launcher_hold.ck" );
 
