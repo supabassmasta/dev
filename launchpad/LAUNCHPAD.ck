@@ -46,7 +46,7 @@ public class LAUNCHPAD {
 
 
     fun void start_midi_rcv() {
-
+				int color;
         while( true )
         {
             min => now;
@@ -55,19 +55,19 @@ public class LAUNCHPAD {
             {
                 <<< msg.data1, msg.data2, msg.data3 >>>;
 
-               /* 
+                
                 if (msg.data1 == 144)
 									if (msg.data3 == 0)
-                    keys[msg.data2].off();
+                     keys[msg.data2].off() => color; 
 								  else
-                    keys[msg.data2].on();
+                    keys[msg.data2].on() => color;
                 else
 									if (msg.data3 == 0)
-                    controls[msg.data2].off();
+                    controls[msg.data2].off() => color;
 								  else
-                    controls[msg.data2].on();
-                */
+                    controls[msg.data2].on() => color;
                 
+                set_color(msg.data1,msg.data2, color );
             }
         }
     }
@@ -81,11 +81,53 @@ public class LAUNCHPAD {
 			mout.send(msg);
 		}
 
+		fun void set_color(int channel, int note, int color ){
+			MidiMsg msg;
+
+			channel => msg.data1;
+		  note => msg.data2;
+			color => msg.data3;
+			mout.send(msg);
+		}
+
+		fun void red(int note){
+				set_color(144, note, 2);
+		}
+
+		fun void green(int note){
+				set_color(144, note, 32);
+		}
+
+		fun void amber(int note){
+				set_color(144, note, 34);
+		}
+
+		fun void clear(int note){
+				set_color(144, note, 0);
+		}
+
+		fun void redc(int note){
+				set_color(176, note, 2);
+		}
+
+		fun void greenc(int note){
+				set_color(176, note, 32);
+		}
+
+		fun void amberc(int note){
+				set_color(176, note, 34);
+		}
+
+		fun void clearc(int note){
+				set_color(176, note, 0);
+		}
+
+
+
+	  fun void start () {	
+	    spork ~ start_midi_rcv() ;
+    }
 
 		reset();
-
-    spork ~ start_midi_rcv() ;
-    
-
 
 }

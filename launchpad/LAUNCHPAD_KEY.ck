@@ -8,8 +8,14 @@ public class LAUNCHPAD_KEY {
 		fun void green() {}
 		fun void clear() {}
 
-		fun void on() {}
-		fun void off() {}
+		fun int on() {
+			
+			return 32; // green
+			}
+		fun int off() {
+			
+			return 0; //clear
+			}
 
 
 }
