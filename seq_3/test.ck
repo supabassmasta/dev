@@ -5,7 +5,6 @@ wav0.samples() => wav0.pos;
 
 class play_wav extends ACTION {
   fun int on_time() {
-    <<<"play">>>; 
     0 => wav0.pos;
 
 
