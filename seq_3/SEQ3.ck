@@ -8,15 +8,15 @@ public class SEQ3 {
 
   ELEMENT elements[0];
 
-  int sync_mode = 0;
-  fun void no_sync() {sync_mode = 0;}
-  fun void element_sync() {sync_mode = 1;}
-  fun void full_sync() {sync_mode = 2;}
+  0 => int sync_mode;
+  fun void no_sync()      {0=>sync_mode ;}
+  fun void element_sync() {1 => sync_mode ;}
+  fun void full_sync()    {2 => sync_mode ;}
 
 
   fun void set_all_next_time_invalid() {
    for (0 => int i; i < elements.size(); i++) {
-     elements[i].next_time_validity = 0;
+     0 => elements[i].next_time_validity;
    }
   }
 
@@ -24,13 +24,13 @@ public class SEQ3 {
     
     // compute duration and rel_time
     0::ms => duration;
-    for (0 => int i; i < elements.size      ; i++) {
+    for (0 => int i; i < elements.size()      ; i++) {
         duration => elements[i].rel_time;
         elements[i].duration +=> duration;
     }
 
     // compute rel_pos
-    for (0 => int i; i < elements.size      ; i++) {
+    for (0 => int i; i < elements.size()      ; i++) {
         elements[i].rel_time /  duration => elements[i].rel_pos;
     }
 
@@ -47,7 +47,7 @@ public class SEQ3 {
         }
         i => idx;
     }
-    else if (sync_mode == 1) {
+    else if (sync_mode == 2) {
         now - ((now - sync_offset)%duration) => ref_time;
         // wait next ref_time to start
         duration + ref_time => ref_time;
@@ -58,7 +58,7 @@ public class SEQ3 {
     while (!exit) {
         // PRE
            for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                elements[idx].actions.pre[i];
+                elements[idx].actions[i].pre();
            }
             
          // Manage next element time   
@@ -74,12 +74,12 @@ public class SEQ3 {
         // ON_TIME
 
                 for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                    elements[idx].actions.on_time[i];
+                    elements[idx].actions[i].on_time();
                 }
             }
         // POST
             for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                 elements[idx].actions.post[i];
+                 elements[idx].actions[i].post();
             }
 
             if (idx == 0) {

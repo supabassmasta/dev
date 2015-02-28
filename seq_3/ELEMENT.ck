@@ -1,11 +1,11 @@
 public class ELEMENT {
-  time duration; // duration of the event
-  int  duration_validity = 0;
+  dur duration; // duration of the event
+  0=>int  duration_validity;
 
   time next_time;
-  int  next_time_validity = 0;
+  0=>int  next_time_validity;
   float rel_pos; // relative position in the sequence
-  int rel_pos_validity = 0;
+  0=>int rel_pos_validity ;
   dur rel_time; // relative time form the begining
 
   ACTION actions[0];
