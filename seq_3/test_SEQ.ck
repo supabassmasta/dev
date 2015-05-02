@@ -10,8 +10,8 @@ SEQ s2;
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Tub_K.wav" => s2.wav["k"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Smk_Sn.wav" => s2.wav["s"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Bck_H.wav" => s2.wav["h"];
-4*300::ms => s2.max;
-"_*2hh:2_h" => s2.seq;
+8*300::ms => s2.max;
+"_h_<<<h_h_h" => s2.seq;
 s2.full_sync();
 
 
