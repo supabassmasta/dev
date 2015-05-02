@@ -76,6 +76,30 @@ public class SEQ {
                     <<<note_id, "Not registered">>>;
                 }
             }
+            else if (c == '_') {
+                if ( s.elements.size() == 0 ){
+                    // first event: Add one with no WAV
+                    set_dur(base_dur) => e.duration;
+                    // Add element to SEQ
+                    s.elements << e;
+                    // Create next element of SEQ
+                    new ELEMENT @=> e;
+                }
+                else {
+                    // increse duration of last element
+                    set_dur(base_dur) +=> s.elements[s.elements.size() - 1].duration;
+                }
+
+            }
+            else if (c == '~') {
+                // special pause : Add an empty element (permit to manage pre() better)
+                set_dur(base_dur) => e.duration;
+                // Add element to SEQ
+                s.elements << e;
+                // Create next element of SEQ
+                new ELEMENT @=> e;
+ 
+            }
 
 
 

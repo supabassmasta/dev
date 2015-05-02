@@ -15,6 +15,7 @@ public class WAV {
 
   fun void read(string in) {
     in => wav0.read;
+    wav0.samples() => wav0.pos;
   }
 
   wav0 => dac;
