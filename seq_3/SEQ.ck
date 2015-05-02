@@ -46,6 +46,8 @@ public class SEQ {
         ELEMENT @ e;
         WAV @ w0;
 
+        dur dur_temp;
+
         // reset remaining
         max_v => remaining;
 
@@ -53,7 +55,7 @@ public class SEQ {
         new ELEMENT @=> e;
 
 
-        while(i< in.length()) {
+        while(i< in.length() ) {
             in.charAt(i)=> c;
             //            		<<<"c", c>>>;	
             if (c == ' ' ){
@@ -68,12 +70,15 @@ public class SEQ {
                         wav[note_id] =>  wav_o[note_id].read;
                     }
 
-                    e.actions << wav_o[note_id].play $ ACTION ;
-                    set_dur(base_dur) => e.duration;
-                    // Add element to SEQ
-                    s.elements << e;
-                    // Create next element of SEQ
-                    new ELEMENT @=> e;
+                    set_dur(base_dur) => dur_temp;
+                    if (dur_temp != 0::ms) {
+                        dur_temp => e.duration;
+                        e.actions << wav_o[note_id].play $ ACTION ;
+                        // Add element to SEQ
+                        s.elements << e;
+                        // Create next element of SEQ
+                        new ELEMENT @=> e;
+                    }
 
                 }
                 else {
@@ -124,9 +129,23 @@ public class SEQ {
                     <<<note_id, "Not registered">>>;
                 }
              }
+			else if (in.charAt(i) == '*') {
+				i++;
+			    in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_dur / ( (c - '0') $ float) => base_dur;
+                }
+            }
+			else if (in.charAt(i) == ':') {
+				i++;
+			    in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_dur * ( (c - '0') $ float) => base_dur;
+                }
+            }
 
 
-            1 +=> i;
+             i++;
         }
         
         // Fill sequence regarding max if needed
