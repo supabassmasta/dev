@@ -9,8 +9,12 @@ public class SEQ {
 
     WAV wav_o[0]; // private
     SEQ3 s;
-    
-    
+    fun void no_sync()      {s.no_sync() ;}
+    fun void element_sync() {s.element_sync();}
+    fun void full_sync()    {s.full_sync();}
+
+
+
     fun void max(dur in){
         in => max_v => remaining;
     }
@@ -33,7 +37,7 @@ public class SEQ {
         }
     }
 
-    
+
 
     fun void seq(string in) {
         0=> int i;
@@ -51,7 +55,7 @@ public class SEQ {
 
         while(i< in.length()) {
             in.charAt(i)=> c;
-//            		<<<"c", c>>>;	
+            //            		<<<"c", c>>>;	
             if (c == ' ' ){
                 // do nothing
             }
@@ -63,7 +67,7 @@ public class SEQ {
                         new WAV @=> wav_o[note_id];
                         wav[note_id] =>  wav_o[note_id].read;
                     }
-                    
+
                     e.actions << wav_o[note_id].play $ ACTION ;
                     set_dur(base_dur) => e.duration;
                     // Add element to SEQ
@@ -98,13 +102,24 @@ public class SEQ {
                 s.elements << e;
                 // Create next element of SEQ
                 new ELEMENT @=> e;
- 
+
             }
 
 
 
             1 +=> i;
         }
+        
+        // Fill sequence regarding max if needed
+        if (max_v != 0::ms){
+            if (remaining > 0::ms) {
+                remaining => e.duration;
+                // Add element to SEQ
+                s.elements << e;
+            }
+        
+        }
+
     } 
 
     fun void go(){
