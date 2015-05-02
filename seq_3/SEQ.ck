@@ -104,7 +104,26 @@ public class SEQ {
                 new ELEMENT @=> e;
 
             }
+			else if (in.charAt(i) == '|') {
+                // Add note to current element
+				i++;
+				in.charAt(i)=> c;
+                note_id.setCharAt(0, c); 
+               
+                if ( wav[note_id] != NULL ){
+                    if (wav_o[note_id] == NULL) {
+                        // Create a new wav and initilize it
+                        new WAV @=> wav_o[note_id];
+                        wav[note_id] =>  wav_o[note_id].read;
+                    }
 
+                    s.elements[s.elements.size() - 1].actions << wav_o[note_id].play $ ACTION ;
+
+                }
+                else {
+                    <<<note_id, "Not registered">>>;
+                }
+             }
 
 
             1 +=> i;
