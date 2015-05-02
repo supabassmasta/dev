@@ -67,25 +67,25 @@ public class LAUNCHPAD {
 
             while( min.recv(msg) )
             {
-//                <<< msg.data1, msg.data2, msg.data3 >>>;
+                //                <<< msg.data1, msg.data2, msg.data3 >>>;
 
-                
+
                 if (msg.data1 == 144)
-									if (msg.data3 == 0)
-                     keys[msg.data2].off() => color; 
-								  else {
-                    keys[msg.data2].on() => color;
-										if (msg.data2 != 8 &&msg.data2 != 24 &&msg.data2 != 40 &&msg.data2 != 56 &&msg.data2 != 72 &&msg.data2 != 88 &&msg.data2 != 104 && msg.data2 != 120 ) 
-											msg.data2=> last_key;
-									}
+                    if (msg.data3 == 0)
+                        keys[msg.data2].off() => color; 
+                    else {
+                        keys[msg.data2].on() => color;
+                        if (msg.data2 != 8 &&msg.data2 != 24 &&msg.data2 != 40 &&msg.data2 != 56 &&msg.data2 != 72 &&msg.data2 != 88 &&msg.data2 != 104 && msg.data2 != 120 ) 
+                            msg.data2=> last_key;
+                    }
                 else
-									if (msg.data3 == 0)
-                    controls[msg.data2].off() => color;
-								  else {
-                    controls[msg.data2].on() => color;
-										msg.data2=> last_control;
-									}
-                
+                    if (msg.data3 == 0)
+                        controls[msg.data2].off() => color;
+                    else {
+                        controls[msg.data2].on() => color;
+                        msg.data2=> last_control;
+                    }
+
                 set_color(msg.data1,msg.data2, color );
             }
         }

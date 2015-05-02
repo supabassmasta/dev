@@ -22,6 +22,9 @@ Machine.add( "../scales/scales.ck");
 Machine.add( "../sampler/sampler.ck");
 Machine.add( "../EFFECTS/DUCK_MASTER.ck");
 
+Machine.add( "../seq_3/ACTION.ck");
+Machine.add( "../seq_3/ELEMENT.ck");
+
 me.yield();
 //Machine.add("../seq_2/top_seq.ck");
 Machine.add("../seq_2/seq.ck");
@@ -32,6 +35,8 @@ Machine.add("../seq_2/seq_script.ck");
 Machine.add("../break/break.ck");
 Machine.add("../lpd8/lpd8_master.ck");
 Machine.add("../EFFECTS/DUCK.ck");
+
+Machine.add( "../seq_3/SEQ3.ck");
 
 // SYNTA
 Machine.add("../SYNTA/GLIDE.ck");
