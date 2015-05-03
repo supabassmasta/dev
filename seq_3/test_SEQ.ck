@@ -2,7 +2,7 @@ SEQ s;
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav" => s.wav["s"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav" => s.wav["h"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav" =>s.wav["k"];
-"k_k|s_" => s.seq;
+"*2k$k:2_s|k _" => s.seq;
 s.full_sync();
 
 SEQ s2;    

@@ -53,6 +53,7 @@ public class SEQ {
         "0" => string note_id;
         ELEMENT @ e;
         WAV @ w0;
+        0 => int autonomous;
 
         dur dur_temp;
 
@@ -72,10 +73,20 @@ public class SEQ {
             else if ( ((c >= 'a') && (c <= 'z')) || ((c >= 'a') && (c <= 'z')) ) {
                 note_id.setCharAt(0, c); 
                 if ( wav[note_id] != NULL ){
-                    if (wav_o[note_id] == NULL) {
-                        // Create a new wav and initilize it
-                        new WAV @=> wav_o[note_id];
-                        wav[note_id] =>  wav_o[note_id].read;
+                    if (!autonomous) {
+                        // Normal case
+                        if (wav_o[note_id] == NULL) {
+                            // Create a new wav and initilize it
+                            new WAV @=> wav_o[note_id];
+                            wav[note_id] =>  wav_o[note_id].read;
+                        }
+                        wav_o[note_id] @=> w0;
+                    }
+                    else {
+                         // This note has a dedicated wav
+                         new WAV @=> w0;
+                         wav[note_id] => w0.read;
+                         0=> autonomous;
                     }
 
                     if (groove == 0::ms){
@@ -102,18 +113,18 @@ public class SEQ {
 
                         // set new GAIN if needed
                         if (gain_to_apply != -1) {
-                             e.actions << wav_o[note_id].set_gain(gain_to_apply) ;
+                             e.actions << w0.set_gain(gain_to_apply) ;
 //                             <<<" e.actions[e.actions.size() - 1]", e.actions[e.actions.size() - 1]>>>; 
                              -1. => gain_to_apply;
                         }
                         // set new PAN if needed
                         if (pan_to_apply != -2) {
-                             e.actions << wav_o[note_id].set_pan(pan_to_apply) ;
+                             e.actions << w0.set_pan(pan_to_apply) ;
                              -2. => pan_to_apply;
                         }
 
                         dur_temp => e.duration;
-                        e.actions << wav_o[note_id].play $ ACTION ;
+                        e.actions << w0.play $ ACTION ;
                         // Add element to SEQ
                         s.elements << e;
                         // Create next element of SEQ
@@ -151,29 +162,40 @@ public class SEQ {
             }
 			else if (in.charAt(i) == '|') {
                 // Add note to current element
-				i++;
-				in.charAt(i)=> c;
+                i++;
+                in.charAt(i)=> c;
                 note_id.setCharAt(0, c); 
-               
-                if ( wav[note_id] != NULL ){
-                    if (wav_o[note_id] == NULL) {
-                        // Create a new wav and initilize it
-                        new WAV @=> wav_o[note_id];
-                        wav[note_id] =>  wav_o[note_id].read;
-                    }
-                        // set new GAIN if needed
-                        if (gain_to_apply != -1) {
-                             s.elements[s.elements.size() - 1].actions << wav_o[note_id].set_gain(gain_to_apply) ;
-                             -1. => gain_to_apply;
-                        }
-                        // set new PAN if needed
-                        if (pan_to_apply != -2) {
-                             s.elements[s.elements.size() - 1].actions << wav_o[note_id].set_pan(pan_to_apply) ;
-                             -2. => pan_to_apply;
-                        }
 
-                    // Add NOTE to ACTIONS
-                    s.elements[s.elements.size() - 1].actions << wav_o[note_id].play $ ACTION ;
+                if ( wav[note_id] != NULL ){
+                    if (!autonomous) {
+                        // Normal case
+                        if (wav_o[note_id] == NULL) {
+                            // Create a new wav and initilize it
+                            new WAV @=> wav_o[note_id];
+                            wav[note_id] =>  wav_o[note_id].read;
+                        }
+                        wav_o[note_id] @=> w0;
+                    }
+                    else {
+                        // This note has a dedicated wav
+                        new WAV @=> w0;
+                        wav[note_id] => w0.read;
+                        0=> autonomous;
+                    }
+
+                // set new GAIN if needed
+                if (gain_to_apply != -1) {
+                    s.elements[s.elements.size() - 1].actions << w0.set_gain(gain_to_apply) ;
+                    -1. => gain_to_apply;
+                }
+                // set new PAN if needed
+                if (pan_to_apply != -2) {
+                    s.elements[s.elements.size() - 1].actions << w0.set_pan(pan_to_apply) ;
+                    -2. => pan_to_apply;
+                }
+
+                // Add NOTE to ACTIONS
+                s.elements[s.elements.size() - 1].actions << w0.play $ ACTION ;
 
                 }
                 else {
@@ -284,7 +306,11 @@ public class SEQ {
                     i--;
                 }
             }
-            
+    		else if (in.charAt(i) == '$') {
+                // Next note will be autonomous
+                1 => autonomous;
+            }
+	            
 
 
              i++;
