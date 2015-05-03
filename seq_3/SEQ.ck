@@ -3,6 +3,13 @@ public class SEQ {
     string wav[0];
     300::ms =>  dur base_dur;
     0.05 => float groove_ratio;
+    0.3 => float init_gain;
+    0.03 => float gain_step;
+    -1. => float gain_to_apply;
+
+    0. => float init_pan;
+    0.1 => float pan_step;
+    -2. => float pan_to_apply;
     
     // PRIVATE
     0::ms => dur max_v;//private
@@ -92,6 +99,19 @@ public class SEQ {
                         0::ms => groove;
                     }
                     if (dur_temp != 0::ms) {
+
+                        // set new GAIN if needed
+                        if (gain_to_apply != -1) {
+                             e.actions << wav_o[note_id].set_gain(gain_to_apply) ;
+//                             <<<" e.actions[e.actions.size() - 1]", e.actions[e.actions.size() - 1]>>>; 
+                             -1. => gain_to_apply;
+                        }
+                        // set new PAN if needed
+                        if (pan_to_apply != -2) {
+                             e.actions << wav_o[note_id].set_pan(pan_to_apply) ;
+                             -2. => pan_to_apply;
+                        }
+
                         dur_temp => e.duration;
                         e.actions << wav_o[note_id].play $ ACTION ;
                         // Add element to SEQ
@@ -141,7 +161,18 @@ public class SEQ {
                         new WAV @=> wav_o[note_id];
                         wav[note_id] =>  wav_o[note_id].read;
                     }
+                        // set new GAIN if needed
+                        if (gain_to_apply != -1) {
+                             s.elements[s.elements.size() - 1].actions << wav_o[note_id].set_gain(gain_to_apply) ;
+                             -1. => gain_to_apply;
+                        }
+                        // set new PAN if needed
+                        if (pan_to_apply != -2) {
+                             s.elements[s.elements.size() - 1].actions << wav_o[note_id].set_pan(pan_to_apply) ;
+                             -2. => pan_to_apply;
+                        }
 
+                    // Add NOTE to ACTIONS
                     s.elements[s.elements.size() - 1].actions << wav_o[note_id].play $ ACTION ;
 
                 }
@@ -185,6 +216,77 @@ public class SEQ {
                     i--;
                 }
             }
+ 			else if (in.charAt(i) == '+') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (gain_to_apply == -1.)
+                        init_gain + gain_step * (c -'0') $ float =>  gain_to_apply;
+                    else
+                        gain_step * (c -'0') $ float +=>  gain_to_apply;
+                }
+                else {
+                    if (gain_to_apply == -1.)
+                        init_gain + gain_step  =>  gain_to_apply;
+                    else
+                        gain_step  +=>  gain_to_apply;
+                    i--;
+                }
+            }
+  			else if (in.charAt(i) == '-') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (gain_to_apply == -1.)
+                        init_gain - gain_step * (c -'0') $ float =>  gain_to_apply;
+                    else
+                        gain_step * (c -'0') $ float -=>  gain_to_apply;
+                }
+                else {
+                    if (gain_to_apply == -1.)
+                        init_gain - gain_step  =>  gain_to_apply;
+                    else
+                        gain_step  -=>  gain_to_apply;
+                    i--;
+                }
+            }
+   			else if (in.charAt(i) == '(') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (pan_to_apply == -2.)
+                        init_pan - pan_step * (c -'0') $ float =>  pan_to_apply;
+                    else
+                        pan_step * (c -'0') $ float -=>  pan_to_apply;
+                }
+                else {
+                    if (pan_to_apply == -2.)
+                        init_pan - pan_step  =>  pan_to_apply;
+                    else
+                        pan_step  -=>  pan_to_apply;
+                    i--;
+                }
+            }
+    			else if (in.charAt(i) == ')') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (pan_to_apply == -2.)
+                        init_pan + pan_step * (c -'0') $ float =>  pan_to_apply;
+                    else
+                        pan_step * (c -'0') $ float +=>  pan_to_apply;
+                }
+                else {
+                    if (pan_to_apply == -2.)
+                        init_pan + pan_step  =>  pan_to_apply;
+                    else
+                        pan_step  +=>  pan_to_apply;
+                    i--;
+                }
+            }
+            
+
+
              i++;
         }
         
