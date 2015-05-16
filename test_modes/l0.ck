@@ -8,7 +8,7 @@ class synt0 extends SYNT{
 
 
 FREQ_STR f0; //8 => f0.max; 
-1=> f0.sync;
+2=> f0.sync;
 
 "DOR" => f0.scale;
 "*2 04050406" =>     f0.seq;     
@@ -34,7 +34,7 @@ inlet => detune[i] => s[i] => final;    1.5 => detune[i].gain;    .5 => s[i].gai
 
 FREQ_STR f1; //8 => f1.max;
 
-1=> f1.sync;
+2=> f1.sync;
 "*4 >c     __4_0_4_ __4_0_4_  " =>     f1.seq;     
 "*4 >c <5  __4_0_4_ __4_0_4_  " =>     f1.seq;     
 "*4 >c     __4_0_4_ __4_0_4_  " =>     f1.seq;     
@@ -46,8 +46,11 @@ SEQ s;
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav" => s.wav["s"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav" => s.wav["h"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav" =>s.wav["k"];
-"*2k$k:2_s|k _" => s.seq;
-s.full_sync();
+8 * data.tick => s.max;
+//"*2k$k:2_s|k _" => s.seq;
+"*2k$k:2_s|k _  k _ s|k  _" => s.seq;
+"*2k$k:2_s|k _ *2 _k  _*2 __<<<sk<3sk _<5s_*8:3sss" => s.seq;
+s.element_sync();
 
 s.go();
 

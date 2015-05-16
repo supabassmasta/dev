@@ -46,6 +46,11 @@ public class SEQ3 {
             i++;
         }
         i => idx;
+        if (idx >= elements.size()){
+            0=> idx;
+        }
+
+
     }
     else if (sync_mode == 2) {
         now - ((now - sync_offset)%duration) => ref_time;
@@ -64,6 +69,11 @@ public class SEQ3 {
            }
          // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
+                if (idx == 0 && ref_time < now) {
+                    // recompute ref_time
+                    ref_time + duration => ref_time;
+                }
+
                 ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
                 1 => elements[idx].next_time_validity;
            }
@@ -83,6 +93,10 @@ public class SEQ3 {
                        elements[idx].actions[i].post();
                    }
                }
+            }
+            else {
+                <<<"element ", idx, "skiped, time",  elements[idx].next_time, ">", now>>>; 
+                0 => elements[idx].next_time_validity;
             }
 
             if (idx == 0) {
