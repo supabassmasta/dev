@@ -18,7 +18,12 @@ s2.full_sync();
 s.go();
 s2.go();
 
+
+
+1 => int on;
 while(1) {
-     100::ms => now;
+     2400::ms => now;
+     !on => on;
+     on => s2.on;
      }
        

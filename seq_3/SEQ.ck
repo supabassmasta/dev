@@ -328,6 +328,9 @@ public class SEQ {
 
     } 
 
+  fun void on(int in) {
+    in => s.on;
+  }
     fun void go(){
         s.go();
     }

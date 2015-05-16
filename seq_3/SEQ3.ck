@@ -4,7 +4,7 @@ public class SEQ3 {
   dur duration;
   0 => int idx;
   0 => int exit;  
-
+  1 => int on_flag;
 
   ELEMENT elements[0];
 
@@ -57,29 +57,32 @@ public class SEQ3 {
     // LOOP
     while (!exit) {
         // PRE
-           for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                elements[idx].actions[i].pre();
+           if (on_flag) {
+               for (0 => int i; i < elements[idx].actions.size()      ; i++) {
+                   elements[idx].actions[i].pre();
+               }
            }
-            
          // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
                 ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
                 1 => elements[idx].next_time_validity;
            }
 
-           if( elements[idx].next_time > now) {
+           if(elements[idx].next_time > now) {
 
-             // wait next event
-             elements[idx].next_time => now;   
-        // ON_TIME
+               // wait next event
+               elements[idx].next_time => now;   
+               if (on_flag) {
+                   // ON_TIME
 
-                for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                    elements[idx].actions[i].on_time();
-                }
-            }
-        // POST
-            for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                 elements[idx].actions[i].post();
+                   for (0 => int i; i < elements[idx].actions.size()      ; i++) {
+                       elements[idx].actions[i].on_time();
+                   }
+                   // POST
+                   for (0 => int i; i < elements[idx].actions.size()      ; i++) {
+                       elements[idx].actions[i].post();
+                   }
+               }
             }
 
             if (idx == 0) {
@@ -104,5 +107,8 @@ public class SEQ3 {
     spork ~ _go();    
   }
 
+  fun void on(int in) {
+    in => on_flag;
+  }
 
 }
