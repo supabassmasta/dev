@@ -1,7 +1,7 @@
 public class SEQ {
     // PUBLIC 
     string wav[0];
-    300::ms =>  dur base_dur;
+    data.tick =>  dur base_dur;
     0.05 => float groove_ratio;
     0.3 => float init_gain;
     0.03 => float gain_step;
@@ -17,6 +17,7 @@ public class SEQ {
     0::ms => dur groove;
     WAV wav_o[0]; // private
     SEQ3 s;
+    data.wait_before_start => s.sync_offset;
     fun void no_sync()      {s.no_sync() ;}
     fun void element_sync() {s.element_sync();}
     fun void full_sync()    {s.full_sync();}

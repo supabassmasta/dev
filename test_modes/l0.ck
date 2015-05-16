@@ -42,6 +42,14 @@ FREQ_STR f1; //8 => f1.max;
 f1.reg(synt1 s1);
 //f1.post()  => dac;
 
+SEQ s;
+"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav" => s.wav["s"];
+"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav" => s.wav["h"];
+"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav" =>s.wav["k"];
+"*2k$k:2_s|k _" => s.seq;
+s.full_sync();
+
+s.go();
 
 
 while(1) {  100::ms => now; }

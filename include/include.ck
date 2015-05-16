@@ -37,6 +37,7 @@ Machine.add("../lpd8/lpd8_master.ck");
 Machine.add("../EFFECTS/DUCK.ck");
 
 Machine.add( "../seq_3/SEQ3.ck");
+Machine.add( "../seq_3/WAV.ck");
 
 // SYNTA
 Machine.add("../SYNTA/GLIDE.ck");
@@ -54,5 +55,6 @@ Machine.add("../SYNT/TB303C.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");
+Machine.add( "../seq_3/SEQ.ck");
 me.yield();
 
