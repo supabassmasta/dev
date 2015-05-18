@@ -227,6 +227,14 @@ public class SEQ {
                 s.elements[s.elements.size() - 1].actions << w0.play $ ACTION ;
 
                 }
+                ////////////////////
+                ///// ACTIONS //////
+                ////////////////////
+                else if ( action[note_id] != NULL ) {
+                
+                  // Add ACTION to ACTIONS
+                  s.elements[s.elements.size() - 1].actions << action[note_id] ;
+                }
                 else {
                     <<<note_id, "Not registered">>>;
                 }
