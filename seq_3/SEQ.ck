@@ -1,6 +1,7 @@
 public class SEQ {
     // PUBLIC 
     string wav[0];
+    ACTION @ action[0];
     data.tick =>  dur base_dur;
     0.05 => float groove_ratio;
     0.3 => float init_gain;
@@ -132,6 +133,33 @@ public class SEQ {
                         new ELEMENT @=> e;
                     }
 
+                }
+                ////////////////////
+                ///// ACTIONS //////
+                ////////////////////
+                else if ( action[note_id] != NULL ) {
+
+                    if (groove == 0::ms){
+                        set_dur(base_dur) => dur_temp;
+                    }
+                    else if( s.elements.size() == 0) {
+                        set_dur(base_dur) => dur_temp;
+                        <<<"Not supported:  groove on first note">>>; 
+                    }
+                    else {
+                        groove +=> s.elements[s.elements.size() - 1].duration;
+                        groove -=> remaining; // correct remaining
+                        set_dur(base_dur - groove) => dur_temp;
+                        0::ms => groove;
+                    }
+                    if (dur_temp != 0::ms) {
+                        dur_temp => e.duration;
+                        e.actions << action[note_id];
+                        // Add element to SEQ
+                        s.elements << e;
+                        // Create next element of SEQ
+                        new ELEMENT @=> e;
+                    }
                 }
                 else {
                     <<<note_id, "Not registered">>>;

@@ -43,16 +43,40 @@ f1.reg(synt1 s1);
 //f1.post()  => dac;
 
 SEQ s;
+
+class test extends ACTION {
+
+  SinOsc s => dac;
+  .0 => s.gain;
+  880 => s.freq;
+
+  fun void bleep() {
+    .1 => s.gain;
+    100::ms => now;
+    .0 => s.gain;
+  }
+  
+  fun int on_time() {
+    spork ~ bleep();
+    return 0;
+  }
+
+}
+
+test T;
+ T @=> s.action["t"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav" => s.wav["s"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav" => s.wav["h"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav" =>s.wav["k"];
 8 * data.tick => s.max;
 //"*2k$k:2_s|k _" => s.seq;
-"*2k$k:2_s|k _  k _ s|k  _" => s.seq;
-"*2k$k:2_s|k _ *2 _k  _*2 __<<<sk<3sk _<5s_*8:3sss" => s.seq;
+"*2k$k:2ts|k _  k t s|k  _" => s.seq;
+"*2k$k:2ts|k _ *2 tk  _*2 __<<<sk<3sk _<5s_*8:3sss" => s.seq;
 s.element_sync();
 
 s.go();
+
+
 
 
 while(1) {  100::ms => now; }
