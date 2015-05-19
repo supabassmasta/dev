@@ -12,6 +12,10 @@ public class SEQ {
     0.1 => float pan_step;
     -2. => float pan_to_apply;
     
+    1. => float init_rate;
+    0.1 => float rate_step;
+    -10. => float rate_to_apply;
+    
     // PRIVATE
     0::ms => dur max_v;//private
     0::ms => dur remaining;//private
@@ -124,6 +128,12 @@ public class SEQ {
                              e.actions << w0.set_pan(pan_to_apply) ;
                              -2. => pan_to_apply;
                         }
+                        // set new RATE if needed
+                        if (rate_to_apply != -10) {
+                             e.actions << w0.set_rate(rate_to_apply) ;
+                             -10. => rate_to_apply;
+                        }
+
 
                         dur_temp => e.duration;
                         e.actions << w0.play $ ACTION ;
@@ -343,6 +353,41 @@ public class SEQ {
                     i--;
                 }
             }
+    		else if (in.charAt(i) == '{') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (rate_to_apply == -10.)
+                        init_rate - rate_step * (c -'0') $ float =>  rate_to_apply;
+                    else
+                        rate_step * (c -'0') $ float -=>  rate_to_apply;
+                }
+                else {
+                    if (rate_to_apply == -10.)
+                        init_rate - rate_step  =>  rate_to_apply;
+                    else
+                        rate_step  -=>  rate_to_apply;
+                    i--;
+                }
+        }
+  			else if (in.charAt(i) == '}') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (rate_to_apply == -10.)
+                        init_rate + rate_step * (c -'0') $ float =>  rate_to_apply;
+                    else
+                        rate_step * (c -'0') $ float +=>  rate_to_apply;
+                }
+                else {
+                    if (rate_to_apply == -10.)
+                        init_rate + rate_step  =>  rate_to_apply;
+                    else
+                        rate_step  +=>  rate_to_apply;
+                    i--;
+                }
+            }
+        
     		else if (in.charAt(i) == '$') {
                 // Next note will be autonomous
                 1 => autonomous;

@@ -53,6 +53,24 @@ public class WAV {
         return act $ ACTION;
     }
 
+    // RATE
+    class rate_set extends ACTION {
+        SndBuf @ buf;
+        .3 => float r;
+        fun int on_time() {
+            r => buf.rate;
+//            <<<"RATE:", buf.rate()>>>;
+            return 0;
+        }
+    }
+    fun ACTION set_rate(float r) {
+        new rate_set @=> rate_set @ act;
+        r => act.r;
+        wav0 @=> act.buf;
+        return act $ ACTION;
+    }
+
+
 
 
 

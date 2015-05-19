@@ -68,9 +68,22 @@ test T;
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/Wsc_Snr2.wav" => s.wav["s"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/Str_H1.wav" => s.wav["h"];
 "../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/Wal_K.wav" =>s.wav["k"];
-8 * data.tick => s.max;
+// * data.tick => s.max;
 //"*2k$k:2_s|k _" => s.seq;
-"*2k|t$k|t:2ts|k _  k t s|k  _" => s.seq;
+//"*2k|t$k|t:2ts|k _  k t s|k  _" => s.seq;
+"*8}0s}1s}2s}3s}4s}5s}6s}7s" => s.seq;
+//"{s{{s{{{s{{{{s{{{{{s{{{{{{s{{{{{{{s{{{{{{{{s" => s.seq;
+//"*2k$k:2ts|k _ *2 tk  _*2 __<<<sk<3sk _<5s_*8:3sss" => s.seq;
+s.element_sync();
+
+s.go();
+
+
+
+
+while(1) {  100::ms => now; }
+//data.meas_size * data.tick => now; 
+"}s}s}s}s}s}s}s}s" => s.seq;
 //"*2k$k:2ts|k _ *2 tk  _*2 __<<<sk<3sk _<5s_*8:3sss" => s.seq;
 s.element_sync();
 
