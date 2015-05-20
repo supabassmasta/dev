@@ -16,6 +16,7 @@ public class SEQ {
     0.1 => float rate_step;
     -10. => float rate_to_apply;
     
+    1. => float proba_to_apply;
     // PRIVATE
     0::ms => dur max_v;//private
     0::ms => dur remaining;//private
@@ -133,10 +134,14 @@ public class SEQ {
                              e.actions << w0.set_rate(rate_to_apply) ;
                              -10. => rate_to_apply;
                         }
-
-
+                        if (proba_to_apply != 1.) {
+                          e.actions << w0.set_play_proba(proba_to_apply) ;
+                          1. => proba_to_apply;
+                        }
+                        else {
+                          e.actions << w0.play $ ACTION ;
+                        }  
                         dur_temp => e.duration;
-                        e.actions << w0.play $ ACTION ;
                         // Add element to SEQ
                         s.elements << e;
                         // Create next element of SEQ
@@ -206,36 +211,48 @@ public class SEQ {
                 note_id.setCharAt(0, c); 
 
                 if ( wav[note_id] != NULL ){
-                    if (!autonomous) {
-                        // Normal case
-                        if (wav_o[note_id] == NULL) {
-                            // Create a new wav and initilize it
-                            new WAV @=> wav_o[note_id];
-                            wav[note_id] =>  wav_o[note_id].read;
-                        }
-                        wav_o[note_id] @=> w0;
+                  if (!autonomous) {
+                    // Normal case
+                    if (wav_o[note_id] == NULL) {
+                      // Create a new wav and initilize it
+                      new WAV @=> wav_o[note_id];
+                      wav[note_id] =>  wav_o[note_id].read;
                     }
-                    else {
-                        // This note has a dedicated wav
-                        new WAV @=> w0;
-                        wav[note_id] => w0.read;
-                        0=> autonomous;
-                    }
+                    wav_o[note_id] @=> w0;
+                  }
+                  else {
+                    // This note has a dedicated wav
+                    new WAV @=> w0;
+                    wav[note_id] => w0.read;
+                    0=> autonomous;
+                  }
 
-                // set new GAIN if needed
-                if (gain_to_apply != -1) {
+                  // set new GAIN if needed
+                  if (gain_to_apply != -1) {
                     s.elements[s.elements.size() - 1].actions << w0.set_gain(gain_to_apply) ;
                     -1. => gain_to_apply;
-                }
-                // set new PAN if needed
-                if (pan_to_apply != -2) {
+                  }
+                  // set new PAN if needed
+                  if (pan_to_apply != -2) {
                     s.elements[s.elements.size() - 1].actions << w0.set_pan(pan_to_apply) ;
                     -2. => pan_to_apply;
-                }
+                  }
+                  // set new RATE if needed
+                  if (rate_to_apply != -10) {
+                    s.elements[s.elements.size() - 1].actions << w0.set_rate(rate_to_apply) ;
+                    -10. => rate_to_apply;
+                  }
 
-                // Add NOTE to ACTIONS
-                s.elements[s.elements.size() - 1].actions << w0.play $ ACTION ;
+                  // PROBA
+                  if (proba_to_apply != 1.) {
+                    s.elements[s.elements.size() - 1].actions << w0.set_play_proba(proba_to_apply) ;
+                    1. => proba_to_apply;
+                  }
+                  else {
 
+                    // Add NOTE to ACTIONS
+                    s.elements[s.elements.size() - 1].actions << w0.play $ ACTION ;
+                  }
                 }
                 ////////////////////
                 ///// ACTIONS //////
@@ -371,23 +388,32 @@ public class SEQ {
                 }
         }
   			else if (in.charAt(i) == '}') {
-			    i++;
-                in.charAt(i)=> c;
-                if ('0' <= c && c <= '9') {
-                    if (rate_to_apply == -10.)
-                        init_rate + rate_step * (c -'0') $ float =>  rate_to_apply;
-                    else
-                        rate_step * (c -'0') $ float +=>  rate_to_apply;
-                }
-                else {
-                    if (rate_to_apply == -10.)
-                        init_rate + rate_step  =>  rate_to_apply;
-                    else
-                        rate_step  +=>  rate_to_apply;
-                    i--;
-                }
+          i++;
+          in.charAt(i)=> c;
+          if ('0' <= c && c <= '9') {
+            if (rate_to_apply == -10.)
+              init_rate + rate_step * (c -'0') $ float =>  rate_to_apply;
+            else
+              rate_step * (c -'0') $ float +=>  rate_to_apply;
+          }
+          else {
+            if (rate_to_apply == -10.)
+              init_rate + rate_step  =>  rate_to_apply;
+            else
+              rate_step  +=>  rate_to_apply;
+            i--;
+          }
             }
-        
+  			else if (in.charAt(i) == '?') {
+          i++;
+          in.charAt(i)=> c;
+          if ('0' <= c && c <= '9') 
+            proba_to_apply * (c -'0') $ float / 10. =>  proba_to_apply;
+          else {
+            proba_to_apply * .5 =>  proba_to_apply;
+            i--;
+          }
+        }
     		else if (in.charAt(i) == '$') {
                 // Next note will be autonomous
                 1 => autonomous;

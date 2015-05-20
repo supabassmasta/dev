@@ -15,6 +15,27 @@ public class WAV {
     play_wav play;
     wav0 @=> play.buf;
 
+    // PLAY PROBA
+    class play_proba extends ACTION {
+      float proba;      
+      SndBuf @ buf;
+        fun int on_time() {
+          Math.random2f(0.,1.) => float res;
+//          <<<"proba", proba, res, res <= proba >>>;
+          if (res <= proba ) {
+            0 => buf.pos;
+          }
+          return 0;
+        }
+    }
+
+    fun ACTION set_play_proba(float p){
+      new play_proba @=> play_proba @ act;
+      p => act.proba;
+      wav0 @=> act.buf;
+      return act $ ACTION;
+    }
+
     // GAIN
     class gain_set extends ACTION {
         SndBuf @ buf;
