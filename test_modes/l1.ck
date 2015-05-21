@@ -1,11 +1,6 @@
-
-SET_WAV set;
-
 SEQ s;
 
-set.DUBSTEP(s);
-
-
+SET_WAV.DUBSTEP(s);
 
 "k_s*2_----}}}}}K " => s.seq;
 s.go();

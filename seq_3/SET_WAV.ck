@@ -1,6 +1,6 @@
 public class SET_WAV {
 
-  fun void DUBSTEP ( SEQ @ s) {
+   fun static void DUBSTEP ( SEQ @ s) {
     "../_SAMPLES/Dubstep_Drum_Kit/" => string dir;
 
     //dir + "" => s.wav[""];
