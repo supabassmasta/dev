@@ -77,7 +77,7 @@ public class SEQ {
             if (c == ' ' ){
                 // do nothing
             }
-            else if ( ((c >= 'a') && (c <= 'z')) || ((c >= 'a') && (c <= 'z')) ) {
+            else if ( ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) ) {
                 note_id.setCharAt(0, c); 
                 if ( wav[note_id] != NULL ){
                     if (!autonomous) {
