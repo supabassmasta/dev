@@ -60,7 +60,7 @@ public class WAV {
         Pan2 @ pan;
         .0 => float p;
         fun int on_time() {
-            <<<"PAN_SET", p>>>;
+//            <<<"PAN_SET", p>>>;
             p => pan.pan;
             return 0;
         }
