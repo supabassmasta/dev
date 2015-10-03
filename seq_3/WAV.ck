@@ -102,6 +102,20 @@ public class WAV {
         wav0.samples() => wav0.pos;
     }
 
+    // function to get audio out of object
+    fun UGen mono() {
+            wav0 =< pan_wav0;
+            return wav0;
+    }
+    fun UGen left() {
+            pan_wav0=< dac;
+            return pan_wav0.left;
+    }
+    fun UGen right() {
+            pan_wav0=< dac;
+            return pan_wav0.right;
+    }
+
     wav0 =>  pan_wav0 => dac;
     0. => pan_wav0.pan;
     0.3 => wav0.gain;

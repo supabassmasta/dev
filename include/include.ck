@@ -56,6 +56,7 @@ me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");
 Machine.add( "../seq_3/SEQ.ck");
+Machine.add( "../seq_3/FREQ.ck");
 me.yield();
 Machine.add( "../seq_3/SET_WAV.ck");
 me.yield();

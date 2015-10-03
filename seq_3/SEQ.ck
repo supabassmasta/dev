@@ -22,12 +22,13 @@ public class SEQ {
     0::ms => dur remaining;//private
     0::ms => dur groove;
     WAV wav_o[0]; // private
+    WAV wav_o_byindex[0]; // use to access all wavs
     SEQ3 s;
     data.wait_before_start => s.sync_offset;
     fun void no_sync()      {s.no_sync() ;}
     fun void element_sync() {s.element_sync();}
     fun void full_sync()    {s.full_sync();}
-
+    
 
 
     fun void max(dur in){
@@ -86,6 +87,8 @@ public class SEQ {
                             // Create a new wav and initilize it
                             new WAV @=> wav_o[note_id];
                             wav[note_id] =>  wav_o[note_id].read;
+                            // store another reference to object in indexed array
+                            wav_o_byindex << wav_o[note_id];
                         }
                         wav_o[note_id] @=> w0;
                     }
@@ -94,7 +97,9 @@ public class SEQ {
                          new WAV @=> w0;
                          wav[note_id] => w0.read;
                          0=> autonomous;
-                    }
+                            // store reference to object in indexed array
+                            wav_o_byindex << w0;
+                     }
 
                     if (groove == 0::ms){
                         set_dur(base_dur) => dur_temp;
@@ -441,5 +446,34 @@ public class SEQ {
   }
     fun void go(){
         s.go();
+    }
+
+    // function to get audio out of object
+    // only one of this to use at a time
+    Gain mono_out => blackhole;
+    fun UGen mono() {
+        for (0 => int i; i < wav_o_byindex.size() ; i++) {
+        <<<"Unchuck wav ", i>>>; 
+            wav_o_byindex[i].mono() => mono_out;
+        }
+
+        return mono_out;
+    }
+
+    Gain left_out;
+    fun UGen left() {
+        for (0 => int i; i < wav_o_byindex.size() ; i++) {
+            wav_o_byindex[i].left() => left_out;
+        }
+
+        return left_out;
+    }
+    Gain right_out;
+    fun UGen right() {
+        for (0 => int i; i < wav_o_byindex.size() ; i++) {
+            wav_o_byindex[i].right() => right_out;
+        }
+
+        return right_out;
     }
 }
