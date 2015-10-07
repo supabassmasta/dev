@@ -163,6 +163,66 @@ public class TONE {
       return act;
     }
 
+  fun int is_note(int c) {
+		 if (((c >= '0') && (c <= '9')) || 
+			   ((c >= 'a') && (c <= 'z')) ||
+				 ((c >= 'A') && (c <= 'Z')))
+				return 1;
+		else
+				return 0;
+
+  }
+
+  fun int convert_note(int c) {
+		 if ((c >= '0') && (c <= '9')) 
+			 return  c - '0';
+		else if	 ((c >= 'a') && (c <= 'z')) 
+			 return  c - 'a' + 10;
+		else if	((c >= 'A') && (c <= 'Z'))
+				 return -1 - (c - 'A');
+		else
+				return 1;
+
+  }
+
+  fun float conv_to_freq (int rel_note, float sc[], int ref_note) {
+        int j, k;
+        float distance_i;
+        float result_i;
+
+        if (sc.size() != 0) {
+          if (rel_note == 0)
+          {
+            0 => distance_i;
+          }
+          else if (rel_note > 0)
+          {
+            0 => distance_i;
+            for (0 => j; j<rel_note; j++)
+            {
+              sc[ j % sc.size()] +=> distance_i;
+            }
+          }
+          else /* rel_note < 0 */
+          {
+            0 => distance_i;
+            for (0 => j; j< -rel_note; j++)
+            {
+              sc.size() - 1 - (j % sc.size()) => k;
+              sc[ k ] -=> distance_i;
+            }
+          }
+
+          /* Convert Note */
+          ref_note + distance_i => result_i;
+        }
+        else {
+          ref_note + rel_note => result_i;
+        }
+
+        return Std.mtof(result_i);  
+  }
+
 
     // seq
     fun void seq(string in) {
@@ -185,18 +245,12 @@ public class TONE {
             if (c == ' ' ){
                 // do nothing
             }
-            else if ( ((c >= 'a') && (c <= 'z')) || ((c >= 'A') && (c <= 'Z')) || ((c >= '0') && (c <= '9'))  ) {
-
+            else if ( is_note(c)  ) {
+                
+                convert_note(c) => int rel_note;
             
                 // SET NOTE
-                if (scale.size() == 0) {
-                   e.actions << set_freq_synt(env[0], 440); 
-
-                }
-                else {
-
-
-                }
+                e.actions << set_freq_synt(env[0], conv_to_freq(rel_note, scale, data.ref_note)); 
 
                 e.actions << set_on_adsr(adsr[0]); // TODO: manage other synt adsr
             
@@ -260,11 +314,12 @@ public class TONE {
     }
 
 }
-
+/*
 // TEST
 TONE t;
 t.reg(HORROR h);
-t.seq("0__0_0");
+t.scale << 2<< 1<<2<<2<<1<<2<<2;
+t.seq("4__a_f");
 t.go();
 
 //t.mono() => NRev r => dac;
@@ -278,3 +333,5 @@ t.go();
 while(1) {
 	     100::ms => now;
 }
+
+*/
