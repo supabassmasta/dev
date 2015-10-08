@@ -202,12 +202,14 @@ public class SEQ {
             }
             else if (c == '~') {
                 // special pause : Add an empty element (permit to manage pre() better)
-                set_dur(base_dur) => e.duration;
-                // Add element to SEQ
-                s.elements << e;
-                // Create next element of SEQ
-                new ELEMENT @=> e;
-
+                set_dur(base_dur) => dur_temp;
+								if (dur_temp != 0::ms) {
+									dur_temp => e.duration;
+									// Add element to SEQ
+									s.elements << e;
+									// Create next element of SEQ
+									new ELEMENT @=> e;
+								}
             }
 			else if (in.charAt(i) == '|') {
                 // Add note to current element

@@ -288,18 +288,21 @@ public class TONE {
             }
             else if (c == '_') {
 
-                set_dur(base_dur) => e.duration;
-                
-                // KeyOff all adsr
-                for (0 => int i; i < adsr.size() ; i++) {
-                  e.actions << set_off_adsr(adsr[i]);                
-                }
+                set_dur(base_dur) => dur_temp;
+								
+								if (dur_temp != 0::ms) {
+									dur_temp => e.duration;
 
-                // Add element to SEQ
-                s.elements << e;
-                // Create next element of SEQ
-                new ELEMENT @=> e;
+									// KeyOff all adsr
+									for (0 => int i; i < adsr.size() ; i++) {
+										e.actions << set_off_adsr(adsr[i]);                
+									}
 
+									// Add element to SEQ
+									s.elements << e;
+									// Create next element of SEQ
+									new ELEMENT @=> e;
+								}
             }
  
 
@@ -319,7 +322,8 @@ public class TONE {
 TONE t;
 t.reg(HORROR h);
 t.scale << 2<< 1<<2<<2<<1<<2<<2;
-t.seq("4__a_f");
+data.tick * 4 => t.max;
+t.seq("4ae7____");
 t.go();
 
 //t.mono() => NRev r => dac;
