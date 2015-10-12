@@ -3,6 +3,7 @@ public class TONE {
 		SYNT synt[0];
     Envelope env[0];
     ADSR adsr[0];
+    int on[0];
 
     float scale[0];
 
@@ -82,6 +83,8 @@ public class TONE {
 
 				one => e => in => a => out;
         in => raw_out;
+
+        on << 0;
 		}
 
     // function to get audio out of object
@@ -115,7 +118,7 @@ public class TONE {
         return mono_out;
     }
 
-    // ACTIONS
+    /////////// ACTIONS ////////////////
 
     class freq_synt extends ACTION {
         Envelope @ e;
@@ -162,6 +165,8 @@ public class TONE {
 
       return act;
     }
+
+  //////// NOTE MANAGEMENT ///////////////
 
   fun int is_note(int c) {
 		 if (((c >= '0') && (c <= '9')) || 
@@ -223,8 +228,38 @@ public class TONE {
         return Std.mtof(result_i);  
   }
 
+/////////////// INDEX ///////////////
+  class index {
+    // interal
+    0=> int state;
+    0=> int value_i;
 
-    // seq
+    // public
+    fun void up(){
+      2 => state;
+      value_i + 1 => value_i;
+    }
+
+    fun int value () {
+      state - 1 => state;
+      if (state <=0) {
+        0=> value_i;
+        0=> state;
+      }
+
+      return value_i;
+    }
+
+
+    fun void reset (){
+      0=> state;
+      0=> value_i;
+    }
+  }
+
+
+
+    ///////// seq ///////////////
     fun void seq(string in) {
         0=> int i;
         int c;
@@ -232,6 +267,7 @@ public class TONE {
         ELEMENT @ e;
 
         dur dur_temp;
+        index idx;
 
         // reset remaining
         max_v => remaining;
@@ -246,14 +282,22 @@ public class TONE {
                 // do nothing
             }
             else if ( is_note(c)  ) {
-                
+                // Get index
+                idx.value() => int id;
+                if (id >= synt.size()){
+                  <<<"Not enough synt registered, default synt 0 used">>>;
+                  0 => id;
+                }
+
                 convert_note(c) => int rel_note;
             
                 // SET NOTE
-                e.actions << set_freq_synt(env[0], conv_to_freq(rel_note, scale, data.ref_note)); 
+                e.actions << set_freq_synt(env[id], conv_to_freq(rel_note, scale, data.ref_note)); 
 
-                e.actions << set_on_adsr(adsr[0]); // TODO: manage other synt adsr
-            
+                e.actions << set_on_adsr(adsr[id]); 
+                // Store that synt is on
+                1 => on[id];
+
                     if (groove == 0::ms){
                         set_dur(base_dur) => dur_temp;
                     }
@@ -287,24 +331,31 @@ public class TONE {
             
             }
             else if (c == '_') {
-
+           
                 set_dur(base_dur) => dur_temp;
 								
 								if (dur_temp != 0::ms) {
 									dur_temp => e.duration;
 
 									// KeyOff all adsr
-									for (0 => int i; i < adsr.size() ; i++) {
-										e.actions << set_off_adsr(adsr[i]);                
+									for (0 => int j; j < adsr.size() ; j++) {
+										e.actions << set_off_adsr(adsr[j]);                
 									}
 
+                  // Restart on first synt for next action
+                  idx.reset();
 									// Add element to SEQ
 									s.elements << e;
 									// Create next element of SEQ
 									new ELEMENT @=> e;
 								}
             }
- 
+            else if (c == '|') {
+              // Next instruction is for synt+1
+              idx.up();
+            
+            }
+
 
 
 
@@ -317,13 +368,13 @@ public class TONE {
     }
 
 }
-/*
+///*
 // TEST
 TONE t;
 t.reg(HORROR h);
 t.scale << 2<< 1<<2<<2<<1<<2<<2;
 data.tick * 4 => t.max;
-t.seq("4ae7____");
+t.seq("4aeA|7");
 t.go();
 
 //t.mono() => NRev r => dac;
@@ -338,4 +389,4 @@ while(1) {
 	     100::ms => now;
 }
 
-*/
+//*/
