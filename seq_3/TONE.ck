@@ -273,7 +273,6 @@ public class TONE {
         max_v => remaining;
 
         // Create next element of SEQ
-        new ELEMENT @=> e;
 
         while(i< in.length() ) {
             in.charAt(i)=> c;
@@ -284,10 +283,25 @@ public class TONE {
             else if ( is_note(c)  ) {
                 // Get index
                 idx.value() => int id;
+								<<<"index:", id, "note", c>>>; 
                 if (id >= synt.size()){
                   <<<"Not enough synt registered, default synt 0 used">>>;
                   0 => id;
                 }
+								// BRAND NEW event
+								if (id == 0) {
+									new ELEMENT @=> e;
+									// Search synt that are not on anymore
+									for (0 => int i; i < on.size()      ; i++) {
+										if (on[i] !=0) {
+											on[i] - 1 => on[i];
+											if (on[i] <= 0 ){
+												0 => on[i];
+												s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i]);
+											}
+										}
+									}
+								}
 
                 convert_note(c) => int rel_note;
             
@@ -296,8 +310,11 @@ public class TONE {
 
                 e.actions << set_on_adsr(adsr[id]); 
                 // Store that synt is on
-                1 => on[id];
+                2 => on[id];
 
+							 
+
+								if ( id == 0 ) {
                     if (groove == 0::ms){
                         set_dur(base_dur) => dur_temp;
                     }
@@ -318,16 +335,13 @@ public class TONE {
                         // reset it
                         0::ms => groove;
                     }
-                    if (dur_temp != 0::ms) {
+                    if (dur_temp != 0::ms ) {
 
-                        dur_temp => e.duration;
-                        // Add element to SEQ
-                        s.elements << e;
-                        // Create next element of SEQ
-                        new ELEMENT @=> e;
-
+											dur_temp => e.duration;
+											// Add element to SEQ
+											s.elements << e;
                     }
-
+								}
             
             }
             else if (c == '_') {
@@ -335,19 +349,19 @@ public class TONE {
                 set_dur(base_dur) => dur_temp;
 								
 								if (dur_temp != 0::ms) {
+									new ELEMENT @=> e;
 									dur_temp => e.duration;
 
 									// KeyOff all adsr
 									for (0 => int j; j < adsr.size() ; j++) {
 										e.actions << set_off_adsr(adsr[j]);                
+										0 => on[i];
 									}
 
                   // Restart on first synt for next action
                   idx.reset();
 									// Add element to SEQ
 									s.elements << e;
-									// Create next element of SEQ
-									new ELEMENT @=> e;
 								}
             }
             else if (c == '|') {
@@ -372,9 +386,10 @@ public class TONE {
 // TEST
 TONE t;
 t.reg(HORROR h);
+t.reg(HORROR h2);
 t.scale << 2<< 1<<2<<2<<1<<2<<2;
-data.tick * 4 => t.max;
-t.seq("4aeA|7");
+//data.tick * 4 => t.max;
+t.seq("4|7_");
 t.go();
 
 //t.mono() => NRev r => dac;
