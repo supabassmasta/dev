@@ -399,8 +399,8 @@ t.reg(synt0 s2);
 t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
-t.seq("__0|3|7_");
-<<<"before go">>>;   
+t.seq("0a");
+<<<"before go", t.s.duration, data.tick, t.s.elements[0].duration>>>;   
 t.go();
 
 //t.mono() => NRev r => dac;

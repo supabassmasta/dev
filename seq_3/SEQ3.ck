@@ -58,6 +58,8 @@ public class SEQ3 {
         duration + ref_time => ref_time;
     }
      
+//    <<<"SEQ3 dur: ",duration," ref_time:",ref_time>>>;
+     
 
     // LOOP
     while (!exit) {
@@ -69,9 +71,10 @@ public class SEQ3 {
            }
          // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
-                if (idx == 0 && ref_time < now) {
+                if (idx == 0 && ref_time <= now) {
                     // recompute ref_time
                     ref_time + duration => ref_time;
+//                  <<<"New ref_time ", ref_time>>>;
                 }
 
                 ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
@@ -99,7 +102,7 @@ public class SEQ3 {
                 0 => elements[idx].next_time_validity;
             }
 
-            if (idx == 0) {
+            if (idx == 0 && elements[0].next_time_validity) {
                elements[idx].next_time => ref_time;   
             }
             
