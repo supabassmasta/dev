@@ -302,7 +302,6 @@ public class TONE {
 										}
 									}
 								}
-
                 convert_note(c) => int rel_note;
             
                 // SET NOTE
@@ -340,6 +339,7 @@ public class TONE {
 											dur_temp => e.duration;
 											// Add element to SEQ
 											s.elements << e;
+
                     }
 								}
             
@@ -355,7 +355,7 @@ public class TONE {
 									// KeyOff all adsr
 									for (0 => int j; j < adsr.size() ; j++) {
 										e.actions << set_off_adsr(adsr[j]);                
-										0 => on[i];
+										0 => on[j];
 									}
 
                   // Restart on first synt for next action
@@ -384,12 +384,23 @@ public class TONE {
 }
 ///*
 // TEST
+
+class synt0 extends SYNT{
+
+    inlet => SinOsc s =>  outlet;   
+        .5 => s.gain;
+
+            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
+} 
+
 TONE t;
-t.reg(HORROR h);
-t.reg(HORROR h2);
-t.scale << 2<< 1<<2<<2<<1<<2<<2;
+t.reg(synt0 s1);
+t.reg(synt0 s2);
+t.reg(synt0 s3);
+//t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
-t.seq("4|7_");
+t.seq("__0|3|7_");
+<<<"before go">>>;   
 t.go();
 
 //t.mono() => NRev r => dac;
