@@ -79,7 +79,7 @@ public class TONE {
         new ADSR @=> a;
         adsr << a;
         a.set(3::ms, 0::ms, 1., 3::ms);
-        .2 => a.gain;
+        init_gain => a.gain;
 
 				one => e => in => a => out;
         in => raw_out;
@@ -162,6 +162,23 @@ public class TONE {
     fun ACTION set_on_adsr (ADSR @ a) {
       new on_adsr @=> on_adsr @ act;
       a @=> act.a;
+
+      return act;
+    }
+    
+    class gain_adsr extends ACTION {
+      ADSR @ a;
+      float g;
+
+        fun int on_time() {
+          g => a.gain;
+        }
+    }
+
+    fun ACTION set_gain_adsr (ADSR @ a, float g) {
+      new gain_adsr @=> gain_adsr @ act;
+      a @=> act.a;
+      g => act.g;
 
       return act;
     }
@@ -302,6 +319,16 @@ public class TONE {
 										}
 									}
 								}
+
+                ///// PARAMS //////////////////
+                        // set new GAIN if needed
+                        if (gain_to_apply != -1) {
+                             e.actions << set_gain_adsr (adsr[id], gain_to_apply);
+                             -1. => gain_to_apply;
+                        }
+
+
+                /////////// NOTE ////////////
                 convert_note(c) => int rel_note;
             
                 // SET NOTE
@@ -369,7 +396,41 @@ public class TONE {
               idx.up();
             
             }
-
+ 			else if (in.charAt(i) == '+') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (gain_to_apply == -1.)
+                        init_gain + gain_step * (c -'0') $ float =>  gain_to_apply;
+                    else
+                        gain_step * (c -'0') $ float +=>  gain_to_apply;
+                }
+                else {
+                    if (gain_to_apply == -1.)
+                        init_gain + gain_step  =>  gain_to_apply;
+                    else
+                        gain_step  +=>  gain_to_apply;
+                    i--;
+                }
+            }
+  			else if (in.charAt(i) == '-') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (gain_to_apply == -1.)
+                        init_gain - gain_step * (c -'0') $ float =>  gain_to_apply;
+                    else
+                        gain_step * (c -'0') $ float -=>  gain_to_apply;
+                }
+                else {
+                    if (gain_to_apply == -1.)
+                        init_gain - gain_step  =>  gain_to_apply;
+                    else
+                        gain_step  -=>  gain_to_apply;
+                    i--;
+                }
+            }
+ 
 
 
 
@@ -399,8 +460,7 @@ t.reg(synt0 s2);
 t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
-t.seq("0a");
-<<<"before go", t.s.duration, data.tick, t.s.elements[0].duration>>>;   
+t.seq("0|+0a0|-6a");
 t.go();
 
 //t.mono() => NRev r => dac;
