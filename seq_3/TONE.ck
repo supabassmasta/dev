@@ -339,7 +339,6 @@ public class TONE {
                 2 => on[id];
 
 
-                <<<"N", groove,s.elements.size(), id >>>; 
 
                 if ( id == 0 ) {
                     if (groove == 0::ms){
@@ -374,7 +373,27 @@ public class TONE {
             }
             else if (c == '_') {
 
-                set_dur(base_dur) => dur_temp;
+                if (groove == 0::ms){
+                    set_dur(base_dur) => dur_temp;
+                }
+                else if( s.elements.size() == 0) {
+                    set_dur(base_dur) => dur_temp;
+                    <<<"Not supported:  groove on first note">>>; 
+                }
+                else {
+                    //                        <<<"groove:", groove/1::ms>>>; 
+                    // add groove to last event
+                    //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
+                    groove +=> s.elements[s.elements.size() - 1].duration;
+                    groove -=> remaining; // correct remaining
+                    //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
+                    // substract it to next one
+                    set_dur(base_dur - groove) => dur_temp;
+                    //                        <<<"dur_temp:", dur_temp/1::ms>>>;
+                    // reset it
+                    0::ms => groove;
+                }
+
 
                 if (dur_temp != 0::ms) {
                     new ELEMENT @=> e;
@@ -446,7 +465,6 @@ public class TONE {
                 }
             }
             else if (in.charAt(i) == '<') {
-                <<<"GROOVE">>>; 
                 i++;
                 in.charAt(i)=> c;
                 if ('0' <= c && c <= '9') {
@@ -456,7 +474,6 @@ public class TONE {
                     base_dur * groove_ratio   -=> groove;
                     i--;
                 }
-                <<<"G", groove,s.elements.size() >>>; 
             }
             else if (in.charAt(i) == '>') {
                 i++;
@@ -499,7 +516,7 @@ t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
 //t.seq("0|+0a0|-6a");
-t.seq("*2  0_0_<25_5_");
+t.seq("*2  0_0_<95<9_5_");
 t.go();
 
 //t.mono() => NRev r => dac;
