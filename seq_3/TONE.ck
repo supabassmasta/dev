@@ -16,6 +16,7 @@ public class TONE {
     Gain raw_out;
     .2 => raw_out.gain;
 
+    data.ref_note => int base_note;
     data.tick =>  dur base_dur;
     0.05 => float groove_ratio;
     0.3 => float init_gain;
@@ -183,6 +184,21 @@ public class TONE {
         return act;
     }
 
+    class pan_action extends ACTION {
+        Pan2 @ p;
+        float v;
+        fun int on_time() {
+            v => p.pan;
+        }
+    }
+
+    fun ACTION set_pan(Pan2 @ p, float v) {
+        new pan_action @=> pan_action @ act;
+        p @=> act.p;
+        v => act.v;
+
+        return act;
+    }
     //////// NOTE MANAGEMENT ///////////////
 
     fun int is_note(int c) {
@@ -326,13 +342,17 @@ public class TONE {
                     e.actions << set_gain_adsr (adsr[id], gain_to_apply);
                     -1. => gain_to_apply;
                 }
-
+                  if (pan_to_apply != -2) {
+                     e.actions << set_pan(pan, pan_to_apply);
+                    -2. => pan_to_apply;
+                  }
+ 
 
                 /////////// NOTE ////////////
                 convert_note(c) => int rel_note;
 
                 // SET NOTE
-                e.actions << set_freq_synt(env[id], conv_to_freq(rel_note, scale, data.ref_note)); 
+                e.actions << set_freq_synt(env[id], conv_to_freq(rel_note, scale, base_note )); 
 
                 e.actions << set_on_adsr(adsr[id]); 
                 // Store that synt is on
@@ -486,8 +506,62 @@ public class TONE {
                     i--;
                 }
             }
-
-
+   			else if (in.charAt(i) == '(') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (pan_to_apply == -2.)
+                        init_pan - pan_step * (c -'0') $ float =>  pan_to_apply;
+                    else
+                        pan_step * (c -'0') $ float -=>  pan_to_apply;
+                }
+                else {
+                    if (pan_to_apply == -2.)
+                        init_pan - pan_step  =>  pan_to_apply;
+                    else
+                        pan_step  -=>  pan_to_apply;
+                    i--;
+                }
+            }
+    			else if (in.charAt(i) == ')') {
+			    i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    if (pan_to_apply == -2.)
+                        init_pan + pan_step * (c -'0') $ float =>  pan_to_apply;
+                    else
+                        pan_step * (c -'0') $ float +=>  pan_to_apply;
+                }
+                else {
+                    if (pan_to_apply == -2.)
+                        init_pan + pan_step  =>  pan_to_apply;
+                    else
+                        pan_step  +=>  pan_to_apply;
+                    i--;
+                }
+            }
+    		else if (in.charAt(i) == '{') {
+				i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_note - (c -'0') => base_note;
+                }
+                else {
+                    base_note - 1 => base_note;
+                    i--;
+                }
+            }
+    		else if (in.charAt(i) == '}') {
+				i++;
+                in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_note + (c -'0') => base_note;
+                }
+                else {
+                    base_note + 1 => base_note;
+                    i--;
+                }
+            }
 
             i++;
         }
@@ -516,7 +590,8 @@ t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
 //t.seq("0|+0a0|-6a");
-t.seq("*2  0_0_<95<9_5_");
+t.seq("*8 {9{{{ (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+//t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 t.go();
 
 //t.mono() => NRev r => dac;
