@@ -396,6 +396,20 @@ public class TONE {
               idx.up();
             
             }
+			else if (in.charAt(i) == '*') {
+				i++;
+			    in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_dur / ( (c - '0') $ float) => base_dur;
+                }
+            }
+			else if (in.charAt(i) == ':') {
+				i++;
+			    in.charAt(i)=> c;
+                if ('0' <= c && c <= '9') {
+                    base_dur * ( (c - '0') $ float) => base_dur;
+                }
+            }
  			else if (in.charAt(i) == '+') {
 			    i++;
                 in.charAt(i)=> c;
@@ -460,7 +474,8 @@ t.reg(synt0 s2);
 t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
-t.seq("0|+0a0|-6a");
+//t.seq("0|+0a0|-6a");
+t.seq("0_0_*20_0_:20*401234564");
 t.go();
 
 //t.mono() => NRev r => dac;
