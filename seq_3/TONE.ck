@@ -546,6 +546,9 @@ public class TONE {
                 if ('0' <= c && c <= '9') {
                     base_note - (c -'0') => base_note;
                 }
+                else if	 ((c >= 'a') && (c <= 'z')) {
+                    base_note - (c -'a') - 10 => base_note;
+                }
                 else {
                     base_note - 1 => base_note;
                     i--;
@@ -556,6 +559,9 @@ public class TONE {
                 in.charAt(i)=> c;
                 if ('0' <= c && c <= '9') {
                     base_note + (c -'0') => base_note;
+                }
+                else if	 ((c >= 'a') && (c <= 'z')) {
+                    base_note + (c -'a') + 10 => base_note;
                 }
                 else {
                     base_note + 1 => base_note;
@@ -590,7 +596,9 @@ t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
 //t.seq("0|+0a0|-6a");
-t.seq("*8 {9{{{ (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+t.seq("*8 {c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 t.go();
 
