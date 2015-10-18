@@ -4,6 +4,7 @@ public class TONE {
     Envelope env[0];
     ADSR adsr[0];
     int on[0];
+    float freq[0];
 
     float scale[0];
 
@@ -86,6 +87,7 @@ public class TONE {
         in => raw_out;
 
         on << 0;
+        freq << 0;
     }
 
     // function to get audio out of object
@@ -199,6 +201,52 @@ public class TONE {
 
         return act;
     }
+
+    class synt_on extends ACTION {
+        SYNT @ s;
+        fun int on_time() {
+            s.on();
+        }
+    }
+
+    fun ACTION set_synt_on( SYNT @ s ) {
+        new synt_on @=> synt_on @ act;
+        s @=> act.s;
+
+        return act;
+    }
+
+    class synt_off extends ACTION {
+        SYNT @ s;
+        fun int on_time() {
+            s.off();
+//            <<<"synt_off">>>; 
+        }
+    }
+
+    fun ACTION set_synt_off( SYNT @ s ) {
+        new synt_off @=> synt_off @ act;
+        s @=> act.s;
+
+        return act;
+    }
+
+    class synt_new_note extends ACTION {
+        SYNT @ s;
+        int index;
+        fun int on_time() {
+            s.new_note(index);
+        }
+    }
+
+    fun ACTION set_synt_new_note( SYNT @ s, int index ) {
+        new synt_new_note @=> synt_new_note @ act;
+        s @=> act.s;
+        index => act.index;
+
+        return act;
+    }
+
     //////// NOTE MANAGEMENT ///////////////
 
     fun int is_note(int c) {
@@ -302,6 +350,9 @@ public class TONE {
         dur dur_temp;
         index idx;
 
+        float temp_freq;
+        0 => int force_new_note;
+
         // reset remaining
         max_v => remaining;
 
@@ -331,6 +382,7 @@ public class TONE {
                             if (on[i] <= 0 ){
                                 0 => on[i];
                                 s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i]);
+                                s.elements[s.elements.size() - 1].actions << set_synt_off(synt[i]);
                             }
                         }
                     }
@@ -352,12 +404,26 @@ public class TONE {
                 convert_note(c) => int rel_note;
 
                 // SET NOTE
-                e.actions << set_freq_synt(env[id], conv_to_freq(rel_note, scale, base_note )); 
+                conv_to_freq(rel_note, scale, base_note ) => temp_freq;
+                
+                if (temp_freq != freq[id]) {
+                    // add a change freq action only if freq change
+                    temp_freq => freq[id];
+                    e.actions << set_freq_synt(env[id], freq[id] ); 
+                    e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+                }
 
-                e.actions << set_on_adsr(adsr[id]); 
-                // Store that synt is on
-                2 => on[id];
+                if (on[id] == 0) {
+                    e.actions << set_on_adsr(adsr[id]); 
+                    e.actions << set_synt_on(synt[id]); 
+                    // Store that synt is on
+                    2 => on[id];
+                }
 
+               if (force_new_note != 0){
+                    e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+                    0=> force_new_note;
+               }
 
 
                 if ( id == 0 ) {
@@ -422,6 +488,7 @@ public class TONE {
                     // KeyOff all adsr
                     for (0 => int j; j < adsr.size() ; j++) {
                         e.actions << set_off_adsr(adsr[j]);                
+                        e.actions << set_synt_off(synt[j]);                
                         0 => on[j];
                     }
 
@@ -568,6 +635,10 @@ public class TONE {
                     i--;
                 }
             }
+    		else if (in.charAt(i) == '!') {
+                1 => force_new_note;
+            }
+
 
             i++;
         }
@@ -583,23 +654,39 @@ public class TONE {
 
 class synt0 extends SYNT{
 
-    inlet => SinOsc s =>  outlet;   
-        .5 => s.gain;
+    inlet => ADSR a_mod => SinOsc s => ADSR a_out =>   outlet;   
+    a_out.set(10::ms, 10::ms, .8, 500::ms);
+//    a_out.keyOff();
+        .7 => s.gain;
+    a_mod.set(80::ms, 80::ms, 0.5, 180::ms);
+    a_mod.gain(2.);
 
-            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
+            fun void on()  {a_out.keyOn();  
+//            <<<"synt on iii">>>;
+            }  
+            
+            fun void off() {
+            a_out.keyOff();
+//            a_mod.keyOff();
+//           <<<"synt off iii">>>; 
+           } 
+            
+            fun void new_note(int idx)  { a_mod.keyOn();  }
 } 
 
 TONE t;
 t.reg(synt0 s1);
-t.reg(synt0 s2);
-t.reg(synt0 s3);
+//t.reg(synt0 s2);
+//t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
 //t.seq("0|+0a0|-6a");
-t.seq("*8 {c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
-t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
-t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+//t.seq("*8 {c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+//t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
+//t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
+t.seq("0_11_23_2!2_");
+t.raw() => dac;
 t.go();
 
 //t.mono() => NRev r => dac;
