@@ -247,6 +247,26 @@ public class TONE {
         return act;
     }
 
+    class slide_act extends ACTION {
+        Envelope @ e;
+        float f;
+        dur s_dur;
+
+        fun int on_time() {
+            f => e.target;
+            s_dur => e.duration;
+        }
+    }
+
+    fun ACTION set_slide(Envelope @ e, float f, dur s_dur) {
+        new slide_act @=> slide_act @ act;
+        e @=> act.e;
+        f => act.f;
+        s_dur => act.s_dur;
+
+        return act;
+    }
+
     //////// NOTE MANAGEMENT ///////////////
 
     fun int is_note(int c) {
@@ -349,6 +369,9 @@ public class TONE {
 
         dur dur_temp;
         index idx;
+        index slide;
+        int slide_nb;
+        dur slide_dur;
 
         float temp_freq;
         0 => int force_new_note;
@@ -374,18 +397,23 @@ public class TONE {
                 }
                 // BRAND NEW event
                 if (id == 0) {
-                    new ELEMENT @=> e;
-                    // Search synt that are not on anymore
-                    for (0 => int i; i < on.size()      ; i++) {
+                    slide.value() => slide_nb;
+                    // if slide, dont create a new element we will increase the new one
+                    if (slide_nb ==0) {
+                      new ELEMENT @=> e;
+                      // Search synt that are not on anymore
+                      for (0 => int i; i < on.size()      ; i++) {
                         if (on[i] !=0) {
-                            on[i] - 1 => on[i];
-                            if (on[i] <= 0 ){
-                                0 => on[i];
-                                s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i]);
-                                s.elements[s.elements.size() - 1].actions << set_synt_off(synt[i]);
-                            }
+                          on[i] - 1 => on[i];
+                          if (on[i] <= 0 ){
+                            0 => on[i];
+                            s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i]);
+                            s.elements[s.elements.size() - 1].actions << set_synt_off(synt[i]);
+                          }
                         }
+                      }
                     }
+
                 }
 
                 ///// PARAMS //////////////////
@@ -406,54 +434,74 @@ public class TONE {
                 // SET NOTE
                 conv_to_freq(rel_note, scale, base_note ) => temp_freq;
                 
-                if (temp_freq != freq[id]) {
+                if (slide_nb) {
+
+                   if (id == 0) {
+                     // Get current element size at least
+                     e.duration => slide_dur; 
+                     // add it remaining duration of the slide using set_dur()
+                     set_dur((slide_nb-1) * base_dur) + slide_dur => slide_dur;
+                     // update element duration
+                     slide_dur => e.duration;
+                   }
+
+                   e.actions << set_slide(env[id], temp_freq, slide_dur); 
+                   temp_freq => freq[id];
+
+                }
+                else
+                {
+                  if (temp_freq != freq[id]) {
                     // add a change freq action only if freq change
                     temp_freq => freq[id];
                     e.actions << set_freq_synt(env[id], freq[id] ); 
                     e.actions << set_synt_new_note(synt[id], s.elements.size()); 
-                }
+                  }
 
-                if (on[id] == 0) {
+                  if (on[id] == 0) {
                     e.actions << set_on_adsr(adsr[id]); 
                     e.actions << set_synt_on(synt[id]); 
-                    // Store that synt is on
-                    2 => on[id];
-                }
+                  }
 
-               if (force_new_note != 0){
+                  // Store that synt is on
+                  2 => on[id];
+
+                  if (force_new_note != 0){
                     e.actions << set_synt_new_note(synt[id], s.elements.size()); 
                     0=> force_new_note;
-               }
+                  }
 
 
-                if ( id == 0 ) {
+                  if ( id == 0 ) {
                     if (groove == 0::ms){
-                        set_dur(base_dur) => dur_temp;
+                      set_dur(base_dur) => dur_temp;
                     }
                     else if( s.elements.size() == 0) {
-                        set_dur(base_dur) => dur_temp;
-                        <<<"Not supported:  groove on first note">>>; 
+                      set_dur(base_dur) => dur_temp;
+                      <<<"Not supported:  groove on first note">>>; 
                     }
                     else {
-                        //                        <<<"groove:", groove/1::ms>>>; 
-                        // add groove to last event
-                        //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
-                        groove +=> s.elements[s.elements.size() - 1].duration;
-                        groove -=> remaining; // correct remaining
-                        //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
-                        // substract it to next one
-                        set_dur(base_dur - groove) => dur_temp;
-                        //                        <<<"dur_temp:", dur_temp/1::ms>>>;
-                        // reset it
-                        0::ms => groove;
+                      //                        <<<"groove:", groove/1::ms>>>; 
+                      // add groove to last event
+                      //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
+                      groove +=> s.elements[s.elements.size() - 1].duration;
+                      groove -=> remaining; // correct remaining
+                      //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
+                      // substract it to next one
+                      set_dur(base_dur - groove) => dur_temp;
+                      //                        <<<"dur_temp:", dur_temp/1::ms>>>;
+                      // reset it
+                      0::ms => groove;
                     }
                     if (dur_temp != 0::ms ) {
 
-                        dur_temp => e.duration;
-                        // Add element to SEQ
-                        s.elements << e;
+                      dur_temp => e.duration;
+                      // Add element to SEQ
+                      s.elements << e;
 
                     }
+                  }
+
                 }
 
             }
@@ -496,6 +544,8 @@ public class TONE {
 
                     // Restart on first synt for next action
                     idx.reset();
+                    // no target: reset slide
+                    slide.reset();
                     // Add element to SEQ
                     s.elements << e;
                 }
@@ -505,7 +555,12 @@ public class TONE {
                 idx.up();
 
             }
-            else if (in.charAt(i) == '*') {
+            else if (c == '/') {
+                // increase slide value
+                slide.up();
+
+            }
+             else if (in.charAt(i) == '*') {
                 i++;
                 in.charAt(i)=> c;
                 if ('0' <= c && c <= '9') {
@@ -698,7 +753,8 @@ t.reg(synt s3);
 //t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 //t.seq("*4 7_7_0|4|7 0|4|7__  4___ }5 0|3|7 0|3|7_{5a");
-t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
+//t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
+t.seq("00//40_6/A_");
 //t.raw() => dac;
 t.element_sync();
 //t.no_sync();
