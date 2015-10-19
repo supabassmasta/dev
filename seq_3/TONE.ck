@@ -367,7 +367,7 @@ public class TONE {
             else if ( is_note(c)  ) {
                 // Get index
                 idx.value() => int id;
-                <<<"index:", id, "note", c>>>; 
+//                <<<"index:", id, "note", c>>>; 
                 if (id >= synt.size()){
                     <<<"Not enough synt registered, default synt 0 used">>>;
                     0 => id;
@@ -487,9 +487,11 @@ public class TONE {
 
                     // KeyOff all adsr
                     for (0 => int j; j < adsr.size() ; j++) {
+                      if (on[j] != 0) {
                         e.actions << set_off_adsr(adsr[j]);                
                         e.actions << set_synt_off(synt[j]);                
                         0 => on[j];
+                      }
                     }
 
                     // Restart on first synt for next action
@@ -674,8 +676,18 @@ class synt0 extends SYNT{
             fun void new_note(int idx)  { a_mod.keyOn();  }
 } 
 
+class synt extends SYNT{
+
+    inlet => SinOsc s =>  outlet;   
+        .5 => s.gain;
+
+            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
+} 
+
 TONE t;
-t.reg(synt0 s1);
+t.reg(synt s1);
+t.reg(synt s2);
+t.reg(synt s3);
 //t.reg(synt0 s2);
 //t.reg(synt0 s3);
 //t.scale << 2<< 1<<2<<2<<1<<2<<2;
@@ -685,8 +697,11 @@ t.reg(synt0 s1);
 //t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
 //t.seq(" }c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
-t.seq("0_11_23_2!2_");
-t.raw() => dac;
+//t.seq("*4 7_7_0|4|7 0|4|7__  4___ }5 0|3|7 0|3|7_{5a");
+t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
+//t.raw() => dac;
+t.element_sync();
+//t.no_sync();
 t.go();
 
 //t.mono() => NRev r => dac;
