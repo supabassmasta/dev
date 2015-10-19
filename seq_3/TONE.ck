@@ -700,6 +700,17 @@ public class TONE {
             i++;
         }
 
+        // remainin
+        if (remaining != 0::ms) {
+            new ELEMENT @=> e;
+
+            remaining => e.duration;
+
+            s.elements << e;
+
+        }
+
+
     }
     fun void go(){
         s.go();
@@ -739,13 +750,14 @@ class synt extends SYNT{
             fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
 } 
 
+/*
 TONE t;
 t.reg(synt s1);
 t.reg(synt s2);
 t.reg(synt s3);
 //t.reg(synt0 s2);
 //t.reg(synt0 s3);
-//t.scale << 2<< 1<<2<<2<<1<<2<<2;
+t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //data.tick * 4 => t.max;
 //t.seq("0|+0a0|-6a");
 //t.seq("*8 {c (9 0_ )9 1_ (9 2_ )9 3_ (9 4_ )9 5_   (9 6_ )9 7_ ");
@@ -754,7 +766,9 @@ t.reg(synt s3);
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 //t.seq("*4 7_7_0|4|7 0|4|7__  4___ }5 0|3|7 0|3|7_{5a");
 //t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
-t.seq("0|7//4|0_0//4_7//0_");
+//t.seq("0|7//4|0_0//4_7//0_");
+4* data.tick => t.max;
+t.seq("*4 0/q0/q0/q0/q0/q __ a\\0_ a\\0_ a\\0  491058FJANC3pdoa_________");
 //t.seq("0|7//4_");
 //t.seq("0//4");
 //t.seq("7//0");
@@ -775,4 +789,4 @@ while(1) {
 	     100::ms => now;
 }
 
-//*/
+*/
