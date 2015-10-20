@@ -44,6 +44,7 @@ public class TONE {
     fun void element_sync() {s.element_sync();}
     fun void full_sync()    {s.full_sync();}
 
+    0::ms => dur glide;
 
     fun void max(dur in){
         in => max_v => remaining;
@@ -370,6 +371,7 @@ public class TONE {
         int c;
         "0" => string note_id;
         ELEMENT @ e;
+        ELEMENT @ e_glide;
 
         dur dur_temp;
         index idx;
@@ -460,6 +462,29 @@ public class TONE {
                     temp_freq => freq[id];
                     e.actions << set_freq_synt(env[id], freq[id] ); 
                     e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+
+                    if (glide != 0::ms && on[id] != 0 && s.elements.size() != 0 ) {
+                      // only available for synt 0 for the moment
+                      if (id == 0) {
+                        // split element N-1
+                        if (glide < s.elements[s.elements.size() - 1].duration ) {
+                          // Reduce N-1
+                          s.elements[s.elements.size() - 1].duration - glide => s.elements[s.elements.size() - 1].duration;
+                          
+                          // add new element for glide
+                          new ELEMENT @=> e_glide;
+                          e_glide.actions << set_slide(env[id], temp_freq , glide);
+                          glide => e_glide.duration;
+                          s.elements << e_glide;
+                        }
+                        else {
+                          <<<"Glide too long compared to note: discarded">>>;  
+                        }
+
+                      }
+
+                    }
+
                   }
 
                   if (on[id] == 0) {
@@ -724,7 +749,7 @@ public class TONE {
       s.print();
     }
 }
-///*
+/*
 // TEST
 
 class synt0 extends SYNT{
@@ -757,7 +782,6 @@ class synt extends SYNT{
             fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
 } 
 
-/*
 TONE t;
 t.reg(synt s1);
 t.reg(synt s2);
@@ -773,7 +797,9 @@ t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 //t.seq("*4 7_7_0|4|7 0|4|7__  4___ }5 0|3|7 0|3|7_{5a");
 //t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
-t.seq("0|7//4|0_0//4_7//0_");
+//t.seq("0|7//4|0_0//4_7//0_");
+100::ms => t.glide;
+t.seq("0a00/b00G5");
 t.print();
 //4* data.tick => t.max;
 //t.seq("*4 0/q0/q0/q0/q0/q __ a\\0_ a\\0_ a\\0  491058FJANC3pdoa_________");
