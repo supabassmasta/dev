@@ -478,4 +478,10 @@ public class SEQ {
 
         return right_out;
     }
+
+    fun void print() {
+      s.print();
+    }
+
 }
+

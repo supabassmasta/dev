@@ -128,4 +128,19 @@ public class SEQ3 {
     in => on_flag;
   }
 
+  fun void print() {
+   for (0 => int i; i < elements.size() ; i++) {
+      <<<"ELEMENT ", i, "  dur: ", elements[i].duration / data.tick>>>;   
+        
+      for (0 => int j; j < elements[i].actions.size()      ; j++) {
+        <<<"    ", j , " " , elements[i].actions[j].name >>>;
+
+      }
+       
+
+   }
+    
+
+
+  }
 }

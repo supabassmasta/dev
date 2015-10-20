@@ -136,6 +136,7 @@ public class TONE {
         new freq_synt @=> freq_synt @ act;
         f => act.f;
         e @=> act.e;
+        "freq_synt" + "  " + e + "  " + f => act.name;
 
         return act;
     }
@@ -150,7 +151,7 @@ public class TONE {
     fun ACTION set_off_adsr (ADSR @ a) {
         new off_adsr @=> off_adsr @ act;
         a @=> act.a;
-
+        "off_adsr  " + a => act.name;
         return act;
     }
 
@@ -165,6 +166,7 @@ public class TONE {
     fun ACTION set_on_adsr (ADSR @ a) {
         new on_adsr @=> on_adsr @ act;
         a @=> act.a;
+        "on_adsr  " + a => act.name;
 
         return act;
     }
@@ -182,7 +184,7 @@ public class TONE {
         new gain_adsr @=> gain_adsr @ act;
         a @=> act.a;
         g => act.g;
-
+        "gain_adsr  " + a + "  " + g => act.name;
         return act;
     }
 
@@ -198,7 +200,7 @@ public class TONE {
         new pan_action @=> pan_action @ act;
         p @=> act.p;
         v => act.v;
-
+        "pan_action  " + p + "  " + v => act.name;
         return act;
     }
 
@@ -213,6 +215,7 @@ public class TONE {
         new synt_on @=> synt_on @ act;
         s @=> act.s;
 
+        "synt_on  " + s => act.name;
         return act;
     }
 
@@ -227,7 +230,7 @@ public class TONE {
     fun ACTION set_synt_off( SYNT @ s ) {
         new synt_off @=> synt_off @ act;
         s @=> act.s;
-
+        "synt_off  " + s => act.name;
         return act;
     }
 
@@ -243,6 +246,7 @@ public class TONE {
         new synt_new_note @=> synt_new_note @ act;
         s @=> act.s;
         index => act.index;
+        "synt_new_note  " + s + "  index " + index => act.name;
 
         return act;
     }
@@ -263,7 +267,7 @@ public class TONE {
         e @=> act.e;
         f => act.f;
         s_dur => act.s_dur;
-
+        "slide_act  " + e + "  dur " + s_dur/data.tick + " target " + f => act.name;
         return act;
     }
 
@@ -716,6 +720,9 @@ public class TONE {
         s.go();
     }
 
+    fun void print() {
+      s.print();
+    }
 }
 ///*
 // TEST
@@ -766,9 +773,10 @@ t.scale << 2<< 1<<2<<2<<1<<2<<2;
 //t.seq("*4 }9}}} }9}}} (9 0_ )9 0_ ");
 //t.seq("*4 7_7_0|4|7 0|4|7__  4___ }5 0|3|7 0|3|7_{5a");
 //t.seq("*4 ____0|4|7 0|4|7__  ____ }5 0|3|7 0|3|7_{5_");
-//t.seq("0|7//4|0_0//4_7//0_");
-4* data.tick => t.max;
-t.seq("*4 0/q0/q0/q0/q0/q __ a\\0_ a\\0_ a\\0  491058FJANC3pdoa_________");
+t.seq("0|7//4|0_0//4_7//0_");
+t.print();
+//4* data.tick => t.max;
+//t.seq("*4 0/q0/q0/q0/q0/q __ a\\0_ a\\0_ a\\0  491058FJANC3pdoa_________");
 //t.seq("0|7//4_");
 //t.seq("0//4");
 //t.seq("7//0");
