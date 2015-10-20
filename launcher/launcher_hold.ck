@@ -187,7 +187,10 @@ public class launcher {
                     	 	   }
                     	       }
                     	       else {
-                    	 	   Machine.replace(shred_id[num], file_name_a[num]);
+//                    	 	   Machine.replace(shred_id[num], file_name_a[num]);
+                               killer.kill(shred_id[num]);
+                                Machine.add( file_name_a[num]) => shred_id[num];
+
                     	       }
                     	       
                     	   }
@@ -252,8 +255,15 @@ public class launcher {
                                 replace_all();
                             }
                             else{
-                                if (!shred_single[last_shred_active])
-                                    Machine.replace(shred_id[last_shred_active], file_name_a[last_shred_active]);
+                                if (!shred_single[last_shred_active]) {
+
+//                                    Machine.replace(shred_id[last_shred_active], file_name_a[last_shred_active]);
+                                   spork ~ killer.kill(shred_id[last_shred_active]);
+                                   <<<"Killed">>>;
+                                   Machine.add( file_name_a[last_shred_active]) => shred_id[last_shred_active];
+
+
+                                }
                                 else
                                     Machine.add( file_name_a[last_shred_active]) => shred_id[last_shred_active];
                             }
