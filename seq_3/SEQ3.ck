@@ -5,6 +5,8 @@ public class SEQ3 {
   0 => int idx;
   0 => int exit;  
   1 => int on_flag;
+  0=> int just_on;
+  0=> int just_off;
 
   ELEMENT elements[0];
 
@@ -91,10 +93,30 @@ public class SEQ3 {
                    for (0 => int i; i < elements[idx].actions.size()      ; i++) {
                        elements[idx].actions[i].on_time();
                    }
+
+                   if (just_on) {
+                      0 => just_on;
+                      for (0 => int i; i < elements[idx].on_actions.size()      ; i++) {
+                        elements[idx].on_actions[i].on_time();
+                      }
+
+                   }
+
                    // POST
                    for (0 => int i; i < elements[idx].actions.size()      ; i++) {
                        elements[idx].actions[i].post();
                    }
+               }
+               else {
+                 if (just_off) {
+                   0 => just_off;
+                   for (0 => int i; i < elements[idx].off_actions.size()      ; i++) {
+                     elements[idx].off_actions[i].on_time();
+                   }
+
+                 }
+
+
                }
             }
             else {
@@ -121,11 +143,20 @@ public class SEQ3 {
 
   
   fun void go() {
+    1=> just_on;
     spork ~ _go();    
   }
 
   fun void on(int in) {
-    in => on_flag;
+    if (in != on_flag){
+      in => on_flag;
+      if (on_flag){
+        1 => just_on;
+      }
+      else {
+        1 => just_off;
+      }
+    }
   }
 
   fun void print() {

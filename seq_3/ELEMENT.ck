@@ -9,6 +9,7 @@ public class ELEMENT {
   dur rel_time; // relative time form the begining
 
   ACTION actions[0];
-
+  ACTION on_actions[0]; // specific action called when the seq On (action to be done in on_time routine)
+  ACTION off_actions[0]; // specific action called when the seq Off (action to be done in on_time routine)
 
 }
