@@ -39,15 +39,15 @@ public class killer {
 				for (0 => int i; i < list.size()      ; i++) {
 					if (list[i].shred_id == id ) {
 //						<<<"kill", id>>>;
-//						spork~list[i].kill_me_bad();	
-						list[i].kill_me_bad();	
+						spork~list[i].kill_me_bad();	
+//						list[i].kill_me_bad();	
 						rem(i);	
 						1 => inside;
 					}
 				}
 
 				if (!inside) {
-//						<<< id,  "not registered kill it directly">>>;
+						<<< id,  "not registered kill it directly">>>;
 						Machine.remove(id);
 				}
 				

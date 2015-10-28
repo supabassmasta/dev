@@ -797,6 +797,11 @@ public class TONE {
   s @=> the_end.s;
 
   fun void go(){
+    // Get id from caller shred
+    me.id() => the_end.shred_id;
+     register end
+    killer.reg(the_end);
+
     s.go();
   }
 
