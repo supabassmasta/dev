@@ -8,6 +8,7 @@ public class SEQ3 {
   0=> int just_on;
   0=> int just_off;
 
+  Shred @ id_go;
   ELEMENT elements[0];
 
   0 => int sync_mode;
@@ -144,7 +145,7 @@ public class SEQ3 {
   
   fun void go() {
     1=> just_on;
-    spork ~ _go();    
+    spork ~ _go() @=> id_go;    
   }
 
   fun void on(int in) {

@@ -9,7 +9,7 @@ class synt0 extends SYNT{
 TONE t;
 
 t.reg(synt0 s1);
-"030419eaRA" => t.seq;
+"*2 735448376" => t.seq;
 t.element_sync();
 
 t.go();

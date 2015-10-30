@@ -790,6 +790,8 @@ public class TONE {
       0 => s.on;
       // Wait seq duration before diing (not optimal)
       s.duration => now;		
+      Machine.remove(s.id_go.id());
+      10::ms => now;
       <<<"THE real END">>>;		
     }
   }; 
@@ -799,7 +801,7 @@ public class TONE {
   fun void go(){
     // Get id from caller shred
     me.id() => the_end.shred_id;
-     register end
+    //  register end
     killer.reg(the_end);
 
     s.go();
