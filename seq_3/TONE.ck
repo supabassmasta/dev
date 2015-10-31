@@ -790,8 +790,12 @@ public class TONE {
       0 => s.on;
       // Wait seq duration before diing (not optimal)
       s.duration => now;		
-      Machine.remove(s.id_go.id());
-      10::ms => now;
+			// let "go" shred exit by herself 
+		  1=>s.exit;
+      s.duration => now;		
+
+//      Machine.remove(s.id_go.id());
+//      10::ms => now;
       <<<"THE real END">>>;		
     }
   }; 

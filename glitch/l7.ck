@@ -9,9 +9,11 @@ class synt0 extends SYNT{
 TONE t;
 
 t.reg(synt0 s1);
-"*2 735448376" => t.seq;
+//60::ms => t.glide;
+//data.tick * 8 => t.max; 
+"*8 0j0a/00/GG/5_ " => t.seq;
 t.element_sync();
-
+//t.print();
 t.go();
 
 while(1) {

@@ -168,7 +168,16 @@ public class SEQ3 {
         <<<"    ", j , " " , elements[i].actions[j].name >>>;
 
       }
-       
+      <<<"ON ACTIONS">>>;  
+      for (0 => int j; j < elements[i].on_actions.size()      ; j++) {
+        <<<"    ", j , " " , elements[i].on_actions[j].name >>>;
+      }
+
+      <<<"OFF ACTIONS">>>;  
+      for (0 => int j; j < elements[i].off_actions.size()      ; j++) {
+        <<<"    ", j , " " , elements[i].off_actions[j].name >>>;
+      }
+
 
    }
     

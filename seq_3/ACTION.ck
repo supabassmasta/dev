@@ -1,5 +1,5 @@
 public class ACTION {
-  "" => string name;
+  "no name" => string name;
 
   fun int pre() {
     return -1;
