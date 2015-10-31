@@ -500,10 +500,6 @@ public class TONE {
             e.actions << set_freq_synt(env[id], freq[id] ); 
             e.actions << set_synt_new_note(synt[id], s.elements.size()); 
 
-            // manage off actions
-            // when off seq is requested: off synt that are on
-            e.off_actions << set_off_adsr(adsr[id]);                
-            e.off_actions << set_synt_off(synt[id]);                
           }
 
 
@@ -577,14 +573,6 @@ public class TONE {
           new ELEMENT @=> e;
           dur_temp => e.duration;
 
-          // manage off actions
-          for (0 => int j; j < adsr.size() ; j++) {
-            // if off seq is requested: off all synt that are one
-            if (on_state[j] != 0) {
-              e.off_actions << set_off_adsr(adsr[j]);                
-              e.off_actions << set_synt_off(synt[j]);                
-            }
-          }
 
 
           // KeyOff all adsr
@@ -760,20 +748,20 @@ public class TONE {
 
       remaining => e.duration;
 
-      // manage off actions
-      for (0 => int j; j < adsr.size() ; j++) {
-        // if off seq is requested: off all synt that are one
-        if (on_state[j] != 0) {
-          e.off_actions << set_off_adsr(adsr[j]);                
-          e.off_actions << set_synt_off(synt[j]);                
-        }
-      }
 
 
       s.elements << e;
 
     }
 
+      // manage off actions
+      for (0 => int j; j < s.elements.size() ; j++) {
+        // if off seq is requested: off all synt 
+				for (0 => int k; k < synt.size()     ; k++) {
+          s.elements[j].off_actions << set_off_adsr(adsr[k]);                
+          s.elements[j].off_actions << set_synt_off(synt[k]);                
+				}
+      }
 
   }
 

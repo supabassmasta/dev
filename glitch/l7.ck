@@ -10,8 +10,8 @@ TONE t;
 
 t.reg(synt0 s1);
 //60::ms => t.glide;
-//data.tick * 8 => t.max; 
-"*8 0j0a/00/GG/5_ " => t.seq;
+//data.tick * 7 => t.max; 
+"*2 0j05_ " => t.seq;
 t.element_sync();
 //t.print();
 t.go();
