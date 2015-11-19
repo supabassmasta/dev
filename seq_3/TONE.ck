@@ -33,6 +33,8 @@ public class TONE {
   -10. => float rate_to_apply;
 
   1. => float proba_to_apply;
+
+  0 => int note_offset;
   // PRIVATE
   0::ms => dur max_v;//private
   0::ms => dur remaining;//private
@@ -296,7 +298,7 @@ public class TONE {
 
   }
 
-  fun float conv_to_freq (int rel_note, float sc[], int ref_note) {
+  fun float conv_to_freq (int rel_note, float sc[], int ref_note, int offset /* for sharp and bemol*/) {
     int j, k;
     float distance_i;
     float result_i;
@@ -325,7 +327,7 @@ public class TONE {
       }
 
       /* Convert Note */
-      ref_note + distance_i => result_i;
+      ref_note + distance_i + offset => result_i;
     }
     else {
       ref_note + rel_note => result_i;
@@ -438,7 +440,9 @@ public class TONE {
         convert_note(c) => int rel_note;
 
         // SET NOTE
-        conv_to_freq(rel_note, scale, base_note ) => temp_freq;
+        conv_to_freq(rel_note, scale, base_note, note_offset) => temp_freq;
+
+        0=> note_offset;
 
         if (slide_nb) {
 
@@ -737,6 +741,15 @@ public class TONE {
       else if (in.charAt(i) == '!') {
         1 => force_new_note;
       }
+      else if (in.charAt(i) == '#') {
+        // Sharp implemenation
+        note_offset ++;
+      }
+      else if (in.charAt(i) == '^') {
+        // bemol implemenation
+        note_offset --;
+      }
+
 
 
       i++;
