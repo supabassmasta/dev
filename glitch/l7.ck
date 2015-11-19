@@ -7,16 +7,9 @@ class synt0 extends SYNT{
 } 
 
 TONE t;
-
-t.reg(synt0 s1);
-//60::ms => t.glide;
-//data.tick * 7 => t.max; 
- // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
- t.dor();
-"*2 02_455__ " => t.seq;
-" 02_4#45__ " => t.seq;
-t.element_sync();
-//t.print();
+t.reg(synt0 s1);  //data.tick * 7 => t.max; //60::ms => t.glide;  // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
+"" => t.seq;
+// t.element_sync(); t.no_sync(); t.full_sync();     //t.print();
 t.go();
 
 while(1) {
