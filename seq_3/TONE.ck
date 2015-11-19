@@ -802,6 +802,53 @@ public class TONE {
   fun void print() {
     s.print();
   }
+
+  // Scales section
+  fun void lyd () {
+    // remove previous scale 
+    0 => scale.size;
+    scale << 2 << 2 << 2 << 1 << 2 << 2 << 1;
+  }
+  fun void ion () {
+    // remove previous scale 
+    0 => scale.size;
+    scale <<2 << 2 << 1 << 2 << 2 << 2 << 1;
+  }
+  fun void mix () {
+    // remove previous scale 
+    0 => scale.size;
+    scale << 2 << 2 << 1 << 2 << 2 << 1 << 2;
+  }
+  fun void dor () {
+    // remove previous scale 
+    0 => scale.size;
+    scale <<2 << 1 << 2 << 2 << 2 << 1 << 2;
+  }
+   fun void aeo () {
+    // remove previous scale 
+    0 => scale.size;
+    scale << 2 << 1 << 2 << 2 << 1 << 2 << 2;
+  }
+  fun void phr () {
+    // remove previous scale 
+    0 => scale.size;
+    scale <<1 << 2 << 2 << 2 << 1 << 2 << 2;
+  }
+  fun void loc () {
+    // remove previous scale 
+    0 => scale.size;
+    scale << 1 << 2 << 2 << 1 << 2 << 2 << 2;
+  }
+
+
+
+
+
+
+
+
+
+
 }
 /*
 // TEST
