@@ -21,6 +21,8 @@ Machine.add( "../digit.ck" );
 Machine.add( "../scales/scales.ck");
 Machine.add( "../sampler/sampler.ck");
 Machine.add( "../EFFECTS/DUCK_MASTER.ck");
+Machine.add( "../EFFECTS/CONTROL.ck");
+Machine.add( "../NANOKONTROL/NANO.ck");
 
 Machine.add( "../seq_3/ACTION.ck");
 Machine.add( "../seq_3/ELEMENT.ck");
@@ -51,6 +53,9 @@ Machine.add("../SYNT/HORROR.ck");
 Machine.add("../SYNT/GRAIN.ck");
 Machine.add("../SYNT/TB303.ck");
 Machine.add("../SYNT/TB303C.ck");
+
+// STEREO EFFECTS
+Machine.add("../EFFECTS/LPF_ST.ck");
 
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
