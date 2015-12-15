@@ -32,7 +32,7 @@ class test_control extends CONTROL {
 
 test_control t;
 NANO_CONTROLER n;
-
+n.start();
 // Register a l arrache
 n.but_back << t;
 
