@@ -32,6 +32,8 @@ NANO_CONTROLER n;
 1 => t.update_on_reg;
 n.button_back.reg( t );
 
+n.start();
+
 while (1) {
 
   1000::ms => now;
