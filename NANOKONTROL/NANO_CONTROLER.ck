@@ -6,10 +6,10 @@ public class NANO_CONTROLER extends NANO {
   CONTROLER button_loop;
   CONTROLER button_stop;
   CONTROLER button_rec;
-  CONTROLER fader[4][9];
-  CONTROLER potar[4][9];
-  CONTROLER button_up[4][9];
-  CONTROLER button_down[4][9];
+  CONTROLER fader[5][10];
+  CONTROLER potar[5][10];
+  CONTROLER button_up[5][10];
+  CONTROLER button_down[5][10];
 
   fun void button_back_ext (int val)    {button_back.set(val); }
   fun void button_play_ext (int val)    {button_play.set(val);}
@@ -58,7 +58,10 @@ n.button_back.reg( t2 );
 n.button_back.set( 37 );
 n.button_back.reg( t );
 n.button_back.set( 38 );
-
+n.potar[1][1].reg(t);
+n.fader[1][1].reg(t2);
+n.button_up[2][2].reg(t2);
+n.button_down[2][2].reg(t2);
 while (1) {
 
   1000::ms => now;
