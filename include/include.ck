@@ -41,6 +41,8 @@ Machine.add("../EFFECTS/DUCK.ck");
 Machine.add( "../seq_3/SEQ3.ck");
 Machine.add( "../seq_3/WAV.ck");
 
+Machine.add( "../EFFECTS/CONTROLER.ck");
+
 // SYNTA
 Machine.add("../SYNTA/GLIDE.ck");
 Machine.add("../SYNTA/POLY.ck");
@@ -56,12 +58,12 @@ Machine.add("../SYNT/TB303C.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
-Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");
 Machine.add( "../seq_3/SEQ.ck");
 Machine.add( "../seq_3/TONE.ck");
+Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 me.yield();
 Machine.add( "../seq_3/SET_WAV.ck");
 me.yield();

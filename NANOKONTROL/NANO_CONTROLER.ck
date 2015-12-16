@@ -1,16 +1,12 @@
 public class NANO_CONTROLER extends NANO {
 
-  CONTROL but_back[0];
+  CONTROLER button_back;
 
   fun void button_up_ext (int bank, int group, int val) { }
   fun void button_down_ext (int bank, int group, int val) {<<<"button down ", bank, group," : ",val>>>;}
 
   fun void button_back_ext (int val) {
-      0 => int i;
-      while (i < but_back.size()) {
-        but_back[i].set(val); 
-        i++;
-      }
+      button_back.set(val);
     }
   fun void button_play_ext (int val) {<<<"button play: ",val>>>;}
   fun void button_forward_ext (int val) {<<<"button forward: ",val>>>;}
@@ -33,8 +29,8 @@ class test_control extends CONTROL {
 test_control t;
 NANO_CONTROLER n;
 
-// Register a l arrache
-n.but_back << t;
+1 => t.update_on_reg;
+n.button_back.reg( t );
 
 while (1) {
 
