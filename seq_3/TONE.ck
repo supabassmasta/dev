@@ -303,6 +303,9 @@ public class TONE {
     float distance_i;
     float result_i;
 
+    // Set 1 as ref note to have classic scale notation: first, third, fifth etc...
+    rel_note - 1 => rel_note;
+
     if (sc.size() != 0) {
       if (rel_note == 0)
       {
