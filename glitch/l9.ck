@@ -1,29 +1,15 @@
-class synt0 extends SYNT{
-
-    inlet => SinOsc s =>  outlet;   
-        .5 => s.gain;
-
-            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
-} 
-
-TONE t;
-t.reg(synt0 s1);
-t.reg(synt0 s2);
-t.reg(synt0 s3);
-t.reg(synt0 s4);
-t.reg(synt0 s5);
-t.reg(synt0 s6);
-t.reg(synt0 s7);
-t.reg(synt0 s8);
-//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-t.dor();
-"*2 1|3|5|7|9|b|d|f___" => t.seq;
-// t.element_sync(); t.no_sync(); t.full_sync();     //t.print();
-// t.mono() => dac; t.left() => dac.left; t.right() => dac.right; t.raw => dac;
-t.go(); 
+SEQ s;  //data.tick * 8 => s.max;  
+SET_WAV.VOLCA(s);
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+//"*2 k|l|m ++++e|h k|l|m|D e|h" => s.seq;
+// "*2 k|l|m _ k|l|m|D _ " => s.seq;
+ "*2 k|l|m _ k|l|m _ " => s.seq;
+// "*2 k|l|m _ k|l _ " => s.seq;
+ s.element_sync(); //s.no_sync(); s.full_sync();     //s.print();
+// s.mono() => dac; s.left() => dac.left; s.right() => dac.right;
+s.go(); 
 
 while(1) {
-       100::ms => now;
+	     100::ms => now;
 }
- 
+		

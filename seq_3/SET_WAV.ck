@@ -55,8 +55,49 @@ public class SET_WAV {
     dir + "Dubstep_Tom_2.wav" =>s.wav["T"]; 
   }
 
+   fun static void VOLCA ( SEQ @ s) {
+		 "../_SAMPLES/Volca_Beast/" => string dir;
+			//dir + "" => s.wav[""];
+			dir + "VBKick1.wav" => s.wav["k"];
+			dir + "VBKick2.wav" => s.wav["l"];
+			dir + "VBKick3.wav" => s.wav["m"];
+			dir + "VBKick4.wav" => s.wav["n"];
+			dir + "VBKick5.wav" => s.wav["o"];
+			dir + "VBKick6.wav" => s.wav["p"];
+			dir + "VBKick7.wav" => s.wav["q"];
+			dir + "VBKick8.wav" => s.wav["r"];
+
+			dir + "VBSnare1.wav" => s.wav["s"];
+			dir + "VBSnare2.wav" => s.wav["t"];
+			dir + "VBSnare3.wav" => s.wav["u"];
+			dir + "VBSnare4.wav" => s.wav["v"];
+			dir + "VBSnare5.wav" => s.wav["w"];
+			dir + "VBSnare6.wav" => s.wav["x"];
+			dir + "VBSnare7.wav" => s.wav["y"];
+			dir + "VBSnare8.wav" => s.wav["z"];
+
+			dir + "VBClsHat2.wav" => s.wav["e"];
+			dir + "VBClsHat4.wav" => s.wav["f"];
+			dir + "VBClsHat1.wav" => s.wav["g"];
+			dir + "VBOpHat1.wav" => s.wav["h"];
+			dir + "VBOpHat3.wav" => s.wav["i"];
+			dir + "VBShaker3.wav" => s.wav["j"];
+
+			dir + "VBAgogo1.wav" => s.wav["A"];
+			dir + "VBAgogo2.wav" => s.wav["B"];
+			dir + "VBAgogo5.wav" => s.wav["C"];
+			dir + "VBClap3.wav" => s.wav["D"];
+			dir + "VBClap6.wav" => s.wav["E"];
+			dir + "VBClaves1.wav" => s.wav["F"];
+			dir + "VBClaves2.wav" => s.wav["G"];
 
 
+			dir + "VBPop2.wav" => s.wav["H"];
+			dir + "VBPop3.wav" => s.wav["I"];
+			dir + "VBShaker2.wav" => s.wav["J"];
+
+
+	 }
 
 }
 
