@@ -387,6 +387,8 @@ public class TONE {
     float temp_freq;
     0 => int force_new_note;
 
+		0 => int start_with_pause;
+
     // reset remaining
     max_v => remaining;
 
@@ -553,6 +555,10 @@ public class TONE {
 
       }
       else if (c == '_') {
+
+				if( s.elements.size() == 0){
+						1 => start_with_pause;
+				}
 
         if (groove == 0::ms){
           set_dur(base_dur) => dur_temp;
@@ -757,6 +763,19 @@ public class TONE {
 
       i++;
     }
+
+		if (start_with_pause) {
+          // KeyOff all adsr in first element
+          for (0 => int j; j < adsr.size() ; j++) {
+            if (on_state[j] != 0) {
+              s.elements[0].actions << set_off_adsr(adsr[j]);                
+              s.elements[0].actions << set_synt_off(synt[j]);                
+              0 => on_state[j];
+            }
+          }
+
+
+		}
 
     // remainin
     if (remaining != 0::ms) {
