@@ -16,7 +16,7 @@ public class launcher {
   [0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0]@=> int shred_group[];
   [0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0  ,0,0,0,0,0, 0,0,0,0,0]@=> int shred_on_hold[];
   0 => int replace;
-  0 => int save_replace;
+  1 => int save_replace;
   0xFF => int last_shred_active;
   0 => int hold_mode;
 

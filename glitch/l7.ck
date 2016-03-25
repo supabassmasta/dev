@@ -16,7 +16,7 @@ t.aeo();
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 //"*4-----9  1_1_151415__15_4" => t.seq;
-"*2  4|7_471|3|5" => t.seq;
+"*2  47471|3|5" => t.seq;
 t.print();
 //"*4-----9 -9 1_1_151415__15_4" => t.seq;
  t.element_sync(); //t.no_sync(); t.full_sync();     //t.print();
