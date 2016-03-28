@@ -15,6 +15,8 @@ public class global_mixer {
 
    static Gain @ kick_freez_in;
    static Gain @ kick_freez_out;
+
+   static Gain @ rev0;
    
    static Event @ duck_trig;
 }
@@ -35,7 +37,10 @@ public class global_mixer {
    
    Gain bar13 @=> global_mixer.stereo1;
    Gain bar14 @=> global_mixer.stereo2;
+
    
    Event bar15 @=> global_mixer.duck_trig;
    
+   Gain bar16 @=> global_mixer.rev0;
+
    while(1) 1000::ms => now;

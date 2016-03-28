@@ -523,7 +523,9 @@ public class TONE {
 
           if (force_new_note != 0){
             e.actions << set_synt_new_note(synt[id], s.elements.size()); 
-            0=> force_new_note;
+            e.actions << set_on_adsr(adsr[id]); 
+            e.actions << set_synt_on(synt[id]); 
+            0 => force_new_note;
           }
 
 
