@@ -99,5 +99,30 @@ public class SET_WAV {
 
 	 }
 
+   fun static void TABLA ( SEQ @ s) {
+		 "../_SAMPLES/Dirt_samples/tabla/" => string dir;
+			//dir + "" => s.wav[""];
+			dir + "024_lower6_hit.wav" => s.wav["A"];
+			dir + "022_lower4_hit.wav" => s.wav["B"];
+			dir + "019_lower1_hit.wav" => s.wav["C"];
+			dir + "020_lower2_hit.wav" => s.wav["D"];
+			dir + "021_lower3_hit.wav" => s.wav["E"];
+
+			dir + "006_d_sharp_hit.wav" => s.wav["a"];
+			dir + "018_hi_hit9.wav" => s.wav["b"];
+			dir + "000_bass_flick1.wav" => s.wav["c"];
+			dir + "007_hi_flick1.wav" => s.wav["d"];
+			dir + "008_hi_flick2.wav" => s.wav["e"];
+			dir + "009_hi_hit1.wav" => s.wav["f"];
+			dir + "010_hi_hit10.wav" => s.wav["g"];
+			dir + "012_hi_hit3.wav" => s.wav["h"];
+			dir + "013_hi_hit4.wav" => s.wav["i"];
+			
+			dir + "003_dead_hit1.wav" => s.wav[""];
+			dir + "004_dead_hit2.wav" => s.wav[""];
+			dir + "005_dead_hit3.wav" => s.wav[""];
+
+   }
+
 }
 
