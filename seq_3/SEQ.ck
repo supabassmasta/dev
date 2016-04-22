@@ -474,27 +474,40 @@ public class SEQ {
   // function to get audio out of object
   // only one of this to use at a time
   Gain mono_out => blackhole;
+  0 => int mono_out_active; 
   fun UGen mono() {
-    for (0 => int i; i < wav_o_byindex.size() ; i++) {
-      <<<"Unchuck wav ", i>>>; 
-      wav_o_byindex[i].mono() => mono_out;
+    if (!mono_out_active) {
+      for (0 => int i; i < wav_o_byindex.size() ; i++) {
+        <<<"Unchuck wav ", i>>>; 
+        wav_o_byindex[i].mono() => mono_out;
+      }
+      1 => mono_out_active;
     }
 
     return mono_out;
   }
 
   Gain left_out;
+  0=> int left_out_active;
   fun UGen left() {
-    for (0 => int i; i < wav_o_byindex.size() ; i++) {
-      wav_o_byindex[i].left() => left_out;
+    if (!left_out_active) {
+      for (0 => int i; i < wav_o_byindex.size() ; i++) {
+        wav_o_byindex[i].left() => left_out;
+      }
+      1 => left_out_active;
     }
 
     return left_out;
   }
+
+  0 => int right_out_active;
   Gain right_out;
   fun UGen right() {
-    for (0 => int i; i < wav_o_byindex.size() ; i++) {
-      wav_o_byindex[i].right() => right_out;
+    if (!right_out_active) {
+      for (0 => int i; i < wav_o_byindex.size() ; i++) {
+        wav_o_byindex[i].right() => right_out;
+      }
+      1 => right_out_active; 
     }
 
     return right_out;
