@@ -95,31 +95,48 @@ public class TONE {
 
   // function to get audio out of object
   // only one of this to use at a time
+  0 => int mono_out_active; 
   Gain mono_out;
   fun UGen mono() {
-    out =< pan;
-    out => mono_out;
+    if (!mono_out_active) {
+      1 => mono_out_active;
+      out =< pan;
+      out => mono_out;
+    }
 
     return mono_out;
   }
 
+  0=> int left_out_active;
   Gain left_out;
   fun UGen left() {
-    pan =< dac;
-    pan.left => left_out;
+    if (!left_out_active) {
+      pan =< dac;
+      pan.left => left_out;
+      1 => left_out_active;
+    }
     return left_out;
   }
+  
+  0 => int right_out_active;
   Gain right_out;
   fun UGen right() {
-    pan =< dac;
-    pan.right => right_out;
+    if (!right_out_active) {
+      pan =< dac;
+      pan.right => right_out;
+      1 => right_out_active; 
+    }
     return right_out;
   }
 
   // raw signal, no adsr
+  0 => int raw_out_active;
   fun UGen raw() {
-    out =< pan;
-    raw_out=> mono_out;
+    if (!raw_out_active) {
+      out =< pan;
+      raw_out=> mono_out;
+      1 => raw_out_active;
+    }
 
     return mono_out;
   }
