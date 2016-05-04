@@ -16,15 +16,16 @@ def find_name (p) :
 
   return re.sub("\W", "_", res)
 
+out = open("set_wav_out.ck", "w")
 
-
+letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 i = 0
 for (path, dirs, files) in os.walk(inpath):
-    print path
+    #print path
     #print dirs
     #print files
-    print "----"
+    #print "----"
 
     wav_in = 0
     wav_nb = 0
@@ -37,21 +38,34 @@ for (path, dirs, files) in os.walk(inpath):
             # create new set_wav
             set_wav_name = find_name(path)
             set_wav_name_base = set_wav_name
-            print ">>>>>>>>>>>>>>>>>>" + set_wav_name
+            #print ">>>>>>>>>>>>>>>>>>" + set_wav_name
 
-          wav_nb += 1
+            out.write ("fun static void " + set_wav_name + " ( SEQ @ s) {\n")
+            out.write ('\t"../' + path + '"  => string dir;\n\n')
+
 
           if wav_nb == 52 :
             # create additional set_wav
             set_wav_nb += 1
             wav_nb = 0
             set_wav_name = set_wav_name_base + "_" + str(set_wav_nb) 
-            print ">>>>>>>>>>>>>>>>>>" + set_wav_name
+            #print ">>>>>>>>>>>>>>>>>>" + set_wav_name
 
-          print f
-    print "****"
+            out.write("\n}\n\n")
+            out.write ("fun static void " + set_wav_name + " ( SEQ @ s) {\n")
+            out.write ('\t"../' + path + '"  => string dir;\n\n')
+
+          #print f
+
+          out.write('\tdir + "' + f + '" => s.wav["' + letters[wav_nb] + '"];\n')
+          wav_nb += 1
+
+      if wav_in == 1 :
+        out.write("\n}\n\n")
+    #print "****"
 
     #i += 1
     #if i >= 4:
     #    break
 
+out.close()
