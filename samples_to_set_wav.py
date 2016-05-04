@@ -1,32 +1,29 @@
 import os
+import re
 
 inpath = "_SAMPLES"
 
 def find_name (p) :
-  pos = p.rfind("/", p)
+  pos = p.rfind("/")
   if pos == -1 :
     return p
 
-  pos2 = p.rfind("/", p, 0, pos)
+  pos2 = p.rfind("/", 0, pos)
   if pos2 == -1 :
-    return p.replace("/", "_")
+    return re.sub("\W", "_", p)
 
   res = p[pos2 +1 ::]
 
-  return res.replace("/", "_")
+  return re.sub("\W", "_", res)
 
 
-
-print find_name("dez/ded/frf")
-
-  
 
 
 i = 0
 for (path, dirs, files) in os.walk(inpath):
     print path
-    print dirs
-    print files
+    #print dirs
+    #print files
     print "----"
 
     wav_in = 0
@@ -38,8 +35,9 @@ for (path, dirs, files) in os.walk(inpath):
           if wav_in == 0 :
             wav_in = 1
             # create new set_wav
-            # set_wav_name = 
-            # print set_wav_name
+            set_wav_name = find_name(path)
+            set_wav_name_base = set_wav_name
+            print ">>>>>>>>>>>>>>>>>>" + set_wav_name
 
           wav_nb += 1
 
@@ -47,12 +45,13 @@ for (path, dirs, files) in os.walk(inpath):
             # create additional set_wav
             set_wav_nb += 1
             wav_nb = 0
-            print set_wav_name
+            set_wav_name = set_wav_name_base + "_" + str(set_wav_nb) 
+            print ">>>>>>>>>>>>>>>>>>" + set_wav_name
 
           print f
     print "****"
 
-    i += 1
-    if i >= 4:
-        break
+    #i += 1
+    #if i >= 4:
+    #    break
 
