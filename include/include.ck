@@ -68,4 +68,5 @@ Machine.add( "../seq_3/TONE.ck");
 Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 me.yield();
 Machine.add( "../seq_3/SET_WAV.ck");
+Machine.add( "../seq_3/SET_WAV2.ck");
 me.yield();
