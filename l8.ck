@@ -5843,7 +5843,7 @@ fun static void __SAMPLES_REGGAE_SET_2_3 ( SEQ @ s) {
 SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous 
 
-_Dirt_samples_sitar(s);
+_Dirt_samples_msg(s);
 
 //"e____________" => s.seq;
 //"b__________________" => s.seq;
