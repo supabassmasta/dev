@@ -3,6 +3,9 @@ import re
 
 inpath = "_SAMPLES"
 
+letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+i = 0
+
 def find_name (p) :
   pos = p.rfind("/")
   if pos == -1 :
@@ -16,11 +19,11 @@ def find_name (p) :
 
   return re.sub("\W", "_", res)
 
-out = open("set_wav_out.ck", "w")
+out = open("seq_3/SET_WAV2.ck", "w")
 
-letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+out.write("public class SET_WAV2 {\n");
 
-i = 0
+
 for (path, dirs, files) in os.walk(inpath):
     #print path
     #print dirs
@@ -62,10 +65,8 @@ for (path, dirs, files) in os.walk(inpath):
 
       if wav_in == 1 :
         out.write("\n}\n\n")
-    #print "****"
 
-    #i += 1
-    #if i >= 4:
-    #    break
+
+out.write("}\n");
 
 out.close()
