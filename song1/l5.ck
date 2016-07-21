@@ -19,7 +19,7 @@ t.aeo(); //t.phr();t.loc();
  t.element_sync();
  
  // t.no_sync(); t.full_sync();     //t.print();
-// t.mono() => dac; t.left() => dac.left; t.right() => dac.right; t.raw => dac;
+ t.mono() => global_mixer.line3; //t.left() => dac.left; t.right() => dac.right; t.raw => dac;
 t.go(); 
 
 while(1) {
