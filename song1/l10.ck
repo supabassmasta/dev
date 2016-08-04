@@ -20,7 +20,7 @@ class synt0 extends SYNT{
 		LPFC f ;
 		//		inlet => SinOsc s => ABSaturator sat /*=>f */ =>  outlet;		
 		inlet => SinOsc s => ABSaturator sat =>f  =>  outlet;		
-		.7 => s.gain;
+		1.3 => s.gain;
 		7 => sat.drive;
 		1 => sat.dcOffset;
 

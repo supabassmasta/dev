@@ -1,7 +1,13 @@
 class synt0 extends SYNT{
 
-  inlet => SinOsc s => ADSR a => outlet; 
+  inlet => SinOsc s => ADSR a => LPF f => LPF f2=> outlet; 
+
   .2 => s.gain;
+
+	f2 => Gain rev => global_mixer.rev0;	
+
+	.1 => rev.gain;	
+
 
   7::ms => dur t2;
 
@@ -22,10 +28,19 @@ class synt0 extends SYNT{
   .5 => mod.freq;
 
   fun void on()  { }  fun void off() { } 
+
   fun void new_note(int idx)  {
     (mod.last() * 4 + 6)* 1::ms => t2;
+
+		inlet.last() * 2 => float fr;
+		if (fr < 10000)
+				fr => f.freq => f2.freq;
+		else
+			10000 => f.freq=> f2.freq;
+
     spork ~ f1 ();
   }
+
 } 
 
 TONE t;
