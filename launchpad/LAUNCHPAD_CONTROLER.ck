@@ -39,8 +39,8 @@ public class LAUNCHPAD {
 		<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
 
-		CONTROLER @ keys[121];
-		CONTROLER @ controls[112];
+		CONTROLER  keys[121];
+		CONTROLER  controls[112];
 
 
 		0 => int last_key;
@@ -55,7 +55,7 @@ public class LAUNCHPAD {
 
             while( min.recv(msg) )
             {
-                //                <<< msg.data1, msg.data2, msg.data3 >>>;
+                                <<< msg.data1, msg.data2, msg.data3 >>>;
 
 
                 if (msg.data1 == 144){
