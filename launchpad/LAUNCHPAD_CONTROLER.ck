@@ -60,7 +60,7 @@ public class LAUNCHPAD {
 
                 if (msg.data1 == 144){
                         keys[msg.data2].set(msg.data3); 
-                        if (msg.data2 != 8 &&msg.data2 != 24 &&msg.data2 != 40 &&msg.data2 != 56 &&msg.data2 != 72 &&msg.data2 != 88 &&msg.data2 != 104 && msg.data2 != 120 ) 
+//                        if (msg.data2 != 8 &&msg.data2 != 24 &&msg.data2 != 40 &&msg.data2 != 56 &&msg.data2 != 72 &&msg.data2 != 88 &&msg.data2 != 104 && msg.data2 != 120 ) 
                             msg.data2=> last_key;
                 }
                 else {

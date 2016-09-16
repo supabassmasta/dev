@@ -70,4 +70,5 @@ Machine.add( "../launchpad/LAUNCHPAD_CONTROLER.ck");
 me.yield();
 Machine.add( "../seq_3/SET_WAV.ck");
 Machine.add( "../seq_3/SET_WAV2.ck");
+Machine.add( "../launchpad/script_launcher.ck");
 me.yield();
