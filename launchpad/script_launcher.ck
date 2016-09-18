@@ -11,7 +11,7 @@ class script_launcher extends CONTROL {
 	0 => int zid;
 	0 => int pad_on;
 
-	fun void prepare(int in_nb, int in_note , LAUNCHPAD @ in_l ){
+	fun void prepare(int in_nb, int in_note , LAUNCHPAD @ in_l){
 		in_nb => nb;
 		in_note => note;
 		in_l @=> lau;
@@ -41,6 +41,7 @@ class script_launcher extends CONTROL {
 					lau.clearc(note);
 				else
 					lau.clear(note);
+
 			} 
 			else {
 				Machine.add( xname );
@@ -99,6 +100,51 @@ for (0 => int  i; i <  8     ; i++) {
 }
 
 l.start();
+
+// KB management
+    Hid hi;
+
+    // open keyboard 0
+    if( !hi.openKeyboard( 0 ) ) me.exit();
+    <<< "keyboard '" + hi.name() + "' ready", "" >>>;
+    spork ~ kb_management(hi);
+
+fun void kb_management (Hid hi)
+{
+	HidMsg msg; 
+	int num;
+	// infinite event loop
+	while( true )
+	{
+		// wait on event
+		hi => now;
+
+		// get one or more messages
+		while( hi.recv( msg ) )
+		{
+			//<<<"note_active 1",note_active>>>;
+			// check for action type
+			if( msg.isButtonDown() )
+			{
+//				<<< "down:", msg.which, "(code)", msg.key, "(usb key)", msg.ascii, "(ascii)" >>>;
+				//--------------------------------------------//
+				//--------------------------------------------//
+				if(msg.which == 31)
+				{
+					<<<"replace YI">>>;
+          500::ms => now;
+					// Get last key (note, will not work wity controls on the top of launchpad)
+					l.keys[l.last_key].controls[0] $ script_launcher @=> script_launcher last;
+					if (last.pad_on == 1) {
+							 killer.kill(last.zid);	
+						   Machine.add(last.zname) => last.zid;
+					}
+				}
+			} 
+		}
+	}
+}
+
 while(1) {
 	     100::ms => now;
 }
