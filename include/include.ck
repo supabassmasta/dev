@@ -57,6 +57,7 @@ Machine.add("../SYNT/HORROR.ck");
 Machine.add("../SYNT/GRAIN.ck");
 Machine.add("../SYNT/TB303.ck");
 Machine.add("../SYNT/TB303C.ck");
+Machine.add("../SYNT/MOD.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
