@@ -29,6 +29,8 @@ Machine.add( "../NANOKONTROL/NANO.ck");
 Machine.add( "../seq_3/ACTION.ck");
 Machine.add( "../seq_3/ELEMENT.ck");
 
+Machine.add( "../include/SIN.ck");
+
 me.yield();
 //Machine.add("../seq_2/top_seq.ck");
 Machine.add("../seq_2/seq.ck");
