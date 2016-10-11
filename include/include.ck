@@ -31,6 +31,7 @@ Machine.add( "../seq_3/ELEMENT.ck");
 
 Machine.add( "../include/SIN.ck");
 
+Machine.add( "../EFFECTS/ST.ck");
 me.yield();
 //Machine.add("../seq_2/top_seq.ck");
 Machine.add("../seq_2/seq.ck");
@@ -63,6 +64,7 @@ Machine.add("../SYNT/MOD.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
+Machine.add("../EFFECTS/STECHO.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

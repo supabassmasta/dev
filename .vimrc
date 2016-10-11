@@ -466,4 +466,5 @@ ab MODK class synt0 extends SYNT{
 \<CR>} 
 
 
-
+ab STECHOK STECHO ech;
+\<CR>ech.connect(t $ ST , 8 * data.tick, .5);

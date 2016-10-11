@@ -1,4 +1,4 @@
-public class TONE {
+public class TONE extends ST {
 
   SYNT synt[0];
   Envelope env[0];
@@ -13,7 +13,9 @@ public class TONE {
   1. => one.next;
 
   // Output for all synt and adsr
-  Gain out  => Pan2 pan => dac;
+  Gain out  => Pan2 pan ;
+  pan.right => outr => dac.right;
+  pan.left => outl => dac.left;
   Gain raw_out;
   .2 => raw_out.gain;
 
@@ -107,6 +109,8 @@ public class TONE {
     return mono_out;
   }
 
+  //Now defined in ST
+  /*
   0=> int left_out_active;
   Gain left_out;
   fun UGen left() {
@@ -128,6 +132,7 @@ public class TONE {
     }
     return right_out;
   }
+*/
 
   // raw signal, no adsr
   0 => int raw_out_active;

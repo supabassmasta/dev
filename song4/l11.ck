@@ -90,15 +90,31 @@ t.reg(synt0 s1); t.reg(synt0 s2); //data.tick * 8 => t.max; //60::ms => t.glide;
 "  ___1___)6B______(54_)93______(5d_______)2a_______(95)9_|5(95______)56__(56__ " => t.seq;
  t.element_sync(); //t.no_sync(); t.full_sync();     //t.print();
 // t.mono() => dac; t.left() => dac.left; t.right() => dac.right; t.raw => dac;
- t.left() => Gain fb => dac.left;
- fb => Delay d => fb;
- .5 => d.gain;
- 8* data.tick => d.max => d.delay;
- t.right() => Gain fbr => dac.right;
- fbr => Delay dr => fbr;
- .5 => dr.gain;
- 8* data.tick => dr.max => dr.delay;
 
+
+
+/*
+class STECHO extends ST{
+
+ Gain fbl => outl;
+ fbl => Delay dl => fbl;
+
+ Gain fbr => outr;
+ fbr => Delay dr => fbr;
+
+  fun void connect(ST @ tone, dur d, float g) {
+    tone.left() => fbl;
+    tone.right() => fbr;
+
+    g =>  dl.gain => dr.gain;
+    d => dl.max => dl.delay => dr.max => dr.delay;
+
+  }
+
+}
+*/
+STECHO ech;
+ech.connect(t $ ST , 8 * data.tick, .5);
 
 t.go(); 
 
