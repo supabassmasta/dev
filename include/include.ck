@@ -66,6 +66,7 @@ Machine.add("../SYNT/MOD.ck");
 Machine.add("../EFFECTS/LPF_ST.ck");
 Machine.add("../EFFECTS/STECHO.ck");
 Machine.add("../EFFECTS/STREV1.ck");
+Machine.add("../EFFECTS/STAUTOPAN.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

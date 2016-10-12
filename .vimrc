@@ -368,18 +368,19 @@ ab gverbK GVerb gverb0  =>
 \<CR>0.3 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5      
 
 ab TONEK TONE t;
-\<CR>t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
+\<CR>t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"" => t.seq;
-\<CR>// t.element_sync(); t.no_sync(); t.full_sync();     //t.print();
-\<CR>// t.mono() => dac; t.left() => dac.left; t.right() => dac.right; t.raw => dac;
+\<CR>// t.element_sync();//  t.no_sync();//  t.full_sync();     //t.print();
+\<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+\<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 \<CR>t.go();
 
-ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);
+ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s);
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
-\<CR>// s.element_sync(); s.no_sync(); s.full_sync();     //s.print();
-\<CR>// s.mono() => dac; s.left() => dac.left; s.right() => dac.right;
+\<CR>// s.element_sync(); //s.no_sync(); //s.full_sync();     //s.print();
+\<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>s.go();
  
 
@@ -471,3 +472,8 @@ ab STECHOK STECHO ech;
 
 ab STREV1K STREV1 rev;
 \<CR>rev.connect(t $ ST, .3 /* mix */);
+
+
+ab STAUTOPANK STAUTOPAN autopan;
+\<CR>autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ ); 
+
