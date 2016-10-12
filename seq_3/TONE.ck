@@ -14,8 +14,8 @@ public class TONE extends ST {
 
   // Output for all synt and adsr
   Gain out  => Pan2 pan ;
-  pan.right => outr => dac.right;
-  pan.left => outl => dac.left;
+  pan.right => outr ; // got to dac via ST class
+  pan.left => outl ;
   Gain raw_out;
   .2 => raw_out.gain;
 
