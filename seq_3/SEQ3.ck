@@ -11,7 +11,7 @@ public class SEQ3 {
   Shred @ id_go;
   ELEMENT elements[0];
 
-  0 => int sync_mode;
+  1 => int sync_mode;
   fun void no_sync()      {0=>sync_mode ;}
   fun void element_sync() {1 => sync_mode ;}
   fun void full_sync()    {2 => sync_mode ;}

@@ -1,4 +1,4 @@
-public class SEQ {
+public class SEQ extends ST{
   // PUBLIC 
   string wav[0];
   ACTION @ action[0];
@@ -487,8 +487,8 @@ public class SEQ {
     return mono_out;
   }
 
-  Gain left_out;
-  0=> int left_out_active;
+//  Gain left_out;
+//  0=> int left_out_active;
   fun UGen left() {
     if (!left_out_active) {
       for (0 => int i; i < wav_o_byindex.size() ; i++) {
@@ -500,8 +500,8 @@ public class SEQ {
     return left_out;
   }
 
-  0 => int right_out_active;
-  Gain right_out;
+//  0 => int right_out_active;
+//  Gain right_out;
   fun UGen right() {
     if (!right_out_active) {
       for (0 => int i; i < wav_o_byindex.size() ; i++) {
