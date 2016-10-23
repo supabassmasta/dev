@@ -477,3 +477,18 @@ ab STREV1K STREV1 rev;
 ab STAUTOPANK STAUTOPAN autopan;
 \<CR>autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ ); 
 
+ab POLYK lpk25 l;
+\<CR>POLY synta; 
+\<CR>l.reg(synta);
+\<CR>synta.reg(synt0 s0);  synta.a[0].set(3::ms, 30::ms, .7, 100::ms);
+\<CR>synta.reg(synt0 s1);  synta.a[1].set(3::ms, 30::ms, .7, 100::ms);
+\<CR>synta.reg(synt0 s2);  synta.a[2].set(3::ms, 30::ms, .7, 100::ms);
+\<CR>synta.reg(synt0 s3);  synta.a[3].set(3::ms, 30::ms, .7, 100::ms);
+
+ab GLIDEK lpk25 l;
+\<CR>GLIDE synta; 20::ms => synta.duration;	300::ms => synta.release; synta.adsr.set(3::ms, 30::ms, .7,  synta.release);
+\<CR>l.reg(synta);
+\<CR>synta.reg(synt0 s0);
+
+
+

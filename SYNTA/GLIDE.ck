@@ -9,6 +9,7 @@ public class GLIDE extends SYNTA {
 fun void reg (SYNT @ in){
 		in @=> synt;
 		e => synt => adsr;
+		.2 => synt.gain;
 
 }
 		1. => one.next;

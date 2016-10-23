@@ -18,7 +18,7 @@ t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 
 
 STAUTOPAN autopan;
-autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ ); 
+autopan.connect(t $ ST, -.9 /* span 0..1 */, 7*data.tick /* period */, 0.0 /* phase 0..1 */ ); 
 
 t.go();
 
