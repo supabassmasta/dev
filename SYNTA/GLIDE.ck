@@ -3,7 +3,9 @@ public class GLIDE extends SYNTA {
 		20::ms => dur duration;
 
 		Step one => Envelope e;
-		ADSR adsr => dac;
+		ADSR adsr => Pan2 pan;
+    pan.right => outr;
+    pan.left  => outl;
 
 		SYNT @ synt;
 fun void reg (SYNT @ in){

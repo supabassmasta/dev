@@ -7,6 +7,10 @@ public class POLY extends SYNTA {
 		
 		SYNT @ s[0];
 
+    Pan2 pan;
+    pan.right => outr;
+    pan.left  => outl;
+    
 		
 		fun void reg(SYNT in) {
 			s.size() + 1 => s.size;
@@ -21,7 +25,7 @@ public class POLY extends SYNTA {
 			note.size() + 1 => note.size;
 
 			a[i].keyOff();
-			f[i] =>  s[i] =>  a[i] => dac;
+			f[i] =>  s[i] =>  a[i] => pan;
 			.2 => s[i].gain;
 		  a[i].set(3::ms, 30::ms, .7, 100::ms);
 
