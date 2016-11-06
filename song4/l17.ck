@@ -56,11 +56,15 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s);
 ACOUSTIC(s);
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 //"*4k_k_w__<<s_<<sk_w__s" => s.seq;
-"*4hfhfhfifhfiHhfhf" => s.seq;
+"*4(4 -3h)4-3fhfhfifhfiHhfhf" => s.seq;
 //"*4fh" => s.seq;
  s.element_sync(); //s.no_sync(); //s.full_sync();     //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+
 s.go(); 
+STREV1 rev;
+rev.connect(s $ ST, .22 /* mix */); 
+
 
 
 while(1) {
