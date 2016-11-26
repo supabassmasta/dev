@@ -21,6 +21,9 @@ public class global_mixer {
    static Gain @ rev1_left;
    
    static Event @ duck_trig;
+
+   static Dyno @ stduck_l;
+   static Dyno @ stduck_r;
 }
 
    Gain bar1 @=> global_mixer.line1;
@@ -46,5 +49,9 @@ public class global_mixer {
    Gain bar16 @=> global_mixer.rev0;
    Gain bar17 @=> global_mixer.rev1_right;
    Gain bar18 @=> global_mixer.rev1_left;
+   Dyno bar19 @=> global_mixer.stduck_l;
+	 bar19 => dac.left;
+   Dyno bar20 @=> global_mixer.stduck_r;
+	 bar20 => dac.right;
 
-   while(1) 1000::ms => now;
+while(1) 1000::ms => now;
