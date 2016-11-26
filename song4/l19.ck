@@ -1,3 +1,4 @@
+
 class synt0 extends SYNT{
   inlet => Gain in;
   Gain out =>  outlet;   
@@ -109,7 +110,11 @@ class synt1 extends SYNT{
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); t.ion(); t.mix();t.dor();t.aeo(); t.phr();t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"{c *4  1" => t.seq;
+"{c *4  1!111!"=> t.seq;
+"51!131!15!575!5"=> t.seq;
+":2 !1_8/1 " => t.seq;
+
+
 // t.element_sync(); t.no_sync(); t.full_sync();     //t.print();
  t.mono() => Dyno dy => dac; //
 //t.left() => dac.left; t.right() => dac.right; t.raw => dac;
@@ -121,10 +126,10 @@ dy.duck();
 30::ms => dy.releaseTime;
 .04 => dy.thresh;
 
-SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);
+SEQ s;  data.tick * 4 => s.max;  // SET_WAV.DUBSTEP(s);
  SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"+++k|n" => s.seq;
+"*4 +++ k|n_k|n_k|nk|n__k|n__s" => s.seq;
 // s.element_sync(); //s.no_sync(); //s.full_sync();     //s.print();
  s.mono() => Gain indy => dac; 
 // s.mono() => Gain indy => blackhole; 
