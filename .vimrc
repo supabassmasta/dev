@@ -491,4 +491,9 @@ ab GLIDEK lpk25 l;
 \<CR>synta.reg(synt0 s0);
 
 
+ab STDUCKMASTERK STDUCKMASTER duckm;
+\<CR>duckm.connect(s $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );
+
+ab STDUCKK STDUCK duck;
+\<CR>duck.connect(t $ ST);
 

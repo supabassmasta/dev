@@ -7,8 +7,7 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);
 s.go(); 
 
 STDUCKMASTER duckm;
-duckm.connect(s);
-
+duckm.connect(s $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ ); 
 
 while(1) {
 	     100::ms => now;

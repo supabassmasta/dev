@@ -1,20 +1,10 @@
 public class STDUCKMASTER extends ST {
 	global_mixer.stduck_l.duck();
-	.2 => global_mixer.stduck_l.slopeAbove;
-	2::ms => global_mixer.stduck_l.attackTime;
-	30::ms => global_mixer.stduck_l.releaseTime;
-	.04 => global_mixer.stduck_l.thresh;
 
 	global_mixer.stduck_r.duck();
-	.2 => global_mixer.stduck_r.slopeAbove;
-	2::ms => global_mixer.stduck_r.attackTime;
-	30::ms => global_mixer.stduck_r.releaseTime;
-	.04 => global_mixer.stduck_r.thresh;
 
 	Gain sidein_l => blackhole;
 	Gain sidein_r => blackhole;
-	9=>sidein_l.gain;
-	9=>sidein_r.gain;
 
 	fun void side_process(){ 
 
@@ -27,8 +17,24 @@ public class STDUCKMASTER extends ST {
 
 	} 
 
-	fun void connect(ST @ tone) {
-		tone.left() => sidein_l;
+	fun void connect(ST @ tone, float in_gain, float tresh, float slope, dur attack, dur release) {
+
+	in_gain => sidein_l.gain;
+	in_gain => sidein_r.gain;
+	
+	tresh => global_mixer.stduck_l.thresh;
+	tresh => global_mixer.stduck_r.thresh;
+
+	slope => global_mixer.stduck_l.slopeAbove;
+	slope => global_mixer.stduck_r.slopeAbove;
+
+	attack => global_mixer.stduck_l.attackTime;
+	attack => global_mixer.stduck_r.attackTime;
+
+	release => global_mixer.stduck_l.releaseTime;
+	release => global_mixer.stduck_r.releaseTime;
+  
+  tone.left() => sidein_l;
 		tone.right() => sidein_r; 
 
 		tone.left() => outl;
