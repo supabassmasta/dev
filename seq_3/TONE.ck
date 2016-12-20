@@ -539,7 +539,8 @@ public class TONE extends ST {
           2 => on_state[id];
 
           // Remember it was on on first element
-				  if( s.elements.size() == 0){
+				  if( s.elements.size() == 0 ||
+						  s.elements[0] == e){
             2 => on_state_on_start[id];
           }
 
