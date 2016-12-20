@@ -31,8 +31,8 @@ t.go();
 STREV1 rev;
 rev.connect(t $ ST, .5 /* mix */); 
 
-//STDUCK duck;
-//duck.connect(rev $ ST); 
+STDUCK duck;
+duck.connect(rev $ ST); 
 
 
 

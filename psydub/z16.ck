@@ -18,9 +18,9 @@ class synt0 extends SYNT{
 
 			//---------------------
 			opin[i] => osc[i] => adsrop[i] => opout[i];
-			1./2. + 0.00 => opin[i].gain;
-			adsrop[i].set(10::ms, 100::ms, .1 , 200::ms);
-			100 * 5 => adsrop[i].gain;
+			1./8. + 0.00 => opin[i].gain;
+			adsrop[i].set(10::ms, 100::ms, .9 , 200::ms);
+			100 * 3 => adsrop[i].gain;
 			i++;
 
 			//---------------------
@@ -43,7 +43,10 @@ class synt0 extends SYNT{
 
 			// modulators
 			in => opin[1];
-			opout[1] => opin[0];
+//			opout[1] => opin[0];
+				
+//			Noise n => opin[0];	
+//			10 * 2 => n.gain;
 
 			in => opin[2];
 			// opout[2] => opin[0];
@@ -52,7 +55,7 @@ class synt0 extends SYNT{
 			// opout[3] => opin[0];
 
 
-			.05 => out.gain;
+			.03 => out.gain;
 
 			fun void on()  
 			{
@@ -83,28 +86,19 @@ class synt0 extends SYNT{
 
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-t.reg(synt0 s3);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-t.reg(synt0 s4);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-t.reg(synt0 s5);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-t.reg(synt0 s6);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion();  
 t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c :2 1|4|6|71|3|5|71|3|6|7" => t.seq;
+"}c}c}c *4 ---__1__6_6_737_58_74_46__35_5_1_1_" => t.seq;
 // t.element_sync();//  t.no_sync();//  t.full_sync();     
 t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(200::ms, 10::ms, 1., 800::ms);
-t.adsr[1].set(200::ms, 10::ms, 1., 800::ms);
-t.adsr[2].set(200::ms, 10::ms, 1., 800::ms);
-t.adsr[3].set(200::ms, 10::ms, 1., 800::ms);
-t.adsr[4].set(200::ms, 10::ms, 1., 800::ms);
-t.adsr[5].set(200::ms, 10::ms, 1., 800::ms);
+t.adsr[0].set(20::ms, 10::ms, .8, 800::ms);
 t.go(); 
-
+STAUTOPAN autopan;
+autopan.connect(t $ ST, .8 /* span 0..1 */, 6*data.tick /* period */, 0.5 /* phase 0..1 */ );  
 
 STREV1 rev;
-rev.connect(t $ ST, .5 /* mix */); 
+rev.connect(autopan $ ST, .4 /* mix */); 
 
 STDUCK duck;
 duck.connect(rev $ ST); 
