@@ -517,5 +517,15 @@ public class SEQ extends ST{
     s.print();
   }
 
+  // update all wavs
+  fun void gain (float in) {
+      for (0 => int i; i < wav_o_byindex.size() ; i++) {
+        in =>  wav_o_byindex[i].gain;
+      }
+  }
+
+  fun void gain (string s, float in) {
+    in => wav_o[s].gain;
+  }
 }
 

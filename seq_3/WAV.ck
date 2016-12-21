@@ -1,7 +1,7 @@
 public class WAV {
     SndBuf wav0;
     Pan2 pan_wav0;
-
+    Gain gain_wav0; 
     //PLAY 
     class play_wav extends ACTION {
         SndBuf @ buf;
@@ -109,8 +109,8 @@ public class WAV {
 
     // function to get audio out of object
     fun UGen mono() {
-            wav0 =< pan_wav0;
-            return wav0;
+            gain_wav0 =< pan_wav0;
+            return gain_wav0;
     }
     fun UGen left() {
             pan_wav0=< dac;
@@ -121,10 +121,14 @@ public class WAV {
             return pan_wav0.right;
     }
 
-    wav0 =>  pan_wav0 => dac;
+    wav0 => gain_wav0 =>  pan_wav0 => dac;
     0. => pan_wav0.pan;
     0.3 => wav0.gain;
     wav0.samples() => wav0.pos;
+
+    fun void gain(float in) {
+      in => gain_wav0.gain;
+    }
 
 }
 

@@ -1,6 +1,6 @@
 Fix TONE on first note re-trgiggered every time
 Fix set gain on first note in TONE
-add gain() to TONE and SEQ
+Fix no_sync and unique play
 
 AUTOWHA  , ST?
 

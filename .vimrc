@@ -380,6 +380,7 @@ ab TONEK TONE t;
 ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
+\<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
 \<CR>// s.element_sync(); //s.no_sync(); //s.full_sync();     //s.print();
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>s.go();
