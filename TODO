@@ -1,0 +1,11 @@
+Fix TONE on first note re-trgiggered every time
+Fix set gain on first note in TONE
+add gain() to TONE and SEQ
+
+AUTOWHA  , ST?
+
+ST effect + controller
+
+Check filters behaviour on baudeline
+
+STAUTOREC with sync, duration, name, attack/Release dur

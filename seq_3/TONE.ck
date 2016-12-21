@@ -17,7 +17,11 @@ public class TONE extends ST {
   pan.right => outr ; // got to dac via ST class
   pan.left => outl ;
   Gain raw_out;
-  .2 => raw_out.gain;
+//  .2 => raw_out.gain;
+
+  fun void gain(float in) {
+    in => out.gain => raw_out.gain;
+  }
 
   data.ref_note => int base_note;
   data.tick =>  dur base_dur;
