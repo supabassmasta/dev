@@ -54,7 +54,7 @@ class synt0 extends SYNT{
 			// opout[3] => opin[0];
 
 
-			.05 => out.gain;
+			.07 => out.gain;
 
 			fun void on()  
 			{
