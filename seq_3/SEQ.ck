@@ -449,18 +449,23 @@ public class SEQ extends ST{
 
   class END extends end { 
     SEQ3 @ s; 
-
+    0::ms => dur extra_end;
+    
     fun void kill_me () {
       <<<"THE END">>>;	
       // Mute seq
       0 => s.on;
       // Wait seq duration before diing (not optimal)
-      s.duration => now;		
+      s.duration +  extra_end => now;		
       <<<"THE real END">>>;		
     }
   }; 
   END the_end;   
   s @=> the_end.s;
+
+  fun void extra_end(dur in) {
+    in => the_end.extra_end;
+  }
 
   fun void go(){
     // Get id from caller shred
@@ -525,7 +530,9 @@ public class SEQ extends ST{
   }
 
   fun void gain (string s, float in) {
-    in => wav_o[s].gain;
+    if (wav_o[s] != NULL){
+      in => wav_o[s].gain;
+    }
   }
 }
 
