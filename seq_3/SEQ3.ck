@@ -39,8 +39,8 @@ public class SEQ3 {
 
     // initial SYNC
     if (sync_mode == 0) {
-        // Start now and save ref_time
-        now => ref_time;
+        // Start now (+ 10::ms for processing) and save ref_time
+        now + 10::ms => ref_time;
     }
     else if (sync_mode == 1) {
         now - ((now - sync_offset)%duration) => ref_time;
