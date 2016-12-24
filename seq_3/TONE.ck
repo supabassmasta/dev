@@ -826,9 +826,6 @@ public class TONE extends ST {
         // synt already on but we need to on it if the seq start here
         s.elements[0].on_actions << set_on_adsr(adsr[j]); 
         s.elements[0].on_actions << set_synt_on(synt[j]); 
-        // also set freq and new note
-        s.elements[0].actions << set_freq_synt(env[j], freq[j] ); 
-        s.elements[0].actions << set_synt_new_note(synt[j], s.elements.size()); 
       }
     }
 
