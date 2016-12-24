@@ -523,21 +523,26 @@ public class TONE extends ST {
 
           }
 
-          if (on_state[id] == 0) {
-            e.actions << set_on_adsr(adsr[id]); 
-            e.actions << set_synt_on(synt[id]); 
-          }
-          else {
-            // Manage on_actions
-            // synt already on but we need to on it if the seq start here
-            e.on_actions << set_on_adsr(adsr[id]); 
-            e.on_actions << set_synt_on(synt[id]); 
-            // also set freq and new note
-            e.actions << set_freq_synt(env[id], freq[id] ); 
-            e.actions << set_synt_new_note(synt[id], s.elements.size()); 
 
-          }
+          // Managa note on for first note at the end, once we now the last note
+          if(!( s.elements.size() == 0 ||
+						  s.elements[0] == e) ){
 
+            if (on_state[id] == 0) {
+              e.actions << set_on_adsr(adsr[id]); 
+              e.actions << set_synt_on(synt[id]); 
+            }
+            else {
+              // Manage on_actions
+              // synt already on but we need to on it if the seq start here
+              e.on_actions << set_on_adsr(adsr[id]); 
+              e.on_actions << set_synt_on(synt[id]); 
+              // also set freq and new note
+              e.actions << set_freq_synt(env[id], freq[id] ); 
+              e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+
+            }
+          }
 
           // Store that synt is on
           2 => on_state[id];
@@ -803,12 +808,27 @@ public class TONE extends ST {
       i++;
     }
 
-    // KeyOff all adsr that are not on in first element
+    // Manage last and first note
     for (0 => int j; j < adsr.size() ; j++) {
       if (on_state[j] != 0 && on_state_on_start[j] == 0) {
+      // KeyOff all adsr that are not on in first element
         s.elements[0].actions << set_off_adsr(adsr[j]);                
         s.elements[0].actions << set_synt_off(synt[j]);                
         0 => on_state[j];
+      }
+      else if (on_state[j] == 0 && on_state_on_start[j] != 0) {
+        // synt off on last, On on first
+        s.elements[0].actions << set_on_adsr(adsr[j]);                
+        s.elements[0].actions << set_synt_on(synt[j]);                
+      }
+      else if (on_state[j] != 0 && on_state_on_start[j] != 0) {
+        // Manage on_actions
+        // synt already on but we need to on it if the seq start here
+        s.elements[0].on_actions << set_on_adsr(adsr[j]); 
+        s.elements[0].on_actions << set_synt_on(synt[j]); 
+        // also set freq and new note
+        s.elements[0].actions << set_freq_synt(env[j], freq[j] ); 
+        s.elements[0].actions << set_synt_new_note(synt[j], s.elements.size()); 
       }
     }
 
