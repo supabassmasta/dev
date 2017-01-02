@@ -1,7 +1,7 @@
 class synt0 extends SYNT{
 
 		inlet => SinOsc s =>  outlet;		
-				.8 => s.gain;
+				.7 => s.gain;
 
 						fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
 } 

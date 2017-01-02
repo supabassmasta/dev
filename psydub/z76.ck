@@ -1,13 +1,15 @@
 class synt0 extends SYNT{
 
-		inlet => SqrOsc s => LPF lpf =>  outlet;		
+		inlet => Gain in => SqrOsc s => LPF lpf =>  outlet;		
 				.2 => s.gain;
+				.25 => in.gain;
 
 				fun void f1 (){ 
 					while(1) {
 						//	<<<"POT",LPD8.pot[0][0]>>>; 
 						Std.mtof(LPD8.pot[0][0]) => lpf.freq;
-						LPD8.pot[0][1] * 6. / 127. => lpf.Q;
+						LPD8.pot[0][1] * 12. / 127. => lpf.Q;
+						LPD8.pot[0][2] / 127. => s.width;	
 						10::ms => now;
 					}
  
