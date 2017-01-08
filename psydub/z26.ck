@@ -17,24 +17,24 @@ class synt0 extends SYNT{
 			i++;
 
 			//---------------------
-			opin[i] => TriOsc mod => adsrop[i] => opout[i];
-			1./3. + 0.002 => opin[i].gain;
-			adsrop[i].set(1::ms, 10::ms, .01 , 200::ms);
-			100 * 7 => adsrop[i].gain;
+			opin[i] => osc[i] => adsrop[i] => opout[i];
+			1./2. + 0.00 => opin[i].gain;
+			adsrop[i].set(10::ms, 100::ms, .1 , 200::ms);
+			100 * 4 => adsrop[i].gain;
 			i++;
 
 			//---------------------
 			opin[i] => osc[i] => adsrop[i] => opout[i];
-			1./13. +0.0 => opin[i].gain;
-			adsrop[i].set(1560::ms, 186::ms, .5 , 1800::ms);
-			0 => adsrop[i].gain;
+			1./8. +0.0 => opin[i].gain;
+			adsrop[i].set(10::ms, 18::ms, .0001 , 1800::ms);
+			43 => adsrop[i].gain;
 			i++;
 
 			//---------------------
 			opin[i] => osc[i] => adsrop[i] => opout[i];
 			1./2. +0.000 => opin[i].gain;
 			adsrop[i].set(200::ms, 186::ms, .2 , 400::ms);
-			5 => adsrop[i].gain;
+			30 => adsrop[i].gain;
 			i++;
 
 			// connect operators
@@ -46,10 +46,10 @@ class synt0 extends SYNT{
 			opout[1] => opin[0];
 
 			in => opin[2];
-			 opout[2] => opin[0];
+		 opout[2] => opin[0];
 
 			in => opin[3];
-			 opout[3] => opin[0];
+			// opout[3] => opin[0];
 
 
 			.5 => out.gain;
@@ -80,15 +80,25 @@ class synt0 extends SYNT{
 							}
 }  
 
+
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+t.reg(synt0 s3);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4  51__ 14!3_ _7_7 _1!1_" => t.seq;
-.4 => t.gain;
-// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+"*4" => t.seq;  
+"1__6 __75 !6_3!1 ___A" => t.seq;
+"!1__6 __75 !6_3!1 __A_" => t.seq;
+"1__6 __75 !6_3!1 _A__" => t.seq;
+"1__6 __75 !6_3!1 _A//8_" => t.seq;
+.7 => t.gain;
+ t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 t.go(); 
+
+//STDUCK duck;
+//duck.connect(t $ ST); 
 
 while(1) {
 	     100::ms => now;
