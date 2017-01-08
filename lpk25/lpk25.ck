@@ -4,6 +4,7 @@ public class lpk25 {
 
 	MidiIn min;
 	MidiMsg msg;
+	MidiOut mout;	
 
   SYNTA synta[0];
 
@@ -17,6 +18,15 @@ public class lpk25 {
 		{
 			if ( min.name() == device ) {
 				<<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
+
+				if(mout.open(i)) {
+					<<< "device", i, "->", min.name(), "->", "open as output: SUCCESS" >>>;
+				}
+				else {
+					<<<"Fail to open lpk25 as output">>>; 
+
+				}
+
 				break;
 			}
 			else {
@@ -53,6 +63,21 @@ public class lpk25 {
 		synta << s;
 	}
 		
+
+	fun void midi_clock (){ 
+			MidiMsg msg;
+
+			0xF8 => msg.data1;
+			0xF8 => msg.data2;
+			0xF8 => msg.data3;
+		while(1) {
+			mout.send(msg);
+			     data.tick / 4 / 24 => now;
+		}
+		 
+	} 
+	spork ~ midi_clock ();
+		  
 	
 	}
 
