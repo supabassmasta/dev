@@ -32,9 +32,9 @@ class synt0 extends SYNT{
 
 			//---------------------
 			opin[i] => osc[i] => adsrop[i] => opout[i];
-			1./8. +0.000 => opin[i].gain;
-			adsrop[i].set(10::ms, 100::ms, .1 , 200::ms);
-			30 => adsrop[i].gain;
+			1. => opin[i].gain;
+			adsrop[i].set(10::ms, 100::ms, .9 , 200::ms);
+			.6 => adsrop[i].gain;
 			i++;
 
 			// connect operators
@@ -49,7 +49,7 @@ class synt0 extends SYNT{
 		 opout[2] => opin[0];
 
 			in => opin[3];
-			 opout[3] => opin[0];
+		//	 opout[3] => out; 
 
 
 			.5 => out.gain;
@@ -85,8 +85,10 @@ class synt0 extends SYNT{
 			fun void f1 (){ 
 					while(1) {
 						//	<<<"POT",LPD8.pot[0][0]>>>; 
-						LPD8.pot[1][0]  * 8  => adsrop[1].gain;
-						LPD8.pot[1][1]  * 8  => adsrop[2].gain;
+						 LPD8.pot[1][0]  * 8 + LPD8.pot[1][1] / ( 1 * 127.) => adsrop[1].gain;
+						1./2. + LPD8.pot[1][1] / ( 1 * 127.) => opin[1].gain;
+						// LPD8.pot[1][0]  * 8  => adsrop[1].gain;
+						//LPD8.pot[1][1]  * 8  => adsrop[2].gain;
 						LPD8.pot[1][2]  * 8  => adsrop[3].gain;
 						10::ms => now;
 					}

@@ -110,4 +110,5 @@ public class NANO {
     spork ~ start_midi_rcv();
   }
 
+  start();
 }

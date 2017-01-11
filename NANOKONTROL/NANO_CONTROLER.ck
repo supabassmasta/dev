@@ -26,7 +26,7 @@ public class NANO_CONTROLER extends NANO {
 }
 
 
-NANO_CONTROLER instance;
+//NANO_CONTROLER instance;
 
 while(1) {
        100::ms => now;
