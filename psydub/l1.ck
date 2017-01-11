@@ -56,21 +56,21 @@ class STECHOC extends ST{
   }
 
 }
-NANO_CONTROLER nano;
+//NANO_CONTROLER nano;
 STECHOC ech;
-ech.connect(s $ ST , nano.potar[1][1] , nano.fader[1][1] ); 
+ech.connect(s $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
 
-nano.fader[1][1].set(64);
+HW.nano.fader[1][1].set(64);
 
-nano.potar[1][1].set(16);
-
-4 * data.tick => now;
-
-nano.potar[1][1].set(8);
+HW.nano.potar[1][1].set(16);
 
 4 * data.tick => now;
 
-nano.potar[1][1].set(4);
+HW.nano.potar[1][1].set(8);
+
+4 * data.tick => now;
+
+HW.nano.potar[1][1].set(4);
 
 4 * data.tick => now;
 
