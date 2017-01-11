@@ -26,7 +26,16 @@ public class NANO_CONTROLER extends NANO {
 }
 
 
+NANO_CONTROLER instance;
+
+while(1) {
+       100::ms => now;
+}
+ 
+
+
 // TEST
+/*
 class test_control extends CONTROL {
     fun void set (float in) {
       <<<"test_control", in>>>;
@@ -66,3 +75,5 @@ while (1) {
 
   1000::ms => now;
 }
+
+*/
