@@ -73,6 +73,7 @@ Machine.add("../EFFECTS/STREV1.ck");
 Machine.add("../EFFECTS/STAUTOPAN.ck");
 Machine.add( "../EFFECTS/STDUCKMASTER.ck");
 Machine.add( "../EFFECTS/STDUCK.ck");
+Machine.add( "../EFFECTS/STECHOC.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

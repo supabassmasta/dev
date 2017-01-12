@@ -499,3 +499,6 @@ ab STDUCKMASTERK STDUCKMASTER duckm;
 ab STDUCKK STDUCK duck;
 \<CR>duck.connect(t $ ST);
 
+ab STECHOCK STECHOC ech;
+\<CR>ech.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+

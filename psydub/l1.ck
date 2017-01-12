@@ -26,7 +26,7 @@ class STECHOC extends ST{
     
     fun void set (float in) {
       <<<"control_gain", in>>>;
-      in / 127. =>  dlp.gain => drp.gain;
+      in / 100. =>  dlp.gain => drp.gain;
 
     }
   }
@@ -40,7 +40,7 @@ class STECHOC extends ST{
     fun void set (float in) {
       <<<"control_delay", in>>>;
 
-      data.tick * (in + 1) / 32. =>  dlp.max => dlp.delay => drp.max => drp.delay; 
+       (in + 1) * data.tick / 8. =>  dlp.max => dlp.delay => drp.max => drp.delay; 
     }
   }
   
