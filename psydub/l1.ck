@@ -21,6 +21,9 @@ class STECHOC extends ST{
   class control_gain extends CONTROL {
     Delay @ dlp;
     Delay @ drp;
+
+    1 => update_on_reg ;
+    
     fun void set (float in) {
       <<<"control_gain", in>>>;
       in / 127. =>  dlp.gain => drp.gain;
@@ -31,7 +34,10 @@ class STECHOC extends ST{
   class control_delay extends CONTROL {
     Delay @ dlp;
     Delay @ drp;
-     fun void set (float in) {
+    
+    1 => update_on_reg ;
+
+    fun void set (float in) {
       <<<"control_delay", in>>>;
 
       data.tick * (in + 1) / 32. =>  dlp.max => dlp.delay => drp.max => drp.delay; 
@@ -61,6 +67,7 @@ STECHOC ech;
 ech.connect(s $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
 
 HW.nano.fader[1][1].set(64);
+/*
 
 HW.nano.potar[1][1].set(16);
 
@@ -74,7 +81,7 @@ HW.nano.potar[1][1].set(4);
 
 4 * data.tick => now;
 
-
+*/
 
 while(1) {
        100::ms => now;
