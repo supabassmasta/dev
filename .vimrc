@@ -500,11 +500,20 @@ ab STDUCKK STDUCK duck;
 \<CR>duck.connect(t $ ST);
 
 ab STECHOCK STECHOC ech;
-\<CR>ech.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+\<CR>ech.connect(t $ ST , HW.nano.potar[1][1] /* freq */ , HW.nano.fader[1][1] /* Q */ ); 
 
 ab STLPFCK STLPFC lpfc;
-\<CR>lpfc.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+\<CR>lpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
 
 ab STBPFCK STBPFC bpfc;
-\<CR>bpfc.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+\<CR>bpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+
+ab STHPFCK STHPFC hpfc;
+\<CR>hpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+
+ab STBRFCK STBRFC brfc;
+\<CR>brfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+
+ab STRESCK STRESC resc;
+\<CR>resc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
 

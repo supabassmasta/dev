@@ -8,11 +8,11 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 s.go(); 
 
 //NANO_CONTROLER nano;
-STBPFC bpfc;
-bpfc.connect(s $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] );  
+STRESC resc;
+resc.connect(s $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  );  
 
 HW.nano.potar[1][1].set(100);
-HW.nano.fader[1][1].set(53);
+HW.nano.fader[1][1].set(41);
 
 4 * data.tick => now;
 
