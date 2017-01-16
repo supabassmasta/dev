@@ -8,8 +8,8 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 s.go(); 
 
 //NANO_CONTROLER nano;
-STRESC resc;
-resc.connect(s $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  );  
+STGAINC gainc;
+gainc.connect(s $ ST , HW.nano.potar[1][1] /* gain */  , .5 /* static gain */  );  
 
 HW.nano.potar[1][1].set(100);
 HW.nano.fader[1][1].set(41);

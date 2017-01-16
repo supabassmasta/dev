@@ -79,6 +79,7 @@ Machine.add( "../EFFECTS/STBPFC.ck");
 Machine.add( "../EFFECTS/STHPFC.ck");
 Machine.add( "../EFFECTS/STBRFC.ck");
 Machine.add( "../EFFECTS/STRESC.ck");
+Machine.add( "../EFFECTS/STGAINC.ck");
 me.yield();
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

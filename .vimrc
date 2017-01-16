@@ -517,3 +517,6 @@ ab STBRFCK STBRFC brfc;
 ab STRESCK STRESC resc;
 \<CR>resc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
 
+ab STGAINCK STGAINC gainc;
+\<CR>gainc.connect(t $ ST , HW.nano.potar[1][1] /* gain */  , 1. /* static gain */  ); 
+
