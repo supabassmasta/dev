@@ -502,3 +502,6 @@ ab STDUCKK STDUCK duck;
 ab STECHOCK STECHOC ech;
 \<CR>ech.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
 
+ab STLPFCK STLPFC lpfc;
+\<CR>lpfc.connect(t $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+

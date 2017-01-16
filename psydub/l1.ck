@@ -7,81 +7,28 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go(); 
 
-class STECHOC extends ST{
-
-  Gain fbl => outl;
-  fbl => Delay dl => fbl;
-
-  Gain fbr => outr;
-  fbr => Delay dr => fbr;
-
-  0. =>  dl.gain => dr.gain;
-  data.tick => dl.max => dl.delay => dr.max => dr.delay;
-
-  class control_gain extends CONTROL {
-    Delay @ dlp;
-    Delay @ drp;
-
-    1 => update_on_reg ;
-    
-    fun void set (float in) {
-      <<<"control_gain", in>>>;
-      in / 100. =>  dlp.gain => drp.gain;
-
-    }
-  }
-
-  class control_delay extends CONTROL {
-    Delay @ dlp;
-    Delay @ drp;
-    
-    1 => update_on_reg ;
-
-    fun void set (float in) {
-      <<<"control_delay", in>>>;
-
-       (in + 1) * data.tick / 8. =>  dlp.max => dlp.delay => drp.max => drp.delay; 
-    }
-  }
-  
-  control_gain cgain;
-  dr @=> cgain.drp; 
-  dl @=> cgain.dlp; 
-
-  control_delay cdelay;
-  dr @=> cdelay.drp; 
-  dl @=> cdelay.dlp; 
-
-  fun void connect(ST @ tone, CONTROLER d, CONTROLER g) {
-    tone.left() => fbl;
-    tone.right() => fbr;
-
-    d.reg(cdelay);
-    g.reg(cgain);
-
-  }
-
-}
 //NANO_CONTROLER nano;
-STECHOC ech;
-ech.connect(s $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] ); 
+STLPFC lpfc;
+lpfc.connect(s $ ST , HW.nano.potar[1][1] , HW.nano.fader[1][1] );  
 
-HW.nano.fader[1][1].set(64);
-/*
-
-HW.nano.potar[1][1].set(16);
+HW.nano.potar[1][1].set(100);
+HW.nano.fader[1][1].set(70);
 
 4 * data.tick => now;
 
-HW.nano.potar[1][1].set(8);
+HW.nano.potar[1][1].set(80);
 
 4 * data.tick => now;
 
-HW.nano.potar[1][1].set(4);
+HW.nano.potar[1][1].set(60);
 
 4 * data.tick => now;
 
-*/
+HW.nano.potar[1][1].set(40);
+
+4 * data.tick => now;
+
+
 
 while(1) {
        100::ms => now;
