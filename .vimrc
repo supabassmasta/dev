@@ -377,7 +377,7 @@ ab TONEK TONE t;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 \<CR>t.go();
 
-ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
+ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // "test.wav" => s.wav["a"];  
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
 \<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
@@ -519,4 +519,7 @@ ab STRESCK STRESC resc;
 
 ab STGAINCK STGAINC gainc;
 \<CR>gainc.connect(t $ ST , HW.nano.potar[1][1] /* gain */  , 1. /* static gain */  ); 
+
+ab RECK REC rec;
+\<CR>rec.rec(8*data.tick, "test.wav");
 

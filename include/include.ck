@@ -27,6 +27,7 @@ Machine.add( "../EFFECTS/DUCK_MASTER.ck");
 Machine.add( "../EFFECTS/CONTROL.ck");
 Machine.add( "../EFFECTS/REV0.ck");
 Machine.add( "../EFFECTS/REV1.ck");
+Machine.add( "../EFFECTS/REC.ck");
 Machine.add( "../NANOKONTROL/NANO.ck");
 
 Machine.add( "../seq_3/ACTION.ck");
