@@ -7,5 +7,10 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go(); 
 
-REC rec;
-rec.rec(8*data.tick, "test.wav"); 
+//REC rec;
+//rec.rec(8*data.tick, "test.wav"); 
+
+while(1) {
+       100::ms => now;
+}
+ 
