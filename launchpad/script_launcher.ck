@@ -1,4 +1,4 @@
-LAUNCHPAD l;
+HW.launchpad @=> LAUNCHPAD @ l;
 
 class script_launcher extends CONTROL {
 	string xname; // oneshot script
