@@ -9,3 +9,5 @@ Check filters behaviour on baudeline
 STAUTOREC with sync, duration, name, attack/Release dur
 
 Try to kill/unreg control objects on script end to free memory
+
+fix glide on first note in TONE
