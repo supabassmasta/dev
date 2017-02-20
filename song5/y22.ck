@@ -18,7 +18,7 @@ STECHOC ech;
 ech.connect(s $ ST , HW.nano.potar[1][5] /* freq */ , HW.nano.potar[1][6] /* Q */ );  
 
 STLPFC lpfc;
-lpfc.connect(ech $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.potar[1][2] /* Q */  );  
+lpfc.connect(ech $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.nano.potar[1][2] /* Q */  );  
 
 STHPFC hpfc;
 hpfc.connect(lpfc $ ST , HW.nano.potar[1][3] /* freq */  , HW.nano.potar[1][4] /* Q */  );  
