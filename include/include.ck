@@ -88,6 +88,7 @@ Machine.add( "../seq_3/SEQ.ck");
 Machine.add( "../seq_3/TONE.ck");
 Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 Machine.add( "../launchpad/LAUNCHPAD_CONTROLER.ck");
+Machine.add( "../lpd8/LPD8_CONTROLLER.ck");
 me.yield();
 Machine.add( "../include/HW.ck");
 Machine.add( "../seq_3/SET_WAV.ck");
