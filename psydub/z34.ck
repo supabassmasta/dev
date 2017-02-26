@@ -32,7 +32,7 @@ STLPFC lpfc;
 lpfc.connect( ech $ ST , HW.lpd8.potar[2][5] /* freq */  , HW.lpd8.potar[2][6] /* Q */  );  
 
 STAUTOPAN autopan;
-autopan.connect(ech $ ST, .6 /* span 0..1 */, 8*data.tick /* period */, 0.5 /* phase 0..1 */ );  
+autopan.connect(lpfc $ ST, .6 /* span 0..1 */, 8*data.tick /* period */, 0.5 /* phase 0..1 */ );  
 
 while(1) {
 	     100::ms => now;

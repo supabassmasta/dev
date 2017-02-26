@@ -4,8 +4,6 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s);
 "*4" => s.seq;
 "hjij" => s.seq;
 "hj_j" => s.seq;
-"*2 hj_jhi_i" => s.seq;
-":2hj_j" => s.seq;
 .2 => s.gain; // s.gain("s", .2); // for single wav 
 // s.element_sync(); //s.no_sync(); //s.full_sync();     //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
