@@ -3,6 +3,7 @@ set mouse =a
 set number
 set autowrite
 
+
 set backspace=indent,eol,start " allow backspace in insert mode
 set autoindent    " text indenting
 set smartindent   " as above
@@ -23,16 +24,19 @@ set shiftwidth=2
 " highlight current position
 set cursorline
 highlight CursorLine guibg=#001000
-
 colorscheme  evening " set up a color scheme in the gvim interface 
 syntax on " active the syntaxic coloration
-let mywinfont="Monospace:h8:cANSI"
+highlight Cursor guifg=black guibg=orange
+highlight iCursor guifg=black guibg=orange
+
+"let mywinfont="Monospace:h8:cANSI"
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
-map <C-s> :w<cr> 
+map <C-s> :w<cr>b
 map <C-d> <C-]>
 map <C-Q> <Esc>0i//<Esc>
+map <C-f> :tnext<cr>
 
 " vim shell to use bash: DO NOT WORK
 "set shell=/bin/bash\ -l
@@ -43,7 +47,7 @@ map <C-Q> <Esc>0i//<Esc>
 " :%s//\<CR\>/g
 
 " recursive grep of visual register then open result list
-map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
+"map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 
 " Dirty uncomment
 "map   <C-E>         0xx
@@ -58,6 +62,25 @@ map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 :command VIMRC e ~/.vimrc 
 :command SRC  source ~/.vimrc
    
+"ab C
+ab whilec while(1){<CR>  <CR>}<Up> 
+
+ab forc for (i=0; i< ; i++){<CR>  <CR>}<Up>
+
+ab ifc if (  ){<CR>  <CR>}<Up>
+
+ab elsec else {<CR>  <CR>}<Up>
+
+ab fopenc FILE *fp;
+\<CR>fp=fopen("", "r");
+\<CR>
+\<CR>//while( fscanf(fp, "%s", buf) != -1) { };
+\<CR>//fprintf(fp, "%s\n", buf);
+\<CR>
+\<CR>fclose(fp);
+
+ab mainc int main(int argc, char *argv[]) {<CR>  <CR>}<Up>
+
 	 
 
 
@@ -69,6 +92,7 @@ vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 ab headerY #! /usr/bin/env python
 \<CR># -*- coding: UTF-8 -*-
 
+" ab ChucK
 ab  forK          for (0 => int i; i <       ; i++) {
 \<CR>}
 \<CR>
@@ -522,4 +546,56 @@ ab STGAINCK STGAINC gainc;
 
 ab RECK REC rec;
 \<CR>rec.rec(8*data.tick, "test.wav");
+
+ab FILTERMODK // filter to add in graph:
+\<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+\<CR>Step base => Gain filter_freq => blackhole;
+\<CR>Gain mod_out => Gain variable => filter_freq;
+\<CR>SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
+\<CR>
+\<CR>// params
+\<CR>4 => filter.Q;
+\<CR>161 => base.next;
+\<CR>551 => variable.gain;
+\<CR>1::second / (data.tick * 4 ) => mod.freq;
+\<CR>// If mod need to be synced
+\<CR>// 1 => int sync_mod;
+\<CR>// if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
+\<CR>
+\<CR>fun void filter_freq_control (){ 
+\<CR>    while(1) {
+\<CR>      filter_freq.last() => filter.freq;
+\<CR>      1::ms => now;
+\<CR>    }
+\<CR>}
+\<CR>spork ~ filter_freq_control ();
+
+ab FILTERADSRK // Filter to add in graph
+\<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+\<CR>Step base => Gain filter_freq => blackhole;
+\<CR>Step variable => PowerADSR padsr => filter_freq;
+\<CR>
+\<CR>// Params
+\<CR>padsr.set(data.tick / 4 , data.tick / 4 , .0000001, data.tick / 4);
+\<CR>padsr.setCurves(2.0, 2.0, .5);
+\<CR>1 => filter.Q;
+\<CR>48 => base.next;
+\<CR>3300 => variable.next;
+\<CR>
+\<CR>// ADSR Trigger
+\<CR>//padsr.keyOn(); padsr.keyOff();
+\<CR>
+\<CR>// fun void auto_off(){
+\<CR>//     data.tick / 4 => now;
+\<CR>//     padsr.keyOff();
+\<CR>// }
+\<CR>// spork ~ auto_off();
+\<CR>
+\<CR>fun void filter_freq_control (){ 
+\<CR>    while(1) {
+\<CR>      filter_freq.last() => filter.freq;
+\<CR>      1::ms => now;
+\<CR>    }
+\<CR>} 
+\<CR>spork ~ filter_freq_control ();
 
