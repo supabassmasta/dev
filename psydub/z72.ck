@@ -30,7 +30,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 //"*8 {c{c{c 0_0_ _36_ _4__ 6__7" => t.seq;
 "*2 {c{c{c 0/f0/f0/f0/f___" => t.seq;
 //"____ R//c ____ 6__7" => t.seq;
-.3 => t.gain;
+.6 => t.gain;
 // t.element_sync();//  t.no_sync();
 t.full_sync();  
 16 * data.tick => t.extra_end;   //t.print();

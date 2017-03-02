@@ -6,6 +6,7 @@ SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS
 // s.element_sync(); //s.no_sync(); 
 s.full_sync();     //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+1.2 => s.gain;
 s.go(); 
 
 STDUCKMASTER duckm;

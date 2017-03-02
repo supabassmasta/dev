@@ -1,7 +1,32 @@
 class synt0 extends SYNT{
 
-		inlet => TriOsc s =>  outlet;		
-				.5 => s.gain;
+		inlet => TriOsc s => /* Gain fb =>  LPF filter => */  outlet;		
+				.2 => s.gain;
+//				.78 => s.width;
+		// filter to add in graph:
+		// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+		Step base => Gain filter_freq => blackhole;
+		Gain mod_out => Gain variable => filter_freq;
+		SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
+
+		// params
+//		4 => filter.Q;
+		.2 => base.next;
+		.6 => variable.gain;
+		1::second / (data.tick * 3 ) => mod.freq;
+		// If mod need to be synced
+		// 1 => int sync_mod;
+		// if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
+
+		fun void filter_freq_control (){ 
+			    while(1) {
+						      filter_freq.last() => s.width;
+									      1::ms => now;
+												    }
+		}
+		spork ~ filter_freq_control (); 
+
+
 
 						fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
 } 
@@ -26,13 +51,47 @@ t.go();
 
 
 STECHO ech;
-ech.connect(t $ ST , data.tick * 1 / 1 , .8); 
+ech.connect(t $ ST , data.tick * 1 / 1 , .9); 
 
-STLPFC lpfc;
-lpfc.connect( ech $ ST , HW.lpd8.potar[2][5] /* freq */  , HW.lpd8.potar[2][6] /* Q */  );  
+ST st;
 
 STAUTOPAN autopan;
-autopan.connect(lpfc $ ST, .6 /* span 0..1 */, 8*data.tick /* period */, 0.5 /* phase 0..1 */ );  
+autopan.connect(st $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );  
+
+
+
+ech.left() =>  LPF filter => st.outr => st.outl;
+Step base => Gain filter_freq => blackhole;
+Gain mod_out => Gain variable => filter_freq;
+SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
+
+// params
+2 => filter.Q;
+161 => base.next;
+511 => variable.gain;
+1::second / (data.tick * 4 ) => mod.freq;
+// If mod need to be synced
+// 1 => int sync_mod;
+// if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
+
+fun void filter_freq_control (){ 
+	    while(1) {
+				      filter_freq.last() => filter.freq;
+							      1::ms => now;
+										    }
+}
+spork ~ filter_freq_control (); 
+
+
+
+
+
+
+//STLPFC lpfc;
+//lpfc.connect( ech $ ST , HW.lpd8.potar[2][5] /* freq */  , HW.lpd8.potar[2][6] /* Q */  );  
+
+//STAUTOPAN autopan;
+//autopan.connect(t $ ST, .6 /* span 0..1 */, 8*data.tick /* period */, 0.5 /* phase 0..1 */ );  
 
 while(1) {
 	     100::ms => now;
