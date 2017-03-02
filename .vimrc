@@ -547,3 +547,55 @@ ab STGAINCK STGAINC gainc;
 ab RECK REC rec;
 \<CR>rec.rec(8*data.tick, "test.wav");
 
+ab FILTERMODK // filter to add in graph:
+\<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+\<CR>Step base => Gain filter_freq => blackhole;
+\<CR>Gain mod_out => Gain variable => filter_freq;
+\<CR>SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
+\<CR>
+\<CR>// params
+\<CR>4 => filter.Q;
+\<CR>161 => base.next;
+\<CR>551 => variable.gain;
+\<CR>1::second / (data.tick * 4 ) => mod.freq;
+\<CR>// If mod need to be synced
+\<CR>// 1 => int sync_mod;
+\<CR>// if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
+\<CR>
+\<CR>fun void filter_freq_control (){ 
+\<CR>    while(1) {
+\<CR>      filter_freq.last() => filter.freq;
+\<CR>      1::ms => now;
+\<CR>    }
+\<CR>}
+\<CR>spork ~ filter_freq_control ();
+
+ab FILTERADSRK // Filter to add in graph
+\<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+\<CR>Step base => Gain filter_freq => blackhole;
+\<CR>Step variable => PowerADSR padsr => filter_freq;
+\<CR>
+\<CR>// Params
+\<CR>padsr.set(data.tick / 4 , data.tick / 4 , .0000001, data.tick / 4);
+\<CR>padsr.setCurves(2.0, 2.0, .5);
+\<CR>1 => filter.Q;
+\<CR>48 => base.next;
+\<CR>3300 => variable.next;
+\<CR>
+\<CR>// ADSR Trigger
+\<CR>//padsr.keyOn(); padsr.keyOff();
+\<CR>
+\<CR>// fun void auto_off(){
+\<CR>//     data.tick / 4 => now;
+\<CR>//     padsr.keyOff();
+\<CR>// }
+\<CR>// spork ~ auto_off();
+\<CR>
+\<CR>fun void filter_freq_control (){ 
+\<CR>    while(1) {
+\<CR>      filter_freq.last() => filter.freq;
+\<CR>      1::ms => now;
+\<CR>    }
+\<CR>} 
+\<CR>spork ~ filter_freq_control ();
+
