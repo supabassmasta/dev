@@ -3,6 +3,7 @@ set mouse =a
 set number
 set autowrite
 
+
 set backspace=indent,eol,start " allow backspace in insert mode
 set autoindent    " text indenting
 set smartindent   " as above
@@ -23,16 +24,19 @@ set shiftwidth=2
 " highlight current position
 set cursorline
 highlight CursorLine guibg=#001000
-
 colorscheme  evening " set up a color scheme in the gvim interface 
 syntax on " active the syntaxic coloration
-let mywinfont="Monospace:h8:cANSI"
+highlight Cursor guifg=black guibg=orange
+highlight iCursor guifg=black guibg=orange
+
+"let mywinfont="Monospace:h8:cANSI"
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
-map <C-s> :w<cr> 
+map <C-s> :w<cr>b
 map <C-d> <C-]>
 map <C-Q> <Esc>0i//<Esc>
+map <C-f> :tnext<cr>
 
 " vim shell to use bash: DO NOT WORK
 "set shell=/bin/bash\ -l
@@ -43,7 +47,7 @@ map <C-Q> <Esc>0i//<Esc>
 " :%s//\<CR\>/g
 
 " recursive grep of visual register then open result list
-map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
+"map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 
 " Dirty uncomment
 "map   <C-E>         0xx
@@ -58,6 +62,25 @@ map <C-f> <esc> :exe 'gr -r ' . @* . ' *' <cr> :cw<cr>
 :command VIMRC e ~/.vimrc 
 :command SRC  source ~/.vimrc
    
+"ab C
+ab whilec while(1){<CR>  <CR>}<Up> 
+
+ab forc for (i=0; i< ; i++){<CR>  <CR>}<Up>
+
+ab ifc if (  ){<CR>  <CR>}<Up>
+
+ab elsec else {<CR>  <CR>}<Up>
+
+ab fopenc FILE *fp;
+\<CR>fp=fopen("", "r");
+\<CR>
+\<CR>//while( fscanf(fp, "%s", buf) != -1) { };
+\<CR>//fprintf(fp, "%s\n", buf);
+\<CR>
+\<CR>fclose(fp);
+
+ab mainc int main(int argc, char *argv[]) {<CR>  <CR>}<Up>
+
 	 
 
 
@@ -69,6 +92,7 @@ vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 ab headerY #! /usr/bin/env python
 \<CR># -*- coding: UTF-8 -*-
 
+" ab ChucK
 ab  forK          for (0 => int i; i <       ; i++) {
 \<CR>}
 \<CR>
