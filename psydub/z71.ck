@@ -17,7 +17,7 @@ Step st => add;
 
 add => SinOsc si => dac;
 //add => dac;
-.3 => si.gain;
+.01 => si.gain;
 
 while(1) {
 	     100::ms => now;
