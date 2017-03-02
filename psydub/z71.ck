@@ -1,25 +1,52 @@
-TriOsc s => Gain add;
-.9 => s.gain;
-1000::ms/20::ms =>s.freq;
-0. => s.width;
+class synt0 extends SYNT{
 
-TriOsc s2 => add;
--.3 => s2.gain;
-1000::ms/20::ms =>s2.freq;
-0.4 => s2.width;
-SinOsc s3 => add;
--.2 => s3.gain;
+    inlet => SqrOsc s => LPF lpf =>  outlet;   
+    403 => lpf.freq;
+    10 => lpf.Q;
 
-Step st => add;
-.8 => st.next;
+    SinOsc mod => blackhole;
+     1::second/ (4 *data.tick) => mod.freq;
 
-2000 => add.gain;
+    fun void f1 (){ 
+      while(1) {
+        (mod.last() + 1) * 601 + 103 => lpf.freq;
 
-add => SinOsc si => dac;
-//add => dac;
-.01 => si.gain;
+
+        1::ms => now;
+      }
+ 
+    } 
+    spork ~ f1 ();
+        
+
+        .2 => s.gain;
+
+            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
+} 
+
+TONE t;
+t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+//"*8 {c{c{c 0_0_ _36_ _4__ 6__7" => t.seq;
+"*8 {c{c{c 0/////f" => t.seq;
+//"____ R//c ____ 6__7" => t.seq;
+.3 => t.gain;
+// t.element_sync();//  t.no_sync();//  t.full_sync();  
+16 * data.tick => t.extra_end;   //t.print();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+t.go(); 
+
+STAUTOPAN autopan;
+autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );  
+
+STECHO ech;
+ech.connect(autopan $ ST , data.tick * 3 / 1 , .7); 
+
+STREV1 rev;
+rev.connect(ech $ ST, .3 /* mix */); 
 
 while(1) {
-	     100::ms => now;
+       100::ms => now;
 }
  
