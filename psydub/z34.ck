@@ -58,6 +58,8 @@ ST st;
 STAUTOPAN autopan;
 autopan.connect(st $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
+STDUCK duck;
+duck.connect(autopan $ ST); 
 
 
 ech.left() =>  LPF filter => st.outr => st.outl;

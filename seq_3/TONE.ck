@@ -893,6 +893,10 @@ public class TONE extends ST {
     s.go();
   }
 
+  fun void on(int in) {
+		in => s.on;
+	}
+
   fun void print() {
     s.print();
   }
