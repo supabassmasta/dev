@@ -26,8 +26,11 @@ ech.connect(bpfc $ ST , data.tick * 1 / 1 , .6);
 STGAINC gainc;
 gainc.connect(ech $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );  
 
-STREV1 rev;
-rev.connect(gainc $ ST, .2 /* mix */);
+STDUCK duck;
+duck.connect(gainc $ ST); 
+
+//STREV1 rev;
+//rev.connect(gainc $ ST, .2 /* mix */);
 
 
 

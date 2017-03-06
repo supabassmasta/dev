@@ -8,7 +8,13 @@ s.full_sync();     //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go(); 
 
-STDUCKMASTER duckm;
+s.mono() => LPF bpf => dac;
+39 * 100 => bpf.freq;
+3 => bpf.Q;
+.6 => bpf.gain;
+
+
+//STDUCKMASTER duckm;
 //duckm.connect(s $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ ); 
 
 while(1) {

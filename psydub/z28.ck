@@ -5,10 +5,13 @@ SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS
 // s.element_sync(); //s.no_sync(); 
 s.full_sync();     //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+1.6 => s.gain;
 s.go(); 
 
 STDUCKMASTER duckm;
-duckm.connect(s $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ ); 
+duckm.connect(s $ ST, 9. /* In Gain */, .03 /* Tresh */, .6 /* Slope */, 25::ms /* Attack */, 28::ms /* Release */ ); 
+//duckm.right() => blackhole;
+//duckm.left() => blackhole;
 
 while(1) {
 	     100::ms => now;
