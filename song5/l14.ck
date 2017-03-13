@@ -25,8 +25,8 @@ t.mono() => NRev rev => st.mono_in;
 t.mono() => ABSaturator ab => st.mono_in;
 23 => ab.drive;
 .1 => ab.gain;
-//STECHO ech;
-//ech.connect(st $ ST , data.tick * 1 / 2 , .5); 
+STECHO ech;
+ech.connect(st $ ST , data.tick * 1 / 2 , .5); 
 
 while(1) {
        100::ms => now;

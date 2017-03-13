@@ -26,30 +26,31 @@ public class ST {
     return right_out;
   }
 
-/*
+
   0 => int mono_out_active;
-  Gain mono_out;
+  Gain mono_out_g;
   fun UGen mono() {
     if (!mono_out_active) {
-      if (!right_out_active) {
-        outr =< dac.right;
-        outr => right_out;
-        1 => right_out_active; 
-      }    
-      right_out => mono_out;
+//      if (!right_out_active) {
+//        outr =< dac.right;
+//        outr => right_out;
+//        1 => right_out_active; 
+//      }    
+//      right_out => mono_out_g;
+        right() => mono_out_g;
 
-      if (!left_out_active) {
-        outl =< dac.left;
-        outl => left_out;
-        1 => left_out_active;
-      }
-      left_out  => mono_out;
+//      if (!left_out_active) {
+//        outl =< dac.left;
+//        outl => left_out;
+//        1 => left_out_active;
+//      }
+//      left_out  => mono_out_g;
+        left()  => mono_out_g;
 
       1 => mono_out_active;
     }
-    return mono_out;
+    return mono_out_g;
   }
-*/
 
   0 => int mono_in_active;
   Gain mono_in_g;

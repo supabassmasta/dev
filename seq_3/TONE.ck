@@ -101,6 +101,7 @@ public class TONE extends ST {
 
   // function to get audio out of object
   // only one of this to use at a time
+  /*
   0 => int mono_out_active; 
   Gain mono_out;
   fun UGen mono() {
@@ -112,7 +113,7 @@ public class TONE extends ST {
 
     return mono_out;
   }
-
+*/
   //Now defined in ST
   /*
   0=> int left_out_active;
@@ -143,11 +144,11 @@ public class TONE extends ST {
   fun UGen raw() {
     if (!raw_out_active) {
       out =< pan;
-      raw_out=> mono_out;
+//      raw_out=> mono_out;
       1 => raw_out_active;
     }
 
-    return mono_out;
+    return raw_out;
   }
 
   /////////// ACTIONS ////////////////
