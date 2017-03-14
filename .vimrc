@@ -396,7 +396,7 @@ ab TONEK TONE t;
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"" => t.seq;
 \<CR>.9 => t.gain;
-\<CR>// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+\<CR>//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 \<CR>t.go();
@@ -405,7 +405,7 @@ ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLC
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
 \<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
-\<CR>// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+\<CR>//t.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>s.go();
  
