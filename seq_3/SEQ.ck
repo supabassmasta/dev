@@ -479,6 +479,7 @@ public class SEQ extends ST{
 
   // function to get audio out of object
   // only one of this to use at a time
+  /*
   Gain mono_out => blackhole;
   0 => int mono_out_active; 
   fun UGen mono() {
@@ -492,6 +493,7 @@ public class SEQ extends ST{
 
     return mono_out;
   }
+*/
 
 //  Gain left_out;
 //  0=> int left_out_active;
