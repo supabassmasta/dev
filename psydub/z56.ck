@@ -57,9 +57,14 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.adsr[0].set(1::ms, data.tick / 5, .3, data.tick);
 t.go(); 
 
-STDUCK duck;
-duck.connect(t $ ST); 
+STRESC lpfc;
+lpfc.connect(t $ ST , HW.lpd8.potar[2][1] /* freq */  , HW.lpd8.potar[2][2] /* Q */  );  
 
+STGAINC gainc;
+gainc.connect(lpfc $ ST , HW.lpd8.potar[2][5] /* gain */  , 4. /* static gain */  );  
+
+STDUCK duck;
+duck.connect(gainc $ ST); 
 //STBRFC brfc;
 //brfc.connect(t $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );  
 

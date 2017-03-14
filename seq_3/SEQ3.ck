@@ -10,11 +10,14 @@ public class SEQ3 {
 
   Shred @ id_go;
   ELEMENT elements[0];
+		
+	0::ms => dur dur_sync;	
 
   1 => int sync_mode;
   fun void no_sync()      {0=>sync_mode ;}
   fun void element_sync() {1 => sync_mode ;}
   fun void full_sync()    {2 => sync_mode ;}
+  fun void sync(dur d)    {3 => sync_mode ; d => dur_sync;}
 
 
   fun void set_all_next_time_invalid() {
@@ -59,6 +62,11 @@ public class SEQ3 {
         now - ((now - sync_offset)%duration) => ref_time;
         // wait next ref_time to start
         duration + ref_time => ref_time;
+    }
+    else if (sync_mode == 3) {
+        now - ((now - sync_offset)%dur_sync) => ref_time;
+        // wait next ref_time to start
+        dur_sync + ref_time => ref_time;
     }
      
 //    <<<"SEQ3 dur: ",duration," ref_time:",ref_time>>>;

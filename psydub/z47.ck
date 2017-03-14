@@ -58,14 +58,17 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
        !1!7!1!1 !1!3!1!1 !1!7!1!1 !1!8!0!1
 
 			 " => t.seq;
-.5 => t.gain;
+1.8 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(1::ms, data.tick / 5, .5, data.tick);
 t.go(); 
 
+STRESC lpfc;
+lpfc.connect(t $ ST , HW.lpd8.potar[2][3] /* freq */  , HW.lpd8.potar[2][4] /* Q */  );  
+
 STDUCK duck;
-duck.connect(t $ ST); 
+duck.connect(lpfc $ ST); 
 
 //STBRFC brfc;
 //brfc.connect(t $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );  

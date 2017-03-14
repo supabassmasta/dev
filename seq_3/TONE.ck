@@ -51,6 +51,7 @@ public class TONE extends ST {
   fun void no_sync()      {s.no_sync() ;}
   fun void element_sync() {s.element_sync();}
   fun void full_sync()    {s.full_sync();}
+  fun void sync(dur d)    {s.sync(d);}
 
   0::ms => dur glide;
 
