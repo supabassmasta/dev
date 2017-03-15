@@ -17,8 +17,11 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 t.go(); 
 
-STDIGIT dig;
-dig.connect(t $ ST , 41::samp /* sample rate */ , .044 /* quantization */); 
+//STDIGIT dig;
+//dig.connect(t $ ST , 41::samp /* sample rate */ , .044 /* quantization */); 
+
+STDIGITC dig;
+dig.connect(t $ ST , HW.lpd8.potar[1][1] /* sub sample period */ , HW.lpd8.potar[1][2] /* quantization */); 
 
 STREV2 rev; // DUCKED
 rev.connect(dig $ ST, .5 /* mix */); 

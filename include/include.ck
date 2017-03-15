@@ -82,6 +82,7 @@ Machine.add( "../EFFECTS/STHPFC.ck");
 Machine.add( "../EFFECTS/STBRFC.ck");
 Machine.add( "../EFFECTS/STRESC.ck");
 Machine.add( "../EFFECTS/STGAINC.ck");
+Machine.add( "../EFFECTS/STDIGITC.ck");
 me.yield();
 Machine.add( "../EFFECTS/REV2.ck");
 Machine.add("../seq_2/FREQ_STR.ck");
