@@ -405,7 +405,7 @@ ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLC
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
 \<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
-\<CR>//t.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+\<CR>//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>s.go();
  
@@ -524,28 +524,28 @@ ab STDUCKK STDUCK duck;
 \<CR>duck.connect(t $ ST);
 
 ab STECHOCK STECHOC ech;
-\<CR>ech.connect(t $ ST , HW.nano.potar[1][1] /* freq */ , HW.nano.fader[1][1] /* Q */ ); 
+\<CR>ech.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */ , HW.lpd8.potar[1][2] /* Q */ ); 
 
 ab STLPFCK STLPFC lpfc;
-\<CR>lpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+\<CR>lpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
 
 ab STBPFCK STBPFC bpfc;
-\<CR>bpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+\<CR>bpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
 
 ab STHPFCK STHPFC hpfc;
-\<CR>hpfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+\<CR>hpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
 
 ab STBRFCK STBRFC brfc;
-\<CR>brfc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+\<CR>brfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
 
 ab STRESCK STRESC resc;
-\<CR>resc.connect(t $ ST , HW.nano.potar[1][1] /* freq */  , HW.nano.fader[1][1] /* Q */  ); 
+\<CR>resc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
 
 ab STGAINCK STGAINC gainc;
-\<CR>gainc.connect(t $ ST , HW.nano.potar[1][1] /* gain */  , 1. /* static gain */  ); 
+\<CR>gainc.connect(t $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  ); 
 
 ab RECK REC rec;
-\<CR>rec.rec(8*data.tick, "test.wav");
+\<CR>rec.rec(8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
 
 ab FILTERMODK // filter to add in graph:
 \<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 

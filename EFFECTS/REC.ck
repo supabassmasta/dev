@@ -1,8 +1,14 @@
 public class REC extends ST{
 
-  fun void rec (dur d, string name) {
+  fun void rec (dur d, string name, dur sync_dur) {
     // sync
-    d - ((now - data.wait_before_start)%d) => now;
+    if (sync_dur == 0::ms)  {
+      // sync on full seq
+      d - ((now - data.wait_before_start)%d) => now;
+    }
+    else {
+      sync_dur  - ((now - data.wait_before_start)%sync_dur) => now;
+    }
 
 		<<<"********************">>>; 
 		<<<"********************">>>; 

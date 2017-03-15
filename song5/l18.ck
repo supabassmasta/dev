@@ -12,7 +12,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 "*2 }c 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 1324 7564 " => t.seq;
 .4 => t.gain;
 // t.element_sync();//  t.no_sync();//  
-t.sync(4*data.tick);  // 16 * data.tick => t.extra_end;   //t.print();
+t.sync(8*data.tick);  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 t.go(); 
