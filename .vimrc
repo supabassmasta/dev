@@ -499,6 +499,9 @@ ab STECHOK STECHO ech;
 ab STREV1K STREV1 rev;
 \<CR>rev.connect(t $ ST, .3 /* mix */);
 
+ab STREV2K STREV2 rev; // DUCKED
+\<CR>rev.connect(t $ ST, .3 /* mix */);
+
 
 ab STAUTOPANK STAUTOPAN autopan;
 \<CR>autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ ); 
