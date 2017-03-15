@@ -602,3 +602,7 @@ ab FILTERADSRK // Filter to add in graph
 \<CR>} 
 \<CR>spork ~ filter_freq_control ();
 
+
+ab STDIGITK STDIGIT dig;
+\<CR>dig.connect(t $ ST , 1::samp /* sub sample period */ , .01 /* quantization */);
+
