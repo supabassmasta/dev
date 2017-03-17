@@ -1,18 +1,12 @@
 SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s);
-SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // "test.wav" => s.wav["a"];  
+SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);
+//SET_WAV.CYMBALS(s); // "test.wav" => s.wav["a"];  
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*4 k_k_ }0(1sk_k 
-    k_s_ _k_k
-    ksk_ s__k
-    k__k sk__
-
-
-    k_k_ }0sk_k 
-    k_s_ _k_k
-    ksk_ s__k
-    k__k sk
-    -2
-    *4s{s{{s{{{s {{{{s{{{{{s{{{{{{s{{{{{{{s
+" *4  
+    _+8)3g__ g_g_
+    g_g_ _gg_
+    _g__ g_g_
+    g_g_ G___
 
     " => s.seq;
 .9 => s.gain; // s.gain("s", .2); // for single wav 
@@ -22,9 +16,9 @@ s.go();
 
 
 //s.mono()  => dac;
-s.mono() => LPF lpf => dac;
-27 * 100 => lpf.freq;
-2 => lpf.Q;
+//s.mono() => LPF lpf => dac;
+//27 * 100 => lpf.freq;
+//2 => lpf.Q;
 
 while(1) {
        100::ms => now;
