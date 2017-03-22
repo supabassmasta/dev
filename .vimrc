@@ -401,7 +401,7 @@ ab TONEK TONE t;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 \<CR>t.go();
 
-ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // "test.wav" => s.wav["a"];  
+ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
 \<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
@@ -609,4 +609,11 @@ ab FILTERADSRK // Filter to add in graph
 \<CR>spork ~ filter_freq_control ();
 
 
+ab ACTIONK class ACT extends ACTION {
+\<CR>  fun int on_time() {
+\<CR>    <<<"test">>>; 
+\<CR>  }
+\<CR>}
+\<CR>
+\<CR>ACT act;
 
