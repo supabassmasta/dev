@@ -326,5 +326,40 @@ fun static void DUB ( SEQ @ s) {
 
 }
 
+fun static void BLIPS ( SEQ @ s) {
+	"../_SAMPLES/Dirt_samples/bleep/"  => string dir;
+
+	dir + "bleep.wav" => s.wav["a"];
+	dir + "boip.wav" => s.wav["b"];
+	dir + "breathy-blip.wav" => s.wav["c"];
+	dir + "breathy-blip2.wav" => s.wav["d"];
+	dir + "checkpoint-hit.wav" => s.wav["e"];
+	dir + "ninjanote.wav" => s.wav["f"];
+	dir + "pc_beep.wav" => s.wav["g"];
+	dir + "shortsaxish.wav" => s.wav["h"];
+	dir + "tiniest.wav" => s.wav["i"];
+	dir + "tinynote.wav" => s.wav["j"];
+	dir + "vidgame-bleep1.wav" => s.wav["k"];
+	dir + "vidgame-bleep2.wav" => s.wav["l"];
+	dir + "watch_beep.wav" => s.wav["m"];
+	dir + "000_blipp01.wav" => s.wav["n"];
+	dir + "001_blipp02.wav" => s.wav["o"];
+	dir + "high.wav" => s.wav["p"];
+	dir + "low.wav" => s.wav["q"];
+  
+	"../_SAMPLES/Dirt_samples/click/"  =>  dir;
+	dir + "000_click0.wav" => s.wav["r"];
+	dir + "001_click1.wav" => s.wav["s"];
+	dir + "002_click2.wav" => s.wav["t"];
+	dir + "003_click3.wav" => s.wav["u"];
+
+	"../_SAMPLES/Dirt_samples/glitch/"  =>  dir;
+
+
+	dir + "003_HH.wav" => s.wav["v"];
+	dir + "006_P2.wav" => s.wav["w"];
+}
+
+
 }
 
