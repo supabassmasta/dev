@@ -2,7 +2,7 @@ class synt0 extends SYNT{
 
 		inlet => TriOsc s => LPF filter =>   outlet;		
   	.5 => s.gain;
-		.86 => s.width;
+		.98 => s.width;
 
 		// filter to add in graph:
 		// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
@@ -13,7 +13,7 @@ class synt0 extends SYNT{
 		// params
 		8 => filter.Q;
 		546 => base.next;
-		3502 => variable.gain;
+		4502 => variable.gain;
 		1::second / (data.tick * 7 ) => mod.freq;
 		// If mod need to be synced
 		// 1 => int sync_mod;
@@ -33,14 +33,15 @@ class synt0 extends SYNT{
 
 
 TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
+t.reg(synt0 s1);  //data.tick * 8 => t.max; 
+39::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c *4 
     1548 1548 B548 1548 
     1548 1568 1548 1548 
     1548 1548 1548 c548 
-    1548 1748 1548 1548 
+    1548 1748 1548 154_ 
 
 " => t.seq;
 
@@ -49,7 +50,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 
 .06 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   
-t.print();
+//t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 t.go(); 
@@ -57,8 +58,8 @@ t.go();
 STAUTOPAN autopan;
 autopan.connect(t $ ST, .6 /* span 0..1 */, 12*data.tick /* period */, 0.5 /* phase 0..1 */ );  
 
-STDUCK duck;
-duck.connect(autopan $ ST); 
+//STDUCK duck;
+//duck.connect(autopan $ ST); 
 
 STREV1 rev;
 rev.connect(autopan $ ST, .1 /* mix */); 
