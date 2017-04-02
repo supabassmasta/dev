@@ -1,10 +1,15 @@
 class synt0 extends SYNT{
 
-		inlet => SinOsc s => LPF filter => Gain out => outlet;		
-		inlet => TriOsc s2 =>  out;		
+		inlet => Gain in => SinOsc s => LPF filter => Gain out => outlet;		
+		in => TriOsc s2 =>  out;		
 				1.3 => s.gain;
-				.33 => s2.gain;
+				.25 => s2.gain;
 				.84 => s2.width;
+		Noise n => LPF nf => in;
+
+		2000 => nf.freq;
+		3. => n.gain;		
+
 
 // Filter to add in graph
 // LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 

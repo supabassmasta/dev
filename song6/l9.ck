@@ -48,7 +48,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 
 
 
-.06 => t.gain;
+.09 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   
 //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;

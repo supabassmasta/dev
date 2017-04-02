@@ -261,13 +261,13 @@ fun static void DUB ( SEQ @ s) {
   dir + "RIMSHOT_02.wav" => s.wav["b"];
   dir + "RIMSHOT_03.wav" => s.wav["c"];
   dir + "RIMSHOT_04.wav" => s.wav["d"];
-  dir + "RIMSHOT_01.wav" => s.wav["e"];
+	// e == RIMSHOT devined bellow
   dir + "SHaKER_01.wav" => s.wav["f"];
   dir + "SHaKER_02.wav" => s.wav["g"];
 
   dir + "HI_HaT_01.wav" => s.wav["h"];
-  dir + "HI_HaT_02.wav" => s.wav["i"];
-  dir + "HI_HaT_03.wav" => s.wav["j"];
+  dir + "HIHaT_02.wav" => s.wav["i"];
+  dir + "HIHaT_03.wav" => s.wav["j"];
   
   dir + "KICK_01.wav" => s.wav["k"];
   dir + "KICK_02.wav" => s.wav["l"];
@@ -294,7 +294,7 @@ fun static void DUB ( SEQ @ s) {
   dir + "COWBELL_Reaggae1.wav" => s.wav["A"];
   dir + "Dumfx_Reaggae1.wav" => s.wav["B"];
   dir + "Hand_Clap_Reaggae1.wav" => s.wav["C"];
-  dir + "Rim_Shot.wav" => s.wav["D"];
+  dir + "Rim_Shot.wav" => s.wav["D"]=> s.wav["e"];
   dir + "Rim_Shot2_Reaggae1.wav" => s.wav["E"];
   dir + "Tambourine_Reaggae1.wav" => s.wav["F"];
   dir + "Timbales1_Reaggae1.wav" => s.wav["G"];
