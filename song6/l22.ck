@@ -8,7 +8,7 @@ SET_WAV.DUB(s); // SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s)
 //    _H_+H ++H__+++H +4H+5H+6H_ +4G+5G+6G+7G 
 //    " => s.seq;
 "*8
-    ____ ____ G__I __H_ 
+    ____ ____ ____ __H_ 
     " => s.seq;
 //    _G_G _I__ H_I_ G_GG 
 .5 => s.gain; // s.gain("s", .2); // for single wav 
@@ -18,7 +18,7 @@ s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 s.go(); 
 
 STECHO ech;
-ech.connect(s $ ST , data.tick * 1 / 3 , .5); 
+ech.connect(s $ ST , data.tick * 1 / 2 , .7); 
 
 STREV1 rev;
 rev.connect(ech $ ST, .4 /* mix */); 
