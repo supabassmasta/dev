@@ -83,6 +83,12 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.adsr[0].set(15::ms, 25::ms, .7, 400::ms);
 t.go(); 
 
+STRESC resc;
+resc.connect(t $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /* Q */  );  
+
+STGAINC gainc;
+gainc.connect(resc $ ST , HW.lpd8.potar[1][1] /* gain */  , 4. /* static gain */  );  
+
 while(1) {
        100::ms => now;
 }
