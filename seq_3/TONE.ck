@@ -2,7 +2,7 @@ public class TONE extends ST {
 
   SYNT synt[0];
   Envelope env[0];
-  ADSR adsr[0];
+  PowerADSR adsr[0];
   int on_state[0];
   float freq[0];
 
@@ -81,16 +81,17 @@ public class TONE extends ST {
 
   fun void reg(SYNT @ in) {
     Envelope @ e;
-    ADSR @ a;
+    PowerADSR @ a;
 
     synt << in;
 
     new Envelope @=> e;
     env << e;
 
-    new ADSR @=> a;
+    new PowerADSR @=> a;
     adsr << a;
     a.set(3::ms, 0::ms, 1., 3::ms);
+    a.setCurves(2.0, 2.0, .5);
     init_gain => a.gain;
 
     one => e => in => a => out;
@@ -173,13 +174,13 @@ public class TONE extends ST {
   }
 
   class off_adsr extends ACTION {
-    ADSR @ a;
+    PowerADSR @ a;
 
     fun int on_time() {
       a.keyOff();
     }
   }
-  fun ACTION set_off_adsr (ADSR @ a) {
+  fun ACTION set_off_adsr (PowerADSR @ a) {
     new off_adsr @=> off_adsr @ act;
     a @=> act.a;
     "off_adsr  " + a => act.name;
@@ -187,14 +188,14 @@ public class TONE extends ST {
   }
 
   class on_adsr extends ACTION {
-    ADSR @ a;
+    PowerADSR @ a;
 
     fun int on_time() {
       a.keyOn();
     }
   }
 
-  fun ACTION set_on_adsr (ADSR @ a) {
+  fun ACTION set_on_adsr (PowerADSR @ a) {
     new on_adsr @=> on_adsr @ act;
     a @=> act.a;
     "on_adsr  " + a => act.name;
@@ -203,7 +204,7 @@ public class TONE extends ST {
   }
 
   class gain_adsr extends ACTION {
-    ADSR @ a;
+    PowerADSR @ a;
     float g;
 
     fun int on_time() {
@@ -211,7 +212,7 @@ public class TONE extends ST {
     }
   }
 
-  fun ACTION set_gain_adsr (ADSR @ a, float g) {
+  fun ACTION set_gain_adsr (PowerADSR @ a, float g) {
     new gain_adsr @=> gain_adsr @ act;
     a @=> act.a;
     g => act.g;
