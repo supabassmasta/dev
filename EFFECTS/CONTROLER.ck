@@ -4,7 +4,9 @@ public class CONTROLER {
   
   fun void reg(CONTROL @ in) {
     controls << in;
+//    <<<"CONTROLER REG in.update_on_reg: ", in.update_on_reg, val>>>;
     if (in.update_on_reg){
+//      <<<"CONTROLER REG val", val>>>;
       in.set(val);
     }
   }

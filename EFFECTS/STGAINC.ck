@@ -29,8 +29,8 @@ public class STGAINC extends ST{
     tone.left() => gainl;
     tone.right() => gainr;
 
-    g.reg(cgain);
     fact => cgain.factor;
+    g.reg(cgain);
 
   }
 

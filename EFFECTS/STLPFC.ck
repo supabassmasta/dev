@@ -13,9 +13,19 @@ public class STLPFC extends ST{
     1 => update_on_reg ;
     
     fun void set (float in) {
-      Std.mtof(in) => fl.freq => fr.freq;
+      float f;
+      Std.mtof(in) => f;
+      if (f>19000) {
+        <<<"control_freq TOO HIGH:", f>>>;
+      }
+      else if (f< 10) {
+        <<<"control_freq TOO LOW:", f>>>;
+      }
+      else {
 
-      <<<"control_freq ", fr.freq()>>>; 
+        f => fl.freq => fr.freq;
+        <<<"control_freq ", fr.freq()>>>; 
+      }
     }
 
   }

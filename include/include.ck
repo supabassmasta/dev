@@ -92,6 +92,7 @@ Machine.add( "../seq_3/TONE.ck");
 Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 Machine.add( "../launchpad/LAUNCHPAD_CONTROLER.ck");
 Machine.add( "../lpd8/LPD8_CONTROLLER.ck");
+Machine.add( "../KBCONTROLLER/KBCONTROLLER.ck");
 me.yield();
 Machine.add("../EFFECTS/STREV2.ck");
 Machine.add( "../include/HW.ck");
