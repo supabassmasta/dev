@@ -33,7 +33,7 @@ SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
 4 => filter.Q;
 161 => base.next;
 751 => variable.gain;
-1::second / (data.tick * 16 ) => mod.freq;
+1::second / (data.tick * 17 ) => mod.freq;
 // If mod need to be synced
 // 1 => int sync_mod;
 // if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
@@ -47,9 +47,14 @@ fun void filter_freq_control (){
 }
 spork ~ filter_freq_control (); 
 
+//STECHO ech;
+//ech.connect(st $ ST , data.tick * 3 / 2 , .3); 
+
+STAUTOPAN autopan;
+autopan.connect(st $ ST, .8 /* span 0..1 */, 7*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
 STREV1 rev;
-rev.connect(st $ ST, .2 /* mix */); 
+rev.connect(autopan $ ST, .2 /* mix */); 
 
 
 while(1) {
