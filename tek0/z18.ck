@@ -1,22 +1,34 @@
 SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);
 
 class ACT extends ACTION {
-	  fun int on_time() {
+     SndBuf @ buf;
+		
+		fun void f1 (){ 
+			 30::ms => now;
+			 buf.samples() => buf.pos;
+			 } 
+			  
+
+     fun int on_time() {
 			    <<<"test">>>; 
+			 spork ~ f1 ();
 					  }
 }
 
 ACT act; 
 
 //SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); /
-//SET_WAV2._1017_BrickSquad_Kit_Vocals_And_Chants(s); // "test.wav" => s.wav["a"];  
+SET_WAV2._1017_BrickSquad_Kit_Vocals_And_Chants(s); // "test.wav" => s.wav["a"];  
 act @=> s.action["q"]; 
+
+
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*2  q___ ____ " => s.seq;
+"*2  q " => s.seq;
 .07 => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go(); 
+s.wav_o["q"].wav0 @=> act.buf;
 
 //STDIGIT dig;
 //dig.connect(s $ ST , 1::samp /* sub sample period */ , .01 /* quantization */); 

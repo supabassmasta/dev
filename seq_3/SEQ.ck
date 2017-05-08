@@ -158,7 +158,7 @@ public class SEQ extends ST{
         ////////////////////
         ///// ACTIONS //////
         ////////////////////
-        else if ( action[note_id] != NULL ) {
+        if ( action[note_id] != NULL ) {
 
           if (groove == 0::ms){
             set_dur(base_dur) => dur_temp;
@@ -181,9 +181,6 @@ public class SEQ extends ST{
             // Create next element of SEQ
             new ELEMENT @=> e;
           }
-        }
-        else {
-          <<<note_id, "Not registered">>>;
         }
       }
       else if (c == '_') {
