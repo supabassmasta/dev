@@ -24,7 +24,7 @@ public class AMBIENT extends SYNT{
 
 		inlet => blackhole;
 		Gain out => outlet;
-		.4=> out.gain;
+		1.=> out.gain;
 
 		fun void load(int in) {
       "../_SAMPLES/Progressive-Trance-Loops---Samples/Progressive_Trance_Loops_&_Samples/Ambient&Trance_Pads&Strings/WAV_Multisamples/" => string path;
