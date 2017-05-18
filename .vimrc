@@ -627,3 +627,22 @@ ab CONTROLLERK // CONTROLLERS:
 \<CR>// HW.launchpad.red[16*0 + 0]   HW.launchpad.green[16*0 + 0]   HW.launchpad.amber[16*0 + 0]   HW.launchpad.clear[16*0 + 0]
 \<CR>// HW.launchpad.redc[?]  HW.launchpad.greenc[?]  HW.launchpad.amberc[?]  HW.launchpad.clearc[?]   
 
+
+ab ACTIONSNDBUFK ST st;
+\<CR>SndBuf buf => st.mono_in;
+\<CR>"../_SAMPLES/HIHAT_02.WAV" => buf.read;
+\<CR>.2 => buf.gain;
+\<CR>buf.samples() => buf.pos;
+\<CR>//100./110. => buf.rate;
+\<CR>
+\<CR>class ACT extends ACTION {
+\<CR>    SndBuf @ sb;
+\<CR>    fun int on_time() {
+\<CR>        0=> sb.pos;
+\<CR>        <<<"test">>>; 
+\<CR>    }
+\<CR>}
+\<CR>
+\<CR>ACT act; 
+\<CR>buf @=> act.sb;
+
