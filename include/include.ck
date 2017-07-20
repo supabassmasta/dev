@@ -67,6 +67,7 @@ Machine.add("../SYNT/TB303C.ck");
 Machine.add("../SYNT/MOD.ck");
 Machine.add("../SYNT/STRINGBASS.ck");
 Machine.add("../SYNT/AMBIENT.ck");
+Machine.add("../SYNT/AMBIENT2.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
