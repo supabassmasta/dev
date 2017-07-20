@@ -68,6 +68,7 @@ Machine.add("../SYNT/MOD.ck");
 Machine.add("../SYNT/STRINGBASS.ck");
 Machine.add("../SYNT/AMBIENT.ck");
 Machine.add("../SYNT/AMBIENT2.ck");
+Machine.add("../SYNT/RESYNT.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
