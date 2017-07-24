@@ -130,6 +130,8 @@ public class AMBIENT2 extends SYNT{
           a[sidx][index].keyOn();
           reload_dur => now;
         }
+        
+//        <<<"EXIT AMBIENT2">>>; 
 
 		}
 		
@@ -140,5 +142,5 @@ public class AMBIENT2 extends SYNT{
 
 						fun void on()  {spork ~ play(); }
             fun void off() { spork ~  stopa(); }	
-            fun void new_note(int idx)  { <<<"note " + idx>>>;		}
+            fun void new_note(int idx)  { /*<<<"note " + idx>>>;	*/	}
 }
