@@ -11,13 +11,13 @@ GVerb gverb0;
 SndBuf buf => pa1  =>  res =>  pa2;
 Gain gainrev;
 pa2 => gainrev => gverb0  => st.mono_in;
-.3 => gainrev.gain;
+.6 => gainrev.gain;
 
 pa2 =>  st.mono_in;
-30 => gverb0.roomsize;        // roomsize: (float) [1.0 - 300.0], default 30.0   
+100 => gverb0.roomsize;        // roomsize: (float) [1.0 - 300.0], default 30.0   
 2::second => gverb0.revtime;   // revtime: (dur), default 5::second
-0.9 => gverb0.dry;             // dry (float) [0.0 - 1.0], default 0.6                
-0.0 => gverb0.early;           // early (float) [0.0 - 1.0], default 0.4
+0.7 => gverb0.dry;             // dry (float) [0.0 - 1.0], default 0.6                
+0.2 => gverb0.early;           // early (float) [0.0 - 1.0], default 0.4
 0.15 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5       
 
 "../_SAMPLES/HIHAT_02.WAV" => buf.read;

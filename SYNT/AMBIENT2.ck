@@ -43,8 +43,8 @@ public class AMBIENT2 extends SYNT{
           c[i] =>	C[1][i].read;
           C[0][i].samples() => C[0][i].pos;
           C[1][i].samples() => C[1][i].pos;
-          C[0][i] => a[0][i] => out;
-          C[1][i] => a[1][i] => out;
+          C[0][i] => a[0][i] ;
+          C[1][i] => a[1][i] ;
           a[0][i].set(30::ms, 30::ms, 1. , 300::ms);
           a[1][i].set(30::ms, 30::ms, 1. , 300::ms);
         }
@@ -77,6 +77,7 @@ public class AMBIENT2 extends SYNT{
 		fun void  play() {
 		    // Off last
         a[sidx][index].keyOff();
+        a[sidx][index] =< out;
 			  if (stopped) {
            //immediate stop last one
            C[sidx][index].samples() => C[sidx][index].pos;
@@ -104,6 +105,7 @@ public class AMBIENT2 extends SYNT{
 				p => C[other_sidx()][index].rate;
 //				<<<"p", p>>>; 
 				0=> C[sidx][index].pos; 
+        a[sidx][index] => out;
 				a[sidx][index].keyOn();
 
         // Rewined wav while key is on
