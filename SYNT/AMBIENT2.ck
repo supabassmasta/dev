@@ -28,7 +28,13 @@ public class AMBIENT2 extends SYNT{
 
     /// PUBLIC ////////////
     3000::ms => dur reload_dur;
-		
+    300::ms => dur	release_dur;	
+
+    fun void disconnect_after_release(int si, int i) {
+      release_dur => now;
+      a[si][i] =< out;
+    }
+
     fun void load(int in) {
       "../_SAMPLES/Progressive-Trance-Loops---Samples/Progressive_Trance_Loops_&_Samples/Ambient&Trance_Pads&Strings/WAV_Multisamples/" => string path;
       //["Agitato/",    "AnaOrch/",  "Apollo/"] @=> string synt[];
@@ -45,8 +51,8 @@ public class AMBIENT2 extends SYNT{
           C[1][i].samples() => C[1][i].pos;
           C[0][i] => a[0][i] ;
           C[1][i] => a[1][i] ;
-          a[0][i].set(30::ms, 30::ms, 1. , 300::ms);
-          a[1][i].set(30::ms, 30::ms, 1. , 300::ms);
+          a[0][i].set(30::ms, 30::ms, 1. , release_dur);
+          a[1][i].set(30::ms, 30::ms, 1. , release_dur);
         }
       }
       else {
@@ -77,7 +83,8 @@ public class AMBIENT2 extends SYNT{
 		fun void  play() {
 		    // Off last
         a[sidx][index].keyOff();
-        a[sidx][index] =< out;
+        spork ~ disconnect_after_release(sidx, index);
+
 			  if (stopped) {
            //immediate stop last one
            C[sidx][index].samples() => C[sidx][index].pos;
@@ -127,8 +134,10 @@ public class AMBIENT2 extends SYNT{
         while (exit == exit_idx) {
 //        <<<"RELOAD 2">>>;
           a[sidx][index].keyOff();
+          spork ~ disconnect_after_release(sidx, index);
           switch_sidx();
           reload_pos => C[sidx][index].pos;
+          a[sidx][index] => out;
           a[sidx][index].keyOn();
           reload_dur => now;
         }
