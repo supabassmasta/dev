@@ -49,6 +49,8 @@ Machine.add("../EFFECTS/DUCK.ck");
 
 Machine.add( "../seq_3/SEQ3.ck");
 Machine.add( "../seq_3/WAV.ck");
+me.yield();
+Machine.add( "../seq_3/MASTER_SEQ3.ck");
 
 Machine.add( "../EFFECTS/CONTROLER.ck");
 
