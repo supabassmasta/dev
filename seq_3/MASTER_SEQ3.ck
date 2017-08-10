@@ -10,7 +10,7 @@ public class MASTER_SEQ3 {
     float last_diff;
     int j; 
     // for future seqs
-    r % data.tick => data.wait_before_start;
+    r - data.T0 => data.wait_before_start;
 
 
     for (0 => int i; i < seqs.size(); i++) {

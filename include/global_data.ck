@@ -25,9 +25,13 @@ public class data {
 
 // FRAMEWORK
     static dur wait_before_start;
-
+		static time T0;
 
 }
+
+now => data.T0;
+<<<"data.T0" , data.T0>>>; 
+
 500::ms => data.tick;
 130 => data.bpm;
 

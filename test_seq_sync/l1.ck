@@ -10,7 +10,7 @@ while(1) {
 
   if (cnt%4 == 0) {
     660 => s.freq;
-    (1. + (cnt $ float)/100.) =>  ratio;
+    (1. - (cnt $ float)/100.) =>  ratio;
     MASTER_SEQ3.update_tick(now, tick *ratio *4, 4);
 //    MASTER_SEQ3.update_ref_times(now, tick *ratio *4);
 //    MASTER_SEQ3.update_durations(tick *ratio *4, 4);
