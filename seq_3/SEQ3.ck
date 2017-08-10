@@ -2,6 +2,7 @@ public class SEQ3 {
   0::ms => dur sync_offset;
   time ref_time;
   dur duration;
+  float nb_tick;
   0 => int idx;
   0 => int exit;  
   1 => int on_flag;
@@ -34,7 +35,9 @@ public class SEQ3 {
         duration => elements[i].rel_time;
         elements[i].duration +=> duration;
     }
-
+    
+    duration / data.tick => nb_tick;
+    // <<<"nb_tick", nb_tick>>>; 
     // compute rel_pos
     for (0 => int i; i < elements.size()      ; i++) {
         elements[i].rel_time /  duration => elements[i].rel_pos;
@@ -129,7 +132,7 @@ public class SEQ3 {
                }
             }
             else {
-                <<<"element ", idx, "skiped, time",  elements[idx].next_time, ">", now>>>; 
+                <<<"element ", idx, "skiped, time",  elements[idx].next_time, "<", now>>>; 
                 0 => elements[idx].next_time_validity;
             }
 
