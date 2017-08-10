@@ -30,6 +30,7 @@ public class data {
 }
 500::ms => data.tick;
 130 => data.bpm;
+
 1000::ms=> data.wait_before_start;
 
 new string_dummy @=> data.scale;
