@@ -47,6 +47,7 @@ public class TONE extends ST {
   0::ms => dur groove;
 
   SEQ3 s;
+  MASTER_SEQ3.reg(s);
   data.wait_before_start => s.sync_offset;
   fun void no_sync()      {s.no_sync() ;}
   fun void element_sync() {s.element_sync();}
