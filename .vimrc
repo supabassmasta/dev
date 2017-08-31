@@ -646,3 +646,89 @@ ab ACTIONSNDBUFK ST st;
 \<CR>ACT act; 
 \<CR>buf @=> act.sb;
 
+ab PMODK class synt0 extends SYNT{
+\<CR>  inlet => Gain in;
+\<CR>Gain out =>  outlet;   
+\<CR>
+\<CR>0 => int i;
+\<CR>Gain opin[8];
+\<CR>Gain opout[8];
+\<CR>PowerADSR adsrop[8];
+\<CR>SinOsc osc[8];
+\<CR>
+\<CR>// build and config operators
+\<CR>//---------------------
+\<CR>opin[i] => osc[i] => adsrop[i] => opout[i];
+\<CR>1. => opin[i].gain;
+\<CR>adsrop[i].set(1::ms, 20::ms, .7 , 200::ms);
+\<CR>adsrop[i].setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>1 => adsrop[i].gain;
+\<CR>i++;
+\<CR>
+\<CR>//---------------------
+\<CR>opin[i] => osc[i] => adsrop[i] => opout[i];
+\<CR>1./2. + 0.03 => opin[i].gain;
+\<CR>adsrop[i].set(1.5*data.tick, 1.5*data.tick, .00001 , 200::ms);
+\<CR>adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>100 * 3 => adsrop[i].gain;
+\<CR>i++;
+\<CR>
+\<CR>//---------------------
+\<CR>opin[i] => osc[i] => adsrop[i] => opout[i];
+\<CR>1./8. +0.0 => opin[i].gain;
+\<CR>adsrop[i].set(100::ms, 186::ms, .5 , 1800::ms);
+\<CR>adsrop[i].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>8 => adsrop[i].gain;
+\<CR>i++;
+\<CR>
+\<CR>//---------------------
+\<CR>opin[i] => osc[i] => adsrop[i] => opout[i];
+\<CR>1./2. +0.000 => opin[i].gain;
+\<CR>adsrop[i].set(200::ms, 186::ms, .2 , 400::ms);
+\<CR>adsrop[i].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>30 => adsrop[i].gain;
+\<CR>i++;
+\<CR>
+\<CR>// connect operators
+\<CR>// main osc
+\<CR>in => opin[0]; opout[0]=> out; 
+\<CR>
+\<CR>// modulators
+\<CR>in => opin[1];
+\<CR>opout[1] => opin[0];
+\<CR>
+\<CR>in => opin[2];
+\<CR>// opout[2] => opin[0];
+\<CR>
+\<CR>in => opin[3];
+\<CR>// opout[3] => opin[0];
+\<CR>
+\<CR>
+\<CR>.5 => out.gain;
+\<CR>
+\<CR>fun void on()  
+\<CR>{
+\<CR>for (0 => int i; i < 8      ; i++)
+\<CR>{
+\<CR>    adsrop[i].keyOn();
+\<CR>    // 0=> osc[i].phase;
+\<CR>}
+\<CR>      
+\<CR>} 
+\<CR>    
+\<CR>fun void off() 
+\<CR>{
+\<CR>for (0 => int i; i < 8      ; i++) 
+\<CR>{
+\<CR>    adsrop[i].keyOff();
+\<CR>}
+\<CR>            
+\<CR>                  
+\<CR>} 
+\<CR>    
+\<CR>fun void new_note(int idx)  
+\<CR>{ 
+\<CR>           
+\<CR>}
+\<CR>} 
+
