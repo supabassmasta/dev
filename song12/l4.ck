@@ -74,8 +74,11 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go(); 
 
+STAUTOPAN autopan;
+autopan.connect(t $ ST, .9 /* span 0..1 */, 7*data.tick/13 /* period */, 0.5 /* phase 0..1 */ );  
+
 STREV1 rev;
-rev.connect(t $ ST, .05 /* mix */); 
+rev.connect(autopan $ ST, .05 /* mix */); 
 while(1) {
        100::ms => now;
 }
