@@ -497,11 +497,11 @@ public class TONE extends ST {
         }
         else
         {
+          e.actions << set_synt_new_note(synt[id], s.elements.size()); 
           if (temp_freq != freq[id]) {
             // add a change freq action only if freq change
             temp_freq => freq[id];
             e.actions << set_freq_synt(env[id], freq[id] ); 
-            e.actions << set_synt_new_note(synt[id], s.elements.size()); 
 
             if (glide != 0::ms && on_state[id] != 0 && s.elements.size() != 0 ) {
               // only available for synt 0 for the moment
