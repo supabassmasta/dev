@@ -5,7 +5,6 @@ public class TONE extends ST {
   PowerADSR adsr[0];
   int on_state[0];
   float freq[0];
-
   float scale[0];
 
   // input for all env
@@ -418,6 +417,8 @@ public class TONE extends ST {
     0 => int force_new_note;
 
     int on_state_on_start[0];
+    float first_note_freq;
+
     on_state.size() => on_state_on_start.size;
 
     // reset remaining
@@ -477,7 +478,12 @@ public class TONE extends ST {
 
         // SET NOTE
         conv_to_freq(rel_note, scale, base_note, note_offset) => temp_freq;
-
+        
+        // save firt note freq for last glide
+        if (id == 0 && s.elements.size() == 0){
+          temp_freq => first_note_freq;
+        }
+        
         0=> note_offset;
 
         if (slide_nb) {
@@ -516,7 +522,10 @@ public class TONE extends ST {
                   e_glide.actions << set_slide(env[id], temp_freq , glide);
                   glide => e_glide.duration;
                   s.elements << e_glide;
-                }
+                  // set on action if seq start by glide event
+                  e_glide.on_actions << set_on_adsr(adsr[id]); 
+                  e_glide.on_actions << set_synt_on(synt[id]); 
+               }
                 else {
                   <<<"Glide too long compared to note: discarded">>>;  
                 }
@@ -830,6 +839,31 @@ public class TONE extends ST {
         // synt already on but we need to on it if the seq start here
         s.elements[0].on_actions << set_on_adsr(adsr[j]); 
         s.elements[0].on_actions << set_synt_on(synt[j]); 
+
+
+        // Need to do a glide here
+        // only available for synt 0 for the moment
+        if (j== 0 && glide != 0::ms ) {
+          // split element N-1
+          if (glide < s.elements[s.elements.size() - 1].duration ) {
+            // Reduce N-1
+            s.elements[s.elements.size() - 1].duration - glide => s.elements[s.elements.size() - 1].duration;
+
+            // add new element for glide
+            new ELEMENT @=> e_glide;
+            e_glide.actions << set_slide(env[j], first_note_freq , glide);
+            glide => e_glide.duration;
+            s.elements << e_glide;
+            // set on action if seq start by glide event
+            e_glide.on_actions << set_on_adsr(adsr[j]); 
+            e_glide.on_actions << set_synt_on(synt[j]); 
+          }
+          else {
+            <<<"Glide too long compared to note: discarded">>>;  
+          }
+
+        }
+
       }
     }
 
