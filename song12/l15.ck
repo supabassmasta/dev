@@ -90,7 +90,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max;
 //160::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" 1//8__ ____ ____ " => t.seq;
+" 8/1!5!1_ ____ ____ " => t.seq;
 .6 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//
 t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
@@ -100,10 +100,10 @@ t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other conve
 t.go(); 
 
 STAUTOPAN autopan;
-autopan.connect(t $ ST, .9 /* span 0..1 */, 1*data.tick/2 /* period */, 0.95 /* phase 0..1 */ );  
+autopan.connect(t $ ST, .9 /* span 0..1 */, 1*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
 STECHO ech;
-ech.connect(autopan $ ST , data.tick * 3 / 8 , .8); 
+ech.connect(autopan $ ST , data.tick * 6 / 8 , .8); 
 
 while(1) {
        100::ms => now;

@@ -18,19 +18,19 @@ class synt0 extends SYNT{
     i++;
 
     //---------------------
-    opin[i] => osc[i] => adsrop[i] => opout[i];
+    opin[i] =>TriOsc tri  => adsrop[i] => opout[i];
     1./5. + 0.03 => opin[i].gain;
     adsrop[i].set(100::ms, 1.5*data.tick, .00001 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    100 * 3 => adsrop[i].gain;
+    100 * 1 => adsrop[i].gain;
     i++;
 
     //---------------------
-    opin[i] => TriOsc tri=> adsrop[i] => opout[i];
+    opin[i] => osc[i]=> adsrop[i] => opout[i];
     1./8. +0.0 => opin[i].gain;
-    adsrop[i].set(2000::ms, 186::ms, .5 , 1800::ms);
+    adsrop[i].set(data.tick , 186::ms, .5 , 1800::ms);
     adsrop[i].setCurves(5.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    15 * 10 => adsrop[i].gain;
+    47 * 10 => adsrop[i].gain;
     .8 => tri.width;
     i++;
 
@@ -90,8 +90,8 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max;
 //160::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" 1//8__ ____ ____ " => t.seq;
-.6 => t.gain;
+" g//1 __ ____ " => t.seq;
+.3 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//
 t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -100,10 +100,10 @@ t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other conve
 t.go(); 
 
 STAUTOPAN autopan;
-autopan.connect(t $ ST, .9 /* span 0..1 */, 1*data.tick/2 /* period */, 0.95 /* phase 0..1 */ );  
+autopan.connect(t $ ST, .9 /* span 0..1 */, 2*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
 STECHO ech;
-ech.connect(autopan $ ST , data.tick * 3 / 8 , .8); 
+ech.connect(autopan $ ST , data.tick * 1 ,  .6); 
 
 while(1) {
        100::ms => now;
