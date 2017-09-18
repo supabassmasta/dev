@@ -113,6 +113,8 @@ t.adsr[0].set(2::ms, 10::ms, .8, 100::ms);
 t.adsr[0].setCurves(1.0, 1.0, 2.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go(); 
 
+STAUTOPAN autopan;
+autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
 while(1) {
        100::ms => now;
