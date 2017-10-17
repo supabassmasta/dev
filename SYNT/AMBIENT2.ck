@@ -56,7 +56,7 @@ public class AMBIENT2 extends SYNT{
         }
       }
       else {
-        <<<"synt index too high">>>; 
+        <<<"synt index too high. size", synt.size()>>>; 
       }
 		}
     /// PUBLIC ////////////
