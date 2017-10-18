@@ -30,9 +30,12 @@ ech.connect(autopan $ ST , data.tick * 3 / 1 , .4);
 
 
 
-STFADEIN fadein;
-fadein.connect(ech, 8*data.tick); 
+//STFADEIN fadein;
+//fadein.connect(ech, 8*data.tick); 
 
+
+STFILTERMOD fmod;
+fmod.connect( ech , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 7 /* Q */, 800 /* f_base */ , 601  /* f_var */, .3 /* f_mod */); 
 
 while(1) {
        100::ms => now;
