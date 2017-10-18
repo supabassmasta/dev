@@ -29,41 +29,7 @@ STECHO ech;
 ech.connect(autopan $ ST , data.tick * 3 / 1 , .4); 
 
 
-
-STREV1 rev;
-rev.connect(ech $ ST, .2/* mix */); 
-
-ST st;
-
-// filter to add in graph:
-// LPF filter =>   BPF filter
-ech.mono() =>   BPF filter => st.mono_in;
-Step base => Gain filter_freq => blackhole;
-Gain mod_out => Gain variable => filter_freq;
-SinOsc mod =>  mod_out; Step one => mod_out; 1=> one.next; .5 => mod_out.gain;
-
-1.5 =>filter.gain;
-
-// params
-4 => filter.Q;
-161 => base.next;
-551 => variable.gain;
-1::second / (data.tick * 4 ) => mod.freq;
-// If mod need to be synced
-// 1 => int sync_mod;
-// if (idx == 0) { if (sync_mod) { 0=> sync_mod; 0.0 => mod.phase; } }
-
-fun void filter_freq_control (){ 
-	    while(1) {
-				      filter_freq.last() => filter.freq;
-							      1::ms => now;
-										    }
-}
-spork ~ filter_freq_control (); 
-
-
-STAUTOPAN autopan2;
-autopan2.connect(st $ ST, .6 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );  
+/*
 
 class STFADEIN extends ST {
     ADSR al=> outl;
@@ -78,10 +44,9 @@ class STFADEIN extends ST {
       ar.keyOn();      
     }
 }
-
-STFADEIN fadein;
-fadein.connect(autopan2, 20000::ms);
-fadein.connect(ech, 20000::ms);
+*/
+//STFADEIN fadein;
+//fadein.connect(ech, 20000::ms);
 
 
 while(1) {

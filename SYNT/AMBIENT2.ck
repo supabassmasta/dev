@@ -1,5 +1,6 @@
 public class AMBIENT2 extends SYNT{
-
+    
+    0 => int config_ok;
 		5=> int nb_samples;
 		string c[nb_samples];
 		SndBuf C[2][nb_samples];
@@ -41,7 +42,7 @@ public class AMBIENT2 extends SYNT{
       ["Agitato/","AnaOrch/","Apollo/","BigWave/","Breathchoir/","ClearBell/","ComeOnHigh/","DynaPWM/","FlangOrg/","GlassChoir/","HollowPad/","Mars/","Neptune/","Phasensemble/","SkyOrgan/","SoftString/","StereoString/","VelocityEns/","AnalogStr/","AnLayer/","BigStrings+/","BottledOut/","BriteString/","CloudNine/","Dreamsphere/","EnsembleMix/","FreezePad/","GlassMan/","Kemuri/","MellowStrings/","No.9String/","PulseString/","SmokePad/","Stalactite/","Telesa/"] @=> string synt[];
 
       if (in < synt.size()) {
-        <<<"SYNT: " + synt[in]>>>; 
+        <<<"AMBIENT2 SYNT: " + synt[in]>>>; 
         for (0 => int i; i <  nb_samples     ; i++) {
           path + synt[in] + "C" + (i + 1) +".wav" => c[i];
           <<<c[i]>>>;
@@ -53,10 +54,11 @@ public class AMBIENT2 extends SYNT{
           C[1][i] => a[1][i] ;
           a[0][i].set(30::ms, 30::ms, 1. , release_dur);
           a[1][i].set(30::ms, 30::ms, 1. , release_dur);
+          1=> config_ok;
         }
       }
       else {
-        <<<"synt index too high. size", synt.size()>>>; 
+        <<<"AMBIENT2: synt index too high. size", synt.size()>>>; 
       }
 		}
     /// PUBLIC ////////////
@@ -120,7 +122,7 @@ public class AMBIENT2 extends SYNT{
         exit_idx => int exit;
 
         if (reload_dur > (1./C[sidx][index].rate()) * C[sidx][index].length()) {
-          <<<"!!!!!!RELOAD DUR TOO HIGH!!!!!!!">>>;
+          <<<"AMBIENT2 : !!!!!!RELOAD DUR TOO HIGH!!!!!!!">>>;
           (1./C[sidx][index].rate()) * C[sidx][index].length() / 2 => reload_dur;
         }
 
@@ -151,7 +153,13 @@ public class AMBIENT2 extends SYNT{
       1 => stopped;
     }
 
-						fun void on()  {spork ~ play(); }
+						fun void on()  { 
+              if (config_ok)
+                spork ~ play(); 
+              else
+                <<<"AMBIENT2 Config KO">>>; 
+              
+            }
             fun void off() { spork ~  stopa(); }	
             fun void new_note(int idx)  { /*<<<"note " + idx>>>;	*/	}
 }

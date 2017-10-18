@@ -732,3 +732,6 @@ ab PMODK class synt0 extends SYNT{
 \<CR>}
 \<CR>} 
 
+ab STFADEINK STFADEIN fadein;
+\<CR>fadein.connect(t, 4*data.tick);
+
