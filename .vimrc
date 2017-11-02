@@ -738,3 +738,7 @@ ab STFADEINK STFADEIN fadein;
 ab STFILTERMODK STFILTERMOD fmod;
 \<CR>fmod.connect( t , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);
 
+ab SATK ABSaturator sat   =>   
+\<CR>20 => sat.drive;
+\<CR>4 => sat.dcOffset;
+
