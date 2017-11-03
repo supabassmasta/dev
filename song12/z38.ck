@@ -87,6 +87,7 @@ class synt0 extends SYNT{
 
 
 
+
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
 t.dor();// t.aeo(); // t.phr();// t.loc();

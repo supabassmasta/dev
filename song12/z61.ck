@@ -22,7 +22,7 @@ class synt0 extends SYNT{
     1./4. + 0.03 => opin[i].gain;
     adsrop[i].set(20::ms,20::ms, .00001 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    100 * 1 => adsrop[i].gain;
+     1 => adsrop[i].gain;
     i++;
 
     //---------------------
@@ -30,7 +30,7 @@ class synt0 extends SYNT{
     1./5. +0.0 => opin[i].gain;
     adsrop[i].set(100::ms, 186::ms, 1. , 1800::ms);
     adsrop[i].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    10 => adsrop[i].gain;
+    1 => adsrop[i].gain;
     .74 => tri.width;
     i++;
 

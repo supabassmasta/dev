@@ -1,7 +1,7 @@
 class ACT extends ACTION {
 		SndBuf s => dac;
 		.2 => s.gain;
-		"/media/toup/b991fb9b-9fbf-4efd-8c6e-1869c8241de2/chuck/dev/_SAMPLES/BluezoneCorporation/EthnoAndTribalAmbient/WAV/Loops 110BPM/Bluezone-Eta-loop-003-110.wav" => s.read;
+		"../_SAMPLES/BluezoneCorporation/EthnoAndTribalAmbient/WAV/Loops 110BPM/Bluezone-Eta-loop-003-110.wav" => s.read;
 		s.samples() => s.pos;
 		100./110. => s.rate;
 
