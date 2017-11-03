@@ -42,6 +42,22 @@ public class MASTER_SEQ3 {
     }
      
   }
+
+  fun static  void offset_ref_times (dur offset) {
+    time ref_test;
+    float last_diff;
+    int j; 
+    // for future seqs
+    offset + data.wait_before_start => data.wait_before_start;
+
+    for (0 => int i; i < seqs.size(); i++) {
+      offset + seqs[i].ref_time => seqs[i].ref_time;
+      seqs[i].set_all_next_time_invalid();
+    }
+
+  }
+
+
   fun static  void update_durations (dur d, float nb_tick) {
     // for future seqs
     d / nb_tick => data.tick;

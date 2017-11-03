@@ -742,3 +742,10 @@ ab SATK ABSaturator sat   =>
 \<CR>20 => sat.drive;
 \<CR>4 => sat.dcOffset;
 
+
+ab CONTROLK class cont extends CONTROL {
+\<CR>   // 0 =>  update_on_reg ;
+\<CR>   fun void set(float in) {
+\<CR>
+\<CR>   }
+\<CR>}
