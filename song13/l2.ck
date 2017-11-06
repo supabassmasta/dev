@@ -12,16 +12,16 @@ class synt0 extends SYNT{
     //---------------------
     opin[i] => /* osc[i] => */adsrop[i] => opout[i];
     1. => opin[i].gain;
-    adsrop[i].set(1::ms, 20::ms, .5 , 200::ms);
-    adsrop[i].setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+    adsrop[i].set(1::ms, 200::ms, .125 , 200::ms);
+    adsrop[i].setCurves(.5, .4, 1); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     1 => adsrop[i].gain;
     i++;
 
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
     1.0 => opin[i].gain;
-    adsrop[i].set(1::ms, 0::ms, 1. , 200::ms);
-    adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+    adsrop[i].set(20::ms, 200::ms, .00006 , 100::ms);
+    adsrop[i].setCurves(.4, .7, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     1 => adsrop[i].gain;
     i++;
 
@@ -56,11 +56,11 @@ class synt0 extends SYNT{
     // opout[3] => opin[0];
 
 
-    1.5 => out.gain;
+    .7 => out.gain;
 
     fun void f1 (){ 
         
-        15::ms => now;
+        150::ms => now;
 
           for (0 => int i; i < 8      ; i++) 
           {
@@ -98,13 +98,14 @@ TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4
+"*4  
 0__0 __0_ 0___ ____ 
 0__0 __0_ __0_ _0__ 
 0_00 __0_ 0___ ____ 
 0___ __0_ ___0 _0__ 
 " => t.seq;
-.9 => t.gain;
+.7 => t.gain;
+t.raw() => dac;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

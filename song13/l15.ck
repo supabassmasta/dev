@@ -1,9 +1,9 @@
 class synt0 extends SYNT{
 
     inlet => SinOsc s => ABSaturator sat   => LPF filter => outlet;    
-    .0 => sat.drive;
-    0.0 => sat.dcOffset; 
-        2.8 => s.gain;
+    .2 => sat.drive;
+    0.3 => sat.dcOffset; 
+        4.8 => s.gain;
 
     // Filter to add in graph
     // LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
@@ -11,11 +11,11 @@ class synt0 extends SYNT{
     Step variable => PowerADSR padsr => filter_freq;
 
     // Params
-    padsr.set(data.tick / 8 , data.tick / 4 , .9, data.tick / 4);
-    padsr.setCurves(2.0, 2.0, .5);
+    padsr.set(data.tick / 4 , data.tick / 4 , .9, data.tick / 4);
+    padsr.setCurves(.7, 2.0, .5);
     1 => filter.Q;
-    48 => base.next;
-    4 *100 => variable.next;
+    102 => base.next;
+    50 => variable.next;
 
     // ADSR Trigger
     //padsr.keyOn(); padsr.keyOff();
@@ -49,7 +49,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 .9 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(2::ms, 10::ms, .8, 400::ms);
+t.adsr[0].set(10::ms, 20::ms, .8, 400::ms);
 t.adsr[0].setCurves(.8, .5, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go(); 
 

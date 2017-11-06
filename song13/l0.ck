@@ -98,7 +98,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 111!888!11 3333333_   555_5588 4444C4C4
 111!888!11 444!CCC!44 BB11111_ 88881818
 " => t.seq;
-1.1 => t.gain;
+1.6 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(6::ms, 100::ms, .7, 100::ms);
@@ -108,8 +108,11 @@ t.go();
 STAUTOPAN autopan;
 autopan.connect(t $ ST, .4 /* span 0..1 */, data.tick / 12 /* period */, 0.95 /* phase 0..1 */ );  
 
-STREV1 rev;
-rev.connect(autopan $ ST, .1 /* mix */); 
+STLPFC lpfc;
+lpfc.connect(autopan $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );  
+
+//STREV1 rev;
+//rev.connect(autopan $ ST, .1 /* mix */); 
 
 while(1) {
        100::ms => now;

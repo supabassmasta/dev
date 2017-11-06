@@ -1,4 +1,42 @@
 class synt0 extends SYNT{
+
+    inlet => SinOsc s => ABSaturator sat   => LPF filter => outlet;    
+    .2 => sat.drive;
+    0.3 => sat.dcOffset; 
+        4.8 => s.gain;
+
+    // Filter to add in graph
+    // LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
+    Step base => Gain filter_freq => blackhole;
+    Step variable => PowerADSR padsr => filter_freq;
+
+    // Params
+    padsr.set(data.tick / 4 , data.tick / 4 , .9, data.tick / 4);
+    padsr.setCurves(.7, 2.0, .5);
+    1 => filter.Q;
+    102 => base.next;
+    50 => variable.next;
+
+    // ADSR Trigger
+    //padsr.keyOn(); padsr.keyOff();
+
+    // fun void auto_off(){
+      //     data.tick / 4 => now;
+      //     padsr.keyOff();
+      // }
+      // spork ~ auto_off();
+
+      fun void filter_freq_control (){ 
+            while(1) {
+                    filter_freq.last() => filter.freq;
+                          1::ms => now;
+                              }
+      } 
+      spork ~ filter_freq_control (); 
+
+            fun void on()  { }  fun void off() {padsr.keyOff(); }  fun void new_note(int idx)  {padsr.keyOn();   }
+} 
+class synt1 extends SYNT{
     inlet => Gain in;
     Gain out =>  outlet;   
 
@@ -103,7 +141,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 111_ __1_ B55_ 333_
 111_ 1_1_ 4_4_ 7_7_
 " => t.seq;
-1.3 => t.gain;
+1.9 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -112,11 +150,11 @@ t.adsr[0].set(6::ms, 100::ms, .7, 100::ms);
 t.adsr[0].setCurves(1.0, 1.0, 2.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe 
 t.go(); 
 
-STAUTOPAN autopan;
-autopan.connect(t $ ST, .4 /* span 0..1 */, data.tick / 12 /* period */, 0.95 /* phase 0..1 */ );  
+//STAUTOPAN autopan;
+//autopan.connect(t $ ST, .4 /* span 0..1 */, data.tick / 12 /* period */, 0.95 /* phase 0..1 */ );  
 
-STREV1 rev;
-rev.connect(autopan $ ST, .1 /* mix */); 
+//STREV1 rev;
+//rev.connect(autopan $ ST, .1 /* mix */); 
 
 
 while(1) {
