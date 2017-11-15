@@ -10,7 +10,10 @@ TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " *4 }c }c
-!1!5!3!4!7!6
+!1!1!5!_3!4_!7!7!6_
+!1!5!5!3!4!4!4!7_!6_
+!1_!5!3!3_!4!7!6!6__
+__
 " => t.seq;
 .6 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
