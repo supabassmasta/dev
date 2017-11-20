@@ -31,7 +31,7 @@ class synt0 extends SYNT{
              
 
            } 
-           spork ~ f1 ();
+//           spork ~ f1 ();
 
 
 
