@@ -2,6 +2,7 @@
 
 
 
+
  <<<shred_id>>>;
 
  Machine.add( "exist.ck")=>shred_id;
