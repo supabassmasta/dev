@@ -12,6 +12,7 @@ public class STDIGITC extends ST{
     1 => update_on_reg ;
 
     fun void set (float in) {
+      if (in == 0) 1. => in;
       (in $ int) * 1::samp   =>  dlp.ech => drp.ech;
       <<<"control_ech ", dlp.ech>>>;
     }
@@ -25,7 +26,7 @@ public class STDIGITC extends ST{
     1 => update_on_reg ;
     
     fun void set (float in) {
-      in / 100. =>  dlp.quant => drp.quant;
+      in / 1000. =>  dlp.quant => drp.quant;
       <<<"control_quant ", dlp.quant>>>;
 
     }
