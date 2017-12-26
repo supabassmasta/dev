@@ -400,7 +400,7 @@ ab TONEK TONE t;
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 \<CR>//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-\<CR>t.go();
+\<CR>t.go();   t $ ST @=> ST @ last;
 
 ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
@@ -408,7 +408,7 @@ ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLC
 \<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
 \<CR>//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-\<CR>s.go();
+\<CR>s.go();     s $ ST @=> ST @ last;
  
 
 ab MODK class synt0 extends SYNT{
@@ -495,17 +495,17 @@ ab MODK class synt0 extends SYNT{
 
 
 ab STECHOK STECHO ech;
-\<CR>ech.connect(t $ ST , data.tick * 8 / 1 , .5);
+\<CR>ech.connect(last $ ST , data.tick * 8 / 1 , .5);  ech $ ST @=>  last;
 
 ab STREV1K STREV1 rev;
-\<CR>rev.connect(t $ ST, .3 /* mix */);
+\<CR>rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last;
 
 ab STREV2K STREV2 rev; // DUCKED
-\<CR>rev.connect(t $ ST, .3 /* mix */);
+\<CR>rev.connect(last $ ST, .3 /* mix */);      rev $ ST @=>  last;
 
 
 ab STAUTOPANK STAUTOPAN autopan;
-\<CR>autopan.connect(t $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ ); 
+\<CR>autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last;
 
 ab POLYK lpk25 l;
 \<CR>POLY synta; 
@@ -522,40 +522,40 @@ ab GLIDEK lpk25 l;
 
 
 ab STDUCKMASTERK STDUCKMASTER duckm;
-\<CR>duckm.connect(s $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );
+\<CR>duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last;
 
 ab STDUCKK STDUCK duck;
-\<CR>duck.connect(t $ ST);
+\<CR>duck.connect(last $ ST);      duck $ ST @=>  last;
 
 ab STDIGITK STDIGIT dig;
-\<CR>dig.connect(t $ ST , 1::samp /* sub sample period */ , .01 /* quantization */);
+\<CR>dig.connect(last $ ST , 1::samp /* sub sample period */ , .01 /* quantization */);      dig $ ST @=>  last;
 
 ab STECHOCK STECHOC ech;
-\<CR>ech.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */ , HW.lpd8.potar[1][2] /* Q */ ); 
+\<CR>ech.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */ , HW.lpd8.potar[1][2] /* Q */ );      ech $ ST @=>  last; 
 
 ab STLPFCK STLPFC lpfc;
-\<CR>lpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
+\<CR>lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last;
 
 ab STBPFCK STBPFC bpfc;
-\<CR>bpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
+\<CR>bpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       bpfc $ ST @=>  last;
 
 ab STHPFCK STHPFC hpfc;
-\<CR>hpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
+\<CR>hpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       hpfc $ ST @=>  last;
 
 ab STBRFCK STBRFC brfc;
-\<CR>brfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
+\<CR>brfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       brfc $ ST @=>  last;
 
 ab STRESCK STRESC resc;
-\<CR>resc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  ); 
+\<CR>resc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );     resc  $ ST @=>  last; 
 
 ab STGAINCK STGAINC gainc;
-\<CR>gainc.connect(t $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  ); 
+\<CR>gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last;
 
 ab RECK REC rec;
 \<CR>rec.rec(8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
 
 ab STDIGITCK STDIGITC dig;
-\<CR>dig.connect(t $ ST , HW.lpd8.potar[1][1] /* sub sample period */ , HW.lpd8.potar[1][2] /* quantization */);
+\<CR>dig.connect(last $ ST , HW.lpd8.potar[1][1] /* sub sample period */ , HW.lpd8.potar[1][2] /* quantization */);      dig $ ST @=>  last;
 
 ab FILTERMODK // filter to add in graph:
 \<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
@@ -733,10 +733,10 @@ ab PMODK class synt0 extends SYNT{
 \<CR>} 
 
 ab STFADEINK STFADEIN fadein;
-\<CR>fadein.connect(t, 4*data.tick);
+\<CR>fadein.connect(last, 4*data.tick);     fadein  $ ST @=>  last;
 
 ab STFILTERMODK STFILTERMOD fmod;
-\<CR>fmod.connect( t , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);
+\<CR>fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last;
 
 ab SATK ABSaturator sat   =>   
 \<CR>20 => sat.drive;

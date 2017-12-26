@@ -1,5 +1,3 @@
-add @last_st in all ST ab
-
 add raw_out param in SYNT class for those managing own ADSR
 
 group Trance instru into trance with name and manual on launch
@@ -14,11 +12,6 @@ Create korg stereo sampler
 
 
 
-Fix set gain on first note in TONE
-
-AUTOWHA  , ST?
-
-ST effect + controller
 
 Check filters behaviour on baudeline
 
@@ -26,4 +19,3 @@ STAUTOREC with sync, duration, name, attack/Release dur
 
 Try to kill/unreg control objects on script end to free memory
 
-fix glide on first note in TONE
