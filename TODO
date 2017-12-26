@@ -1,3 +1,19 @@
+add @last_st in all ST ab
+
+add raw_out param in SYNT class for those managing own ADSR
+
+group Trance instru into trance with name and manual on launch
+
+create more ready to use SYNTs
+
+Fix DIGITC and check all others
+
+Create STFLANGER
+
+Create korg stereo sampler
+
+
+
 Fix set gain on first note in TONE
 
 AUTOWHA  , ST?

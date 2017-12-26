@@ -1,0 +1,11 @@
+Balanced outputs are 2 mono outs, use mono jacks.
+
+
+In Qjackctl/Settings Select Interface hw:USB Scarlett
+
+Launch chuckj with option '--out4' to get the four outputs available.
+
+In chuck scripts select channels with dac.chan(0) to dac.chan(3)
+
+
+ADC: to select adc input in scripts use: adc.chan(0) and adc.chan(1) 

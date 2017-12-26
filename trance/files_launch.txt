@@ -1,5 +1,7 @@
 COMMON effects.ck
 
+space_frogs.ck
+
 l0.ck
 l1.ck
 l2.ck
