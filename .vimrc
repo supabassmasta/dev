@@ -340,7 +340,7 @@ ab SYNTK class synt0 extends SYNT{
 \<CR>	inlet => SinOsc s =>  outlet;	
 \<CR>	.5 => s.gain;
 \<CR>
-\<CR>	fun void on()  { } 	fun void off() { } 	fun void new_note(int idx)  {	}
+\<CR>	fun void on()  { } 	fun void off() { } 	fun void new_note(int idx)  {	} 0 => own_adsr;
 \<CR>}
 
 
@@ -491,6 +491,7 @@ ab MODK class synt0 extends SYNT{
 \<CR>{ 
 \<CR>         
 \<CR>}
+\<CR> 0 => own_adsr;
 \<CR>} 
 
 
@@ -730,6 +731,7 @@ ab PMODK class synt0 extends SYNT{
 \<CR>{ 
 \<CR>           
 \<CR>}
+\<CR> 0 => own_adsr;
 \<CR>} 
 
 ab STFADEINK STFADEIN fadein;
