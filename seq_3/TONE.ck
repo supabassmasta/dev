@@ -94,7 +94,12 @@ public class TONE extends ST {
     a.setCurves(2.0, 2.0, .5);
     init_gain => a.gain;
 
-    one => e => in => a => out;
+    if (in.own_adsr) {
+      one => e => in => out;
+    }
+    else {
+      one => e => in => a => out;
+    }
     in => raw_out;
 
     on_state << 0;

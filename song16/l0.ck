@@ -1,15 +1,16 @@
 class synt0 extends SYNT{
-
-    inlet => SinOsc s =>  outlet;   
+    1 => own_adsr;
+    inlet => SinOsc s => ADSR a => outlet;   
+    a.set(1000::ms, 0::ms, 1., 2000::ms);
         .5 => s.gain;
 
-            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   }
+            fun void on()  {a.keyOn(); }  fun void off() {a.keyOff(); }  fun void new_note(int idx)  {   }
 } 
 
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c}c *4 1______" => t.seq;
+"}c}c 1______" => t.seq;
 .3 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -18,7 +19,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.go();   t $ ST @=> ST @ last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 5 / 1 , .8);  ech $ ST @=>  last; 
 
 STDIGIT dig;
 dig.connect(last $ ST , 100::samp /* sub sample period */ , .01 /* quantization */);      dig $ ST @=>  last; 
