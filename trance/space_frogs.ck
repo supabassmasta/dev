@@ -41,7 +41,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*8 {c {c 11" => t.seq;
 //"*8 {c {c 11__57_1AC_B 7531_ 8///1" => t.seq;
-.9 => t.gain;
+3.9 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();     //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

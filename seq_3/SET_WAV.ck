@@ -360,6 +360,66 @@ fun static void BLIPS ( SEQ @ s) {
 	dir + "006_P2.wav" => s.wav["w"];
 }
 
+fun  static  void TRANCE ( SEQ @ s) {
+    "../_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" => string dir;
+    dir + "Bong 03.wav" => s.wav["a"];
+    dir + "Bong 03.wav" => s.wav["b"];
+    dir + "Bong 13.wav" => s.wav["A"];
+    dir + "Bong 29.wav" => s.wav["B"];
+    dir + "Clap 03.wav" => s.wav["c"];
+    dir + "Clap 25.wav" => s.wav["C"];
+
+    dir + "darbukah 13.wav" => s.wav["d"];
+    dir + "darbukah 46.wav" => s.wav["e"];
+    dir + "darbukah 56.wav" => s.wav["f"];
+    dir + "darbukah 83.wav" => s.wav["g"];
+
+    dir + "darbukah 03.wav" => s.wav["D"];
+    dir + "darbukah 20.wav" => s.wav["E"];
+
+
+    //dir + "" => s.wav[""];
+
+    dir + "Closed hat 01.wav" => s.wav["h"];
+    dir + "Closed hat 10.wav" => s.wav["i"];
+    dir + "Closed hat 43.wav" => s.wav["j"];
+
+    dir + "Open Hat 04.wav" => s.wav["H"];
+    dir + "Open Hat 21.wav" => s.wav["I"];
+    dir + "Open Hat 26.wav" => s.wav["J"];
+
+    dir + "Proggy Kick 15.wav" => s.wav["k"];
+    dir + "Proggy Kick 07.wav" => s.wav["l"];
+    dir + "Proggy Kick 32.wav" => s.wav["m"];
+    dir + "Kick 33.wav" => s.wav["n"];
+
+    dir + "Kick 58.wav" => s.wav["K"];
+    dir + "Kick 41.wav" => s.wav["L"];
+    dir + "Kick 77.wav" => s.wav["M"];
+    dir + "Kick 69.wav" => s.wav["N"];
+    dir + "Kick 02.wav" => s.wav["O"];
+
+
+    dir + "Snare 21.wav" => s.wav["s"];   
+    dir + "Snare 15.wav" => s.wav["t"];   
+    dir + "Snare 23.wav" => s.wav["u"];   
+    dir + "Snare 04.wav" => s.wav["v"];   
+    dir + "Sacral snare.wav" => s.wav["w"];   
+    dir + "Sacral snare 4.wav" => s.wav["x"];   
+    dir + "Sacral.wav" => s.wav["y"]   ;
+
+    dir + "Hitek snare 31.wav" => s.wav["S"];
+    dir + "Hitek snare 11.wav" => s.wav["T"];
+    dir + "Hitek snare 07.wav" => s.wav["U"];
+    dir + "Hitek snare 12.wav" => s.wav["V"];
+    dir + "Hitek snare 15.wav" => s.wav["W"];
+    dir + "Jungle snare 08.wav" => s.wav["X"];
+    dir + "Electro snare 6.wav" => s.wav["Y"];
+
+    dir + "Proggy wood 02.wav" => s.wav["z"];
+    dir + "Proggy wood 21.wav" => s.wav["Z"];
+
+}
 
 }
 
