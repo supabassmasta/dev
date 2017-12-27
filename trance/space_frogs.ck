@@ -1,16 +1,30 @@
 class synt0 extends SYNT{
 
-		inlet => Gain in => SqrOsc s => LPF lpf =>  outlet;		
+		inlet => Gain in => SqrOsc s => LPF lpf => Gain out =>  outlet;		
 				.1 => s.gain;
 				.25 => in.gain;
+        1. => out.gain;
+
+
+        <<<"______ SPACE FROGS 0 ____">>>; 
+        <<<"______               ____">>>; 
+        <<<"______ LPD8 :        ____">>>; 
+        <<<"______ pot 1.1: GAIN ____">>>; 
+        <<<"______ pot 1.1: IN FREQ _">>>; 
+        <<<"______ pot 1.2: LPFFREQ _">>>; 
+        <<<"______ pot 1.3: LPF Q ___">>>; 
+        <<<"______ pot 1.4: SQR width">>>; 
+        <<<"______               ____">>>; 
+        <<<"______ SPACE FROGS 0 ____">>>; 
 
 				fun void f1 (){ 
 					while(1) {
 						//	<<<"POT",LPD8.pot[0][0]>>>; 
-						Std.mtof(LPD8.pot[0][0]) => lpf.freq;
-						LPD8.pot[0][1] * 12. / 127. + 1. => lpf.Q;
-						LPD8.pot[0][2] / 127. => s.width;	
-						LPD8.pot[0][3] * 2 / 127. =>in.gain;	
+						LPD8.pot[0][0] * 2 / 127. =>out.gain;	
+						LPD8.pot[0][1] * 2 / 127. =>in.gain;	
+						Std.mtof(LPD8.pot[0][2]) => lpf.freq;
+						LPD8.pot[0][3] * 12. / 127. + 1. => lpf.Q;
+						LPD8.pot[0][4] / 127. => s.width;	
 						10::ms => now;
 					}
  

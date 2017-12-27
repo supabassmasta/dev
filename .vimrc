@@ -751,3 +751,7 @@ ab CONTROLK class cont extends CONTROL {
 \<CR>
 \<CR>   }
 \<CR>}
+
+ab PowerADSRK PowerADSR padsr
+\<CR>padsr.set(1::ms, 20::ms, .7 , 200::ms);
+\<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave

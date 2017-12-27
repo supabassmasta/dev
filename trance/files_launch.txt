@@ -1,6 +1,7 @@
 COMMON effects.ck
 
 space_frogs.ck
+TB303C_example.ck
 
 l0.ck
 l1.ck
