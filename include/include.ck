@@ -71,6 +71,18 @@ Machine.add("../SYNT/STRINGBASS.ck");
 Machine.add("../SYNT/AMBIENT.ck");
 Machine.add("../SYNT/AMBIENT2.ck");
 Machine.add("../SYNT/RESYNT.ck");
+Machine.add("../SYNT/PSYBASS0.ck");
+Machine.add("../SYNT/PSYBASS1.ck");
+Machine.add("../SYNT/PSYBASS2.ck");
+Machine.add("../SYNT/PSYBASS3.ck");
+Machine.add("../SYNT/PSYBASS4.ck");
+Machine.add("../SYNT/PSYBASS5.ck");
+Machine.add("../SYNT/PSYBASS6.ck");
+Machine.add("../SYNT/PSYBASS7.ck");
+Machine.add("../SYNT/PSYBASS8.ck");
+Machine.add("../SYNT/PSYBASS9.ck");
+Machine.add("../SYNT/PSYBASS10.ck");
+Machine.add("../SYNT/PSYBASS11.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
