@@ -588,7 +588,7 @@ ab FILTERADSRK // Filter to add in graph
 \<CR>
 \<CR>// Params
 \<CR>padsr.set(data.tick / 4 , data.tick / 4 , .0000001, data.tick / 4);
-\<CR>padsr.setCurves(2.0, 2.0, .5);
+\<CR>padsr.setCurves(2.0, 2.0, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>1 => filter.Q;
 \<CR>48 => base.next;
 \<CR>3300 => variable.next;
