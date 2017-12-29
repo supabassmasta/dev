@@ -9,10 +9,11 @@ trance_percs2.ck
 mod0_space_trippy.ck
 psybass0.ck
 hpf_80s_slide_arp_trip.ck
-l8.ck
-l9.ck
-l10.ck
-l11.ck
+glidy_arp_synt.ck
+long_deep_mod_bass.ck
+long_deep_mod_bass_varing.ck
+rising_bleeping_synt.ck
+
 l12.ck
 l13.ck
 l14.ck
