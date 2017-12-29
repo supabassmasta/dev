@@ -83,6 +83,7 @@ Machine.add("../SYNT/PSYBASS8.ck");
 Machine.add("../SYNT/PSYBASS9.ck");
 Machine.add("../SYNT/PSYBASS10.ck");
 Machine.add("../SYNT/PSYBASS11.ck");
+Machine.add("../SYNT/MOD0.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
