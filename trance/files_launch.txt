@@ -3,12 +3,12 @@ COMMON effects.ck
 space_frogs.ck
 TB303C_example.ck
 
-l2.ck
-l3.ck
-l4.ck
-l5.ck
-l6.ck
-l7.ck
+beat_trance.ck
+trance_percs1.ck
+trance_percs2.ck
+mod0_space_trippy.ck
+psybass0.ck
+hpf_80s_slide_arp_trip.ck
 l8.ck
 l9.ck
 l10.ck
