@@ -741,8 +741,8 @@ ab STFILTERMODK STFILTERMOD fmod;
 \<CR>fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last;
 
 ab SATK ABSaturator sat   =>   
-\<CR>20 => sat.drive;
-\<CR>4 => sat.dcOffset;
+\<CR>2.0 => sat.drive;
+\<CR>0.0 => sat.dcOffset;
 
 
 ab CONTROLK class cont extends CONTROL {

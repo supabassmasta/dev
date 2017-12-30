@@ -88,6 +88,10 @@ Machine.add("../SYNT/DUBBASS0.ck");
 Machine.add("../SYNT/DUBBASS1.ck");
 Machine.add("../SYNT/DUBBASS2.ck");
 Machine.add("../SYNT/DUBBASS3.ck");
+Machine.add("../SYNT/PLOC0.ck");
+Machine.add("../SYNT/PLOC1.ck");
+Machine.add("../SYNT/PLOC2.ck");
+Machine.add("../SYNT/PLOC3.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
