@@ -6,6 +6,7 @@ Create STFLANGER
 
 Create korg stereo sampler
 
+fix SEQ: when no sample loaded in a letter, replace with a pause (at now it is skiped causing seq swift)
 
 
 
