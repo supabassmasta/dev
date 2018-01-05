@@ -91,9 +91,9 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max;
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "  ____ 1!533 ____ 571_ 
-____ ____ ____ ____
 " => t.seq;
 .6 => t.gain;
+//____ ____ ____ ____
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//
 t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;

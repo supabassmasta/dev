@@ -2,7 +2,7 @@ class synt0 extends SYNT{
 
     inlet => TriOsc s =>LPF filter =>  outlet;   
         .3 => s.gain;
-        .9 => s.width;
+        .93 => s.width;
 
     // Filter to add in graph
     // LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
@@ -45,7 +45,8 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 "*6 *2 }c
 B//111__ 11__11 ______ ____BB 
 B//111__ 11__11 ____11 ____BB 
-   " => t.seq;
+B//111__ BB__11 ______ ____BB 
+B//111__ 11____ _BB__1 1___BB    " => t.seq;
 .5 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -57,7 +58,7 @@ STECHO ech;
 ech.connect(last $ ST , data.tick * 2 / 4 , .5);  ech $ ST @=>  last; 
 
 STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 7 /* Q */, 1800 /* f_base */ , 1600  /* f_var */, 1::second / (64 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 7 /* Q */, 500 /* f_base */ , 1600  /* f_var */, 1::second / (32 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STREV2 rev; // DUCKED
 rev.connect(last $ ST, .2 /* mix */);      rev $ ST @=>  last; 

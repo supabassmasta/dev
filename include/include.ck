@@ -99,6 +99,11 @@ Machine.add("../SYNT/FROG1.ck");
 Machine.add("../SYNT/FROG2.ck");
 Machine.add("../SYNT/FROG3.ck");
 Machine.add("../SYNT/FROG4.ck");
+Machine.add("../SYNT/NOISE0.ck");
+Machine.add("../SYNT/NOISE1.ck");
+Machine.add("../SYNT/NOISE2.ck");
+Machine.add("../SYNT/NOISE3.ck");
+Machine.add("../SYNT/NOISE4.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
