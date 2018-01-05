@@ -12,11 +12,12 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c {c {c *4 
-____ 1/8_ _5/11/c_ ____
-____ 11_1 ____ _R__
-____ 15_6 _1r/Y_ __a/T_
-____ 1A1T _D_1 __F_
+____  _1r/Y_ 
 " => t.seq;
+//____ 1/8_ _5/11/c_ ____
+//____ 11_1 ____ _R__
+//____ 15_6 _1r/Y_ __a/T_
+//____ 1A1T _D_1 __F_
 
 .4 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();

@@ -1,5 +1,6 @@
-class synt0 extends SYNT{
-    inlet => Gain in;
+public class HMOD0 extends SYNT{
+    inlet => Gain gin => Gain in;
+    2. => gin.gain;
     Gain out =>  outlet;   
 
     0 => int i;
@@ -19,11 +20,11 @@ class synt0 extends SYNT{
 
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
-    1./4. + 0.001 => opin[i].gain;
+    1./8. + 0.004 => opin[i].gain;
     adsrop[i].set(.125*data.tick, .125*data.tick, .00001 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    10 * 42 => adsrop[i].gain;
-    .5  => osc[i].width;
+    10 * 33 => adsrop[i].gain;
+    .8  => osc[i].width;
     
     i++;
 
@@ -58,7 +59,7 @@ class synt0 extends SYNT{
     // opout[3] => opin[0];
 
 
-    .5 => out.gain;
+    .166 => out.gain;
 
     fun void on()  
     {
@@ -86,33 +87,4 @@ class synt0 extends SYNT{
             }
              1 => own_adsr;
 }  
-
-TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*8 }c 
-1_1 _ ____ ____ ____ 
-____ ____ ____ __1_
-1_1 _ 1___ ____ ____ 
-____ ____ ____ ____
-1_1 _ ____ ____ ____ 
-____ ____ ____ __1_
-1_1 _ 1___ ____ ____ 
-____ ____ ____ ____
-" => t.seq;
-.3 => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
-
-//STREV2 rev; // DUCKED
-//rev.connect(last $ ST, .2 /* mix */);      rev $ ST @=>  last; 
-
-while(1) {
-       100::ms => now;
-}
- 
 

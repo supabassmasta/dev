@@ -84,6 +84,8 @@ Machine.add("../SYNT/PSYBASS9.ck");
 Machine.add("../SYNT/PSYBASS10.ck");
 Machine.add("../SYNT/PSYBASS11.ck");
 Machine.add("../SYNT/MOD0.ck");
+Machine.add("../SYNT/HMOD0.ck");
+Machine.add("../SYNT/HMOD1.ck");
 Machine.add("../SYNT/DUBBASS0.ck");
 Machine.add("../SYNT/DUBBASS1.ck");
 Machine.add("../SYNT/DUBBASS2.ck");
