@@ -92,6 +92,11 @@ Machine.add("../SYNT/PLOC0.ck");
 Machine.add("../SYNT/PLOC1.ck");
 Machine.add("../SYNT/PLOC2.ck");
 Machine.add("../SYNT/PLOC3.ck");
+Machine.add("../SYNT/FROG0.ck");
+Machine.add("../SYNT/FROG1.ck");
+Machine.add("../SYNT/FROG2.ck");
+Machine.add("../SYNT/FROG3.ck");
+Machine.add("../SYNT/FROG4.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
