@@ -1,7 +1,7 @@
 public class NOISE1 extends SYNT{
 
 		inlet => SinOsc s =>  outlet;		
-				.3 => s.gain;
+				.15 => s.gain;
 		Noise n => Gain mult => s;
 		3 => mult.op;
 		inlet => Gain gn => mult;
