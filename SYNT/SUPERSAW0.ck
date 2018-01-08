@@ -1,4 +1,4 @@
-public class SUPERSAW extends SYNT{
+public class SUPERSAW0 extends SYNT{
 
 	8 => int synt_nb; 0 => int i;
 	Gain detune[synt_nb];

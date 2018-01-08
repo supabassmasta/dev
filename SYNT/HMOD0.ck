@@ -21,7 +21,7 @@ public class HMOD0 extends SYNT{
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
     1./8. + 0.004 => opin[i].gain;
-    adsrop[i].set(.125*data.tick, .125*data.tick, .00001 , 200::ms);
+    adsrop[i].set(.125*data.tick, .125*data.tick, .9 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     10 * 33 => adsrop[i].gain;
     .8  => osc[i].width;

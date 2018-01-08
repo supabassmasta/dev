@@ -60,7 +60,12 @@ Machine.add("../SYNTA/POLY.ck");
 
 
 // SYNT
-Machine.add("../SYNT/SUPERSAW.ck");
+Machine.add("../SYNT/SUPERSAW0.ck");
+Machine.add("../SYNT/SUPERSAW1.ck");
+Machine.add("../SYNT/SUPERSAW2.ck");
+Machine.add("../SYNT/SUPERSAW3.ck");
+Machine.add("../SYNT/SUPERSAW4.ck");
+Machine.add("../SYNT/SUPERSAW5.ck");
 Machine.add("../SYNT/CHILL.ck");
 Machine.add("../SYNT/HORROR.ck");
 Machine.add("../SYNT/GRAIN.ck");
