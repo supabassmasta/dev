@@ -58,6 +58,7 @@ public class SEQ3 {
         if (idx >= elements.size()){
             0=> idx;
         }
+        // <<<"SYNC on Element ", idx>>>;
 
 
     }
@@ -72,7 +73,7 @@ public class SEQ3 {
         dur_sync + ref_time => ref_time;
     }
      
-//    <<<"SEQ3 dur: ",duration," ref_time:",ref_time>>>;
+    //    <<<"SEQ3 dur: ",duration," ref_time:",ref_time>>>;
      
 
     // LOOP
@@ -88,7 +89,7 @@ public class SEQ3 {
                 if (idx == 0 && ref_time <= now) {
                     // recompute ref_time
                     ref_time + duration => ref_time;
-//                  <<<"New ref_time ", ref_time>>>;
+                    //  <<<"New ref_time ", ref_time>>>;
                 }
 
                 ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
@@ -99,11 +100,14 @@ public class SEQ3 {
 
                // wait next event
                elements[idx].next_time => now;   
+
                if (on_flag) {
                    // ON_TIME
+                   // <<<"SEQ3 Execute element: ", idx>>>; 
 
                    for (0 => int i; i < elements[idx].actions.size()      ; i++) {
                        elements[idx].actions[i].on_time();
+                       //  <<<"action ", i>>>; 
                    }
 
                    if (just_on) {

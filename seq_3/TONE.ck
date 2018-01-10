@@ -509,10 +509,10 @@ public class TONE extends ST {
         else
         {
           e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+          // Add freq_synt action every time in case SEQ3 start here
+          e.actions << set_freq_synt(env[id], temp_freq ); 
           if (temp_freq != freq[id]) {
-            // add a change freq action only if freq change
             temp_freq => freq[id];
-            e.actions << set_freq_synt(env[id], freq[id] ); 
 
             if (glide != 0::ms && on_state[id] != 0 && s.elements.size() != 0 ) {
               // only available for synt 0 for the moment
@@ -540,7 +540,6 @@ public class TONE extends ST {
             }
 
           }
-
 
           // Managa note on for first note at the end, once we now the last note
           if(!( s.elements.size() == 0 ||
