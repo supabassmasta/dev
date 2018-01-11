@@ -496,7 +496,7 @@ ab MODK class synt0 extends SYNT{
 
 
 ab STECHOK STECHO ech;
-\<CR>ech.connect(last $ ST , data.tick * 8 / 1 , .5);  ech $ ST @=>  last;
+\<CR>ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 
 ab STREV1K STREV1 rev;
 \<CR>rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last;
