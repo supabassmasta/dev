@@ -4,7 +4,7 @@ public class Break extends Chubgraph{
 
  
 
- fun void set (int num) {
+ fun static void set (int num) {
 		if (num >= 8) <<<"ERROR only 0 to 7 break events available">>>;
 		else {
 				1 => data.break_state[num];
@@ -13,7 +13,7 @@ public class Break extends Chubgraph{
 		}
  }
 
- fun void release (int num) {
+ fun static void release (int num) {
 		if (num >= 8) <<<"ERROR only 0 to 7 break events available">>>;
 		else {
 				0 => data.break_state[num];
@@ -21,7 +21,7 @@ public class Break extends Chubgraph{
         data.break_ev[num].broadcast();
 		}
  }
-
+ 
  fun void  follower (int num) {
 		while(1) {
 			     data.break_ev[num] => now;
@@ -58,6 +58,42 @@ public class Break extends Chubgraph{
          a.set(3::ms, 0::ms, 1, 3::ms);
 		}
  }
+
+ // Actions for STBREAK
+
+class STBREAK_SET extends ACTION {
+    0 => int nb;
+    fun int on_time() {
+         Break.set(nb*2);
+         Break.set(nb*2 + 1);
+
+         <<<"STBREAK_SET">>>; 
+            }
+}
+
+class STBREAK_RELEASE extends ACTION {
+    0 => int nb;
+    fun int on_time() {
+         Break.release(nb*2);
+         Break.release(nb*2 + 1);
+
+         <<<"STBREAK_RELEASE">>>; 
+            }
+}
+
+fun static ACTION @ stbreak_set(int nb){
+   STBREAK_SET act;
+   nb => act.nb;
+   return act $ ACTION;
+
+}
+
+fun static ACTION @ stbreak_release(int nb){
+   STBREAK_RELEASE act;
+   nb => act.nb;
+   return act $ ACTION;
+
+}
 
 
 }

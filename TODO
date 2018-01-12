@@ -8,6 +8,7 @@ Create korg stereo sampler
 
 fix SEQ: when no sample loaded in a letter, replace with a pause (at now it is skiped causing seq swift)
 
+fix SEQ: mono() output seems to do not include parallel wav (|)
 
 
 Check filters behaviour on baudeline

@@ -135,6 +135,7 @@ Machine.add( "../EFFECTS/STGAINC.ck");
 Machine.add( "../EFFECTS/STDIGITC.ck");
 Machine.add( "../EFFECTS/STFADEIN.ck");
 Machine.add( "../EFFECTS/STFILTERMOD.ck");
+Machine.add( "../EFFECTS/STBREAK.ck");
 me.yield();
 Machine.add( "../EFFECTS/REV2.ck");
 Machine.add("../seq_2/FREQ_STR.ck");

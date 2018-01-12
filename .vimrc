@@ -755,3 +755,12 @@ ab CONTROLK class cont extends CONTROL {
 ab PowerADSRK PowerADSR padsr
 \<CR>padsr.set(1::ms, 20::ms, .7 , 200::ms);
 \<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+
+ab STBREAKK STBREAK stbreak;
+\<CR>stbreak.connect(last $ ST, 0 /* break_number, max 3 */);   stbreak $ ST @=>last; 
+\<CR>// To add in break script
+\<CR>//Break.stbreak_set(0) @=> s.action["a"];  "" => s.wav["a"]; 
+\<CR>//Break.stbreak_release(0) @=> s.action["b"]; "" => s.wav["b"];
+\<CR>// Release a break : Break.release(0);
+
+
