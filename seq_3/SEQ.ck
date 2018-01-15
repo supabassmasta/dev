@@ -156,6 +156,21 @@ public class SEQ extends ST{
           }
 
         }
+        else {    
+          // No wav registered add a silence like with '~', to do not break the beat
+          // And allow to add actions
+          set_dur(base_dur) => dur_temp;
+          if (dur_temp != 0::ms) {
+            dur_temp => e.duration;
+            // Add element to SEQ
+            s.elements << e;
+            // Create next element of SEQ
+            new ELEMENT @=> e;
+          }
+
+
+        }
+
         ////////////////////
         ///// ACTIONS //////
         ////////////////////
