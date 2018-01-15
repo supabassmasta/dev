@@ -160,28 +160,8 @@ public class SEQ extends ST{
         ///// ACTIONS //////
         ////////////////////
         if ( action[note_id] != NULL ) {
-
-          if (groove == 0::ms){
-            set_dur(base_dur) => dur_temp;
-          }
-          else if( s.elements.size() == 0) {
-            set_dur(base_dur) => dur_temp;
-            <<<"Not supported:  groove on first note">>>; 
-          }
-          else {
-            groove +=> s.elements[s.elements.size() - 1].duration;
-            groove -=> remaining; // correct remaining
-            set_dur(base_dur - groove) => dur_temp;
-            0::ms => groove;
-          }
-          if (dur_temp != 0::ms) {
-            dur_temp => e.duration;
-            e.actions << action[note_id];
-            // Add element to SEQ
-            s.elements << e;
-            // Create next element of SEQ
-            new ELEMENT @=> e;
-          }
+          // Add ACTION to last ELEMENT actions
+          s.elements[s.elements.size() - 1].actions << action[note_id] ;
         }
       }
       else if (c == '_') {
@@ -267,13 +247,10 @@ public class SEQ extends ST{
         ////////////////////
         ///// ACTIONS //////
         ////////////////////
-        else if ( action[note_id] != NULL ) {
+        if ( action[note_id] != NULL ) {
 
           // Add ACTION to ACTIONS
           s.elements[s.elements.size() - 1].actions << action[note_id] ;
-        }
-        else {
-          <<<note_id, "Not registered">>>;
         }
       }
       else if (in.charAt(i) == '*') {
