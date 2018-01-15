@@ -223,6 +223,8 @@ public class SEQ extends ST{
               // Create a new wav and initilize it
               new WAV @=> wav_o[note_id];
               wav[note_id] =>  wav_o[note_id].read;
+              // store another reference to object in indexed array
+              wav_o_byindex << wav_o[note_id];
             }
             wav_o[note_id] @=> w0;
           }
@@ -231,6 +233,8 @@ public class SEQ extends ST{
             new WAV @=> w0;
             wav[note_id] => w0.read;
             0=> autonomous;
+            // store reference to object in indexed array
+            wav_o_byindex << w0;
           }
 
           // set new GAIN if needed
