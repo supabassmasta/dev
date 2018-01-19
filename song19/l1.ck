@@ -70,9 +70,15 @@ _!0!3!1 _!1!5!1
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last;
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
+STBREAK stbreak;
+stbreak.connect(last $ ST, 0 /* break_number, max 3 */);   stbreak $ ST @=>last; 
+// To add in break script
+//Break.stbreak_set(0) @=> s.action["a"];  "" => s.wav["a"]; 
+//Break.stbreak_release(0) @=> s.action["b"]; "" => s.wav["b"];
+// Release a break : Break.release(0); 
 
 while(1) {
        100::ms => now;

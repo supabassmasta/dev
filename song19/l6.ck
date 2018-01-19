@@ -10,16 +10,13 @@ SET_WAV.TRANCE_VARIOUS(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 //d|b___ ___C|a _C_C CCCC
 "
-b___ ____
-____ __
+____ ____
+____ ___
 *8 *2
-addd
-eeee
-}1oooo
-}3oooo
+____
+____
+BBBB
 AAAA
-____
-____
 " => s.seq;
 //b___ ____ ___a CCCC
 .7 => s.gain; // s.gain("s", .2); // for single wav 
@@ -34,8 +31,8 @@ s.print();
 STDIGIT dig;
 dig.connect(last $ ST , 8::samp /* sub sample period */ , .01 /* quantization */);      dig $ ST @=>  last; 
 
-//STECHO ech;
-//ech.connect(last $ ST , data.tick * 2 / 4 , .5);  ech $ ST @=>  last; 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 2 / 3 , .7);  ech $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
