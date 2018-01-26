@@ -1,9 +1,13 @@
 public class DUBBASS0 extends SYNT{
+    1 => own_adsr;
 
-    inlet => Gain ing => SinOsc s => ABSaturator sat   => LPF filter => outlet;    
+
+    inlet => Gain ing => SinOsc s => ABSaturator sat   => LPF filter => ADSR a => outlet;    
     .7 => sat.drive;
     0.2 => sat.dcOffset; 
         4.8 => s.gain;
+
+    a.set(10::ms, 10::ms, 1., 20::ms);
 
 
     .5 => ing.gain;
@@ -37,7 +41,7 @@ public class DUBBASS0 extends SYNT{
       } 
       spork ~ filter_freq_control (); 
 
-            fun void on()  { }  fun void off() {padsr.keyOff(); }  fun void new_note(int idx)  {padsr.keyOn();   }
+            fun void on()  {a.keyOn(); }  fun void off() {padsr.keyOff();a.keyOff(); }  fun void new_note(int idx)  {padsr.keyOn();   }
 } 
 
 
