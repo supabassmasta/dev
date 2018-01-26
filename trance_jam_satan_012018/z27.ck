@@ -1,29 +1,24 @@
-
 TONE t;
-t.reg(NOISE4 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(FROG2 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" *4  
-____ __z/M ____ ____ M/z 
-____ ____G //// //// /z
-____ __T/f ____ ____ e/D 
-____ ____x //// //// /A
-
+"*8 
+____ _1_1 ____ ____ 
+____ ____ 1_1_ _1__ 
+____ _5_5 ____ ____ 
+____ _4_4 _4__ P//1__
 " => t.seq;
-.5 => t.gain;
+.6 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last;
+t.go();   t $ ST @=> ST @ last; 
 
-////STDUCK duck;
-//duck.connect(last $ ST);      duck $ ST @=>  last; 
-
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3/4 , .7);  ech $ ST @=>  last; 
+STDIGIT dig;
+dig.connect(last $ ST ,  6::samp /* sub sample period */ , .01 /* quantization */);      dig $ ST @=>  last; 
 
 while(1) {
-	     100::ms => now;
+       100::ms => now;
 }
  

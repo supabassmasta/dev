@@ -1,0 +1,25 @@
+COMMON effects.ck
+
+space_frogs.ck
+TB303C_example.ck
+
+beat_trance.ck
+trance_percs1.ck
+trance_percs2.ck
+psybass0.ck
+psybass7.ck
+mod0_space_trippy.ck
+hpf_80s_slide_arp_trip.ck
+glidy_arp_synt.ck
+long_deep_mod_bass.ck
+long_deep_mod_bass_varing.ck
+rising_bleeping_synt.ck
+
+l12.ck
+l13.ck
+l14.ck
+l15.ck
+l16.ck
+l17.ck
+l18.ck
+

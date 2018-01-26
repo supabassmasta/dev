@@ -1,13 +1,12 @@
-
 TONE t;
-t.reg(NOISE4 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(PSYBASS0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" *4  
-____ __z/M ____ ____ M/z 
-____ ____G //// //// /z
-____ __T/f ____ ____ e/D 
-____ ____x //// //// /A
+"*2 
+_1_1 _1_1 
+_1_1 _1__ 
+_1_1 _1_1 
+_1_1 _1!3!1 
 
 " => t.seq;
 .5 => t.gain;
@@ -15,15 +14,12 @@ ____ ____x //// //// /A
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last;
+t.go();   t $ ST @=> ST @ last; 
 
-////STDUCK duck;
-//duck.connect(last $ ST);      duck $ ST @=>  last; 
-
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3/4 , .7);  ech $ ST @=>  last; 
+STREV1 rev;
+rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
-	     100::ms => now;
+       100::ms => now;
 }
  
