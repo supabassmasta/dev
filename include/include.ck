@@ -116,6 +116,18 @@ Machine.add("../SYNT/NOISE1.ck");
 Machine.add("../SYNT/NOISE2.ck");
 Machine.add("../SYNT/NOISE3.ck");
 Machine.add("../SYNT/NOISE4.ck");
+Machine.add("../SYNT/AMB0.ck");
+Machine.add("../SYNT/AMB1.ck");
+Machine.add("../SYNT/AMB2.ck");
+Machine.add("../SYNT/AMB3.ck");
+Machine.add("../SYNT/AMB4.ck");
+Machine.add("../SYNT/AMB5.ck");
+Machine.add("../SYNT/AMB6.ck");
+Machine.add("../SYNT/AMB7.ck");
+Machine.add("../SYNT/AMB8.ck");
+Machine.add("../SYNT/AMB9.ck");
+Machine.add("../SYNT/AMB10.ck");
+Machine.add("../SYNT/AMB11.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
