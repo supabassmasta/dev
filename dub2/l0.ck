@@ -188,16 +188,83 @@
 
      }
 */
+     fun void  G_Mallet ( SEQ @ s) {
+     "../_SAMPLES/NOIIZ/G_Mallet/"  => string dir;
+
+     dir + "1.wav" => s.wav["a"];
+     dir + "Rim_02_321_SP.wav" => s.wav["b"];
+
+     dir + "57_Claps_SP_88_11.wav" => s.wav["c"];
+     dir + "81_Clap_06_255_SP.wav" => s.wav["d"];
+
+     dir + "../57_Perc_SP_88_25.wav" => s.wav["e"];
+     dir + "../81_Perc_01_255_SP.wav" => s.wav["f"];
+     dir + "../81_Perc_08_255_SP.wav" => s.wav["g"];
+
+     dir + "HiHat_SP_300_01.wav" => s.wav["h"];
+     dir + "HiHat_SP_300_18.wav" => s.wav["j"];
+     dir + "HiHat_SP_300_15.wav" => s.wav["j"];
+
+
+     dir + "57_Kick_SP_88_07.wav" => s.wav["k"];
+     dir + "81_Kick_09_255_SP.wav" => s.wav["l"];
+     dir + "Kick_SP_300_20.wav" => s.wav["m"];
+     dir + "Kick_SP_300_03.wav" => s.wav["n"];
+     dir + "Kick_SP_300_07.wav" => s.wav["o"];
+     dir + "../41_Massemba_SP_8_01.wav" => s.wav["p"];
+     dir + "../Framedrum_18_76_SP.wav" => s.wav["q"];
+     dir + "../Framedrum_27_76_SP.wav" => s.wav["r"];
+
+
+     dir + "57_Snares_SP_88_21.wav" => s.wav["s"];
+     dir + "57_Snares_SP_88_06.wav" => s.wav["t"];
+     dir + "81_Snare_13_255_SP.wav" => s.wav["u"];
+     dir + "81_Snare_04_255_SP.wav" => s.wav["v"];
+     dir + "81_Snare_14_255_SP.wav" => s.wav["w"];
+     dir + "Snare_SP_300_02.wav" => s.wav["x"];
+     dir + "Snare_SP_300_13.wav" => s.wav["y"];
+     dir + "Snare_SP_300_14.wav" => s.wav["z"];
+
+     dir + "Rim_06_321_SP.wav" => s.wav["A"];
+     dir + "Rim_03_321_SP.wav" => s.wav["B"];
+
+     dir + "57_Claps_SP_88_03.wav" => s.wav["C"];
+     dir + "Snare_SP_300_18.wav" => s.wav["D"];
+
+     dir + "../81_Perc_08_255_SP.wav" => s.wav["E"];
+     dir + "../81_Perc_09_255_SP.wav" => s.wav["F"];
+     dir + "../81_Perc_01_255_SP.wav" => s.wav["G"];
+
+     dir + "81_Hat_07_255_SP.wav" => s.wav["H"];
+     dir + "81_Hat_06_255_SP.wav" => s.wav["I"];
+     dir + "HiHat_SP_300_14.wav" => s.wav["J"];
+
+     dir + "57_Kick_SP_88_02.wav" => s.wav["K"];
+     dir + "57_Kick_SP_88_19.wav" => s.wav["L"];
+     dir + "../ConcertBassDrum_01_92_SP.wav" => s.wav["M"];
+     dir + "../Smooth_Live_Kick_01_321_SP.wav" => s.wav["N"];
+     dir + "../Underwater_Bomb_01_321_SP.wav" => s.wav["O"];
+
+     dir + "../41_Tambor_SP_8_03.wav" => s.wav["P"];
+     dir + "../41_Tumba_SP_8_02.wav" => s.wav["Q"];
+     dir + "../Maracas_01_92_SP.wav" => s.wav["R"];
+
+     dir + "57_Snares_SP_88_11.wav" => s.wav["S"];
+     dir + "57_Snares_SP_88_08.wav" => s.wav["T"];
+     dir + "Snare_SP_300_06.wav" => s.wav["U"];
+     dir + "Snare_SP_300_07.wav" => s.wav["V"];
+     dir + "Snare_SP_300_09.wav" => s.wav["W"];
+     dir + "Snare_SP_300_11.wav" => s.wav["X"];
+     dir + "Snare_SP_300_20.wav" => s.wav["Y"];
+     dir + "../57_Perc_SP_88_06.wav" => s.wav["Z"];
+
+     }
 SEQ s;
-SET_WAV.TRIBAL1(s);
+G_Mallet(s);
 //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*4 
-Ka__ U__v  _vK_ U___
-K_Fb UzFv  avKK U|C__v
-K__b U_Ev  _vKb U___
-Ka__ UEEv  FvKK U|C__v
-
+"
+a
 
 " => s.seq;
 .9 => s.gain; // s.gain("s", .2); // for single wav 
