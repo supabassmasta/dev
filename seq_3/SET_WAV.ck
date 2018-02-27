@@ -734,40 +734,41 @@ public class SET_WAV {
 			 dir+"Wood_Foley_01_321_SP.wav"=>s.wav["r"];
 			 dir+"Zilbel_01_92_SP.wav"=>s.wav["s"];
 			 dir+"Smooth_Live_Kick_01_321_SP.wav"=>s.wav["t"];
-			 /*
-					dir + "" => s.wav["u"];
-					dir + "" => s.wav["v"];
-					dir + "" => s.wav["w"];
-					dir + "" => s.wav["x"];
-					dir + "" => s.wav["y"];
-					dir + "" => s.wav["z"];
-					dir + "" => s.wav["A"];
-					dir + "" => s.wav["B"];
-					dir + "" => s.wav["C"];
-					dir + "" => s.wav["D"];
-					dir + "" => s.wav["E"];
-					dir + "" => s.wav["F"];
-					dir + "" => s.wav["G"];
-					dir + "" => s.wav["H"];
-					dir + "" => s.wav["I"];
-					dir + "" => s.wav["J"];
-					dir + "" => s.wav["K"];
-					dir + "" => s.wav["L"];
-					dir + "" => s.wav["M"];
-					dir + "" => s.wav["N"];
-					dir + "" => s.wav["O"];
-					dir + "" => s.wav["P"];
-					dir + "" => s.wav["Q"];
-					dir + "" => s.wav["R"];
-					dir + "" => s.wav["S"];
-					dir + "" => s.wav["T"];
-					dir + "" => s.wav["U"];
-					dir + "" => s.wav["V"];
-					dir + "" => s.wav["W"];
-					dir + "" => s.wav["X"];
-					dir + "" => s.wav["Y"];
-					dir + "" => s.wav["Z"];
-				*/
+
+				dir + "Darbuka/Darbuka_04_76_SP.wav" => s.wav["u"];
+				dir + "Darbuka/Darbuka_116_76_SP.wav" => s.wav["v"];
+				dir + "Darbuka/Darbuka_11_76_SP.wav" => s.wav["w"];
+				dir + "Darbuka/Darbuka_128_76_SP.wav" => s.wav["x"];
+				dir + "Darbuka/Darbuka_150_76_SP.wav" => s.wav["y"];
+				dir + "Darbuka/Darbuka_153_76_SP.wav" => s.wav["z"];
+				dir + "Darbuka/Darbuka_22_76_SP.wav" => s.wav["A"];
+				dir + "Darbuka/Darbuka_44_76_SP.wav" => s.wav["B"];
+				dir + "Darbuka/Darbuka_50_76_SP.wav" => s.wav["C"];
+				dir + "Darbuka/Darbuka_62_76_SP.wav" => s.wav["D"];
+				dir + "Darbuka/Darbuka_73_76_SP.wav" => s.wav["E"];
+				dir + "Darbuka/Darbuka_79_76_SP.wav" => s.wav["F"];
+
+
+				dir + "Metal/18_BellLead_C3_119_SP.wav" => s.wav["G"];
+				dir + "Metal/34_Chimes_SP_222_03.wav" => s.wav["H"];
+				dir + "Metal/34_HandBells_SP_222_05.wav" => s.wav["I"];
+				dir + "Metal/34_HandBells_SP_222_08.wav" => s.wav["J"];
+				dir + "Metal/34_HndBllsStr_SP_222_01.wav" => s.wav["K"];
+				dir + "Metal/34_Rainstick_SP_222_02.wav" => s.wav["L"];
+				dir + "Metal/34_Rainstick_SP_222_03.wav" => s.wav["M"];
+				dir + "Metal/71_F_Bell_SP_194_02.wav" => s.wav["N"];
+				dir + "Metal/78_Chime_SP_269_02.wav" => s.wav["O"];
+				dir + "Metal/C_Bell_221_SP03.wav" => s.wav["P"];
+				dir + "Metal/C_Cinematic_4_311_SP.wav" => s.wav["Q"];
+				dir + "Metal/Cinematic_9_311_SP.wav" => s.wav["R"];
+				dir + "Metal/F_Cinematic_27_311_SP.wav" => s.wav["S"];
+				dir + "Metal/G_ChimeBar_05_483.wav" => s.wav["T"];
+				dir + "Metal/TubularBell_1_Mallet_395_SP.wav" => s.wav["U"];
+				dir + "Metal/TubularBell_3_Mallet_395_SP.wav" => s.wav["V"];
+				dir + "Metal/TubularBell_3_Stick_395_SP.wav " => s.wav["W"];
+				dir + "Metal/TubularBell_6_Stick_395_SP.wav " => s.wav["X"];
+				dir + "Metal/TubularBell_7_Mallet_395_SP.wav" => s.wav["Y"];
+				dir + "Metal/NoiseCrash_SP_168_01.wav" => s.wav["Z"];
      }
 
      fun static  void  TRIBAL ( SEQ @ s) {
