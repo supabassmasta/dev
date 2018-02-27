@@ -16,6 +16,21 @@ l___ Ul_u _ul_ U__v
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+//STLPF lpf;
+//lpf.connect(last $ ST , 7 * 1000 /* freq */  , 3.0 /* Q */  );       lpf $ ST @=>  last; 
+
+//STBPF bpf;
+//bpf.connect(last $ ST , 10000 /* freq */  , 1. /* Q */  );       bpf $ ST @=>  last; 
+
+//STHPF hpf;
+//hpf.connect(last $ ST , 4500 /* freq */  , 4 /* Q */  );       hpf $ ST @=>  last; 
+
+//STBRF brf;
+//brf.connect(last $ ST , 1300 /* freq */  , 0.4 /* Q */  );       brf $ ST @=>  last; 
+
+//STRES res;
+//res.connect(last $ ST , 400 /* freq */  , .40 /* Q */  );     res  $ ST @=>  last;  
+
 while(1) {
 	     100::ms => now;
 }

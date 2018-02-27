@@ -537,17 +537,33 @@ ab STECHOCK STECHOC ech;
 ab STLPFCK STLPFC lpfc;
 \<CR>lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last;
 
+ab STLPFK STLPF lpf;
+\<CR>lpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last;
+
 ab STBPFCK STBPFC bpfc;
 \<CR>bpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       bpfc $ ST @=>  last;
+
+ab STBPFK STBPF bpf;
+\<CR>bpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       bpf $ ST @=>  last;
+
 
 ab STHPFCK STHPFC hpfc;
 \<CR>hpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       hpfc $ ST @=>  last;
 
+ab STHPFK STHPF hpf;
+\<CR>hpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last;
+
 ab STBRFCK STBRFC brfc;
 \<CR>brfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       brfc $ ST @=>  last;
 
+ab STBRFK STBRF brf;
+\<CR>brf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       brf $ ST @=>  last;
+
 ab STRESCK STRESC resc;
 \<CR>resc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );     resc  $ ST @=>  last; 
+
+ab STRESK STRES res;
+\<CR>res.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );     res  $ ST @=>  last; 
 
 ab STGAINCK STGAINC gainc;
 \<CR>gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last;
