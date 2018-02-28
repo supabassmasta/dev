@@ -20,11 +20,13 @@ s.go();     s $ ST @=> ST @ last;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
 
-STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 1600 /* f_base */ , 800  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .7 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+//STFILTERMOD fmod;
+//fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 1600 /* f_base */ , 800  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
-STREV1 rev;
-rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
+//STREV1 rev;
+//rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
 
 
 while(1) {
