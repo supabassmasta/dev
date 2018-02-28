@@ -14,18 +14,7 @@ u_ux *2 AA_D _B_C :2
 .5 => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-
 s.go();     s $ ST @=> ST @ last; 
-
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
-
-STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 1600 /* f_base */ , 800  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
-
-STREV1 rev;
-rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
-
 
 while(1) {
        100::ms => now;
