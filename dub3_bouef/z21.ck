@@ -1,17 +1,23 @@
-SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); 
-SET_WAV.DUB(s); // SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
-// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-//"*4 -2h__+0h _<2+2j__ -2h+0<h_<h _<<h+2h_ " => s.seq;
-"*4 +0h+4h +0h_ 0h+5>>i +0h+5h +0j_  +0h+4h  +0h+5>>h  +0i_ +0h+5h
-    +0h+4h +0h_ 0h+5>>i +0h+5h +0j_  +0h+4h  +0h+5>>h  +0i_ +0h+5h   
-    +0h+4h +0h_ 0h+5>>i +0h+5h +0j_  +0h+4h  +0h+5>>h  +0ih +0h+5h   
-    +0h+4h +0h_ 0h+5>>i +0h+5h +0j_  +0h+4h  +0h+5>>h  +0i_ __   
-    " => s.seq;
 
-.15 => s.gain; // s.gain("s", .2); // for single wav 
+SEQ s;  //data.tick * 8 => s.max;  //
+SET_WAV.TRIBAL1(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+"
+S___ L___
+R___ ____
+____ ____
+____ ____
+S___ ____
+R___ R___
+____ H___
+____ ____
+
+" => s.seq;
+.4 => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-s.go(); 
+s.go();     s $ ST @=> ST @ last; 
+
 
 while(1) {
        100::ms => now;
