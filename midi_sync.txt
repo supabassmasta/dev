@@ -1,0 +1,22 @@
+tick 248 9 0
+
+
+24 tick par beat
+
+
+start 250 9 0 ?
+
+reset to begin 242 0 0  ?
+
+stop/pause 252 9 0 
+
+Jackd2:
+Ech/period: 512
+Tampons: 2
+Pilot Midi: seq
+
+
+Sur live
+Retard synchro par horloge midi: 160ms
+
+
