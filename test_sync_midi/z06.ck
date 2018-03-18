@@ -18,7 +18,7 @@ class tick_adjust {
 				}
 				else {
 					now => time midi_time;
-					next + latency - midi_time => dur delta;
+					next  - (midi_time - latency) => dur delta;
 //					midi_time- next + latency  => dur delta;
 
 					// ------------ MEAN ---------------
@@ -29,7 +29,7 @@ class tick_adjust {
 
 				if (cnt == refresh_rate){
 						next - delta_mean => ref => next;
-						MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+						MASTER_SEQ3.update_ref_times(ref - 48::ms, data.tick * 4 );
 						<<<"UPDATE delta_mean: ", delta_mean/1::ms>>>;
 						0::ms => delta_mean;
 						0=> cnt;
