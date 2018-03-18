@@ -1,0 +1,10 @@
+
+dep for pulse on Mate 16.04
+
+sudo apt-get install bison flex libpulse-dev 
+
+make linux-pulse
+
+Tips to find missing file corrseponding package:
+apt-file search 'pulse/error.h'
+
