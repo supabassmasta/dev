@@ -72,6 +72,9 @@ padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1
 
 fun void f2 (){ 
 	  ta.latency => now;
+    // radom latency
+//    Std.rand2( 1, 10 ) * 1::ms => now;
+
     if (bcnt == 0) {
 		  ta.midi_ev(1);	
     }
