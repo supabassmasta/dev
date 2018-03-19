@@ -2,7 +2,9 @@ class tick_adjust {
 
 	// ------------ LATENCY --------------
 		240::ms => dur latency;
-		20 => int refresh_rate;
+    48::ms => dur jitter_mean; 
+		[4, 8, 16, 24] @=> int refresh_rate[];
+    0=> int refresh_index;
 
 		time ref, next;
 		0 => int started;
@@ -10,15 +12,20 @@ class tick_adjust {
 		0 => int cnt;
 
 
-		fun void midi_ev() {
+		fun void midi_ev(int in) {
+        // in == 1 : Bar (4 beat) start
+        // other : other beats
+
 				if (!started) {
 						now => ref;
-						ref - latency => ref => next;
+						ref - latency - jitter_mean => ref => next;
+						MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+						<<<"UPDATE 1st ref">>>;
 						1=> started;
 				}
 				else {
 					now => time midi_time;
-					next  - (midi_time - latency) => dur delta;
+					next  - (midi_time - latency - jitter_mean) => dur delta;
 //					midi_time- next + latency  => dur delta;
 
 					// ------------ MEAN ---------------
@@ -27,12 +34,15 @@ class tick_adjust {
 				}
 				cnt + 1 => cnt;
 
-				if (cnt == refresh_rate){
+				if (cnt == refresh_rate[refresh_index]){
 						next - delta_mean => ref => next;
-						MASTER_SEQ3.update_ref_times(ref - 48::ms, data.tick * 4 );
-						<<<"UPDATE delta_mean: ", delta_mean/1::ms>>>;
+						MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+						<<<"UPDATE delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 						0::ms => delta_mean;
 						0=> cnt;
+            if (refresh_index < refresh_rate.size() - 1){
+              refresh_index + 1 => refresh_index;
+            }
 				}
 				
 				next + data.tick => next;
