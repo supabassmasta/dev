@@ -10,7 +10,7 @@ _1_1__5!1
 
 
 " => t.seq;
-.9 => t.gain;
+.7 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -18,7 +18,7 @@ _1_1__5!1
 t.go();   t $ ST @=> ST @ last; 
 
 STLPF lpf;
-lpf.connect(last $ ST , 13 * 10 /* freq */  , 2.0 /* Q */  );       lpf $ ST @=>  last; 
+lpf.connect(last $ ST , 14 * 10 /* freq */  , 1.05 /* Q */  );       lpf $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;

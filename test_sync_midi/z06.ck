@@ -1,8 +1,8 @@
 class tick_adjust {
 
 	// ------------ LATENCY --------------
-		186::ms => dur latency;
-    48::ms => dur jitter_mean; 
+		0::ms => dur latency;
+    12::ms => dur jitter_mean; 
 		[5 , 8, 16, 24, 32] @=> int refresh_rate[];
     0=> int refresh_index;
 
@@ -77,7 +77,7 @@ for(0 =>  int i; i < 8; i++ )
 				break;
 				}
 				else {
-					min.close();
+//					min.close();
 				}
 
 	 }
@@ -97,12 +97,12 @@ while( true )
 
 	while( min.recv(msg) )
 	{
-		<<< msg.data1, msg.data2, msg.data3 >>>;
-		if (msg.data1 == 144 && msg.data2 == 64  && msg.data3 == 144 ){
+//		<<< msg.data1, msg.data2, msg.data3 >>>;
+		if (msg.data1 == 0x90 && msg.data2 == 64  && msg.data3 == 0x7F ){
       // first beat of for
       ta.midi_ev(1);
     }
-    else if (msg.data1 == 144 && msg.data2 == 64  && msg.data3 == 145 ) {
+    else if (msg.data1 == 144 && msg.data2 == 65  && msg.data3 == 0x7F ) {
       // other beat
       ta.midi_ev(0);
     }
