@@ -1,8 +1,10 @@
 class tick_adjust {
 
 	// ------------ LATENCY --------------
-		240::ms => dur latency;
-		20 => int refresh_rate;
+		186::ms => dur latency;
+    48::ms => dur jitter_mean; 
+		[5 , 8, 16, 24, 32] @=> int refresh_rate[];
+    0=> int refresh_index;
 
 		time ref, next;
 		0 => int started;
@@ -10,81 +12,105 @@ class tick_adjust {
 		0 => int cnt;
 
 
-		fun void midi_ev() {
+		fun void midi_ev(int in) {
+        // in == 1 : Bar (4 beat) start
+        // other : other beats
+
 				if (!started) {
-						now => ref;
-						ref - latency => ref => next;
-						1=> started;
+          if (in == 1) {
+            now => ref;
+            ref - latency - jitter_mean => ref => next;
+            MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+            <<<"UPDATE 1st ref">>>;
+            1=> started;
+          }
+
 				}
 				else {
 					now => time midi_time;
-					next  - (midi_time - latency) => dur delta;
+					next  - (midi_time - latency - jitter_mean) => dur delta;
 //					midi_time- next + latency  => dur delta;
 
 					// ------------ MEAN ---------------
-					delta * 0.05 + delta_mean * 0.95 => delta_mean;
+//					delta * 0.05 + delta_mean * 0.95 => delta_mean;
+
+					delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
 
 				}
-				cnt + 1 => cnt;
 
-				if (cnt == refresh_rate){
-						next - delta_mean => ref => next;
-						MASTER_SEQ3.update_ref_times(ref - 48::ms, data.tick * 4 );
-						<<<"UPDATE delta_mean: ", delta_mean/1::ms>>>;
-						0::ms => delta_mean;
-						0=> cnt;
-				}
-				
-				next + data.tick => next;
+        if (started) {
+          cnt + 1 => cnt;
 
+          if (cnt == refresh_rate[refresh_index]){
+            next - delta_mean => ref => next;
+            MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+            <<<"UPDATE delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+            0::ms => delta_mean;
+            0=> cnt;
+            if (refresh_index < refresh_rate.size() - 1){
+              refresh_index + 1 => refresh_index;
+            }
+          }
+
+          next + data.tick => next;
+        }
 		}
 
 
 }
 
 
-// FAKE TEST
+
+"Scarlett 2i4 USB MIDI 1" => string device;
+MidiIn min;
+MidiMsg msg;
+// open the device
+for(0 =>  int i; i < 8; i++ )
+{
+		// open the device
+		if( min.open( i ) )
+		{
+				if ( min.name() == device ) {
+				<<< "device", i, "->", min.name(), "->", "open as input: SUCCESS" >>>;
+
+
+				break;
+				}
+				else {
+					min.close();
+				}
+
+	 }
+		else {
+				<<<"Cannot open", device>>>; 	
+			break;
+		}
+}
+
+<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
+
 tick_adjust ta;
 
-SinOsc s => PowerADSR padsr => dac;
-padsr.set(1::ms, 20::ms, .0000000000007 , 20::ms);
-padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
+while( true )
+{
+	min => now;
 
-600 => s.freq;
-.4 => s.gain;
-0 => int t_ready;
-
-fun void f2 (){ 
-	  ta.latency => now;
-		ta.midi_ev();	
-	 } 
-	  
-
-fun void f1 (){ 
-  14::ms => now;
-  while(1) {
-    4096::samp => now;
-    if (t_ready){
-      spork ~ f2 ();
-      0 => t_ready;
+	while( min.recv(msg) )
+	{
+		<<< msg.data1, msg.data2, msg.data3 >>>;
+		if (msg.data1 == 144 && msg.data2 == 64  && msg.data3 == 144 ){
+      // first beat of for
+      ta.midi_ev(1);
     }
-  }
+    else if (msg.data1 == 144 && msg.data2 == 64  && msg.data3 == 145 ) {
+      // other beat
+      ta.midi_ev(0);
+    }
 
-
-} 
-
-spork ~ f1 ();
-
-
-104::ms => now;
-
-while(1) {
-		// real tick
-	     data.tick => now;
-			 1 => t_ready;
-			 padsr.keyOn(); 	
-
+	}
 }
+
+
  
 
 

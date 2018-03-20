@@ -1,9 +1,9 @@
 class tick_adjust {
 
 	// ------------ LATENCY --------------
-		240::ms => dur latency;
+		186::ms => dur latency;
     48::ms => dur jitter_mean; 
-		[5 , 8, 16, 24] @=> int refresh_rate[];
+		[5 , 8, 16, 24, 32] @=> int refresh_rate[];
     0=> int refresh_index;
 
 		time ref, next;
@@ -32,7 +32,9 @@ class tick_adjust {
 //					midi_time- next + latency  => dur delta;
 
 					// ------------ MEAN ---------------
-					delta * 0.05 + delta_mean * 0.95 => delta_mean;
+//					delta * 0.05 + delta_mean * 0.95 => delta_mean;
+
+					delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
 
 				}
 
