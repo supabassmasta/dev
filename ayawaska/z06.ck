@@ -97,7 +97,7 @@ while( true )
 
 	while( min.recv(msg) )
 	{
-//		<<< msg.data1, msg.data2, msg.data3 >>>;
+		<<< msg.data1, msg.data2, msg.data3 >>>;
 		if (msg.data1 == 144 && msg.data2 == 36 && msg.data3 == 100 ){
       // first beat of for
       ta.midi_ev(1);
