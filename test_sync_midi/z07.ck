@@ -1,8 +1,10 @@
 class tick_adjust {
 
 	// ------------ LATENCY --------------
-		186::ms => dur latency;
-    48::ms => dur jitter_mean; 
+//		186::ms => dur latency;
+//    48::ms => dur jitter_mean; 
+		0::ms => dur latency;
+    8::ms => dur jitter_mean; 
 		[4 , 8, 8, 12, 16, 16, 32] @=> int refresh_rate[];
     0=> int refresh_index;
 
@@ -51,7 +53,13 @@ class tick_adjust {
 
           if (cnt == refresh_rate[refresh_index]){
             next - delta_mean => ref => next;
-            MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+            if (in == 2 ){
+              MASTER_SEQ3.update_ref_times(ref, data.tick * 32 );
+              <<<"UPDATE ref 32">>>;
+            }else {
+              MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
+              <<<"UPDATE ref 4">>>;
+            }
             <<<"UPDATE delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
             0::ms => delta_mean;
             0=> cnt;
