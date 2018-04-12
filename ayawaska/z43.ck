@@ -1,32 +1,24 @@
-class synt0 extends SYNT{
-
-    inlet => SinOsc s =>  outlet;   
-        .5 => s.gain;
-
-            fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {   } 0 => own_adsr;
-} 
-
-TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4 
-____ 1///8 _ ____ ____
-____ 8///1 _ ____ ____
-____ 1//8 c//8 ____ ____
-____ 8//1 1//c ____ ____
-" => t.seq;
-.5 => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+SEQ s;  //data.tick * 8 => s.max;  
+SET_WAV.TRIBAL0(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+"*2 
+ ____ ____ _gi_ hhg_ 
+ ____ ___g _gii _hg_ 
+ ____ _hhi _hhi hhg *2 gh :2 
+ ____ _gi_ gi_g *2 i_hh i_gh :2 
+" => s.seq;
+.6 => s.gain; // s.gain("s", .2); // for single wav 
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+s.go();     s $ ST @=> ST @ last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, 3*data.tick /* period */, 0.05 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 while(1) {
-       100::ms => now;
+	     100::ms => now;
 }
  
