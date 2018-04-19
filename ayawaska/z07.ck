@@ -1,7 +1,7 @@
 class tick_adjust {
 
 	// ------------ LATENCY --------------
-		196::ms => dur latency;
+		186::ms => dur latency;
     48::ms => dur jitter_mean; 
 		[4 , 16] @=> int refresh_rate[];
     0=> int refresh_index;
@@ -24,7 +24,6 @@ class tick_adjust {
             ref - latency - jitter_mean => ref => next;
             <<<"UPDATE 1st beat ref ">>>;
             1=> started;
-          }
 
 				}
 				else {
@@ -62,7 +61,7 @@ class tick_adjust {
         ref_sync - in * 16 * data.tick => ref_sync;
 
         MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
-        <<<"UPDATE delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+        <<<"UPDATE midi counter: ", in, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 
         1 => refresh_index;
         0::ms => delta_mean;
@@ -73,7 +72,6 @@ class tick_adjust {
 
 
 }
-
 
 
 "Scarlett 2i4 USB MIDI 1" => string device;

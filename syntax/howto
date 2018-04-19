@@ -1,0 +1,30 @@
+https://www.vim.org/scripts/script.php?script_id=1880
+
+created by
+Adam Pense
+ 
+script type
+syntax
+ 
+description
+Syntax file for the ChucK Audio Programming Language http://chuck.cs.princeton.edu/
+ 
+install details
+NOTE: in order to obtain syntax highlighting in Chuck programs just follow the
+      steps below or in case you don't have root privileges follow Graham Percival's tip :
+      1. copy this file into /usr/share/vim/vim62/syntax.
+      2. add the following line in /usr/share/vim/filetype.vim,
+
+               au BufNewFile,BufRead *.ck          setf ck
+ 
+
+
+
+
+
+
+
+sudo cp ck.vim /usr/share/vim/vim74/syntax/
+
+
+sudo vi /usr/share/vim/vim74/filetype.vim
