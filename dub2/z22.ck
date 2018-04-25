@@ -1,8 +1,9 @@
 TONE t;
 t.reg(AMB1 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(AMB1 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"
+/*
 11__
 55__
 33__
@@ -11,7 +12,17 @@ ____
 44__
 22_8
 8___
+*/
+"
+11__
+|5|5__
+33__
+|2|2__
+33__
 
+|5|5__
+33__
+|2|2__
 " => t.seq;
 .5 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
