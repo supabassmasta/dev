@@ -12,6 +12,16 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 5111
 5111
 5111
+
+5111
+5111
+5111
+5111
+
+5111
+5111
+5111
+5111
 " => t.seq;
 .9 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();

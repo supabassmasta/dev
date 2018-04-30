@@ -3,15 +3,14 @@ class tick_adjust {
 	// ------------ LATENCY --------------
 		186::ms => dur latency;
     48::ms => dur jitter_mean; 
-		[4 , 16] @=> int refresh_rate[];
+		[4 , 8, 8, 16, 24, 32] @=> int refresh_rate[];
     0=> int refresh_index;
 
-		time ref, next;
+		time ref, next, guard_time;
 		0 => int started;
 	  0::ms => dur delta_mean;
 		0 => int cnt;
 
-    0 => int first_sync_received;
     time ref_sync;
 
 
@@ -20,59 +19,71 @@ class tick_adjust {
         // other : other beats
 
 				if (!started) {
-            now => ref;
-            ref - latency - jitter_mean => ref => next;
-            <<<"UPDATE 1st beat ref ">>>;
-            1=> started;
 
+						// DO NOTHING
+
+					// TODO compute early delta_mean
 				}
 				else {
 					now => time midi_time;
-					next  - (midi_time - latency - jitter_mean) => dur delta;
+					if (midi_time > guard_time) {
+						next  - (midi_time - latency - jitter_mean) => dur delta;
 
-					delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
-
+						delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
+					}
 				}
 
         if (started) {
           cnt + 1 => cnt;
 
-//          if (cnt == refresh_rate[refresh_index]){
-//            next - delta_mean => ref => next;
-//            MASTER_SEQ3.update_ref_times(ref, data.tick * 4 );
-////            <<<"UPDATE delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
-//            0::ms => delta_mean;
-//            0=> cnt;
-//            if (refresh_index < refresh_rate.size() - 1){
-//              refresh_index + 1 => refresh_index;
-//            }
-//          }
+          if (cnt == refresh_rate[refresh_index]){
+            next - delta_mean => ref => next;
+            MASTER_SEQ3.offset_ref_times(-1. * delta_mean );
+            <<<"UPDATE offset_ref_times delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+            0::ms => delta_mean;
+            0=> cnt;
+            if (refresh_index < refresh_rate.size() - 1){
+              refresh_index + 1 => refresh_index;
+            }
+          }
 
           next + data.tick => next;
         }
 		}
 
 		fun void synchro_ev(int in) {
+				if (!started) {
+					now => ref_sync;
+					// adjust it with latency and delta_mean already measured
+					ref_sync - latency - jitter_mean - delta_mean => ref_sync;
+					// compute next
+          ref_sync + data.tick => next;
+					// compute guard time to avoid double sync with other midi channel
+					ref_sync + data.tick/2 => guard_time;
 
-        now => ref_sync;
-        // adjust it with latency and delta_mean already measured
-        ref_sync - latency - jitter_mean - delta_mean => ref_sync;
-        // adjust to the begining of the song
-        ref_sync - in * 16 * data.tick => ref_sync;
+					// adjust to the begining of the song
+					ref_sync - in * 16 * data.tick => ref_sync;
 
-        MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
-        <<<"UPDATE midi counter: ", in, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 
-        1 => refresh_index;
-        0::ms => delta_mean;
+					MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
+					<<<"UPDATE midi counter: ", in, "ref_sync ", ref_sync, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 
-        1 => first_sync_received;
+					
+					0 => refresh_index;
+					0::ms => delta_mean;
+
+					1=> started;
+				}
+				else {
+				  	<<<"midi counter: ", in	">>>;  
+				}
+
+
 
     }
 
 
 }
-
 
 "Scarlett 2i4 USB MIDI 1" => string device;
 MidiIn min;

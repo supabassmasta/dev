@@ -66,13 +66,16 @@ class tick_adjust {
 
 
 					MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
-					<<<"UPDATE midi counter: ", in, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+					<<<"UPDATE midi counter: ", in, "ref_sync ", ref_sync, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 
 					
 					0 => refresh_index;
 					0::ms => delta_mean;
 
 					1=> started;
+				}
+				else {
+				  	<<<"midi counter: ", in	">>>;  
 				}
 
 
@@ -94,8 +97,8 @@ padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1
 600 => s.freq;
 .4 => s.gain;
 0 => int t_ready;
-1 => int bcnt;
--2 => int tick_cnt;
+0 => int bcnt;
+60 => int tick_cnt;
 
 
 fun void f2 (){ 
@@ -110,11 +113,11 @@ fun void f2 (){
 		  ta.midi_ev(0);	
     }
     (bcnt + 1) % 4 => bcnt;
-    tick_cnt + 1 => tick_cnt;
 
     if ((tick_cnt % 16) == 0 ) {
        ta.synchro_ev(tick_cnt/16);
     }
+    tick_cnt + 1 => tick_cnt;
 } 
 	  
 
