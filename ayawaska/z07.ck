@@ -17,6 +17,7 @@ class tick_adjust {
 		fun void midi_ev(int in) {
         // in == 1 : Bar (4 beat) start
         // other : other beats
+					now => time midi_time;
 
 				if (!started) {
 
@@ -25,7 +26,6 @@ class tick_adjust {
 					// TODO compute early delta_mean
 				}
 				else {
-					now => time midi_time;
 					if (midi_time > guard_time) {
 						next  - (midi_time - latency - jitter_mean) => dur delta;
 
@@ -33,7 +33,7 @@ class tick_adjust {
 					}
 				}
 
-        if (started) {
+        if (started && midi_time > guard_time) {
           cnt + 1 => cnt;
 
           if (cnt == refresh_rate[refresh_index]){
@@ -54,12 +54,12 @@ class tick_adjust {
 		fun void synchro_ev(int in) {
 				if (!started) {
 					now => ref_sync;
+					// compute guard time to avoid double sync with other midi channel
+					ref_sync + data.tick/2 => guard_time;
 					// adjust it with latency and delta_mean already measured
 					ref_sync - latency - jitter_mean - delta_mean => ref_sync;
 					// compute next
           ref_sync + data.tick => next;
-					// compute guard time to avoid double sync with other midi channel
-					ref_sync + data.tick/2 => guard_time;
 
 					// adjust to the begining of the song
 					ref_sync - in * 16 * data.tick => ref_sync;
@@ -75,7 +75,7 @@ class tick_adjust {
 					1=> started;
 				}
 				else {
-				  	<<<"midi counter: ", in	">>>;  
+				  	<<<"midi counter: ", in	>>>;  
 				}
 
 
