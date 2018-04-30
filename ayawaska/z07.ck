@@ -19,35 +19,32 @@ class tick_adjust {
         // other : other beats
 					now => time midi_time;
 
-				if (!started) {
+//				if (!started) {
 
 						// DO NOTHING
 
 					// TODO compute early delta_mean
-				}
-				else {
-					if (midi_time > guard_time) {
-						next  - (midi_time - latency - jitter_mean) => dur delta;
-
-						delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
-					}
-				}
+//				}
 
         if (started && midi_time > guard_time) {
-          cnt + 1 => cnt;
+					next  - (midi_time - latency - jitter_mean) => dur delta;
 
-          if (cnt == refresh_rate[refresh_index]){
-            next - delta_mean => ref => next;
-            MASTER_SEQ3.offset_ref_times(-1. * delta_mean );
-            <<<"UPDATE offset_ref_times delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
-            0::ms => delta_mean;
-            0=> cnt;
-            if (refresh_index < refresh_rate.size() - 1){
-              refresh_index + 1 => refresh_index;
-            }
-          }
+					delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
 
-          next + data.tick => next;
+					cnt + 1 => cnt;
+
+					if (cnt == refresh_rate[refresh_index]){
+						next - delta_mean => ref => next;
+						MASTER_SEQ3.offset_ref_times(-1. * delta_mean );
+						<<<"UPDATE offset_ref_times delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+						0::ms => delta_mean;
+						0=> cnt;
+						if (refresh_index < refresh_rate.size() - 1){
+							refresh_index + 1 => refresh_index;
+						}
+					}
+
+					next + data.tick => next;
         }
 		}
 
