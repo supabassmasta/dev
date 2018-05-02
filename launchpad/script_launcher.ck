@@ -11,24 +11,69 @@ class script_launcher extends CONTROL {
 	0 => int zid;
 	0 => int pad_on;
 
+  fun int file_exist (string filename){ 
+    FileIO fio;
+    fio.open( filename, FileIO.READ );
+    if( !fio.good() )
+        return 0;
+    else {
+      fio.close();
+      return 1;
+    }
+  } 
+
+  fun int red_file_exist (string filename){ 
+    FileIO fio;
+    fio.open( "red/" + filename, FileIO.READ );
+    if( !fio.good() )
+        return 0;
+    else {
+      fio.close();
+      return 1;
+    }
+  } 
+      
 	fun void prepare(int in_nb, int in_note , LAUNCHPAD @ in_l){
 		in_nb => nb;
 		in_note => note;
 		in_l @=> lau;
+    0 => int cont;
 
 		if (nb < 10) {
 			"x0" + nb + ".ck" => xname;
 			"y0" + nb + ".ck" => yname;
 			"z0" + nb + ".ck" => zname;
+      1 => cont;
 		}
 		else {
 			"x" + nb + ".ck" => xname;
 			"y" + nb + ".ck" => yname;
 			"z" + nb + ".ck" => zname;
+      0 => cont;
 		}
 
 		//				<<<"xname", xname>>>; 
 
+    // turn on light for existing files
+    if (file_exist(xname) || file_exist(yname) || file_exist(zname) ) {
+      if (red_file_exist(xname) || red_file_exist(yname) || red_file_exist(zname) ) {
+        // <<<"RED ", zname>>>; 
+        if (cont){
+            lau.redc(note);
+        }
+        else {
+            lau.red(note);
+        }
+      }
+      else {
+        if (cont){
+          lau.amberc(note);
+        }
+        else {
+          lau.amber(note);
+        }
+      }
+    }
 	}
 
 	fun void set(float in) {
@@ -38,9 +83,9 @@ class script_launcher extends CONTROL {
 				killer.kill(zid);
 				0 => pad_on;
 				if (nb < 10) 
-					lau.clearc(note);
+					lau.amberc(note);
 				else
-					lau.clear(note);
+					lau.amber(note);
 
 			} 
 			else {
