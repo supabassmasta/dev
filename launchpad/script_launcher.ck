@@ -10,6 +10,7 @@ class script_launcher extends CONTROL {
 	0 => int yid;
 	0 => int zid;
 	0 => int pad_on;
+	0 => int red;
 
   fun int file_exist (string filename){ 
     FileIO fio;
@@ -29,6 +30,7 @@ class script_launcher extends CONTROL {
         return 0;
     else {
       fio.close();
+			1 => red;
       return 1;
     }
   } 
@@ -77,15 +79,23 @@ class script_launcher extends CONTROL {
 	}
 
 	fun void set(float in) {
-		//				<<<"HEY", in>>>;
+//						<<<"HEY", in, note, zid, pad_on>>>;
 		if (in == 127.) {
 			if (pad_on) {
 				killer.kill(zid);
 				0 => pad_on;
 				if (nb < 10) 
-					lau.amberc(note);
-				else
-					lau.amber(note);
+					if (red)
+						lau.redc(note);
+					else
+					  lau.amberc(note);
+				else {
+					if (red)
+						lau.red(note);
+					else{
+						lau.amber(note);
+					}
+				}
 
 			} 
 			else {
@@ -103,12 +113,15 @@ class script_launcher extends CONTROL {
 			}
 		}
 		else {
-			killer.kill(yid);
-			if (!pad_on) {
-				if (nb < 10) 
-					lau.clearc(note);
-				else
-					lau.clear(note);
+			if (yid != 0) {
+				killer.kill(yid);
+				if (!pad_on) {
+					if (nb < 10) 
+						lau.amberc(note);
+					else
+						lau.amber(note);
+				}
+			
 			}
 
 		}
