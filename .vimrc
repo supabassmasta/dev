@@ -781,10 +781,10 @@ ab STBREAKK STBREAK stbreak;
 
 ab LONG_WAVK LONG_WAV l;
 \<CR>"../_SAMPLES/" => l.read;
-\<CR>.5 => l.buf.gain;
+\<CR>1.0 => l.buf.gain;
 \<CR>0 => l.update_ref_time;
 \<CR>l.AttackRelease(0::ms, 0::ms);
-\<CR>l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */);
+\<CR>l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last; 
 
 ab SYNCK	SYNC sy;
 \<CR>sy.sync(4 * data.tick);
