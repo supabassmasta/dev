@@ -1,14 +1,14 @@
 public class LONG_WAV extends ST {
-	SndBuf buf;
+	SndBuf2 buf;
 	SYNC sy;
   0 => int update_ref_time; 
 	Shred start_id;
   0::ms => dur end_sync;
 
-  .5 => buf.gain;
+  1. => buf.gain;
 
-	buf => ADSR al => outl;
-	buf => ADSR ar => outr;
+	buf.chan(0) => ADSR al => outl;
+	buf.chan(1)=> ADSR ar => outr;
 
 	fun void AttackRelease(dur a, dur r){
 		al.set(a, 0::ms, 1., r);
