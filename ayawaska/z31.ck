@@ -3,7 +3,7 @@ LONG_WAV l;
 1. => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(16*data.tick, 20::ms);
-l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 32 * data.tick /* loop (0::ms == disable) */ , 4 * data.tick /* END sync */); 
+l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 128 * data.tick /* loop (0::ms == disable) */ , 16 * data.tick /* END sync */); 
 l $ ST @=> ST @ last; 
 
 STLPF lpf;
