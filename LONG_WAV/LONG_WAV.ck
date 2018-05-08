@@ -1,17 +1,4 @@
-class SYNC {
-
-	fun void sync (dur d){
-		d - ((now - data.wait_before_start)%d) => now;
-	}
-
-	fun void sync (dur d, dur offset){
-		d - ((now - (data.wait_before_start + offset))%d)  => now;
-	}
-
-}
-
-
-class LONG_WAV extends ST {
+public class LONG_WAV extends ST {
 	SndBuf buf;
 	SYNC sy;
   0 => int update_ref_time; 
@@ -99,15 +86,3 @@ class LONG_WAV extends ST {
 
 
 }
-
-LONG_WAV l;
-"../_SAMPLES/Chassin/Icario chant G D C test2.wav" => l.read;
-1 => l.update_ref_time;
-l.AttackRelease(0::ms, 1000::ms);
-l.start(4 * data.tick /* sync */ , 128 * data.tick + 32 * data.tick  /* offset */ , 16 * data.tick /* loop (0::ms == disable) */ , 16 * data.tick /* END sync */);
-//l.start(4 * data.tick, 0 * data.tick);
-
-while(1) {
-	     100::ms => now;
-}
- 

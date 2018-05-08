@@ -12,6 +12,7 @@ Machine.add( "../lpd8/lpd8.ck" );
 Machine.add( "../include/end.ck" );
 Machine.add( "../include/killer.ck" );
 Machine.add( "../save/SAVE.ck" );
+Machine.add( "../SYNC/SYNC.ck" );
 
 Machine.add( "../launcher/launcher_hold.ck" );
 
@@ -154,6 +155,7 @@ Machine.add( "../EFFECTS/STFADEIN.ck");
 Machine.add( "../EFFECTS/STFILTERMOD.ck");
 Machine.add( "../EFFECTS/STBREAK.ck");
 me.yield();
+Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../EFFECTS/REV2.ck");
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");

@@ -779,4 +779,13 @@ ab STBREAKK STBREAK stbreak;
 \<CR>//Break.stbreak_release(0) @=> s.action["b"]; "" => s.wav["b"];
 \<CR>// Release a break : Break.release(0);
 
+ab LONG_WAVK LONG_WAV l;
+\<CR>"../_SAMPLES/" => l.read;
+\<CR>.5 => l.buf.gain;
+\<CR>0 => l.update_ref_time;
+\<CR>l.AttackRelease(0::ms, 0::ms);
+\<CR>l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */);
 
+ab SYNCK	SYNC sy;
+\<CR>sy.sync(4 * data.tick);
+\<CR>//sy.sync(4 * data.tick , 0::ms /* offset */);
