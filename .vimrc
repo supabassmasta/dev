@@ -532,7 +532,10 @@ ab STDIGITK STDIGIT dig;
 \<CR>dig.connect(last $ ST , 1::samp /* sub sample period */ , .01 /* quantization */);      dig $ ST @=>  last;
 
 ab STECHOCK STECHOC ech;
-\<CR>ech.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */ , HW.lpd8.potar[1][2] /* Q */ );      ech $ ST @=>  last; 
+\<CR>ech.connect(last $ ST , HW.lpd8.potar[1][1] /* Period */ , HW.lpd8.potar[1][2] /* Gain */ );      ech $ ST @=>  last; 
+
+ab STECHOC0K STECHOC0 ech;
+\<CR>ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;  
 
 ab STLPFCK STLPFC lpfc;
 \<CR>lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last;

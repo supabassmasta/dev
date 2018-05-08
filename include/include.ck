@@ -139,6 +139,7 @@ Machine.add( "../EFFECTS/STDUCKMASTER.ck");
 Machine.add( "../EFFECTS/STDUCK.ck");
 Machine.add( "../EFFECTS/STDIGIT.ck");
 Machine.add( "../EFFECTS/STECHOC.ck");
+Machine.add( "../EFFECTS/STECHOC0.ck");
 Machine.add( "../EFFECTS/STLPFC.ck");
 Machine.add( "../EFFECTS/STBPFC.ck");
 Machine.add( "../EFFECTS/STHPFC.ck");

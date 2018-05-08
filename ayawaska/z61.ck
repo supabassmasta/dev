@@ -128,8 +128,11 @@ lpfc.connect(last $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 5. /* static gain */  );       gainc $ ST @=>  last; 
 
-STECHO0C ech;
-ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][4] /* Q */ );      ech $ ST @=>  last;  
+//STECHO0C ech;
+//ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][4] /* Q */ );      ech $ ST @=>  last;  
+
+STECHOC0 ech;
+ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;   
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
