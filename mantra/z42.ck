@@ -87,10 +87,11 @@ class synt0 extends SYNT{
 
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; 
-t.scale.size(0);
-t.scale << 1 << 3 << 1 << 2 << 3 << 2;
-//160::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
-t.dor();// t.aeo(); // t.phr();// t.loc();
+//t.scale.size(0);
+////t.scale << 1 << 3 << 1 << 2 << 3 << 2;
+//160::ms => t.glide;  // t.lyd(); // t.ion(); // 
+t.mix();
+//t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " *4 
 ____ ____ 11__ 1!7!4_

@@ -4,7 +4,7 @@ t.scale.size(0);
 t.scale << 1 << 3 << 1 << 2 << 3 << 2;
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4 1_21  __2_ 15_4 _3_2 
+"*4 _1_21  __2_ 15_4 _3_2 
     1_5_  46_1 13_3 __A_
 " => t.seq;
 .6 => t.gain;

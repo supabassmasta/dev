@@ -6,4 +6,6 @@
 53 => data.ref_note;
 
 //fa fa# la sib do re#
+//fa mixolydian
 
+// 8 * 1 then 8*2
