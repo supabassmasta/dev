@@ -8,4 +8,4 @@
 //fa fa# la sib do re#
 //fa mixolydian
 
-// 8 * 1 then 8*2
+// 8 * 1 fa fa# then 8*2 fa do

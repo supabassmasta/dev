@@ -93,14 +93,13 @@ t.reg(HMOD0 s1);  //data.tick * 8 => t.max;
 39::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4 1_21  __2_ 15_4 _3_2 
-    1_5_  46_1 13_3 __A_
+"*8 }c 1_1_1_1_ 8_3_5_5_
 " => t.seq;
 
 
 
 
-.73 => t.gain;
+.49 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   
 //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
