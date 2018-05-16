@@ -7,7 +7,7 @@ t.mix();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4 {c
 8251 _385
-8_5_ 14_5
+8_5_ 14_5_
 
 " => t.seq;
 .6 => t.gain;

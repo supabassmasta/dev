@@ -5,9 +5,9 @@ t.reg(PLOC0 s1);
 t.mix();
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4 {c
+"*4 
 8251 _385
-8_5_ 14_5
+8_5_ 14_5 _
 
 " => t.seq;
 .6 => t.gain;

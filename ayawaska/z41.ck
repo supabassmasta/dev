@@ -5,7 +5,7 @@ t.reg(NOISE1 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); /
 t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 ":4 
-____ P////m
+____  P////m
 
 " => t.seq;
 .9 => t.gain;
