@@ -3,10 +3,10 @@ SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "*4
 
-l_u|t|s_ l__s|u 
-l_u|t|s_ l_us|u 
-l_u|t|s_ l_Rs|u 
-l_u|t|s_ l_us|u 
+l__s|u l_u|t|s_  
+l_us|u l_u|t|s_  
+l_Rs|u l_u|t|s_  
+l_us|u l_u|t|s_  
 
 " => s.seq;
 .7 => s.gain; // 
