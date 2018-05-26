@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../_SAMPLES/Chassin/Mantra tibétain-takeyourtime_NORMALIZED.wav" => l.read;
+"../_SAMPLES/Chassin/Ederlezi Do dorien full_NORMALIZED.wav" => l.read;
 1.0 => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
