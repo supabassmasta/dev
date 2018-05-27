@@ -1,34 +1,9 @@
-TONE t;
-t.reg(PLOC0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"
-8881
-5111
-5111
-5111
-
-5111
-5111
-5111
-5111
-
-5111
-5111
-5111
-5111
-
-5111
-5111
-5111
-5111
-" => t.seq;
-.9 => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+LONG_WAV l;
+"../_SAMPLES/Chassin/Mantra tibétain-takeyourtime_NORMALIZED.wav" => l.read;
+1.0 => l.buf.gain;
+0 => l.update_ref_time;
+l.AttackRelease(0::ms, 0::ms);
+l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
 while(1) {
 	     100::ms => now;
