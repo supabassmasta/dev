@@ -11,14 +11,22 @@ h_h_ hJh_ h_sh shs|h_
 
 " => s.seq;
 .9 => s.gain; //
-s.gain("s", .2); // for single wav 
+s.gain("s", .25); // for single wav 
 s.gain("v", .5); // for single wav 
-s.gain("h", 1.3); // for single wav 
-s.gain("J", 0.6); // for single wav 
+s.gain("h", 1.1); // for single wav 
+s.gain("J", 0.7); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STLPFC lpfc;
+lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last; 
+
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][3] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+
+STECHOC0 ech;
+ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;   
 
 while(1) {
 	     100::ms => now;
