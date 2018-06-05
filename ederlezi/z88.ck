@@ -23,6 +23,7 @@ l.AttackRelease(0::ms, 0::ms);
 // REFRAIN
 //l.start(4 * data.tick /* sync */ , (128 + 64 + 32) * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
+// BEFORE 1ST BREAK
 l.start(4 * data.tick /* sync */ , (128 + 32 + 16 ) * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 4 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
 while(1) {
