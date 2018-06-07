@@ -5,6 +5,9 @@ LONG_WAV l;
 l.AttackRelease(0::ms, 0::ms);
 l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
+STLPFC lpfc;
+lpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );       lpfc $ ST @=>  last; 
+
 while(1) {
 	     100::ms => now;
 }
