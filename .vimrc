@@ -7,18 +7,16 @@ set autowrite
 set backspace=indent,eol,start " allow backspace in insert mode
 set autoindent    " text indenting
 set smartindent   " as above
-set tabstop=4     " number of spaces in a tab
-set softtabstop=4 " as above
-set shiftwidth=4  " as above
+"set softtabstop=4 " as above
 
 set history=100   " lines of command history
 set showcmd       " show incomplete commands
 set hlsearch      " highlight searched-for phrases
 set incsearch     " highlight search as you type
-"set smarttab
-"set expandtab
+set smarttab
 set tabstop=2
 set shiftwidth=2
+set expandtab
 "set list " affiche les caracteres louches
 
 " highlight current position
@@ -63,13 +61,14 @@ map <C-f> :tnext<cr>
 :command SRC  source ~/.vimrc
    
 "ab C
-ab whilec while(1){<CR>  <CR>}<Up> 
+ab whilec while( ){<CR>  <CR>}<Up><Up><Right><Right><Right><Right><Right> 
 
-ab forc for (i=0; i< ; i++){<CR>  <CR>}<Up>
+ab forc for (i=0; i< ; i++){<CR>  <CR>}<Up><Up><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
 
-ab ifc if (  ){<CR>  <CR>}<Up>
+ab ifc if (  ){<CR>  <CR>}<Up><Up><Right><Right><Right>
 
 ab elsec else {<CR>  <CR>}<Up>
+ab elseifc else if (  ){<CR>  <CR>}<Up><Up><Right><Right><Right><Right><Right><Right><Right><Right> 
 
 ab fopenc FILE *fp;
 \<CR>fp=fopen("", "r");
@@ -367,7 +366,7 @@ ab ENDK class END extends end { fun void kill_me () {
 \<CR>		<<<"THE real END">>>; 	
 \<CR>}}; END the_end; me.id() => the_end.shred_id; killer.reg(the_end); 
 
-ab <<< <<<"">>>;
+ab <<< <<<"">>>;<CR><Up><Right><Right><Right><Right>
 
 ab SEQ_STRK SEQ_STR s0; // 4 => s0.max; 0 => s0.sync;
 \<CR>
