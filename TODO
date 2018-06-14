@@ -1,3 +1,6 @@
+
+Make sync script hardcore: if diff_time to high reset counter
+
 Add general gain for a song
 
 Print out seq size in terminal
