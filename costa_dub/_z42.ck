@@ -26,6 +26,10 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last;
 STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 4 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
+STADSRC stadsrc;
+stadsrc.connect(last, HW.launchpad.keys[16*3 + 1] /* pad 4:2 */ /* controler */, 3::ms /* attack */, 3::ms /* release */, 0 /* default_on */, 0  /* toggle */); stadsrc $ ST @=> last;
+
+
 STREV1 rev;
 rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
 

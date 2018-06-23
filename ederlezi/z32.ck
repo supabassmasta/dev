@@ -20,13 +20,20 @@ s.gain("J", 0.7); // for single wav
 s.go();     s $ ST @=> ST @ last; 
 
 STLPFC lpfc;
-lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last; 
+lpfc.connect(last $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /* Q */  );       lpfc $ ST @=>  last; 
 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][3] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
 
 STECHOC0 ech;
 ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;   
+
+<<<"Venitian percs: ">>>;
+<<<"  POTAR 1.1:  GAin">>>;
+<<<"  POTAR 1.2:  LPF Freq">>>;
+<<<"  POTAR 1.3:  LPF Q">>>;
+<<<"  POTAR 1.4:  Echo GAin">>>;
+
 
 while(1) {
 	     100::ms => now;
