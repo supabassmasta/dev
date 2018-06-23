@@ -70,6 +70,7 @@ ech.connect(st $ ST , data.tick * 1/ 4 , .3);
 STAUTOPAN autopan;
 autopan.connect(ech $ ST, -.6 /* span 0..1 */, 8*data.tick /* period */, 0.5 /* phase 0..1 */ );  autopan $ ST @=> ST @ last; 
 
+/*
 class STADSRC extends ST{
   ADSR al => outl;
   ADSR ar => outr;
@@ -166,7 +167,7 @@ class STADSRC extends ST{
 
 
 }
-
+*/
 // CONTROLLERS:
 // HW.lpd8.potar[1][1]   HW.lpd8.pad[1][1]  
 // HW.kb.updown          HW.kb.leftright

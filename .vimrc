@@ -576,6 +576,10 @@ ab RECK REC rec;
 ab STDIGITCK STDIGITC dig;
 \<CR>dig.connect(last $ ST , HW.lpd8.potar[1][1] /* sub sample period */ , HW.lpd8.potar[1][2] /* quantization */);      dig $ ST @=>  last;
 
+ab STADSRCK STADSRC stadsrc;
+\<CR>stadsrc.connect(last, HW.launchpad.keys[16*0 + 0] /* pad 1:1 */ /* controler */, 3::ms /* attack */, 3::ms /* release */, 1 /* default_on */, 0  /* toggle */); stadsrc $ ST @=> last;
+
+
 ab FILTERMODK // filter to add in graph:
 \<CR>// LPF filter =>   BPF filter =>   HPF filter =>   BRF filter => 
 \<CR>Step base => Gain filter_freq => blackhole;
