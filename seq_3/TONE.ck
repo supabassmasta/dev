@@ -902,12 +902,16 @@ public class TONE extends ST {
 
   class END extends end { 
     SEQ3 @ s; 
+    0=> int force_off_actions;
     0::ms => dur extra_end;
 
     fun void kill_me () {
       <<<"THE END">>>;	
       // Mute seq
       0 => s.on;
+      if ( force_off_actions  ){
+          s.play_off_actions(0);
+      }
       // Wait seq duration before diing (not optimal)
       s.duration + extra_end => now;		
 			// let "go" shred exit by herself 
@@ -924,6 +928,9 @@ public class TONE extends ST {
 
   fun void extra_end(dur in) {
     in => the_end.extra_end;
+  }
+  fun void force_off_action(){
+    1=>the_end.force_off_actions;
   }
 
   fun void go(){

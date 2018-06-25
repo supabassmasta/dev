@@ -199,4 +199,18 @@ public class SEQ3 {
 
 
   }
+
+
+fun void play_off_actions(int element_idx) {
+  if (element_idx < elements.size()   ){
+    for (0 => int i; i < elements[element_idx].off_actions.size()      ; i++) {
+      elements[element_idx].off_actions[i].on_time();
+    }
+  }
+  else {
+    <<<"ERROR: SEQ3: off_actions index too high">>>;
+  }
+}
+
+
 }
