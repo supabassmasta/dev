@@ -25,7 +25,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 ____
 11
 ____" => t.seq;
-.4 => t.gain;
+.2 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2000::ms, 10::ms, 1., 4000::ms);
@@ -46,8 +46,8 @@ autopan.connect(last $ ST, .1 /* span 0..1 */, data.tick/12 /* period */, 0.95 /
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
 
-//STREV2 rev; // DUCKED
-//rev.connect(last $ ST, .3 /* mix */);      rev $ ST @=>  last; 
+STREV1 rev; // DUCKED
+rev.connect(last $ ST, .1 /* mix */);      rev $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
