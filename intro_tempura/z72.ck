@@ -43,29 +43,9 @@ t.adsr[3].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other conve
 t.go();   t $ ST @=> ST @ last; 
 
 
- class STABSATURATOR extends ST{
-   ABSaturator satl   =>   outl;
-   ABSaturator satr   =>   outr;
-   2.0 => satl.drive;
-   0.0 => satl.dcOffset; 
-   2.0 => satr.drive;
-   0.0 => satr.dcOffset; 
-
-
-   fun void connect(ST @ tone, float drive, float dc) {
-     drive => satl.drive=> satr.drive;
-     dc => satl.dcOffset=> satr.dcOffset; 
-
-     tone.left() => satl;
-     tone.right() => satr;
-
-   }
-
-
-}
 
 //STABSATURATOR stabsat;
-//stabsat.connect(last, 5.0, 0.01); stabsat $ ST @=>  last;
+//stabsat.connect(last, 5.0 /* drive */, 0.00 /* dc offset */); stabsat $ ST @=>  last;
 
 //STAUTOPAN autopan;
 //autopan.connect(last $ ST, .1 /* span 0..1 */, data.tick/12 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 

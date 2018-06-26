@@ -766,6 +766,8 @@ ab SATK ABSaturator sat   =>
 \<CR>2.0 => sat.drive;
 \<CR>0.0 => sat.dcOffset;
 
+ab STABSATURATORK STABSATURATOR stabsat;
+\<CR>stabsat.connect(last, 5.0 /* drive */, 0.00 /* dc offset */); stabsat $ ST @=>  last;
 
 ab CONTROLK class cont extends CONTROL {
 \<CR>   // 0 =>  update_on_reg ;

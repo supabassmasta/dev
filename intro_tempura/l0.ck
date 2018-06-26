@@ -17,28 +17,37 @@ class synt0 extends SYNT{
 } 
 
 TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(synt0 s1);
+t.reg(synt0 s2);
+t.reg(synt0 s3);
+t.reg(synt0 s4);
+
+//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" {c
-1111
-____
-11
-____" => t.seq;
-.4 => t.gain;
+" :4 }c 
+1|3|5|7_
+1|3|8_
+" => t.seq;
+.02 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2000::ms, 10::ms, 1., 4000::ms);
 t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.adsr[1].set(2000::ms, 10::ms, 1., 4000::ms);
+t.adsr[1].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.adsr[2].set(2000::ms, 10::ms, 1., 4000::ms);
+t.adsr[2].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.adsr[3].set(2000::ms, 10::ms, 1., 4000::ms);
+t.adsr[3].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
 
+//STABSATURATOR stabsat;
+//stabsat.connect(last, 5.0, 0.01); stabsat $ ST @=>  last;
 
-STABSATURATOR stabsat;
-stabsat.connect(last, 5.0, 0.01); stabsat $ ST @=>  last;
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .1 /* span 0..1 */, data.tick/12 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+//STAUTOPAN autopan;
+//autopan.connect(last $ ST, .1 /* span 0..1 */, data.tick/12 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 //STHPF hpf;
 //hpf.connect(last $ ST , 10 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last; 
@@ -49,6 +58,8 @@ autopan.connect(last $ ST, .1 /* span 0..1 */, data.tick/12 /* period */, 0.95 /
 //STREV2 rev; // DUCKED
 //rev.connect(last $ ST, .3 /* mix */);      rev $ ST @=>  last; 
 
+STREV1 rev;
+rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 while(1) {
        100::ms => now;
 }
