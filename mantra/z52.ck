@@ -6,13 +6,27 @@ SET_WAV.TRIBAL1(s);
 "*4 
 u__xuyz_
 u_ux_AB_
+
 u__xuyz_
 u_ux_AB_
+
 u__xuyz_
 u_ux_AB_
 
 uu_xuyzA
 uuuxBAB_
+
+u__xuyz_
+u_ux_AB_
+
+u__xuyz_
+u_ux_AB_
+
+uu_xuyzA
+uuuxBAB_
+
+xAyABAzA
+uBuxBAB_
 
 
 " => s.seq;

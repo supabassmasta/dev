@@ -1,11 +1,3 @@
-class synt1 extends SYNT{
-
-    inlet => SinOsc s =>  outlet; 
-      .5 => s.gain;
-
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
-} 
-
 class synt0 extends SYNT{
     inlet => Gain in;
     Gain out =>  outlet;   
@@ -20,25 +12,26 @@ class synt0 extends SYNT{
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
     1. => opin[i].gain;
-    adsrop[i].set(1::ms, 20::ms, .7 , 200::ms);
+    adsrop[i].set(1::ms, 20::ms, 1. , 4000::ms);
     adsrop[i].setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     1 => adsrop[i].gain;
     i++;
 
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
-    1./2. + 0.03 => opin[i].gain;
+    1./5. + 0.03 => opin[i].gain;
     adsrop[i].set(1.5*data.tick, 1.5*data.tick, .00001 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     100 * 3 => adsrop[i].gain;
     i++;
 
     //---------------------
-    opin[i] => osc[i] => adsrop[i] => opout[i];
+    opin[i] => TriOsc tri=> adsrop[i] => opout[i];
     1./8. +0.0 => opin[i].gain;
-    adsrop[i].set(100::ms, 186::ms, .5 , 1800::ms);
-    adsrop[i].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    8 => adsrop[i].gain;
+    adsrop[i].set(2000::ms, 186::ms, .5 , 1800::ms);
+    adsrop[i].setCurves(5.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+    15 * 10 => adsrop[i].gain;
+    .8 => tri.width;
     i++;
 
     //---------------------
@@ -58,7 +51,7 @@ class synt0 extends SYNT{
     opout[1] => opin[0];
 
     in => opin[2];
-    // opout[2] => opin[0];
+     opout[2] => opin[0];
 
     in => opin[3];
     // opout[3] => opin[0];
@@ -90,32 +83,39 @@ class synt0 extends SYNT{
             { 
                          
             }
-             0 => own_adsr;
 }  
 
 TONE t;
-t.reg(synt1 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
-t.aeo(); // t.phr();// t.loc();
+t.reg(synt0 s1);  //data.tick * 8 => t.max; 
+//160::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
+t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+t.no_sync();
 t.force_off_action();
-
-":4  }c
- P////mm//////////z
+" 
+m//Pm//PP//////////Z
 
 " => t.seq;
-.2 => t.gain;
-//t.sync(4*data.tick);// t.element_sync();// 
-t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+
+.35 => t.gain;
+//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//
+//t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+t.adsr[0].set(2::ms, 10::ms, .8, 4000::ms);
+t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.go(); 
+
+STAUTOPAN autopan;
+autopan.connect(t $ ST, .9 /* span 0..1 */, 1*data.tick/2 /* period */, 0.95 /* phase 0..1 */ );  
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+ech.connect(autopan $ ST , data.tick * 3 / 8 , .8);ech $ ST @=>ST @  last; 
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
 }
  
+

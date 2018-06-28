@@ -1,6 +1,6 @@
 TONE t;
 t.reg(PLOC0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); //
-t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+t.dor();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*2*2 {c{c
  {c{c
@@ -32,8 +32,6 @@ ech.connect(last $ ST , data.tick * 7 / 4 , .6);  ech $ ST @=>  last;
 STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 3 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (7 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
-STREV1 rev;
-rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 
 ST st;
 
@@ -43,8 +41,15 @@ d.limit();
 
 .2 =>d.gain;
 
+st @=> last;
 //STAUTOPAN autopan;
 //autopan.connect(st $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+
+STREV1 rev;
+rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
