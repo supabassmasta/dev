@@ -118,13 +118,13 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /*
 STFILTERMOD fmod;
 fmod.connect( last , "HPF" /* "HPF" "BPF" BRF" "ResonZ" */, 3 /* Q */, 14 *100 /* f_base */ ,  400  /* f_var */, 2::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
-STLPFC lpfc;
-lpfc.connect(last $ ST , HW.lpd8.potar[1][6] /* freq */  , HW.lpd8.potar[1][7] /* Q */  );       lpfc $ ST @=>  last; 
+//STLPFC lpfc;
+//lpfc.connect(last $ ST , HW.lpd8.potar[1][6] /* freq */  , HW.lpd8.potar[1][7] /* Q */  );       lpfc $ ST @=>  last; 
 
 //STDUCK duck;
 //duck.connect(autopan $ ST); 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 7. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][7] /* gain */  , 7. /* static gain */  );       gainc $ ST @=>  last; 
 
 STECHO0C ech;
 ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][8] /* Q */ );      ech $ ST @=>  last;  
@@ -132,6 +132,7 @@ ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][8] /* Q
 STREV1 rev;
 rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 
+<<<"SYNT 2 Solo:\n  -lpd8 potar 1.7: Gain\n  -lpd8 potar 1.8: echo gain">>>;
 while(1) {
 	     100::ms => now;
 }

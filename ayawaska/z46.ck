@@ -109,7 +109,12 @@ STAUTOPAN autopan;
 autopan.connect(t $ ST, .9 /* span 0..1 */, 1*data.tick /* period */, 0.95 /* phase 0..1 */ );  
 
 STECHO ech;
-ech.connect(autopan $ ST , data.tick * 6 / 8 , .8); 
+ech.connect(autopan $ ST , data.tick * 6 / 8 , .8);  ech  $ ST @=> ST @ last;
+
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
+
+
 
 while(1) {
        100::ms => now;
