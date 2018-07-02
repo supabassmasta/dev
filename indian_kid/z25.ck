@@ -23,6 +23,7 @@ t.go();   t $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
  
+<<<"PLOC* : lpd8 1.2: Gain">>>;
 
 while(1) {
        100::ms => now;

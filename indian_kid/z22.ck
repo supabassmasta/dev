@@ -50,6 +50,7 @@ gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 3. /* static gain */
 
 STREV1 rev;
 rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
+<<<"PLOC* : lpd8 1.2: Gain">>>;
 
 while(1) {
        100::ms => now;

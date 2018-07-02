@@ -26,6 +26,7 @@ lpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  l
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+<<<"PLOC* : lpd8 1.2: Gain">>>;
 while(1) {
        100::ms => now;
 }

@@ -89,7 +89,7 @@ class synt0 extends SYNT{
 
 
 TONE t;
-t.reg(HMOD0 s1);  //data.tick * 8 => t.max; 
+t.reg(HMOD1 s1);  //data.tick * 8 => t.max; 
 39::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
@@ -116,7 +116,7 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /*
 
 
 STFILTERMOD fmod;
-fmod.connect( last , "HPF" /* "HPF" "BPF" BRF" "ResonZ" */, 3 /* Q */, 14 *100 /* f_base */ ,  400  /* f_var */, 2::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 3 /* Q */, 14 *100 /* f_base */ ,  400  /* f_var */, 2::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 //STLPFC lpfc;
 //lpfc.connect(last $ ST , HW.lpd8.potar[1][6] /* freq */  , HW.lpd8.potar[1][7] /* Q */  );       lpfc $ ST @=>  last; 

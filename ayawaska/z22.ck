@@ -18,6 +18,8 @@ t.go();   t $ ST @=> ST @ last;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
+
+
 while(1) {
        100::ms => now;
 }

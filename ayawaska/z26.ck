@@ -26,6 +26,8 @@ t.go();   t $ ST @=> ST @ last;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
+<<<"PLOC* : lpd8 1.2: Gain">>>;
+
 while(1) {
        100::ms => now;
 }

@@ -74,8 +74,12 @@ spork ~ filter_freq_control ();
 
 
 STAUTOPAN autopan;
-autopan.connect(st $ ST, .7 /* span 0..1 */, 9*data.tick /* period */, 0.51 /* phase 0..1 */ );  
+autopan.connect(st $ ST, .7 /* span 0..1 */, 9*data.tick /* period */, 0.51 /* phase 0..1 */ );  autopan $ ST @=> ST @ last;
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+
+<<<"Space 80s: lpd8 1.2 :Gain">>>;
 
 while(1) {
 	     100::ms => now;
