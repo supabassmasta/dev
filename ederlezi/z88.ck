@@ -1,6 +1,6 @@
 LONG_WAV l;
 "../_SAMPLES/Chassin/Ederlezi Do dorien full_NORMALIZED.wav" => l.read;
-1.0 => l.buf.gain;
+1.0 * data.master_gain => l.buf.gain;
 1 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 

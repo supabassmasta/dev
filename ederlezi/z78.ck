@@ -1,6 +1,6 @@
 LONG_WAV l;
 "../_SAMPLES/Chassin/Ederlezi Do dorien sans bass ni drum_NORMALIZED.wav" => l.read;
-0.4 => l.buf.gain;
+0.4 * data.master_gain => l.buf.gain;
 1 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 

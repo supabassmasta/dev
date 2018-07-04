@@ -97,7 +97,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 !111!1 11!11 ____ 8////1
 
 " => t.seq;
-.9 => t.gain;
+.9 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

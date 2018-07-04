@@ -10,7 +10,7 @@ h_hJ hJh_ hshs hsh_
 h_h_ hJh_ h_sh shs|h_ 
 
 " => s.seq;
-.9 => s.gain; //
+.9 * data.master_gain => s.gain; //
 s.gain("s", .25); // for single wav 
 s.gain("v", .5); // for single wav 
 s.gain("h", 1.1); // for single wav 

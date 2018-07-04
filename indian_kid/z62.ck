@@ -100,7 +100,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 
 
 " => t.seq;
-.3 => t.gain;
+.3 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 
 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;

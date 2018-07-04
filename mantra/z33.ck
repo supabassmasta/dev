@@ -4,20 +4,17 @@ SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TE
 "
 *4
 
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ s___ ____ 
-____ ____ s___ ____ 
+____ ____ ___a|s ____ 
 
 " => s.seq;
-1.3 => s.gain; // s.gain("s", .2); // for single wav 
+0.7 => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;

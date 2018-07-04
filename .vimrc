@@ -394,7 +394,7 @@ ab TONEK TONE t;
 \<CR>t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"1" => t.seq;
-\<CR>.9 => t.gain;
+\<CR>.9 * data.master_gain => t.gain;
 \<CR>//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -404,7 +404,7 @@ ab TONEK TONE t;
 ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
-\<CR>.9 => s.gain; // s.gain("s", .2); // for single wav 
+\<CR>.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 \<CR>//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>s.go();     s $ ST @=> ST @ last;
@@ -789,7 +789,7 @@ ab STBREAKK STBREAK stbreak;
 
 ab LONG_WAVK LONG_WAV l;
 \<CR>"../_SAMPLES/" => l.read;
-\<CR>1.0 => l.buf.gain;
+\<CR>1.0 * data.master_gain => l.buf.gain;
 \<CR>0 => l.update_ref_time;
 \<CR>l.AttackRelease(0::ms, 0::ms);
 \<CR>l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last; 

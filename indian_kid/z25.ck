@@ -13,7 +13,7 @@ t.dor();// t.dor();// t.aeo(); // t.phr();// t.loc();
 1357 }c
 
 " => t.seq;
-.7 => t.gain;
+.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

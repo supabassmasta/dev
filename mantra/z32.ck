@@ -4,10 +4,10 @@ SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TE
 "
 *4
 
-____ ____ a___ ____ 
-____ ____ a___ ____ 
-____ _b__ a___ ____ 
-____ _b_b a___ ____ 
+___b ____ ____ ___b 
+____ _b_b ____ ___b 
+___b ____ ____ ___b 
+____ _b_b __b_ b_bb 
 
 " => s.seq;
 .9 => s.gain; // s.gain("s", .2); // for single wav 

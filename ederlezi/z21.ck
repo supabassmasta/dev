@@ -10,7 +10,7 @@ k___ __k_  ____ k_k$k
 k__k __k_  _k_k _k$k_
 
 " => s.seq;
-.9 => s.gain; //
+.9 * data.master_gain => s.gain; //
 s.gain("k", 1.3); // for single wav 
 s.gain("c", .7); // for single wav 
 //s.gain("h", 1.7); // for single wav 

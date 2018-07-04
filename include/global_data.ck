@@ -13,6 +13,8 @@ public class data {
 // SCALE, NOTES...
     static string_dummy @ scale; 
     static int ref_note;
+// MIX
+   static float master_gain;
 
 
 // EVENTS
@@ -34,6 +36,7 @@ now => data.T0;
 
 500::ms => data.tick;
 130 => data.bpm;
+1. => data.master_gain;
 
 1000::ms=> data.wait_before_start;
 
