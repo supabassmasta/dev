@@ -1,0 +1,1 @@
+swap() { mv $1 tmp_switch_file; cp $2 $1; mv tmp_switch_file $2; }
