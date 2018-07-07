@@ -5,8 +5,6 @@ t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 t.no_sync();
 t.force_off_action();
 "}c}c
-h/G_
-G/h_
 G//// /////h
 " => t.seq;
 .4 => t.gain;
@@ -16,14 +14,15 @@ G//// /////h
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
+
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
 
-STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
 
 
 while(1) {
