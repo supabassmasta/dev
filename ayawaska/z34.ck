@@ -8,16 +8,16 @@ ____ ____
 ____ ____ 
 ____ ____ 
 ____ ____ 
-__p_ r_p_ 
+____ r___ 
 __p_ p_r_ 
 " => s.seq;
-.6 => s.gain; // s.gain("s", .2); // for single wav 
+.55 => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
-//STECHO ech;
-//ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;
