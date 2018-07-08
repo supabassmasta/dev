@@ -1,14 +1,24 @@
+class synt0 extends SYNT{
+
+    inlet => SqrOsc s =>  outlet; 
+      .5 => s.gain;
+      .9 => s.width;
+
+
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+} 
 
 TONE t;
-t.reg(NOISE0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
+t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
 t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " }c
-R/h_f/O_ P//f__
+_R/h_f/O_ P//f__
 f/O__R/h __f//P
 
 " => t.seq;
-.7 => t.gain;
+.15 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
