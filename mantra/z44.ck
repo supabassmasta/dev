@@ -8,7 +8,8 @@ ____ s___
 ____ s__t
 
 " => s.seq;
-0.8 => s.gain; // s.gain("s", .3); // for single wav 
+0.8 => s.gain; //
+s.gain("s", 1.2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last;		
