@@ -11,7 +11,7 @@ class SYNC {
 }
 
 
-class LONG_WAV extends ST {
+class LONG_WAV_2 extends ST {
 	SndBuf2 buf;
 	SYNC sy;
   0 => int update_ref_time; 
@@ -102,6 +102,7 @@ class LONG_WAV extends ST {
 
 LONG_WAV l;
 "../_SAMPLES/Chassin/Icario chant G D C test2.wav" => l.read;
+.8 * data.master_gain => l.buf.gain;
 1 => l.update_ref_time;
 l.AttackRelease(0::ms, 1000::ms);
 l.start(4 * data.tick /* sync */ , 128 * data.tick + 32 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 16 * data.tick /* END sync */);
@@ -111,3 +112,4 @@ while(1) {
 	     100::ms => now;
 }
  
+

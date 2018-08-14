@@ -3,7 +3,7 @@ t.reg(NOISE2 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); /
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 ":2
-1////g  g////C C//l  l///1 
+1////g  g//////3 3/////d  d////1 
 " => t.seq;
 1.5 * data.master_gain  => t.gain;
 t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
@@ -19,7 +19,7 @@ STECHO ech;
 ech.connect(last $ ST , data.tick * 12 / 4 , .3);  ech $ ST @=>  last; 
 
 STAUTOPAN autopan;
-autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+autopan.connect(last $ ST, .6 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 while(1) {
 	     100::ms => now;
 }

@@ -5,9 +5,7 @@ t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 t.no_sync();
 t.force_off_action();
 "}c}c
-h/G_
-G/h_
-G//// /////h
+G//// /////hh//////////z
 " => t.seq;
 .4 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();

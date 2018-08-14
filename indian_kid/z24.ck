@@ -26,7 +26,11 @@ lpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  l
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+STECHOC0 ech;
+ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][3] /* Gain */ );      ech $ ST @=>  last;   
+
 <<<"PLOC* : lpd8 1.2: Gain">>>;
+<<<"PLOC* : lpd8 1.3: ECho Gain">>>;
 while(1) {
        100::ms => now;
 }

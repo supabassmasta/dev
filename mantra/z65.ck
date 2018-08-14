@@ -19,11 +19,12 @@ t.go();   t $ ST @=> ST @ last;
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick/3 /* period */, 0.5 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
+
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
-STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;

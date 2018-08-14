@@ -21,7 +21,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.go();   t $ ST @=> ST @ last; 
 
 STADSRC stadsrc;
-stadsrc.connect(last, HW.launchpad.keys[16*3 + 1] /* pad 4:2 */ /* controler */, 3::ms /* attack */, 3::ms /* release */, 0 /* default_on */, 1  /* toggle */); stadsrc $ ST @=> last;
+stadsrc.connect(last, HW.launchpad.keys[16*3 + 1] /* pad 4:2 */ /* controler */, 3::ms /* attack */, 3::ms /* release */, 0 /* default_on */, 0  /* toggle */); stadsrc $ ST @=> last;
 
 STREV1 rev;
 rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
