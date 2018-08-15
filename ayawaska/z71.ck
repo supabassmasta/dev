@@ -124,7 +124,7 @@ fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 3 /* Q */, 14 *100 /
 //STDUCK duck;
 //duck.connect(autopan $ ST); 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][7] /* gain */  , 7. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][7] /* gain */  , 9. /* static gain */  );       gainc $ ST @=>  last; 
 
 STECHO0C ech;
 ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][8] /* Q */ );      ech $ ST @=>  last;  

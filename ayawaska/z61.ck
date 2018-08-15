@@ -126,7 +126,7 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /*
 //STDUCK duck;
 //duck.connect(autopan $ ST); 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 5. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 7. /* static gain */  );       gainc $ ST @=>  last; 
 
 //STECHO0C ech;
 //ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][4] /* Q */ );      ech $ ST @=>  last;  
