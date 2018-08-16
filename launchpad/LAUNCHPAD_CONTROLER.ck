@@ -125,29 +125,42 @@ public class LAUNCHPAD {
     fun void virtual_key_on(int sid /* script id, example 11 for z11.ck) */) {
       int i, j, note;
 
-      // compute note from sid
-      sid/10 - 1 => i;
-      sid - (i+1)*10 - 1 => j;
+      if (sid > 10) {
+        // compute note from sid
+        sid/10 - 1 => i;
+        sid - (i+1)*10 - 1 => j;
 
-      i*16 + j => note;
+        i*16 + j => note;
 
-      // Call controls attached on the key
-      keys[note].set(127); 
-      msg.data2=> last_key;
+        // Call controls attached on the key
+        keys[note].set(127); 
+        // note=> last_key;
+      }
+      else {
+        controls[sid + 103].set(127);
+      }
+
     }
 
     fun void virtual_key_off(int sid /* script id, example 11 for z11.ck) */) {
       int i, j, note;
 
-      // compute note from sid
-      sid/10 - 1 => i;
-      sid - (i+1)*10 - 1 => j;
 
-      i*16 + j => note;
+      if (sid > 10) {
+        // compute note from sid
+        sid/10 - 1 => i;
+        sid - (i+1)*10 - 1 => j;
 
-      // Call controls attached on the key
-      keys[note].set(0); 
-      msg.data2=> last_key;
+        i*16 + j => note;
+
+        // Call controls attached on the key
+        keys[note].set(0); 
+        msg.data2=> last_key;
+      }
+      else {
+        controls[sid - 1].set(0);
+      }
+
     }
 
 
