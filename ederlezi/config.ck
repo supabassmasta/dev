@@ -7,6 +7,11 @@
 
 .8 => data.master_gain;
 
+// Start synchro
+HW.launchpad.virtual_key_on(7);
+
+1::ms => now;
+
 // SOL
 // DO Dorien
 

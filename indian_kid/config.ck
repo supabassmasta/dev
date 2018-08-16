@@ -6,6 +6,13 @@
 48 => data.ref_note;
 
 1.5 => data.master_gain;
+
+// Start synchro
+HW.launchpad.virtual_key_on(7);
+
+1::ms => now;
+
+
 // D#/G     //    Bb/B - C/B
 
 // START: 2 kid samples
