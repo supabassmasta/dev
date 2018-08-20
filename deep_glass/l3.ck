@@ -5,7 +5,7 @@ class synt0 extends SYNT{
 0.978363 => bwg.bowRate;
 0.373116 => bwg.bowPressure;
 0.853088 => bwg.strikePosition;
-2 => bwg.preset;
+0 => bwg.preset;
 
 124 => bwg.bowMotion;
 //    bwg.controlChange( 11, 4 /* vibratoFreq */); 
@@ -25,7 +25,8 @@ class synt0 extends SYNT{
 
 TONE t;
 t.reg(synt0 s1);
-//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c }c *4
 5151 _3_3
@@ -34,7 +35,7 @@ t.reg(synt0 s1);
 _183 78_1
 15_1 3__4
 51_7 355_
-1518 7_3
+1518 7_3_
 
 
 " => t.seq;

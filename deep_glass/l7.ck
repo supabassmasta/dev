@@ -3,16 +3,16 @@ class BWG0 extends SYNT{
 
     BandedWG bwg  =>  outlet; 
 
-0.175412  => bwg.pluck; 
-0.869230  => bwg.bowRate; 
-bwg.controlChange( 2,  115.706523  /* bowPressure */ ); 
-bwg.controlChange( 4,  32.258742 /* bowMotion */); 
-bwg.controlChange( 8,  42.431364 /* strikePosition */); 
-bwg.controlChange( 11,  65.808262 /* vibratoFreq */); 
-bwg.controlChange( 1,  96.573335 /* gain */); 
-bwg.controlChange( 128,  62.514321 /* bowVelocity */); 
-bwg.controlChange( 64,  2.955549 /* setStriking */); 
-bwg.controlChange( 16,  0.5 /* preset */); 
+0.426246  => bwg.pluck; 
+0.680029  => bwg.bowRate; 
+bwg.controlChange( 2,  28.830611  /* bowPressure */ ); 
+bwg.controlChange( 4,  77.396553 /* bowMotion */); 
+bwg.controlChange( 8,  65.867153 /* strikePosition */); 
+bwg.controlChange( 11,  22.405772 /* vibratoFreq */); 
+bwg.controlChange( 1,  91.732982 /* gain */); 
+bwg.controlChange( 128,  6.458138 /* bowVelocity */); 
+bwg.controlChange( 64,  64.465172 /* setStriking */); 
+bwg.controlChange( 16,  3.000000 /* preset */); 
 
     fun void f1 (){ 
       1::samp => now;
@@ -31,20 +31,35 @@ t.reg(BWG0 s2);
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c *2  
-1_5_ 3___
-1|5_5|8_ 3__8
-1_5_ 4___
-1|5_5|8_ 4_3_
+" *2  
+1___ ____
+____ ____
+____ ____
+____ ____
+1__|5_ ____
+____ ____
+____ ____
+____ ___|8_
+
+1___ ____
+____ ____
+____ ____
+____ ____
+1__|5_ ____
+____ ____
+____ ____
+____ ____
 
 
 
 " => t.seq;
-0.7 * data.master_gain => t.gain;
+0.15 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2::ms, 0::ms, 1., 4000::ms);
 t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.adsr[1].set(2::ms, 0::ms, 1., 4000::ms);
+t.adsr[1].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
 //STDUCK duck;

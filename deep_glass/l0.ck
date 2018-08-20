@@ -5,10 +5,10 @@ class synt0 extends SYNT{
     padsr.set(4000::ms, 2000::ms, .7 , 10000::ms);
     padsr.setCurves(1. , 1., 1.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     // ding!
-    .04 => bottle.noiseGain;
+    .09 => bottle.noiseGain;
     5 => bottle.vibratoFreq;
-    .0 => bottle.vibratoGain;
-    .9 => bottle.volume;
+    .2 => bottle.vibratoGain;
+    .8 => bottle.volume;
 
     fun void f1 (){ 
       1::samp => now;
@@ -24,10 +24,12 @@ TONE t;
 t.reg(synt0 s1);
 t.reg(synt0 s2);
 t.reg(synt0 s3);
-//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c :4 1|3|5 ___ 3|5___ " => t.seq;
-.6 * data.master_gain => t.gain;
+"}c :4 1|3|5 ___ 3|5|7___
+       1|3|8 ___ 4|6|8___ " => t.seq;
+.2 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
