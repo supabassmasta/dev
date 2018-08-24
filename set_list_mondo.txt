@@ -1,6 +1,97 @@
-intro
+intro_tempura
 ayawuaska
 indian kid
 costa dub
 ederlezi
 mantra
+
+-------------------------------
+intro_tempura:
+-------------
+z31: Slide. To play live with Thunder Perc
+
+z21: Big Drum with Sync. To Stop after first drum
+z81: Kick to play just after z21
+z82: Big Drum
+
+z73: Synt Echo bells: Control with   LPD8 1.2
+z11: Synt Pad:  Control with   LPD8 1.1
+
+z12: Bass
+
+z83: rythm percs chikichik
+
+
+---------
+ayawuaska (midi sync)
+---------
+z31: Costa forest to start ASAP
+
+z4*: Slides. Gain control with LPD8 1.1
+
+Medicina solo:
+z61: High synt. Gain LPD8 1.5. Echo LPD8 1.6
+z71: Low synt.  Gain LPD8 1.7. Echo LPD8 1.8
+z62: 80s slides. Gain LPD8 1.2
+
+
+---------- 
+indian kid (midi sync)
+---------- 
+z31: cymbal (each 16 ticks)
+z41: Intro beat to after 2 first kind chants.
+
+z16: Big drum
+z17: Kick
+
+z2* PLOC to play on Do part (Blue on Chass Live) Gain control with LPD8 1.2
+
+z8*: Slides. Gain control with LPD8 1.1
+
+
+---------
+costa dub
+---------
+START
+z31: Niap: z32: use with niap active for echo
+z41: TITITI (silent alone): z42: ADSRON. z43: ECHO
+
+
+-------
+ederlezi (midi sync)
+-------
+START
+z11: wind low: Gain LPD8 1.5.
+z12: wind high: Gain LPD8 1.6.
+z13: horse:     LPF freq LPD8 1.7 Q LPD8 1.8
+
+Live shaker on Cumbia
+
+z81: Start 1st trap (4 beat sync)
+z82: Start 2nd trap (4 beat sync)
+
+z32/z33 Venitian percs: 
+         POTAR 1.1:  GAin
+         POTAR 1.2:  LPF Freq
+         POTAR 1.3:  LPF Q
+         POTAR 1.4:  Echo GAin
+
+
+------
+mantra (midi sync)         
+------
+z11 12 13: First beat to play after first pause.
+z13: cymbal (32 beat aligned)
+z21: BASS
+
+z23: String (follow BASS)  POTAR 1.6 GAIN
+z24: Strange string louder POTAR 1.6 GAIN
+
+z31: kick Dub: to start with Chassin's Gong
+
+z68: Start auto trance beat (4 beats sync)
+
+z6*: MOD0 echo synt. POTAR 1.1 GAIN
+z7*: PLOC echo.      POTAR 1.5 GAIN
+
+z8*: Slides          POTAR 1.1 GAIN
