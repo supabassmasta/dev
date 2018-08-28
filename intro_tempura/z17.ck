@@ -3,12 +3,12 @@ ST st_direct;
 
 adc => Gain gain_effect => st_effect.mono_in; st_effect @=> ST @ last;
 adc => Gain gain_direct => st_direct.mono_in;
-.5 => gain_effect.gain;
-.5 => gain_direct.gain;
+1.5 => gain_effect.gain;
+1.5 => gain_direct.gain;
 
 // EFFECT -----------------
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 
 // DIRECT + EFFECT --------
