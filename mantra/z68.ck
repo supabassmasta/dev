@@ -26,22 +26,115 @@ HW.launchpad.virtual_key_on(43); // HH
 HW.launchpad.virtual_key_on(44); // Snare
 HW.launchpad.virtual_key_on(45); // BASS 1
 
-(5 * 16 + 12) * data.tick => now;
+/////////////////////////
+
+
+
+(1 * 16 + 12) * data.tick => now;
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(45); // BASS 1
+HW.launchpad.virtual_key_on(58); // BK kick 1
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(55); // BK glitch 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(55); // BK glitch 2
+HW.launchpad.virtual_key_on(58); // BK kick 1
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(45); // BASS 1
+
+(1 * 16 + 12) * data.tick => now;
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(45); // BASS 1
+HW.launchpad.virtual_key_on(57); // BK kick 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(56); // BK glitch 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(56); // BK glitch 2
+HW.launchpad.virtual_key_on(57); // BK kick 2
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(45); // BASS 1
+
+
+(1 * 16 + 12) * data.tick => now;
+
+
+////////////////////////
+
+
+//(5 * 16 + 12) * data.tick => now;
+
 //16 * data.tick => now; // For Test
+//
+//-------------------------------------------------------
 
 // BREAK Silence
 HW.launchpad.virtual_key_on(41); // Kick
 HW.launchpad.virtual_key_on(43); // HH
 HW.launchpad.virtual_key_on(44); // Snare
 HW.launchpad.virtual_key_on(45); // BASS 1
-4 * data.tick => now;
+
+
+3 * data.tick => now;
+
+HW.launchpad.virtual_key_on(58); // BK kick 1
+1 * data.tick => now;
+HW.launchpad.virtual_key_on(58); // BK kick 1
 
 HW.launchpad.virtual_key_on(41); // Kick
 HW.launchpad.virtual_key_on(43); // HH
 HW.launchpad.virtual_key_on(44); // Snare
 HW.launchpad.virtual_key_on(48); // BASS 2
 
-(5 * 16 + 6) * data.tick => now;
+
+(3 * 16 + 12 ) * data.tick => now;
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(48); // BASS 2
+
+
+
+
+HW.launchpad.virtual_key_on(57); // BK kick 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(56); // BK glitch 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(56); // BK glitch 2
+HW.launchpad.virtual_key_on(57); // BK kick 2
+
+
+
+
+
+
+HW.launchpad.virtual_key_on(41); // Kick
+HW.launchpad.virtual_key_on(43); // HH
+HW.launchpad.virtual_key_on(44); // Snare
+HW.launchpad.virtual_key_on(48); // BASS 2
+
+
+
+(1 * 16 + 6) * data.tick => now;
+
+//-------------------------------------------------------
+
+//(5 * 16 + 6) * data.tick => now;
+
+
+
 //16 * data.tick => now; // For Test
 
 // BREAK Silence
@@ -49,7 +142,10 @@ HW.launchpad.virtual_key_on(41); // Kick
 HW.launchpad.virtual_key_on(43); // HH
 HW.launchpad.virtual_key_on(44); // Snare
 HW.launchpad.virtual_key_on(48); // BASS 2
-22 * data.tick => now;
+20 * data.tick => now;
+HW.launchpad.virtual_key_on(57); // BK kick 2
+2 * data.tick => now;
+HW.launchpad.virtual_key_on(57); // BK kick 2
 
 HW.launchpad.virtual_key_on(41); // Kick
 HW.launchpad.virtual_key_on(43); // HH
