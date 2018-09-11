@@ -34,6 +34,9 @@ z61: High synt. Gain LPD8 1.5. Echo LPD8 1.6
 z71: Low synt.  Gain LPD8 1.7. Echo LPD8 1.8
 z62: 80s slides. Gain LPD8 1.2
 
+---------------
+BANSURI
+---------------
 
 ---------- 
 indian kid (midi sync)
