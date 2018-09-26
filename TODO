@@ -1,3 +1,11 @@
+Create global STGain array (size 88) to route audio between zXX.ck:
+-  STSEND(ST @ last, 11) // 11 for z11.ck
+-  STRECEIVE (11) // by convention to use in z11.ck
+To use with for example:
+STMULT_BASE_ONE(ST @ source, ST @ MOD): ST multiplier, adding mod input to 1
+STMOD_BASE_ONE(ST @ source, ST @ MOD): ST FM modulator (TONE to be checked to accept input fm mod)
+
+
 TRain bansuri: thème do la sol si. sa da pa ni
 
 
