@@ -797,3 +797,14 @@ ab LONG_WAVK LONG_WAV l;
 ab SYNCK	SYNC sy;
 \<CR>sy.sync(4 * data.tick);
 \<CR>//sy.sync(4 * data.tick , 0::ms /* offset */);
+
+ab STMIXK STMIX stmix;
+\<CR>//stmix.send(last, 11);
+\<CR>//stmix.receive(11); stmix $ ST @=> ST @ last;
+
+ab STMULT_BASE_ONEK STMULT_BASE_ONE stmult;
+\<CR>stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last;
+
+ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
+\<CR>stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last;
+

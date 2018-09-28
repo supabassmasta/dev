@@ -158,6 +158,8 @@ Machine.add( "../EFFECTS/STBREAK.ck");
 Machine.add( "../EFFECTS/STADSRC.ck");
 Machine.add( "../EFFECTS/STABSATURATOR.ck");
 Machine.add( "../EFFECTS/STMIX.ck");
+Machine.add( "../EFFECTS/STMULT_BASE_ONE.ck");
+Machine.add( "../EFFECTS/STMULT_BASE_ZERO.ck");
 me.yield();
 Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../EFFECTS/REV2.ck");
