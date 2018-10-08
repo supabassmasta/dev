@@ -1,13 +1,13 @@
-2 => float fact;
+1 => float fact;
 
-adc => GVerb gverb0  => Gain out;
-50 => gverb0.roomsize;        // roomsize: (float) [1.0 - 300.0], default 30.0   
-8::second => gverb0.revtime;   // revtime: (dur), default 5::second
-0.0 => gverb0.dry;             // dry (float) [0.0 - 1.0], default 0.6                
-0.0 => gverb0.early;           // early (float) [0.0 - 1.0], default 0.4
-1.0 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5       
+adc => Delay d0 => Gain out;
+fact * data.tick - 186::ms * 2 => d0.max => d0.delay;
+.6 => d0.gain;
+d0 => Delay d1 => out;
+fact * data.tick  => d1.max => d1.delay;
+.6 => d1.gain;
+d1 => Gain fb => d1;
 
-.3 => out.gain;
 out => dac;
 
 while(1) {

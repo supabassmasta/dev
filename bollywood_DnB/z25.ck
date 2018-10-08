@@ -1,10 +1,12 @@
 SEQ s;  //data.tick * 8 => s.max;  
 SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*3*2
+"*4*4
 
-_x__  ____ ___x
-
+____ ____ ____ __x_
+____ ____ ____ __x_
+____ ____ ____ __x_
+__x_ ____ ____ __x_
 " => s.seq;
 .4 * data.master_gain => s.gain; //
 s.gain("w", .4); // for single wav 

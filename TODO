@@ -1,3 +1,8 @@
+Bolly:
+Faire des synt plus soft pour le début du morceau
+Faire du glitché pour le chant digital
+
+
 Create global STGain array (size 88) to route audio between zXX.ck:
 -  STSEND(ST @ last, 11) // 11 for z11.ck
 -  STRECEIVE (11) // by convention to use in z11.ck

@@ -12,7 +12,7 @@ k___ __k_ x___ ____
 ____ k___ x___ _<5k__
 
 " => s.seq;
-.9 * data.master_gain => s.gain; //
+1.4 * data.master_gain => s.gain; //
 s.gain("w", .4); // for single wav 
 s.gain("k", .7); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
