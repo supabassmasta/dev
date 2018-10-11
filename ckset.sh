@@ -30,3 +30,4 @@ gnome-terminal --working-directory=$PWD/costa_dub/ --geometry 118x82+0+0
 gnome-terminal --working-directory=$PWD/ederlezi/ --geometry 118x82-0+0
 gnome-terminal --working-directory=$PWD/mantra/ --geometry 118x82+0+0
 gnome-terminal --working-directory=$PWD/deep_glass/ --geometry 118x82-0+0
+gnome-terminal --working-directory=$PWD/bollywood_DnB/ --geometry 118x82-0+0
