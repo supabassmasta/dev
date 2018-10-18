@@ -3,7 +3,10 @@ SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
 *2
-ll
+__ll llll
+__ll llll
+__ll llll
+_ll_ llll
 
 " => s.seq;
 .5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
@@ -11,15 +14,8 @@ ll
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
-STMIX stmix;
-//stmix.send(last, 11);
-stmix.receive(11);// stmix $ ST @=> last; 
-
-STMULT_BASE_ONE stmult;
-stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last; 
-
 STREV2 rev; // DUCKED
-rev.connect(last $ ST, .0 /* mix */);      rev $ ST @=>  last; 
+rev.connect(last $ ST, .1 /* mix */);      rev $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

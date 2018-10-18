@@ -14,6 +14,8 @@ ll__ ____
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STREV2 rev; // DUCKED
+rev.connect(last $ ST, .1 /* mix */);      rev $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
