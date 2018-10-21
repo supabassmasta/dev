@@ -1,5 +1,7 @@
 public class ST {
   
+  NULL @=> ST @ next;
+
   Gain outl => dac.left;
   Gain outr => dac.right;
 
@@ -65,4 +67,15 @@ public class ST {
       in => mono_in_g;
     }
   }
+
+  fun void note_info(note_info_t @ ni ){
+    // Put code here
+    // Always spork blocking process
+
+
+    if (next != NULL) {
+      next.note_info(ni);
+    }
+  }
+
 }
