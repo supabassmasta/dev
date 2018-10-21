@@ -308,6 +308,25 @@ public class TONE extends ST {
     return act;
   }
 
+  class note_info_act extends ACTION {
+    ST @ st;
+    ELEMENT @ e;
+
+    fun int on_time() {
+      st.note_info( e.note_info_s );
+    }
+
+  }
+  
+  fun ACTION set_note_info_act(ST @ st, ELEMENT @ e) {
+    new note_info_act @=> note_info_act @ act;
+    
+    e @=> act.e;
+    st @=> act.st;
+
+    "note_info_act " + e + " ST " + st => act.name;
+    return act;
+  }
   //////// NOTE MANAGEMENT ///////////////
 
   fun int is_note(int c) {
@@ -451,6 +470,7 @@ public class TONE extends ST {
           // if slide, dont create a new element we will increase the new one
           if (slide_nb ==0) {
             new ELEMENT @=> e;
+            e.actions << set_note_info_act(next ,e);
             // Search synt that are not on anymore
             for (0 => int i; i < on_state.size()      ; i++) {
               if (on_state[i] !=0) {
@@ -500,6 +520,7 @@ public class TONE extends ST {
             set_dur((slide_nb-1) * base_dur) + slide_dur => slide_dur;
             // update element duration
             slide_dur => e.duration;
+            e.duration => e.note_info_s.d;
           }
 
           e.actions << set_slide(env[id], temp_freq, slide_dur); 
@@ -548,6 +569,7 @@ public class TONE extends ST {
             if (on_state[id] == 0) {
               e.actions << set_on_adsr(adsr[id]); 
               e.actions << set_synt_on(synt[id]); 
+              1 => e.note_info_s.on;
             }
             else {
               // Manage on_actions
@@ -575,6 +597,7 @@ public class TONE extends ST {
             e.actions << set_on_adsr(adsr[id]); 
             e.actions << set_synt_on(synt[id]); 
             0 => force_new_note;
+            1 => e.note_info_s.on;
           }
 
 
@@ -602,6 +625,7 @@ public class TONE extends ST {
             if (dur_temp != 0::ms ) {
 
               dur_temp => e.duration;
+              e.duration => e.note_info_s.d;
               // Add element to SEQ
               s.elements << e;
 
@@ -645,9 +669,10 @@ public class TONE extends ST {
 
         if (dur_temp != 0::ms) {
           new ELEMENT @=> e;
+          e.actions << set_note_info_act(next ,e);
           dur_temp => e.duration;
-
-
+          e.duration => e.note_info_s.d;
+          0 => e.note_info_s.on;
 
           // KeyOff all adsr
           for (0 => int j; j < adsr.size() ; j++) {
@@ -837,6 +862,7 @@ public class TONE extends ST {
         // synt off on last, On on first
         s.elements[0].actions << set_on_adsr(adsr[j]);                
         s.elements[0].actions << set_synt_on(synt[j]);                
+        1 => s.elements[0].note_info_s.on;
       }
       else if (on_state[j] != 0 && on_state_on_start[j] != 0) {
         // Manage on_actions
@@ -876,9 +902,10 @@ public class TONE extends ST {
     // remaining
     if (remaining != 0::ms) {
       new ELEMENT @=> e;
-
+      e.actions << set_note_info_act(next ,e);
+ 
       remaining => e.duration;
-
+      e.duration => e.note_info_s.d;
 
 
       s.elements << e;
