@@ -68,14 +68,4 @@ public class ST {
     }
   }
 
-  fun void note_info(note_info_t @ ni ){
-    // Put code here
-    // Always spork blocking process
-
-
-    if (next != NULL) {
-      next.note_info(ni);
-    }
-  }
-
 }
