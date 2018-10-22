@@ -1,4 +1,6 @@
 Machine.add( "../EFFECTS/note_info.ck");
+Machine.add( "../EFFECTS/note_info_rx.ck");
+Machine.add( "../EFFECTS/note_info_tx.ck");
 Machine.add( "../EFFECTS/ST.ck");
 Machine.add( "../include/global_data.ck" );
 Machine.add( "../include/global_mixer.ck" );
