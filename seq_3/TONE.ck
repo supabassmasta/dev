@@ -40,6 +40,10 @@ public class TONE extends ST {
   1. => float proba_to_apply;
 
   0 => int note_offset;
+
+  // Note information service
+  note_info_tx note_info_tx_o;
+
   // PRIVATE
   0::ms => dur max_v;//private
   0::ms => dur remaining;//private
@@ -309,22 +313,22 @@ public class TONE extends ST {
   }
 
   class note_info_act extends ACTION {
-    ST @ st;
+    note_info_tx @ note_info_tx_p;
     ELEMENT @ e;
 
     fun int on_time() {
-      st.note_info( e.note_info_s );
+      note_info_tx_p.push_to_all( e.note_info_s );
     }
 
   }
   
-  fun ACTION set_note_info_act(ST @ st, ELEMENT @ e) {
+  fun ACTION set_note_info_act(note_info_tx @ nitp, ELEMENT @ e) {
     new note_info_act @=> note_info_act @ act;
     
     e @=> act.e;
-    st @=> act.st;
+    nitp @=> act.note_info_tx_p;
 
-    "note_info_act " + e + " ST " + st => act.name;
+    "note_info_act " + e + " ST " + nitp => act.name;
     return act;
   }
   //////// NOTE MANAGEMENT ///////////////
@@ -470,7 +474,7 @@ public class TONE extends ST {
           // if slide, dont create a new element we will increase the new one
           if (slide_nb ==0) {
             new ELEMENT @=> e;
-            e.actions << set_note_info_act(next ,e);
+            e.actions << set_note_info_act(note_info_tx_o ,e);
             // Search synt that are not on anymore
             for (0 => int i; i < on_state.size()      ; i++) {
               if (on_state[i] !=0) {
@@ -669,7 +673,7 @@ public class TONE extends ST {
 
         if (dur_temp != 0::ms) {
           new ELEMENT @=> e;
-          e.actions << set_note_info_act(next ,e);
+          e.actions << set_note_info_act(note_info_tx_o ,e);
           dur_temp => e.duration;
           e.duration => e.note_info_s.d;
           0 => e.note_info_s.on;
@@ -902,7 +906,7 @@ public class TONE extends ST {
     // remaining
     if (remaining != 0::ms) {
       new ELEMENT @=> e;
-      e.actions << set_note_info_act(next ,e);
+      e.actions << set_note_info_act(note_info_tx_o ,e);
  
       remaining => e.duration;
       e.duration => e.note_info_s.d;
