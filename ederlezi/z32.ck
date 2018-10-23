@@ -25,14 +25,14 @@ lpfc.connect(last $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
 
-STECHOC0 ech;
-ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;   
+//STECHOC0 ech;
+//ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][4] /* Gain */ );      ech $ ST @=>  last;   
 
 <<<"Venitian percs: ">>>;
 <<<"  POTAR 1.1:  GAin">>>;
 <<<"  POTAR 1.2:  LPF Freq">>>;
 <<<"  POTAR 1.3:  LPF Q">>>;
-<<<"  POTAR 1.4:  Echo GAin">>>;
+//<<<"  POTAR 1.4:  Echo GAin">>>;
 
 
 while(1) {

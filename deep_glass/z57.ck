@@ -5,11 +5,13 @@ SET_WAV2._Dirt_samples_amencutup(s);
 "*4
 _i__ i__i
 " => s.seq;
-.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STLPFC lpfc;
+lpfc.connect(last $ ST , HW.lpd8.potar[1][3] /* freq */  , HW.lpd8.potar[1][4] /* Q */  );       lpfc $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
