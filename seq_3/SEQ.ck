@@ -17,6 +17,10 @@ public class SEQ extends ST{
   -10. => float rate_to_apply;
 
   1. => float proba_to_apply;
+
+  // Note information service
+  note_info_tx note_info_tx_o;
+
   // PRIVATE
   0::ms => dur max_v;//private
   0::ms => dur remaining;//private
@@ -55,6 +59,25 @@ public class SEQ extends ST{
     }
   }
 
+  class note_info_act extends ACTION {
+    note_info_tx @ note_info_tx_p;
+    ELEMENT @ e;
+
+    fun int on_time() {
+      note_info_tx_p.push_to_all( e.note_info_s );
+    }
+
+  }
+  
+  fun ACTION set_note_info_act(note_info_tx @ nitp, ELEMENT @ e) {
+    new note_info_act @=> note_info_act @ act;
+    
+    e @=> act.e;
+    nitp @=> act.note_info_tx_p;
+
+    "note_info_act " + e + " ST " + nitp => act.name;
+    return act;
+  }
 
 
   fun void seq(string in) {
@@ -72,7 +95,7 @@ public class SEQ extends ST{
 
     // Create next element of SEQ
     new ELEMENT @=> e;
-
+    e.actions << set_note_info_act(note_info_tx_o ,e);
 
     while(i< in.length() ) {
       in.charAt(i)=> c;
@@ -115,6 +138,7 @@ public class SEQ extends ST{
             // add groove to last event
             //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
             groove +=> s.elements[s.elements.size() - 1].duration;
+            s.elements[s.elements.size() - 1].duration => s.elements[s.elements.size() - 1].note_info_s.d;
             groove -=> remaining; // correct remaining
             //                        <<<"s.elements[s.elements.size() - 1].duration:", s.elements[s.elements.size() - 1].duration/1::ms>>>; 
             // substract it to next one
@@ -144,15 +168,19 @@ public class SEQ extends ST{
             if (proba_to_apply != 1.) {
               e.actions << w0.set_play_proba(proba_to_apply) ;
               1. => proba_to_apply;
+              1 => e.note_info_s.on;
             }
             else {
               e.actions << w0.play $ ACTION ;
+              1 => e.note_info_s.on;
             }  
             dur_temp => e.duration;
+            e.duration => e.note_info_s.d;
             // Add element to SEQ
             s.elements << e;
             // Create next element of SEQ
             new ELEMENT @=> e;
+            e.actions << set_note_info_act(note_info_tx_o ,e);
           }
 
         }
@@ -162,10 +190,12 @@ public class SEQ extends ST{
           set_dur(base_dur) => dur_temp;
           if (dur_temp != 0::ms) {
             dur_temp => e.duration;
+            e.duration => e.note_info_s.d;
             // Add element to SEQ
             s.elements << e;
             // Create next element of SEQ
             new ELEMENT @=> e;
+            e.actions << set_note_info_act(note_info_tx_o ,e);
           }
 
 
@@ -183,14 +213,18 @@ public class SEQ extends ST{
         if ( s.elements.size() == 0 ){
           // first event: Add one with no WAV
           set_dur(base_dur) => e.duration;
+          0 => e.note_info_s.on;
+          e.duration => e.note_info_s.d;
           // Add element to SEQ
           s.elements << e;
           // Create next element of SEQ
           new ELEMENT @=> e;
+          e.actions << set_note_info_act(note_info_tx_o ,e);
         }
         else {
           // increse duration of last element
           set_dur(base_dur) +=> s.elements[s.elements.size() - 1].duration;
+          s.elements[s.elements.size() - 1].duration => s.elements[s.elements.size() - 1].note_info_s.d;
         }
 
       }
@@ -199,10 +233,13 @@ public class SEQ extends ST{
         set_dur(base_dur) => dur_temp;
         if (dur_temp != 0::ms) {
           dur_temp => e.duration;
+          0 => e.note_info_s.on;
+          e.duration => e.note_info_s.d;
           // Add element to SEQ
           s.elements << e;
           // Create next element of SEQ
           new ELEMENT @=> e;
+          e.actions << set_note_info_act(note_info_tx_o ,e);
         }
       }
       else if (in.charAt(i) == '|') {
@@ -252,11 +289,13 @@ public class SEQ extends ST{
           if (proba_to_apply != 1.) {
             s.elements[s.elements.size() - 1].actions << w0.set_play_proba(proba_to_apply) ;
             1. => proba_to_apply;
+            1 => s.elements[s.elements.size() - 1].note_info_s.on;
           }
           else {
 
             // Add NOTE to ACTIONS
             s.elements[s.elements.size() - 1].actions << w0.play $ ACTION ;
+              1 => s.elements[s.elements.size() - 1].note_info_s.on;
           }
         }
         ////////////////////
@@ -430,7 +469,8 @@ public class SEQ extends ST{
     if (max_v != 0::ms){
       if (remaining > 0::ms) {
         remaining => e.duration;
-        // Add element to SEQ
+        e.duration => e.note_info_s.d; 
+         // Add element to SEQ
         s.elements << e;
       }
 

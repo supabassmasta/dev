@@ -24,6 +24,7 @@ Faire un kick seul ou sync sur 4temps ou un break pour le début de mantra.
 
 Essayer Tracktion 7 as companion DAW
 
+Fix/Check: action duplication in TONE.print() : freq_synt, synt_new_note. Maybe note a big issue
 
 Faire des break kick trance pour mantra, voire du tout en un avec slide etc et relancage propre du beat
 
