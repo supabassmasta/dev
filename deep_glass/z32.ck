@@ -30,16 +30,16 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c }c *4
 5151 _3_3
-1__8 4_3_
+1__8 #4_3_
 13_5 7_81
 _183 78_1
-15_1 3__4
+15_1 3__#4
 51_7 355_
 1518 7_3_
 
 
 " => t.seq;
-.8 * data.master_gain => t.gain;
+1.2 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
