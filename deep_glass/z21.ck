@@ -1,55 +1,29 @@
-class synt0 extends SYNT{
-    inlet => blackhole;
+SEQ s;  //data.tick * 8 => s.max;  
+SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 
-    BandedWG bwg  =>  outlet; 
-0.721442  => bwg.pluck; 
-0.982707  => bwg.bowRate; 
-bwg.controlChange( 2,  37.294487  /* bowPressure */ ); 
-bwg.controlChange( 4,  58.331798 /* bowMotion */); 
-bwg.controlChange( 8,  113.101567 /* strikePosition */); 
-bwg.controlChange( 11,  53.811021 /* vibratoFreq */); 
-bwg.controlChange( 1,  33.395608 /* gain */); 
-bwg.controlChange( 128,  60.081363 /* bowVelocity */); 
-bwg.controlChange( 64,  91.122568 /* setStriking */); 
-bwg.controlChange( 16,  2.000000 /* preset */); 
- 
-    fun void f1 (){ 
-      1::samp => now;
-      inlet.last() => bwg.freq;
-      .8 => bwg.startBowing;
-       } 
-       
-        
+ s.wav["l"]=> s.wav["k"]; 
 
-        fun void on()  { spork ~ f1 ();}  fun void off() { /*1.0 => bwg.stopBowing;*/ }  fun void new_note(int idx)  { } 0 => own_adsr;
-}
+"*4
 
-TONE t;
-t.reg(synt0 s1);
-t.reg(synt0 s2);
-//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c :4 
-11__ 33__
-11__ 44__
-" => t.seq;
-1.4 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(5::ms, 0::ms, 1., 4000::ms);
-t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+k___ __k_ x___ ____
+____ k___ x_k_ ____
+kk__ __k_ x___ ____
+____ k___ x|w_k_ k_k_
 
-//STDUCK duck;
-//duck.connect(last $ ST);      duck $ ST @=>  last; 
-//STECHO ech;
-//ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
+" => s.seq;
+.9 * data.master_gain => s.gain; //
+s.gain("w", .4); // for single wav 
+s.gain("k", .7); // for single wav 
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+s.go();     s $ ST @=> ST @ last; 
 
-//STREV2 rev; // DUCKED
-//rev.connect(last $ ST, .2 /* mix */);      rev $ ST @=>  last; 
+STREV1 rev;
+rev.connect(last $ ST, .05 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
 }
  
+

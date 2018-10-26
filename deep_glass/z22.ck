@@ -1,48 +1,34 @@
-class synt0 extends SYNT{
-    inlet => blackhole;
+SEQ s;  //data.tick * 8 => s.max;  
+SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 
-    BlowBotl bottle  => PowerADSR padsr =>  outlet; 
-    padsr.set(4000::ms, 2000::ms, .7 , 10000::ms);
-    padsr.setCurves(1. , 1., 1.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    // ding!
-    .09 => bottle.noiseGain;
-    5 => bottle.vibratoFreq;
-    .2 => bottle.vibratoGain;
-    .8 => bottle.volume;
+ s.wav["l"]=> s.wav["k"]; 
+/*
+k___ __k_ x___ ____
+____ k___ x_k_ ____
+kk__ __k_ x___ ____
+____ k___ x|w_k_ k_k_
+*/
+"*4
 
-    fun void f1 (){ 
-      1::samp => now;
-      inlet.last() => bottle.freq;
-       } 
-       
-        
+_k_k _k__ __k_ kk_k
+_k_k ___k ___k k__k
+__k_ kk__ __k_ __kk
+__k_ __kk ___k _k_k
 
-        fun void on()  { padsr.keyOn();}  fun void off() { padsr.keyOff();}  fun void new_note(int idx)  {.8 => bottle.noteOn; spork ~ f1 ();} 1 => own_adsr;
-}
+" => s.seq;
+.9 * data.master_gain => s.gain; //
+s.gain("w", .4); // for single wav 
+s.gain("k", .7); // for single wav 
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+s.go();     s $ ST @=> ST @ last; 
 
-TONE t;
-t.reg(synt0 s1);
-t.reg(synt0 s2);
-t.reg(synt0 s3);
-//data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c :4 1|3|5 ___ 3|5|7___
-       1|3|8 ___ 4|6|8___ " => t.seq;
-.15 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
-
-//STDUCK duck;
-//duck.connect(last $ ST);      duck $ ST @=>  last; 
-
-STREV2 rev; // DUCKED
-rev.connect(last $ ST, .1 /* mix */);      rev $ ST @=>  last; 
+STREV1 rev;
+rev.connect(last $ ST, .05 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
 }
  
+
