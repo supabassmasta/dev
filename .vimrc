@@ -812,4 +812,8 @@ ab STADSRK STADSR stadsr;
 \<CR>stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, .6 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
 \<CR>stadsr.connect(last $ ST, s.note_info_tx_o);
 
+ab STPADSRK STPADSR stpadsr;
+\<CR>stpadsr.set(0::ms /* Attack */, 24::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stpadsr.setCurves(2, .7, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stpadsr.connect(last $ ST, s.note_info_tx_o);
 

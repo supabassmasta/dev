@@ -8,9 +8,10 @@ SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA
 s.go();     s $ ST @=> ST @ last; 
 
 
-STADSR stadsr;
-stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);
-stadsr.connect(last $ ST, s.note_info_tx_o); 
+STPADSR stpadsr;
+stpadsr.set(0::ms /* Attack */, 24::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);
+stpadsr.setCurves(2, .7, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+stpadsr.connect(last $ ST, s.note_info_tx_o); 
 
 while(1) {
        100::ms => now;
