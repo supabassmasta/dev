@@ -808,3 +808,8 @@ ab STMULT_BASE_ONEK STMULT_BASE_ONE stmult;
 ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
 \<CR>stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last;
 
+ab STADSRK STADSR stadsr;
+\<CR>stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, .6 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stadsr.connect(last $ ST, s.note_info_tx_o);
+
+
