@@ -137,4 +137,6 @@ z45: Amen break
 z71: 80s Gain lpd8 1.2
 z72, 73: ayawaska medicina solo 
 
+Note: Theme == 4 mesures, couplet == 2 themes
+A la fin couperla Le beat au milieu du couplet
 

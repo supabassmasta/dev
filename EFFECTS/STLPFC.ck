@@ -20,6 +20,7 @@ public class STLPFC extends ST{
       }
       else if (f< 10) {
         <<<"control_freq TOO LOW:", f>>>;
+        10 => fl.freq => fr.freq;
       }
       else {
 
