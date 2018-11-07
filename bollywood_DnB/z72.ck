@@ -30,7 +30,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 
 
 
-1.2 => t.gain;
+0.9 => t.gain;
 // t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   
 //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -73,7 +73,7 @@ autopan.connect(st $ ST, .7 /* span 0..1 */, 9*data.tick /* period */, 0.51 /* p
  
 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][8] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 3. /* static gain */  );       gainc $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;

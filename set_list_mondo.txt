@@ -108,17 +108,18 @@ z8*: Slides          POTAR 1.1 GAIN
 ------------------
 Bollywood DnB
 ------------------
-z71 72 : 80s synt LPF: GAIN lpd8 1.8
+z71 72 : 80s synt LPF: GAIN lpd8 1.1
+z8*:     slides various: GAIN lpd8 1.1
 
 z22 23 : Beat for dohl
 
 z33 34: BASS
 
 z61 62 63 : Frenetic synt for TEK
-    1.1 Gain
-    1.2 echo
-    1.3 1.4 digit
-    1.5 1.6 LPFC
+    1.5 Gain
+    1.6 1.7 LPFC
+
+
 
 ------------------
 Deep glass
@@ -140,3 +141,12 @@ z72, 73: ayawaska medicina solo
 Note: Theme == 4 mesures, couplet == 2 themes
 A la fin couperla Le beat au milieu du couplet
 
+
+
+--------------------------
+Happy birthday
+-------------------------
+___ mi
+___ fa
+_ fa mi re re
+___ fa

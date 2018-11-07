@@ -13,17 +13,17 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.go();   t $ ST @=> ST @ last; 
 
 
-STDIGITC dig;
-dig.connect(last $ ST , HW.lpd8.potar[1][3] /* sub sample period */ , HW.lpd8.potar[1][4] /* quantization */);      dig $ ST @=>  last; 
+//STDIGITC dig;
+//dig.connect(last $ ST , HW.lpd8.potar[1][3] /* sub sample period */ , HW.lpd8.potar[1][4] /* quantization */);      dig $ ST @=>  last; 
 
 STLPFC lpfc;
-lpfc.connect(last $ ST , HW.lpd8.potar[1][5] /* freq */  , HW.lpd8.potar[1][6] /* Q */  );       lpfc $ ST @=>  last; 
+lpfc.connect(last $ ST , HW.lpd8.potar[1][6] /* freq */  , HW.lpd8.potar[1][7] /* Q */  );       lpfc $ ST @=>  last; 
 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
 
-STECHOC0 ech;
-ech.connect(last $ ST , data.tick * 8 / 4  /* period */ , HW.lpd8.potar[1][2] /* Gain */ );      ech $ ST @=>  last;   
+//STECHOC0 ech;
+//ech.connect(last $ ST , data.tick * 8 / 4  /* period */ , HW.lpd8.potar[1][2] /* Gain */ );      ech $ ST @=>  last;   
 
 while(1) {
        100::ms => now;

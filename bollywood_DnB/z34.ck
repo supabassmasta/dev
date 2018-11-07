@@ -14,8 +14,8 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 ":2 
 {c{c
-8765
-876 *4 *2 8585  8585
+8#776
+8#77 *4 *2 8585  8585
 
 " => t.seq;
 1.0 * data.master_gain => t.gain;
