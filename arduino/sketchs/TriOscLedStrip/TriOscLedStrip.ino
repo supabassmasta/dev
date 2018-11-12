@@ -11,16 +11,16 @@ class Tri {
   public :
   int cnt;
 
-  int offset_cnt = 128;
+  int offset_cnt = 0;
 
   int min = 0;
   int max = 255;
 
-  int period_num = 1;
-  int period_den = 4*32;
+  int period_num = 6;
+  int period_den = 1;
 
   int offset_num = 1;
-  int offset_den = 4*32;
+  int offset_den = 1;
   
   // private TODO Clean
   int sub_cnt_offset = 0;
@@ -36,9 +36,11 @@ class Tri {
     if (sub_cnt_offset > offset_den) {
       sub_cnt_offset = 0;
       offset_cnt += offset_num;
-      
-      cnt = offset_cnt;
+     
+      if (offset_cnt > 255) offset_cnt = 0;
     }
+    cnt = offset_cnt;
+    sub_cnt = 0;
     
   }
 
@@ -62,15 +64,15 @@ class Tri {
 
 void setup() {
   strip.begin();
-  strip.setBrightness(64); // Max 255
+  strip.setBrightness(32); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
-
+//  Serial.begin(115200);
 }
 
 void loop() {
   show1(); 
-//  theaterChase(strip.Color(0, 127, 0), 50); // Red
+  //  theaterChase(strip.Color(0, 127, 0), 50); // Red
 }
 
 void theaterChase(uint32_t c, uint8_t wait) {
@@ -91,19 +93,24 @@ void theaterChase(uint32_t c, uint8_t wait) {
 }
 
 void show1() {
+      t1.new_show();
+
       for (uint16_t i=0; i < strip.numPixels(); i++) {
           int g;
 
           g = t1.process();
-
+// Serial.println(g);
+//      delay (200);
           if (g<0) g = 0;
           if (g>255) g = 255;
           strip.setPixelColor(i, strip.Color(0, g, 0));
       }
 
+//      Serial.println("SHOW");
+
       strip.show();
       
-      t1.new_show();
+
 
 }
 
