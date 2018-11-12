@@ -41,10 +41,10 @@ void loop() {
 //colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
   // Send a theater pixel chase in...
  // theaterChase(strip.Color(127, 127, 127), 0); // White
- // theaterChase(strip.Color(127, 0, 0), 50); // Red
+  theaterChase(strip.Color(127, 0, 0), 50); // Red
  // theaterChase(strip.Color(0, 0, 127), 50); // Blue
 
-  rainbow(0);
+ // rainbow(0);
  // rainbowCycle(0);
  // theaterChaseRainbow(50);
 }
