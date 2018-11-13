@@ -113,8 +113,10 @@ void error() {
 }
 
 void loop() {
-//  show1(); 
-    kick();
+  show1(); 
+  read_serial();
+  kick();
+  snare();
       strip.show();
 
 
@@ -142,19 +144,19 @@ void show1_conf() {
   t1.offset_cnt = 0;
   t1.min = -255;
   t1.max = 255;
-  t1.period_num = 4 * 16;
+  t1.period_num = 2 * 16;
   t1.period_den = 1;
-  t1.offset_num = 8;
+  t1.offset_num = 7;
   t1.offset_den = 1;
   t1.up_start = true;    
 
   t2.offset_cnt = 0;
-  t2.min = -256;
+  t2.min = -24;
   t2.max = 64;
-  t2.period_num = 7;
-  t2.period_den = 0;
-  t2.offset_num = 30;
-  t2.offset_den = 1;
+  t2.period_num = 1;
+  t2.period_den = 8;
+  t2.offset_num = 1;
+  t2.offset_den = 3;
   t2.up_start = true;
 
   t3.offset_cnt = 0;
@@ -183,14 +185,14 @@ void show1() {
       t2.new_show();
       t3.new_show();
 
-      for (uint16_t i=0; i < strip.numPixels() / 4 ; i++) {
+      for (uint16_t i=0; i < strip.numPixels() / 6 ; i++) {
           int g;
           int b;
           int r;
 
           g = t1.process();
           b = t2.process();
-          r = t3.process() ;
+//          r = t3.process() ;
 
           if (g<0) g = 0;
           if (g>255) g = 255;
@@ -202,8 +204,8 @@ void show1() {
           strip.setPixelColor(i, strip.Color(r, g, b));
 
           // SYMETRY !!!!!!!!
-          strip.setPixelColor(strip.numPixels()/2 -  i, strip.Color(r, g, b));
-          strip.setPixelColor(1*strip.numPixels()/2 + i, strip.Color(r, g, b));
+          strip.setPixelColor(2*strip.numPixels()/6 -  i, strip.Color(r, g, b));
+          strip.setPixelColor(4*strip.numPixels()/6 + i, strip.Color(r, g, b));
           strip.setPixelColor(strip.numPixels() - i, strip.Color(r, g, b));
       }
 
@@ -215,11 +217,11 @@ void show1() {
 }
 
 int kick_cnt;
+int snare_cnt;
 
-void kick() {
+void read_serial(){  
   byte b;
   int a;
-
   a = Serial.available ();
   if ( a > 0 ){
     b = Serial.read();   
@@ -227,20 +229,42 @@ void kick() {
       kick_cnt = 30;
       //error();
     }
+    else if (b == 's') {
+      snare_cnt = 30;
+      //error();
+    }
     else {
      error();
     }
 
   }
+}
 
 
+void kick() {
   if (kick_cnt > 0 ) {
     kick_cnt --;
 
-    int kick_color = kick_cnt*5;
+    int kick_color = kick_cnt*8;
 
-    for (int i= strip.numPixels() >> 2; i < ( 3 * strip.numPixels() >> 2 ); i++){
-       strip.setPixelColor(i, /* strip.getPixelColor(i) | */ (kick_color << 16 | kick_color << 8 | kick_color ));
+    for (int i= 3 * strip.numPixels() >> 3; i < ( 5 * strip.numPixels() >> 3 ); i++){
+       strip.setPixelColor(i, /* strip.getPixelColor(i) | */ (/*kick_color << 16  |*/ kick_color << 8 | kick_color ));
+    }
+  }
+
+
+}
+
+
+void snare() {
+
+  if (snare_cnt > 0 ) {
+    snare_cnt --;
+
+    int snare_color = snare_cnt*8;
+
+    for (int i= 2 * strip.numPixels() >> 3; i < ( 3 * strip.numPixels() >> 3 ); i++){
+       strip.setPixelColor(i, strip.Color(snare_color,0, 0));
     }
   }
 
