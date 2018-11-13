@@ -55,7 +55,7 @@ class Tri {
     }
     cnt = offset_cnt;
     sub_cnt = 0;
-    up = up_start;
+    up = up_offset;
     
   }
 
@@ -91,19 +91,34 @@ class Tri {
 Tri t1 = Tri();
 Tri t2 = Tri();
 Tri t3 = Tri();
+Tri t4 = Tri();
+Tri t5 = Tri();
 
 void setup() {
   strip.begin();
-  strip.setBrightness(32); // Max 255
+  strip.setBrightness(64); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
   show1_conf();
 
-//  Serial.begin(115200);
+  pinMode(LED_BUILTIN, OUTPUT);
+
+  Serial.begin(115200);
+}
+
+void error() {
+    digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
+    delay(100);                       // wait for a second
+    digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
 }
 
 void loop() {
-  show1(); 
+//  show1(); 
+    kick();
+      strip.show();
+
+
+
   //  theaterChase(strip.Color(0, 127, 0), 50); // Red
 }
 
@@ -129,18 +144,36 @@ void show1_conf() {
   t1.max = 255;
   t1.period_num = 4 * 16;
   t1.period_den = 1;
-  t1.offset_num = 8 * 8;
+  t1.offset_num = 8;
   t1.offset_den = 1;
-  t1.up_start = true;
+  t1.up_start = true;    
 
   t2.offset_cnt = 0;
-  t2.min = -64;
+  t2.min = -256;
   t2.max = 64;
   t2.period_num = 7;
   t2.period_den = 0;
-  t2.offset_num = 1;
+  t2.offset_num = 30;
   t2.offset_den = 1;
   t2.up_start = true;
+
+  t3.offset_cnt = 0;
+  t3.min = -6*256;
+  t3.max = 64;
+  t3.period_num = 10;
+  t3.period_den = 0;
+  t3.offset_num = 43;
+  t3.offset_den = 1;
+  t3.up_start = true;
+
+  t4.offset_cnt = 0;
+  t4.min = -256;
+  t4.max = 64;
+  t4.period_num = 7;
+  t4.period_den = 0;
+  t4.offset_num = 30;
+  t4.offset_den = 1;
+  t4.up_start = true;
 
 }
 
@@ -148,15 +181,16 @@ void show1_conf() {
 void show1() {
       t1.new_show();
       t2.new_show();
+      t3.new_show();
 
-      for (uint16_t i=0; i < strip.numPixels(); i++) {
+      for (uint16_t i=0; i < strip.numPixels() / 4 ; i++) {
           int g;
           int b;
           int r;
 
           g = t1.process();
-//          b = t2.process();
-//          r = g*b ;
+          b = t2.process();
+          r = t3.process() ;
 
           if (g<0) g = 0;
           if (g>255) g = 255;
@@ -166,15 +200,49 @@ void show1() {
           if (r>255) r = 255;
 
           strip.setPixelColor(i, strip.Color(r, g, b));
+
+          // SYMETRY !!!!!!!!
+          strip.setPixelColor(strip.numPixels()/2 -  i, strip.Color(r, g, b));
+          strip.setPixelColor(1*strip.numPixels()/2 + i, strip.Color(r, g, b));
+          strip.setPixelColor(strip.numPixels() - i, strip.Color(r, g, b));
       }
 
 //      Serial.println("SHOW");
 
-      strip.show();
       
 
 
 }
 
+int kick_cnt;
+
+void kick() {
+  byte b;
+  int a;
+
+  a = Serial.available ();
+  if ( a > 0 ){
+    b = Serial.read();   
+    if (b == 'k') {
+      kick_cnt = 30;
+      //error();
+    }
+    else {
+     error();
+    }
+
+  }
 
 
+  if (kick_cnt > 0 ) {
+    kick_cnt --;
+
+    int kick_color = kick_cnt*5;
+
+    for (int i= strip.numPixels() >> 2; i < ( 3 * strip.numPixels() >> 2 ); i++){
+       strip.setPixelColor(i, /* strip.getPixelColor(i) | */ (kick_color << 16 | kick_color << 8 | kick_color ));
+    }
+  }
+
+
+}
