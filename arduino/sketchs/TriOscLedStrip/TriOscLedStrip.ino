@@ -114,12 +114,11 @@ void error() {
 
 void loop() {
   show1(); 
+  randblue();
   read_serial();
   kick();
   snare();
-      strip.show();
-
-
+  strip.show();
 
   //  theaterChase(strip.Color(0, 127, 0), 50); // Red
 }
@@ -270,3 +269,23 @@ void snare() {
 
 
 }
+
+  int a = 346211;
+
+void randblue() {
+  int b;
+
+  for (int i=0; i< 10 ; i++){
+    a = a*413 + 537- a>>2; 
+    b = a & 0x1FF;
+    strip.setPixelColor(b, strip.Color( 128, 0, 0));
+  }
+  for (int i=0; i< 150 ; i++){
+    a = a*413 + 497; 
+    b = a & 0x1FF;
+    strip.setPixelColor(b, strip.Color(0,0, 0));
+  }
+
+
+}
+
