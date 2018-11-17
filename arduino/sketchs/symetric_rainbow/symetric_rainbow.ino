@@ -60,10 +60,14 @@ void colorWipe(uint32_t c, uint8_t wait) {
 
 void rainbow(uint8_t wait) {
   uint16_t i, j;
+  uint32_t color;
 
   for(j=0; j<256; j++) {
-    for(i=0; i<strip.numPixels(); i++) {
-      strip.setPixelColor(i, Wheel((i+j) & 255));
+    for(i=0; i<strip.numPixels()/2; i++) {
+      color = Wheel((i*2+j) & 255);
+      strip.setPixelColor(i, color);
+      // Symetry
+      strip.setPixelColor(strip.numPixels()-i-1, color);
     }
     strip.show();
     delay(wait);
