@@ -234,6 +234,7 @@ void read_serial(){
     }
     else {
      error();
+     Serial.flush();
     }
 
   }
@@ -288,4 +289,3 @@ void randblue() {
 
 
 }
-
