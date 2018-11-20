@@ -24,13 +24,15 @@ public class LEDSTRIP {
   }
 
   class tx extends ACTION {
-    int bytes[];
+//    int bytes[];
     0 => int opened;
     SerialIO @ serial;
     fun int on_time() {
+      <<<"SERIAL">>>;
+
       if ( opened) {
         <<<"serial send bytes">>>; 
-        serial.writeBytes(bytes);
+        serial.writeBytes(['k']);
       }
       else {
         <<<"Warning cannot execute action, serial not openned">>>;
@@ -41,7 +43,7 @@ public class LEDSTRIP {
 
   fun ACTION set_tx(int b) {
     new tx @=> tx @ act;
-    act.bytes << b;
+//    act.bytes << b;
     opened => act.opened;
     cereal @=> act.serial;
     "serial tx msg : " + b =>  act.name; 
