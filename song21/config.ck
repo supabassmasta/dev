@@ -11,3 +11,7 @@
 //HW.launchpad.virtual_key_on(7);
 //1::ms => now;
 
+HW.ledstrip.open();
+
+
+1::ms => now;

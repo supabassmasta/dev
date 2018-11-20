@@ -64,7 +64,7 @@ void rainbow(uint8_t wait) {
 
   for(j=0; j<256; j++) {
     for(i=0; i<strip.numPixels()/2; i++) {
-      color = Wheel((i*2+j) & 255);
+      color = Wheel((i*2+j*4) & 255);
       strip.setPixelColor(i, color);
       // Symetry
       strip.setPixelColor(strip.numPixels()-i-1, color);
