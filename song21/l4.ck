@@ -5,9 +5,9 @@ SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TE
 HW.ledstrip.set_tx('k') @=> s.action["k"]; 
 HW.ledstrip.set_tx('s') @=> s.action["s"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*4*2
-k_k_s__s
-ksk_s___
+"*4*4
+s
+
 " => s.seq;
 .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
