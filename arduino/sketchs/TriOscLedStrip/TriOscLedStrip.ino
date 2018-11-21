@@ -94,6 +94,50 @@ Tri t3 = Tri();
 Tri t4 = Tri();
 Tri t5 = Tri();
 
+class Perc {
+  public :
+  int cnt = 0;
+  int cnt_reload = 50;
+  int cnt_dec = 1;
+  int color_fact = 1;
+  int max = 255;
+  int pos = 0;
+  int color_mask = 0x00FFFFFF;
+
+  // constructor
+  Perc() {
+  }
+
+  void process(Adafruit_NeoPixel * s_p){
+    int i, j;
+    int c;
+    if ( cnt > 0  ){
+       // up ramp
+       for (i = pos - cnt, j = 0; i< pos  ; i++, j++){
+          if ( i > 0 && i < s_p->numPixels() ){
+            c = j * color_fact;
+            if (c > max) c = max;
+            strip.setPixelColor(i, color_mask & (c<<16 | c<<8 | c));
+          }
+       }
+       for (i = pos , j = cnt; i< cnt + pos  ; i++, j--){
+         if ( i > 0 && i < s_p->numPixels() ){
+            c = j * color_fact;
+            if (c > max) c = max;
+            strip.setPixelColor(i, color_mask & (c<<16 | c<<8 | c));
+         }
+       }
+      cnt -= cnt_dec;
+    }
+  }
+
+  void reload()  {
+    cnt = cnt_reload;
+  }
+};
+
+Perc perc1;
+
 void setup() {
   strip.begin();
   strip.setBrightness(64); // Max 255
@@ -113,9 +157,10 @@ void error() {
 }
 
 void loop() {
-  show1(); 
+//  show1(); 
   randblue();
   read_serial();
+  perc1.process(&strip);
   kick();
   snare();
   strip.show();
@@ -176,6 +221,12 @@ void show1_conf() {
   t4.offset_den = 1;
   t4.up_start = true;
 
+  perc1.cnt_reload = 50;
+  perc1.cnt_dec = 1;
+  perc1.color_fact = 2;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x00000FF;
 }
 
 
@@ -230,6 +281,10 @@ void read_serial(){
     }
     else if (b == 's') {
       snare_cnt = 30;
+      //error();
+    }
+    else if (b == 'K') {
+      perc1.reload();
       //error();
     }
     else {
