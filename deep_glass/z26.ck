@@ -7,10 +7,16 @@ ss__
 // _s_s ____ ___t _s_*2ss:2  
 // _s_s _s_s ___s _t*2_sst:2  
 .4 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 
+16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .7 /* span 0..1 */, 4*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
