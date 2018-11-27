@@ -158,7 +158,11 @@ void error() {
 
 void loop() {
 //  show1(); 
-  randblue();
+//randblue();
+//  randgreen();
+//randall();
+mult();
+//blueriver();
   read_serial();
   perc1.process(&strip);
   kick();
@@ -342,5 +346,113 @@ void randblue() {
     strip.setPixelColor(b, strip.Color(0,0, 0));
   }
 
+
+}
+
+
+// Middle Square Weyl Sequence PRNG
+// 16 bits implementation attempt
+long x = 0, w = 0, s = 0xb5ad4ece; // sizeof long == 32 bits on Uno
+
+int msws() {
+  x *= x;
+  x += (w += s);
+  x = (x>>16) | (x<<16);
+  return (int) x;
+}
+
+
+void randgreen() {
+  int b;
+  int c;
+  int white;
+  for (int i=0; i< 10 ; i++){
+    b = msws();
+    c = b >> 9;
+    if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
+      white = b >> 15;    
+    }
+    else {
+      white = 0;
+    }
+   b = b & 0x1FF;
+    strip.setPixelColor(b, strip.Color(0, c,white ));
+  }
+//  for (int i=0; i< 150 ; i++){
+//    a = a*413 + 497; 
+//    b = a & 0x1FF;
+//    strip.setPixelColor(b, strip.Color(0,0, 0));
+//  }
+
+
+}
+void randall() {
+  int b;
+  int c;
+  int j, nb;
+  int i = 0;
+  while( i <strip.numPixels()  ){
+
+    b = msws();
+    c = msws();
+    nb = c >> 11;
+    for (j=i; j< nb + i  ; j++){
+
+      strip.setPixelColor(j, strip.Color(b>>8, b & 0xFF, c & 0xFF ));
+    }
+    i +=nb;
+  }
+  //  for (int i=0; i< 150 ; i++){
+  //    a = a*413 + 497; 
+  //    b = a & 0x1FF;
+  //    strip.setPixelColor(b, strip.Color(0,0, 0));
+  //  }
+
+
+}
+
+int mi = 0;
+int mj = 0;
+void mult() {
+  long c;
+  int i;
+  mj ++;
+
+  if ( mj == 1  ){
+  mi ++;
+  mj =  0;
+      
+  }
+
+  for (i=0; i< strip.numPixels() ; i++){
+     c = mi + i;
+     c = c *c;
+    strip.setPixelColor(i, c);
+  }
+
+}
+
+int di = 0;
+int dj = 0;
+void blueriver() {
+  long c;
+  int i;
+//  dj ++;
+
+//  if ( dj == 8  ){
+  di ++;
+//  dj =  0;
+      
+//  }
+
+  for (i=0; i< strip.numPixels() / 2 ; i++){
+     c = di + i;
+     c = c * c;
+    strip.setPixelColor(i,strip.Color(0 ,0,  c));
+
+
+    //symetry
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(0 ,0,  c));
+  }
 
 }
