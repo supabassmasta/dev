@@ -6,7 +6,7 @@ HW.ledstrip.set_tx('K') @=> s.action["K"];
 HW.ledstrip.set_tx('s') @=> s.action["s"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
-K
+K___
 
 " => s.seq;
 .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 

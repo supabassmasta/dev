@@ -98,11 +98,13 @@ class Perc {
   public :
   int cnt = 0;
   int cnt_reload = 50;
-  int cnt_dec = 1;
+  int cnt_num = 1;
+  int cnt_den = 1;
+  int cnt_den_tmp = 0;
   int color_fact = 1;
   int max = 255;
   int pos = 0;
-  int color_mask = 0x00FFFFFF;
+  long color_mask = 0x00FFFFFF;
 
   // constructor
   Perc() {
@@ -117,17 +119,23 @@ class Perc {
           if ( i > 0 && i < s_p->numPixels() ){
             c = j * color_fact;
             if (c > max) c = max;
-            strip.setPixelColor(i, color_mask & (c<<16 | c<<8 | c));
+            strip.setPixelColor(i, color_mask & ((long)c<<16 | c<<8 | c));
           }
        }
-       for (i = pos , j = cnt; i< cnt + pos  ; i++, j--){
+       // down ramp
+       for (i = pos , j = cnt - 1; i< cnt + pos  ; i++, j--){
          if ( i > 0 && i < s_p->numPixels() ){
             c = j * color_fact;
             if (c > max) c = max;
-            strip.setPixelColor(i, color_mask & (c<<16 | c<<8 | c));
+            strip.setPixelColor(i, color_mask & ((long)c<<16 | c<<8 | c));
          }
        }
-      cnt -= cnt_dec;
+
+      cnt_den_tmp ++;
+      if (cnt_den_tmp >= cnt_den) {
+        cnt -= cnt_num;
+        cnt_den_tmp = 0;
+      }
     }
   }
 
@@ -163,7 +171,7 @@ void loop() {
 //randall();
 //mult();
 //blueriver();
-symetricmorseblue();
+//symetricmorseblue();
   read_serial();
   perc1.process(&strip);
   kick();
@@ -226,12 +234,13 @@ void show1_conf() {
   t4.offset_den = 1;
   t4.up_start = true;
 
-  perc1.cnt_reload = 50;
-  perc1.cnt_dec = 1;
-  perc1.color_fact = 2;
+  perc1.cnt_reload = 10;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 16;
+  perc1.color_fact = 15;
   perc1.max = 255;
   perc1.pos = strip.numPixels() / 2;
-  perc1.color_mask = 0x00000FF;
+  perc1.color_mask = 0x0700FF;
 }
 
 
