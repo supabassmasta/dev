@@ -161,8 +161,9 @@ void loop() {
 //randblue();
 //  randgreen();
 //randall();
-mult();
+//mult();
 //blueriver();
+symetricmorseblue();
   read_serial();
   perc1.process(&strip);
   kick();
@@ -456,3 +457,30 @@ void blueriver() {
   }
 
 }
+
+int ni = 0;
+int nj = 0;
+void symetricmorseblue() {
+  long c;
+  int g = 0;
+  int i;
+//  nj ++;
+
+//  if ( nj == 1  ){
+  ni +=1;
+//  nj =  0;
+      
+//  }
+
+  for (i=0; i< strip.numPixels()/4 ; i++){
+     c = ni + i;
+     c = (((c>>8)&0xF) & c) *c ;
+//     g = (c & 0xFF) ^ 0xFF - 199; 
+    strip.setPixelColor(i,strip.Color(0 ,0, c));
+    strip.setPixelColor(strip.numPixels()/2 - i,strip.Color(0 ,g, c));
+    strip.setPixelColor(strip.numPixels()/2 + i,strip.Color(0 ,g, c));
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(0 ,0, c));
+  }
+
+}
+
