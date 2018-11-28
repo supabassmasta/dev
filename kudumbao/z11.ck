@@ -90,8 +90,8 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c *2
-1___1___1___1_ 85
-1___1___1___1_ 58
+!1___1___1___1_ 85
+!1___1___1___1_ 58
 
 " => t.seq;
 2.4 * data.master_gain => t.gain;
