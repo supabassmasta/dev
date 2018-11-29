@@ -7,6 +7,18 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(300, PIN, NEO_GRB + NEO_KHZ800);
 
+// Middle Square Weyl Sequence PRNG
+// 16 bits implementation attempt
+long x = 0, w = 0, s = 0xb5ad4ece; // sizeof long == 32 bits on Uno
+
+int msws() {
+  x *= x;
+  x += (w += s);
+  x = (x>>16) | (x<<16);
+  return (int) x;
+}
+
+
 class Tri {
   public :
   int cnt;
@@ -146,6 +158,74 @@ class Perc {
 
 Perc perc1;
 
+class RandTrain {
+  public :
+  int pos = 150;
+  long color = 0x00FFFFFF;
+  int train_size = 40;
+  int train_mask = 0x32A6; // lower pixel density with simple mask
+  int target = 90;
+  int cnt_num = 1;
+  int cnt_den = 2;
+  int cnt_den_tmp = 0;
+
+  // private
+  int cnt = 100;
+ 
+  // constructor
+  RandTrain() {
+
+  }
+
+  void process(Adafruit_NeoPixel * s_p){
+    int i, j;
+    int train;
+    int p;
+    if ( cnt < target  ){
+      train = msws();
+      train = train & (train_mask << (0x3 & train)); // randomly shift tain mask
+//      train = train_mask;
+
+      for (i = 0, j=0; i < train_size; i++, j++) {
+        // round around train
+        if ( j>= 16  ){
+          j = 0;
+        }
+
+        // check pixel is active
+        if ( (train >> j) & 0x1 ) {
+          // pixel after pos
+          p = pos + cnt + i;
+          if (p < s_p->numPixels() && p < pos + target) {
+            strip.setPixelColor(p, color );
+          }
+          // pixel before pos
+          p = pos - cnt - i;
+          if ( p > 0 && p > pos - target){
+            strip.setPixelColor(p, color );
+          }
+        }
+
+      }
+
+      cnt_den_tmp ++;
+      if (cnt_den_tmp >= cnt_den) {
+        cnt += cnt_num;
+        cnt_den_tmp = 0;
+      }
+      
+    }
+
+  }
+
+  void reload()  {
+    cnt = 0;
+  }
+
+};
+
+RandTrain train1;
+
 void setup() {
   strip.begin();
   strip.setBrightness(64); // Max 255
@@ -165,6 +245,7 @@ void error() {
 }
 
 void loop() {
+allOff();
 //  show1(); 
 //randblue();
 //  randgreen();
@@ -174,6 +255,7 @@ void loop() {
 //symetricmorseblue();
   read_serial();
   perc1.process(&strip);
+  train1.process(&strip);
   kick();
   snare();
   strip.show();
@@ -197,6 +279,13 @@ void theaterChase(uint32_t c, uint8_t wait) {
     }
   }
 }
+
+void allOff() {
+  for (uint16_t i=0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, 0); 
+  }
+}
+
 void show1_conf() {
   t1.offset_cnt = 0;
   t1.min = -255;
@@ -234,13 +323,13 @@ void show1_conf() {
   t4.offset_den = 1;
   t4.up_start = true;
 
-  perc1.cnt_reload = 10;
+  perc1.cnt_reload = 40;
   perc1.cnt_num = 1;
-  perc1.cnt_den = 16;
+  perc1.cnt_den = 1;
   perc1.color_fact = 15;
   perc1.max = 255;
   perc1.pos = strip.numPixels() / 2;
-  perc1.color_mask = 0x0700FF;
+  perc1.color_mask = 0x0FFFF00;
 }
 
 
@@ -301,6 +390,10 @@ void read_serial(){
       perc1.reload();
       //error();
     }
+    else if (b == 't') {
+      train1.reload();
+      //error();
+    }
     else {
      error();
      Serial.flush();
@@ -359,17 +452,6 @@ void randblue() {
 
 }
 
-
-// Middle Square Weyl Sequence PRNG
-// 16 bits implementation attempt
-long x = 0, w = 0, s = 0xb5ad4ece; // sizeof long == 32 bits on Uno
-
-int msws() {
-  x *= x;
-  x += (w += s);
-  x = (x>>16) | (x<<16);
-  return (int) x;
-}
 
 
 void randgreen() {
