@@ -8,3 +8,7 @@
 
 // D#/G     //    Bb/B - C/B
 
+// Start REV and ECHO
+HW.launchpad.virtual_key_on(38);
+HW.launchpad.virtual_key_on(48);
+1::ms => now;
