@@ -589,9 +589,9 @@ void rg_rainbow() {
     strip.setPixelColor(strip.numPixels()-i-1, color);
   }
   rg_rainbow_j ++;
-  if ( rg_rainbow_j > 255  ){
-    rg_rainbow_j =  0;
-  }
+//  if ( rg_rainbow_j > 254  ){
+//    rg_rainbow_j =  0;
+//  }
 
 }
 
@@ -599,10 +599,10 @@ void rg_rainbow() {
 // The colours are a transition r - g back to r.
 uint32_t rg_Wheel(byte WheelPos) {
 //  WheelPos = 255 - WheelPos;
-  if(WheelPos < 127) {
+  if(WheelPos < 128) {
     return strip.Color(255 - WheelPos * 2, WheelPos * 2, 0);
   }
   
-  WheelPos -= 127;
+  WheelPos -= 128;
   return strip.Color(WheelPos * 2, 255 - WheelPos * 2, 0);
 }
