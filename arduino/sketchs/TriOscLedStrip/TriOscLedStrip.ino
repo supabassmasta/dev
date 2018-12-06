@@ -245,7 +245,7 @@ void error() {
 }
 
 void loop() {
-allOff();
+//allOff();
 //  show1(); 
 //randblue();
 //  randgreen();
@@ -253,6 +253,7 @@ allOff();
 //mult();
 //blueriver();
 //symetricmorseblue();
+  rg_rainbow();
   read_serial();
   perc1.process(&strip);
   train1.process(&strip);
@@ -575,3 +576,33 @@ void symetricmorseblue() {
 
 }
 
+int rg_rainbow_j = 0;
+
+void rg_rainbow() {
+  uint16_t i;
+  uint32_t color;
+
+  for(i=0; i<strip.numPixels()/2; i++) {
+    color = rg_Wheel((i*1+rg_rainbow_j*2) & 255);
+    strip.setPixelColor(i, color);
+    // Symetry
+    strip.setPixelColor(strip.numPixels()-i-1, color);
+  }
+  rg_rainbow_j ++;
+  if ( rg_rainbow_j > 255  ){
+    rg_rainbow_j =  0;
+  }
+
+}
+
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g back to r.
+uint32_t rg_Wheel(byte WheelPos) {
+//  WheelPos = 255 - WheelPos;
+  if(WheelPos < 127) {
+    return strip.Color(255 - WheelPos * 2, WheelPos * 2, 0);
+  }
+  
+  WheelPos -= 127;
+  return strip.Color(WheelPos * 2, 255 - WheelPos * 2, 0);
+}
