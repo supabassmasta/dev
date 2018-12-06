@@ -6,8 +6,7 @@
 55 => data.ref_note;
 
 
-// Start synchro
-HW.launchpad.virtual_key_on(7);
+HW.ledstrip.open();
+HW.ledstrip._load_preset('2');
 
 1::ms => now;
-

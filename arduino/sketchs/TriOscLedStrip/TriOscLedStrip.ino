@@ -157,6 +157,9 @@ class Perc {
 };
 
 Perc perc1;
+Perc perc2;
+Perc perc3;
+Perc perc4;
 
 class RandTrain {
   public :
@@ -170,7 +173,7 @@ class RandTrain {
   int cnt_den_tmp = 0;
 
   // private
-  int cnt = 100;
+  int cnt = 1000;
  
   // constructor
   RandTrain() {
@@ -225,8 +228,12 @@ class RandTrain {
 };
 
 RandTrain train1;
+RandTrain train2;
+
+int preset = 0;
 
 void setup() {
+  preset = 0;
   strip.begin();
   strip.setBrightness(64); // Max 255
   strip.show(); // Initialize all pixels to 'off'
@@ -236,6 +243,7 @@ void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
+  Serial.flush(); 
 }
 
 void error() {
@@ -245,6 +253,22 @@ void error() {
 }
 
 void loop() {
+  read_serial();
+  switch (preset) {
+    case 0:
+      allOff(); 
+    break;
+    case 1:
+      blueriver();
+    break;
+    case 2:
+      rg_rainbow();
+    break;
+
+
+  }
+
+
 //allOff();
 //  show1(); 
 //randblue();
@@ -253,10 +277,12 @@ void loop() {
 //mult();
 //blueriver();
 //symetricmorseblue();
-  rg_rainbow();
-  read_serial();
+//  rg_rainbow();
   perc1.process(&strip);
+  perc2.process(&strip);
+  perc3.process(&strip);
   train1.process(&strip);
+  train2.process(&strip);
   kick();
   snare();
   strip.show();
@@ -370,37 +396,162 @@ void show1() {
 
 }
 
+void config_intro_tempura() {
+  perc1.cnt_reload = 45;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x0000FFFF;
+  train1.train_size = 40;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  perc2.cnt_reload = 40;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x0FFFF00;
+
+  perc3.cnt_reload = 40;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x0FFFF00;
+
+  train2.pos = 0;
+  train2.color = 0x0000FF1F;
+  train2.train_size = 80;
+  train2.train_mask = 0x32A6; // lower pixel density with simple mask
+  train2.target = strip.numPixels();
+  train2.cnt_num = 1;
+  train2.cnt_den = 2;
+  train2.cnt_den_tmp = 0;
+
+}
+
+void config_ayawuaska() {
+  perc1.cnt_reload = 50;
+  perc1.cnt_num = 2;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x000FFFF;
+}
+
+
 int kick_cnt;
 int snare_cnt;
 
 void read_serial(){  
   byte b;
   int a;
+  int valid = 0;
+
+  valid = 0;
+  
   a = Serial.available ();
   if ( a > 0 ){
     b = Serial.read();   
-    if (b == 'k') {
-      kick_cnt = 30;
-      //error();
+
+    // manage presets
+    if (b == '0') {
+      preset = 0;
+      valid = 1;
     }
-    else if (b == 's') {
-      snare_cnt = 30;
-      //error();
+    else if (b == '1') {
+      config_intro_tempura();
+      preset = 1;
+      valid = 1;
     }
-    else if (b == 'K') {
-      perc1.reload();
-      //error();
+    else if (b == '2') {
+      config_ayawuaska();
+      preset = 2;
+      valid = 1;
     }
-    else if (b == 't') {
-      train1.reload();
-      //error();
+
+
+    switch (preset) {
+
+      case 0:
+        if (b == 'k') {
+          train1.reload();
+          valid = 1;
+        }
+        break;
+      /////////// INTRO TEMPURA ////////////////////////
+      case 1:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'l' ){
+          train1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        else if ( b == 'n' ){
+          train2.reload();
+          valid = 1;
+        }
+        break;
+
+      /////////// AYAWUASKA ////////////////////////
+      case 2:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        break;
+
+        /*
+
+           if (b == 'k') {
+           kick_cnt = 30;
+        //error();
+        }
+        else if (b == 's') {
+        snare_cnt = 30;
+        //error();
+        }
+        else if (b == 'K') {
+        perc1.reload();
+        //error();
+        }
+        else if (b == 't') {
+        train1.reload();
+        //error();
+        }
+        else {
+        error();
+        Serial.flush();
+        }
+         */
     }
-    else {
-     error();
-     Serial.flush();
+
+    if ( !valid  ){
+       error();
+       Serial.flush(); 
     }
 
   }
+
 }
 
 

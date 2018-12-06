@@ -51,5 +51,18 @@ public class LEDSTRIP {
     return act;
   }
 
+  fun void _load_preset(int byte) {
+      2000::ms => now;
+      if ( opened) {
+        cereal.writeByte(byte);
+        <<<"LED STRIP LOAD PRESET: ", byte>>>;
+
+      }
+  }
+
+//  fun void load_preset(int byte) {
+//    spork ~ _load_preset(byte);  
+//  }
+
 }
 

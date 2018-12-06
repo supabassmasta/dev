@@ -11,4 +11,8 @@
 // Start REV and ECHO
 HW.launchpad.virtual_key_on(38);
 HW.launchpad.virtual_key_on(48);
-1::ms => now;
+
+HW.ledstrip.open();
+HW.ledstrip._load_preset('1');
+
+3::ms => now;
