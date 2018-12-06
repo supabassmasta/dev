@@ -160,6 +160,7 @@ Perc perc1;
 Perc perc2;
 Perc perc3;
 Perc perc4;
+Perc perc5;
 
 class RandTrain {
   public :
@@ -230,6 +231,84 @@ class RandTrain {
 RandTrain train1;
 RandTrain train2;
 
+class Fade_in_out {
+  public:
+    bool in = true;
+    int cnt = 0;
+    int cnt_num = 1;
+    int cnt_den = 1;
+    int cnt_den_tmp = 0;
+    // constructor
+    fade_in_out() {
+
+    }
+
+    void process(Adafruit_NeoPixel * s_p){
+      int i;
+      uint32_t c;
+      int r;
+      int g;
+      int b;
+
+      if (in && cnt > 0) {
+        for (i=0; i< s_p->numPixels() ; i++){
+          c =  strip.getPixelColor(i);
+          r = (((c >> 16)       ) - cnt );
+          g = (((c >> 8) & 0xFF ) - cnt );
+          b = (((c     ) & 0xFF ) - cnt );
+          if ( r < 0  ) r = 0;
+          if ( g < 0  ) g = 0;
+          if ( b < 0  ) b = 0;
+          c = r << 16 | g << 8 | b ;
+          strip.setPixelColor(i,c);
+        }
+        cnt_den_tmp ++;
+        if (cnt_den_tmp >= cnt_den) {
+          cnt -= cnt_num;
+          cnt_den_tmp = 0;
+        }
+
+      }
+      else if (  !in && cnt < 255  ){
+        for (i=0; i< s_p->numPixels() ; i++){
+          c =  strip.getPixelColor(i);
+          r = (((c >> 16)       ) - cnt );
+          g = (((c >> 8) & 0xFF ) - cnt );
+          b = (((c     ) & 0xFF ) - cnt );
+          if ( r < 0  ) r = 0;
+          if ( g < 0  ) g = 0;
+          if ( b < 0  ) b = 0;
+          c = r << 16 | g << 8 | b ;
+          strip.setPixelColor(i,c);
+        }
+        cnt_den_tmp ++;
+        if (cnt_den_tmp >= cnt_den) {
+          cnt += cnt_num;
+          cnt_den_tmp = 0;
+        }
+
+      }
+      else if (  !in  ){
+        for (i=0; i< s_p->numPixels() ; i++){
+          strip.setPixelColor(i,0);
+        }
+      }
+    }
+
+  void start_in(){
+    in = true;
+    cnt = 255;
+  }
+
+  void start_out(){
+    in = false;
+    cnt = 0;
+  }
+  
+
+};
+Fade_in_out fade_in_out;
+
 int preset = 0;
 
 void setup() {
@@ -267,6 +346,10 @@ void loop() {
     case 3:
       symetricmorseblue();
     break;
+    case 4:
+      randgreen();
+    break;
+
 
 
   }
@@ -284,10 +367,12 @@ void loop() {
   perc1.process(&strip);
   perc2.process(&strip);
   perc3.process(&strip);
+  perc4.process(&strip);
   train1.process(&strip);
   train2.process(&strip);
   kick();
   snare();
+  fade_in_out.process(&strip);
   strip.show();
 
   //  theaterChase(strip.Color(0, 127, 0), 50); // Red
@@ -490,6 +575,62 @@ void config_indian_kid() {
 
 }
 
+void config_costa() {
+  perc1.cnt_reload = 45;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+
+  perc2.cnt_reload = 40;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x0FFFF00;
+
+  perc3.cnt_reload = 20;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x0FF0F00;
+
+  perc4.cnt_reload = 20;
+  perc4.cnt_num = 1;      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_out();
+
+  perc4.cnt_den = 1;
+  perc4.color_fact = 15;
+  perc4.max = 255;
+  perc4.pos = strip.numPixels() * 7 / 8;
+  perc4.color_mask = 0x00FFF00;
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x0000FFFF;
+  train1.train_size = 25;
+  train1.train_mask = 0x0086; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 1;
+  train1.cnt_den_tmp = 0;
+
+  train2.pos = 0;
+  train2.color = 0x0000FF1F;
+  train2.train_size = 80;
+  train2.train_mask = 0x32A6; // lower pixel density with simple mask
+  train2.target = strip.numPixels();
+  train2.cnt_num = 1;
+  train2.cnt_den = 2;
+  train2.cnt_den_tmp = 0;
+
+}
 int kick_cnt;
 int snare_cnt;
 
@@ -507,21 +648,44 @@ void read_serial(){
     // manage presets
     if (b == '0') {
       preset = 0;
-      valid = 1;
+     valid = 1;
     }
     else if (b == '1') {
       config_intro_tempura();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
       preset = 1;
       valid = 1;
     }
     else if (b == '2') {
       config_ayawuaska();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
       preset = 2;
       valid = 1;
     }
     else if (b == '3') {
       config_indian_kid();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
       preset = 3;
+      valid = 1;
+    }
+    else if (b == '4') {
+      config_costa();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      preset = 4;
+      valid = 1;
+    }
+    else if (b == '!') {
+      fade_in_out.cnt_num = 8;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_out();
       valid = 1;
     }
 
@@ -575,6 +739,29 @@ void read_serial(){
         else if ( b == 'm' ){
           perc2.reload();
           perc3.reload();
+          valid = 1;
+        }
+        break;
+      /////////// COSTA ////////////////////////
+      case 4:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'l' ){
+          perc2.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc3.reload();
+          valid = 1;
+        }
+        else if ( b == 'n' ){
+          perc4.reload();
+          valid = 1;
+        }
+        else if ( b == 'o' ){
+          train1.reload();
           valid = 1;
         }
         break;
@@ -817,3 +1004,5 @@ uint32_t rg_Wheel(byte WheelPos) {
   WheelPos -= 128;
   return strip.Color(WheelPos * 2, 255 - WheelPos * 2, 0);
 }
+
+
