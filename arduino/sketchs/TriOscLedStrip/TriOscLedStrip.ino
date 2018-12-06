@@ -264,6 +264,9 @@ void loop() {
     case 2:
       rg_rainbow();
     break;
+    case 3:
+      symetricmorseblue();
+    break;
 
 
   }
@@ -451,6 +454,41 @@ void config_ayawuaska() {
   perc1.color_mask = 0x000FFFF;
 }
 
+void config_indian_kid() {
+  perc1.cnt_reload = 45;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x0000FFFF;
+  train1.train_size = 40;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  perc2.cnt_reload = 40;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x0FF00FF;
+
+  perc3.cnt_reload = 40;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x0FF00FF;
+
+}
 
 int kick_cnt;
 int snare_cnt;
@@ -479,6 +517,11 @@ void read_serial(){
     else if (b == '2') {
       config_ayawuaska();
       preset = 2;
+      valid = 1;
+    }
+    else if (b == '3') {
+      config_indian_kid();
+      preset = 3;
       valid = 1;
     }
 
@@ -519,6 +562,23 @@ void read_serial(){
           valid = 1;
         }
         break;
+      /////////// INDIAN KID ////////////////////////
+      case 3:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'l' ){
+          train1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
+ 
 
         /*
 
