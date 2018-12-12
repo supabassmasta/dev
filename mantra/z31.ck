@@ -4,6 +4,7 @@ SET_WAV.DUB(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV2.__SAMPLES_KICKS(s); // 
 
 "../_SAMPLES/Chassin/Kick Mantra.wav" => s.wav["l"];
 
+HW.ledstrip.set_tx('k') @=> s.action["l"];
 "*4
 l___ 
 

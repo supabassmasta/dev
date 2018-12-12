@@ -9,9 +9,14 @@ __1!1
 
 
 " => t.seq;
+
+t.s.elements[2].actions << HW.ledstrip.set_tx('m');
+//t.s.elements[3].actions << HW.ledstrip.set_tx('m');
+
 1.0 => t.gain;
 t.sync(1*data.tick);// t.element_sync();//  t.no_sync();// 
-//t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+//t.full_sync();  // 16 * data.tick => t.extra_end;   //
+//t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave

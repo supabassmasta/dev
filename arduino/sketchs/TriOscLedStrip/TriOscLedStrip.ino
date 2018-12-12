@@ -350,6 +350,12 @@ void loop() {
     case 4:
       randgreen();
     break;
+    case 5:
+    break;
+    case 6:
+      symetricmorseorange();
+    break;
+
 
 
 
@@ -632,6 +638,33 @@ void config_costa() {
   train2.cnt_den_tmp = 0;
 
 }
+
+void config_mantra(){
+  perc1.cnt_reload = 30;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  perc2.cnt_reload = 30;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x000FF;
+
+  perc3.cnt_reload = 30;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x000FF;
+}
+
 int kick_cnt;
 int snare_cnt;
 
@@ -681,6 +714,14 @@ void read_serial(){
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
       preset = 4;
+      valid = 1;
+    }
+    else if (b == '6') {
+      config_mantra();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      preset = 6;
       valid = 1;
     }
     else if (b == '!') {
@@ -766,7 +807,19 @@ void read_serial(){
           valid = 1;
         }
         break;
- 
+      /////////// MANTRA ////////////////////////
+      case 6:
+         if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
+
 
         /*
 
@@ -971,6 +1024,33 @@ void symetricmorseblue() {
     strip.setPixelColor(strip.numPixels()/2 - i,strip.Color(0 ,g, c));
     strip.setPixelColor(strip.numPixels()/2 + i,strip.Color(0 ,g, c));
     strip.setPixelColor(strip.numPixels() - i,strip.Color(0 ,0, c));
+  }
+
+}
+
+void symetricmorseorange() {
+  long c;
+  int g = 0;
+  int i;
+//  nj ++;
+
+//  if ( nj == 1  ){
+  ni +=1;
+//  nj =  0;
+      
+//  }
+
+  for (i=0; i< strip.numPixels()/4 ; i++){
+     c = ni + i;
+     c = (((c>>8)&0xF) & c) *c ;
+     g = (c & 0xFF) - 64; 
+     if ( g < 0  ){
+         g = 0;
+     }
+    strip.setPixelColor(i,strip.Color(c ,g, 0));
+    strip.setPixelColor(strip.numPixels()/2 - i,strip.Color(c ,g,0));
+    strip.setPixelColor(strip.numPixels()/2 + i,strip.Color(c ,g, 0));
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(c ,g, 0));
   }
 
 }
