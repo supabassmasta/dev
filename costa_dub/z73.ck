@@ -1,6 +1,10 @@
 SEQ s;  //data.tick * 8 => s.max;  
 SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+HW.ledstrip.set_tx('k') @=> s.action["l"];
+HW.ledstrip.set_tx('l') @=> s.action["U"];
+HW.ledstrip.set_tx('m') @=> s.action["u"];
+HW.ledstrip.set_tx('n') @=> s.action["v"];
 "*8
 l___ U__u __l_ U___
 l___ U__u _ul_ U___
