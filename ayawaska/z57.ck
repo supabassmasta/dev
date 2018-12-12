@@ -1,6 +1,6 @@
-2/2 => float fact;
+1 => float fact;
 
-adc => Delay d0  => Gain out;
+adc => Delay d0 => Gain out;
 fact * data.tick - 186::ms * 2 => d0.max => d0.delay;
 .7 => d0.gain;
 d0 => Delay d1 => out;
@@ -8,7 +8,7 @@ fact * data.tick  => d1.max => d1.delay;
 .7 => d1.gain;
 d1 => Gain fb => d1;
 
-out => BRF brf => /* LPF lpf=> */ dac;
+out =>  BRF brf =>  /* LPF lpf=> */ dac;
 
 3500 => brf.freq;
 1.=> brf.Q;

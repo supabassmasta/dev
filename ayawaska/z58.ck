@@ -8,7 +8,13 @@ fact * data.tick  => d1.max => d1.delay;
 .6 => d1.gain;
 d1 => Gain fb => d1;
 
-out => dac;
+out => /* BRF brf => */ /* LPF lpf=> */ dac;
+
+//3500 => brf.freq;
+//1.=> brf.Q;
+
+//3000 => lpf.freq;
+//1.=> lpf.Q;
 
 while(1) {
        100::ms => now;
