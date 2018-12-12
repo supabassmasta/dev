@@ -342,6 +342,7 @@ void loop() {
     break;
     case 2:
       rg_rainbow();
+      aya_randgreen();
     break;
     case 3:
       symetricmorseblue();
@@ -530,8 +531,8 @@ void config_intro_tempura() {
 }
 
 void config_ayawuaska() {
-  perc1.cnt_reload = 50;
-  perc1.cnt_num = 2;
+  perc1.cnt_reload = 20;
+  perc1.cnt_num = 1;
   perc1.cnt_den = 1;
   perc1.color_fact = 15;
   perc1.max = 255;
@@ -980,11 +981,11 @@ void rg_rainbow() {
   uint16_t i;
   uint32_t color;
 
-  for(i=0; i<strip.numPixels()/2; i++) {
+  for(i=0; i<strip.numPixels()/4; i++) {
     color = rg_Wheel((i*1+rg_rainbow_j*2) & 255);
-    strip.setPixelColor(i, color);
+    strip.setPixelColor(i + strip.numPixels()/4, color);
     // Symetry
-    strip.setPixelColor(strip.numPixels()-i-1, color);
+    strip.setPixelColor(3 * strip.numPixels() / 4 -i-1, color);
   }
   rg_rainbow_j ++;
 //  if ( rg_rainbow_j > 254  ){
@@ -1005,4 +1006,29 @@ uint32_t rg_Wheel(byte WheelPos) {
   return strip.Color(WheelPos * 2, 255 - WheelPos * 2, 0);
 }
 
+void aya_randgreen() {
+  int b;
+  int c;
+  int white;
+  for (int i=0; i< 5 ; i++){
+    b = msws();
+    c = b >> 9;
+    if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
+      white = b >> 15;    
+    }
+    else {
+      white = 0;
+    }
+   b = b & 0x7F;
+    strip.setPixelColor(b, strip.Color(0, c,white ));
+    strip.setPixelColor(strip.numPixels() - b, strip.Color(0, c,white ));
+  }
+//  for (int i=0; i< 150 ; i++){
+//    a = a*413 + 497; 
+//    b = a & 0x1FF;
+//    strip.setPixelColor(b, strip.Color(0,0, 0));
+//  }
+
+
+}
 
