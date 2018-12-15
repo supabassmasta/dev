@@ -817,3 +817,9 @@ ab STPADSRK STPADSR stpadsr;
 \<CR>stpadsr.setCurves(2, .7, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stpadsr.connect(last $ ST, s.note_info_tx_o);
 
+ab STSYNCLPFK STSYNCLPF stsynclpf;
+\<CR>stsynclpf.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
+\<CR>stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynclpf.connect(t $ ST, t.note_info_tx_o);
+
+

@@ -165,6 +165,7 @@ Machine.add( "../EFFECTS/STMULT_BASE_ONE.ck");
 Machine.add( "../EFFECTS/STMULT_BASE_ZERO.ck");
 Machine.add( "../EFFECTS/STADSR.ck");
 Machine.add( "../EFFECTS/STPADSR.ck");
+Machine.add( "../EFFECTS/STSYNCLPF.ck");
 me.yield();
 Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../EFFECTS/REV2.ck");
