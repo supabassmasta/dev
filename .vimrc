@@ -822,4 +822,3 @@ ab STSYNCLPFK STSYNCLPF stsynclpf;
 \<CR>stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
 \<CR>stsynclpf.connect(t $ ST, t.note_info_tx_o);
 
-
