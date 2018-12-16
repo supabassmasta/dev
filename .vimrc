@@ -822,3 +822,9 @@ ab STSYNCLPFK STSYNCLPF stsynclpf;
 \<CR>stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
 \<CR>stsynclpf.connect(t $ ST, t.note_info_tx_o);
 
+ab STSYNCBPFK STSYNCBPF stsyncbpf;
+\<CR>stsyncbpf.freq(100 /* Base */, 9 * 100 /* Variable */, 4. /* Q */);
+\<CR>stsyncbpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncbpf.connect(t $ ST, t.note_info_tx_o); 
+
+
