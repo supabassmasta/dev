@@ -842,4 +842,9 @@ ab STSYNCRESK STSYNCRES stsyncres;
 \<CR>stsyncres.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
 \<CR>stsyncres.connect(t $ ST, t.note_info_tx_o); stsyncres $ ST @=>  last;
 
+ab STSYNCLPF2K STSYNCLPF2 stsynclpf2;
+\<CR>stsynclpf2.freq(100 /* Base */, 11 * 100 /* Variable */, 1.0 /* Q */);
+\<CR>stsynclpf2.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynclpf2.connect(t $ ST, t.note_info_tx_o); stsynclpf2 $ ST @=>  last;
+
 

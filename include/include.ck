@@ -166,6 +166,7 @@ Machine.add( "../EFFECTS/STMULT_BASE_ZERO.ck");
 Machine.add( "../EFFECTS/STADSR.ck");
 Machine.add( "../EFFECTS/STPADSR.ck");
 Machine.add( "../EFFECTS/STSYNCLPF.ck");
+Machine.add( "../EFFECTS/STSYNCLPF2.ck");
 Machine.add( "../EFFECTS/STSYNCBPF.ck");
 Machine.add( "../EFFECTS/STSYNCHPF.ck");
 Machine.add( "../EFFECTS/STSYNCBRF.ck");
