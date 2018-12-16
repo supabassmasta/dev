@@ -810,21 +810,36 @@ ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
 
 ab STADSRK STADSR stadsr;
 \<CR>stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, .6 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
-\<CR>stadsr.connect(last $ ST, s.note_info_tx_o);
+\<CR>stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
 
 ab STPADSRK STPADSR stpadsr;
 \<CR>stpadsr.set(0::ms /* Attack */, 24::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);
 \<CR>stpadsr.setCurves(2, .7, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-\<CR>stpadsr.connect(last $ ST, s.note_info_tx_o);
+\<CR>stpadsr.connect(last $ ST, s.note_info_tx_o); stpadsr $ ST @=>  last;
 
 ab STSYNCLPFK STSYNCLPF stsynclpf;
 \<CR>stsynclpf.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
-\<CR>stsynclpf.connect(t $ ST, t.note_info_tx_o);
+\<CR>stsynclpf.connect(t $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last;
 
 ab STSYNCBPFK STSYNCBPF stsyncbpf;
 \<CR>stsyncbpf.freq(100 /* Base */, 9 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsyncbpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
-\<CR>stsyncbpf.connect(t $ ST, t.note_info_tx_o); 
+\<CR>stsyncbpf.connect(t $ ST, t.note_info_tx_o); stsyncbpf $ ST @=>  last; 
+
+ab STSYNCHPFK STSYNCHPF stsynchpf;
+\<CR>stsynchpf.freq(1000 /* Base */, 20 * 100 /* Variable */, 4. /* Q */);
+\<CR>stsynchpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynchpf.connect(t $ ST, t.note_info_tx_o); stsynchpf $ ST @=>  last; 
+
+ab STSYNCBRFK STSYNCBRF stsyncbrf;
+\<CR>stsyncbrf.freq(100 /* Base */, 31 * 100 /* Variable */, 1. /* Q */);
+\<CR>stsyncbrf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncbrf.connect(t $ ST, t.note_info_tx_o); stsyncbrf $ ST @=>  last; 
+
+ab STSYNCRESK STSYNCRES stsyncres;
+\<CR>stsyncres.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
+\<CR>stsyncres.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncres.connect(t $ ST, t.note_info_tx_o); stsyncres $ ST @=>  last;
 
 
