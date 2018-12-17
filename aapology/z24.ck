@@ -3,8 +3,7 @@ SET_WAV.TRANCE(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(
 // _ = pause , ~ = special pause , | = add note to _current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
 *8
-k___
-
+k$k_k $k_k$k  ck_k _k$k_
 " => s.seq;
 //s.gain("c", .5); // for single wav 
 .4 * data.master_gain => s.gain; //
@@ -14,8 +13,6 @@ s.gain("k", 0.9); // for single wav
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
-STDUCKMASTER duckm;
-duckm.connect(last $ ST, 9. /* In Gain */, .1 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;

@@ -1,23 +1,27 @@
 class synt0 extends SYNT{
 
-    inlet => SqrOsc s =>  outlet; 
-      .9 => s.gain;
+    8 => int synt_nb; 0 => int i;
+    Gain detune[synt_nb];
+    SawOsc s[synt_nb];
+    Gain final => outlet; .8 => final.gain;
+
+    inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .9 => s[i].gain; i++;  
+    inlet => detune[i] => s[i] => final;    2. => detune[i].gain;    .5 => s[i].gain; i++;  
+//      .99 => s.gain;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
 
 
 TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
+t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// 
 t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4 {c
-1_1_ ____ 
-____ ____ 
-4___ ____ 
-2___ ____ 
+"*8 {c
+*1 1_1!1 !1_1_ 1!1!1_1!1!1_ 
+4!4!4_ 2_2_  2!2!2_2!2!2_
 " => t.seq;
-.3 * data.master_gain => t.gain;
+.11 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -25,12 +29,12 @@ ____ ____
 t.go();   t $ ST @=> ST @ last; 
 
 STSYNCLPF stsynclpf;
-stsynclpf.freq(100 /* Base */, 3 * 100 /* Variable */, 2. /* Q */);
+stsynclpf.freq(3* 100 /* Base */, 29 * 100 /* Variable */, 8. /* Q */);
 stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
 stsynclpf.connect(t $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
+//STECHO ech;
+//ech.connect(last $ ST , data.tick * 1 / 4 , .4);  ech $ ST @=>  last; 
 
 
 while(1) {
