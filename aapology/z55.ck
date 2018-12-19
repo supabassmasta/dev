@@ -33,7 +33,7 @@ STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 13 /* Q */, 100 /* f_base */ , 6 * 100  /* f_var */, 1::second / (2.4 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STFILTERMOD fmod2;
-fmod2.connect( t , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 13 /* Q */, 200 /* f_base */ , 8 * 100  /* f_var */, 1::second / (3.3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod2.connect( t , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 13 /* Q */, 200 /* f_base */ , 8 * 100  /* f_var */, 1::second / (3.3 * data.tick) /* f_mod */);     fmod2  $ ST @=>  last; 
 
 //STABSATURATOR stabsat;
 //stabsat.connect(last, 14.0 /* drive */, 0.00 /* dc offset */); stabsat $ ST @=>  last; 
