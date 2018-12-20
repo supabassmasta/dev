@@ -32,15 +32,29 @@ t.reg(BWG0 s2);
 //t.dor();//
 t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" *4  
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ 8765 4321 
+"*4 }c
+1___ _1__
+1___ _3_1
+4___ _4__
+2__2 _3_1
 
+1___ _1__
+1___ _3_1
+4___ _4__
+____ ____
+
+1___ _11_
+1___ _331
+4___ _4__
+2_22 _3_1
+
+1__1 _1__
+1_51 _3_1
+4_6_ _4__
+____ ____
 
 " => t.seq;
-1.2 * data.master_gain => t.gain;
+1.3 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2::ms, 0::ms, 1., 4000::ms);
@@ -49,8 +63,8 @@ t.go();   t $ ST @=> ST @ last;
 
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
-//STECHO ech;
-//ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
 
 STREV1 rev; // DUCKED
 rev.connect(last $ ST, .04 /* mix */);      rev $ ST @=>  last; 
