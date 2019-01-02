@@ -334,6 +334,8 @@ void error() {
     digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
 }
 
+int bond_cnt = 0;
+
 void loop() {
   read_serial();
   switch (preset) {
@@ -362,6 +364,15 @@ void loop() {
     case 7:
       greenblueriver();
     break;
+    case 8:
+      symetricmorsered();
+      bond_cnt ++;
+      if ( bond_cnt > 300  ){
+         bond_cnt = 0;
+         train1.reload();
+      }
+    break;
+
 
 
 
@@ -451,13 +462,30 @@ void ederlezi_config() {
   t4.offset_den = 1;
   t4.up_start = true;
 
-  perc1.cnt_reload = 40;
+  perc1.cnt_reload = 45;
   perc1.cnt_num = 1;
   perc1.cnt_den = 1;
   perc1.color_fact = 15;
   perc1.max = 255;
   perc1.pos = strip.numPixels() / 2;
-  perc1.color_mask = 0x0FFFF00;
+  perc1.color_mask = 0x0FFFFFF;
+
+  perc2.cnt_reload = 40;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x0FFFF00;
+
+  perc3.cnt_reload = 40;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x0FFFF00;
+
 }
 
 
@@ -683,6 +711,42 @@ void config_mantra(){
   perc3.color_mask = 0x000FF;
 }
 
+void config_bondlywood() {
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x000000FF;
+  train1.train_size = 70;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 150;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  perc1.cnt_reload = 30;
+  perc1.cnt_num = 1;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  perc2.cnt_reload = 30;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x000FF;
+
+  perc3.cnt_reload = 30;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x000FF;
+}
+
 int kick_cnt;
 int snare_cnt;
 
@@ -755,6 +819,15 @@ void read_serial(){
 //      fade_in_out.cnt_den = 1;
 //      fade_in_out.start_in();
       preset = 7;
+      valid = 1;
+    }
+    // MISSION BONDLLYWOOD
+    else if (b == '8') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      config_bondlywood();
+      preset = 8;
       valid = 1;
     }
     else if (b == '!') {
@@ -840,6 +913,18 @@ void read_serial(){
           valid = 1;
         }
         break;
+      /////////// EDERLEZI ////////////////////////
+      case 5:
+         if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
       /////////// MANTRA ////////////////////////
       case 6:
          if (b == 'k') {
@@ -852,6 +937,19 @@ void read_serial(){
           valid = 1;
         }
         break;
+      /////////// MISSION BONDLYWOOD ////////////////////////
+      case 8:
+         if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
+
 
 
         /*
@@ -1113,6 +1211,29 @@ void symetricmorseorange() {
     strip.setPixelColor(strip.numPixels()/2 - i,strip.Color(c ,g,0));
     strip.setPixelColor(strip.numPixels()/2 + i,strip.Color(c ,g, 0));
     strip.setPixelColor(strip.numPixels() - i,strip.Color(c ,g, 0));
+  }
+
+}
+
+void symetricmorsered() {
+  long c;
+  int g = 0;
+  int i;
+//  nj ++;
+
+//  if ( nj == 1  ){
+  ni -=1;
+//  nj =  0;
+      
+//  }
+
+  for (i=0; i< strip.numPixels()/4 ; i++){
+     c = ni + i;
+     c = (((c>>8)&0xF) & c) *c ;
+    strip.setPixelColor(i,strip.Color(c ,0, 0));
+    strip.setPixelColor(strip.numPixels()/2 - i - 1,strip.Color(c ,0,0));
+    strip.setPixelColor(strip.numPixels()/2 + i ,strip.Color(c ,0, 0));
+    strip.setPixelColor(strip.numPixels() - i -1,strip.Color(c ,0, 0));
   }
 
 }

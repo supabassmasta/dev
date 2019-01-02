@@ -4,6 +4,9 @@ SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(
 
  s.wav["l"]=> s.wav["k"]; 
 
+HW.ledstrip.set_tx('k') @=> s.action["k"];
+HW.ledstrip.set_tx('m') @=> s.action["x"];
+
 "*4*4
 
 k___ ____ x___ ____
