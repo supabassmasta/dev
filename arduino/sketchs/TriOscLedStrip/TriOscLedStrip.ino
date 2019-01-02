@@ -57,7 +57,11 @@ class Tri {
        if (offset_cnt < min) {
         up_offset = true;
       }
-     
+
+//      if (offset_num < 0){
+//        up_offset = ! up_offset;
+//     }
+
       if (up_offset ) {
         offset_cnt += offset_num;
       }    
@@ -317,7 +321,6 @@ void setup() {
   strip.setBrightness(64); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
-  show1_conf();
 
   pinMode(LED_BUILTIN, OUTPUT);
 
@@ -351,11 +354,14 @@ void loop() {
       randgreen();
     break;
     case 5:
+      ederlezi(); 
     break;
     case 6:
       symetricmorseorange();
     break;
-
+    case 7:
+      greenblueriver();
+    break;
 
 
 
@@ -408,7 +414,7 @@ void allOff() {
   }
 }
 
-void show1_conf() {
+void ederlezi_config() {
   t1.offset_cnt = 0;
   t1.min = -255;
   t1.max = 255;
@@ -428,20 +434,20 @@ void show1_conf() {
   t2.up_start = true;
 
   t3.offset_cnt = 0;
-  t3.min = -6*256;
-  t3.max = 64;
-  t3.period_num = 10;
-  t3.period_den = 0;
-  t3.offset_num = 43;
+  t3.min = -256;
+  t3.max = 16;
+  t3.period_num = 4;
+  t3.period_den = 1;
+  t3.offset_num = 6;
   t3.offset_den = 1;
   t3.up_start = true;
 
   t4.offset_cnt = 0;
-  t4.min = -256;
-  t4.max = 64;
-  t4.period_num = 7;
-  t4.period_den = 0;
-  t4.offset_num = 30;
+  t4.min = -512;
+  t4.max = 16;
+  t4.period_num = 4;
+  t4.period_den = 1;
+  t4.offset_num = 4;
   t4.offset_den = 1;
   t4.up_start = true;
 
@@ -455,19 +461,33 @@ void show1_conf() {
 }
 
 
-void show1() {
+void ederlezi() {
       t1.new_show();
       t2.new_show();
       t3.new_show();
+      t4.new_show();
 
-      for (uint16_t i=0; i < strip.numPixels() / 6 ; i++) {
+      for (uint16_t i=0; i < strip.numPixels() / 2 ; i++) {
           int g;
           int b;
-          int r;
+          int r, r2;
 
           g = t1.process();
           b = t2.process();
-//          r = t3.process() ;
+          
+          r = t3.process();
+          if (r<0) r = 0;
+          if (r>255) r = 255;
+
+          r2 = t4.process() ;
+          if (r2<0) r2 = 0;
+          if (r2>255) r2 = 255;
+
+          r = r + r2;
+          if (r<0) r = 0;
+          if (r>255) r = 255;
+
+
 
           if (g<0) g = 0;
           if (g>255) g = 255;
@@ -479,8 +499,6 @@ void show1() {
           strip.setPixelColor(i, strip.Color(r, g, b));
 
           // SYMETRY !!!!!!!!
-          strip.setPixelColor(2*strip.numPixels()/6 -  i, strip.Color(r, g, b));
-          strip.setPixelColor(4*strip.numPixels()/6 + i, strip.Color(r, g, b));
           strip.setPixelColor(strip.numPixels() - i, strip.Color(r, g, b));
       }
 
@@ -716,12 +734,27 @@ void read_serial(){
       preset = 4;
       valid = 1;
     }
+    else if (b == '5') {
+      ederlezi_config();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      preset = 5;
+      valid = 1;
+    }
     else if (b == '6') {
       config_mantra();
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
       preset = 6;
+      valid = 1;
+    }
+    else if (b == '7') {
+//      fade_in_out.cnt_num = 12;
+//      fade_in_out.cnt_den = 1;
+//      fade_in_out.start_in();
+      preset = 7;
       valid = 1;
     }
     else if (b == '!') {
@@ -1001,6 +1034,35 @@ void blueriver() {
   }
 
 }
+void greenblueriver() {
+  long c;
+  int g;
+  int i;
+//  dj ++;
+
+//  if ( dj == 8  ){
+  di ++;
+//  dj =  0;
+      
+//  }
+
+  for (i=0; i< strip.numPixels() / 2 ; i++){
+     c = di + i;
+     c = c * c;
+//     if ( c > 128  ){
+//      g = 128;
+//        
+//    }
+//    else {
+      g = c;   
+//    }
+   strip.setPixelColor(i,strip.Color(0 ,g,  c));
+
+    //symetry
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(0 ,g,  c));
+  }
+
+}
 
 int ni = 0;
 int nj = 0;
@@ -1043,7 +1105,7 @@ void symetricmorseorange() {
   for (i=0; i< strip.numPixels()/4 ; i++){
      c = ni + i;
      c = (((c>>8)&0xF) & c) *c ;
-     g = (c & 0xFF) - 64; 
+     g = (c & 0xFF) - 128; 
      if ( g < 0  ){
          g = 0;
      }
