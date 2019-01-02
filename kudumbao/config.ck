@@ -9,6 +9,14 @@
 
 // Start ECHO
 HW.launchpad.virtual_key_on(38);
+
+// Start synchro
+HW.launchpad.virtual_key_on(7);
+
+
+HW.ledstrip.open();
+HW.ledstrip._load_preset('9');
+
 1::ms => now;
 
 

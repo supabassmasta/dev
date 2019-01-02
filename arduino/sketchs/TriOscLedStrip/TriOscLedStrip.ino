@@ -372,6 +372,10 @@ void loop() {
          train1.reload();
       }
     break;
+    case 9:
+      randyellow();
+    break;
+
 
 
 
@@ -746,6 +750,42 @@ void config_bondlywood() {
   perc3.pos = strip.numPixels() * 3 / 4;
   perc3.color_mask = 0x000FF;
 }
+void config_kudunbao() {
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x000000FF;
+  train1.train_size = 70;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 150;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  perc1.cnt_reload = 60;
+  perc1.cnt_num = 5;
+  perc1.cnt_den = 2;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FF0000;
+
+  perc2.cnt_reload = 30;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x000FF;
+
+  perc3.cnt_reload = 30;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x000FF;
+}
+
 
 int kick_cnt;
 int snare_cnt;
@@ -815,9 +855,9 @@ void read_serial(){
       valid = 1;
     }
     else if (b == '7') {
-//      fade_in_out.cnt_num = 12;
-//      fade_in_out.cnt_den = 1;
-//      fade_in_out.start_in();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
       preset = 7;
       valid = 1;
     }
@@ -828,6 +868,15 @@ void read_serial(){
       fade_in_out.start_in();
       config_bondlywood();
       preset = 8;
+      valid = 1;
+    }
+    // KUDUMBAO
+    else if (b == '9') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      config_kudunbao();
+      preset = 9;
       valid = 1;
     }
     else if (b == '!') {
@@ -949,6 +998,18 @@ void read_serial(){
           valid = 1;
         }
         break;
+      /////////// KUDUMBAO ////////////////////////
+      case 9:
+         if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
 
 
 
@@ -1053,6 +1114,30 @@ void randgreen() {
     }
    b = b & 0x1FF;
     strip.setPixelColor(b, strip.Color(0, c,white ));
+  }
+//  for (int i=0; i< 150 ; i++){
+//    a = a*413 + 497; 
+//    b = a & 0x1FF;
+//    strip.setPixelColor(b, strip.Color(0,0, 0));
+//  }
+
+
+}
+void randyellow() {
+  int b;
+  int c;
+  int white;
+  for (int i=0; i< 10 ; i++){
+    b = msws();
+    c = b >> 9;
+    if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
+      white = b >> 15;    
+    }
+    else {
+      white = 0;
+    }
+   b = b & 0x1FF;
+    strip.setPixelColor(b, strip.Color(c, c,white ));
   }
 //  for (int i=0; i< 150 ; i++){
 //    a = a*413 + 497; 
