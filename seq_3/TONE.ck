@@ -40,6 +40,10 @@ public class TONE extends ST {
   1. => float proba_to_apply;
 
   0 => int note_offset;
+
+  // Note information service
+  note_info_tx note_info_tx_o;
+
   // PRIVATE
   0::ms => dur max_v;//private
   0::ms => dur remaining;//private
@@ -308,6 +312,25 @@ public class TONE extends ST {
     return act;
   }
 
+  class note_info_act extends ACTION {
+    note_info_tx @ note_info_tx_p;
+    ELEMENT @ e;
+
+    fun int on_time() {
+      note_info_tx_p.push_to_all( e.note_info_s );
+    }
+
+  }
+  
+  fun ACTION set_note_info_act(note_info_tx @ nitp, ELEMENT @ e) {
+    new note_info_act @=> note_info_act @ act;
+    
+    e @=> act.e;
+    nitp @=> act.note_info_tx_p;
+
+    "note_info_act " + e + " ST " + nitp => act.name;
+    return act;
+  }
   //////// NOTE MANAGEMENT ///////////////
 
   fun int is_note(int c) {
@@ -451,6 +474,7 @@ public class TONE extends ST {
           // if slide, dont create a new element we will increase the new one
           if (slide_nb ==0) {
             new ELEMENT @=> e;
+            e.actions << set_note_info_act(note_info_tx_o ,e);
             // Search synt that are not on anymore
             for (0 => int i; i < on_state.size()      ; i++) {
               if (on_state[i] !=0) {
@@ -500,6 +524,7 @@ public class TONE extends ST {
             set_dur((slide_nb-1) * base_dur) + slide_dur => slide_dur;
             // update element duration
             slide_dur => e.duration;
+            e.duration => e.note_info_s.d;
           }
 
           e.actions << set_slide(env[id], temp_freq, slide_dur); 
@@ -509,6 +534,7 @@ public class TONE extends ST {
         else
         {
           e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+          s.elements.size() => e.note_info_s.idx;
           // Add freq_synt action every time in case SEQ3 start here
           e.actions << set_freq_synt(env[id], temp_freq ); 
           if (temp_freq != freq[id]) {
@@ -548,6 +574,7 @@ public class TONE extends ST {
             if (on_state[id] == 0) {
               e.actions << set_on_adsr(adsr[id]); 
               e.actions << set_synt_on(synt[id]); 
+              1 => e.note_info_s.on;
             }
             else {
               // Manage on_actions
@@ -557,6 +584,7 @@ public class TONE extends ST {
               // also set freq and new note
               e.actions << set_freq_synt(env[id], freq[id] ); 
               e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+              s.elements.size() => e.note_info_s.idx;
 
             }
           }
@@ -572,9 +600,11 @@ public class TONE extends ST {
 
           if (force_new_note != 0){
             e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+            s.elements.size() => e.note_info_s.idx;
             e.actions << set_on_adsr(adsr[id]); 
             e.actions << set_synt_on(synt[id]); 
             0 => force_new_note;
+            1 => e.note_info_s.on;
           }
 
 
@@ -602,6 +632,7 @@ public class TONE extends ST {
             if (dur_temp != 0::ms ) {
 
               dur_temp => e.duration;
+              e.duration => e.note_info_s.d;
               // Add element to SEQ
               s.elements << e;
 
@@ -645,9 +676,10 @@ public class TONE extends ST {
 
         if (dur_temp != 0::ms) {
           new ELEMENT @=> e;
+          e.actions << set_note_info_act(note_info_tx_o ,e);
           dur_temp => e.duration;
-
-
+          e.duration => e.note_info_s.d;
+          0 => e.note_info_s.on;
 
           // KeyOff all adsr
           for (0 => int j; j < adsr.size() ; j++) {
@@ -837,6 +869,7 @@ public class TONE extends ST {
         // synt off on last, On on first
         s.elements[0].actions << set_on_adsr(adsr[j]);                
         s.elements[0].actions << set_synt_on(synt[j]);                
+        1 => s.elements[0].note_info_s.on;
       }
       else if (on_state[j] != 0 && on_state_on_start[j] != 0) {
         // Manage on_actions
@@ -876,9 +909,10 @@ public class TONE extends ST {
     // remaining
     if (remaining != 0::ms) {
       new ELEMENT @=> e;
-
+      e.actions << set_note_info_act(note_info_tx_o ,e);
+ 
       remaining => e.duration;
-
+      e.duration => e.note_info_s.d;
 
 
       s.elements << e;

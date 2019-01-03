@@ -1,5 +1,7 @@
 public class ST {
   
+  NULL @=> ST @ next;
+
   Gain outl => dac.left;
   Gain outr => dac.right;
 
@@ -65,4 +67,5 @@ public class ST {
       in => mono_in_g;
     }
   }
+
 }
