@@ -365,11 +365,20 @@ void loop() {
       greenblueriver();
     break;
     case 8:
-      symetricmorsered();
+      int r;
+
+allOff();
+      
+//      symetricmorsered();
       bond_cnt ++;
-      if ( bond_cnt > 300  ){
-         bond_cnt = 0;
-         train1.reload();
+      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
+        bond_cnt = 0;
+
+        r = msws();
+        train1.pos = 86 + (r & 0x7F);
+        train1.target = 35 + ((r>>8) & 0x3F);;
+        train1.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+        train1.reload();
       }
     break;
     case 9:
