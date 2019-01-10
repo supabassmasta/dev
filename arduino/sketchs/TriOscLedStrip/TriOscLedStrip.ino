@@ -468,7 +468,9 @@ class Star {
   }
 };
 
-uint16_t intro_stars_cnt = 1000;
+
+uint16_t fade_stars_cnt = 255;
+uint16_t fade_stars_sub_cnt = 0;
 
 void intro_stars() {
   uint8_t r,g,b = 0;
@@ -648,18 +650,40 @@ st[idx].r = 3 ;
   idx++;
 
 
-
-
-
-
-
   for (int i=0; i<  STARS_NB ; i++){
-    
-    strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b));    
+    /*
+    if ( fade_stars_cnt >  st[i].r  ){
+      r = 0;
+    }
+    else {
+      r = st[i].r - fade_stars_cnt;
+    }
+    if ( fade_stars_cnt >  st[i].g  ){
+      g = 0;
+    }
+    else {
+      g = st[i].g - fade_stars_cnt;
+    }
+    if ( fade_stars_cnt >  st[i].b  ){
+      b = 0;
+    }
+    else {
+      b = st[i].b - fade_stars_cnt;
+    }
+    */
+//     strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b, 255 - fade_stars_cnt)); 
+     strip.setPixelColor(st[i].pos, st[i].r / fade_stars_cnt, st[i].g / fade_stars_cnt, st[i].b / fade_stars_cnt); 
+//     strip.setPixelColor(st[i].pos, st[i].r, st[i].g, st[i].b, 0); 
+//     strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b, 64)); 
+//     strip.setPixelColor(st[i].pos, strip.Color(r, g, b));    
 //    strip.setPixelColor(150, 0xFFFFFFFF);    
   }
 
-  intro_stars_cnt--;
+  fade_stars_sub_cnt ++;
+  if (fade_stars_cnt > 1 && fade_stars_sub_cnt > 10  ){
+      fade_stars_sub_cnt = 0;
+      fade_stars_cnt--;
+  }
 }
 
 void ederlezi_config() {
