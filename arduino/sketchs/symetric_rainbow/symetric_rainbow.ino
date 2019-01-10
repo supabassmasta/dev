@@ -29,7 +29,7 @@ void setup() {
 
 
   strip.begin();
-  strip.setBrightness(64); // Max 255
+  strip.setBrightness(128); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 }
 
@@ -64,7 +64,7 @@ void rainbow(uint8_t wait) {
 
   for(j=0; j<256; j++) {
     for(i=0; i<strip.numPixels()/2; i++) {
-      color = Wheel((i*2+j*4) & 255);
+      color = Wheel((i*1+j*1) & 255);
       strip.setPixelColor(i, color);
       // Symetry
       strip.setPixelColor(strip.numPixels()-i-1, color);

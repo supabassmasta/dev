@@ -318,7 +318,7 @@ int preset = 0;
 void setup() {
   preset = 0;
   strip.begin();
-  strip.setBrightness(64); // Max 255
+  strip.setBrightness(255); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
 
@@ -335,6 +335,7 @@ void error() {
 }
 
 int bond_cnt = 0;
+int bond_cnt2 = 0;
 
 void loop() {
   read_serial();
@@ -377,12 +378,32 @@ allOff();
         r = msws();
         train1.pos = 86 + (r & 0x7F);
         train1.target = 35 + ((r>>8) & 0x3F);;
-        train1.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+        long l = (long)(msws()<<16 | r ); 
+        train1.color =  l;
+//        train1.color = 0xFFFF0000; 
         train1.reload();
       }
+      /*
+      
+      bond_cnt2 ++;
+      if ( bond_cnt2 > 160 +train2.target ){
+        bond_cnt2 = 0;
+
+        r = msws();
+        train2.pos = 86 + (r & 0x7F);
+        train2.target = 35 + ((r>>8) & 0x0F);;
+        train2.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+
+
+        train2.reload();
+      }
+      */
     break;
     case 9:
       randyellow();
+    break;
+    case 10:
+      intro_stars();
     break;
 
 
@@ -436,6 +457,62 @@ void allOff() {
   for (uint16_t i=0; i < strip.numPixels(); i++) {
     strip.setPixelColor(i, 0); 
   }
+}
+
+class Star {
+  public :
+  uint8_t r,g,b;
+  uint16_t arrival;
+  uint16_t pos;
+  Star() {
+  }
+};
+
+uint16_t intro_stars_cnt = 1000;
+
+void intro_stars() {
+  uint8_t r,g,b = 0;
+
+  #define STARS_NB 32
+  Star st[STARS_NB];
+
+  uint8_t idx = 0;
+
+  st[idx].r = 255 ;
+  st[idx].g = 255 ;
+  st[idx].b = 42 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  150 ;
+  idx++;
+
+  st[idx].r = 255 ;
+  st[idx].g = 0 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  1000 ;
+  st[idx].pos =  251 ;
+  idx++;
+
+  st[idx].r = 255 ;
+  st[idx].g = 255 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  150 ;
+  idx++;
+
+  st[idx].r = 255 ;
+  st[idx].g = 255 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  150 ;
+  idx++;
+
+  for (int i=0; i<  STARS_NB ; i++){
+    
+    strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b));    
+//    strip.setPixelColor(150, 0xFFFFFFFF);    
+  }
+
+  intro_stars_cnt--;
 }
 
 void ederlezi_config() {
@@ -735,6 +812,15 @@ void config_bondlywood() {
   train1.cnt_den = 2;
   train1.cnt_den_tmp = 0;
 
+  train2.pos = strip.numPixels() / 2;
+  train2.color = 0x000000FF;
+  train2.train_size = 70;
+  train2.train_mask = 0x32A6; // lower pixel density with simple mask
+  train2.target = 150;
+  train2.cnt_num = 1;
+  train2.cnt_den = 2;
+  train2.cnt_den_tmp = 0;
+
   perc1.cnt_reload = 30;
   perc1.cnt_num = 1;
   perc1.cnt_den = 1;
@@ -814,6 +900,14 @@ void read_serial(){
     if (b == '0') {
       preset = 0;
      valid = 1;
+    }
+    else if (b == '&') {
+//      config_ayawuaska();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      preset = 10;
+      valid = 1;
     }
     else if (b == '1') {
       config_intro_tempura();
