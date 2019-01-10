@@ -480,31 +480,178 @@ void intro_stars() {
 
   st[idx].r = 255 ;
   st[idx].g = 255 ;
-  st[idx].b = 42 ;
+  st[idx].b = 255;
   st[idx].arrival =  255 ;
   st[idx].pos =  150 ;
   idx++;
-
-  st[idx].r = 255 ;
+  st[idx].r = 0 ;
   st[idx].g = 0 ;
-  st[idx].b = 0 ;
+  st[idx].b = 20;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  149 ;
+  idx++;
+  st[idx].r = 0 ;
+  st[idx].g = 0 ;
+  st[idx].b = 20;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  151 ;
+  idx++;
+
+  st[idx].r = 100 ;
+  st[idx].g = 100 ;
+  st[idx].b = 255 ;
   st[idx].arrival =  1000 ;
-  st[idx].pos =  251 ;
+  st[idx].pos =  273 ;
+  idx++;
+
+  st[idx].r = 240 ;
+  st[idx].g = 240 ;
+  st[idx].b = 100 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  63 ;
   idx++;
 
   st[idx].r = 255 ;
-  st[idx].g = 255 ;
-  st[idx].b = 0 ;
+  st[idx].g = 100 ;
+  st[idx].b = 100 ;
   st[idx].arrival =  255 ;
-  st[idx].pos =  150 ;
+  st[idx].pos =  0 ;
   idx++;
 
-  st[idx].r = 255 ;
-  st[idx].g = 255 ;
+  st[idx].r = 200 ;
+  st[idx].g = 75 ;
+  st[idx].b = 75 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  200 ;
+  idx++;
+
+  st[idx].r = 100 ;
+  st[idx].g = 100 ;
+  st[idx].b = 100 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  295 ;
+  idx++;
+
+  st[idx].r = 100 ;
+  st[idx].g = 75 ;
+  st[idx].b = 110 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  130 ;
+  idx++;
+
+  st[idx].r = 150 ;
+  st[idx].g = 150 ;
+  st[idx].b = 75 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  230 ;
+  idx++;
+
+  st[idx].r = 50 ;
+  st[idx].g = 50 ;
+  st[idx].b = 200;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  35 ;
+  idx++;
+  
+  st[idx].r = 50 ;
+  st[idx].g = 50 ;
+  st[idx].b = 50 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  80 ;
+  idx++;
+  
+  st[idx].r = 20 ;
+  st[idx].g = 10 ;
   st[idx].b = 0 ;
   st[idx].arrival =  255 ;
-  st[idx].pos =  150 ;
+  st[idx].pos =  12 ;
   idx++;
+ st[idx].r = 20 ;
+  st[idx].g = 10 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  137 ;
+  idx++;
+ st[idx].r = 20 ;
+  st[idx].g = 10 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  203 ;
+  idx++;
+ st[idx].r = 20 ;
+  st[idx].g = 15 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  207 ;
+  idx++;
+   st[idx].r = 20 ;
+  st[idx].g = 10 ;
+  st[idx].b = 0 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  287 ;
+  idx++;
+
+ st[idx].r = 1 ;
+  st[idx].g = 2 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  100 ;
+  idx++;
+st[idx].r = 1 ;
+  st[idx].g = 3 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  110 ;
+  idx++;
+st[idx].r = 1 ;
+  st[idx].g = 2 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  173 ;
+  idx++;
+st[idx].r = 1 ;
+  st[idx].g = 2 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  257 ;
+  idx++;
+st[idx].r = 1 ;
+  st[idx].g = 2 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  66 ;
+  idx++;
+  st[idx].r = 1 ;
+  st[idx].g = 2 ;
+  st[idx].b = 5 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  53 ;
+  idx++;
+
+  st[idx].r = 2 ;
+  st[idx].g = 2 ;
+  st[idx].b = 2 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  237 ;
+  idx++;
+st[idx].r = 3 ;
+  st[idx].g = 2 ;
+  st[idx].b = 2 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  240 ;
+  idx++;
+  st[idx].r = 2 ;
+  st[idx].g = 1 ;
+  st[idx].b = 3 ;
+  st[idx].arrival =  255 ;
+  st[idx].pos =  247 ;
+  idx++;
+
+
+
+
+
+
 
   for (int i=0; i<  STARS_NB ; i++){
     
@@ -1482,4 +1629,3 @@ void aya_randgreen() {
 
 
 }
-
