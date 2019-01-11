@@ -468,16 +468,11 @@ class Star {
   }
 };
 
+#define STARS_NB 32
+Star st[STARS_NB];
 
-uint16_t fade_stars_cnt = 255;
-uint16_t fade_stars_sub_cnt = 0;
 
-void intro_stars() {
-  uint8_t r,g,b = 0;
-
-  #define STARS_NB 32
-  Star st[STARS_NB];
-
+void init_stars (){ 
   uint8_t idx = 0;
 
   st[idx].r = 255 ;
@@ -650,40 +645,38 @@ st[idx].r = 3 ;
   idx++;
 
 
-  for (int i=0; i<  STARS_NB ; i++){
-    /*
-    if ( fade_stars_cnt >  st[i].r  ){
-      r = 0;
-    }
-    else {
-      r = st[i].r - fade_stars_cnt;
-    }
-    if ( fade_stars_cnt >  st[i].g  ){
-      g = 0;
-    }
-    else {
-      g = st[i].g - fade_stars_cnt;
-    }
-    if ( fade_stars_cnt >  st[i].b  ){
-      b = 0;
-    }
-    else {
-      b = st[i].b - fade_stars_cnt;
-    }
-    */
-//     strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b, 255 - fade_stars_cnt)); 
-     strip.setPixelColor(st[i].pos, st[i].r / fade_stars_cnt, st[i].g / fade_stars_cnt, st[i].b / fade_stars_cnt); 
-//     strip.setPixelColor(st[i].pos, st[i].r, st[i].g, st[i].b, 0); 
-//     strip.setPixelColor(st[i].pos, strip.Color(st[i].r, st[i].g, st[i].b, 64)); 
-//     strip.setPixelColor(st[i].pos, strip.Color(r, g, b));    
-//    strip.setPixelColor(150, 0xFFFFFFFF);    
-  }
+} 
+    
+
+uint16_t intro_cnt = 0;
+uint16_t fade_stars_sub_cnt = 0;
+
+void intro_stars() {
+  uint8_t r,g,b = 0;
+  uint16_t fade_stars_cnt;
 
   fade_stars_sub_cnt ++;
-  if (fade_stars_cnt > 1 && fade_stars_sub_cnt > 10  ){
-      fade_stars_sub_cnt = 0;
-      fade_stars_cnt--;
+  if (intro_cnt < 254 && fade_stars_sub_cnt > 10  ){
+
+    fade_stars_sub_cnt = 0;
+    
+    fade_stars_cnt = 255 - intro_cnt;
+
+    for (int i=0; i<  STARS_NB ; i++){
+      strip.setPixelColor(st[i].pos, st[i].r / fade_stars_cnt, st[i].g / fade_stars_cnt, st[i].b / fade_stars_cnt); 
+    }
+
+    intro_cnt ++;
   }
+  else if ( intro_cnt >= 254) {
+    // No fade in
+    for (int i=0; i<  STARS_NB ; i++){
+      strip.setPixelColor(st[i].pos, st[i].r , st[i].g , st[i].b ); 
+    }
+  }
+
+
+
 }
 
 void ederlezi_config() {
@@ -1073,7 +1066,7 @@ void read_serial(){
      valid = 1;
     }
     else if (b == '&') {
-//      config_ayawuaska();
+      init_stars ();
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
