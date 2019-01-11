@@ -363,7 +363,8 @@ void loop() {
       symetricmorseorange();
     break;
     case 7:
-      greenblueriver();
+      rainbow();
+      // greenblueriver();
     break;
     case 8:
       int r;
@@ -1691,3 +1692,38 @@ void aya_randgreen() {
 
 
 }
+
+
+uint16_t rainbow_idx = 0;
+
+void rainbow() {
+  uint16_t i;
+  uint32_t color;
+
+    for(i=0; i<strip.numPixels()/2; i++) {
+      color = Wheel((i*1+rainbow_idx*1) & 255);
+      strip.setPixelColor(i, color);
+      // Symetry
+      strip.setPixelColor(strip.numPixels()-i-1, color);
+    }
+    
+    rainbow_idx ++;
+    if ( rainbow_idx > 255  ){
+        rainbow_idx = 0;
+    }
+}
+// Input a value 0 to 255 to get a color value.
+// The colours are a transition r - g - b - back to r.
+uint32_t Wheel(byte WheelPos) {
+  WheelPos = 255 - WheelPos;
+  if(WheelPos < 85) {
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  }
+  if(WheelPos < 170) {
+    WheelPos -= 85;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+  WheelPos -= 170;
+  return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
+}
+
