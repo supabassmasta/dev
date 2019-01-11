@@ -997,7 +997,7 @@ void config_mantra(){
   perc2.color_fact = 15;
   perc2.max = 255;
   perc2.pos = strip.numPixels() / 4;
-  perc2.color_mask = 0x000FF;
+  perc2.color_mask = 0x000FF00;
 
   perc3.cnt_reload = 30;
   perc3.cnt_num = 1;
@@ -1005,7 +1005,7 @@ void config_mantra(){
   perc3.color_fact = 15;
   perc3.max = 255;
   perc3.pos = strip.numPixels() * 3 / 4;
-  perc3.color_mask = 0x000FF;
+  perc3.color_mask = 0x000FF00;
 }
 
 void config_bondlywood() {
