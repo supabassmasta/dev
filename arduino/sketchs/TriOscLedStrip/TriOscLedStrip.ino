@@ -658,7 +658,7 @@ void intro_stars() {
   uint16_t fade_blue_cnt;
 
   fade_stars_sub_cnt ++;
-  if (intro_cnt < 254 && fade_stars_sub_cnt > 3  ){
+  if (intro_cnt < 254 && fade_stars_sub_cnt > 15  ){
 
     fade_stars_sub_cnt = 0;
     
@@ -670,14 +670,14 @@ void intro_stars() {
 
     intro_cnt ++;
   }
-  else if ( intro_cnt >= 254 && intro_cnt < 1000) {
+  else if ( intro_cnt >= 254 && intro_cnt < 3000) {
     // Stars No fade in
     for (int i=0; i<  STARS_NB ; i++){
       strip.setPixelColor(st[i].pos, st[i].r , st[i].g , st[i].b ); 
     }
 
     // Red  
-    fade_red_cnt = (intro_cnt - 254) >> 2;
+    fade_red_cnt = (intro_cnt - 254) >> 4;
     if (fade_red_cnt > 151 ) fade_red_cnt = 151;
     for ( int i = 0; i <  fade_red_cnt; i++) {
       r = fade_red_cnt - i;
@@ -687,13 +687,13 @@ void intro_stars() {
     intro_cnt ++;
      
   }
-  else if ( intro_cnt >= 1000) {
+  else if ( intro_cnt >= 3000) {
      // Red  
 //    fade_red_cnt = (intro_cnt - 254) >> 2;
 //    if (fade_red_cnt > 151 ) fade_red_cnt = 151;
 
       // Blue
-      fade_blue_cnt = (intro_cnt - 1000) >> 2;
+      fade_blue_cnt = (intro_cnt - 3000) >> 4;
       if (fade_blue_cnt > 300 ) fade_blue_cnt = 300;
     for ( int i = 0; i <  151; i++) {
       int16_t b16;
@@ -1109,6 +1109,9 @@ void read_serial(){
     }
     else if (b == '&') {
       init_stars ();
+      intro_cnt = 0;
+      fade_stars_sub_cnt = 0;
+
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
