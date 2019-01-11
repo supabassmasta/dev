@@ -1,3 +1,6 @@
+HW.ledstrip.cereal.writeByte('1');
+
+
 class synt1 extends SYNT{
 
     inlet => SinOsc s =>  outlet; 
