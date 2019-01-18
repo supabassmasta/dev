@@ -176,9 +176,11 @@ public class SEQ3 {
   }
 
   fun void print() {
+   0::ms => dur total_dur; 
+    
    for (0 => int i; i < elements.size() ; i++) {
       <<<"ELEMENT ", i, "  dur: ", elements[i].duration / data.tick>>>;   
-        
+      elements[i].duration +=>  total_dur; 
       for (0 => int j; j < elements[i].actions.size()      ; j++) {
         <<<"    ", j , " " , elements[i].actions[j].name >>>;
 
@@ -196,6 +198,8 @@ public class SEQ3 {
 
    }
     
+    <<<"\nSEQ TOTAL DURATION: ", total_dur / 1000::ms, " s, ", total_dur / data.tick, " ticks\n">>>;
+
 
 
   }
