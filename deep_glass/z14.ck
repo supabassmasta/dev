@@ -2,7 +2,7 @@ class synt0 extends SYNT{
     inlet => blackhole;
 
     BlowBotl bottle  => PowerADSR padsr =>  outlet; 
-    padsr.set(4000::ms, 2000::ms, .7 , 10000::ms);
+    padsr.set(4000::ms, 2000::ms, .7 , 4000::ms);
     padsr.setCurves(1. , 1., 1.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
     // ding!
     .09 => bottle.noiseGain;
@@ -27,8 +27,10 @@ t.reg(synt0 s3);
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c :4 1|3|5 ___ 3|5|7___
-       1|3|8 ___ 4|6|8___ " => t.seq;
+"}c :4 1|3|5 _
+       1|3|8 _
+" => t.seq;
+
 .15 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //
 t.print(); //t.force_off_action();
