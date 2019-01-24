@@ -9,6 +9,8 @@ h_h_ h<3h__ h_<3hh
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+s.sync(4*data.tick);
+s.print();
 
 while(1) {
        100::ms => now;

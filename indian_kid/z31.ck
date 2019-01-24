@@ -6,6 +6,8 @@ SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_V
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 
 8 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+s.sync(4*data.tick);
+s.print();
 s.go();     s $ ST @=> ST @ last; 
 
 STBRF brf;
