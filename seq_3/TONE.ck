@@ -177,7 +177,7 @@ public class TONE extends ST {
     new freq_synt @=> freq_synt @ act;
     f => act.f;
     e @=> act.e;
-    "freq_synt" + "  " + e + "  " + f => act.name;
+    "freq_synt" + "  " + e.toString() + "  " + f => act.name;
 
     return act;
   }
@@ -192,7 +192,7 @@ public class TONE extends ST {
   fun ACTION set_off_adsr (PowerADSR @ a) {
     new off_adsr @=> off_adsr @ act;
     a @=> act.a;
-    "off_adsr  " + a => act.name;
+    "off_adsr  " + a.toString() => act.name;
     return act;
   }
 
@@ -207,7 +207,7 @@ public class TONE extends ST {
   fun ACTION set_on_adsr (PowerADSR @ a) {
     new on_adsr @=> on_adsr @ act;
     a @=> act.a;
-    "on_adsr  " + a => act.name;
+    "on_adsr  " + a.toString() => act.name;
 
     return act;
   }
@@ -225,7 +225,7 @@ public class TONE extends ST {
     new gain_adsr @=> gain_adsr @ act;
     a @=> act.a;
     g => act.g;
-    "gain_adsr  " + a + "  " + g => act.name;
+    "gain_adsr  " + a.toString() + "  " + g => act.name;
     return act;
   }
 
@@ -241,7 +241,7 @@ public class TONE extends ST {
     new pan_action @=> pan_action @ act;
     p @=> act.p;
     v => act.v;
-    "pan_action  " + p + "  " + v => act.name;
+    "pan_action  " + p.toString() + "  " + v => act.name;
     return act;
   }
 
@@ -256,7 +256,7 @@ public class TONE extends ST {
     new synt_on @=> synt_on @ act;
     s @=> act.s;
 
-    "synt_on  " + s => act.name;
+    "synt_on  " + s.toString() => act.name;
     return act;
   }
 
@@ -271,7 +271,7 @@ public class TONE extends ST {
   fun ACTION set_synt_off( SYNT @ s ) {
     new synt_off @=> synt_off @ act;
     s @=> act.s;
-    "synt_off  " + s => act.name;
+    "synt_off  " + s.toString() => act.name;
     return act;
   }
 
@@ -287,7 +287,7 @@ public class TONE extends ST {
     new synt_new_note @=> synt_new_note @ act;
     s @=> act.s;
     index => act.index;
-    "synt_new_note  " + s + "  index " + index => act.name;
+    "synt_new_note  " + s.toString() + "  index " + index => act.name;
 
     return act;
   }
@@ -308,7 +308,7 @@ public class TONE extends ST {
     e @=> act.e;
     f => act.f;
     s_dur => act.s_dur;
-    "slide_act  " + e + "  dur " + s_dur/data.tick + " target " + f => act.name;
+    "slide_act  " + e.toString() + "  dur " + s_dur/data.tick + " target " + f => act.name;
     return act;
   }
 
@@ -328,7 +328,7 @@ public class TONE extends ST {
     e @=> act.e;
     nitp @=> act.note_info_tx_p;
 
-    "note_info_act " + e + " ST " + nitp => act.name;
+    "note_info_act " + e.toString() + " ST " + nitp.toString() => act.name;
     return act;
   }
   //////// NOTE MANAGEMENT ///////////////
