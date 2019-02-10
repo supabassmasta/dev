@@ -75,7 +75,7 @@ public class SEQ extends ST{
     e @=> act.e;
     nitp @=> act.note_info_tx_p;
 
-    "note_info_act " + e + " ST " + nitp => act.name;
+    "note_info_act " + e.toString() + " ST " + nitp.toString()=> act.name;
     return act;
   }
 

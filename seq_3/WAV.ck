@@ -14,7 +14,7 @@ public class WAV {
 
     play_wav play;
     wav0 @=> play.buf;
-    "play_wav  " + wav0 => play.name;
+    "play_wav  " + wav0.toString() => play.name;
 
     // PLAY PROBA
     class play_proba extends ACTION {
@@ -34,7 +34,7 @@ public class WAV {
       new play_proba @=> play_proba @ act;
       p => act.proba;
       wav0 @=> act.buf;
-      "play_proba  " + wav0 + " " + p => act.name;
+      "play_proba  " + wav0.toString() + " " + p => act.name;
       return act $ ACTION;
     }
 
@@ -54,7 +54,7 @@ public class WAV {
 //        <<<"ACT:", act>>>;
         g => act.g;
         wav0 @=> act.buf;
-        "gain_set  " + wav0 + " " + g => act.name;
+        "gain_set  " + wav0.toString() + " " + g => act.name;
         return act $ ACTION;
     }
 
@@ -74,7 +74,7 @@ public class WAV {
 //        <<<"ACT:", act>>>;
         p => act.p;
         pan_wav0 @=> act.pan;
-        "pan_set  " + pan_wav0 + "  " + p => act.name;
+        "pan_set  " + pan_wav0.toString() + "  " + p => act.name;
         return act $ ACTION;
     }
 
@@ -92,7 +92,7 @@ public class WAV {
         new rate_set @=> rate_set @ act;
         r => act.r;
         wav0 @=> act.buf;
-        "rate_set  " + wav0 + "  " + r => act.name;
+        "rate_set  " + wav0.toString() + "  " + r => act.name;
         return act $ ACTION;
     }
 
