@@ -1,0 +1,22 @@
+cd /usr/bin/
+ll chuck*
+
+sudo ln -s chuckp1400 chuckp
+sudo ln -s chuckj1400 chuckj
+
+sudo ln -s chuckp1352 chuckp
+sudo ln -s chuckj1352 chuckj
+
+sudo rm chuckp
+sudo rm chuckj
+
+
+
+
+cd /usr/local/lib
+
+sudo ln -s chuck_1400 chuck
+sudo ln -s chuck_1352 chuck
+
+sudo rm chuck
+
