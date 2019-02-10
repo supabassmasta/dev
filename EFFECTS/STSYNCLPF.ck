@@ -1,7 +1,3 @@
-public class STSYNCLPF extends ST{
-  LPF filterl => outl;
-  LPF filterr => outr;
-
   class nirx extends note_info_rx {
     
     LPF @ fl;
@@ -64,6 +60,10 @@ public class STSYNCLPF extends ST{
       }
     }
   }
+
+public class STSYNCLPF extends ST{
+  LPF filterl => outl;
+  LPF filterr => outr;
 
   nirx nio;
   filterl @=> nio.fl;

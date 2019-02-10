@@ -1,3 +1,26 @@
+  class END extends end { 
+		dur sync;
+		ADSR @ al;
+		ADSR @ ar;
+    fun void kill_me () {
+			SYNC sy;
+
+			if (sync == 0::ms) {
+				<<<"END LONG WAV NO SYNC">>>; 
+				al.keyOff(); ar.keyOff();  
+				al.releaseTime() => now;
+				<<<"REAL END LONG WAV">>>; 
+			}
+			else {
+				<<<"END LONG WAV SYNC">>>; 
+        sy.sync(sync ,-1* al.releaseTime());
+				al.keyOff(); ar.keyOff();  
+				al.releaseTime() => now;
+				<<<"REAL END LONG WAV">>>; 
+			}
+    }
+  }; 
+
 public class LONG_WAV extends ST {
 	SndBuf2 buf;
 	SYNC sy;
@@ -22,28 +45,6 @@ public class LONG_WAV extends ST {
 		in => buf.read;
 	}
 
-  class END extends end { 
-		dur sync;
-		ADSR @ al;
-		ADSR @ ar;
-    fun void kill_me () {
-			SYNC sy;
-
-			if (sync == 0::ms) {
-				<<<"END LONG WAV NO SYNC">>>; 
-				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
-				<<<"REAL END LONG WAV">>>; 
-			}
-			else {
-				<<<"END LONG WAV SYNC">>>; 
-        sy.sync(sync ,-1* al.releaseTime());
-				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
-				<<<"REAL END LONG WAV">>>; 
-			}
-    }
-  }; 
   END the_end;   
 	end_sync => the_end.sync;
 	al @=> the_end.al;

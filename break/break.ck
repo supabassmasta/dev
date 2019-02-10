@@ -1,3 +1,23 @@
+class STBREAK_SET extends ACTION {
+    0 => int nb;
+    fun int on_time() {
+         Break.set(nb*2);
+         Break.set(nb*2 + 1);
+
+         <<<"STBREAK_SET">>>; 
+            }
+}
+
+class STBREAK_RELEASE extends ACTION {
+    0 => int nb;
+    fun int on_time() {
+         Break.release(nb*2);
+         Break.release(nb*2 + 1);
+
+         <<<"STBREAK_RELEASE">>>; 
+            }
+}
+
 public class Break extends Chubgraph{
 
 	inlet => ADSR a => outlet;
@@ -60,26 +80,6 @@ public class Break extends Chubgraph{
  }
 
  // Actions for STBREAK
-
-class STBREAK_SET extends ACTION {
-    0 => int nb;
-    fun int on_time() {
-         Break.set(nb*2);
-         Break.set(nb*2 + 1);
-
-         <<<"STBREAK_SET">>>; 
-            }
-}
-
-class STBREAK_RELEASE extends ACTION {
-    0 => int nb;
-    fun int on_time() {
-         Break.release(nb*2);
-         Break.release(nb*2 + 1);
-
-         <<<"STBREAK_RELEASE">>>; 
-            }
-}
 
 fun static ACTION @ stbreak_set(int nb){
    STBREAK_SET act;

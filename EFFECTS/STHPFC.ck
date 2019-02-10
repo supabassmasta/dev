@@ -1,12 +1,3 @@
-public class STHPFC extends ST{
-  HPF hpfl => outl;
-  HPF hpfr => outr;
-
-  1000 => hpfl.freq;
-  1000 => hpfr.freq;
-  1 => hpfl.Q;
-  1 => hpfr.Q;
-
   class control_freq extends CONTROL {
     HPF @ fl;
     HPF @ fr;
@@ -41,6 +32,15 @@ public class STHPFC extends ST{
       <<<"control_freq ", fr.freq()>>>; 
     }
   }
+
+public class STHPFC extends ST{
+  HPF hpfl => outl;
+  HPF hpfr => outr;
+
+  1000 => hpfl.freq;
+  1000 => hpfr.freq;
+  1 => hpfl.Q;
+  1 => hpfr.Q;
 
   control_freq cfreq;
   hpfl @=> cfreq.fl;

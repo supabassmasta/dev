@@ -1,3 +1,15 @@
+  class cont extends CONTROL {
+    LPF @ fl;    
+    LPF @ fr;    
+    LPF_ST @ mother;
+
+   fun void set(float in) {
+     mother.enable();
+     Std.mtof(in) => fl.freq => fr.freq;
+   }
+
+  }
+
 public class LPF_ST {
 
 
@@ -18,17 +30,6 @@ public class LPF_ST {
     
   }
 
-  class cont extends CONTROL {
-    LPF @ fl;    
-    LPF @ fr;    
-    LPF_ST @ mother;
-
-   fun void set(float in) {
-     mother.enable();
-     Std.mtof(in) => fl.freq => fr.freq;
-   }
-
-  }
 
   cont c;
   lpfl @=> c.fl;

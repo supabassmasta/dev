@@ -1,3 +1,27 @@
+class note_info_act extends ACTION {
+    note_info_tx @ note_info_tx_p;
+    ELEMENT @ e;
+
+    fun int on_time() {
+      note_info_tx_p.push_to_all( e.note_info_s );
+    }
+
+  }
+
+   class END extends end { 
+    SEQ3 @ s; 
+    0::ms => dur extra_end;
+    
+    fun void kill_me () {
+      <<<"THE END">>>;	
+      // Mute seq
+      0 => s.on;
+      // Wait seq duration before diing (not optimal)
+      s.duration +  extra_end => now;		
+      <<<"THE real END">>>;		
+    }
+  }; 
+ 
 public class SEQ extends ST{
   // PUBLIC 
   string wav[0];
@@ -59,16 +83,6 @@ public class SEQ extends ST{
     }
   }
 
-  class note_info_act extends ACTION {
-    note_info_tx @ note_info_tx_p;
-    ELEMENT @ e;
-
-    fun int on_time() {
-      note_info_tx_p.push_to_all( e.note_info_s );
-    }
-
-  }
-  
   fun ACTION set_note_info_act(note_info_tx @ nitp, ELEMENT @ e) {
     new note_info_act @=> note_info_act @ act;
     
@@ -482,19 +496,6 @@ public class SEQ extends ST{
     in => s.on;
   }
 
-  class END extends end { 
-    SEQ3 @ s; 
-    0::ms => dur extra_end;
-    
-    fun void kill_me () {
-      <<<"THE END">>>;	
-      // Mute seq
-      0 => s.on;
-      // Wait seq duration before diing (not optimal)
-      s.duration +  extra_end => now;		
-      <<<"THE real END">>>;		
-    }
-  }; 
   END the_end;   
   s @=> the_end.s;
 

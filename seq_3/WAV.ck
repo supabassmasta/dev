@@ -1,8 +1,3 @@
-public class WAV {
-    SndBuf wav0;
-    Pan2 pan_wav0;
-    Gain gain_wav0; 
-    //PLAY 
     class play_wav extends ACTION {
         SndBuf @ buf;
         fun int on_time() {
@@ -12,11 +7,7 @@ public class WAV {
         }
     }
 
-    play_wav play;
-    wav0 @=> play.buf;
-    "play_wav  " + wav0.toString() => play.name;
 
-    // PLAY PROBA
     class play_proba extends ACTION {
       float proba;      
       SndBuf @ buf;
@@ -30,15 +21,6 @@ public class WAV {
         }
     }
 
-    fun ACTION set_play_proba(float p){
-      new play_proba @=> play_proba @ act;
-      p => act.proba;
-      wav0 @=> act.buf;
-      "play_proba  " + wav0.toString() + " " + p => act.name;
-      return act $ ACTION;
-    }
-
-    // GAIN
     class gain_set extends ACTION {
         SndBuf @ buf;
         .3 => float g;
@@ -49,16 +31,6 @@ public class WAV {
         }
     }
 
-    fun ACTION set_gain(float g) {
-        new gain_set @=> gain_set @ act;
-//        <<<"ACT:", act>>>;
-        g => act.g;
-        wav0 @=> act.buf;
-        "gain_set  " + wav0.toString() + " " + g => act.name;
-        return act $ ACTION;
-    }
-
-    // PAN
     class pan_set extends ACTION {
         Pan2 @ pan;
         .0 => float p;
@@ -69,6 +41,46 @@ public class WAV {
         }
     }
 
+    class rate_set extends ACTION {
+        SndBuf @ buf;
+        .3 => float r;
+        fun int on_time() {
+            r => buf.rate;
+//            <<<"RATE:", buf.rate()>>>;
+            return 0;
+        }
+    }
+
+public class WAV {
+    SndBuf wav0;
+    Pan2 pan_wav0;
+    Gain gain_wav0; 
+    //PLAY 
+    play_wav play;
+    wav0 @=> play.buf;
+    "play_wav  " + wav0.toString() => play.name;
+
+    // PLAY PROBA
+
+    fun ACTION set_play_proba(float p){
+      new play_proba @=> play_proba @ act;
+      p => act.proba;
+      wav0 @=> act.buf;
+      "play_proba  " + wav0.toString() + " " + p => act.name;
+      return act $ ACTION;
+    }
+
+    // GAIN
+    fun ACTION set_gain(float g) {
+        new gain_set @=> gain_set @ act;
+//        <<<"ACT:", act>>>;
+        g => act.g;
+        wav0 @=> act.buf;
+        "gain_set  " + wav0.toString() + " " + g => act.name;
+        return act $ ACTION;
+    }
+
+    // PAN
     fun ACTION set_pan(float p) {
         new pan_set @=> pan_set @ act;
 //        <<<"ACT:", act>>>;
@@ -79,15 +91,6 @@ public class WAV {
     }
 
     // RATE
-    class rate_set extends ACTION {
-        SndBuf @ buf;
-        .3 => float r;
-        fun int on_time() {
-            r => buf.rate;
-//            <<<"RATE:", buf.rate()>>>;
-            return 0;
-        }
-    }
     fun ACTION set_rate(float r) {
         new rate_set @=> rate_set @ act;
         r => act.r;

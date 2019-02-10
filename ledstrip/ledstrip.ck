@@ -1,3 +1,21 @@
+  class tx extends ACTION {
+    int byte;
+    0 => int opened;
+    SerialIO @ serial;
+    fun int on_time() {
+//      <<<"SERIAL">>>;
+
+      if ( opened) {
+//        <<<"serial send bytes">>>; 
+        serial.writeByte(byte);
+      }
+      else {
+//        <<<"Warning cannot execute action, serial not openned">>>;
+      }
+    }
+
+  }
+
 public class LEDSTRIP {
 
   0 => int opened;
@@ -19,24 +37,6 @@ public class LEDSTRIP {
     }
     else {
       <<<"WARNING LED SERIAL NOT OPENED">>>;
-    }
-
-  }
-
-  class tx extends ACTION {
-    int byte;
-    0 => int opened;
-    SerialIO @ serial;
-    fun int on_time() {
-//      <<<"SERIAL">>>;
-
-      if ( opened) {
-//        <<<"serial send bytes">>>; 
-        serial.writeByte(byte);
-      }
-      else {
-//        <<<"Warning cannot execute action, serial not openned">>>;
-      }
     }
 
   }

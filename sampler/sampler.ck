@@ -1,13 +1,4 @@
-public class sampler {
-
-    Gain in;
-    Gain out;
-
-    dur max;
-    dur length;
-    
-    // buff class
-    class buffer {
+class buffer {
        Gain in => ADSR buf_in => Gain fb => ADSR buf_out => Gain out;
        fb => Delay d => fb;
        
@@ -47,6 +38,15 @@ public class sampler {
     
     }
 
+public class sampler {
+
+    Gain in;
+    Gain out;
+
+    dur max;
+    dur length;
+    
+    // buff class
     buffer @ array [0];
     
 

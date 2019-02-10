@@ -1,7 +1,3 @@
-public class STSYNCBRF extends ST{
-  BRF filterl => outl;
-  BRF filterr => outr;
-
   class nirx extends note_info_rx {
     
     BRF @ fl;
@@ -64,6 +60,10 @@ public class STSYNCBRF extends ST{
       }
     }
   }
+
+public class STSYNCBRF extends ST{
+  BRF filterl => outl;
+  BRF filterr => outr;
 
   nirx nio;
   filterl @=> nio.fl;

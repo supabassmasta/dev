@@ -1,12 +1,3 @@
-public class STRESC extends ST{
-  ResonZ resl => outl;
-  ResonZ resr => outr;
-
-  1000 => resl.freq;
-  1000 => resr.freq;
-  1 => resl.Q;
-  1 => resr.Q;
-
   class control_freq extends CONTROL {
     ResonZ @ fl;
     ResonZ @ fr;
@@ -41,6 +32,15 @@ public class STRESC extends ST{
       <<<"control_freq ", fr.freq()>>>; 
     }
   }
+
+public class STRESC extends ST{
+  ResonZ resl => outl;
+  ResonZ resr => outr;
+
+  1000 => resl.freq;
+  1000 => resr.freq;
+  1 => resl.Q;
+  1 => resr.Q;
 
   control_freq cfreq;
   resl @=> cfreq.fl;

@@ -1,3 +1,141 @@
+  class freq_synt extends ACTION {
+    Envelope @ e;
+    float f;
+
+    fun int on_time() {
+      f => e.value;
+    }
+  }
+
+  class off_adsr extends ACTION {
+    PowerADSR @ a;
+
+    fun int on_time() {
+      a.keyOff();
+    }
+  }
+
+  class on_adsr extends ACTION {
+    PowerADSR @ a;
+
+    fun int on_time() {
+      a.keyOn();
+    }
+  }
+
+  class gain_adsr extends ACTION {
+    PowerADSR @ a;
+    float g;
+
+    fun int on_time() {
+      g => a.gain;
+    }
+  }
+
+  class pan_action extends ACTION {
+    Pan2 @ p;
+    float v;
+    fun int on_time() {
+      v => p.pan;
+    }
+  }
+
+  class synt_on extends ACTION {
+    SYNT @ s;
+    fun int on_time() {
+      s.on();
+    }
+  }
+
+  class synt_off extends ACTION {
+    SYNT @ s;
+    fun int on_time() {
+      s.off();
+      //            <<<"synt_off">>>; 
+    }
+  }
+
+  class synt_new_note extends ACTION {
+    SYNT @ s;
+    int index;
+    fun int on_time() {
+      s.new_note(index);
+    }
+  }
+
+ class slide_act extends ACTION {
+    Envelope @ e;
+    float f;
+    dur s_dur;
+
+    fun int on_time() {
+      f => e.target;
+      s_dur => e.duration;
+    }
+  }
+
+  class note_info_act extends ACTION {
+    note_info_tx @ note_info_tx_p;
+    ELEMENT @ e;
+
+    fun int on_time() {
+      note_info_tx_p.push_to_all( e.note_info_s );
+    }
+
+  }
+  
+  class index {
+    // interal
+    0=> int state;
+    0=> int value_i;
+
+    // public
+    fun void up(){
+      2 => state;
+      value_i + 1 => value_i;
+    }
+
+    fun int value () {
+      state - 1 => state;
+      if (state <=0) {
+        0=> value_i;
+        0=> state;
+      }
+
+      return value_i;
+    }
+
+
+    fun void reset (){
+      0=> state;
+      0=> value_i;
+    }
+  }
+
+  class END extends end { 
+    SEQ3 @ s; 
+    0=> int force_off_actions;
+    0::ms => dur extra_end;
+
+    fun void kill_me () {
+      <<<"THE END">>>;	
+      // Mute seq
+      0 => s.on;
+      if ( force_off_actions  ){
+          s.play_off_actions(0);
+      }
+      // Wait seq duration before diing (not optimal)
+      s.duration + extra_end => now;		
+			// let "go" shred exit by herself 
+		  1=>s.exit;
+      s.duration => now;		
+
+//      Machine.remove(s.id_go.id());
+//      10::ms => now;
+      <<<"THE real END">>>;		
+    }
+  }; 
+
 public class TONE extends ST {
 
   SYNT synt[0];
@@ -164,15 +302,6 @@ public class TONE extends ST {
 
   /////////// ACTIONS ////////////////
 
-  class freq_synt extends ACTION {
-    Envelope @ e;
-    float f;
-
-    fun int on_time() {
-      f => e.value;
-    }
-  }
-
   fun ACTION set_freq_synt (Envelope @ e, float f) {
     new freq_synt @=> freq_synt @ act;
     f => act.f;
@@ -182,26 +311,11 @@ public class TONE extends ST {
     return act;
   }
 
-  class off_adsr extends ACTION {
-    PowerADSR @ a;
-
-    fun int on_time() {
-      a.keyOff();
-    }
-  }
   fun ACTION set_off_adsr (PowerADSR @ a) {
     new off_adsr @=> off_adsr @ act;
     a @=> act.a;
     "off_adsr  " + a.toString() => act.name;
     return act;
-  }
-
-  class on_adsr extends ACTION {
-    PowerADSR @ a;
-
-    fun int on_time() {
-      a.keyOn();
-    }
   }
 
   fun ACTION set_on_adsr (PowerADSR @ a) {
@@ -212,29 +326,12 @@ public class TONE extends ST {
     return act;
   }
 
-  class gain_adsr extends ACTION {
-    PowerADSR @ a;
-    float g;
-
-    fun int on_time() {
-      g => a.gain;
-    }
-  }
-
   fun ACTION set_gain_adsr (PowerADSR @ a, float g) {
     new gain_adsr @=> gain_adsr @ act;
     a @=> act.a;
     g => act.g;
     "gain_adsr  " + a.toString() + "  " + g => act.name;
     return act;
-  }
-
-  class pan_action extends ACTION {
-    Pan2 @ p;
-    float v;
-    fun int on_time() {
-      v => p.pan;
-    }
   }
 
   fun ACTION set_pan(Pan2 @ p, float v) {
@@ -245,13 +342,6 @@ public class TONE extends ST {
     return act;
   }
 
-  class synt_on extends ACTION {
-    SYNT @ s;
-    fun int on_time() {
-      s.on();
-    }
-  }
-
   fun ACTION set_synt_on( SYNT @ s ) {
     new synt_on @=> synt_on @ act;
     s @=> act.s;
@@ -260,27 +350,11 @@ public class TONE extends ST {
     return act;
   }
 
-  class synt_off extends ACTION {
-    SYNT @ s;
-    fun int on_time() {
-      s.off();
-      //            <<<"synt_off">>>; 
-    }
-  }
-
   fun ACTION set_synt_off( SYNT @ s ) {
     new synt_off @=> synt_off @ act;
     s @=> act.s;
     "synt_off  " + s.toString() => act.name;
     return act;
-  }
-
-  class synt_new_note extends ACTION {
-    SYNT @ s;
-    int index;
-    fun int on_time() {
-      s.new_note(index);
-    }
   }
 
   fun ACTION set_synt_new_note( SYNT @ s, int index ) {
@@ -292,17 +366,7 @@ public class TONE extends ST {
     return act;
   }
 
-  class slide_act extends ACTION {
-    Envelope @ e;
-    float f;
-    dur s_dur;
-
-    fun int on_time() {
-      f => e.target;
-      s_dur => e.duration;
-    }
-  }
-
+ 
   fun ACTION set_slide(Envelope @ e, float f, dur s_dur) {
     new slide_act @=> slide_act @ act;
     e @=> act.e;
@@ -312,16 +376,6 @@ public class TONE extends ST {
     return act;
   }
 
-  class note_info_act extends ACTION {
-    note_info_tx @ note_info_tx_p;
-    ELEMENT @ e;
-
-    fun int on_time() {
-      note_info_tx_p.push_to_all( e.note_info_s );
-    }
-
-  }
-  
   fun ACTION set_note_info_act(note_info_tx @ nitp, ELEMENT @ e) {
     new note_info_act @=> note_info_act @ act;
     
@@ -396,34 +450,6 @@ public class TONE extends ST {
     return Std.mtof(result_i);  
   }
 
-  /////////////// INDEX ///////////////
-  class index {
-    // interal
-    0=> int state;
-    0=> int value_i;
-
-    // public
-    fun void up(){
-      2 => state;
-      value_i + 1 => value_i;
-    }
-
-    fun int value () {
-      state - 1 => state;
-      if (state <=0) {
-        0=> value_i;
-        0=> state;
-      }
-
-      return value_i;
-    }
-
-
-    fun void reset (){
-      0=> state;
-      0=> value_i;
-    }
-  }
 
 
 
@@ -934,29 +960,6 @@ public class TONE extends ST {
     in => s.on;
   }
 
-  class END extends end { 
-    SEQ3 @ s; 
-    0=> int force_off_actions;
-    0::ms => dur extra_end;
-
-    fun void kill_me () {
-      <<<"THE END">>>;	
-      // Mute seq
-      0 => s.on;
-      if ( force_off_actions  ){
-          s.play_off_actions(0);
-      }
-      // Wait seq duration before diing (not optimal)
-      s.duration + extra_end => now;		
-			// let "go" shred exit by herself 
-		  1=>s.exit;
-      s.duration => now;		
-
-//      Machine.remove(s.id_go.id());
-//      10::ms => now;
-      <<<"THE real END">>>;		
-    }
-  }; 
   END the_end;   
   s @=> the_end.s;
 

@@ -1,7 +1,3 @@
-public class STSYNCRES extends ST{
-  ResonZ filterl => outl;
-  ResonZ filterr => outr;
-
   class nirx extends note_info_rx {
     
     ResonZ @ fl;
@@ -64,6 +60,10 @@ public class STSYNCRES extends ST{
       }
     }
   }
+
+public class STSYNCRES extends ST{
+  ResonZ filterl => outl;
+  ResonZ filterr => outr;
 
   nirx nio;
   filterl @=> nio.fl;

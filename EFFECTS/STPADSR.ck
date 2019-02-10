@@ -1,15 +1,3 @@
-public class STPADSR extends ST{
-  PowerADSR adsrl => outl;
-  PowerADSR adsrr => outr;
-  dur dur_to_keyoff;
-
-
-  adsrl.set(1::ms, 10::ms, .00001, 10::ms);
-  adsrr.set(1::ms, 10::ms, .00001, 10::ms);
-
-  adsrl.setCurves(2.0, 2.0, .5);
-  adsrr.setCurves(2.0, 2.0, .5);
-
   class nirx extends note_info_rx {
     PowerADSR @ al;
     PowerADSR @ ar;
@@ -43,6 +31,18 @@ public class STPADSR extends ST{
 
     }
   }
+
+public class STPADSR extends ST{
+  PowerADSR adsrl => outl;
+  PowerADSR adsrr => outr;
+  dur dur_to_keyoff;
+
+
+  adsrl.set(1::ms, 10::ms, .00001, 10::ms);
+  adsrr.set(1::ms, 10::ms, .00001, 10::ms);
+
+  adsrl.setCurves(2.0, 2.0, .5);
+  adsrr.setCurves(2.0, 2.0, .5);
 
   nirx nio;
   adsrl @=> nio.al;

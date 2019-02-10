@@ -1,9 +1,3 @@
-public class STGAINC extends ST{
-  Gain gainl => outl;
-  Gain gainr => outr;
-
-  1. => gainl.gain => gainr.gain;
-
   class control_gain extends CONTROL {
     Gain @ gl;
     Gain @ gr;
@@ -19,6 +13,12 @@ public class STGAINC extends ST{
     }
 
   }
+
+public class STGAINC extends ST{
+  Gain gainl => outl;
+  Gain gainr => outr;
+
+  1. => gainl.gain => gainr.gain;
 
   control_gain cgain;
   gainl @=> cgain.gl;

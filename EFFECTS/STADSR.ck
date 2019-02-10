@@ -1,12 +1,3 @@
-public class STADSR extends ST{
-  ADSR adsrl => outl;
-  ADSR adsrr => outr;
-  dur dur_to_keyoff;
-
-
-  adsrl.set(1::ms, 10::ms, .00001, 10::ms);
-  adsrr.set(1::ms, 10::ms, .00001, 10::ms);
-
   class nirx extends note_info_rx {
     ADSR @ al;
     ADSR @ ar;
@@ -40,6 +31,15 @@ public class STADSR extends ST{
 
     }
   }
+
+public class STADSR extends ST{
+  ADSR adsrl => outl;
+  ADSR adsrr => outr;
+  dur dur_to_keyoff;
+
+
+  adsrl.set(1::ms, 10::ms, .00001, 10::ms);
+  adsrr.set(1::ms, 10::ms, .00001, 10::ms);
 
   nirx nio;
   adsrl @=> nio.al;

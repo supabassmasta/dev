@@ -1,10 +1,3 @@
-public class STDIGITC extends ST{
-  digit digl;
-  digit digr;
-
-  Gain inl => digl.connect => outl;
-  Gain inr => digr.connect => outr;
-
   class control_ech extends CONTROL {
     digit @ dlp;
     digit @ drp;
@@ -31,6 +24,13 @@ public class STDIGITC extends ST{
 
     }
   }
+
+public class STDIGITC extends ST{
+  digit digl;
+  digit digr;
+
+  Gain inl => digl.connect => outl;
+  Gain inr => digr.connect => outr;
 
   control_ech cech;
   digl @=> cech.dlp;

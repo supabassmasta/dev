@@ -1,12 +1,3 @@
-public class STBRFC extends ST{
-  BRF brfl => outl;
-  BRF brfr => outr;
-
-  1000 => brfl.freq;
-  1000 => brfr.freq;
-  1 => brfl.Q;
-  1 => brfr.Q;
-
   class control_freq extends CONTROL {
     BRF @ fl;
     BRF @ fr;
@@ -41,6 +32,15 @@ public class STBRFC extends ST{
       <<<"control_freq ", fr.freq()>>>; 
     }
   }
+
+public class STBRFC extends ST{
+  BRF brfl => outl;
+  BRF brfr => outr;
+
+  1000 => brfl.freq;
+  1000 => brfr.freq;
+  1 => brfl.Q;
+  1 => brfr.Q;
 
   control_freq cfreq;
   brfl @=> cfreq.fl;

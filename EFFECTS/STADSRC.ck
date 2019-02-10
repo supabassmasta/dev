@@ -1,7 +1,3 @@
-public class STADSRC extends ST{
-  ADSR al => outl;
-  ADSR ar => outr;
-
   class control_a extends CONTROL {
     ADSR @ alp;
     ADSR @ arp;
@@ -65,6 +61,11 @@ public class STADSRC extends ST{
       }
     }
   }
+
+public class STADSRC extends ST{
+  ADSR al => outl;
+  ADSR ar => outr;
+
   control_a ca;
   al @=> ca.alp;
   ar @=> ca.arp;
