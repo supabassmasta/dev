@@ -545,6 +545,9 @@ ab STLPFK STLPF lpf;
 ab STDLK STWPDiodeLadder stdl;
 \<CR>stdl.connect(last $ ST , 1000 /* cutoff */  , 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */  );       stdl $ ST @=>  last;
 
+ab STKORGK STWPKorg35 stkorg;
+\<CR>stkorg.connect(last $ ST , 1000 /* cutoff */  , 1.2 /* /!\ < 1.7 !!!!!! resonance */ , true /* nonlinear */ );       stkorg $ ST @=>  last;
+
 
 ab STBPFCK STBPFC bpfc;
 \<CR>bpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       bpfc $ ST @=>  last;
@@ -855,5 +858,10 @@ ab STSYNCDLK STSYNCWPDiodeLadder stsyncdl;
 \<CR>stsyncdl.freq(3*100 /* Base */, 5 * 100 /* Variable */, 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */ );
 \<CR>stsyncdl.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
 \<CR>stsyncdl.connect(t $ ST, t.note_info_tx_o); stsyncdl $ ST @=>  last; 
+
+ab STSYNCKORGK STSYNCWPKorg35 stsynckorg;
+\<CR>stsynckorg.freq(3*100 /* Base */, 2 * 100 /* Variable */, 1.1 /*   /!\ < 1.7 !!!!   resonance */ , true /* nonlinear */ );
+\<CR>stsynckorg.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
+\<CR>stsynckorg.connect(t $ ST, t.note_info_tx_o); stsynckorg $ ST @=>  last; 
 
 
