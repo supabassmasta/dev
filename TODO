@@ -1,3 +1,6 @@
+Optimize TONE and SEQ END duration/extra_end. Test negative extra end to reduce long seq END.
+
+
 Bolly:
 Faire des synt plus soft pour le début du morceau
 Faire du glitché pour le chant digital
