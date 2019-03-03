@@ -579,6 +579,7 @@ ab STGAINCK STGAINC gainc;
 
 ab RECK REC rec;
 \<CR>rec.rec(8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
+\<CR>//rec.rec_no_sync(8*data.tick, "test.wav");
 
 ab STDIGITCK STDIGITC dig;
 \<CR>dig.connect(last $ ST , HW.lpd8.potar[1][1] /* sub sample period */ , HW.lpd8.potar[1][2] /* quantization */);      dig $ ST @=>  last;

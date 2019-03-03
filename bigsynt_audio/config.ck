@@ -1,0 +1,1 @@
+../bigsynt_silent/config.ck
