@@ -16,6 +16,7 @@ SndBuf s => FFT ffth => blackhole;
 //*******************************************************************************
 //"../_SAMPLES/ConvolutionImpulseResponse/in_the_silo_revised.wav" => s.read; // whatever you like (caution of length!!)
 "../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => s.read; // whatever you like (caution of length!!)
+//"../_SAMPLES/ConvolutionImpulseResponse/chateau_de_logne_outside.wav" => s.read; // whatever you like (caution of length!!)
 
 2 => int fftSize;
 while (fftSize < s.samples())
@@ -23,14 +24,12 @@ while (fftSize < s.samples())
 fftSize => int windowSize;   // this is windowsize, only apply to signal blocks
 windowSize/2 => int hopSize; // this can any whole fraction of windowsize
 2 *=> fftSize;               // zero pad by 2x factor (for convolve)
+<<<"fftSize :", fftSize, " samp, ", fftSize * 1::samp / 1::ms," ms">>>;
+
 
 // our input signal, replace adc with anything you like
 SndBuf w => Gain input => FFT fftx => blackhole;  // input signal
 
-//*******************************************************************************
-//Sound source to convolve filename/path
-//*******************************************************************************
-"./ploc.wav" => w.read;
 
 IFFT outy => dac;            // our output
 fftSize => ffth.size => fftx.size => outy.size; // sizes
@@ -39,11 +38,19 @@ windowSize::samp => now;     // load impulse response into h
 ffth.upchuck() @=> UAnaBlob H; // spectrum of fixed impulse response
 s =< ffth =< blackhole;      // don't need impulse resp signal anymore
 
+<<<"Convolution IR Ready">>>;
+
+
 complex Z[fftSize/2];
 //*******************************************************************************
 //Change output gain
 //*******************************************************************************
-3 * 1000 => input.gain;          // fiddle with this how you like/need
+10 * 1000 => input.gain;          // fiddle with this how you like/need
+
+//*******************************************************************************
+//Sound source to convolve filename/path
+//*******************************************************************************
+"./ploc.wav" => w.read;
 
 fun void f1 (){ 
 while(1) {
@@ -57,7 +64,7 @@ while(1) {
 fun void f2 (){ 
  REC rec;
 // rec.rec(128*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
- rec.rec_no_sync(128*data.tick, "test.wav"); 
+ rec.rec_no_sync(8  * 32*data.tick, "test.wav"); 
 
 
    } 
