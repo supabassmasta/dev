@@ -1,76 +1,48 @@
-// FFT convolution with static impulse response
-// by Perry R. Cook, November 2014
-// upsides:  as efficient as it could be, save for
-//           constructing a specific fft convolution chugin
-// downsides: minimum delay is length of impulse response + buffers
-// fix:      break into pieces and overlap add
-//  Other fix:  see filter version using my FIR Filter chugin
+TONE t;
+t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(SUPERSAW3 s2); 
+t.reg(SUPERSAW3 s3); 
+t.reg(SUPERSAW3 s4); 
+t.reg(SUPERSAW3 s5); 
+t.reg(SUPERSAW3 s6); 
+t.dor();// t.aeo(); // t.phr();// t.loc();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+":8:2 }c}c
+1|3|5|8|b|d_
+" => t.seq;
+0.6 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+t.adsr[0].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[1].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[2].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[3].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[4].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[5].set(2000::ms, 1000::ms, .8, 4000::ms);
+t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.go();   t $ ST @=> ST @ last; 
 
-// our fixed convolution kernal (impulse response)
-SndBuf s => FFT ffth => blackhole;
+//STSYNCWPDiodeLadder stsyncdl;
+//stsyncdl.freq(13*100 /* Base */, 10 * 100 /* Variable */, 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */ );
+//stsyncdl.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
+//stsyncdl.connect(t $ ST, t.note_info_tx_o); stsyncdl $ ST @=>  last;  
 
-//*******************************************************************************
-//Input response recording filename goes here. 
-//If using Mini-Audicle, make sure in Mini-Audicle Preferences
-//you have set your "Current Directory" in the Miscellaneous tab.
-//*******************************************************************************
-//"../_SAMPLES/ConvolutionImpulseResponse/in_the_silo_revised.wav" => s.read; // whatever you like (caution of length!!)
-"../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => s.read; // whatever you like (caution of length!!)
+STSYNCLPF stsynclpf;
+stsynclpf.freq(3*100 /* Base */, 6 * 100 /* Variable */, 6. /* Q */);
+stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpf.connect(t $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
-2 => int fftSize;
-while (fftSize < s.samples())
-    2 *=> fftSize;           // next highest power of two
-fftSize => int windowSize;   // this is windowsize, only apply to signal blocks
-windowSize/2 => int hopSize; // this can any whole fraction of windowsize
-2 *=> fftSize;               // zero pad by 2x factor (for convolve)
+//STREV2 rev; // DUCKED
+//rev.connect(last $ ST, .3 /* mix */);      rev $ ST @=>  last; 
 
-// our input signal, replace adc with anything you like
-SndBuf w => Gain input => FFT fftx => blackhole;  // input signal
+// WAIT seq to start
+10::ms => now;
 
-//*******************************************************************************
-//Sound source to convolve filename/path
-//*******************************************************************************
-"./ploc.wav" => w.read;
-
-IFFT outy => dac;            // our output
-fftSize => ffth.size => fftx.size => outy.size; // sizes
-Windowing.hann(windowSize) => fftx.window;
-windowSize::samp => now;     // load impulse response into h
-ffth.upchuck() @=> UAnaBlob H; // spectrum of fixed impulse response
-s =< ffth =< blackhole;      // don't need impulse resp signal anymore
-
-complex Z[fftSize/2];
-//*******************************************************************************
-//Change output gain
-//*******************************************************************************
-3 * 1000 => input.gain;          // fiddle with this how you like/need
-
-fun void f1 (){ 
-while(1) {
-     4*hopSize :: samp => now;
-     0 => w.pos;
-}
- 
-   } 
-   spork ~ f1 ();
-    
-fun void f2 (){ 
- REC rec;
-// rec.rec(128*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
- rec.rec_no_sync(128*data.tick, "test.wav"); 
+REC rec;
+//rec.rec(8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
+rec.rec_no_sync(32*data.tick, "test4.wav"); 
 
 
-   } 
-   spork ~ f2 ();
-    
+//4 *  data.tick => now;
 
-while (true)  {
-    fftx.upchuck() @=> UAnaBlob X; // spectrum of input signal
-    
-    // multiply spectra bin by bin (complex for free!):
-    for(0 => int i; i < fftSize/2; i++ ) {
-        fftx.cval(i) * H.cval(i) => Z[i];    
-    }    
-    outy.transform( Z );      // take ifft
-    hopSize :: samp => now;   // and do it all again
-}
