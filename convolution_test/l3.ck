@@ -1,6 +1,7 @@
 class STRECCONV extends ST{
   Gain gainl => outl;
   Gain gainr => outr;
+  1. => gainl.gain => gainr.gain;
 
   SndBuf ir;
   FFT fftir;
@@ -27,17 +28,18 @@ class STRECCONV extends ST{
     2 *=> fftSize;               // zero pad by 2x factor (for convolve)
     <<<"fftSize :", fftSize, " samp, ", fftSize * 1::samp / 1::ms," ms">>>;
 
+    // config ffts sizes and window
+    fftSize => fftir.size => fftx.size => outy.size; // sizes
+    Windowing.hann(windowSize) => fftx.window;
+
+    fftSize/2 => Z.size;
+
+    0 => ir.pos;
     windowSize::samp => now;     // load impulse response into h
     fftir.upchuck() @=> H; // spectrum of fixed impulse response
     ir =< fftir =< blackhole;      // don't need impulse resp signal anymore
 
     <<<"Convolution IR Ready">>>;
-
-    // config ffts sizes and window
-    fftSize => fftir.size => fftx.size => outy.size; // sizes
-    Windowing.hann(windowSize) => fftx.window;
-
-    fftSize/2 => Z.size();
   }
 
 
@@ -56,6 +58,7 @@ class STRECCONV extends ST{
   ////// OUTPUT ////// 
   outy => gainl;  // MONO AT NOW         
   outy => gainr;      
+//  outy => dac;      
 
   //*******************************************************************************
   //Change output gain
@@ -79,7 +82,7 @@ class STRECCONV extends ST{
     spork ~ _rec ();
   }
 
-  fun void process() {
+  fun void  _process() {
 
     while (true)  {
       fftx.upchuck() @=> UAnaBlob X; // spectrum of input signal
@@ -94,6 +97,10 @@ class STRECCONV extends ST{
 
   }
 
+  fun void  process() {
+    spork ~ _process();
+  }
+
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -101,7 +108,8 @@ class STRECCONV extends ST{
 TONE t;
 t.reg(PLOC0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"1" => t.seq;
+"
+1___" => t.seq;
 .9 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -123,8 +131,8 @@ STRECCONV strecconv;
 //"../_SAMPLES/ConvolutionImpulseResponse/chateau_de_logne_outside.wav" => strecconv.ir.read;
 strecconv.loadir();
 strecconv.connect(t);
-strecconv.rec();
 strecconv.process();
+strecconv.rec();
 
 while(1) {
        100::ms => now;
