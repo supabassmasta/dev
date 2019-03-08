@@ -56,8 +56,12 @@ while(1) {
     
 fun void f2 (){ 
  REC rec;
-// rec.rec(128*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
- rec.rec_no_sync(8  * 32*data.tick, "test.wav"); 
+ 
+ //wait fft to start
+ fftSize * 1::samp => now;
+
+  // rec.rec(128*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
+ rec.rec_no_sync(2  * 32*data.tick, "test.wav"); 
 
 
    } 
