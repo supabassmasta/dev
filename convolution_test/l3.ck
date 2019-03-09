@@ -35,7 +35,8 @@ class STRECCONV extends ST{
     fftSize/2 => Z.size;
 
     0 => ir.pos;
-    windowSize::samp => now;     // load impulse response into h
+//    windowSize::samp => now;     // load impulse response into h
+    fftSize::samp => now;     // load impulse response into h
     fftir.upchuck() @=> H; // spectrum of fixed impulse response
     ir =< fftir =< blackhole;      // don't need impulse resp signal anymore
 
@@ -126,8 +127,8 @@ t.go();   t $ ST @=> ST @ last;
 
 STRECCONV strecconv;
 
-//"../_SAMPLES/ConvolutionImpulseResponse/in_the_silo_revised.wav" => strecconv.ir.read; 
-"../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => strecconv.ir.read;
+"../_SAMPLES/ConvolutionImpulseResponse/in_the_silo_revised.wav" => strecconv.ir.read; 
+//"../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => strecconv.ir.read;
 //"../_SAMPLES/ConvolutionImpulseResponse/chateau_de_logne_outside.wav" => strecconv.ir.read;
 strecconv.loadir();
 strecconv.connect(t);
