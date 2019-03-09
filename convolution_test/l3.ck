@@ -86,7 +86,7 @@ class STRECCONV extends ST{
     REC rec;
 
     //wait fft to start
-    fftSize * 1::samp => now;
+    fftSize/2 * 1::samp + 10::ms /* delay before seq no_sync start */ => now;
 
     // rec.rec(128*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
     rec.rec_no_sync(d, s); 
@@ -132,7 +132,7 @@ t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+//t.go();   t $ ST @=> ST @ last; 
 
 
 
@@ -149,6 +149,12 @@ STRECCONV strecconv;
 //"../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => strecconv.ir.read;
 //"../_SAMPLES/ConvolutionImpulseResponse/chateau_de_logne_outside.wav" => strecconv.ir.read;
 strecconv.loadir();
+
+/////   /!\ make seq start after loading IR /!\   ///////////////////
+t.no_sync(); // Config it no_sync
+t.go();
+////////////////////////////////////////////////////////////////
+
 strecconv.connect(t /* ST */);
 strecconv.process();
 strecconv.rec(16 * data.tick /* length */, "test3.wav" /* file name */ );
