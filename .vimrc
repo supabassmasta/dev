@@ -865,4 +865,24 @@ ab STSYNCKORGK STSYNCWPKorg35 stsynckorg;
 \<CR>stsynckorg.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
 \<CR>stsynckorg.connect(t $ ST, t.note_info_tx_o); stsynckorg $ ST @=>  last; 
 
+ab STRECCONVK STRECCONV strecconv;
+\<CR>10 * 1000 => strecconv.inputl.gain => strecconv.inputr.gain; // input signal into reverb only
+\<CR>.2 => strecconv.dry;
+\<CR>0::ms => strecconv.predelay;
+\<CR>
+\<CR>//"../_SAMPLES/ConvolutionImpulseResponse/in_the_silo_revised.wav" => strecconv.ir.read; 
+\<CR>//"../_SAMPLES/ConvolutionImpulseResponse/on_a_star_jsn_fade_out.wav" => strecconv.ir.read;
+\<CR>//"../_SAMPLES/ConvolutionImpulseResponse/chateau_de_logne_outside.wav" => strecconv.ir.read;
+\<CR>"../_SAMPLES/ConvolutionImpulseResponse/st_nicolaes_church.wav" => strecconv.ir.read;
+\<CR>strecconv.loadir();
+\<CR>
+\<CR>/////   /!\ make seq start after loading IR /!\   ///////////////////
+\<CR>t.no_sync(); // Config it no_sync
+\<CR>t.go();
+\<CR>////////////////////////////////////////////////////////////////
+\<CR>
+\<CR>strecconv.connect(last $ ST /* ST */);
+\<CR>strecconv.process();
+\<CR>strecconv.rec(32 * data.tick /* length */, "test4.wav" /* file name */ );
+
 

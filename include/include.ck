@@ -175,6 +175,7 @@ Machine.add( "../EFFECTS/STSYNCBRF.ck");
 Machine.add( "../EFFECTS/STSYNCRES.ck");
 Machine.add( "../EFFECTS/STSYNCWPDiodeLadder.ck");
 Machine.add( "../EFFECTS/STSYNCWPKorg35.ck");
+Machine.add( "../EFFECTS/STRECCONV.ck");
 me.yield();
 Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../EFFECTS/REV2.ck");
