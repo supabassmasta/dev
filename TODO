@@ -1,10 +1,30 @@
+create vim ab for SEQ[] and TONE[] arrays, allowing to manage several seq in the same script.
+
+create SYNC tremolo
+
+create SYNC modulators with TONE.in as input
+
+create PathThru SYNT in => (do nothing to signal) to create different SEQ for example ADRSR (cut effect) SYNC FILTER...  
+
+Break wav loop technique:
+// a global timer for functions to know where we are in normal sample
+while(1) {
+       2::data.tick => w.pos; wait(1/4::data.tick);
+       2::data.tick => w.pos; wait(1/4::data.tick);
+       2::data.tick => w.pos; wait(1/4::data.tick);
+
+       play_noral(4::data.tick); /play part of sample as not glitched
+
+        // connect unconnect with effect
+        w >= dac; w => effect => dac;
+        1::data.tick => w.pos; wait(1::data.tick);
+        w >= effect >= dac; w => dac;
+}
+ 
+
+
+
 Optimize TONE and SEQ END duration/extra_end. Test negative extra end to reduce long seq END.
-
-
-Bolly:
-Faire des synt plus soft pour le début du morceau
-Faire du glitché pour le chant digital
-
 
 Create global STGain array (size 88) to route audio between zXX.ck:
 -  STSEND(ST @ last, 11) // 11 for z11.ck
@@ -14,56 +34,22 @@ STMULT_BASE_ONE(ST @ source, ST @ MOD): ST multiplier, adding mod input to 1
 STMOD_BASE_ONE(ST @ source, ST @ MOD): ST FM modulator (TONE to be checked to accept input fm mod)
 
 
-TRain bansuri: thème do la sol si. sa da pa ni
-
-
-+ de monté sur indian kid
-
-ghost jungle on cumbia costa. + cuica
-
-
-Faire un kick seul ou sync sur 4temps ou un break pour le début de mantra.
-
-
 Essayer Tracktion 7 as companion DAW
 
 Fix/Check: action duplication in TONE.print() : freq_synt, synt_new_note. Maybe note a big issue
-
-Faire des break kick trance pour mantra, voire du tout en un avec slide etc et relancage propre du beat
-
-
-Contacter l'elabo en septembre pour la répéte public: elaboratoire.rennes at gmail point com
-
-
-Pour l"intro : reprendre le beat d"indian kid, mettre un lpf sur les percs. faire des nappes gentille en do, et des pti ambient.
-
 
 STLIMITERK with gain;
 
 Make sync script hardcore: if diff_time to high reset counter
 
-Add general gain for a song
-
-Print out seq size in terminal
-
-
 Bangra 6 temps
-Find guiro sample for cumbia style rythm
-
-
 
 Create STFLANGER
 
 Create korg stereo sampler
 
 
-
-
 Check filters behaviour on baudeline
-
-STAUTOREC with sync, duration, name, attack/Release dur
 
 Try to kill/unreg control objects on script end to free memory
 
-
-PC: MSI GP62M 7RDX-1484XFR Leopard
