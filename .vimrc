@@ -886,3 +886,9 @@ ab STRECCONVK STRECCONV strecconv;
 \<CR>strecconv.rec(32 * data.tick /* length */, "test4.wav" /* file name */ );
 
 
+ab STTREMOLOK STTREMOLO sttrem;
+\<CR>.5 => sttrem.mod.gain;  5 => sttrem.mod.freq;
+\<CR>sttrem.pa.set(data.tick *6 , 0::ms , 1., 1700::ms);
+\<CR>sttrem.connect(last $ ST, t.note_info_tx_o);  sttrem  $ ST @=>  last; 
+
+
