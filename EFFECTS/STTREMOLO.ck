@@ -2,7 +2,7 @@ class nirx extends note_info_rx {
   ADSR @ pa;
 
   fun void push(note_info_t @ ni ) {
-    <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
+    // <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
     if(ni.on) {
       pa.keyOn();
     }
