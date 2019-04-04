@@ -15,7 +15,7 @@
 
     // Params
     padsr.set(data.tick / 4 , data.tick / 4 , .0000001, data.tick / 4);
-    padsr.setCurves(2.0, 2.0, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+    padsr.setCurves(2.0, 2.0, 1.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 
     // ADSR Trigger
     //padsr.keyOn(); padsr.keyOff();
