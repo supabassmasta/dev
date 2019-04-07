@@ -16,8 +16,8 @@ h___ _hi_ i___ ____
 h___ _ih_ ____ ih__
 h___ ____ _h_h _h__
 " => s.seq;
-s.gain("h", .5); // for single wav 
-s.gain("i", .2); // for single wav 
+s.gain("h", .4); // for single wav 
+s.gain("i", .15); // for single wav 
 //.6 * data.master_gain => s.gain; //
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;

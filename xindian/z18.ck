@@ -21,10 +21,9 @@
     }
   }; 
 
-public class LONG_WAV extends ST {
+class LOOP_WAV extends ST {
 	SndBuf2 buf;
 	SYNC sy;
-  0 => int update_ref_time; 
 	Shred start_id;
   0::ms => dur end_sync;
 
@@ -52,29 +51,25 @@ public class LONG_WAV extends ST {
 
 
 
-	fun void _start(dur synchro, dur offset, dur loop, dur endsync){
+	fun void _start(dur synchro, dur offset,  dur endsync){
 		endsync => end_sync => the_end.sync;
 		sy.sync(synchro);
 
 		al.keyOn(); ar.keyOn(); 
-		(offset/1::samp) $ int => buf.pos;
-		if (update_ref_time){
-		  MASTER_SEQ3.update_ref_times(now, data.tick * 16 * 128 );
-		}
+		(((now - data.wait_before_start)%buf.length())/1::samp) $ int => buf.pos;
+//		(offset/1::samp) $ int => buf.pos;
 
-		if (loop != 0::ms) {
 			while(1) {
-				loop => now;
+				buf.length() => now;
 				// restart to offset
 				(offset/1::samp) $ int => buf.pos;
 			}
  
-		}
 
 	}
 
-	fun void start(dur synchro, dur offset, dur loop, dur endsync){
-		spork ~ _start(synchro, offset, loop, endsync) @=> start_id;
+	fun void start(dur synchro, dur offset,  dur endsync){
+		spork ~ _start(synchro, offset,  endsync) @=> start_id;
 
     // Get id from caller shred
     me.id() => the_end.shred_id;
@@ -82,8 +77,16 @@ public class LONG_WAV extends ST {
     killer.reg(the_end);
 	}
 
-
-//  Machine.remove(start_id.id());
-
-
 }
+
+
+LOOP_WAV l;
+"loop.wav" => l.read;
+1.0 * data.master_gain => l.buf.gain;
+l.AttackRelease(1::ms, 100::ms);
+l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ ,  1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
+while(1) {
+       100::ms => now;
+}
+ 

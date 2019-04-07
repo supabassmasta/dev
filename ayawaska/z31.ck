@@ -1,5 +1,5 @@
 LONG_WAV l; 
-"../_SAMPLES/CostaRica/processed/ZOOM0014.wav" => l.read;
+"../_SAMPLES/CostaRica/processed/ZOOM0014_Processed.wav" => l.read;
 1.1 => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(8*data.tick, 4*data.tick );
