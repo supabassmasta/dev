@@ -16,7 +16,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c 
 ____ ____
-!8//1 ____
+!8//1__ ____
 ____ ___!5
 !8//1__ ____
 

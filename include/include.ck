@@ -180,6 +180,7 @@ Machine.add( "../EFFECTS/STTREMOLO.ck");
 me.yield();
 Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../LONG_WAV/LOOP_WAV.ck");
+Machine.add( "../LONG_WAV/LOOP_DOUBLE_WAV.ck");
 Machine.add( "../EFFECTS/REV2.ck");
 Machine.add("../seq_2/FREQ_STR.ck");
 Machine.add("../seq_2/SEQ_STR.ck");
