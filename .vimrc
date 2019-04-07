@@ -892,4 +892,10 @@ ab STTREMOLOK STTREMOLO sttrem;
 \<CR>sttrem.pa.set(data.tick *6 , 0::ms , 1., 1700::ms);
 \<CR>sttrem.connect(last $ ST, t.note_info_tx_o);  sttrem  $ ST @=>  last; 
 
+ab LOOP_WAVK LOOP_WAV l;
+\<CR>"../_SAMPLES/" => l.read;
+\<CR>1.0 * data.master_gain => l.buf.gain;
+\<CR>l.AttackRelease(1::ms, 100::ms);
+\<CR>l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
 

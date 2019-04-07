@@ -21,7 +21,7 @@
     }
   }; 
 
-class LOOP_WAV extends ST {
+public class LOOP_WAV extends ST {
 	SndBuf2 buf;
 	SYNC sy;
 	Shred start_id;
@@ -82,13 +82,3 @@ class LOOP_WAV extends ST {
 }
 
 
-LOOP_WAV l;
-"loop.wav" => l.read;
-1.0 * data.master_gain => l.buf.gain;
-l.AttackRelease(1::ms, 100::ms);
-l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
-
-while(1) {
-       100::ms => now;
-}
- 
