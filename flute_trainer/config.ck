@@ -1,5 +1,5 @@
 // RYTHM
-79 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+133 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 16 => data.meas_size;
 // MIX
 1. => data.master_gain;
@@ -9,6 +9,5 @@
 
 // Start synchro
 //HW.launchpad.virtual_key_on(7);
-
 //1::ms => now;
 
