@@ -900,8 +900,8 @@ ab LOOP_WAVK LOOP_WAV l;
 
 ab LOOP_DOUBLE_WAVK LOOP_DOUBLE_WAV l;
 \<CR>"../_SAMPLES/" => l.read;
-\<CR>1.0 * data.master_gain => l.buf.gain;
+\<CR>1.0 * data.master_gain => l.buf.gain => l.buf2.gain;
 \<CR>l.AttackRelease(1::ms, 15 * 100::ms);
-\<CR>l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+\<CR>l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */ ,  16 * data.tick /* loop */); l $ ST @=> ST @ last;  
 
 

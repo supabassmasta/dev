@@ -58,30 +58,27 @@ public class LOOP_DOUBLE_WAV extends ST {
 
 
 
-	fun void _start(dur synchro,   dur endsync){
+	fun void _start(dur synchro,   dur endsync, dur loop){
 		endsync => end_sync => the_end.sync;
 		sy.sync(synchro);
 
 		al.keyOn(); ar.keyOn(); 
-    buf.length() / 2. => dur half_buf_length;
-		(((now - data.wait_before_start) % half_buf_length )/1::samp)$ int => int loop_start;
-    loop_start => buf.pos;
-
-    // Wait end of buff before loop
-    half_buf_length - loop_start*1::samp => now;
+//		(((now - data.wait_before_start) % loop )/1::samp)$ int => int loop_start;
+//    loop_start => buf.pos;
+      0  => buf.pos;
 
 			while(1) {
+				loop => now;
 				0 => buf2.pos;
-				half_buf_length => now;
+				loop => now;
 				0 => buf.pos;
-				half_buf_length => now;
 			}
  
 
 	}
 
-	fun void start(dur synchro,   dur endsync){
-		spork ~ _start(synchro,  endsync) @=> start_id;
+	fun void start(dur synchro,   dur endsync, dur loop){
+		spork ~ _start(synchro,  endsync, loop) @=> start_id;
 
     // Get id from caller shred
     me.id() => the_end.shred_id;
