@@ -8,5 +8,12 @@ HW.launchpad.virtual_key_on(81); // Bells 1
 
 HW.launchpad.virtual_key_on(82); // Bass 1
 
+16 * data.tick => now;
+
+HW.launchpad.virtual_key_on(61); // Beat 1
+1 * data.tick => now;
+
+HW.launchpad.virtual_key_on(62); // hh
+
 1 * data.tick => now;
 
