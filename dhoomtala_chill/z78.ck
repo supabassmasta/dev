@@ -26,18 +26,18 @@ HW.launchpad.virtual_key_on(66); // Beat ragga
 HW.launchpad.virtual_key_on(67); // hh ragga
 
 // Theme 1
-HW.launchpad.virtual_key_on(81); // Bells 1
-HW.launchpad.virtual_key_on(82); // Bass 1
-HW.launchpad.virtual_key_on(38); // DnB beat
-HW.launchpad.virtual_key_on(37); // hh Drum
-
-//  theme 2
-//HW.launchpad.virtual_key_on(84); // Bass 2
+//HW.launchpad.virtual_key_on(81); // Bells 1
+//HW.launchpad.virtual_key_on(82); // Bass 1
 //HW.launchpad.virtual_key_on(38); // DnB beat
 //HW.launchpad.virtual_key_on(37); // hh Drum
 
-//HW.launchpad.virtual_key_on(85); // cocotte
-//HW.launchpad.virtual_key_on(83); // Bells 2
+//  theme 2
+HW.launchpad.virtual_key_on(84); // Bass 2
+HW.launchpad.virtual_key_on(38); // DnB beat
+HW.launchpad.virtual_key_on(37); // hh Drum
+
+HW.launchpad.virtual_key_on(85); // cocotte
+HW.launchpad.virtual_key_on(83); // Bells 2
 
 1 * data.tick => now;
 
