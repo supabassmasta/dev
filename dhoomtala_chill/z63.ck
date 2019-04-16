@@ -10,6 +10,7 @@ k___D_c_ k|x_____c_
 k___D_D_ k|x__c__D_
 " => s.seq;
 .9 * data.master_gain => s.gain; //
+s.gain("k", 1.2); // for single wav 
 s.gain("x", .7); // for single wav 
 s.gain("c", .3); // for single wav 
 s.gain("D", .3); // for single wav 

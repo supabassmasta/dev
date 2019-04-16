@@ -43,11 +43,16 @@ HW.launchpad.virtual_key_on(67); // hh ragga
 //HW.launchpad.virtual_key_on(37); // hh Drum
 
 // Theme 1
-HW.launchpad.virtual_key_on(81); // Bells 1
+//HW.launchpad.virtual_key_on(81); // Bells 1
 //HW.launchpad.virtual_key_on(82); // Bass 1
 //HW.launchpad.virtual_key_on(38); // DnB beat
 HW.launchpad.virtual_key_on(36); // Steppa
 HW.launchpad.virtual_key_on(37); // hh Drum
+HW.launchpad.virtual_key_on(26); // Slide
+
+8 * data.tick => now;
+HW.launchpad.virtual_key_on(26); //  OFF Slide
+16 * data.tick => now;
+HW.launchpad.virtual_key_on(81); // Bells 1
 
 1 * data.tick => now;
-
