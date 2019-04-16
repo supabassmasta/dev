@@ -6,7 +6,7 @@ SET_WAV.TRIBAL(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(
 k_k_k_k_k_kck_kc
 kxkxk_kDkkkkkkkk
 " => s.seq;
-1.2 * data.master_gain => s.gain; //
+1.5 * data.master_gain => s.gain; //
 s.gain("x", .7); // for single wav 
 s.gain("c", .3); // for single wav 
 s.gain("D", .4); // for single wav 
