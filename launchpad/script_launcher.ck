@@ -112,6 +112,41 @@ class script_launcher extends CONTROL {
 					lau.green(note);
 			}
 		}
+		else if (in == 126.) { // VIRTUAL KEY ON only if OFF 
+			if (!pad_on) {
+				Machine.add( xname );
+				Machine.add( yname ) => yid;
+				Machine.add( zname ) => zid;
+				if (zid != 0) {
+					1 => pad_on;
+				}
+
+				if (nb < 10) 
+					lau.greenc(note);
+				else
+					lau.green(note);
+			}
+		}
+		else if (in == 125.) { // VIRTUAL KEY OFF only if ON 
+			if (pad_on) {
+				killer.kill(zid);
+				0 => pad_on;
+				if (nb < 10) 
+					if (red)
+						lau.redc(note);
+					else
+					  lau.amberc(note);
+				else {
+					if (red)
+						lau.red(note);
+					else{
+						lau.amber(note);
+					}
+				}
+
+			} 
+
+    }
 		else {
 			if (yid != 0) {
 				killer.kill(yid);
