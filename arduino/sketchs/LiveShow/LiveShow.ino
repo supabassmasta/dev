@@ -1203,6 +1203,7 @@ void read_serial(){
       fade_in_out.start_in();
       
       init_colorRamps();
+      init_kaleidoscope();
 
       preset = 11;
       valid = 1;
@@ -1750,16 +1751,40 @@ class colorRampElt {
   }
 };
 
+#define CRAMP_RED_NB 2
+colorRampElt cramp_r[CRAMP_RED_NB];
+
+#define CRAMP_GREEN_NB 2
+colorRampElt cramp_g[CRAMP_GREEN_NB];
+
 #define CRAMP_BLUE_NB 2
 colorRampElt cramp_b[CRAMP_BLUE_NB];
 
 void init_colorRamps() {
   uint8_t idx = 0;
 
+  ////////////// RED //////////////////
+  idx = 0;
+  cramp_r[idx].target = 128;
+  cramp_r[idx].step = 16;
+  idx++;
+  
+  cramp_r[idx].target = -128;
+  cramp_r[idx].step = -16;
+  idx++;
+
+  ////////////// GREEN //////////////////
+  idx = 0;
+  cramp_g[idx].target = -128;
+  cramp_g[idx].step = -12;
+  idx++;
+
+  cramp_g[idx].target = 128;
+  cramp_g[idx].step = 12;
+  idx++;
+
   ////////////// BLUE //////////////////
-//  cramp_b[idx].target = 255;
-//  cramp_b[idx].step = 1;
-//  idx++;
+  idx = 0;
 
   cramp_b[idx].target = -128;
   cramp_b[idx].step = -16;
@@ -1769,12 +1794,6 @@ void init_colorRamps() {
   cramp_b[idx].step = 16;
   idx++;
 
-  ////////////// RED //////////////////
-  idx = 0;
-  
-  ////////////// GREEN //////////////////
-  idx = 0;
-
 
 
 
@@ -1782,42 +1801,207 @@ void init_colorRamps() {
 
 }
 
-uint8_t cramp_start_b = 0;
+uint8_t cramp_start = 0;
+uint16_t cramp_sub_cnt = 0;
 
 void colorRamp() {
   uint8_t led_i;
-  uint8_t cramp_index = 0;
-  int16_t current_color;
-  uint8_t real_color;
+  uint8_t cramp_index_r = 0;
+  int16_t cur_r;
+  uint8_t r;
+  uint8_t cramp_index_g = 0;
+  int16_t cur_g;
+  uint8_t g;
+  uint8_t cramp_index_b = 0;
+  int16_t cur_b;
+  uint8_t b;
 
-  led_i = cramp_start_b;
+  led_i = cramp_start;
   // first element of Cramp is the init value
-  real_color = current_color = cramp_b[cramp_index].target;
-  if ( current_color < 0) real_color = 0;  if ( current_color > 255) real_color = 255;
-  strip.setPixelColor(led_i, 0, 0, real_color);
+  r = cur_r = cramp_r[cramp_index_r].target;
+  if ( cur_r < 0) r = 0;  if ( cur_r > 255) r = 255;
+
+  g = cur_g = cramp_g[cramp_index_g].target;
+  if ( cur_g < 0) g = 0;  if ( cur_g > 255) g = 255;
+
+  b = cur_b = cramp_b[cramp_index_b].target;
+  if ( cur_b < 0) b = 0;  if ( cur_b > 255) b = 255;
+
+  strip.setPixelColor(led_i, r, g, b);
 
   led_i ++; if ( led_i >  strip.numPixels() / 2 ) led_i = 0;
-  cramp_index++; if (cramp_index > CRAMP_BLUE_NB - 1  ) cramp_index = 0; 
+  cramp_index_r++; if (cramp_index_r > CRAMP_BLUE_NB - 1  ) cramp_index_r = 0; 
+  cramp_index_g++; if (cramp_index_g > CRAMP_BLUE_NB - 1  ) cramp_index_g = 0; 
+  cramp_index_b++; if (cramp_index_b > CRAMP_BLUE_NB - 1  ) cramp_index_b = 0; 
 
-  while (led_i != cramp_start_b) {
+  while (led_i != cramp_start) {
 
-    real_color = current_color = current_color + cramp_b[cramp_index].step;
-    if ( current_color < 0) real_color = 0;  if ( current_color > 255) real_color = 255;
-    strip.setPixelColor(led_i, 0, 0, real_color);
+    r = cur_r = cur_r + cramp_r[cramp_index_r].step;
+    if ( cur_r < 0) r = 0;  if ( cur_r > 255) r = 255;
+
+    g = cur_g = cur_g + cramp_g[cramp_index_g].step;
+    if ( cur_g < 0) g = 0;  if ( cur_g > 255) g = 255;
+    
+    b = cur_b = cur_b + cramp_b[cramp_index_b].step;
+    if ( cur_b < 0) b = 0;  if ( cur_b > 255) b = 255;
+    
+    strip.setPixelColor(led_i, r, g, b);
 
 
     led_i ++; if ( led_i >  strip.numPixels() / 2 ) led_i = 0;
-    if (   ( cramp_b[cramp_index].step < 0 && current_color <  cramp_b[cramp_index].target )
-        || ( cramp_b[cramp_index].step > 0 && current_color >  cramp_b[cramp_index].target )  ){
+    if (   ( cramp_r[cramp_index_r].step < 0 && cur_r <  cramp_r[cramp_index_r].target )
+        || ( cramp_r[cramp_index_r].step > 0 && cur_r >  cramp_r[cramp_index_r].target )  ){
 
-      cramp_index++; if (cramp_index > CRAMP_BLUE_NB - 1  ) cramp_index = 0; 
+      cramp_index_r++; if (cramp_index_r > CRAMP_BLUE_NB - 1  ) cramp_index_r = 0; 
     }
+
+    if (   ( cramp_g[cramp_index_g].step < 0 && cur_g <  cramp_g[cramp_index_g].target )
+        || ( cramp_g[cramp_index_g].step > 0 && cur_g >  cramp_g[cramp_index_g].target )  ){
+
+      cramp_index_g++; if (cramp_index_g > CRAMP_BLUE_NB - 1  ) cramp_index_g = 0; 
+    }
+
+    if (   ( cramp_b[cramp_index_b].step < 0 && cur_b <  cramp_b[cramp_index_b].target )
+        || ( cramp_b[cramp_index_b].step > 0 && cur_b >  cramp_b[cramp_index_b].target )  ){
+
+      cramp_index_b++; if (cramp_index_b > CRAMP_BLUE_NB - 1  ) cramp_index_b = 0; 
+    }
+
+    /// MOVE
+    cramp_sub_cnt ++;
+    if ( cramp_sub_cnt > 600  ){
+      cramp_sub_cnt = 0;
+      cramp_start ++;
+      if ( cramp_start >   strip.numPixels() / 2 ){
+          cramp_start = 0;
+      }
+    }
+
+
 
   }
 }
 
+class kaleidoElt {
+  public:
+  uint8_t type; // 0: 0 to up, 1: end to down, 2: reverse, 3 : oposite
+  uint8_t pix;
+  uint8_t offset;
+  kaleidoElt() {
+  }
+};
+
+#define KALEIDO_NB_ELTS 2
+kaleidoElt kaleidoElts[KALEIDO_NB_ELTS];
+kaleidoElt * kaleidoElts_reord[KALEIDO_NB_ELTS];
+
+void init_kaleidoscope(){
+
+  /// /!\ WARNING : At least one type 0 needed !!!!!!
+
+  uint8_t idx = 0;
+  kaleidoElts[idx].type = 0;
+  kaleidoElts[idx].pix = strip.numPixels() / 4;
+  kaleidoElts[idx].offset = 0;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
+  kaleidoElts[idx].pix = 0;
+  kaleidoElts[idx].offset = 0;
+  idx ++;
+
+}
+
+// use first half strip to build 2nd half
+// Then copy second half to the 1st
+void kaleidoscope(){
+  int16_t source_pix;
+  uint16_t target_pix;
+  uint16_t first_pix;
+  uint8_t i, j;
+  uint8_t elt_found ;
+  uint8_t elt_cur ;
+  uint8_t max;
+
+  // find first elt type 0 to start
+  max = 255;
+  i = 0;
+  elt_found = 255;
+  while( i < KALEIDO_NB_ELTS ){
+    if (kaleidoElts[i].type == 0 && kaleidoElts[i].pix < max ){
+      elt_found = i;
+      max = kaleidoElts[i].pix;
+    }
+    i++;
+  }
+
+  if (elt_found == 255) {
+    // No index found
+    return;
+  }
+
+  first_pix = target_pix = kaleidoElts[elt_found].pix;
+
+  strip.setPixelColor(strip.numPixels() / 2 + target_pix, strip.getPixelColor(0));
+  target_pix++; if ( target_pix > strip.numPixels() / 2 ) target_pix = 0;
+  source_pix = 1;
+
+  // TODO: Do it only when element pix moves (sub cnt update. and first time: have au sub cnt update on 1st time )
+  // reorder elts
+  i = first_pix + 1;
+  kaleidoElts_reord[0] = & kaleidoElts[elt_found];
+  elt_found = 1;
+  while( i != first_pix ){
+    for (j=0; j < KALEIDO_NB_ELTS; j++){
+      if ( kaleidoElts[j].pix == i ){
+        kaleidoElts_reord[elt_found] = & kaleidoElts[j];
+        elt_found++;
+      }
+    }
+    i++;  if ( i > strip.numPixels() / 2 ) i = 0;
+  }
+
+  elt_cur = 0;
+  while (target_pix != first_pix) {
+
+    switch ( kaleidoElts_reord[elt_cur]->type ) {
+      case 0:
+        source_pix ++; if (source_pix > strip.numPixels() / 2 ) source_pix = 0;
+        break;
+      case 1:
+        source_pix --; if (source_pix < 0) source_pix = strip.numPixels() / 2 - 1;
+        break;
+    }
+
+    strip.setPixelColor(strip.numPixels() / 2 + target_pix, strip.getPixelColor(source_pix));
+
+    // check next element
+    while( elt_cur + 1 < KALEIDO_NB_ELTS && kaleidoElts_reord[elt_cur + 1]->pix == target_pix ){
+      elt_cur = elt_cur + 1;
+
+      // Update source pix if needed
+      switch ( kaleidoElts_reord[elt_cur]->type ) {
+        case 0:
+          source_pix = 0;
+          break;
+        case 1:
+          source_pix = strip.numPixels() / 2 - 1;
+          break;
+      }
+
+
+    }
+
+    target_pix++; if ( target_pix > strip.numPixels() / 2 ) target_pix = 0;
+  }
+
+
+}
 
 void dhoomtala() {
   colorRamp();
+  
+  kaleidoscope();
+
 }
 
