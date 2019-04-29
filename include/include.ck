@@ -156,6 +156,7 @@ Machine.add( "../EFFECTS/STRES.ck");
 Machine.add( "../EFFECTS/STWPDiodeLadder.ck");
 Machine.add( "../EFFECTS/STWPKorg35.ck");
 Machine.add( "../EFFECTS/STGAINC.ck");
+Machine.add( "../EFFECTS/STGAIN.ck");
 Machine.add( "../EFFECTS/STDIGITC.ck");
 Machine.add( "../EFFECTS/STFADEIN.ck");
 Machine.add( "../EFFECTS/STFILTERMOD.ck");

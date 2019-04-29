@@ -578,6 +578,9 @@ ab STRESK STRES res;
 ab STGAINCK STGAINC gainc;
 \<CR>gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last;
 
+ab STGAINK STGAIN stgain;
+\<CR>stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last;
+
 ab RECK REC rec;
 \<CR>rec.rec(8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */);
 \<CR>//rec.rec_no_sync(8*data.tick, "test.wav");
@@ -904,4 +907,17 @@ ab LOOP_DOUBLE_WAVK LOOP_DOUBLE_WAV l;
 \<CR>l.AttackRelease(1::ms, 15 * 100::ms);
 \<CR>l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */ ,  16 * data.tick /* loop */); l $ ST @=> ST @ last;  
 
+ab SEQMULTIK SEQ s[5];
+\<CR>0 => int idx;
+\<CR>ST @ last;
+\<CR> 
+\<CR>//data.tick * 8 => s[idx].max;  // SET_WAV.DUBSTEP(s[idx]);// SET_WAV.VOLCA(s[idx]); // SET_WAV.ACOUSTIC(s[idx]); // SET_WAV.TABLA(s[idx]);// SET_WAV.CYMBALS(s[idx]); // SET_WAV.DUB(s[idx]); // SET_WAV.TRANCE(s[idx]); // SET_WAV.TRANCE_VARIOUS(s[idx]);// SET_WAV.TEK_VARIOUS(s[idx]);// SET_WAV.TEK_VARIOUS2(s[idx]);// SET_WAV2.__SAMPLES_KICKS(s[idx]); // SET_WAV2.__SAMPLES_KICKS_1(s[idx]); // SET_WAV.BLIPS(s[idx]); // "test.wav" => s[idx].wav["a"];  // act @=> s[idx].action["a"]; 
+\<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+\<CR>"" => s[idx].seq;
+\<CR>1. * data.master_gain => s[idx].gain; // s[idx].gain("s", .2); // for single wav 
+\<CR>//s[idx].sync(4*data.tick);// s[idx].element_sync(); //s[idx].no_sync(); //s[idx].full_sync();  // 16 * data.tick => s[idx].extra_end;   //s[idx].print();
+\<CR>// s[idx].mono() => dac; //s[idx].left() => dac.left; //s[idx].right() => dac.right;
+\<CR>s[idx].go();     s[idx] $ ST @=>  last; 
+\<CR> 
+\<CR>1 +=> idx;
 

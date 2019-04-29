@@ -10,6 +10,10 @@
 HW.ledstrip.open();
 HW.ledstrip._load_preset('7');
 
+
+// Start DnB master script
+//HW.launchpad.virtual_key_on(76);
+
 1::ms => now;
 
 
