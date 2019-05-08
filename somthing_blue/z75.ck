@@ -30,7 +30,7 @@ ____ ____ ____ __18
 185_ ____ ____ ____
 ____ ____ ____ ____
 " => t.seq;
-1.5 * data.master_gain => t.gain;
+1.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -38,7 +38,7 @@ ____ ____ ____ ____
 t.go();   t $ ST @=> ST @ last; 
 
 STFILTERMOD fmod;
-fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 2400  /* f_var */, 3::second / (4 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 2400  /* f_var */, 3::second / (5 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
