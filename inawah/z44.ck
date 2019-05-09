@@ -2,7 +2,7 @@ class synt0 extends SYNT{
 
     inlet => TriOsc s =>  outlet; 
       .5 => s.gain;
-    .03 => s.width;
+    .11 => s.width;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
@@ -13,17 +13,35 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max;
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " }c  *6
-A21A21
+A21___
 ______
 ______
 ______
-265265
+_652_5
 ______
-143143
+______
+______
+
+A21___
+______
+______
+______
+______
+______
+1431__
+______
+
+A2112A
+______
+______
+______
+2652__
+______
+______
 ______
 
 " => t.seq;
-3.8 * data.master_gain => t.gain;
+0.8 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2::ms, 5::ms, .3, 400::ms);
@@ -31,8 +49,8 @@ t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other conve
 t.go();   t $ ST @=> ST @ last; 
 
 
-STWPDiodeLadder stdl;
-stdl.connect(last $ ST , 8 * 1000 /* cutoff */  , 7. /* resonance */ , true /* nonlinear */, true /* nlp_type */  );       stdl $ ST @=>  last; 
+//STWPDiodeLadder stdl;
+//stdl.connect(last $ ST , 8 * 1000 /* cutoff */  , 7. /* resonance */ , true /* nonlinear */, true /* nlp_type */  );       stdl $ ST @=>  last; 
 
 //STSYNCWPDiodeLadder stsyncdl;
 //stsyncdl.freq(35*100 /* Base */, 69 * 100 /* Variable */, 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */ );
@@ -40,14 +58,14 @@ stdl.connect(last $ ST , 8 * 1000 /* cutoff */  , 7. /* resonance */ , true /* n
 //stsyncdl.connect(t $ ST, t.note_info_tx_o); stsyncdl $ ST @=>  last;  
 
 STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 60 * 10 /* f_base */ , 30 * 100  /* f_var */, 1::second / (16 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
-
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 60 * 10 /* f_base */ , 18 * 100  /* f_var */, 1::second / (16 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 4 / 6 , .7);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 6 , .8);  ech $ ST @=>  last; 
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, 2.1*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
