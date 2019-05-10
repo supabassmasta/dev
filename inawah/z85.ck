@@ -153,6 +153,9 @@ lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /
 //STLHPFC lhpfc;
 //lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last; 
 
+STLPFC lpfc2;
+lpfc2.connect(last $ ST , HW.lpd8.potar[1][5] /* freq */  , HW.lpd8.potar[1][6] /* Q */  );       lpfc2 $ ST @=>  last; 
+
 last.mono() => Dyno dy => dac;
 dy.limit();
 0.0 => dy.slopeAbove;
