@@ -540,6 +540,9 @@ ab STECHOC0K STECHOC0 ech;
 ab STLPFCK STLPFC lpfc;
 \<CR>lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last;
 
+ab STLHPFCK STLHPFC lhpfc;
+\<CR>lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last;
+
 ab STLPFK STLPF lpf;
 \<CR>lpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last;
 
