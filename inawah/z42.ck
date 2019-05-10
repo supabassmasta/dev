@@ -10,9 +10,9 @@ class synt0 extends SYNT{
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; 
 10::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// 
-t.dor();// t.aeo(); // t.phr();// t.loc();
+t.ion();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"  *6
+" {2 *6
 A21A21
 A21A21
 A21A21
@@ -45,6 +45,9 @@ fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 300 /* f_
 
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 4. /* static gain */  );       gainc $ ST @=>  last; 
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
