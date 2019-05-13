@@ -34,8 +34,8 @@ ____
 __3|0_
 " => t.seq;
 .30 * data.master_gain => t.gain;
-0.8 => s1.bottle.gain;
-0.6 => s2.bottle.gain;
+0.8 => s1.outlet.gain;
+0.6 => s2.outlet.gain;
 s1.padsr.set(500::ms, 2000::ms, .7 , 2000::ms);
 s2.padsr.set(1500::ms, 2000::ms, .7 , 2000::ms);
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
