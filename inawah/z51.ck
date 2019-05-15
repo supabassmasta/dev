@@ -1,6 +1,6 @@
 SYNC sy;
 //sy.sync(4 * data.tick);
-sy.sync(4 * data.tick , -0.5 * data.tick /* offset */); 
+sy.sync(8 * data.tick , -0.5 * data.tick /* offset */); 
 
 // Off first part
 HW.launchpad.virtual_key_off_only(11); 
@@ -28,9 +28,9 @@ HW.launchpad.virtual_key_on_only(57); // Hit
 HW.launchpad.virtual_key_on_only(55); // HH
 HW.launchpad.virtual_key_on_only(56); // Slide
 
-8 * data.tick => now;
+15 * data.tick => now;
 HW.launchpad.virtual_key_off_only(57); // Hit
-8 * data.tick => now;
+1 * data.tick => now;
 
 HW.launchpad.virtual_key_off_only(56); // Slide
 

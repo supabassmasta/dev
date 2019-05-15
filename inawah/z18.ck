@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../_SAMPLES/Chassin/Inawah voices.wav" => l.read;
+"../_SAMPLES/inawah/Inawah voices.wav" => l.read;
 0.4 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);

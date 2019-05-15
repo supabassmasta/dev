@@ -2,20 +2,27 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 SET_WAV.TRIBAL0(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "*4
-D|s|i___ ____ ____ ____
-____ ____ ____ ____
+D|s|i___ ____ ____ ____ 
+
 
 
 
 
 " => s.seq;
-1.9 * data.master_gain => s.gain; //
+1.0 * data.master_gain => s.gain; //
 s.gain("s", .5); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+STFADEIN fadein;
+fadein.connect(last, 16*data.tick);     fadein  $ ST @=>  last; 
+
+STGAIN stgain;
+stgain.connect(ech $ ST , 1.3 /* static gain */  );       stgain $ ST @=>  last;
+
 
 STREV1 rev;
 rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
