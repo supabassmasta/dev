@@ -1,24 +1,17 @@
-SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
-"../_SAMPLES/wolfs/139901__y89312__33.wav" => s.wav["a"]; 
-// act @=> s.action["a"]; 
-// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"
-a___
-____
+LOOP_DOUBLE_WAV l;
+"../_SAMPLES/inawah/high_space_pads.wav" => l.read;
+1.0 * data.master_gain => l.buf.gain => l.buf2.gain;
+l.AttackRelease(100::ms, 15 * 100::ms);
+l.start(8 * data.tick /* sync */ ,   1 * data.tick /* END sync */ ,  8 * data.tick /* loop */); l $ ST @=> ST @ last;   
 
-" => s.seq;
-.6 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 
-2 * 16 * data.tick => s.extra_end;   //s.print();
-// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-s.go();     s $ ST @=> ST @ last; 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 8 / 4 , .3);  ech $ ST @=>  last; 
+STADSRC stadsrc;
+stadsrc.connect(last, HW.launchpad.keys[16*2 + 7] /* pad 1:1 */ /* controler */, 100::ms /* attack */, 1000::ms /* release */, 0 /* default_on */, 1  /* toggle */); stadsrc $ ST @=> last; 
 
 while(1) {
        100::ms => now;
 }
  
-
 

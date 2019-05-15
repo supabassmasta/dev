@@ -1,27 +1,19 @@
-SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
-"../_SAMPLES/rattlesnake/rattlesnake1.wav" => s.wav["a"]; 
-"../_SAMPLES/rattlesnake/rattlesnake2.wav" => s.wav["b"]; 
-"../_SAMPLES/rattlesnake/rattlesnake6.wav" => s.wav["c"]; 
-// act @=> s.action["a"]; 
-// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"
-____
-___a
-____
-___c
-____
-___b
+LONG_WAV l;
+"../_SAMPLES/Chassin/Inawah voices.wav" => l.read;
+0.4 * data.master_gain => l.buf.gain;
+0 => l.update_ref_time;
+l.AttackRelease(0::ms, 0::ms);
+l.start(8 * data.tick /* sync */ , 2 * 16 * data.tick  /* offset */ , 8 * 16 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
+STHPF hpf;
+hpf.connect(last $ ST , 1000 /* freq */  , 2.0 /* Q */  );       hpf $ ST @=>  last; 
 
-" => s.seq;
-.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
-// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-s.go();     s $ ST @=> ST @ last; 
+//last.mono() => PitShift p => dac;
+//Std.mtof(48) / Std.mtof(50) =>  p.shift;
+//1.0 => p.mix;
+
 
 while(1) {
        100::ms => now;
 }
  
-
-

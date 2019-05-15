@@ -128,7 +128,7 @@
       s.duration + extra_end => now;		
 			// let "go" shred exit by herself 
 		  1=>s.exit;
-      s.duration => now;		
+      s.duration + extra_end => now;		
 
 //      Machine.remove(s.id_go.id());
 //      10::ms => now;
