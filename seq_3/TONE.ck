@@ -881,6 +881,10 @@ public class TONE extends ST {
 
 
       i++;
+
+
+//      1::ms => now; // let other sherd run
+//      me.yield(); // let other sherd run
     }
 
     // Manage last and first note

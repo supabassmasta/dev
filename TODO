@@ -1,3 +1,8 @@
+Fix Bug: long TONE SEQ do xrun @ .seq() loading and maybe .go(). Use inawah/z33 for test
+
+Fix Bug mantra: Cymabl shut down. Pb with killer: not registered after stopping al other shreds.
+
+
 Check powerADSR compilation.
 Add PowerADSR.stCurves in SYNCFILTER ab
 
