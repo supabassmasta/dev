@@ -2,26 +2,33 @@ public class killer {
 
 		static end @ list [0];
 
-		fun static void reg (end in) {
+		fun static void reg (end @ in) {
 				0 => int inside;
 				for (0 => int i; i < list.size()      ; i++) {
-						if (in == list[i]) 1=> inside;
+						if (in.shred_id == list[i].shred_id) 1=> inside;
 				}
 				 
 				if (!inside) {
 						list << in;
 						<<< in.shred_id , "Registred in killer">>>;
-				}
+				
+            //print_list();
+        }
 		}
 
 		fun static void rem(int j) {
+      //<<<"Before Remove: ", j>>>;
+      //print_list();
+
   		if (j < list.size()) {
 				for (j => int i; i < list.size() - 1     ; i++) {
-						list[j+1] @=> list[j];
+						list[i+1] @=> list[i];
 				}
 		
 		    list.size() -1 => list.size;
 		  }
+      //<<<"After Remove">>>;
+      //print_list();
 		}
 
 
@@ -34,14 +41,16 @@ public class killer {
 		}
 
 		fun static void kill(int id) {
-//			<<<"attempt to kill", id>>>; 
+			//<<<"attempt to kill", id>>>; 
 				0=> int inside;
+        end @ e;
 				for (0 => int i; i < list.size()      ; i++) {
 					if (list[i].shred_id == id ) {
-//						<<<"kill", id>>>;
-						spork~list[i].kill_me_bad();	
-//						list[i].kill_me_bad();	
+						//<<<"kill", id>>>;
+						list[i] @=> e;	
 						rem(i);	
+						spork~e.kill_me_bad();	
+
 						1 => inside;
 					}
 				}
@@ -52,6 +61,14 @@ public class killer {
 				}
 				
 		}
+
+    fun static void print_list() {
+      <<<"KILLER size: ", list.size(), " list:">>>;
+      for (0 => int i; i <  list.size(); i++) {
+        <<<i, list[i].shred_id>>>;
+      }
+    }
+
 
 }
 
