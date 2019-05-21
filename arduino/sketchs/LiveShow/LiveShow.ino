@@ -7,6 +7,7 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(300, PIN, NEO_GRB + NEO_KHZ800);
 
+#define MOON_START 138
 // Middle Square Weyl Sequence PRNG
 // 16 bits implementation attempt
 long x = 0, w = 0, s = 0xb5ad4ece; // sizeof long == 32 bits on Uno
@@ -369,7 +370,7 @@ void loop() {
     case 8:
       int r;
 
-allOff();
+      allOff();
       
 //      symetricmorsered();
       bond_cnt ++;
@@ -411,7 +412,11 @@ allOff();
       dhoomtala();
     break;
 
-
+    case 12:
+      inawah_fire_up();
+      moon();
+      delay(10);
+    break;
 
 
 
@@ -724,6 +729,85 @@ void intro_stars() {
      
   }
 
+}
+
+
+void inawah_fire_up() {    
+  uint16_t fade_red_cnt;
+  int16_t r;
+
+  // Red  
+      fade_red_cnt = (intro_cnt ) >> 6;
+//  fade_red_cnt = (intro_cnt ) >> 4;
+  if (fade_red_cnt > 151 ) fade_red_cnt = 151;
+  for ( int i = 0; i <  MOON_START; i++) {
+    r = fade_red_cnt - i;
+    if ( r < 0 ){
+      r = 0;    
+    }
+    strip.setPixelColor(i, r, 0, 0 ); 
+    strip.setPixelColor(strip.numPixels() - i, r, 0, 0 ); 
+  }
+
+  // Rand orange yellow
+  {
+    uint16_t r;
+    uint16_t g;
+    for (int i=0; i< 5 ; i++){
+
+      r = msws();
+      g = r >> 10;
+      r = r & 0x7F;
+      if (r < fade_red_cnt) {
+        strip.setPixelColor(r, strip.Color(255, g, 0 ));
+        strip.setPixelColor(strip.numPixels() - r, strip.Color(255, g, 0 ));
+      }
+    }
+  }
+
+  // Trains
+  {
+    uint16_t r;
+      bond_cnt ++;
+      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
+        bond_cnt = 0;
+
+        r = msws();
+        if (  r & 0x1  ){
+          train1.pos = 0;
+        }
+        else {
+          train1.pos = strip.numPixels() - 10;
+        }
+        train1.target = 85 + ((r>>6) & 0x3F);
+        train1.color =  0x00FF7000;
+        train1.train_size = ((r>>8) & 0x1F);
+        train1.train_mask = r & 0x1632; 
+//train1.color = 0xFFFF0000; 
+        train1.reload();
+      }
+
+  }
+
+  intro_cnt ++;
+}
+
+void moon() {
+  int8_t g;
+  uint8_t v, u;
+
+  v = intro_cnt & 0xFF;
+  if ( v > 128  ){
+      v = 256 - v;
+  }
+  u = intro_cnt >> 1 & 0xFF;
+  if ( u > 128  ){
+      u = 256 - u;
+  }
+  
+  for (int i=MOON_START ; i< strip.numPixels() - MOON_START + 1 ; i++){
+     strip.setPixelColor(i, strip.Color(255, 127 + v, 127 + u  )); 
+  }
 }
 
 void ederlezi_config() {
@@ -1093,6 +1177,21 @@ void config_kudunbao() {
 }
 
 
+void config_inawah_part_1() {
+  train1.pos = 0;
+  train1.color = 0x00FFF000;
+  train1.train_size = 60;
+  train1.train_mask = 0x1002; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  intro_cnt = 0;
+  bond_cnt = 0;
+}
+
+
 int kick_cnt;
 int snare_cnt;
 
@@ -1206,6 +1305,17 @@ void read_serial(){
       init_kaleidoscope();
 
       preset = 11;
+      valid = 1;
+    }
+    // Inawah
+    else if (b == 'B') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+
+      config_inawah_part_1();
+      
+      preset = 12;
       valid = 1;
     }
     else if (b == '!') {
@@ -1336,6 +1446,13 @@ void read_serial(){
         else if ( b == 'm' ){
           perc2.reload();
           perc3.reload();
+          valid = 1;
+        }
+        break;
+      /////////// INAWAH Part 1 ////////////////////////
+      case 12:
+         if (b == 'k') {
+          train1.reload();
           valid = 1;
         }
         break;
@@ -2055,4 +2172,3 @@ void dhoomtala() {
   kaleidoscope();
 
 }
-
