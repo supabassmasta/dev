@@ -14,9 +14,9 @@ while(1) {
 while(1) {
 
   
- HW.launchpad.virtual_key_on( Std.rand2(11, 17)) ;
+ HW.launchpad.virtual_key_on( Std.rand2(21, 27)) ;
 
- Std.rand2(0, 500) * 1::ms => now;
+ Std.rand2(50, 1000) * 1::ms => now;
 }
  
 

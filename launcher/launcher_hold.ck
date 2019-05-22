@@ -160,7 +160,7 @@ public class launcher {
         // check for action type
         if( msg.isButtonDown() )
         {
-          <<< "down:", msg.which, "(code)", msg.key, "(usb key)", msg.ascii, "(ascii)" >>>;
+          // <<< "down:", msg.which, "(code)", msg.key, "(usb key)", msg.ascii, "(ascii)" >>>;
           //<<<"kb_convert",kb_convert(msg.which)>>>;
 
           kb_convert(msg.which) => num;
@@ -294,6 +294,31 @@ public class launcher {
             }
           }
           //--------------------------------------------//
+          //      Space: Display active scripts             //
+          //--------------------------------------------//
+          else if(msg.which == 57) {
+            string hold_string;	
+
+
+            <<<"**************** SHREDS **************">>>;
+            <<<"               BANK ACTIVE:", bank>>>;
+            for (0=> int i; i< max_file_nb/10; i++) {
+              <<<"------ ", i, " ------">>>;
+              for (0=> int j; j< 10; j++) {
+                if (shred_active[j + i*10]){
+                  if (shred_on_hold[j + i*10]) "**HOLD**" => hold_string;
+                  else "" => hold_string;
+
+                  <<<j+i*10, file_name_a[j+i*10], " ",hold_string >>>;
+                }
+                else if (file_name_a[j+i*10]!="")
+                  <<<j+i*10,"- - - - - - - - - - - - - ", j+i*10,file_name_a[j+i*10]>>>;
+
+              }
+            }
+            <<<"**************** SHREDS **************">>>;
+          }
+          //--------------------------------------------//
         }
         else
         {
@@ -312,26 +337,6 @@ public class launcher {
 
           }
 
-          string hold_string;	
-
-
-          <<<"**************** SHREDS **************">>>;
-          <<<"               BANK ACTIVE:", bank>>>;
-          for (0=> int i; i< max_file_nb/10; i++) {
-            <<<"------ ", i, " ------">>>;
-            for (0=> int j; j< 10; j++) {
-              if (shred_active[j + i*10]){
-                if (shred_on_hold[j + i*10]) "**HOLD**" => hold_string;
-                else "" => hold_string;
-
-                <<<j+i*10, file_name_a[j+i*10], " ",hold_string >>>;
-              }
-              else if (file_name_a[j+i*10]!="")
-                <<<j+i*10,"- - - - - - - - - - - - - ", j+i*10,file_name_a[j+i*10]>>>;
-
-            }
-          }
-          <<<"**************** SHREDS **************">>>;
 
         }  
 
