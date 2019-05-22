@@ -38,5 +38,8 @@ HW.launchpad.virtual_key_on_only(12); // Kick
 HW.launchpad.virtual_key_on_only(52); // rim shot
 HW.launchpad.virtual_key_on_only(53); // Big Drum
 
-1 * data.tick => now;
+while(1) {
+       10000::ms => now;
+}
+ 
 

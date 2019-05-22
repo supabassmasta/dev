@@ -1,3 +1,6 @@
+Check DestTimeNegativeException Error implications...
+
+
 Fix Bug: Ghost scripts using  HW.launchpad.virtual_key_X. Call stack from the script  script_launcher.virtual_key_X > killer.kill > spork End.kill_me_bad. If the caller ends befor the kill me bad termination, the kill_me_bad is shred is killed before it finsh. It creates a ghost script that never ends.
 
 Fix Bug: long TONE SEQ do xrun @ .seq() loading and maybe .go(). Use inawah/z33 for test

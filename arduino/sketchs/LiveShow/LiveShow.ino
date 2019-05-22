@@ -415,7 +415,7 @@ void loop() {
     case 12:
       inawah_fire_up();
       moon();
-      delay(10);
+      delay(5);
     break;
 
 
