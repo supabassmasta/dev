@@ -7,6 +7,8 @@
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(300, PIN, NEO_GRB + NEO_KHZ800);
 
+uint16_t intro_cnt = 0;
+
 #define MOON_START 138
 // Middle Square Weyl Sequence PRNG
 // 16 bits implementation attempt
@@ -236,6 +238,72 @@ class RandTrain {
 RandTrain train1;
 RandTrain train2;
 
+class RainbowStar {
+  public :
+  int pos = 150;
+  int size = 40;
+  int target = 90;
+  int cnt_num = 1;
+  int cnt_den = 2;
+  int cnt_den_tmp = 0;
+
+  // private
+  int cnt = 1000;
+ 
+  // constructor
+  RainbowStar() {
+
+  }
+
+  void process(Adafruit_NeoPixel * s_p){
+    int i, j;
+    int p;
+    if ( cnt < abs( target - pos )  ){
+
+      if ( pos < target  ){
+        // Print Star
+        p = pos + cnt;
+        strip.setPixelColor(p, 0x00FFFFFF );
+
+        p--;
+        while( p >= 0 && p >= pos && p >= pos + cnt - size  ){
+          strip.setPixelColor(p, Wheel(cnt + intro_cnt) );
+          p--;
+        }
+      }
+
+      if ( pos > target  ){
+        // Print Star
+        p = pos - cnt;
+        strip.setPixelColor(p, 0x00FFFFFF );
+
+        p++;
+        while( p < strip.numPixels() && p <= pos && p < pos - cnt + size  ){
+          strip.setPixelColor(p, Wheel(cnt + intro_cnt) );
+          p++;
+        }
+      }
+      cnt_den_tmp ++;
+      if (cnt_den_tmp >= cnt_den) {
+        cnt += cnt_num;
+        cnt_den_tmp = 0;
+      }
+      
+    }
+
+  }
+
+  void reload()  {
+    cnt = 0;
+  }
+
+};
+RainbowStar rainbowStar1;
+RainbowStar rainbowStar2;
+RainbowStar rainbowStar3;
+RainbowStar rainbowStar4;
+
+
 class Fade_in_out {
   public:
     bool in = true;
@@ -417,6 +485,13 @@ void loop() {
       moon();
       delay(5);
     break;
+    case 13:
+      allOff();
+      moon();
+      // update this counter to keep moon oscillating
+      intro_cnt ++;
+    break;
+
 
 
 
@@ -438,6 +513,10 @@ void loop() {
   perc4.process(&strip);
   train1.process(&strip);
   train2.process(&strip);
+  rainbowStar1.process(&strip);
+  rainbowStar2.process(&strip);
+  rainbowStar3.process(&strip);
+  rainbowStar4.process(&strip);
   kick();
   snare();
   fade_in_out.process(&strip);
@@ -658,7 +737,6 @@ st[idx].r = 3 ;
 } 
     
 
-uint16_t intro_cnt = 0;
 uint16_t fade_stars_sub_cnt = 0;
 
 void intro_stars() {
@@ -1191,6 +1269,35 @@ void config_inawah_part_1() {
   bond_cnt = 0;
 }
 
+void config_inawah_part_2() {
+rainbowStar1.pos = strip.numPixels() - MOON_START + 1;
+rainbowStar1.size = 30;
+rainbowStar1.target = 300;
+rainbowStar1.cnt_num = 3;
+rainbowStar1.cnt_den = 1;
+rainbowStar1.cnt_den_tmp = 0;
+
+rainbowStar2.pos = strip.numPixels() - MOON_START + 1;
+rainbowStar2.size = 30;
+rainbowStar2.target = 300;
+rainbowStar2.cnt_num = 3;
+rainbowStar2.cnt_den = 1;
+rainbowStar2.cnt_den_tmp = 0;
+
+rainbowStar3.pos = MOON_START - 1;
+rainbowStar3.size = 30;
+rainbowStar3.target = 0;
+rainbowStar3.cnt_num = 3;
+rainbowStar3.cnt_den = 1;
+rainbowStar3.cnt_den_tmp = 0;
+
+rainbowStar4.pos = MOON_START - 1;
+rainbowStar4.size = 30;
+rainbowStar4.target = 0;
+rainbowStar4.cnt_num = 3;
+rainbowStar4.cnt_den = 1;
+rainbowStar4.cnt_den_tmp = 0;
+}
 
 int kick_cnt;
 int snare_cnt;
@@ -1316,6 +1423,13 @@ void read_serial(){
       config_inawah_part_1();
       
       preset = 12;
+      valid = 1;
+    }
+    else if (b == 'C') {
+
+      config_inawah_part_2();
+      
+      preset = 13;
       valid = 1;
     }
     else if (b == '!') {
@@ -1456,8 +1570,27 @@ void read_serial(){
           valid = 1;
         }
         break;
+      /////////// INAWAH Part 1 ////////////////////////
+      case 13:
+        if (b == 'k') {
+          rainbowStar1.reload();
+          valid = 1;
+        }
+        if (b == 'l') {
+          rainbowStar2.reload();
+          valid = 1;
+        }
 
+        if (b == 'm') {
+          rainbowStar3.reload();
+          valid = 1;
+        }
 
+        if (b == 'n') {
+          rainbowStar4.reload();
+          valid = 1;
+        }
+        break;
 
         /*
 
