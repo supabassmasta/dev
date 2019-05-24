@@ -17,10 +17,13 @@ HW.launchpad.virtual_key_off_only(72);
 
 // Thunder
 HW.launchpad.virtual_key_on_only(65); 
+HW.ledstrip.cereal.writeByte('o'); // Thunder leds
 
 MASTER_SEQ3.offset_ref_times(3 * data.tick);
 
 HW.launchpad.virtual_key_on_only(18); // Chaman
+HW.ledstrip.cereal.writeByte('D'); // leds last part
+HW.launchpad.virtual_key_off_only(54); // leds: remove last script
 
 8 * data.tick => now;
 
