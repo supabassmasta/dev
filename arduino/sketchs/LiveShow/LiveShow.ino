@@ -255,6 +255,8 @@ class RainbowStar {
 
   }
 
+#define RAINBOW_START_SIZE 3
+
   void process(Adafruit_NeoPixel * s_p){
     int i, j;
     int p;
@@ -263,9 +265,12 @@ class RainbowStar {
       if ( pos < target  ){
         // Print Star
         p = pos + cnt;
-        strip.setPixelColor(p, 0x00FFFFFF );
 
-        p--;
+        for (i=0; i< RAINBOW_START_SIZE ; i++){
+          strip.setPixelColor(p, 0x00FFFFFF );
+          p--;
+        }
+
         while( p >= 0 && p >= pos && p >= pos + cnt - size  ){
           strip.setPixelColor(p, Wheel(cnt + intro_cnt) );
           p--;
@@ -275,9 +280,12 @@ class RainbowStar {
       if ( pos > target  ){
         // Print Star
         p = pos - cnt;
-        strip.setPixelColor(p, 0x00FFFFFF );
 
-        p++;
+        for (i=0; i< RAINBOW_START_SIZE ; i++){
+          strip.setPixelColor(p, 0x00FFFFFF );
+          p++;
+        }
+
         while( p < strip.numPixels() && p <= pos && p < pos - cnt + size  ){
           strip.setPixelColor(p, Wheel(cnt + intro_cnt) );
           p++;
@@ -481,15 +489,21 @@ void loop() {
     break;
 
     case 12:
-      inawah_fire_up();
+      inawah_fire(true);
       moon();
       delay(5);
     break;
     case 13:
       allOff();
+      randyellow();
       moon();
       // update this counter to keep moon oscillating
       intro_cnt ++;
+    break;
+    case 14:
+      inawah_fire(false);
+      moon();
+      delay(5);
     break;
 
 
@@ -810,16 +824,19 @@ void intro_stars() {
 }
 
 
-void inawah_fire_up() {    
+void inawah_fire(bool up) {    
   uint16_t fade_red_cnt;
   int16_t r;
 
   // Red  
-      fade_red_cnt = (intro_cnt ) >> 6;
-//  fade_red_cnt = (intro_cnt ) >> 4;
+  fade_red_cnt = (intro_cnt ) >> 6;
   if (fade_red_cnt > 151 ) fade_red_cnt = 151;
   for ( int i = 0; i <  MOON_START; i++) {
-    r = fade_red_cnt - i;
+    if ( up  ){
+      r = fade_red_cnt - i;
+    } else {
+      r = (151 - fade_red_cnt) - i;
+    }
     if ( r < 0 ){
       r = 0;    
     }
@@ -835,8 +852,10 @@ void inawah_fire_up() {
 
       r = msws();
       g = r >> 10;
-      r = r & 0x7F;
-      if (r < fade_red_cnt) {
+      r = r & 0x7F ;
+      if (  ( up && r < fade_red_cnt )
+         || (!up &&  r < (151 - fade_red_cnt) ) ) 
+      {
         strip.setPixelColor(r, strip.Color(255, g, 0 ));
         strip.setPixelColor(strip.numPixels() - r, strip.Color(255, g, 0 ));
       }
@@ -846,24 +865,24 @@ void inawah_fire_up() {
   // Trains
   {
     uint16_t r;
-      bond_cnt ++;
-      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
-        bond_cnt = 0;
+    bond_cnt ++;
+    if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
+      bond_cnt = 0;
 
-        r = msws();
-        if (  r & 0x1  ){
-          train1.pos = 0;
-        }
-        else {
-          train1.pos = strip.numPixels() - 10;
-        }
-        train1.target = 85 + ((r>>6) & 0x3F);
-        train1.color =  0x00FF7000;
-        train1.train_size = ((r>>8) & 0x1F);
-        train1.train_mask = r & 0x1632; 
-//train1.color = 0xFFFF0000; 
-        train1.reload();
+      r = msws();
+      if (  r & 0x1  ){
+        train1.pos = 0;
       }
+      else {
+        train1.pos = strip.numPixels() - 10;
+      }
+      train1.target = 85 + ((r>>6) & 0x3F);
+      train1.color =  0x00FF7000;
+      train1.train_size = ((r>>8) & 0x1F);
+      train1.train_mask = r & 0x1632; 
+      //train1.color = 0xFFFF0000; 
+      train1.reload();
+    }
 
   }
 
@@ -1432,6 +1451,11 @@ void read_serial(){
       preset = 13;
       valid = 1;
     }
+    else if (b == 'D') {
+      config_inawah_part_1();      
+      preset = 14;
+      valid = 1;
+    }
     else if (b == '!') {
       fade_in_out.cnt_num = 8;
       fade_in_out.cnt_den = 1;
@@ -1448,7 +1472,7 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// INTRO TEMPURA ////////////////////////
+        /////////// INTRO TEMPURA ////////////////////////
       case 1:
         if (b == 'k') {
           perc1.reload();
@@ -1469,14 +1493,14 @@ void read_serial(){
         }
         break;
 
-      /////////// AYAWUASKA ////////////////////////
+        /////////// AYAWUASKA ////////////////////////
       case 2:
         if (b == 'k') {
           perc1.reload();
           valid = 1;
         }
         break;
-      /////////// INDIAN KID ////////////////////////
+        /////////// INDIAN KID ////////////////////////
       case 3:
         if (b == 'k') {
           perc1.reload();
@@ -1492,7 +1516,7 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// COSTA ////////////////////////
+        /////////// COSTA ////////////////////////
       case 4:
         if (b == 'k') {
           perc1.reload();
@@ -1515,9 +1539,9 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// EDERLEZI ////////////////////////
+        /////////// EDERLEZI ////////////////////////
       case 5:
-         if (b == 'k') {
+        if (b == 'k') {
           perc1.reload();
           valid = 1;
         }
@@ -1527,9 +1551,9 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// MANTRA ////////////////////////
+        /////////// MANTRA ////////////////////////
       case 6:
-         if (b == 'k') {
+        if (b == 'k') {
           perc1.reload();
           valid = 1;
         }
@@ -1539,9 +1563,9 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// MISSION BONDLYWOOD ////////////////////////
+        /////////// MISSION BONDLYWOOD ////////////////////////
       case 8:
-         if (b == 'k') {
+        if (b == 'k') {
           perc1.reload();
           valid = 1;
         }
@@ -1551,9 +1575,9 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// KUDUMBAO ////////////////////////
+        /////////// KUDUMBAO ////////////////////////
       case 9:
-         if (b == 'k') {
+        if (b == 'k') {
           perc1.reload();
           valid = 1;
         }
@@ -1563,14 +1587,7 @@ void read_serial(){
           valid = 1;
         }
         break;
-      /////////// INAWAH Part 1 ////////////////////////
-      case 12:
-         if (b == 'k') {
-          train1.reload();
-          valid = 1;
-        }
-        break;
-      /////////// INAWAH Part 1 ////////////////////////
+        /////////// INAWAH Part 2 ////////////////////////
       case 13:
         if (b == 'k') {
           rainbowStar1.reload();
@@ -1588,6 +1605,41 @@ void read_serial(){
 
         if (b == 'n') {
           rainbowStar4.reload();
+          valid = 1;
+        }
+
+        if (b == 'o') {
+          // Thunder
+
+          perc1.cnt_reload = 75;
+          perc1.cnt_num = 1;
+          perc1.cnt_den = 1;
+          perc1.color_fact = 15;
+          perc1.max = 150;
+          perc1.pos = 200;
+          perc1.color_mask = 0x0FFFFFF;
+
+          perc2.cnt_reload = 61;
+          perc2.cnt_num = 1;
+          perc2.cnt_den = 2;
+          perc2.color_fact = 15;
+          perc2.max = 150;
+          perc2.pos = 120;
+          perc2.color_mask = 0x0FFFFFF;
+
+          train1.pos = strip.numPixels() / 2;
+          train1.color = 0x003F3F3F;
+          train1.train_size = 60;
+          train1.train_mask = 0x32A6; // lower pixel density with simple mask
+          train1.target = 150;
+          train1.cnt_num = 2;
+          train1.cnt_den = 1;
+          train1.cnt_den_tmp = 0;
+
+          perc1.reload();      
+          perc2.reload();
+          train1.reload();
+
           valid = 1;
         }
         break;
