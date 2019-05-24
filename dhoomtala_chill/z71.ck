@@ -15,5 +15,8 @@ HW.launchpad.virtual_key_on_only(61); // Beat 1
 
 HW.launchpad.virtual_key_on_only(62); // hh
 
-1 * data.tick => now;
-
+// Let killer terminates
+while(1) {
+       100::ms => now;
+}
+ 

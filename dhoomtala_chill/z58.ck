@@ -33,4 +33,8 @@ HW.launchpad.virtual_key_off_only(26); //  OFF Slide
 16 * data.tick => now;
 HW.launchpad.virtual_key_on_only(81); // Bells 1
 
-1 * data.tick => now;
+// Let killer terminates
+while(1) {
+       100::ms => now;
+}
+

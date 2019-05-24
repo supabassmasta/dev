@@ -21,5 +21,8 @@ HW.launchpad.virtual_key_off_only(84); // Bass 2
 HW.launchpad.virtual_key_on_only(81); // Bells 1
 HW.launchpad.virtual_key_on_only(82); // Bass 1
 
-1 * data.tick => now;
+// Let killer terminates
+while(1) {
+       100::ms => now;
+}
 

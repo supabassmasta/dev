@@ -21,4 +21,8 @@ HW.launchpad.virtual_key_on_only(34); // BASS
 HW.launchpad.virtual_key_off_only(41);
 HW.launchpad.virtual_key_off_only(42);
 
-1 * data.tick => now;
+// Let killer terminates
+while(1) {
+       100::ms => now;
+}
+ 

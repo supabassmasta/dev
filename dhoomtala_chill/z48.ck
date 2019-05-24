@@ -28,5 +28,8 @@ HW.launchpad.virtual_key_on_only(37); // hh Drum
 HW.launchpad.virtual_key_on_only(85); // cocotte
 HW.launchpad.virtual_key_on_only(83); // Bells 2
 
-1 * data.tick => now;
+// Let killer terminates
+while(1) {
+       100::ms => now;
+}
 
