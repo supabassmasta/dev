@@ -179,3 +179,25 @@ ___ mi
 ___ fa
 _ fa mi re re
 ___ fa
+
+
+--------------------------
+Inawah
+--------------------------
+z21: snakes
+z22: wolf
+
+z27: strange pad low  z37 ADSRC
+z28: strange pad high z38 ADSRC
+
+=> z51: Switch to 6:4 beat
+
+z71 72: ARPS Synt low high
+
+lpd8 1.5 gain low
+     1.6 gain high
+     1.7 LHPF cutoff
+     1.8 LHPF Q
+
+=> z81: switch back to 4:4 beat
+
