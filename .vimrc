@@ -928,3 +928,12 @@ ab SEQMULTIK SEQ s[5];
 \<CR> 
 \<CR>1 +=> idx;
 
+ab STCOMPRESSORK STCOMPRESSOR stcomp;
+\<CR>7. => float in_gain;
+\<CR>stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;  
+
+ab STLIMITERK STLIMITER stlimiter;
+\<CR>1. => float in_gainl;
+\<CR>stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;  
+
+

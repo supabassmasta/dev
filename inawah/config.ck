@@ -15,3 +15,13 @@ HW.ledstrip.open();
 HW.ledstrip._load_preset('B');
 
 1::ms => now;
+
+/*
+Umma maka tha iwateyah yah yah yah
+Inawah teyah yah yah yah
+Tonosha umma kayae hé hé hé
+Umma maka tha iwateyoh yoh yoh yoh
+Inawah teyoh yoh yoh yoh
+Tonosha umma kayae hé hé hé
+*/
+

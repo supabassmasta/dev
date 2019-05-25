@@ -180,6 +180,8 @@ Machine.add( "../EFFECTS/STSYNCWPDiodeLadder.ck");
 Machine.add( "../EFFECTS/STSYNCWPKorg35.ck");
 Machine.add( "../EFFECTS/STRECCONV.ck");
 Machine.add( "../EFFECTS/STTREMOLO.ck");
+Machine.add( "../EFFECTS/STCOMPRESSOR.ck");
+Machine.add( "../EFFECTS/STLIMITER.ck");
 me.yield();
 Machine.add( "../LONG_WAV/LONG_WAV.ck");
 Machine.add( "../LONG_WAV/LOOP_WAV.ck");
