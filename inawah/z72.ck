@@ -39,12 +39,16 @@ stdl.connect(last $ ST , 8 * 1000 /* cutoff */  , 7. /* resonance */ , true /* n
 //stsyncdl.adsr_set(.1 /* Relative Attack */, .1/* Relative Decay */, 0.5 /* Sustain */, .3 /* Relative Sustain dur */, 0.2 /* Relative release */);
 //stsyncdl.connect(t $ ST, t.note_info_tx_o); stsyncdl $ ST @=>  last;  
 
-STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 60 * 10 /* f_base */ , 30 * 100  /* f_var */, 1::second / (16 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+//STFILTERMOD fmod;
+//fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 60 * 10 /* f_base */ , 30 * 100  /* f_var */, 1::second / (16 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+
+STLHPFC lhpfc;
+lhpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );       lhpfc $ ST @=>  last; 
+
 
 
 STAUTOPAN autopan;
-autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+autopan.connect(last $ ST, .3 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][6] /* gain */  , 4. /* static gain */  );       gainc $ ST @=>  last; 

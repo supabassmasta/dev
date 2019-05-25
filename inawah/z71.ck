@@ -1,27 +1,3 @@
-
-class STCOMPRESSOR extends ST{
-  Gain gainl => Dyno dyl => outl;
-  Gain gainr => Dyno dyr => outr;
-  dyl.compress();
-  dyr.compress();
-
-  1. => gainl.gain => gainr.gain;
-
-  fun void connect(ST @ tone, float g, float out_g, float sA, float sB, float tr, dur at, dur rt  ) {
-    tone.left() => gainl;
-    tone.right() => gainr;
-    
-    sA => dyl.slopeAbove=> dyr.slopeAbove;
-    sB => dyl.slopeBelow=> dyr.slopeBelow;
-    tr => dyl.thresh  => dyr.thresh;
-    at => dyl.attackTime => dyr.attackTime;
-    rt => dyl.releaseTime => dyr.releaseTime;
-    out_g => dyl.gain => dyr.gain;
-    g => gainl.gain => gainr.gain;
-  }
-
-
-}
 class synt0 extends SYNT{
 
     inlet => TriOsc s =>  outlet; 
@@ -70,14 +46,8 @@ STLHPFC lhpfc;
 lhpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );       lhpfc $ ST @=>  last; 
 
 
-//8.0 => float in_g;
-//
-//STCOMPRESSOR stcomp;
-//stcomp.connect(last $ ST , in_g /* in gain */, 1./in_g /* out gain */, 0.5 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last; 
-
-
-//STAUTOPAN autopan;
-//autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .3 /* span 0..1 */, 4*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 4. /* static gain */  );       gainc $ ST @=>  last; 
