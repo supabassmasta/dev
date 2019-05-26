@@ -4,8 +4,21 @@ public class killer {
 
 		fun static void reg (end @ in) {
 				0 => int inside;
+        end @ e;
+        1 => int pos;
 				for (0 => int i; i < list.size()      ; i++) {
-						if (in.shred_id == list[i].shred_id) 1=> inside;
+						if (in.shred_id == list[i].shred_id) {
+              1=> inside;
+
+              // Shred already have end(s) registered
+              list[i] @=> e;
+              while(e.next != NULL) {
+                e.next @=> e;
+                1 +=> pos;
+              }
+              in @=> e.next; 
+              <<< in.shred_id , "Registred in killer, sub end, position: ", pos>>>;
+            }
 				}
 				 
 				if (!inside) {
@@ -44,12 +57,20 @@ public class killer {
 			//<<<"attempt to kill", id>>>; 
 				0=> int inside;
         end @ e;
+        0 => int pos;
 				for (0 => int i; i < list.size()      ; i++) {
 					if (list[i].shred_id == id ) {
-						//<<<"kill", id>>>;
+						<<<"kill", id>>>;
 						list[i] @=> e;	
 						rem(i);	
 						spork~e.kill_me_bad();	
+            // kill sub end in same shred
+            while(e.next != NULL) {
+              e.next @=> e;
+              spork~e.kill_me_bad();
+              1 +=> pos;
+              <<<"Kill sub end, id: ", id, " position: ", pos>>>;
+            }
 
 						1 => inside;
 					}

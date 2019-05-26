@@ -1,6 +1,7 @@
 public class end  {
 
  int shred_id;
+ NULL @=> end @ next; 
 
  fun void kill_me () {}
 
