@@ -936,4 +936,58 @@ ab STLIMITERK STLIMITER stlimiter;
 \<CR>1. => float in_gainl;
 \<CR>stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;  
 
+ab FILTER_TONEK class filter0 extends SYNT{
+\<CR>    1::samp => dur refresh;
+\<CR>
+\<CR>    inlet => blackhole;
+\<CR>    
+\<CR>    STLPF lpf;
+\<CR>//    STWPDiodeLadder lpf;
+\<CR>    
+\<CR>    fun void f1 (){ 
+\<CR>      while(1) {
+\<CR>        inlet.last() => lpf.lpfl.freq =>  lpf.lpfr.freq;
+\<CR>//        inlet.last() => lpf.lpfl.cutoff =>  lpf.lpfr.cutoff;
+\<CR>        refresh => now;
+\<CR>      }
+\<CR>       
+\<CR>      
+\<CR>    } 
+\<CR>    spork ~ f1 ();
+\<CR>
+\<CR>    fun void  connect (ST @ in, float q){
+\<CR>      lpf.connect(in , 1000 /* freq */  , 1.0 /* Q */  );   
+\<CR>      q => lpf.lpfl.Q =>  lpf.lpfr.Q;
+\<CR>//      lpf.connect(in , 1000 /* cutoff */  , 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */  );   
+\<CR>//      q => lpf.lpfl.resonance=>  lpf.lpfr.resonance;
+\<CR>
+\<CR>    }
+\<CR>
+\<CR>
+\<CR>        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+\<CR>} 
+\<CR>
+\<CR>TONE tone_filter;
+\<CR>tone_filter.reg(filter0 filt0);  //data.tick * 8 => tone_filter.max; //60::ms => tone_filter.glide;  // tone_filter.lyd(); // tone_filter.ion(); // tone_filter.mix();// 
+\<CR>tone_filter.dor();// tone_filter.aeo(); // tone_filter.phr();// tone_filter.loc();
+\<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+\<CR>"" => tone_filter.seq;
+\<CR>.9 * data.master_gain => tone_filter.gain;
+\<CR>//tone_filter.sync(4*data.tick);// tone_filter.element_sync();//  tone_filter.no_sync();//  tone_filter.full_sync();  // 16 * data.tick => tone_filter.extra_end;   //tone_filter.print(); //tone_filter.force_off_action();
+\<CR>// tone_filter.mono() => dac;//  tone_filter.left() => dac.left; // tone_filter.right() => dac.right; // tone_filter.raw => dac;
+\<CR>tone_filter.adsr[0].set(20::ms, 0::ms, 1., 400::ms);
+\<CR>tone_filter.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>tone_filter.go();   tone_filter $ ST @=> ST @ last; 
+\<CR>
+\<CR>//////////////////////////////////////////////
+\<CR>//            PUT YOUR SYNT/SEQ HERE :       //
+\<CR>//            Beware of "last" declaration  //
+\<CR>
+\<CR>
+\<CR>
+\<CR>
+\<CR>//////////////////////////////////////////////
+\<CR>
+\<CR>filt0.connect(last, 6.0); filt0.lpf @=> last;
+
 
