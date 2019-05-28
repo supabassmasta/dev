@@ -1611,21 +1611,21 @@ void read_serial(){
         if (b == 'o') {
           // Thunder
 
-          perc1.cnt_reload = 75;
+          perc1.cnt_reload = 30;
           perc1.cnt_num = 1;
           perc1.cnt_den = 1;
           perc1.color_fact = 15;
           perc1.max = 150;
           perc1.pos = 200;
-          perc1.color_mask = 0x0FFFFFF;
+          perc1.color_mask = 0x07FFFFF;
 
-          perc2.cnt_reload = 61;
+          perc2.cnt_reload = 20;
           perc2.cnt_num = 1;
           perc2.cnt_den = 2;
           perc2.color_fact = 15;
           perc2.max = 150;
           perc2.pos = 120;
-          perc2.color_mask = 0x0FFFFFF;
+          perc2.color_mask = 0x07FFFFF;
 
           train1.pos = strip.numPixels() / 2;
           train1.color = 0x003F3F3F;
