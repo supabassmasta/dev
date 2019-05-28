@@ -2067,7 +2067,7 @@ void init_colorRamps() {
 
   ////////////// RED //////////////////
   idx = 0;
-  cramp_r[idx].target = 128;
+  cramp_r[idx].target = 32;
   cramp_r[idx].step = 16;
   idx++;
   
@@ -2078,11 +2078,11 @@ void init_colorRamps() {
   ////////////// GREEN //////////////////
   idx = 0;
   cramp_g[idx].target = -128;
-  cramp_g[idx].step = -12;
+  cramp_g[idx].step = -4;
   idx++;
 
-  cramp_g[idx].target = 128;
-  cramp_g[idx].step = 12;
+  cramp_g[idx].target = 32;
+  cramp_g[idx].step = 4;
   idx++;
 
   ////////////// BLUE //////////////////
@@ -2092,7 +2092,7 @@ void init_colorRamps() {
   cramp_b[idx].step = -16;
   idx++;
 
-  cramp_b[idx].target = 128;
+  cramp_b[idx].target = -128;
   cramp_b[idx].step = 16;
   idx++;
 
@@ -2197,24 +2197,28 @@ class kaleidoElt {
 kaleidoElt kaleidoElts[KALEIDO_NB_ELTS];
 kaleidoElt * kaleidoElts_reord[KALEIDO_NB_ELTS];
 
+uint16_t kal_sub_cnt = 0xFFF0;
+
 void init_kaleidoscope(){
 
   /// /!\ WARNING : At least one type 0 needed !!!!!!
 
   uint8_t idx = 0;
   kaleidoElts[idx].type = 0;
-  kaleidoElts[idx].pix = strip.numPixels() / 4;
-  kaleidoElts[idx].offset = 3;
+  kaleidoElts[idx].pix = 0;
+  kaleidoElts[idx].offset = 0;
   idx ++;
 
   kaleidoElts[idx].type = 2;
-  kaleidoElts[idx].pix = 0;
-  kaleidoElts[idx].offset = -2;
+  kaleidoElts[idx].pix = strip.numPixels() / 4;
+  kaleidoElts[idx].offset = 0;
   idx ++;
+
+  // init sub cnt high to enter the "move" section on first call
+  kal_sub_cnt = 0xFFF0 ;
 
 }
 
-uint16_t kal_sub_cnt = 0;
 
 // use first half strip to build 2nd half
 // Then copy second half to the 1st
@@ -2228,43 +2232,82 @@ void kaleidoscope(){
   uint8_t max;
   uint8_t up;
 
-  // find first elt type 0 to start
-  max = 255;
-  i = 0;
-  elt_found = 255;
-  while( i < KALEIDO_NB_ELTS ){
-    if (kaleidoElts[i].type == 0 && kaleidoElts[i].pix < max ){
-      elt_found = i;
-      max = kaleidoElts[i].pix;
+
+  // move (Note: kal_sub_cnt must be high enough to enter this on first call)
+  kal_sub_cnt ++;
+
+  if (kal_sub_cnt > 1000) {
+    int16_t new_pix;
+
+    kal_sub_cnt = 0;
+
+    // find first elt type 0 to start
+    max = 255;
+    i = 0;
+    elt_found = 255;
+    while( i < KALEIDO_NB_ELTS ){
+      if (kaleidoElts[i].type == 0 && kaleidoElts[i].pix < max ){
+        elt_found = i;
+        max = kaleidoElts[i].pix;
+      }
+      i++;
     }
-    i++;
+
+    if (elt_found == 255) {
+      // No index found
+      return;
+    }
+
+    first_pix = target_pix = kaleidoElts[elt_found].pix;
+
+    // reorder elts
+    i = first_pix + 1; if ( i > strip.numPixels() / 2 ) i = 0;
+    kaleidoElts_reord[0] = & kaleidoElts[elt_found];
+    elt_found = 1;
+    while( i != first_pix ){
+      for (j=0; j < KALEIDO_NB_ELTS; j++){
+        if ( kaleidoElts[j].pix == i ){
+          kaleidoElts_reord[elt_found] = & kaleidoElts[j];
+          elt_found++;
+        }
+      }
+      i++;  if ( i > strip.numPixels() / 2 ) i = 0;
+    }
+
+    i = 0;
+    while( i < KALEIDO_NB_ELTS ){
+      if (kaleidoElts[i].offset > 0) {
+        new_pix = kaleidoElts[i].pix + kaleidoElts[i].offset;
+        if ( new_pix > strip.numPixels() / 2  ){
+          kaleidoElts[i].pix = 0;
+        }
+        else {
+          kaleidoElts[i].pix = new_pix;
+        }
+      }
+      else  if (kaleidoElts[i].offset < 0) {
+        new_pix = kaleidoElts[i].pix + kaleidoElts[i].offset;
+        if ( new_pix < 0  ){
+          kaleidoElts[i].pix = strip.numPixels() / 2 - 1;
+        }
+        else {
+          kaleidoElts[i].pix = new_pix;
+        }
+      }
+      i++;
+    }
+
+
   }
 
-  if (elt_found == 255) {
-    // No index found
-    return;
-  }
 
-  first_pix = target_pix = kaleidoElts[elt_found].pix;
-
+  // STEP First Pix before loop
+  first_pix = target_pix  = kaleidoElts_reord[0]->pix;
+  up = 1;
   strip.setPixelColor(strip.numPixels() / 2 + target_pix, strip.getPixelColor(0));
+  // update target pix to enter the loop
   target_pix++; if ( target_pix > strip.numPixels() / 2 ) target_pix = 0;
   source_pix = 1;
-
-  // TODO: Do it only when element pix moves (sub cnt update. and first time: have au sub cnt update on 1st time )
-  // reorder elts
-  i = first_pix + 1;
-  kaleidoElts_reord[0] = & kaleidoElts[elt_found];
-  elt_found = 1;
-  while( i != first_pix ){
-    for (j=0; j < KALEIDO_NB_ELTS; j++){
-      if ( kaleidoElts[j].pix == i ){
-        kaleidoElts_reord[elt_found] = & kaleidoElts[j];
-        elt_found++;
-      }
-    }
-    i++;  if ( i > strip.numPixels() / 2 ) i = 0;
-  }
 
   elt_cur = 0;
   while (target_pix != first_pix) {
@@ -2305,8 +2348,9 @@ void kaleidoscope(){
         case 2:
           // don't change source pix
           // Change directrion
-          if ( up  )  up = 0;
-          else up = 1;
+          if ( up  ) { up = 0; }
+          else {up = 1; }
+
           break;
       }
 
@@ -2316,37 +2360,6 @@ void kaleidoscope(){
     target_pix++; if ( target_pix > strip.numPixels() / 2 ) target_pix = 0;
   }
 
-  // move
-  kal_sub_cnt ++;
-  if (kal_sub_cnt > 1000) {
-    int16_t new_pix;
-    
-    kal_sub_cnt = 0;
-     
-    i = 0;
-    while( i < KALEIDO_NB_ELTS ){
-      if (kaleidoElts[i].offset > 0) {
-        new_pix = kaleidoElts[i].pix + kaleidoElts[i].offset;
-        if ( new_pix > strip.numPixels() / 2  ){
-          kaleidoElts[i].pix = 0;
-        }
-        else {
-          kaleidoElts[i].pix = new_pix;
-        }
-      }
-      else  if (kaleidoElts[i].offset < 0) {
-        new_pix = kaleidoElts[i].pix + kaleidoElts[i].offset;
-        if ( new_pix < 0  ){
-          kaleidoElts[i].pix = strip.numPixels() / 2 - 1;
-        }
-        else {
-          kaleidoElts[i].pix = new_pix;
-        }
-      }
-
-    }
-
-  }
 
 
 }
