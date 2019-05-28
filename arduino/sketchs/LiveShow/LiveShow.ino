@@ -2089,11 +2089,11 @@ void init_colorRamps() {
   idx = 0;
 
   cramp_b[idx].target = -128;
-  cramp_b[idx].step = -16;
+  cramp_b[idx].step = -1;
   idx++;
 
-  cramp_b[idx].target = -128;
-  cramp_b[idx].step = 16;
+  cramp_b[idx].target = 56;
+  cramp_b[idx].step = 1;
   idx++;
 
 
@@ -2171,7 +2171,7 @@ void colorRamp() {
 
     /// MOVE
     cramp_sub_cnt ++;
-    if ( cramp_sub_cnt > 600  ){
+    if ( cramp_sub_cnt > 200  ){
       cramp_sub_cnt = 0;
       cramp_start ++;
       if ( cramp_start >   strip.numPixels() / 2 ){
@@ -2193,7 +2193,7 @@ class kaleidoElt {
   }
 };
 
-#define KALEIDO_NB_ELTS 2
+#define KALEIDO_NB_ELTS 8
 kaleidoElt kaleidoElts[KALEIDO_NB_ELTS];
 kaleidoElt * kaleidoElts_reord[KALEIDO_NB_ELTS];
 
@@ -2206,12 +2206,42 @@ void init_kaleidoscope(){
   uint8_t idx = 0;
   kaleidoElts[idx].type = 0;
   kaleidoElts[idx].pix = 0;
-  kaleidoElts[idx].offset = 0;
+  kaleidoElts[idx].offset = -1;
   idx ++;
 
-  kaleidoElts[idx].type = 2;
+  kaleidoElts[idx].type = 0;
+  kaleidoElts[idx].pix = 3 *strip.numPixels() / 8;
+  kaleidoElts[idx].offset = 2;
+  idx ++;
+
+  kaleidoElts[idx].type = 0;
+  kaleidoElts[idx].pix = strip.numPixels() / 2;
+  kaleidoElts[idx].offset = -3;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
   kaleidoElts[idx].pix = strip.numPixels() / 4;
-  kaleidoElts[idx].offset = 0;
+  kaleidoElts[idx].offset = 1;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
+  kaleidoElts[idx].pix = strip.numPixels() / 8;
+  kaleidoElts[idx].offset = -2;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
+  kaleidoElts[idx].pix = 3 *strip.numPixels() / 8;
+  kaleidoElts[idx].offset = 3;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
+  kaleidoElts[idx].pix = strip.numPixels() / 2;
+  kaleidoElts[idx].offset = -1;
+  idx ++;
+
+  kaleidoElts[idx].type = 1;
+  kaleidoElts[idx].pix = strip.numPixels() / 2;
+  kaleidoElts[idx].offset = 1;
   idx ++;
 
   // init sub cnt high to enter the "move" section on first call
@@ -2236,7 +2266,7 @@ void kaleidoscope(){
   // move (Note: kal_sub_cnt must be high enough to enter this on first call)
   kal_sub_cnt ++;
 
-  if (kal_sub_cnt > 1000) {
+  if (kal_sub_cnt > 20) {
     int16_t new_pix;
 
     kal_sub_cnt = 0;
@@ -2360,7 +2390,10 @@ void kaleidoscope(){
     target_pix++; if ( target_pix > strip.numPixels() / 2 ) target_pix = 0;
   }
 
-
+  // Symetry
+  for (i=0; i< strip.numPixels() / 2 ; i++){
+     strip.setPixelColor(i, strip.getPixelColor(strip.numPixels() - i - 1)); 
+  }
 
 }
 
