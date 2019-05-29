@@ -3,7 +3,7 @@ SYNC sy;
 sy.sync(8 * data.tick , -0.5 * data.tick /* offset */); 
 
 // Off first part
-HW.launchpad.virtual_key_off_only(11); 
+//HW.launchpad.virtual_key_off_only(11); 
 HW.launchpad.virtual_key_off_only(12); 
 HW.launchpad.virtual_key_off_only(13); 
 HW.launchpad.virtual_key_off_only(14); 

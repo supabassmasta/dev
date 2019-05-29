@@ -1,6 +1,6 @@
 LONG_WAV l;
-"../_SAMPLES/inawah/Inawah voices.wav" => l.read;
-0.4 * data.master_gain => l.buf.gain;
+"../_SAMPLES/inawah/Inawah voices processed.wav" => l.read;
+0.6 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 l.start(8 * data.tick /* sync */ , 2 * 16 * data.tick  /* offset */ , 8 * 16 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  

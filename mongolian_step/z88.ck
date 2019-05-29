@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../_SAMPLES/Chassin/Mongolian step.wav" => l.read;
+"../_SAMPLES/mongolian_step/Mongolian step with bass.wav" => l.read;
 0.7 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
