@@ -47,7 +47,7 @@ lhpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] 
 
 
 STAUTOPAN autopan;
-autopan.connect(last $ ST, .3 /* span 0..1 */, 4*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+autopan.connect(last $ ST, .2 /* span 0..1 */, 4*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 4. /* static gain */  );       gainc $ ST @=>  last; 
