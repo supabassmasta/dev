@@ -11,13 +11,20 @@ class note_info_act extends ACTION {
    class END extends end { 
     SEQ3 @ s; 
     0::ms => dur extra_end;
+    0::ms => dur fixed_end_dur;
     
     fun void kill_me () {
       <<<"THE END">>>;	
       // Mute seq
       0 => s.on;
-      // Wait seq duration before diing (not optimal)
-      s.duration +  extra_end => now;		
+      if ( fixed_end_dur != 0::ms  ){
+          fixed_end_dur => now;
+          1=>s.exit;
+      }
+      else {
+        // Wait seq duration before diing (not optimal)
+        s.duration +  extra_end => now;		
+      }
       <<<"THE real END">>>;		
     }
   }; 

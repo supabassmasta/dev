@@ -11,7 +11,8 @@ ST @ last;
  " => s[idx].seq;
  0.4 * data.master_gain => s[idx].gain; // s[idx].gain("s", .2); // for single wav 
  //s[idx].sync(4*data.tick);// s[idx].element_sync(); //s[idx].no_sync(); //s[idx].full_sync();  //
- -2 * data.tick => s[idx].extra_end;   //s[idx].print();
+// -2 * data.tick => s[idx].extra_end;   //s[idx].print();
+
  // s[idx].mono() => dac; //s[idx].left() => dac.left; //s[idx].right() => dac.right;
  s[idx].go();     s[idx] $ ST @=>  last; 
   

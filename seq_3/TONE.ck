@@ -116,6 +116,7 @@
     SEQ3 @ s; 
     0=> int force_off_actions;
     0::ms => dur extra_end;
+    0::ms => dur fixed_end_dur;
 
     fun void kill_me () {
       <<<"THE END">>>;	
@@ -124,14 +125,17 @@
       if ( force_off_actions  ){
           s.play_off_actions(0);
       }
-      // Wait seq duration before diing (not optimal)
-      s.duration + extra_end => now;		
-			// let "go" shred exit by herself 
-		  1=>s.exit;
-      s.duration + extra_end => now;		
-
-//      Machine.remove(s.id_go.id());
-//      10::ms => now;
+      if ( fixed_end_dur != 0::ms  ){
+          fixed_end_dur => now;
+          1=>s.exit;
+      }
+      else {
+        // Wait seq duration before diing (not optimal)
+        s.duration + extra_end => now;		
+        // let "go" shred exit by herself 
+        1=>s.exit;
+        s.duration + extra_end => now;		
+      }
       <<<"THE real END">>>;		
     }
   }; 
