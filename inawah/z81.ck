@@ -10,6 +10,8 @@ HW.launchpad.virtual_key_off_only(72);
 
 HW.launchpad.virtual_key_on_only(75); // Synt transition
 HW.launchpad.virtual_key_on_only(76); 
+//HW.launchpad.virtual_key_on_only(85); // Synt transition
+//HW.launchpad.virtual_key_on_only(86); 
 9 * data.tick => now;
 // OFF second part
 HW.launchpad.virtual_key_off_only(55); // HH
@@ -19,6 +21,8 @@ HW.launchpad.virtual_key_off_only(62); // rim shot
 HW.launchpad.virtual_key_off_only(53); // Big Drum
 HW.launchpad.virtual_key_off_only(75); // Synt transition
 HW.launchpad.virtual_key_off_only(76); 
+//HW.launchpad.virtual_key_off_only(85); // Synt transition
+//HW.launchpad.virtual_key_off_only(86); 
 
 // Thunder
 HW.launchpad.virtual_key_on_only(65); 
