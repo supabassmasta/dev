@@ -51,7 +51,7 @@
   }
 
     fun void push(note_info_t @ ni ) {
-//      <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
+      //<<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
       if(ni.on) {
         padsr.set(rel_attack * ni.d , rel_decay * ni.d , sustain, rel_release * ni.d);
         padsr.keyOn();

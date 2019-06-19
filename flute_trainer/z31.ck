@@ -23,8 +23,8 @@ t.reg(synt0 s13);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
 t.reg(synt0 s14);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
 t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c}c:2
-1|2|3|4|5|6|7 |8|9|a|b|c|d|e
+"}c:2
+5|6|7 |8|9|a|b|c|d|e|f |g|h|i
 " => t.seq;
 .03 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
