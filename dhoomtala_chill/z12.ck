@@ -12,6 +12,8 @@ _sksllkk
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STHPF hpf;
+hpf.connect(last $ ST , 12 * 10 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last; 
 
 STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 5 /* Q */, 2 * 100 /* f_base */ , 4 * 100  /* f_var */, 1::second / (7 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
