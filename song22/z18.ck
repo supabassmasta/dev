@@ -12,16 +12,16 @@ t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*2 }c 
 1__1 _2__
-____ ____
+5___ ____
 
 B__B _A__
-____ ____
+2___ ____
 
 1_3_ 21__
-____ ____
+5___ ____
 
 1_B_ 0A__
-____ ____
+2___ ____
 
 
 " => t.seq;
