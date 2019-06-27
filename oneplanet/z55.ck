@@ -29,6 +29,9 @@ fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 4 /* Q */, 1600 /
 STFILTERMOD fmod2;
 fmod2.connect( stlimiter $ ST , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 4 /* Q */, 1600 /* f_base */ , 5400  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .8 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }

@@ -66,6 +66,9 @@ STCOMPRESSOR stcomp;
 4. => float in_gain;
 stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 30::ms /* releaseTime */);   stcomp $ ST @=>  last;   
 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .2 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }
