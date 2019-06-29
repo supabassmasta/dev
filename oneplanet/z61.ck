@@ -29,7 +29,7 @@ class synt0 extends SYNT{
       2. => st.next;
       1./8. +0.0 => opin[i].gain;
       adsrop[i].set(100::ms, 186::ms, 1. , 1800::ms);
-      15 * 100 => adsrop[i].gain;
+      18 * 100 => adsrop[i].gain;
       i++;
 
       //---------------------
@@ -81,7 +81,7 @@ class synt0 extends SYNT{
                  
                  if(idx == 0) {
                    
-                   0.2 => osc[2].phase;        
+                   0.6 => osc[2].phase;        
                    <<<"PHASE UPDATE">>>;
                  }
 
@@ -105,33 +105,34 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
 //t.lyd(); // t.ion(); // t.mix();// 
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"*4*2 }c}c}c
-1_3_ 5___ 8___ __B_
-5___ __8_ ____ B_B_
-1_3_ 5___ 8_0_ __A_
-__6_ __B_ ____ ____
+"*4*2 }c}c}c}c
+8_5_3___ 1_4_____
+8_5___B_ 1___A_B_
+5___2___ 0_B___1_
+5___3___ 1___A_B_
 
-1_3_ 5___ 8___ __B_
-5___ B_8_ ____ B_B_
-1_3_ 5___ 8___ 0_A_
-__6_ __B_ __1_ ____
+8_5_3___ 1_4_____
+8_5___B_ 1___A_B_
+5___2___ 0_B___1_
+5___3___ 1___A_B_
 " => t.seq;
-1.7 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+0.7 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
+1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
 STLPF lpf;
-lpf.connect(last $ ST ,  6 * 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+lpf.connect(last $ ST ,  17 * 100 /* freq */  , 1.7 /* Q */  );       lpf $ ST @=>  last; 
 
 //==============================================================================================
 STECHO ech;
-ech.connect(last $ ST , data.tick * 8 / 8 , .3);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 6 / 8 , .4);  ech $ ST @=>  last; 
 
 STFILTERMOD fmod;
-fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 1 /* Q */, 600 /* f_base */ , 8* 100  /* f_var */, 1::second / (12 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 5 * 100 /* f_base */ , 15* 100  /* f_var */, 1::second / (5 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 
 

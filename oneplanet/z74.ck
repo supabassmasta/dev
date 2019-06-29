@@ -133,6 +133,9 @@ ech.connect(last $ ST , data.tick * 8 / 8 , .3);  ech $ ST @=>  last;
 STFILTERMOD fmod;
 fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 1 /* Q */, 600 /* f_base */ , 8* 100  /* f_var */, 1::second / (12 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
+STLHPFC lhpfc;
+lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last; 
+
 
 
 STCOMPRESSOR stcomp;

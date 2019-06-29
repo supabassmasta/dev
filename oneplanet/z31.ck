@@ -9,6 +9,10 @@ s.go();     s $ ST @=> ST @ last;
 
 STLPF lpf;
 lpf.connect(last $ ST , 10* 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+
+STDUCKMASTER duckm;
+duckm.connect(last $ ST, 9. /* In Gain */, .07 /* Tresh */, .5 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }
