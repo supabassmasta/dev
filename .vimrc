@@ -993,3 +993,7 @@ ab FILTER_TONEK class filter0 extends SYNT{
 ab STGVERBK STGVERB stgverb;
 \<CR>stgverb.connect(last $ ST, .5 /* mix */, 14 * 10. /* room size */, 11::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last;
 
+ab STFLANGERK STFLANGER flang;
+\<CR>flang.connect(last $ ST); flang $ ST @=>  last; 
+\<CR>flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */);
+

@@ -9,7 +9,8 @@ a__g_b_r_n_
 
 " => s.seq;
 .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
+8 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
@@ -17,6 +18,9 @@ s.go();     s $ ST @=> ST @ last;
 STADSR stadsr;
 stadsr.set(0::ms /* Attack */, 60::ms /* Decay */, 0.0001/* Sustain */, 100::ms /* Sustain dur */,  30::ms /* release */);
 stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last; 
+
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
