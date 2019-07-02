@@ -110,7 +110,7 @@ STAUTOPAN autopan;
 autopan.connect(last $ ST, .6 /* span 0..1 */, 5*data.tick + 9::ms /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 STFILTERMOD fmod2;
 fmod2.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 30 * 100 /* f_base */ , 50 * 100  /* f_var */, 1.03::second / (3 * data.tick) /* f_mod */);     fmod2  $ ST @=>  last; 
