@@ -1,0 +1,2 @@
+
+chuckj: ugen_xxx.cpp:2614: long int sndbuf_load(sndbuf_data*, long unsigned int): Assertion `bin < d->chunk_num' failed.

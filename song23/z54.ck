@@ -12,7 +12,7 @@ class synt0 extends SYNT{
 			//---------------------
 			opin[i] => osc[i] => adsrop[i] => opout[i];
 			1. => opin[i].gain;
-			adsrop[i].set(1::ms,.5*data.tick, .5 , 200::ms);
+			adsrop[i].set(1::ms,.5*data.tick, .5 , 4* data.tick);
 			adsrop[i].setCurves(1.0, .8, .5);
 			1 => adsrop[i].gain;
 			i++;
@@ -111,7 +111,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 !111_ ____
 111_ __8!5
 " => t.seq;
-0.6 => t.gain;
+0.4 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2::ms, 10::ms, 1, 4*data.tick);
@@ -131,6 +131,9 @@ hpf.connect(last $ ST , 50 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  las
 
 STLPF lpf;
 lpf.connect(last $ ST , 6 * 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+
+STREV1 rev;
+rev.connect(last $ ST, .1 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
 	     100::ms => now;
