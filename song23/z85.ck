@@ -10,7 +10,7 @@ class synt0 extends SYNT{
 TONE t;
 t.reg(synt0 s1);  //data.tick * 8 => t.max; //
 30::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc();
+t.mix();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4
 8351 ____ ____ ____

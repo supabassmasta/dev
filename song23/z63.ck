@@ -1,3 +1,34 @@
+class SUPERSAWT extends SYNT{
+
+	9 => int synt_nb; 0 => int i;
+	Gain detune[synt_nb];
+	TriOsc s[synt_nb];
+	Gain final => outlet; .15 => final.gain;
+
+	.001 * 2 => float offset;
+	fun float comp_detune(int i) {
+		return i * offset + Math.random2f(-0.001, 0.001) ;
+
+	}
+	inlet => detune[i] => s[i] => final;    1.  => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. + comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. - comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. + comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. - comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. + comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. - comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. + comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+	inlet => detune[i] => s[i] => final;    1. - comp_detune((i+1)/2) => detune[i].gain;    .6 => s[i].gain; i++;  
+
+
+
+	// init width
+	for (0 =>  i; i < detune.size()     ; i++) {
+		0. => s[i].width;
+	}
+
+	fun void on()  { }	fun void off() { }	fun void new_note(int idx)  {		}
+} 
 class synt0 extends SYNT{
 
     inlet => TriOsc s =>  outlet; 
@@ -8,7 +39,7 @@ class synt0 extends SYNT{
 } 
 
 TONE t;
-t.reg(SUPERSAW2 s1);  //data.tick * 8 => t.max; //
+t.reg(SUPERSAWT s1);  //data.tick * 8 => t.max; //
 30::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.mix();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
