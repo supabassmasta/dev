@@ -50,7 +50,7 @@ class synt0 extends SYNT{
 
 
  " => t.seq;
- .4 * data.master_gain => t.gain;
+ .6 * data.master_gain => t.gain;
  //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
  t.adsr[0].set(4::ms, 30::ms, .001, 400::ms);

@@ -8,6 +8,7 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 ___a
 
 " => s.seq;
+8 * data.tick => s.the_end.fixed_end_dur;
 1.1 * data.master_gain => s.gain; // 
 s.gain("a", 1.4); // for single wav 
 s.gain("b", 2.3); // for single wav 
@@ -20,5 +21,3 @@ s.go();     s $ ST @=> ST @ last;
 while(1) {
        100::ms => now;
 }
- 
-

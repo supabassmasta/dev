@@ -15,6 +15,5 @@ HW.ledstrip._load_preset('0');
 HW.launchpad.virtual_key_on(7);
 1::ms => now;
 
-// BASS line
-// 2298 
+// PARTS: D C D D
 

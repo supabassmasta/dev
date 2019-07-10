@@ -21,7 +21,7 @@ ____ ____ ____ ____
 ____ ____ __9_ 1_8_ 
 ____ ____ ____ ____ 
 " => t.seq;
-1.3 * data.master_gain => t.gain;
+1.5 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(10::ms, 3 * 10::ms, .7, 200::ms);
