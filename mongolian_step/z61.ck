@@ -15,6 +15,9 @@ u_u x_*2A_:2
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
+STREV1 rev;
+rev.connect(last $ ST, .10 /* mix */);     rev  $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }

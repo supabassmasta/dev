@@ -55,16 +55,11 @@ ____
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
-STECHOHPF stechohpf;
-stechohpf.connect(last $ ST);
-stechohpf.stdelay.connect( last $ ST, 1.01/* gain */ , 1. / 8. * data.tick /* delay */ );
+STECHO ech;
+ech.connect(last $ ST , data.tick * 1 / 8 , .9);  ech $ ST @=>  last; 
 
-stechohpf.stsynchpf.freq(4 * 1000 /* Base */, 3 * 1000 /* Variable */, 1.4 /* Q */);
-stechohpf.stsynchpf.adsr_set(1. /* Relative Attack */, .0/* Relative Decay */, 0.0 /* Sustain */, .0 /* Relative Sustain dur */, 1. /* Relative release */);
-stechohpf.stsynchpf.connect(stechohpf.stdelay $ ST, s.note_info_tx_o);
-
-stechohpf.stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 6 * data.tick /* Sustain dur */, 4 * data.tick /* release */);
-stechohpf.stadsr.connect(stechohpf.stsynchpf $ ST, s.note_info_tx_o);  stechohpf $ ST @=> last;
+STFILTERMOD fmod;
+fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 3400  /* f_var */, 1::second / (1.5 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 
 STLIMITER stlimiter;

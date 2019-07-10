@@ -67,7 +67,7 @@ stgverb.connect(last $ ST, .5 /* mix */, 14 * 10. /* room size */, 11::second /*
 
 STCOMPRESSOR stcomp;
 12. => float in_gain;
-stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain + .1 /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
+stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain   /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
 
 
  while(1) {

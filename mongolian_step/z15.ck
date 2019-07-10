@@ -6,13 +6,13 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
 ____
-__a_
+___a
 ____
-__b_
+___b
 ____
-__c_
+___c
 ____
-__d_
+___d
 
 " => s.seq;
 .9 * data.master_gain => s.gain; // 

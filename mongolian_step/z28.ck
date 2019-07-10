@@ -5,7 +5,7 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 "../_SAMPLES/mongolian_step/snare_echo4.wav" => s.wav["d"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
-__d_
+___d
 
 " => s.seq;
 2.8 * data.master_gain => s.gain; // 

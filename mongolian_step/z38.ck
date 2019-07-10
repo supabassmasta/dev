@@ -5,10 +5,10 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 "../_SAMPLES/mongolian_step/snare_echo4.wav" => s.wav["d"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
-___b
+___d
 
 " => s.seq;
-.9 * data.master_gain => s.gain; // 
+2.8 * data.master_gain => s.gain; // 
 s.gain("a", 1.4); // for single wav 
 s.gain("b", 2.3); // for single wav 
 s.gain("c", 1.4); // for single wav 
@@ -16,6 +16,9 @@ s.gain("d", 1.7); // for single wav
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
+
+STECHO ech;
+ech.connect(last $ ST , data.tick * 1 / 4 + 5::ms , .6);  ech $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
