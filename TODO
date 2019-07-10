@@ -1,3 +1,9 @@
+Perc chamanic for mong step
+
+Implement STEP.step => Modulator ; STEP.config(Controller @);  // Useful to add into PMOD.
+
+
+
 Implement note info into SYNTA (fixed dur as param)
 
 
