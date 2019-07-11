@@ -1,9 +1,12 @@
 LONG_WAV l;
 "../_SAMPLES/mongolian_step/Mongolian step with bass.wav" => l.read;
-0.7 * data.master_gain => l.buf.gain;
+0.9 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 l.start(4 * data.tick /* sync */ , 18 * 16 * data.tick  /* offset */ , 16 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
+STDUCK duck;
+duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

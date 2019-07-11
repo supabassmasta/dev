@@ -22,15 +22,16 @@ t.dor(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 //}c
 //1|5|8_ 
 " :2
-1|81|8 
+}c
 __
 1|8_ 
 __
+1|81|8 
 
 
 
  "=> t.seq;
-4.7 * data.master_gain => t.gain;
+4.9 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 6 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -56,6 +57,8 @@ STGVERB stgverb;
 stgverb.connect(last $ ST, .06 /* mix */, 8 * 10. /* room size */, 8::second /* rev time */, 0.1 /* early */ , 0.3 /* tail */ ); stgverb $ ST @=>  last; 
 
 
+STLPF lpf;
+lpf.connect(last $ ST , 4 * 1000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
 
 
