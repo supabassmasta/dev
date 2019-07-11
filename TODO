@@ -15,13 +15,8 @@ Fix Bug: Ghost scripts using  HW.launchpad.virtual_key_X. Call stack from the sc
 Fix Bug: long TONE SEQ do xrun @ .seq() loading and maybe .go(). Use inawah/z33 for test
 
 
-Check powerADSR compilation.
-Add PowerADSR.stCurves in SYNCFILTER ab
 
-
-create vim ab for SEQ[] and TONE[] arrays, allowing to manage several seq in the same script.
-
-create SYNC tremolo
+create vim ab for TONE[] arrays, allowing to manage several TONE in the same script.
 
 create SYNC modulators with TONE.in as input
 
@@ -44,33 +39,15 @@ while(1) {
  
 
 
-
-Optimize TONE and SEQ END duration/extra_end. Test negative extra end to reduce long seq END.
-
-Create global STGain array (size 88) to route audio between zXX.ck:
--  STSEND(ST @ last, 11) // 11 for z11.ck
--  STRECEIVE (11) // by convention to use in z11.ck
-To use with for example:
-STMULT_BASE_ONE(ST @ source, ST @ MOD): ST multiplier, adding mod input to 1
-STMOD_BASE_ONE(ST @ source, ST @ MOD): ST FM modulator (TONE to be checked to accept input fm mod)
-
-
 Essayer Tracktion 7 as companion DAW
 
 Fix/Check: action duplication in TONE.print() : freq_synt, synt_new_note. Maybe note a big issue
-
-STLIMITERK with gain;
 
 Make sync script hardcore: if diff_time to high reset counter
 
 Bangra 6 temps
 
-Create STFLANGER
-
 Create korg stereo sampler
-
-
-Check filters behaviour on baudeline
 
 Try to kill/unreg control objects on script end to free memory
 

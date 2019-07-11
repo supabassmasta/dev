@@ -57,9 +57,9 @@ map <C-f> :tnext<cr>
 " Copy buffer 'a' at begining of line, buffer 'z' at end
 "map   <C-G>         0"aP$"zpj   
 
-:command BW bp | sp | bn | bd
-:command VIMRC e ~/.vimrc 
-:command SRC  source ~/.vimrc
+:command! BW bp | sp | bn | bd
+:command! VIMRC e ~/.vimrc 
+:command! SRC  source ~/.vimrc
    
 "ab C
 ab whilec while( ){<CR>  <CR>}<Up><Up><Right><Right><Right><Right><Right> 
@@ -996,4 +996,7 @@ ab STGVERBK STGVERB stgverb;
 ab STFLANGERK STFLANGER flang;
 \<CR>flang.connect(last $ ST); flang $ ST @=>  last; 
 \<CR>flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */);
+
+ab STEPCK STEPC stepc; stepc.init(HW.lpd8.potar[1][1], 100 /* min */, 3000 /* max */, 50::ms /* transition_dur */);
+\<CR>stepc.out => 
 
