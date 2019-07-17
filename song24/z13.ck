@@ -23,7 +23,7 @@ _j_j
 j_jj
 
 " => s.seq;
-.3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.15 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
