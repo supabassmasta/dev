@@ -515,11 +515,21 @@ ab POLYK lpk25 l;
 \<CR>synta.reg(synt0 s1);  synta.a[1].set(3::ms, 30::ms, .7, 100::ms);
 \<CR>synta.reg(synt0 s2);  synta.a[2].set(3::ms, 30::ms, .7, 100::ms);
 \<CR>synta.reg(synt0 s3);  synta.a[3].set(3::ms, 30::ms, .7, 100::ms);
+\<CR>
+\<CR>// Note info duration
+\<CR>10 * 100::ms => synta.ni.d;
+\<CR>
+\<CR>synta $ ST @=> ST @ last;
 
 ab GLIDEK lpk25 l;
 \<CR>GLIDE synta; 20::ms => synta.duration;	300::ms => synta.release; synta.adsr.set(3::ms, 30::ms, .7,  synta.release);
 \<CR>l.reg(synta);
 \<CR>synta.reg(synt0 s0);
+\<CR>
+\<CR>// Note info duration
+\<CR>10 * 100::ms => synta.ni.d;
+\<CR>
+\<CR>synta $ ST @=> ST @ last;
 
 
 ab STDUCKMASTERK STDUCKMASTER duckm;

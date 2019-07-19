@@ -26,6 +26,7 @@ fun void reg (SYNT @ in){
 				//                msg.data2 => pad_nb_;
 				//                msg.data3 => val_;
 
+        send_note_info(msg);
 
 		if (msg.data1 == 144){
 				note_on ++;

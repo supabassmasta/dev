@@ -34,6 +34,8 @@ public class POLY extends SYNTA {
 
 
 	fun void in(	MidiMsg msg){
+
+
 		if (msg.data1 == 144){		
 		 // find a voice
 		 0=>int i;
@@ -68,6 +70,9 @@ public class POLY extends SYNTA {
 				s[i].off();
 		  }
 		}
+
+    send_note_info(msg);
+    
   }
 }
 
