@@ -12,7 +12,7 @@ class control_step extends CONTROL {
 }
 
 public class STEPC {
-  step one => Envelope out;
+  Step one => Envelope out;
   1. => one.next;
 
   control_step cs;

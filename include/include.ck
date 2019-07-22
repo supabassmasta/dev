@@ -204,6 +204,7 @@ Machine.add("../EFFECTS/STREV2.ck");
 Machine.add( "../include/HW.ck");
 Machine.add( "../seq_3/SET_WAV.ck");
 Machine.add( "../seq_3/SET_WAV2.ck");
+Machine.add("../EFFECTS/ARP.ck");
 me.yield();
 Machine.add( "../launchpad/script_launcher.ck");
 Machine.add("config.ck");

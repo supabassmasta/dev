@@ -392,7 +392,7 @@ ab gverbK GVerb gverb0  =>
 \<CR>0.3 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5      
 
 ab TONEK TONE t;
-\<CR>t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+\<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"1" => t.seq;
 \<CR>.9 * data.master_gain => t.gain;
@@ -1009,4 +1009,14 @@ ab STFLANGERK STFLANGER flang;
 
 ab STEPCK STEPC stepc; stepc.init(HW.lpd8.potar[1][1], 100 /* min */, 3000 /* max */, 50::ms /* transition_dur */);
 \<CR>stepc.out => 
+
+ab ARPK ARP arp;
+\<CR>arp.t.dor();
+\<CR>50::ms => arp.t.glide;
+\<CR>"*4 1538  " => arp.t.seq;
+\<CR>arp.t.go();   
+\<CR>
+\<CR>// CONNECT SYNT HERE
+\<CR>3 => s0.inlet.op;
+\<CR>arp.t.raw() => s0.inlet;
 
