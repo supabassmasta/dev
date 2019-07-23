@@ -1,7 +1,7 @@
 ST st;
 SndBuf s => st.mono_in;
 "../_SAMPLES/tanpura/LoopCplusG 3.wav" => s.read;
-0.8 => s.gain;
+0.2 => s.gain;
 
 fun void f1 (){ 
   while(1) {
