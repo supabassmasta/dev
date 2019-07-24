@@ -985,7 +985,7 @@ void ederlezi() {
           g = t1.process();
           b = t2.process();
           
-          r = t3.process();
+          r = t3.process() + b  + g + 64;
           if (r<0) r = 0;
           if (r>255) r = 255;
 
