@@ -1,12 +1,12 @@
 ST st;
 SndBuf s => st.mono_in;
-"../_SAMPLES/tanpura/LoopCplusG 3.wav" => s.read;
-0.3 => s.gain;
+"../_SAMPLES/tanpura/LoopCplusG 4.wav" => s.read;
+0.26 => s.gain;
 
 fun void f1 (){ 
   while(1) {
 
-    s.length() => now;
+    s.length()  => now;
     0 => s.pos;
   }
 } 
@@ -22,7 +22,7 @@ STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 1 /* Q */, 600 /* f_base */ , 1600  /* f_var */, 1::second / (5 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STECHO ech;
-ech.connect(last $ ST , 100::ms , .7);  ech $ ST @=>  last; 
+ech.connect(last $ ST , 100::ms , .8);  ech $ ST @=>  last; 
 
 STLPF lpf;
 lpf.connect(last $ ST , 2000 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
