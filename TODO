@@ -1,3 +1,5 @@
+Create reload_lpd8 command/function in HW obj
+
 
 live piano recoder SYNTA. output: " 1111 1111 2333 ____ ...
 
@@ -6,11 +8,6 @@ supersaw => flanger (bien metal) => tone_filter (fast transition)
 
 Perc chamanic, kick beat with DUCK,  for mong step
 
-Implement STEP.step => Modulator ; STEP.config(Controller @);  // Useful to add into PMOD.
-
-
-
-Implement note info into SYNTA (fixed dur as param)
 
 
 Check DestTimeNegativeException Error implications...
