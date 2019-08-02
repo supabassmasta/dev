@@ -1,6 +1,7 @@
 public class lpd8 {
     // device number
     "LPD8 MIDI 1" => string device;
+    "Akai LPD8 Wireless MIDI 1" => string device2;
 
     MidiIn min;
     MidiMsg msg;
@@ -17,7 +18,7 @@ for(0 =>  int i; i < 8; i++ )
     // open the device
     if( min.open( i ) )
     {
-				if ( min.name() == device ) {
+				if ( min.name() == device || min.name() == device2) {
         <<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
 				break;
 				}
