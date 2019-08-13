@@ -143,92 +143,41 @@ SndBuf s => outlet;
         } 0 => own_adsr;
 } 
 
-class VIOLIN0 extends SYNT{
+class synt0 extends SYNT{
 
-inlet => Gain factor => blackhole;
+    inlet => SinOsc s =>  outlet; 
+      .5 => s.gain;
 
-1. / 32. => factor.gain;
-
-SndBuf s => outlet;
-"../_SAMPLES/wavetable/violin.wav"=> s.read;
-
-.5 => s.gain;
-1=> s.loop;
-1 => s.interp;
-
-
-        fun void on()  { }  fun void off() { } 
-        fun void new_note(int idx)  { 
-          1::samp => now;
-          factor.last() => s.freq;
-        } 0 => own_adsr;
-} 
-
-class VIOLIN1 extends SYNT{
-
-inlet => Gain factor => blackhole;
-
-1. / 32. => factor.gain;
-
-SndBuf s => outlet;
-"../_SAMPLES/wavetable/violin2.wav"=> s.read;
-
-.5 => s.gain;
-1=> s.loop;
-1 => s.interp;
-
-
-        fun void on()  { }  fun void off() { } 
-        fun void new_note(int idx)  { 
-          1::samp => now;
-          factor.last() => s.freq;
-        } 0 => own_adsr;
-} 
-
-class CELLO0 extends SYNT{
-
-inlet => Gain factor => blackhole;
-
-1. / 8. => factor.gain;
-
-SndBuf s => outlet;
-"../_SAMPLES/wavetable/cello0.wav"=> s.read;
-
-.5 => s.gain;
-1=> s.loop;
-1 => s.interp;
-
-
-        fun void on()  { }  fun void off() { } 
-        fun void new_note(int idx)  { 
-          1::samp => now;
-          factor.last() => s.freq;
-        } 0 => own_adsr;
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
 
 
-lpk25 l;
-POLY synta; 
-l.reg(synta);
-synta.reg(CELLO0 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+TONE t;
+t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+t.dor();// t.aeo(); // t.phr();// t.loc();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+":4 }c}c
+_1_5_3__8_7__
+" => t.seq;
+.6 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 
+1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+t.adsr[0].set(600::ms, 400::ms, .7, 2000::ms);
+//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.go();   t $ ST @=> ST @ last; 
 
-// Note info duration
-10 * 100::ms => synta.ni.d;
+//STFLANGER flang;
+//flang.connect(last $ ST); flang $ ST @=>  last; 
+//flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  12::ms /* dur base */, 3::ms /* dur range */, .05 /* freq */); 
 
-synta $ ST @=> ST @ last; 
-
-STLPFC lpfc;
-lpfc.connect(last $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /* Q */  );       lpfc $ ST @=>  last; 
-
-STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 8. /* static gain */  );       gainc $ ST @=>  last; 
+//STSYNCLPF stsynclpf;
+//stsynclpf.freq(200 /* Base */, 10 * 100 /* Variable */, 2. /* Q */);
+//stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.8 /* Relative release */);
+//stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
 STMIX stmix;
 stmix.send(last, 28);
-//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
 while(1) {
        100::ms => now;

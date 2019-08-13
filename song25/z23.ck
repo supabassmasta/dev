@@ -172,6 +172,9 @@ stsynclpf.freq(200 /* Base */, 7 * 100 /* Variable */, 2. /* Q */);
 stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.8 /* Relative release */);
 stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
+STMIX stmix;
+stmix.send(last, 28);
+
 while(1) {
        100::ms => now;
 }

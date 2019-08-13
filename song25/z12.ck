@@ -210,25 +210,26 @@ SndBuf s => outlet;
 lpk25 l;
 POLY synta; 
 l.reg(synta);
-synta.reg(CELLO0 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(CELLO0 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(CELLO0 s0);  synta.a[0].set(3::ms, 30::ms, .7, 400::ms);
+synta.reg(CELLO0 s1);  synta.a[1].set(3::ms, 30::ms, .7, 400::ms);
+synta.reg(CELLO0 s2);  synta.a[2].set(3::ms, 30::ms, .7, 400::ms);
+synta.reg(CELLO0 s3);  synta.a[3].set(3::ms, 30::ms, .7, 400::ms);
 
 // Note info duration
 10 * 100::ms => synta.ni.d;
 
 synta $ ST @=> ST @ last; 
 
+STSYNCLPF stsynclpf;
+stsynclpf.freq(100 /* Base */, 20 * 100 /* Variable */, 1. /* Q */);
+stsynclpf.adsr_set(.1 /* Relative Attack */, .4/* Relative Decay */, .00006 /* Sustain */, .2 /* Relative Sustain dur */, 0.1 /* Relative release */);
+stsynclpf.connect(last $ ST, synta.note_info_tx_o); stsynclpf $ ST @=>  last; 
+
 STLPFC lpfc;
 lpfc.connect(last $ ST , HW.lpd8.potar[1][2] /* freq */  , HW.lpd8.potar[1][3] /* Q */  );       lpfc $ ST @=>  last; 
 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 8. /* static gain */  );       gainc $ ST @=>  last; 
-
-STMIX stmix;
-stmix.send(last, 28);
-//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
 while(1) {
        100::ms => now;
