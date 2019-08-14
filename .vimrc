@@ -32,7 +32,7 @@ highlight iCursor guifg=black guibg=orange
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
-map <C-s> :w<cr>b
+map <C-s> :w<cr>
 map <C-d> <C-]>
 map <C-Q> <Esc>0i//<Esc>
 map <C-f> :tnext<cr>

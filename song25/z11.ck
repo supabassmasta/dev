@@ -1,3 +1,124 @@
+class SERUM0 extends SYNT{
+
+  inlet => Gain factor => Phasor p => Wavetable w =>  outlet; 
+  .5 => w.gain;
+  .5 => factor.gain;
+
+  1. => p.gain;
+
+
+  1 => w.sync;
+  1 => w.interpolate;
+  //[-1.0, -0.5, 0, 0.5, 1, 0.5, 0, -0.5] @=> float myTable[];
+  //[-1.0,  1] @=> float myTable[];
+  float myTable[0];
+
+  SndBuf s => blackhole;
+  
+  2048 => int chunk_size;
+
+
+  fun void config(int wn /* wave number */, int of /* chunk offset */) {
+
+//    "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/"
+//    "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/01-Camchord.wav"
+//    "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/26-Arctic.wav"
+
+    string st[0];
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/02-Acid.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/03-Groan I.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/04-Groan II.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/05-Groan III.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/06-Groan IV.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/07-Crude.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/08-Drive I.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/09-Drive II.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/10-Drive III.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/11-Electric.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/12-Screamer.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/13-Dirty Needle.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/14-Dirty Throat.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/15-Dirty PWM.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/16-Strontium.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/17-Crusher.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/18-Reducer.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/19-Kangaroo.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/20-Frozen.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/21-Vulgar.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/22-Classic.wav" ;
+    st << "../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/23-Disto.wav" ;
+    
+   if ( wn >= st.size()  ){
+       <<<"SERUM: WARNING WAVTABLE NUMER TOO HIGH">>>;
+       0 => wn;
+   }
+   else {
+      <<<"serum wavtable :", wn, st[wn]>>>;
+   }
+
+   st[wn] => s.read;
+
+    if ( of * chunk_size >=  s.samples() - chunk_size ){
+      <<<"SERUM: WARNING CHUNK OFFSET TOO HIGH:", of>>>;
+      0=> of;
+  }
+
+    of * chunk_size => int start;
+
+    for (start => int i; i < s.samples() && i < start +  chunk_size   ; i++) {
+      myTable << s.valueAt(i);
+    }
+
+    if ( myTable.size() == 0  ){
+       <<<" SERUM ERROR: Empty wavtable !!!!!">>>;
+
+       myTable << 0; 
+    }
+
+    w.setTable (myTable);
+  }
+
+  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+} 
+
+class synt4 extends SYNT{
+
+    inlet => Gain factor => Phasor p => Wavetable w =>  outlet; 
+      .5 => w.gain;
+    .125 => factor.gain;
+
+    1. => p.gain;
+
+
+      1 => w.sync;
+      1 => w.interpolate;
+//[-1.0, -0.5, 0, 0.5, 1, 0.5, 0, -0.5] @=> float myTable[];
+//[-1.0,  1] @=> float myTable[];
+float myTable[0];
+
+SndBuf s => blackhole;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M3-Analog-Electric/02-Acid.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/01-Camchord.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/01-Camchord.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/26-Arctic.wav"=> s.read;   // COOL !!!
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/01-Gentle Speech.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/03-Deep Throat.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/04-Melomantic.wav"=> s.read;
+"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/12-Duckorgan.wav"=> s.read;
+//"../_SAMPLES/wavetable/TriSamples Wavetables For Serum/M4-Digital-Hybrid/30-E-Bass Pulse.wav"=> s.read;
+3 => int offs;
+offs * 2048 => int start;
+
+for (start => int i;  i < start +  2048   ; i++) {
+  myTable << s.valueAt(i);
+}
+ 
+
+w.setTable (myTable);
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+} 
+
 class synt3 extends SYNT{
 
     inlet => Gain factor => Phasor p => Wavetable w =>  outlet; 
@@ -473,13 +594,23 @@ inlet => detune[i] => s[i] => final;    0.995 => detune[i].gain;    .2 => s[i].g
 lpk25 l;
 POLY synta; 
 l.reg(synta);
-synta.reg(VOICEA2 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s4);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s5);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-synta.reg(VOICEA2 s6);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+////synta.reg(synt4 s4);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s5);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+//synta.reg(synt4 s6);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+12 => int wn;
+14 => int of;
+synta.reg(SERUM0 ser0); ser0.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser1); ser1.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser2); ser2.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser3); ser3.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser4); ser4.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser5); ser5.config( wn /* wave number */, of /* chunk offset */);
+synta.reg(SERUM0 ser6); ser6.config( wn /* wave number */, of /* chunk offset */);
+
 
 // Note info duration
 10 * 100::ms => synta.ni.d;
