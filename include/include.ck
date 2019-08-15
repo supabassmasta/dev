@@ -132,6 +132,7 @@ Machine.add("../SYNT/AMB8.ck");
 Machine.add("../SYNT/AMB9.ck");
 Machine.add("../SYNT/AMB10.ck");
 Machine.add("../SYNT/AMB11.ck");
+Machine.add("../SYNT/SERUM0.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
