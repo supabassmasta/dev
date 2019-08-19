@@ -654,22 +654,22 @@ inlet => detune[i] => s[i] => final;    0.995 => detune[i].gain;    .2 => s[i].g
 lpk25 l;
 POLY synta; 
 l.reg(synta);
-//synta.reg(synt4 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
-//synta.reg(synt4 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
-//synta.reg(synt4 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
-//synta.reg(synt4 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-////synta.reg(synt4 s4);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-//synta.reg(synt4 s5);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
-//synta.reg(synt4 s6);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s0);  synta.a[0].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s1);  synta.a[1].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s2);  synta.a[2].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s3);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s4);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s5);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
+synta.reg(PAD3 s6);  synta.a[3].set(100::ms, 300::ms, .7, 1000::ms);
 47 => int wn;
 0 => int of;
-synta.reg(SERUM0 ser0); ser0.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser1); ser1.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser2); ser2.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser3); ser3.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser4); ser4.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser5); ser5.config( wn /* wave number */, of /* chunk offset */);
-synta.reg(SERUM0 ser6); ser6.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser0); ser0.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser1); ser1.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser2); ser2.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser3); ser3.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser4); ser4.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser5); ser5.config( wn /* wave number */, of /* chunk offset */);
+//synta.reg(SERUM0 ser6); ser6.config( wn /* wave number */, of /* chunk offset */);
 
 
 // Note info duration

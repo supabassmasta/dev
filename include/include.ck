@@ -133,6 +133,16 @@ Machine.add("../SYNT/AMB9.ck");
 Machine.add("../SYNT/AMB10.ck");
 Machine.add("../SYNT/AMB11.ck");
 Machine.add("../SYNT/SERUM0.ck");
+Machine.add("../SYNT/PAD0.ck");
+Machine.add("../SYNT/PAD1.ck");
+Machine.add("../SYNT/PAD2.ck");
+Machine.add("../SYNT/PAD3.ck");
+Machine.add("../SYNT/VIOLIN0.ck");
+Machine.add("../SYNT/VIOLIN1.ck");
+Machine.add("../SYNT/CELLO0.ck");
+Machine.add("../SYNT/VOICEA0.ck");
+Machine.add("../SYNT/VOICEA1.ck");
+Machine.add("../SYNT/VOICEA2.ck");
 
 // STEREO EFFECTS
 Machine.add("../EFFECTS/LPF_ST.ck");
@@ -200,6 +210,15 @@ Machine.add( "../launchpad/LAUNCHPAD_CONTROLER.ck");
 Machine.add( "../lpd8/LPD8_CONTROLLER.ck");
 Machine.add( "../KBCONTROLLER/KBCONTROLLER.ck");
 Machine.add( "../ledstrip/ledstrip.ck");
+
+// Composite SYNTs
+Machine.add("../SYNT/CELLO1.ck");
+Machine.add("../SYNT/CELLO2.ck");
+Machine.add("../SYNT/CELLO3.ck");
+Machine.add("../SYNT/CHORUSA0.ck");
+Machine.add("../SYNT/CHORUSA1.ck");
+Machine.add("../SYNT/CHORUSA2.ck");
+
 me.yield();
 Machine.add("../EFFECTS/STREV2.ck");
 Machine.add( "../include/HW.ck");
