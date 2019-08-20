@@ -1020,3 +1020,8 @@ ab ARPK ARP arp;
 \<CR>3 => s0.inlet.op;
 \<CR>arp.t.raw() => s0.inlet;
 
+ab STCUTTERK STCUTTER stcutter;
+\<CR>"*8 1_1_" => stcutter.t.seq;
+\<CR>stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last;
+
+
