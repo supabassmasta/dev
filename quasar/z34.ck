@@ -33,7 +33,7 @@ ____ 4|b___
 ____ ____ 
 
 " => t.seq;
-.07 * data.master_gain => t.gain;
+.06 * data.master_gain => t.gain;
 .3 => s2.s.gain;
 t.sync(16*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 4 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();

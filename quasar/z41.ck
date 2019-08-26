@@ -120,7 +120,7 @@ B351
 " => t.seq;
 .16 * data.master_gain => t.gain;
 //
-t.sync(16*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 
+t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 
 2 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

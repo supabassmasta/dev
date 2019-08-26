@@ -1,5 +1,5 @@
 LONG_WAV l;
-"pad1.wav" => l.read;
+"../_SAMPLES/quasar/pad1.wav" => l.read;
 0.7 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(4 * data.tick, 4 * data.tick);
