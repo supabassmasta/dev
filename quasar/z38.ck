@@ -35,3 +35,8 @@ HW.launchpad.virtual_key_on_only(13);
 
 1 * data.tick => now;
 
+while(1) {
+       10000::ms => now;
+}
+ 
+
