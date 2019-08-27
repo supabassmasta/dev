@@ -22,7 +22,7 @@ s.go();     s $ ST @=> ST @ last;
 2 * .97 => s.wav_o["c"].wav0.rate;
 
 STGVERB stgverb;
-stgverb.connect(last $ ST, .3 /* mix */, 6 * 10. /* room size */, 6::second /* rev time */, 0.0 /* early */ , 0.2 /* tail */ ); stgverb $ ST @=>  last; 
+stgverb.connect(last $ ST, .4 /* mix */, 7 * 10. /* room size */, 8::second /* rev time */, 0.2 /* early */ , 0.2 /* tail */ ); stgverb $ ST @=>  last; 
 
 STCUTTER stcutter;
 "1111 
