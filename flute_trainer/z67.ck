@@ -3,7 +3,7 @@ SndBuf s => st.mono_in;
 
 
 "../_SAMPLES/tabla/80_TablaClose_04_239_SP.wav" => s.read;
-0.9 => s.gain;
+0.9 * data.master_gain  => s.gain;
 
 fun void f1 (){ 
   while(1) {

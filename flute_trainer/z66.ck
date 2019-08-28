@@ -3,7 +3,7 @@ SndBuf s => st.mono_in;
 
 
 "../_SAMPLES/tabla/kehr_vaa.wav" => s.read;
-0.7 => s.gain;
+0.7 * data.master_gain  => s.gain;
 
 fun void f1 (){ 
   while(1) {
