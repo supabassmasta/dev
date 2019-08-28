@@ -1,6 +1,6 @@
 class synt0 extends SYNT{
 
-    inlet => SawOsc s =>  outlet; 
+    inlet => TriOsc s =>  outlet; 
       .5 => s.gain;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
@@ -14,13 +14,18 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 ____
 ____
 ____
-___
+__
 *8
-____ __1/ff/1
+1/ff/11/ff/11/ff/11/ff/1
 :8
+_
 
+____
+____
+____
+____
 " => t.seq;
-1.1 * data.master_gain => t.gain;
+1.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
