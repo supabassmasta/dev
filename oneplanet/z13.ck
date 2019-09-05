@@ -4,10 +4,16 @@ SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"];
 "*2
 _h_h_h_h_h_h_h_*2hh
 " => s.seq;
-.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
+
+STHPF hpf;
+hpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last; 
+
+STLPF lpf;
+lpf.connect(last $ ST , 15000 /* freq */  , 1.1 /* Q */  );       lpf $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
