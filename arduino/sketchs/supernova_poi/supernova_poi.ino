@@ -32,7 +32,7 @@
 #include <Adafruit_DotStar.h>
 #include <avr/power.h>
 #include <avr/sleep.h>
-#include <IRremote.h>
+//#include <IRremote.h>
 #include <SPI.h>
 
 typedef uint16_t line_t;
@@ -51,8 +51,8 @@ typedef uint16_t line_t;
 // Ideally you use hardware SPI as it's much faster, though limited to
 // specific pins.  If you really need to bitbang DotStar data & clock on
 // different pins, optionally define those here:
-//#define LED_DATA_PIN  0
-//#define LED_CLOCK_PIN 1
+#define LED_DATA_PIN  13
+#define LED_CLOCK_PIN 11
 
 // Empty and full thresholds (millivolts) used for battery level display:
 #define BATT_MIN_MV 3350 // Some headroom over battery cutoff near 2.9V
@@ -61,9 +61,9 @@ typedef uint16_t line_t;
 boolean autoCycle = true; // Set to true to cycle images by default
 uint32_t CYCLE_TIME = 12; // Time, in seconds, between auto-cycle images
 
-int RECV_PIN = 5;
-IRrecv irrecv(RECV_PIN);
-decode_results results;
+//int RECV_PIN = 5;
+//IRrecv irrecv(RECV_PIN);
+//decode_results results;
 
 // Adafruit IR Remote Codes:
 //   Button       Code         Button  Code
@@ -97,23 +97,27 @@ decode_results results;
 #if defined(LED_DATA_PIN) && defined(LED_CLOCK_PIN)
 // Older DotStar LEDs use GBR order.  If colors are wrong, edit here.
 Adafruit_DotStar strip = Adafruit_DotStar(NUM_LEDS,
-  LED_DATA_PIN, LED_CLOCK_PIN, DOTSTAR_BGR);
+  LED_DATA_PIN, LED_CLOCK_PIN, DOTSTAR_GBR);
 #else
 Adafruit_DotStar strip = Adafruit_DotStar(NUM_LEDS, DOTSTAR_BGR); 
 #endif
 
-void     imageInit(void),
-         IRinterrupt(void);
+void     imageInit(void);
+//void     imageInit(void),
+//         IRinterrupt(void);
 uint16_t readVoltage(void);
+
+const uint8_t PROGMEM brightness[] = { 15, 31, 63, 127, 255 };
 
 void setup() {
   strip.begin(); // Allocate DotStar buffer, init SPI
+  strip.setBrightness(brightness[0]);
   strip.clear(); // Make sure strip is clear
   strip.show();  // before measuring battery
   
   imageInit();   // Initialize pointers for default image
 
-  irrecv.enableIRIn(); // Start the receiver
+//  irrecv.enableIRIn(); // Start the receiver
 }
 
 
@@ -130,7 +134,6 @@ line_t   imageLines,         // Number of lines in active image
          imageLine;          // Current line number in image
 volatile uint16_t irCode = BTN_NONE; // Last valid IR code received
 
-const uint8_t PROGMEM brightness[] = { 15, 31, 63, 127, 255 };
 uint8_t bLevel = sizeof(brightness) - 1;
 
 // Microseconds per line for various speed settings
@@ -244,15 +247,17 @@ void loop() {
   }
 
   if(++imageLine >= imageLines) imageLine = 0; // Next scanline, wrap around
-  IRinterrupt();
+//  IRinterrupt();
   while(((t = micros()) - lastLineTime) < lineInterval) {
-    if(results.value != BTN_NONE) {
-      if(!strip.getBrightness()) { // If strip is off...
+//    if(results.value != BTN_NONE) {
+//      if(!strip.getBrightness()) { // If strip is off...
         // Set brightness to last level
-        strip.setBrightness(brightness[bLevel]);
+//        strip.setBrightness(brightness[bLevel]);
         // and ignore button press (don't fall through)
         // effectively, first press is 'wake'
-      } else {
+//      }
+      /*
+      else {
         switch(results.value) {
          case BTN_BRIGHT_UP:
           if(bLevel < (sizeof(brightness) - 1))
@@ -292,15 +297,16 @@ void loop() {
       }
       results.value = BTN_NONE;
     }
+    */
   }
 
   strip.show(); // Refresh LEDs
   lastLineTime = t;
 }
 
-void IRinterrupt() {
-  if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
-    irrecv.resume(); // Receive the next value
-  }
-}
+//void IRinterrupt() {
+//  if (irrecv.decode(&results)) {
+//    Serial.println(results.value, HEX);
+//    irrecv.resume(); // Receive the next value
+//  }
+//}
