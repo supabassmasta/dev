@@ -5,7 +5,12 @@ SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"];
 k___ __k_ s___ __k_
 k___ ____ s___ ____
 k___ __k_ s___ __k_
-k___ ____ s__u k_u_
+k___ ____ s__u k___
+
+k___ __k_ s___ __k_
+k___ ____ s___ ku__
+k___ __k_ s___ __k_
+k___ ____ s__u kuk_
 
 " => s.seq;
 .7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 

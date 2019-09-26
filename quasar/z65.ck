@@ -3,17 +3,18 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 "../_SAMPLES/Sula Mae Jazz vocals/F2_Oohh__387_SP_01.wav" => s.wav["b"];  // act @=> s.action["a"]; 
 "../_SAMPLES/Sula Mae Jazz vocals/F2_Oohh__387_SP_01.wav" => s.wav["c"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"b___ ____
- ____ ____
- ____ ____
- ____ ____
+"
  a___ a___
  ____ ____
  c___ c___
  ____ ____
+ b___ ____
+ ____ ____
+ ____ ____
+ ____ ____
 " => s.seq;
 .3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
+s.sync(8*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
@@ -38,6 +39,7 @@ STCUTTER stcutter;
 :8
 1111
 " => stcutter.t.seq;
+stcutter.t.sync(8*data.tick);
 stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
 
 
