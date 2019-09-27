@@ -111,7 +111,7 @@ const uint8_t PROGMEM brightness[] = { 15, 31, 63, 127, 255 };
 
 void setup() {
   strip.begin(); // Allocate DotStar buffer, init SPI
-  strip.setBrightness(brightness[0]);
+  strip.setBrightness(brightness[2]);
   strip.clear(); // Make sure strip is clear
   strip.show();  // before measuring battery
   
@@ -147,7 +147,8 @@ const uint16_t PROGMEM lineTable[] = { // 375 * 2^(n/3)
   1000000L / 1500  // 1500 lines/sec = fastest
 };
 uint8_t  lineIntervalIndex = 3;
-uint16_t lineInterval      = 1000000L / 750;
+//uint16_t lineInterval      = 1000000L / 750;
+uint16_t lineInterval      = lineTable[5];
 
 void imageInit() { // Initialize global image state for current imageNumber
   imageType    = images[imageNumber].type;

@@ -1,0 +1,2 @@
+python convert.py ecstatic\ chill70X700.gif > graphics.h
+python convert.py ecstatic\ chill70X700.gif polaire70X700.gif string\ art70X700.gif > graphics.h
