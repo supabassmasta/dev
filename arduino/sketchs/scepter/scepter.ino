@@ -390,10 +390,10 @@ class Fade_in_out {
 };
 Fade_in_out fade_in_out;
 
-int preset = 15;
+int preset = 0;
 
 void setup() {
-  preset = 15;
+  preset = 4;
   strip.begin();
   strip.setBrightness(255); // Max 255
   strip.show(); // Initialize all pixels to 'off'
@@ -506,14 +506,10 @@ void loop() {
       delay(5);
     break;
 
-    case 15:
-    circle_flash();
-    break;
 
 
 
   }
-    circle_flash();
 
 
 //allOff();
@@ -541,18 +537,6 @@ void loop() {
   strip.show();
 
   //  theaterChase(strip.Color(0, 127, 0), 50); // Red
-}
-
-void circle_flash(){
-
-int d = 200;
-
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i, 255, 0, 0); } strip.show(); delay(d);
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i, 0, 255, 0); } strip.show(); delay(d);
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i, 0, 0, 255); } strip.show(); delay(d);
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i, 0, 128, 128); } strip.show(); delay(d);
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i,  128, 0, 128); } strip.show(); delay(d);
-for (int i=0; i< 120 ; i++){ strip.setPixelColor(i,  128, 128, 0); } strip.show(); delay(d);
 }
 
 void theaterChase(uint32_t c, uint8_t wait) {
