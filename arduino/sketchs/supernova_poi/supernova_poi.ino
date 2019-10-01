@@ -148,7 +148,7 @@ const uint16_t PROGMEM lineTable[] = { // 375 * 2^(n/3)
 };
 uint8_t  lineIntervalIndex = 3;
 //uint16_t lineInterval      = 1000000L / 750;
-uint16_t lineInterval      = lineTable[3];
+uint16_t lineInterval      = lineTable[6];
 
 void imageInit() { // Initialize global image state for current imageNumber
   imageType    = images[imageNumber].type;
