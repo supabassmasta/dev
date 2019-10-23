@@ -28,6 +28,30 @@ STSYNCLPF stsynclpf;
 stsynclpf.freq(3 * 100 /* Base */, 8 * 100 /* Variable */, 2. /* Q */);
 stsynclpf.adsr_set(.04 /* Relative Attack */, .2/* Relative Decay */, 0.00001 /* Sustain */, .4 /* Relative Sustain dur */, 0.5 /* Relative release */);
 stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
+//////////////////////////////////////////////////////////
+
+STEPC stepc; stepc.init(HW.lpd8.potar[1][1], 0 /* min */, 3000 /* max */, 50::ms /* transition_dur */);
+stepc.out => Gain mult => s0.inlet;
+3 => mult.op;
+
+SinOsc s => mult;
+
+STEPC stepc1; stepc1.init(HW.lpd8.potar[1][2], .1 /* min */, 60 /* max */, 50::ms /* transition_dur */);
+stepc1.out =>  blackhole;
+
+fun void f1 (){ 
+while(1) {
+  stepc1.out.last() => s.freq;
+  1::samp => now;
+}
+ 
+   } 
+   spork ~ f1 ();
+    
+
+
+//////////////////////////////////////////////////
+
 
 STGVERB stgverb;
 stgverb.connect(last $ ST, .1 /* mix */, 5 * 10. /* room size */, 5::second /* rev time */, 0.2 /* early */ , 0.04 /* tail */ ); stgverb $ ST @=>  last; 

@@ -1,140 +1,72 @@
-class tick_adjust {
+REC rec;
 
-	// ------------ LATENCY --------------
-		186::ms => dur latency;
-    48::ms => dur jitter_mean; 
-		[4 , 8, 8, 16, 24, 32] @=> int refresh_rate[];
-    0=> int refresh_index;
-
-		time ref, next, guard_time;
-		0 => int started;
-	  0::ms => dur delta_mean;
-		0 => int cnt;
-
-    time ref_sync;
+/////////////////////////
+// TRANCE
+/////////////////////////
 
 
-		fun void midi_ev(int in) {
-        // in == 1 : Bar (4 beat) start
-        // other : other beats
-					now => time midi_time;
+HW.launchpad.virtual_key_on_only(44);
+HW.launchpad.virtual_key_on_only(45);
+HW.launchpad.virtual_key_on_only(46);
 
-//				if (!started) {
+1::data.tick => now;
 
-						// DO NOTHING
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/trance_synts_and_bells.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
 
-					// TODO compute early delta_mean
-//				}
+HW.launchpad.virtual_key_off_only(44);
+HW.launchpad.virtual_key_off_only(45);
+HW.launchpad.virtual_key_off_only(46);
 
-        if (started && midi_time > guard_time) {
-					next  - (midi_time - latency - jitter_mean) => dur delta;
+16::data.tick => now;
 
-					delta * (1. / (refresh_rate[refresh_index] $ float) )  + delta_mean *(1.- ( 1. / (refresh_rate[refresh_index] $ float ))) => delta_mean;
-
-					cnt + 1 => cnt;
-
-					if (cnt == refresh_rate[refresh_index]){
-						next - delta_mean => ref => next;
-						MASTER_SEQ3.offset_ref_times(-1. * delta_mean );
-						<<<"UPDATE offset_ref_times delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
-						0::ms => delta_mean;
-						0=> cnt;
-						if (refresh_index < refresh_rate.size() - 1){
-							refresh_index + 1 => refresh_index;
-						}
-					}
-
-					next + data.tick => next;
-        }
-		}
-
-		fun void synchro_ev(int in) {
-				if (!started) {
-					now => ref_sync;
-					// compute guard time to avoid double sync with other midi channel
-					ref_sync + data.tick/2 => guard_time;
-					// adjust it with latency and delta_mean already measured
-					ref_sync - latency - jitter_mean - delta_mean => ref_sync;
-					// compute next
-          ref_sync + data.tick => next;
-
-					// adjust to the begining of the song
-					ref_sync - in * 16 * data.tick => ref_sync;
+HW.launchpad.virtual_key_on_only(41);
+HW.launchpad.virtual_key_on_only(42);
+HW.launchpad.virtual_key_on_only(43);
 
 
-					MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
-					<<<"UPDATE midi counter: ", in, "ref_sync ", ref_sync, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/trance_synts_2.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(41);
+HW.launchpad.virtual_key_off_only(42);
+HW.launchpad.virtual_key_off_only(43);
 
-					
-					0 => refresh_index;
-					0::ms => delta_mean;
+31::data.tick => now;
+HW.launchpad.virtual_key_on_only(54);
 
-					1=> started;
-				}
-				else {
-				  	<<<"midi counter: ", in	>>>;  
-				}
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/trance_scratchs_1.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(54);
 
+31::data.tick => now;
+HW.launchpad.virtual_key_on_only(61);
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/trance_scratchs_2.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(61);
 
+/////////////////////////
+// CHILL
+/////////////////////////
 
-    }
+16::data.tick => now;
+HW.launchpad.virtual_key_on_only(32);
+HW.launchpad.virtual_key_on_only(35);
+HW.launchpad.virtual_key_on_only(36);
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/beat_chill.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(32);
+HW.launchpad.virtual_key_off_only(35);
+HW.launchpad.virtual_key_off_only(36);
 
+16::data.tick => now;
 
-}
+HW.launchpad.virtual_key_on_only(38);
+HW.launchpad.virtual_key_on_only(48);
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/loop_pads.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(38);
+HW.launchpad.virtual_key_off_only(48);
 
-"Scarlett 2i4 USB MIDI 1" => string device;
-MidiIn min;
-MidiMsg msg;
-// open the device
-for(0 =>  int i; i < 8; i++ )
-{
-		// open the device
-		if( min.open( i ) )
-		{
-				if ( min.name() == device ) {
-				<<< "device", i, "->", min.name(), "->", "open as input: SUCCESS" >>>;
+16::data.tick => now;
 
+HW.launchpad.virtual_key_on_only(58);
+HW.launchpad.virtual_key_on_only(68);
+rec.rec(32*data.tick, "../_SAMPLES/oneplanet/loop_pans.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */); 
+HW.launchpad.virtual_key_off_only(58);
+HW.launchpad.virtual_key_off_only(68);
 
-				break;
-				}
-				else {
-//					min.close();
-				}
-
-	 }
-		else {
-				<<<"Cannot open", device>>>; 	
-			break;
-		}
-}
-
-<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
-
-tick_adjust ta;
-
-while( true )
-{
-	min => now;
-
-	while( min.recv(msg) )
-	{
-		<<< msg.data1, msg.data2, msg.data3 >>>;
-		if (msg.data1 == 144 && msg.data2 == 36 && msg.data3 == 100 ){
-      // first beat of for
-      ta.midi_ev(1);
-    }
-    else if (msg.data1 == 144 && msg.data2 == 24 && msg.data3 == 100 ) {
-      // other beat
-      ta.midi_ev(0);
-    }
-    else if (msg.data1 == 145 &&  msg.data3 == 100 ) {
-      ta.synchro_ev( msg.data2 );
-    }
-
-	}
-}
-
-
- 
-
-
+100::ms => now;

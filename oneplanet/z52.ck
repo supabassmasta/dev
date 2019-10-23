@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../_SAMPLES/oneplanet/looppans_125.wav" => l.read;
+"../_SAMPLES/oneplanet/loop_pans.wav" => l.read;
 1.0 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 100::ms);
