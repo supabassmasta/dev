@@ -28,8 +28,8 @@ __0 ABA0_
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 4 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(6::ms, 22::ms, .3, 400::ms);
-t.adsr[0].setCurves(.4, 2.0, 2.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.adsr[0].set(10::ms, 22::ms, .3, 400::ms);
+t.adsr[0].setCurves(.8, 2.0, 2.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
 

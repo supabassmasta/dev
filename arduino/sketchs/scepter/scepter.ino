@@ -393,13 +393,17 @@ Fade_in_out fade_in_out;
 int preset = 0;
 
 void setup() {
-  preset = 4;
   strip.begin();
   strip.setBrightness(255); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
 
-  pinMode(LED_BUILTIN, OUTPUT);
+  preset = 11;
+  init_colorRamps();
+  init_kaleidoscope();
+
+ 
+   pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
   Serial.flush(); 
@@ -486,6 +490,8 @@ void loop() {
 
     case 11:
       dhoomtala();
+      randyellow();
+
     break;
 
     case 12:

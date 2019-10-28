@@ -2,27 +2,25 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "*4
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ __u_ ____ 
-
-____ ____ ____ ____ 
-____ ____ ____ ____ 
-____ ____ __u_ ____ 
-____ _e__ ____ __F_ 
-
+k__k s_k_ _s_k s_k_
+k__k s_ks _s_k s_k_
+k__k s_k_ _s_k s_k_
+k__k s_ks __kk s_ks
+k__k s_k_ _s_k s_k_
+k__k s_ks _s_k s_k_
+k__k s_k_ _s_k s_k_
+k__k s_ks s_kk s_ks
 
 " => s.seq;
-.35 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+1.3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+
+STLPF lpf;
+lpf.connect(last $ ST , 15 *100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
 }
-
-
+ 
