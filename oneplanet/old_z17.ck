@@ -5,7 +5,7 @@ sy.sync(4 * data.tick , - .5*data.tick /* offset */);
 HW.launchpad.virtual_key_off_only(61); 
 HW.launchpad.virtual_key_off_only(62); 
 HW.launchpad.virtual_key_on_only(27); 
-HW.launchpad.virtual_key_on_only(75); 
+HW.launchpad.virtual_key_on_only(75); // Slide up 
 
 4 * data.tick => now;
 

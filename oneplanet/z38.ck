@@ -6,14 +6,16 @@ sy.sync(4 * data.tick , - .5*data.tick /* offset */);
 HW.launchpad.virtual_key_off_only(11); 
 HW.launchpad.virtual_key_off_only(12); 
 
-HW.launchpad.virtual_key_on_only(28); 
+HW.launchpad.virtual_key_off_only(82);  // VS 2
+HW.launchpad.virtual_key_off_only(16); // Congas and co
+
+HW.launchpad.virtual_key_on_only(26); 
 HW.launchpad.virtual_key_on_only(76); 
 
 4 * data.tick => now;
 
 
 HW.launchpad.virtual_key_off_only(11); 
-HW.launchpad.virtual_key_off_only(12); 
 HW.launchpad.virtual_key_off_only(13); 
 HW.launchpad.virtual_key_off_only(14); 
 HW.launchpad.virtual_key_off_only(15); 
@@ -23,19 +25,20 @@ HW.launchpad.virtual_key_off_only(22);
 HW.launchpad.virtual_key_off_only(23); 
 HW.launchpad.virtual_key_off_only(24); 
 
-//HW.launchpad.virtual_key_on_only(51); 
+HW.launchpad.virtual_key_on_only(51); 
 HW.launchpad.virtual_key_on_only(52); 
-HW.launchpad.virtual_key_on_only(61); 
+//HW.launchpad.virtual_key_on_only(61); 
+HW.launchpad.virtual_key_on_only(11); 
 //HW.launchpad.virtual_key_on_only(62); 
+HW.launchpad.virtual_key_on_only(12); 
+//HW.launchpad.virtual_key_on_only(22); 
 
 
 .45 * data.tick => now;
 
-HW.launchpad.virtual_key_off_only(28); 
+HW.launchpad.virtual_key_off_only(26); 
 HW.launchpad.virtual_key_off_only(76); 
 
-31.5 * data.tick => now;
-HW.launchpad.virtual_key_on_only(51); 
 
 while(1) {
        100::ms => now;

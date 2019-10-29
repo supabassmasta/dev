@@ -1,6 +1,11 @@
-SYNC sy;
+//SYNC sy;
 //sy.sync(4 * data.tick);
-sy.sync(4 * data.tick , - .5*data.tick /* offset */); 
+//sy.sync(4 * data.tick , - .5*data.tick /* offset */); 
+
+MASTER_SEQ3.update_ref_times(now + .5 * data.tick, data.tick * 16 * 128 );
+
+
+
 
 HW.launchpad.virtual_key_on_only(75); 
 

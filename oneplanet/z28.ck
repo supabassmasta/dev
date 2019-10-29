@@ -1,17 +1,82 @@
-SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // 
-SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
-// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"*4k_k_ k_k_ kkkk kkkk" => s.seq;
-1.1 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
-// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-s.go();     s $ ST @=> ST @ last; 
+SYNC sy;
+//sy.sync(4 * data.tick);
+//sy.sync(16 * data.tick , - 4.5*data.tick /* offset */); 
+sy.sync(4 * data.tick , - .5*data.tick /* offset */); 
 
-STLPF lpf;
-lpf.connect(last $ ST , 10* 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+HW.launchpad.virtual_key_off_only(11); 
+HW.launchpad.virtual_key_off_only(12); 
 
-STDUCKMASTER duckm;
-duckm.connect(last $ ST, 9. /* In Gain */, .07 /* Tresh */, .5 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+HW.launchpad.virtual_key_on_only(26); 
+HW.launchpad.virtual_key_on_only(76); 
+
+4 * data.tick => now;
+
+
+HW.launchpad.virtual_key_off_only(11); 
+HW.launchpad.virtual_key_off_only(12); 
+HW.launchpad.virtual_key_off_only(13); 
+HW.launchpad.virtual_key_off_only(14); 
+HW.launchpad.virtual_key_off_only(15); 
+
+HW.launchpad.virtual_key_off_only(21); 
+HW.launchpad.virtual_key_off_only(22); 
+HW.launchpad.virtual_key_off_only(23); 
+HW.launchpad.virtual_key_off_only(24); 
+
+//HW.launchpad.virtual_key_on_only(51); 
+HW.launchpad.virtual_key_on_only(52); 
+HW.launchpad.virtual_key_on_only(61); 
+//HW.launchpad.virtual_key_on_only(62); 
+
+
+.45 * data.tick => now;
+
+HW.launchpad.virtual_key_off_only(26); 
+HW.launchpad.virtual_key_off_only(76); 
+
+31.5 * data.tick => now;
+HW.launchpad.virtual_key_on_only(51);  // Pans
+
+32 * data.tick => now;
+HW.launchpad.virtual_key_on_only(81); // VS
+
+32 * data.tick => now;
+
+HW.launchpad.virtual_key_on_only(13); // HH
+32 * data.tick => now;
+HW.launchpad.virtual_key_on_only(14); // SNARES
+HW.launchpad.virtual_key_on_only(15); // 
+
+12 * data.tick => now;
+
+HW.launchpad.virtual_key_off_only(61); 
+HW.launchpad.virtual_key_off_only(62); 
+HW.launchpad.virtual_key_on_only(27); // Break
+HW.launchpad.virtual_key_on_only(75); // Slide up 
+
+4 * data.tick => now;
+
+
+HW.launchpad.virtual_key_on_only(11); 
+HW.launchpad.virtual_key_on_only(12); 
+
+HW.launchpad.virtual_key_on_only(21); 
+HW.launchpad.virtual_key_on_only(82); 
+
+
+HW.launchpad.virtual_key_off_only(51); 
+HW.launchpad.virtual_key_off_only(52); 
+
+.45 * data.tick => now;
+
+HW.launchpad.virtual_key_off_only(27); 
+HW.launchpad.virtual_key_off_only(75); 
+
+HW.launchpad.virtual_key_off_only(14); // SNARES
+HW.launchpad.virtual_key_off_only(15); // 
+HW.launchpad.virtual_key_off_only(81); // VS
+
+
 
 while(1) {
        100::ms => now;

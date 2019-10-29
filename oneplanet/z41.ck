@@ -47,6 +47,15 @@ stgverb.connect(last $ ST, .3 /* mix */, 14 * 10. /* room size */, 5::second /* 
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][8] /* gain */  , 1.5 /* static gain */  );       gainc $ ST @=>  last; 
 
+// FLANGER PART
+
+STFLANGER flang;
+flang.connect(stgverb $ ST); flang $ ST @=>  last; 
+flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  data.tick / 16 /* dur base */, 1::ms /* dur range */, 2 /* freq */); 
+
+STGAINC gainc2;
+gainc2.connect(last $ ST , HW.lpd8.potar[1][7] /* gain */  , 1. /* static gain */  );       gainc2 $ ST @=>  last; 
+
 
 while(1) {
        100::ms => now;
