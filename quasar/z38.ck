@@ -23,11 +23,11 @@ HW.launchpad.virtual_key_on_only(17);  // Break
 
 HW.launchpad.virtual_key_off_only(58); 
 HW.launchpad.virtual_key_off_only(55); 
+HW.launchpad.virtual_key_off_only(56); // ARP BELLS
 
 4 * data.tick => now;
 HW.launchpad.virtual_key_off_only(51);  // Slide
 HW.launchpad.virtual_key_off_only(17);  // Break
-HW.launchpad.virtual_key_off_only(56); 
 
 HW.launchpad.virtual_key_on_only(45);
 HW.launchpad.virtual_key_on_only(11);

@@ -7,12 +7,12 @@ s1.wav["s"] => s.wav["t"];
 
 "*4
 k__k s_k_ _}3+2t_k s_k_
-k__k s_kt _t_k s_k_
+k__k s_kt _tk_ s_k_
 k__k s_kt _t_k s_kt
-k__k s_kt _ttk stk_
+k__k s_kt _tk|t_ st__
 
 " => s.seq;
-1.3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
@@ -20,8 +20,6 @@ s.go();     s $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 15 *100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
-STHPFC hpfc;
-hpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       hpfc $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

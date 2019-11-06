@@ -33,11 +33,8 @@ TONE tone_filter;
 tone_filter.reg(filter0 filt0);  //data.tick * 8 => tone_filter.max; //60::ms => tone_filter.glide;  // tone_filter.lyd(); // tone_filter.ion(); // tone_filter.mix();// 
 tone_filter.dor();// tone_filter.aeo(); // tone_filter.phr();// tone_filter.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"
-G////5 Z_ *2 _G/aG/aG/a :2
-G////5 Z_ *2 _a/GZ_ :2
-
-
+" *2
+ G//// //// //// ///5_ 
 
 " => tone_filter.seq;
 .9 * data.master_gain => tone_filter.gain;
@@ -57,10 +54,8 @@ t.reg(SERUM0 s0); s0.config(8, 0);
 
 //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"{5 {c
-1111 __11
-1111 __5_
-
+"{5 {c *2
+ 4//// //// //// ///1_
 " => t.seq;
 .5 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
