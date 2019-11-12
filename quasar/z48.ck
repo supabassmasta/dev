@@ -14,6 +14,13 @@ HW.launchpad.virtual_key_off_only(27);
 HW.launchpad.virtual_key_off_only(35);
 HW.launchpad.virtual_key_off_only(76);
 
+HW.launchpad.virtual_key_off_only(11); 
+HW.launchpad.virtual_key_off_only(12); 
+HW.launchpad.virtual_key_off_only(13); 
+HW.launchpad.virtual_key_off_only(45); 
+HW.launchpad.virtual_key_off_only(46); 
+
+
 HW.launchpad.virtual_key_on_only(86); 
 HW.launchpad.virtual_key_on_only(81); 
 HW.launchpad.virtual_key_on_only(82); 
