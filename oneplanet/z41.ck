@@ -56,6 +56,10 @@ flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  da
 STGAINC gainc2;
 gainc2.connect(last $ ST , HW.lpd8.potar[1][7] /* gain */  , 1. /* static gain */  );       gainc2 $ ST @=>  last; 
 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+ech.connect(gainc $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+
 
 while(1) {
        100::ms => now;

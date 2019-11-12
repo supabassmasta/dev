@@ -11,7 +11,8 @@ HW.launchpad.virtual_key_off_only(85); // One humanity
 
 
 HW.launchpad.virtual_key_off_only(11); 
-HW.launchpad.virtual_key_off_only(12); 
+HW.launchpad.virtual_key_off_only(12);  // BAss hard 
+HW.launchpad.virtual_key_off_only(56); // BAss light
 
 HW.launchpad.virtual_key_off_only(82);  // VS 2
 HW.launchpad.virtual_key_off_only(16); // Congas and co
@@ -37,7 +38,9 @@ HW.launchpad.virtual_key_on_only(52);
 //HW.launchpad.virtual_key_on_only(61); 
 HW.launchpad.virtual_key_on_only(11); 
 //HW.launchpad.virtual_key_on_only(62); 
-HW.launchpad.virtual_key_on_only(12); 
+//HW.launchpad.virtual_key_on_only(12); // BASS HARD
+HW.launchpad.virtual_key_on_only(56); // BAss light
+
 //HW.launchpad.virtual_key_on_only(22); 
 
 

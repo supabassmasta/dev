@@ -10,7 +10,8 @@ HW.launchpad.virtual_key_on_only(85); // One humanity
 HW.launchpad.virtual_key_off_only(85); // One humanity
 
 HW.launchpad.virtual_key_off_only(11); 
-HW.launchpad.virtual_key_off_only(12); 
+HW.launchpad.virtual_key_off_only(12); // BASS hard
+HW.launchpad.virtual_key_off_only(56); // bass light
 
 HW.launchpad.virtual_key_on_only(26); // Break 
 HW.launchpad.virtual_key_on_only(76); // Slide
@@ -64,7 +65,8 @@ HW.launchpad.virtual_key_on_only(75); // Slide up
 
 
 HW.launchpad.virtual_key_on_only(11); 
-HW.launchpad.virtual_key_on_only(12); 
+//HW.launchpad.virtual_key_on_only(12); // BAss hard 
+HW.launchpad.virtual_key_on_only(56);   // BAss light
 
 HW.launchpad.virtual_key_on_only(21); 
 HW.launchpad.virtual_key_on_only(82); 
