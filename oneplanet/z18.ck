@@ -22,15 +22,12 @@ HW.launchpad.virtual_key_off_only(61);
 HW.launchpad.virtual_key_off_only(62); 
 
 HW.launchpad.virtual_key_on_only(11); 
-//HW.launchpad.virtual_key_on_only(12);  // BASS 1
+HW.launchpad.virtual_key_on_only(12);  // BASS light
 
 HW.launchpad.virtual_key_on_only(21); 
 
-.5 * data.tick => now;
 
 
-HW.launchpad.virtual_key_on_only(56);  // BASS 
-//HW.launchpad.virtual_key_on_only(67);  // BASS 
 
 
 

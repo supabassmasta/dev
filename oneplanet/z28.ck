@@ -10,8 +10,8 @@ HW.launchpad.virtual_key_on_only(85); // One humanity
 HW.launchpad.virtual_key_off_only(85); // One humanity
 
 HW.launchpad.virtual_key_off_only(11); 
-HW.launchpad.virtual_key_off_only(12); // BASS hard
-HW.launchpad.virtual_key_off_only(56); // bass light
+HW.launchpad.virtual_key_off_only(12); // bass light
+HW.launchpad.virtual_key_off_only(13); // BASS hard
 
 HW.launchpad.virtual_key_on_only(26); // Break 
 HW.launchpad.virtual_key_on_only(76); // Slide
@@ -20,10 +20,9 @@ HW.launchpad.virtual_key_on_only(76); // Slide
 
 
 HW.launchpad.virtual_key_off_only(11); 
-HW.launchpad.virtual_key_off_only(12); 
-HW.launchpad.virtual_key_off_only(13); 
 HW.launchpad.virtual_key_off_only(14); 
 HW.launchpad.virtual_key_off_only(15); 
+HW.launchpad.virtual_key_off_only(16); 
 
 HW.launchpad.virtual_key_off_only(21); 
 HW.launchpad.virtual_key_off_only(22); 
@@ -49,10 +48,10 @@ HW.launchpad.virtual_key_on_only(81); // VS
 
 32 * data.tick => now;
 
-HW.launchpad.virtual_key_on_only(13); // HH
+HW.launchpad.virtual_key_on_only(14); // HH
 32 * data.tick => now;
-HW.launchpad.virtual_key_on_only(14); // SNARES
-HW.launchpad.virtual_key_on_only(15); // 
+HW.launchpad.virtual_key_on_only(15); // SNARES
+HW.launchpad.virtual_key_on_only(16); // 
 
 12 * data.tick => now;
 
@@ -65,8 +64,7 @@ HW.launchpad.virtual_key_on_only(75); // Slide up
 
 
 HW.launchpad.virtual_key_on_only(11); 
-//HW.launchpad.virtual_key_on_only(12); // BAss hard 
-HW.launchpad.virtual_key_on_only(56);   // BAss light
+HW.launchpad.virtual_key_on_only(12); // BASS light
 
 HW.launchpad.virtual_key_on_only(21); 
 HW.launchpad.virtual_key_on_only(82); 
@@ -80,8 +78,8 @@ HW.launchpad.virtual_key_off_only(52);
 HW.launchpad.virtual_key_off_only(27); 
 HW.launchpad.virtual_key_off_only(75); 
 
-HW.launchpad.virtual_key_off_only(14); // SNARES
-HW.launchpad.virtual_key_off_only(15); // 
+HW.launchpad.virtual_key_off_only(15); // SNARES
+HW.launchpad.virtual_key_off_only(16); // 
 HW.launchpad.virtual_key_off_only(81); // VS
 
 
