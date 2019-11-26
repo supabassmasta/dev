@@ -1,16 +1,3 @@
- class STFADEOUT extends ST {
-    ADSR al=> outl;
-    ADSR ar => outr;
-    
-    fun void connect(ST @ tone,  dur d) {    
-      al.set(0::ms, d, 0.00000000000000001, 0::ms);
-      ar.set(0::ms, d, 0.00000000000000001, 0::ms);
-      tone.left() =>  al;
-      tone.right() => ar;
-      al.keyOn();      
-      ar.keyOn();      
-    }
-}
 
 TONE t;
 t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -54,7 +41,7 @@ fadeout.connect(last, 20*data.tick);     fadeout  $ ST @=>  last;
  // FLANGER PART
  
  STFADEIN fadein;
- fadein.connect(autopan, 16*data.tick);     fadein  $ ST @=>  last; 
+ fadein.connect(autopan, 20*data.tick);     fadein  $ ST @=>  last; 
  
  STFLANGER flang;
  flang.connect(last $ ST); flang $ ST @=>  last; 

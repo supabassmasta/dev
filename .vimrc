@@ -788,6 +788,9 @@ ab PMODK class synt0 extends SYNT{
 ab STFADEINK STFADEIN fadein;
 \<CR>fadein.connect(last, 4*data.tick);     fadein  $ ST @=>  last;
 
+ab STFADEOUTK STFADEOUT fadeout;
+\<CR>fadeout.connect(last, 20*data.tick);     fadeout  $ ST @=>  last; 
+
 ab STFILTERMODK STFILTERMOD fmod;
 \<CR>fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 600 /* f_base */ , 400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last;
 

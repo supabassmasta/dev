@@ -172,6 +172,7 @@ Machine.add( "../EFFECTS/STGAINC.ck");
 Machine.add( "../EFFECTS/STGAIN.ck");
 Machine.add( "../EFFECTS/STDIGITC.ck");
 Machine.add( "../EFFECTS/STFADEIN.ck");
+Machine.add( "../EFFECTS/STFADEOUT.ck");
 Machine.add( "../EFFECTS/STFILTERMOD.ck");
 Machine.add( "../EFFECTS/STBREAK.ck");
 Machine.add( "../EFFECTS/STADSRC.ck");
