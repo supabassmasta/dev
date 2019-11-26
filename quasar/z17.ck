@@ -6,6 +6,7 @@ HW.launchpad.virtual_key_off_only(24); // Beat Dub
 HW.launchpad.virtual_key_off_only(25); // Niap
 HW.launchpad.virtual_key_off_only(26); // BASS
 HW.launchpad.virtual_key_off_only(27); // Big Kick
+HW.launchpad.virtual_key_off_only(13); // HH
 
 HW.launchpad.virtual_key_on_only(53);  // Slide
 HW.launchpad.virtual_key_on_only(57); // Kick
