@@ -10,6 +10,7 @@ HW.launchpad.virtual_key_on_only(81); // VS
 HW.launchpad.virtual_key_off_only(11); 
 HW.launchpad.virtual_key_off_only(12); // BASS light
 HW.launchpad.virtual_key_off_only(13); // BASS hard
+HW.launchpad.virtual_key_off_only(17); // Congas and co
 
 HW.launchpad.virtual_key_off_only(61); 
 HW.launchpad.virtual_key_off_only(62); 
