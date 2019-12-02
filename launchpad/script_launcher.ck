@@ -153,10 +153,10 @@ class script_launcher extends CONTROL {
 			}
 
 			else if (yid == 0 && 	zid == 0){
-				if (nb < 10) 
-					lau.clearc(note);
-				else
-					lau.clear(note);
+//				if (nb < 10) 
+//					lau.clearc(note);
+//				else
+//					lau.clear(note);
 			}
 			else if (!pad_on) {
 				if (nb < 10) 
