@@ -1,5 +1,7 @@
 HW.launchpad @=> LAUNCHPAD @ l;
 
+8 => int nb_page;
+
 class script_launcher extends CONTROL {
 	string xname; // oneshot script
 	string yname; // stop on release script
@@ -11,7 +13,9 @@ class script_launcher extends CONTROL {
 	0 => int yid;
 	0 => int zid;
 	0 => int pad_on;
+	0 => int pad_with_file;
 	0 => int red;
+  0 => int cont;
 
   fun int file_exist (string filename){ 
     FileIO fio;
@@ -36,45 +40,36 @@ class script_launcher extends CONTROL {
     }
   } 
       
-	fun void prepare(int in_nb, int in_note , LAUNCHPAD @ in_l){
+	fun void prepare(int p /* page */, int in_nb, int in_note , LAUNCHPAD @ in_l){
 		in_nb => nb;
 		in_note => note;
 		in_l @=> lau;
-    0 => int cont;
+    
+    string pa;
+
+    if (p == 0) "" => pa;
+    else p => pa;
 
 		if (nb < 10) {
-			"x0" + nb + ".ck" => xname;
-			"y0" + nb + ".ck" => yname;
-			"z0" + nb + ".ck" => zname;
+			"x" + pa + "0" + nb + ".ck" => xname;
+			"y" + pa + "0" + nb + ".ck" => yname;
+			"z" + pa + "0" + nb + ".ck" => zname;
       1 => cont;
 		}
 		else {
-			"x" + nb + ".ck" => xname;
-			"y" + nb + ".ck" => yname;
-			"z" + nb + ".ck" => zname;
+			"x" + pa + nb + ".ck" => xname;
+			"y" + pa + nb + ".ck" => yname;
+			"z" + pa + nb + ".ck" => zname;
       0 => cont;
 		}
 
-		//				<<<"xname", xname>>>; 
+			<<<"xname", xname>>>; 
 
     // turn on light for existing files
     if (file_exist(xname) || file_exist(yname) || file_exist(zname) ) {
+      1 => pad_with_file;
       if (red_file_exist(xname) || red_file_exist(yname) || red_file_exist(zname) ) {
-        // <<<"RED ", zname>>>; 
-        if (cont){
-            lau.redc(note);
-        }
-        else {
-            lau.red(note);
-        }
-      }
-      else {
-        if (cont){
-          lau.amberc(note);
-        }
-        else {
-          lau.amber(note);
-        }
+        1 => red;
       }
     }
 	}
@@ -108,6 +103,7 @@ class script_launcher extends CONTROL {
 				}
 
         if ( xid != 0 || yid !=0 || zid != 0) {
+          1 =>  pad_with_file;
           if (nb < 10) 
             lau.greenc(note);
           else
@@ -181,34 +177,170 @@ class script_launcher extends CONTROL {
 
 	}
 
-
-
 }
-
-script_launcher s [72];
-int n;
-int nt;
 
 // Keys and right side controls
-for (0 => int i; i <  8     ; i++) {
-	for (0 => int j; j < 9      ; j++) {
-	  (i+1)*10 + j +1 => n; 
-	  (i)*16 + j  => nt; 
-		s[i*9 + j].prepare(n, nt, l);
-
-		l.keys[nt].reg(s[i*9 + j]);
-	}
+// Create array
+script_launcher s[0] [72];
+for (0 => int i; i < nb_page; i++) {
+  s << new script_launcher[72];
 }
- 
+
+int n;
+int nt;
+// Prepare controls
+for (0 => int p; p < nb_page; p ++ ){
+  for (0 => int i; i <  8     ; i++) {
+    for (0 => int j; j < 9      ; j++) {
+      (i+1)*10 + j +1 => n; 
+      (i)*16 + j  => nt; 
+      s[p][i*9 + j].prepare(p, n, nt, l);
+
+    }
+  }
+
+} 
+
 // Up side controls
-script_launcher s2 [8];
+// Create array 
+script_launcher s2 [0][8];
+for (0 => int i; i < nb_page; i++) {
+  s2 << new script_launcher[8];
+}
+
+// prepare controls
 for (0 => int  i; i <  8     ; i++) {
 		i + 1 => n;
 		i + 104 => nt;
 		s2[i].prepare(n, nt, l);
 
-		l.controls[nt].reg(s2[i]);
 }
+
+
+fun void register_in_lp (int page) {
+
+  for (0 => int i; i <  8     ; i++) {
+    for (0 => int j; j < 9      ; j++) {
+      (i)*16 + j  => nt; 
+
+      l.keys[nt].reg(s[page][i*9 + j]);
+    }
+  }
+  
+  for (0 => int  i; i <  8     ; i++) {
+		i + 104 => nt;
+
+		l.controls[nt].reg(s2[page][i]);
+  }
+
+}
+
+fun void unregister_in_lp (int page) {
+
+  for (0 => int i; i <  8     ; i++) {
+    for (0 => int j; j < 9      ; j++) {
+      (i)*16 + j  => nt; 
+
+      l.keys[nt].unreg(s[page][i*9 + j]);
+    }
+  }
+  
+  for (0 => int  i; i <  8     ; i++) {
+		i + 104 => nt;
+
+		l.controls[nt].unreg(s2[page][i]);
+  }
+
+}
+
+fun void light_up_page(int p) {
+  for (0 => int i; i < 72; i++) {
+    if(s[p][i].pad_on) {
+      if (cont){
+        lau.greenc(s[p][i].note);
+      }
+      else {
+        lau.green(s[p][i].note);
+      }
+    }
+    else if (  s[p][i].red  ){
+      if (cont){
+        lau.redc(s[p][i].note);
+      }
+      else {
+        lau.red(s[p][i].note);
+      }
+    }
+    else if (   s[p][i].pad_with_file  ){
+      if (cont){
+        lau.amberc(s[p][i].note);
+      }
+      else {
+        lau.amber(s[p][i].note);
+      }
+
+    }
+
+  }
+  for (0 => int i; i < 8; i++) {
+    if(s2[p][i].pad_on) {
+      if (cont){
+        lau.greenc(s2[p][i].note);
+      }
+      else {
+        lau.green(s2[p][i].note);
+      }
+    }
+    else if (  s2[p][i].red  ){
+      if (cont){
+        lau.redc(s2[p][i].note);
+      }
+      else {
+        lau.red(s2[p][i].note);
+      }
+    }
+    else if (   s2[p][i].pad_with_file  ){
+      if (cont){
+        lau.amberc(s2[p][i].note);
+      }
+      else {
+        lau.amber(s2[p][i].note);
+      }
+
+    }
+
+  }
+
+}
+
+fun void light_down_page(int p) {
+  for (0 => int i; i < 72; i++) {
+    if (   s[p][i].pad_with_file  ){
+      if (cont){
+        lau.clearc(s[p][i].note);
+      }
+      else {
+        lau.clear(s[p][i].note);
+      }
+
+    }
+
+  }
+  for (0 => int i; i < 8; i++) {
+    if (   s2[p][i].pad_with_file  ){
+      if (cont){
+        lau.clearc(s2[p][i].note);
+      }
+      else {
+        lau.clear(s2[p][i].note);
+      }
+
+    }
+
+  }
+
+}
+
 
 l.start();
 
