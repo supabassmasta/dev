@@ -1,0 +1,1 @@
+../trance2/config.ck
