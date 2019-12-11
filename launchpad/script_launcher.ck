@@ -7,6 +7,7 @@ class script_launcher extends CONTROL {
 	int nb;
 	int note;
 	LAUNCHPAD @ lau;
+	0 => int xid;
 	0 => int yid;
 	0 => int zid;
 	0 => int pad_on;
@@ -99,17 +100,19 @@ class script_launcher extends CONTROL {
 
 			} 
 			else {
-				Machine.add( xname );
+				Machine.add( xname ) => xid;
 				Machine.add( yname ) => yid;
 				Machine.add( zname ) => zid;
 				if (zid != 0) {
 					1 => pad_on;
 				}
 
-				if (nb < 10) 
-					lau.greenc(note);
-				else
-					lau.green(note);
+        if ( xid != 0 || yid !=0 || zid != 0) {
+          if (nb < 10) 
+            lau.greenc(note);
+          else
+            lau.green(note);
+        }
 			}
 		}
 		else if (in == 126.) { // VIRTUAL KEY ON only if OFF 
