@@ -63,7 +63,7 @@ class script_launcher extends CONTROL {
       0 => cont;
 		}
 
-			<<<"xname", xname>>>; 
+//			<<<"xname", xname>>>; 
 
     // turn on light for existing files
     if (file_exist(xname) || file_exist(yname) || file_exist(zname) ) {
@@ -304,10 +304,20 @@ class page_manager {
       register_in_lp(current_page);
       light_up_page(current_page);
 
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
       <<<"SCRIPT LAUNCHER: PAGE ", current_page>>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+
+
     }
     else {
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
       <<<"SCRIPT LAUNCHER: MAX PAGE reached">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
     }
 
   }
@@ -319,10 +329,18 @@ class page_manager {
       current_page --;
       register_in_lp(current_page);
       light_up_page(current_page);
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
       <<<"SCRIPT LAUNCHER: PAGE ", current_page>>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
     }
     else {
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
       <<<"SCRIPT LAUNCHER: MIN PAGE reached">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
+      <<<"~~~~~~~~~~~~~~~~~~~~~~~~~", "">>>;
     }
   }
 
@@ -332,30 +350,37 @@ page_manager pm;
 l @=> pm.l;
 s @=> pm.s;
 nb_page => pm.nb_p;
+// Load first page
+pm.register_in_lp(0);
+pm.light_up_page(0);
 
-// TODO 
+
+// CONTROL Page up an down
 class uppage extends CONTROL {
   page_manager @ pm;    // 0 =>  update_on_reg ;
   fun void set(float in) {
-    pm.page_up();
+    if ( in == 127  ){
+      pm.page_up();
+    }
   }
 } 
 
 uppage upagec;
 pm @=> upagec.pm;
 
-// TODO dwnpage
 class dwnpage extends CONTROL {
   page_manager @ pm;    // 0 =>  update_on_reg ;
   fun void set(float in) {
-    pm.page_down();
+    if ( in == 127  ){
+      pm.page_down();
+    }
   }
 } 
 
 dwnpage dwnpagec;
 pm @=> dwnpagec.pm;
 
-// Regster page up and down
+// Register page up and down in launchpad
 l.controls[104].reg(dwnpagec);
 l.controls[105].reg(upagec);
 
