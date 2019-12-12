@@ -203,143 +203,161 @@ for (0 => int p; p < nb_page; p ++ ){
 
 // Up side controls
 // Create array 
-script_launcher s2 [0][8];
-for (0 => int i; i < nb_page; i++) {
-  s2 << new script_launcher[8];
-}
+script_launcher s2 [8];
 
 // prepare controls
 for (0 => int  i; i <  8     ; i++) {
 		i + 1 => n;
 		i + 104 => nt;
 		s2[i].prepare(n, nt, l);
-
+-		l.controls[nt].reg(s2[i]);
 }
 
 
-fun void register_in_lp (int page) {
+class page_manager {
 
-  for (0 => int i; i <  8     ; i++) {
-    for (0 => int j; j < 9      ; j++) {
-      (i)*16 + j  => nt; 
+  LAUNCHPAD @ l;
+  script_launcher s[][];
 
-      l.keys[nt].reg(s[page][i*9 + j]);
+  0 => int current_page;
+  int nb_p;
+
+  fun void register_in_lp (int page) {
+
+    for (0 => int i; i <  8     ; i++) {
+      for (0 => int j; j < 9      ; j++) {
+        (i)*16 + j  => int nt; 
+
+        l.keys[nt].reg(s[page][i*9 + j]);
+      }
     }
-  }
-  
-  for (0 => int  i; i <  8     ; i++) {
-		i + 104 => nt;
 
-		l.controls[nt].reg(s2[page][i]);
-  }
 
-}
-
-fun void unregister_in_lp (int page) {
-
-  for (0 => int i; i <  8     ; i++) {
-    for (0 => int j; j < 9      ; j++) {
-      (i)*16 + j  => nt; 
-
-      l.keys[nt].unreg(s[page][i*9 + j]);
-    }
-  }
-  
-  for (0 => int  i; i <  8     ; i++) {
-		i + 104 => nt;
-
-		l.controls[nt].unreg(s2[page][i]);
   }
 
-}
+  fun void unregister_in_lp (int page) {
 
-fun void light_up_page(int p) {
-  for (0 => int i; i < 72; i++) {
-    if(s[p][i].pad_on) {
-      if (cont){
-        lau.greenc(s[p][i].note);
-      }
-      else {
-        lau.green(s[p][i].note);
-      }
-    }
-    else if (  s[p][i].red  ){
-      if (cont){
-        lau.redc(s[p][i].note);
-      }
-      else {
-        lau.red(s[p][i].note);
-      }
-    }
-    else if (   s[p][i].pad_with_file  ){
-      if (cont){
-        lau.amberc(s[p][i].note);
-      }
-      else {
-        lau.amber(s[p][i].note);
-      }
+    for (0 => int i; i <  8     ; i++) {
+      for (0 => int j; j < 9      ; j++) {
+        (i)*16 + j  => int nt; 
 
+        l.keys[nt].unreg(s[page][i*9 + j]);
+      }
     }
+
 
   }
-  for (0 => int i; i < 8; i++) {
-    if(s2[p][i].pad_on) {
-      if (cont){
-        lau.greenc(s2[p][i].note);
+
+  fun void light_up_page(int p) {
+    for (0 => int i; i < 72; i++) {
+      if(s[p][i].pad_on) {
+        if (cont){
+          l.greenc(s[p][i].note);
+        }
+        else {
+          l.green(s[p][i].note);
+        }
       }
-      else {
-        lau.green(s2[p][i].note);
+      else if (  s[p][i].red  ){
+        if (cont){
+          l.redc(s[p][i].note);
+        }
+        else {
+          l.red(s[p][i].note);
+        }
       }
-    }
-    else if (  s2[p][i].red  ){
-      if (cont){
-        lau.redc(s2[p][i].note);
-      }
-      else {
-        lau.red(s2[p][i].note);
-      }
-    }
-    else if (   s2[p][i].pad_with_file  ){
-      if (cont){
-        lau.amberc(s2[p][i].note);
-      }
-      else {
-        lau.amber(s2[p][i].note);
+      else if (   s[p][i].pad_with_file  ){
+        if (cont){
+          l.amberc(s[p][i].note);
+        }
+        else {
+          l.amber(s[p][i].note);
+        }
+
       }
 
     }
 
   }
 
-}
+  fun void light_down_page(int p) {
+    for (0 => int i; i < 72; i++) {
+      if (   s[p][i].pad_with_file  ){
+        if (cont){
+          l.clearc(s[p][i].note);
+        }
+        else {
+          l.clear(s[p][i].note);
+        }
 
-fun void light_down_page(int p) {
-  for (0 => int i; i < 72; i++) {
-    if (   s[p][i].pad_with_file  ){
-      if (cont){
-        lau.clearc(s[p][i].note);
-      }
-      else {
-        lau.clear(s[p][i].note);
       }
 
     }
 
   }
-  for (0 => int i; i < 8; i++) {
-    if (   s2[p][i].pad_with_file  ){
-      if (cont){
-        lau.clearc(s2[p][i].note);
-      }
-      else {
-        lau.clear(s2[p][i].note);
-      }
 
+  fun void page_up () {
+    if (current_page < nb_p - 1 ){
+      light_down_page(current_page);
+      unregister_in_lp(current_page);
+      current_page ++;
+      register_in_lp(current_page);
+      light_up_page(current_page);
+
+      <<<"SCRIPT LAUNCHER: PAGE ", current_page>>>;
+    }
+    else {
+      <<<"SCRIPT LAUNCHER: MAX PAGE reached">>>;
     }
 
+  }
+
+  fun void page_down () {
+    if (current_page > 0 ){
+      light_down_page(current_page);
+      unregister_in_lp(current_page);
+      current_page --;
+      register_in_lp(current_page);
+      light_up_page(current_page);
+      <<<"SCRIPT LAUNCHER: PAGE ", current_page>>>;
+    }
+    else {
+      <<<"SCRIPT LAUNCHER: MIN PAGE reached">>>;
+    }
   }
 
 }
+
+page_manager pm;
+l @=> pm.l;
+s @=> pm.s;
+nb_page => pm.nb_p;
+
+// TODO 
+class uppage extends CONTROL {
+  page_manager @ pm;    // 0 =>  update_on_reg ;
+  fun void set(float in) {
+    pm.page_up();
+  }
+} 
+
+uppage upagec;
+pm @=> upagec;
+
+// TODO dwnpage
+class dwnpage extends CONTROL {
+  page_manager @ pm;    // 0 =>  update_on_reg ;
+  fun void set(float in) {
+    pm.page_down();
+  }
+} 
+
+dwnpage dwnpagec;
+pm @=> dwnpagec;
+
+// Regster page up and down
+l.controls[104].reg(dwnpagec);
+l.controls[105].reg(upagec);
 
 
 l.start();
