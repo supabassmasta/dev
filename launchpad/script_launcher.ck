@@ -48,7 +48,7 @@ class script_launcher extends CONTROL {
     string pa;
 
     if (p == 0) "" => pa;
-    else p => pa;
+    else "" + p => pa;
 
 		if (nb < 10) {
 			"x" + pa + "0" + nb + ".ck" => xname;
@@ -203,14 +203,14 @@ for (0 => int p; p < nb_page; p ++ ){
 
 // Up side controls
 // Create array 
-script_launcher s2 [8];
+script_launcher s2 [1][8];
 
 // prepare controls
 for (0 => int  i; i <  8     ; i++) {
 		i + 1 => n;
 		i + 104 => nt;
-		s2[i].prepare(n, nt, l);
--		l.controls[nt].reg(s2[i]);
+		s2[0][i].prepare(0, n, nt, l);
+		l.controls[nt].reg(s2[0][i]);
 }
 
 
@@ -251,7 +251,7 @@ class page_manager {
   fun void light_up_page(int p) {
     for (0 => int i; i < 72; i++) {
       if(s[p][i].pad_on) {
-        if (cont){
+        if (s[p][i].cont){
           l.greenc(s[p][i].note);
         }
         else {
@@ -259,7 +259,7 @@ class page_manager {
         }
       }
       else if (  s[p][i].red  ){
-        if (cont){
+        if (s[p][i].cont){
           l.redc(s[p][i].note);
         }
         else {
@@ -267,7 +267,7 @@ class page_manager {
         }
       }
       else if (   s[p][i].pad_with_file  ){
-        if (cont){
+        if (s[p][i].cont){
           l.amberc(s[p][i].note);
         }
         else {
@@ -283,7 +283,7 @@ class page_manager {
   fun void light_down_page(int p) {
     for (0 => int i; i < 72; i++) {
       if (   s[p][i].pad_with_file  ){
-        if (cont){
+        if (s[p][i].cont){
           l.clearc(s[p][i].note);
         }
         else {
@@ -342,7 +342,7 @@ class uppage extends CONTROL {
 } 
 
 uppage upagec;
-pm @=> upagec;
+pm @=> upagec.pm;
 
 // TODO dwnpage
 class dwnpage extends CONTROL {
@@ -353,7 +353,7 @@ class dwnpage extends CONTROL {
 } 
 
 dwnpage dwnpagec;
-pm @=> dwnpagec;
+pm @=> dwnpagec.pm;
 
 // Regster page up and down
 l.controls[104].reg(dwnpagec);
