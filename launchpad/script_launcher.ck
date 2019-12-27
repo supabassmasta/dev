@@ -76,22 +76,35 @@ class script_launcher extends CONTROL {
 
 	fun void set(float in) {
 //						<<<"HEY", in, note, zid, pad_on>>>;
+    
+    // DIRTY: To optimize
+    0 => int no_light;
+
+    if ( in < 0  ){
+        1 => no_light;
+        in * -1 => in;
+        <<<"No light">>>;
+    }
+
 		if (in == 127.) {
 			if (pad_on) {
 				killer.kill(zid);
 				0 => pad_on;
-				if (nb < 10) 
-					if (red)
-						lau.redc(note);
-					else
-					  lau.amberc(note);
-				else {
-					if (red)
-						lau.red(note);
-					else{
-						lau.amber(note);
-					}
-				}
+
+        if ( ! no_light  ){
+          if (nb < 10) 
+            if (red)
+              lau.redc(note);
+            else
+              lau.amberc(note);
+          else {
+            if (red)
+              lau.red(note);
+            else{
+              lau.amber(note);
+            }
+          }
+        }
 
 			} 
 			else {
@@ -104,44 +117,51 @@ class script_launcher extends CONTROL {
 
         if ( xid != 0 || yid !=0 || zid != 0) {
           1 =>  pad_with_file;
-          if (nb < 10) 
-            lau.greenc(note);
-          else
-            lau.green(note);
+          if ( ! no_light  ){
+            if (nb < 10) 
+              lau.greenc(note);
+            else
+              lau.green(note);
+          }
         }
 			}
 		}
 		else if (in == 126.) { // VIRTUAL KEY ON only if OFF 
 			if (!pad_on) {
-				Machine.add( xname );
-				Machine.add( yname ) => yid;
-				Machine.add( zname ) => zid;
-				if (zid != 0) {
-					1 => pad_on;
-				}
+        Machine.add( xname );
+        Machine.add( yname ) => yid;
+        Machine.add( zname ) => zid;
+        if (zid != 0) {
+          1 => pad_on;
+        }
 
-				if (nb < 10) 
-					lau.greenc(note);
-				else
-					lau.green(note);
+        if ( ! no_light  ){
+          if (nb < 10) 
+            lau.greenc(note);
+          else
+            lau.green(note);
+        }
+
 			}
 		}
 		else if (in == 125.) { // VIRTUAL KEY OFF only if ON 
 			if (pad_on) {
 				killer.kill(zid);
 				0 => pad_on;
-				if (nb < 10) 
-					if (red)
-						lau.redc(note);
-					else
-					  lau.amberc(note);
-				else {
-					if (red)
-						lau.red(note);
-					else{
-						lau.amber(note);
-					}
-				}
+        if ( ! no_light  ){
+          if (nb < 10) 
+            if (red)
+              lau.redc(note);
+            else
+              lau.amberc(note);
+          else {
+            if (red)
+              lau.red(note);
+            else{
+              lau.amber(note);
+            }
+          }
+        }
 
 			} 
 
@@ -152,24 +172,23 @@ class script_launcher extends CONTROL {
 			}
 
 			else if (yid == 0 && 	zid == 0){
-//				if (nb < 10) 
-//					lau.clearc(note);
-//				else
-//					lau.clear(note);
+        //	Do nothing but keep this case. To do not light up pads.
 			}
 			else if (!pad_on) {
-				if (nb < 10) 
-					if (red)
-						lau.redc(note);
-					else
-					  lau.amberc(note);
-				else {
-					if (red)
-						lau.red(note);
-					else{
-						lau.amber(note);
-					}
-				}
+        if ( ! no_light  ){
+          if (nb < 10) 
+            if (red)
+              lau.redc(note);
+            else
+              lau.amberc(note);
+          else {
+            if (red)
+              lau.red(note);
+            else{
+              lau.amber(note);
+            }
+          }
+        }
 			}
 
 
@@ -419,6 +438,8 @@ class launchpad_virtual_control_on extends CONTROL {
     script_launcher s[][];
     script_launcher s2 [][];
     int nb_p;
+    page_manager @ pm;
+    1 => int no_light;
 
     fun void set(float in) {
       <<<"launchpad_virtual_control_on ", in>>>;
@@ -442,7 +463,10 @@ class launchpad_virtual_control_on extends CONTROL {
           
       }
       else {
-        s[p][idx].set(126); // on only   
+        if (p != pm.current_page) -1 => no_light;
+        else 1 => no_light;
+          
+        s[p][idx].set(no_light * 126); // on only   
       }
 
 
@@ -453,6 +477,7 @@ launchpad_virtual_control_on launchpad_virtual_control_on_c;
 s @=> launchpad_virtual_control_on_c.s;
 s2 @=> launchpad_virtual_control_on_c.s2;
 nb_page => launchpad_virtual_control_on_c.nb_p;
+pm @=> launchpad_virtual_control_on_c.pm;
 
 LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on_c);
 
