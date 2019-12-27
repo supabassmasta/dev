@@ -1,1 +1,0 @@
-../parallel_test_main/z01.ck

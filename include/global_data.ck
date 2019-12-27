@@ -29,6 +29,9 @@ public class data {
     static dur wait_before_start;
 		static time T0;
 
+// Page manager
+   static int page_manager_page_nb;
+
 }
 
 now => data.T0;
@@ -47,6 +50,8 @@ Event bar1 @=> data.super_seq_reset_ev;
 
 Event bar3[8] @=> data.break_ev;
 [0, 0, 0, 0, 0, 0, 0, 0]  @=> data.break_state;
+
+8 => data.page_manager_page_nb;
 
 while(1) 1000::ms => now;
 

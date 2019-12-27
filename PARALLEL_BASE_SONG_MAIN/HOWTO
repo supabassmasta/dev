@@ -5,7 +5,7 @@ copy PARALLEL_BASE_SONG_MAIN
 copy PARALLEL_BASE_SONG_AUX   (max 3 for 4 cpus)
 
 In AUX link ( ln -s ) from MAIN :
-      z01.ck   (SYNC script, mandatory)
+      z03.ck   (SYNC script, mandatory)
       config.ck
 
 In MAIN update parallel_launch.sh with all AUX.

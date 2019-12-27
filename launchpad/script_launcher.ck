@@ -1,6 +1,6 @@
 HW.launchpad @=> LAUNCHPAD @ l;
 
-8 => int nb_page;
+data.page_manager_page_nb => int nb_page;
 
 class script_launcher extends CONTROL {
 	string xname; // oneshot script
@@ -433,16 +433,17 @@ l.controls[105].reg(upagec);
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-class launchpad_virtual_control_on extends CONTROL {
+class launchpad_virtual_control extends CONTROL {
      // 0 =>  update_on_reg ;
     script_launcher s[][];
     script_launcher s2 [][];
     int nb_p;
     page_manager @ pm;
     1 => int no_light;
+    int cmd;
 
     fun void set(float in) {
-      <<<"launchpad_virtual_control_on ", in>>>;
+      <<<"launchpad_virtual_control, command : ", cmd, " sid: ", in>>>;
       
 
       in $ int => int sid;
@@ -459,27 +460,46 @@ class launchpad_virtual_control_on extends CONTROL {
 
       if ( sid < 9 ){
         // upside control
-        s2 [0][sid - 1].set(126); // on only
+        s2 [0][sid - 1].set(cmd); // on only
           
       }
       else {
         if (p != pm.current_page) -1 => no_light;
         else 1 => no_light;
           
-        s[p][idx].set(no_light * 126); // on only   
+        s[p][idx].set(no_light * cmd); // on only   
       }
 
 
     }
 } 
 
-launchpad_virtual_control_on launchpad_virtual_control_on_c;
-s @=> launchpad_virtual_control_on_c.s;
-s2 @=> launchpad_virtual_control_on_c.s2;
-nb_page => launchpad_virtual_control_on_c.nb_p;
-pm @=> launchpad_virtual_control_on_c.pm;
+launchpad_virtual_control launchpad_virtual_control_on;
+126 => launchpad_virtual_control_on.cmd; // On only
+s @=> launchpad_virtual_control_on.s;
+s2 @=> launchpad_virtual_control_on.s2;
+nb_page => launchpad_virtual_control_on.nb_p;
+pm @=> launchpad_virtual_control_on.pm;
 
-LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on_c);
+LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on);
+
+launchpad_virtual_control launchpad_virtual_control_off;
+125 => launchpad_virtual_control_off.cmd; // On only
+s @=> launchpad_virtual_control_off.s;
+s2 @=> launchpad_virtual_control_off.s2;
+nb_page => launchpad_virtual_control_off.nb_p;
+pm @=> launchpad_virtual_control_off.pm;
+
+LAUNCHPAD_VIRTUAL.off.reg(launchpad_virtual_control_off);
+
+launchpad_virtual_control launchpad_virtual_control_toggle;
+127 => launchpad_virtual_control_toggle.cmd; // On only
+s @=> launchpad_virtual_control_toggle.s;
+s2 @=> launchpad_virtual_control_toggle.s2;
+nb_page => launchpad_virtual_control_toggle.nb_p;
+pm @=> launchpad_virtual_control_toggle.pm;
+
+LAUNCHPAD_VIRTUAL.toggle.reg(launchpad_virtual_control_toggle);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
