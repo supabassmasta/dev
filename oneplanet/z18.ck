@@ -10,10 +10,12 @@ sy.sync(16 * data.tick , -4.5*data.tick /* offset */);
 
 
 
+HW.launchpad.virtual_key_on_only(86); 
 HW.launchpad.virtual_key_on_only(75); 
 
 4 * data.tick => now;
 
+HW.launchpad.virtual_key_off_only(86); 
 HW.launchpad.virtual_key_off_only(75); 
 
 HW.launchpad.virtual_key_off_only(51); 
