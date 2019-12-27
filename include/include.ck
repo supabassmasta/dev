@@ -228,8 +228,8 @@ Machine.add( "../seq_3/SET_WAV.ck");
 Machine.add( "../seq_3/SET_WAV2.ck");
 Machine.add("../EFFECTS/ARP.ck");
 Machine.add("../EFFECTS/STCUTTER.ck");
-me.yield();
-Machine.add("config.ck");
+Machine.add("page_manager_nb_page_config.ck"); // PAGE MANAGER : NUMBER OF PAGES
 me.yield();
 Machine.add( "../launchpad/script_launcher.ck");
+Machine.add("config.ck");
 me.yield();
