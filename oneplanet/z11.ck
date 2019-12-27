@@ -8,7 +8,7 @@ SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET
 s.go();     s $ ST @=> ST @ last; 
 
 STLPF lpf;
-lpf.connect(last $ ST , 10* 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+lpf.connect(last $ ST , 17* 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 9. /* In Gain */, .07 /* Tresh */, .5 /* Slope */, 6::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
