@@ -418,15 +418,31 @@ class launchpad_virtual_control_on extends CONTROL {
      // 0 =>  update_on_reg ;
     script_launcher s[][];
     script_launcher s2 [][];
+    int nb_p;
 
     fun void set(float in) {
       <<<"launchpad_virtual_control_on ", in>>>;
+      
 
       in $ int => int sid;
+      sid / 100 => int p;
+      (sid - p * 100) / 10 => int i;
+      (sid - p * 100 - i*10) => int j;
+      (i - 1)*9 + j - 1 => int idx;
+      <<<"sid: ", sid, " page: ", p, " i: ", i, " j: ", j," idx: ", idx>>>;
+      if ( idx >=72 || p > nb_p || idx < 0 || p < 0  ){
+          <<<"ERROR LAUNCHPAD_VIRTUAL invalid sid ", sid>>>;
+          <<<"sid: ", sid, " page: ", p, " i: ", i, " j: ", j," idx: ", idx>>>;
+      }
+
+
       if ( sid < 9 ){
         // upside control
-        s2 [0][sid - 1].set(126);
+        s2 [0][sid - 1].set(126); // on only
           
+      }
+      else {
+        s[p][idx].set(126); // on only   
       }
 
 
@@ -436,6 +452,7 @@ class launchpad_virtual_control_on extends CONTROL {
 launchpad_virtual_control_on launchpad_virtual_control_on_c;
 s @=> launchpad_virtual_control_on_c.s;
 s2 @=> launchpad_virtual_control_on_c.s2;
+nb_page => launchpad_virtual_control_on_c.nb_p;
 
 LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on_c);
 
