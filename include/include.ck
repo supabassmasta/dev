@@ -208,6 +208,7 @@ Machine.add( "../seq_3/SEQ.ck");
 Machine.add( "../seq_3/TONE.ck");
 Machine.add( "../NANOKONTROL/NANO_CONTROLER.ck");
 Machine.add( "../launchpad/LAUNCHPAD_CONTROLER.ck");
+Machine.add( "../launchpad/LAUNCHPAD_VIRTUAL.ck");
 Machine.add( "../lpd8/LPD8_CONTROLLER.ck");
 Machine.add( "../KBCONTROLLER/KBCONTROLLER.ck");
 Machine.add( "../ledstrip/ledstrip.ck");

@@ -211,6 +211,34 @@ for (0 => int  i; i <  8     ; i++) {
 		i + 104 => nt;
 		s2[0][i].prepare(0, n, nt, l);
 		l.controls[nt].reg(s2[0][i]);
+
+    // light it up
+      if(s2[0][i].pad_on) {
+        if (s2[0][i].cont){
+          l.greenc(s2[0][i].note);
+        }
+        else {
+          l.green(s2[0][i].note);
+        }
+      }
+      else if (  s2[0][i].red  ){
+        if (s2[0][i].cont){
+          l.redc(s2[0][i].note);
+        }
+        else {
+          l.red(s2[0][i].note);
+        }
+      }
+      else if (   s2[0][i].pad_with_file  ){
+        if (s2[0][i].cont){
+          l.amberc(s2[0][i].note);
+        }
+        else {
+          l.amber(s2[0][i].note);
+        }
+
+      }
+
 }
 
 
@@ -383,6 +411,37 @@ pm @=> dwnpagec.pm;
 // Register page up and down in launchpad
 l.controls[104].reg(dwnpagec);
 l.controls[105].reg(upagec);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+class launchpad_virtual_control_on extends CONTROL {
+     // 0 =>  update_on_reg ;
+    script_launcher s[][];
+    script_launcher s2 [][];
+
+    fun void set(float in) {
+      <<<"launchpad_virtual_control_on ", in>>>;
+
+      in $ int => int sid;
+      if ( sid < 9 ){
+        // upside control
+        s2 [0][sid - 1].set(126);
+          
+      }
+
+
+    }
+} 
+
+launchpad_virtual_control_on launchpad_virtual_control_on_c;
+s @=> launchpad_virtual_control_on_c.s;
+s2 @=> launchpad_virtual_control_on_c.s2;
+
+LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on_c);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 
 l.start();
