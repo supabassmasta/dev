@@ -1,0 +1,1 @@
+../techno_hell/config.ck
