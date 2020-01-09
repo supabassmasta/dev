@@ -1,0 +1,7 @@
+With page manager it can be useful to rename several files to change their pages.
+
+Be carful with file z14.ck and z142.ck. you want to move page 14 to 15 but not change name of z14.ck
+
+Solution is ? symbol that will match one char in querry
+
+rename 's/z14/z15/' z14?.ck
