@@ -1,5 +1,9 @@
 public class LAUNCHPAD {
 		"Launchpad S MIDI 1" => string device;
+		"Launchpad MK2 MIDI 1" => string device2;
+
+    0 => int MK2;
+
     MidiIn min;
     MidiMsg msg;
 		MidiOut mout;	
@@ -7,33 +11,38 @@ public class LAUNCHPAD {
 		// open the device
 		for(0 =>  int i; i < 8; i++ )
 		{
-				// no print err
-		//    min.printerr( 0 );
+      // no print err
+      //    min.printerr( 0 );
 
-				// open the device
-				if( min.open( i ) )
-				{
-						if ( min.name() == device ) {
-						<<< "device", i, "->", min.name(), "->", "open as input: SUCCESS" >>>;
+      // open the device
+      if( min.open( i ) )
+      {
+        if ( min.name() == device || min.name() == device2) {
+          if (  min.name() == device2  ){
+            1 => MK2; 
+          }
 
-					  if(mout.open(i)) {
-							<<< "device", i, "->", min.name(), "->", "open as output: SUCCESS" >>>;
-						}
-						else {
-								<<<"Fail to open launchpad as output">>>; 
-						}
+          <<< "device", i, "->", min.name(), "->", "open as input: SUCCESS" >>>;
 
-						break;
-						}
-						else {
-		//					min.close();
-						}
+          if(mout.open(i)) {
+            <<< "device", i, "->", min.name(), "->", "open as output: SUCCESS" >>>;
+          }
+          else {
+            <<<"Fail to open launchpad as output">>>; 
+          }
 
-			 }
-				else {
-						<<<"Cannot open", device>>>; 	
-					break;
-				}
+          break;
+        }
+        else {
+          //					min.close();
+        }
+
+      }
+      else {
+        <<<"Cannot open", device>>>; 	
+        break;
+      }
+
 		}
 
 		<<< "MIDI device:", min.num(), " -> ", min.name() >>>;
@@ -48,57 +57,121 @@ public class LAUNCHPAD {
 
 
     fun void start_midi_rcv() {
-				int color;
-        while( true )
+      int color;
+      int nt;
+      while( true )
+      {
+        min => now;
+
+        while( min.recv(msg) )
         {
-            min => now;
+          <<< msg.data1, msg.data2, msg.data3 >>>;
 
-            while( min.recv(msg) )
-            {
-                                <<< msg.data1, msg.data2, msg.data3 >>>;
-
-
-                if (msg.data1 == 144){
-                        keys[msg.data2].set(msg.data3); 
-//                        if (msg.data2 != 8 &&msg.data2 != 24 &&msg.data2 != 40 &&msg.data2 != 56 &&msg.data2 != 72 &&msg.data2 != 88 &&msg.data2 != 104 && msg.data2 != 120 ) 
-                            msg.data2=> last_key;
-                }
-                else {
-                        controls[msg.data2].set(msg.data3);
-                        msg.data2=> last_control;
-                }
+          if (msg.data1 == 144){
+            if ( MK2 ){
+              mk2_convert_note_to_S(msg.data2) => nt;
             }
+            else {
+              msg.data2 => nt;
+            }
+
+            keys[nt].set(msg.data3); 
+            nt=> last_key;
+          }
+          else {
+            controls[msg.data2].set(msg.data3);
+            msg.data2=> last_control;
+          }
         }
+      }
+      
+    }
+
+    fun int mk2_convert_note_to_S(int n) {
+      // row and column of mk2
+      n / 10  => int row;
+      n - (row * 10) => int col;
+   
+      // convert to S
+      8 - row => int i;
+      col - 1 => int j;
+
+      return ( i * 16 + j );
+    }
+
+    fun int S_convert_note_to_mk2(int n) {
+      // row and column to S
+      n / 16 => int row;
+      n - (row * 16) => int col;
+
+      // convert to MK2
+      8 - row => int i;
+      col + 1 => int j;
+
+      return (i * 10 + j);
     }
 
 		fun void reset(){
-			MidiMsg msg;
+      MidiMsg msg;
 
-			176 => msg.data1;
-			0 => msg.data2;
-			0 => msg.data3;
-			mout.send(msg);
+      if ( MK2  ){
+        for (10 => int i; i < 90; 10 +=> i) {
+          for (1 => int j; j < 10; j++) {
+            144 => msg.data1;
+            i + j => msg.data2;
+            0 => msg.data3;
+            mout.send(msg);
+          }
+        }
+
+        for (104 => int i; i < 112      ; i++) {
+          176 => msg.data1;
+          i => msg.data2;
+          0 => msg.data3;
+          mout.send(msg);
+        }
+      }
+      else {
+        176 => msg.data1;
+        0 => msg.data2;
+        0 => msg.data3;
+        mout.send(msg);
+      }
+
 		}
 
 		fun void set_color(int channel, int note, int color ){
-			MidiMsg msg;
+      MidiMsg msg;
 
-			channel => msg.data1;
-		  note => msg.data2;
-			color => msg.data3;
-			mout.send(msg);
+      if ( MK2  && channel == 144 ){
+        S_convert_note_to_mk2(note) => note;
+      }
+
+      channel => msg.data1;
+      note => msg.data2;
+      color => msg.data3;
+      mout.send(msg);
 		}
 
 		fun void red(int note){
-				set_color(144, note, 2);
+        if ( MK2  )
+				  set_color(144, note, 72);
+        else
+				  set_color(144, note, 2);
 		}
 
 		fun void green(int note){
-				set_color(144, note, 32);
+        if ( MK2  )
+				  set_color(144, note, 17);
+        else
+				  set_color(144, note, 32);
 		}
 
 		fun void amber(int note){
-				set_color(144, note, 34);
+        if ( MK2  )
+				  set_color(144, note, 37);
+        else
+				  set_color(144, note, 34);
 		}
 
 		fun void clear(int note){
@@ -106,15 +179,24 @@ public class LAUNCHPAD {
 		}
 
 		fun void redc(int note){
-				set_color(176, note, 2);
+        if ( MK2  )
+          set_color(176, note, 72);
+        else
+          set_color(176, note, 2);
 		}
 
 		fun void greenc(int note){
-				set_color(176, note, 32);
+        if ( MK2  )
+          set_color(176, note, 17);
+        else
+          set_color(176, note, 32);
 		}
 
 		fun void amberc(int note){
-				set_color(176, note, 34);
+        if ( MK2  )
+          set_color(176, note, 37);
+        else
+          set_color(176, note, 34);
 		}
 
 		fun void clearc(int note){
