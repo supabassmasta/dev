@@ -7,10 +7,18 @@ a__ aa_ a__
 a__ aa_ a__
 a__ aa_ aaa
 " => s.seq;
-.3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.6 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
+
+
+STFILTERMOD fmod;
+fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 1.5 /* Q */, 800 /* f_base */ , 6000  /* f_var */, 1::second / (7 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .8 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
 
 while(1) {
        100::ms => now;
