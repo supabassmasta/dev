@@ -1,7 +1,8 @@
 public class SET_WAV {
-  /*
+
+ /*
      fun static void  TEMPLATE ( SEQ @ s) {
-     "../_SAMPLES/"  => string dir;
+     ROOTPATH.str.my_string + "_SAMPLES/"  => string dir;
 
      dir + ".wav" => s.wav["a"];
      dir + ".wav" => s.wav["b"];
@@ -60,7 +61,7 @@ public class SET_WAV {
    */
 
   fun static void DUBSTEP ( SEQ @ s) {
-    "../_SAMPLES/Dubstep_Drum_Kit/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Dubstep_Drum_Kit/" => string dir;
 
     //dir + "" => s.wav[""];
     dir + "Dubstep_Kick_5.wav" => s.wav["k"];
@@ -115,7 +116,7 @@ public class SET_WAV {
   }
 
   fun static void VOLCA ( SEQ @ s) {
-    "../_SAMPLES/Volca_Beast/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Volca_Beast/" => string dir;
     //dir + "" => s.wav[""];
     dir + "VBKick1.wav" => s.wav["k"];
     dir + "VBKick2.wav" => s.wav["l"];
@@ -159,7 +160,7 @@ public class SET_WAV {
   }
 
   fun static void TABLA ( SEQ @ s) {
-    "../_SAMPLES/Dirt_samples/tabla/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tabla/" => string dir;
     //dir + "" => s.wav[""];
     dir + "024_lower6_hit.wav" => s.wav["A"];
     dir + "022_lower4_hit.wav" => s.wav["B"];
@@ -184,7 +185,7 @@ public class SET_WAV {
   }
 
   fun static void ACOUSTIC ( SEQ @ s) {
-    "../_SAMPLES/AVL_Drumkits_1.1-fix/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/AVL_Drumkits_1.1-fix/" => string dir;
 
     //dir + "" => s.wav[""];
     dir + "36-Ludwig26Kick-1.wav" => s.wav["K"];
@@ -255,7 +256,7 @@ public class SET_WAV {
 
   }
   fun static void CYMBALS ( SEQ @ s) {
-    "../_SAMPLES/AVL_Drumkits_1.1-fix/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/AVL_Drumkits_1.1-fix/" => string dir;
 
     //dir + "" => s.wav[""];
     dir + "49-SabianAA16Crash-2.wav" => s.wav["a"];
@@ -315,7 +316,7 @@ public class SET_WAV {
   }
 
   fun static void DUB ( SEQ @ s) {
-    "../_SAMPLES/ONE_SHOT_REGGAE/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/ONE_SHOT_REGGAE/" => string dir;
     dir + "RIMSHOT_01.wav" => s.wav["a"];
     dir + "RIMSHOT_02.wav" => s.wav["b"];
     dir + "RIMSHOT_03.wav" => s.wav["c"];
@@ -345,7 +346,7 @@ public class SET_WAV {
     dir + "TaMBOURINE_01.wav" => s.wav["z"];
 
 
-    "../_SAMPLES/REGGAE_SET_1/" => dir;
+    ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_1/" => dir;
 
     dir + "Bongo3_Reaggae1.wav" => s.wav["q"];
     dir + "Bongo4_Reaggae1.wav" => s.wav["r"];
@@ -360,7 +361,7 @@ public class SET_WAV {
     dir + "Timbales2_Reaggae1.wav" => s.wav["H"];
     dir + "Timbales4_Reaggae1.wav" => s.wav["I"];
 
-    "../_SAMPLES/REGGAE_SET_2/" => dir;
+    ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_2/" => dir;
 
     dir + "Bongo1.wav" => s.wav["J"];
     dir + "Bongo2.wav" => s.wav["K"];
@@ -370,7 +371,7 @@ public class SET_WAV {
     dir + "Vibraslap_Velo07_Reggae1.wav" => s.wav["O"];
     dir + "Vibraslap_Velo09_Reggae1.wav" => s.wav["P"];
 
-    "../_SAMPLES/AFRICAN_SET/" => dir;
+    ROOTPATH.str.my_string + "_SAMPLES/AFRICAN_SET/" => dir;
 
     dir + "AFRICAN_SET.wav" => s.wav["Q"];
     dir + "BONGOLOW.wav" => s.wav["R"];
@@ -386,7 +387,7 @@ public class SET_WAV {
   }
 
   fun static void BLIPS ( SEQ @ s) {
-    "../_SAMPLES/Dirt_samples/bleep/"  => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bleep/"  => string dir;
 
     dir + "bleep.wav" => s.wav["a"];
     dir + "boip.wav" => s.wav["b"];
@@ -406,13 +407,13 @@ public class SET_WAV {
     dir + "high.wav" => s.wav["p"];
     dir + "low.wav" => s.wav["q"];
 
-    "../_SAMPLES/Dirt_samples/click/"  =>  dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/click/"  =>  dir;
     dir + "000_click0.wav" => s.wav["r"];
     dir + "001_click1.wav" => s.wav["s"];
     dir + "002_click2.wav" => s.wav["t"];
     dir + "003_click3.wav" => s.wav["u"];
 
-    "../_SAMPLES/Dirt_samples/glitch/"  =>  dir;
+    ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/glitch/"  =>  dir;
 
 
     dir + "003_HH.wav" => s.wav["v"];
@@ -420,7 +421,7 @@ public class SET_WAV {
   }
 
   fun  static  void TRANCE ( SEQ @ s) {
-    "../_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" => string dir;
     dir + "Bong 03.wav" => s.wav["a"];
     dir + "Bong 03.wav" => s.wav["b"];
     dir + "Bong 13.wav" => s.wav["A"];
@@ -481,7 +482,7 @@ public class SET_WAV {
   }
 
   fun static void TRANCE_VARIOUS ( SEQ @ s) {
-    "../_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" => string dir;
 
     dir + "Acid.wav" => s.wav["a"];
     dir + "Android 1.wav" => s.wav["b"];
@@ -540,7 +541,7 @@ public class SET_WAV {
 
   }
      fun static void  TEK_VARIOUS ( SEQ @ s) {
-     "../_SAMPLES/TechnotronSD422demoExamples/G-Sonique Technotron SD422 demo examples/"  => string dir;
+     ROOTPATH.str.my_string + "_SAMPLES/TechnotronSD422demoExamples/G-Sonique Technotron SD422 demo examples/"  => string dir;
 
      dir + "Africa.wav" => s.wav["a"];
      dir + "Alien clap.wav" => s.wav["b"];
@@ -597,7 +598,7 @@ public class SET_WAV {
 
      }
      fun static void  TEK_VARIOUS2 ( SEQ @ s) {
-     "../_SAMPLES/TechnotronSD422demoExamples/G-Sonique Technotron SD422 demo examples/"  => string dir;
+     ROOTPATH.str.my_string + "_SAMPLES/TechnotronSD422demoExamples/G-Sonique Technotron SD422 demo examples/"  => string dir;
 
      dir + "Holographic.wav" => s.wav["a"];
      dir + "Industrial 5.wav" => s.wav["b"];
@@ -654,7 +655,7 @@ public class SET_WAV {
 
      }
      fun static  void  TRIBAL0 ( SEQ @ s) {
-     "../_SAMPLES/NOIIZ/"  => string dir;
+     ROOTPATH.str.my_string + "_SAMPLES/NOIIZ/"  => string dir;
 
      dir + "41_Afoxe_SP_8_02.wav" => s.wav["a"];
      dir + "41_Caxixi_SP_8_01.wav" => s.wav["b"];
@@ -712,7 +713,7 @@ public class SET_WAV {
      }
 
      fun static  void  TRIBAL1 ( SEQ @ s) {
-			 "../_SAMPLES/NOIIZ/"  => string dir;
+			 ROOTPATH.str.my_string + "_SAMPLES/NOIIZ/"  => string dir;
 
 			 dir+"Perc_SP_300_48.wav"=>s.wav["a"];
 			 dir+"Perc_SP_300_51.wav"=>s.wav["b"];
@@ -772,7 +773,7 @@ public class SET_WAV {
      }
 
      fun static  void  TRIBAL ( SEQ @ s) {
-     "../_SAMPLES/NOIIZ/Kick_snare_hihat/"  => string dir;
+     ROOTPATH.str.my_string + "_SAMPLES/NOIIZ/Kick_snare_hihat/"  => string dir;
 
      dir + "Rim_01_321_SP.wav" => s.wav["a"];
      dir + "Rim_02_321_SP.wav" => s.wav["b"];

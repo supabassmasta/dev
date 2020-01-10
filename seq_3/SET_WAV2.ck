@@ -1,6 +1,6 @@
 public class SET_WAV2 {
 fun static void __SAMPLES ( SEQ @ s) {
-	"../_SAMPLES/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/"  => string dir;
 
 	dir + "amen_snare2.wav" => s.wav["a"];
 	dir + "_PERC_39.wav" => s.wav["b"];
@@ -54,14 +54,14 @@ fun static void __SAMPLES ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_FreeDrumKits_net___1017_BRICKSQUAD_Drum_Kit ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/"  => string dir;
 
 	dir + "www.FreeDrumKits.net.wav" => s.wav["a"];
 
 }
 
 fun static void _1017_BrickSquad_Kit_Claps ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Claps/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Claps/"  => string dir;
 
 	dir + "Clap (1).wav" => s.wav["a"];
 	dir + "Clap (15).wav" => s.wav["b"];
@@ -84,7 +84,7 @@ fun static void _1017_BrickSquad_Kit_Claps ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Snares ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Snares/"  => string dir;
 
 	dir + "Sanre (15).wav" => s.wav["a"];
 	dir + "Sanre (3).wav" => s.wav["b"];
@@ -107,7 +107,7 @@ fun static void _1017_BrickSquad_Kit_Snares ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Producer_Tags ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Producer Tags/"  => string dir;
 
 	dir + "Vette Boyz.wav" => s.wav["a"];
 	dir + "Zaytoven.wav" => s.wav["b"];
@@ -120,7 +120,7 @@ fun static void _1017_BrickSquad_Kit_Producer_Tags ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Hi_Hats__Crashes____Percs ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/"  => string dir;
 
 	dir + "Pers (9).wav" => s.wav["a"];
 	dir + "Pers (37).wav" => s.wav["b"];
@@ -178,7 +178,7 @@ fun static void _1017_BrickSquad_Kit_Hi_Hats__Crashes____Percs ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Hi_Hats__Crashes____Percs_1 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Hi Hats, Crashes, & Percs/"  => string dir;
 
 	dir + "Pers (51).wav" => s.wav["a"];
 	dir + "Pers (42).wav" => s.wav["b"];
@@ -186,7 +186,7 @@ fun static void _1017_BrickSquad_Kit_Hi_Hats__Crashes____Percs_1 ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Kicks ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Kicks/"  => string dir;
 
 	dir + "Kick (9).wav" => s.wav["a"];
 	dir + "Kick (3).wav" => s.wav["b"];
@@ -205,7 +205,7 @@ fun static void _1017_BrickSquad_Kit_Kicks ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_FX ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/FX/"  => string dir;
 
 	dir + "Gun Cockback (1).wav" => s.wav["a"];
 	dir + "School Bell.wav" => s.wav["b"];
@@ -227,7 +227,7 @@ fun static void _1017_BrickSquad_Kit_FX ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_Vocals_And_Chants ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/Vocals And Chants/"  => string dir;
 
 	dir + "Trapaholic Mixtapes.wav" => s.wav["a"];
 	dir + "Waka Flocka Vocal (6).wav" => s.wav["b"];
@@ -271,7 +271,7 @@ fun static void _1017_BrickSquad_Kit_Vocals_And_Chants ( SEQ @ s) {
 }
 
 fun static void _1017_BrickSquad_Kit_808_s ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 1017 BRICKSQUAD Drum Kit/1017 BrickSquad Kit/808's/"  => string dir;
 
 	dir + "808 (20).wav" => s.wav["a"];
 	dir + "808 (11).wav" => s.wav["b"];
@@ -298,7 +298,7 @@ fun static void _1017_BrickSquad_Kit_808_s ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_ONE_SHOT_REGGAE ( SEQ @ s) {
-	"../_SAMPLES/ONE_SHOT_REGGAE/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/ONE_SHOT_REGGAE/"  => string dir;
 
 	dir + "BaSS_03.wav" => s.wav["a"];
 	dir + "BaSS_01.wav" => s.wav["b"];
@@ -350,7 +350,7 @@ fun static void __SAMPLES_ONE_SHOT_REGGAE ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_REGGAE_SET_2 ( SEQ @ s) {
-	"../_SAMPLES/REGGAE_SET_2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_2/"  => string dir;
 
 	dir + "Tom_Velo02_High.wav" => s.wav["a"];
 	dir + "Timbales_Velo02_Reggae2.wav" => s.wav["b"];
@@ -408,7 +408,7 @@ fun static void __SAMPLES_REGGAE_SET_2 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_REGGAE_SET_2_1 ( SEQ @ s) {
-	"../_SAMPLES/REGGAE_SET_2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_2/"  => string dir;
 
 	dir + "Tom_Velo04_Low.wav" => s.wav["a"];
 	dir + "Snare_DrumVelo02_Metal.wav" => s.wav["b"];
@@ -466,7 +466,7 @@ fun static void __SAMPLES_REGGAE_SET_2_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_REGGAE_SET_2_2 ( SEQ @ s) {
-	"../_SAMPLES/REGGAE_SET_2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_2/"  => string dir;
 
 	dir + "Vibraslap_Velo06_Reggae1.wav" => s.wav["a"];
 	dir + "Rimshot_Velo02_Reggae1.wav" => s.wav["b"];
@@ -524,7 +524,7 @@ fun static void __SAMPLES_REGGAE_SET_2_2 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_REGGAE_SET_2_3 ( SEQ @ s) {
-	"../_SAMPLES/REGGAE_SET_2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_2/"  => string dir;
 
 	dir + "Bass_DrumVelo05_Reggae1.wav" => s.wav["a"];
 	dir + "Ride_KuppeVelo02_Reggae1.wav" => s.wav["b"];
@@ -558,7 +558,7 @@ fun static void __SAMPLES_REGGAE_SET_2_3 ( SEQ @ s) {
 }
 
 fun static void _DMD_FR909_FR909_Crash ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Crash/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Crash/"  => string dir;
 
 	dir + "f9crsh01.wav" => s.wav["a"];
 	dir + "f9crsh05.wav" => s.wav["b"];
@@ -574,7 +574,7 @@ fun static void _DMD_FR909_FR909_Crash ( SEQ @ s) {
 }
 
 fun static void _DMD_FR909_FR909_Clap ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Clap/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Clap/"  => string dir;
 
 	dir + "f9clp14.wav" => s.wav["a"];
 	dir + "f9clp08.wav" => s.wav["b"];
@@ -610,7 +610,7 @@ fun static void _DMD_FR909_FR909_Clap ( SEQ @ s) {
 }
 
 fun static void _DMD_FR909_DMDMD_Demo ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/DMDMD_Demo/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/DMDMD_Demo/"  => string dir;
 
 	dir + "EFM-SRp43ot.wav" => s.wav["a"];
 	dir + "TRX-CG13ot.wav" => s.wav["b"];
@@ -654,7 +654,7 @@ fun static void _DMD_FR909_DMDMD_Demo ( SEQ @ s) {
 }
 
 fun static void _FR909_Hats_FR9_openhat ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909_Hats/FR9_openhat/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909_Hats/FR9_openhat/"  => string dir;
 
 	dir + "f9opht12.wav" => s.wav["a"];
 	dir + "f9opht13.wav" => s.wav["b"];
@@ -674,7 +674,7 @@ fun static void _FR909_Hats_FR9_openhat ( SEQ @ s) {
 }
 
 fun static void _FR909_Hats_FR9_clsdhat ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909_Hats/FR9_clsdhat/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909_Hats/FR9_clsdhat/"  => string dir;
 
 	dir + "f9clht05.wav" => s.wav["a"];
 	dir + "f9clht04.wav" => s.wav["b"];
@@ -687,7 +687,7 @@ fun static void _FR909_Hats_FR9_clsdhat ( SEQ @ s) {
 }
 
 fun static void _FR909_Snares_FR9_lwsnrs ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Snares/FR9 lwsnrs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Snares/FR9 lwsnrs/"  => string dir;
 
 	dir + "f9lsnr26.wav" => s.wav["a"];
 	dir + "f9lsnr02.wav" => s.wav["b"];
@@ -725,7 +725,7 @@ fun static void _FR909_Snares_FR9_lwsnrs ( SEQ @ s) {
 }
 
 fun static void _FR909_Snares_FR9_hghsnrs ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Snares/FR9 hghsnrs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Snares/FR9 hghsnrs/"  => string dir;
 
 	dir + "f9hsnr15.wav" => s.wav["a"];
 	dir + "f9hsnr22.wav" => s.wav["b"];
@@ -756,7 +756,7 @@ fun static void _FR909_Snares_FR9_hghsnrs ( SEQ @ s) {
 }
 
 fun static void _FR909_Snares_FR9_tightsnrs ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Snares/FR9 tightsnrs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Snares/FR9 tightsnrs/"  => string dir;
 
 	dir + "f9tsnr13.wav" => s.wav["a"];
 	dir + "f9tsnr33.wav" => s.wav["b"];
@@ -796,7 +796,7 @@ fun static void _FR909_Snares_FR9_tightsnrs ( SEQ @ s) {
 }
 
 fun static void _FR909_Snares_FR9_softsnrs ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Snares/FR9 softsnrs/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Snares/FR9 softsnrs/"  => string dir;
 
 	dir + "f9sfsn24.wav" => s.wav["a"];
 	dir + "f9sfsn33.wav" => s.wav["b"];
@@ -835,7 +835,7 @@ fun static void _FR909_Snares_FR9_softsnrs ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_htoms1 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 htoms1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 htoms1/"  => string dir;
 
 	dir + "f9htom15.wav" => s.wav["a"];
 	dir + "f9htom12.wav" => s.wav["b"];
@@ -869,7 +869,7 @@ fun static void _FR909_Toms_FR9_htoms1 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_mtoms1 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 mtoms1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 mtoms1/"  => string dir;
 
 	dir + "f9mtom38.wav" => s.wav["a"];
 	dir + "f9mtom34.wav" => s.wav["b"];
@@ -919,7 +919,7 @@ fun static void _FR909_Toms_FR9_mtoms1 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_htoms2 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 htoms2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 htoms2/"  => string dir;
 
 	dir + "f9htom41.wav" => s.wav["a"];
 	dir + "f9htom58.wav" => s.wav["b"];
@@ -960,7 +960,7 @@ fun static void _FR909_Toms_FR9_htoms2 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_ltoms1 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms1/"  => string dir;
 
 	dir + "f9ltm11.wav" => s.wav["a"];
 	dir + "f9ltm36.wav" => s.wav["b"];
@@ -1004,7 +1004,7 @@ fun static void _FR909_Toms_FR9_ltoms1 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_ltoms2 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms2/"  => string dir;
 
 	dir + "f9ltm44.wav" => s.wav["a"];
 	dir + "f9ltm60.wav" => s.wav["b"];
@@ -1047,7 +1047,7 @@ fun static void _FR909_Toms_FR9_ltoms2 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_mtoms2 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 mtoms2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 mtoms2/"  => string dir;
 
 	dir + "f9mtom78.wav" => s.wav["a"];
 	dir + "f9mtom71.wav" => s.wav["b"];
@@ -1104,7 +1104,7 @@ fun static void _FR909_Toms_FR9_mtoms2 ( SEQ @ s) {
 }
 
 fun static void _FR909_Toms_FR9_ltoms3 ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms3/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Toms/FR9 ltoms3/"  => string dir;
 
 	dir + "f9ltm120.wav" => s.wav["a"];
 	dir + "f9ltm93.wav" => s.wav["b"];
@@ -1155,7 +1155,7 @@ fun static void _FR909_Toms_FR9_ltoms3 ( SEQ @ s) {
 }
 
 fun static void _DMD_FR909_FR909_Rim ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Rim/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Rim/"  => string dir;
 
 	dir + "f9rim01.wav" => s.wav["a"];
 	dir + "f9rim03.wav" => s.wav["b"];
@@ -1165,7 +1165,7 @@ fun static void _DMD_FR909_FR909_Rim ( SEQ @ s) {
 }
 
 fun static void _DMD_FR909_FR909_Ride ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Ride/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Ride/"  => string dir;
 
 	dir + "f9ride04.wav" => s.wav["a"];
 	dir + "f9ride08.wav" => s.wav["b"];
@@ -1183,7 +1183,7 @@ fun static void _DMD_FR909_FR909_Ride ( SEQ @ s) {
 }
 
 fun static void _FR909_Kicks_FR9_distkck ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Kicks/FR9 distkck/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Kicks/FR9 distkck/"  => string dir;
 
 	dir + "f9dstk07.wav" => s.wav["a"];
 	dir + "f9dstk10.wav" => s.wav["b"];
@@ -1199,7 +1199,7 @@ fun static void _FR909_Kicks_FR9_distkck ( SEQ @ s) {
 }
 
 fun static void _FR909_Kicks_FR9_sftrkck ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Kicks/FR9 sftrkck/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Kicks/FR9 sftrkck/"  => string dir;
 
 	dir + "f9sftk19.wav" => s.wav["a"];
 	dir + "f9sftk09.wav" => s.wav["b"];
@@ -1226,7 +1226,7 @@ fun static void _FR909_Kicks_FR9_sftrkck ( SEQ @ s) {
 }
 
 fun static void _FR909_Kicks_FR9_hrdrkck ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Kicks/FR9 hrdrkck/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Kicks/FR9 hrdrkck/"  => string dir;
 
 	dir + "f9hrdk03.wav" => s.wav["a"];
 	dir + "f9hrdk05.wav" => s.wav["b"];
@@ -1250,7 +1250,7 @@ fun static void _FR909_Kicks_FR9_hrdrkck ( SEQ @ s) {
 }
 
 fun static void _FR909_Kicks_FR9_medkck ( SEQ @ s) {
-	"../_SAMPLES/DMD-FR909/FR909 Kicks/FR9 medkck/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DMD-FR909/FR909 Kicks/FR9 medkck/"  => string dir;
 
 	dir + "f9medk02.wav" => s.wav["a"];
 	dir + "f9medk12.wav" => s.wav["b"];
@@ -1277,14 +1277,14 @@ fun static void _FR909_Kicks_FR9_medkck ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_FreeDrumKits_net___9th_Wonder_Kit ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/"  => string dir;
 
 	dir + "www.FreeDrumKits.net.wav" => s.wav["a"];
 
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Cymbals ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Cymbals/"  => string dir;
 
 	dir + "Str_Ohh.wav" => s.wav["a"];
 	dir + "Hgh_Cy1.wav" => s.wav["b"];
@@ -1323,7 +1323,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Cymbals ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Claps ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Claps/"  => string dir;
 
 	dir + "Tw_clp.wav" => s.wav["a"];
 	dir + "Bg_Clp.wav" => s.wav["b"];
@@ -1359,7 +1359,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Claps ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
 
 	dir + "Kv_Snr.wav" => s.wav["a"];
 	dir + "Rb_Snr.wav" => s.wav["b"];
@@ -1417,7 +1417,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares_1 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
 
 	dir + "Drt_Snr1.wav" => s.wav["a"];
 	dir + "Pro_Snr.wav" => s.wav["b"];
@@ -1475,7 +1475,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares_1 ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares_2 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Snares/"  => string dir;
 
 	dir + "Pch_Snr.wav" => s.wav["a"];
 	dir + "Jb_Snr.wav" => s.wav["b"];
@@ -1527,7 +1527,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Snares_2 ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
 
 	dir + "Cp_K.wav" => s.wav["a"];
 	dir + "Bnk_K1.wav" => s.wav["b"];
@@ -1585,7 +1585,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks_1 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
 
 	dir + "Grnd_K.wav" => s.wav["a"];
 	dir + "Kld_K2.wav" => s.wav["b"];
@@ -1643,7 +1643,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks_1 ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks_2 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Kicks/"  => string dir;
 
 	dir + "Jud_K.wav" => s.wav["a"];
 	dir + "Rtf_K1.wav" => s.wav["b"];
@@ -1675,7 +1675,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Kicks_2 ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Percussions ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Percussions/"  => string dir;
 
 	dir + "PercLoop1.wav" => s.wav["a"];
 	dir + "Tab_02.wav" => s.wav["b"];
@@ -1723,7 +1723,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Percussions ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Shakers ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Shakers/"  => string dir;
 
 	dir + "Lng_Shk2.wav" => s.wav["a"];
 	dir + "Ml_Shk6.wav" => s.wav["b"];
@@ -1759,7 +1759,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Shakers ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Hi_Hats ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/"  => string dir;
 
 	dir + "Pin_H.wav" => s.wav["a"];
 	dir + "Wsh_H2.wav" => s.wav["b"];
@@ -1817,7 +1817,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Hi_Hats ( SEQ @ s) {
 }
 
 fun static void _FreeDrumKits_net___9th_Wonder_Kit_Hi_Hats_1 ( SEQ @ s) {
-	"../_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FreeDrumKits.net - 9th Wonder Kit/Hi-Hats/"  => string dir;
 
 	dir + "Wsh_H1.wav" => s.wav["a"];
 	dir + "Hgh_H2.wav" => s.wav["b"];
@@ -1871,7 +1871,7 @@ fun static void _FreeDrumKits_net___9th_Wonder_Kit_Hi_Hats_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_Dubstep_Drum_Kit ( SEQ @ s) {
-	"../_SAMPLES/Dubstep_Drum_Kit/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dubstep_Drum_Kit/"  => string dir;
 
 	dir + "Dubstep_Effect_9.wav" => s.wav["a"];
 	dir + "Dubstep_Effect_8.wav" => s.wav["b"];
@@ -1929,7 +1929,7 @@ fun static void __SAMPLES_Dubstep_Drum_Kit ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_DUB_SET ( SEQ @ s) {
-	"../_SAMPLES/DUB_SET/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/DUB_SET/"  => string dir;
 
 	dir + "Hi_Hat_Open_Dub1.wav" => s.wav["a"];
 	dir + "Rim_Shot_Dub1.wav" => s.wav["b"];
@@ -1962,7 +1962,7 @@ fun static void __SAMPLES_DUB_SET ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_Merdrignac_voices ( SEQ @ s) {
-	"../_SAMPLES/Merdrignac_voices/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Merdrignac_voices/"  => string dir;
 
 	dir + "porc1.wav" => s.wav["a"];
 	dir + "merd12.wav" => s.wav["b"];
@@ -1986,7 +1986,7 @@ fun static void __SAMPLES_Merdrignac_voices ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_Volca_Beast ( SEQ @ s) {
-	"../_SAMPLES/Volca_Beast/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Volca_Beast/"  => string dir;
 
 	dir + "VBClap10.wav" => s.wav["a"];
 	dir + "VBSnare8.wav" => s.wav["b"];
@@ -2044,7 +2044,7 @@ fun static void __SAMPLES_Volca_Beast ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_Volca_Beast_1 ( SEQ @ s) {
-	"../_SAMPLES/Volca_Beast/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Volca_Beast/"  => string dir;
 
 	dir + "VBTom4.wav" => s.wav["a"];
 	dir + "VBKick8.wav" => s.wav["b"];
@@ -2076,7 +2076,7 @@ fun static void __SAMPLES_Volca_Beast_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_Whales ( SEQ @ s) {
-	"../_SAMPLES/Whales/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Whales/"  => string dir;
 
 	dir + "hmpback1.wav" => s.wav["a"];
 	dir + "baleine5.wav" => s.wav["b"];
@@ -2096,7 +2096,7 @@ fun static void __SAMPLES_Whales ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_SNARES ( SEQ @ s) {
-	"../_SAMPLES/SNARES/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/SNARES/"  => string dir;
 
 	dir + "SNARE___27_.wav" => s.wav["a"];
 	dir + "SNARE___74_.wav" => s.wav["b"];
@@ -2154,7 +2154,7 @@ fun static void __SAMPLES_SNARES ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_SNARES_1 ( SEQ @ s) {
-	"../_SAMPLES/SNARES/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/SNARES/"  => string dir;
 
 	dir + "SNARE___58_.wav" => s.wav["a"];
 	dir + "SNARE___5_.wav" => s.wav["b"];
@@ -2199,7 +2199,7 @@ fun static void __SAMPLES_SNARES_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_FX_and_HITS ( SEQ @ s) {
-	"../_SAMPLES/FX_and_HITS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FX_and_HITS/"  => string dir;
 
 	dir + "FX___HITS__121_.wav" => s.wav["a"];
 	dir + "FX___HITS__66_.wav" => s.wav["b"];
@@ -2257,7 +2257,7 @@ fun static void __SAMPLES_FX_and_HITS ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_FX_and_HITS_1 ( SEQ @ s) {
-	"../_SAMPLES/FX_and_HITS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FX_and_HITS/"  => string dir;
 
 	dir + "FX___HITS__90_.wav" => s.wav["a"];
 	dir + "FX___HITS__28_.wav" => s.wav["b"];
@@ -2315,7 +2315,7 @@ fun static void __SAMPLES_FX_and_HITS_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_FX_and_HITS_2 ( SEQ @ s) {
-	"../_SAMPLES/FX_and_HITS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/FX_and_HITS/"  => string dir;
 
 	dir + "FX___HITS__22_.wav" => s.wav["a"];
 	dir + "FX___HITS__109_.wav" => s.wav["b"];
@@ -2345,7 +2345,7 @@ fun static void __SAMPLES_FX_and_HITS_2 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_KICKS ( SEQ @ s) {
-	"../_SAMPLES/KICKS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/KICKS/"  => string dir;
 
 	dir + "KICK___24_.wav" => s.wav["a"];
 	dir + "KICK___89_.wav" => s.wav["b"];
@@ -2403,7 +2403,7 @@ fun static void __SAMPLES_KICKS ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_KICKS_1 ( SEQ @ s) {
-	"../_SAMPLES/KICKS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/KICKS/"  => string dir;
 
 	dir + "KICK___42_.wav" => s.wav["a"];
 	dir + "KICK___7_.wav" => s.wav["b"];
@@ -2453,7 +2453,7 @@ fun static void __SAMPLES_KICKS_1 ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_AFRICAN_SET ( SEQ @ s) {
-	"../_SAMPLES/AFRICAN_SET/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/AFRICAN_SET/"  => string dir;
 
 	dir + "_PERC_39.wav" => s.wav["a"];
 	dir + "SNARE1P.wav" => s.wav["b"];
@@ -2511,7 +2511,7 @@ fun static void __SAMPLES_AFRICAN_SET ( SEQ @ s) {
 }
 
 fun static void __SAMPLES_AFRICAN_SET_1 ( SEQ @ s) {
-	"../_SAMPLES/AFRICAN_SET/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/AFRICAN_SET/"  => string dir;
 
 	dir + "mystflute+2.wav" => s.wav["a"];
 	dir + "_PERC_02.wav" => s.wav["b"];
@@ -2524,7 +2524,7 @@ fun static void __SAMPLES_AFRICAN_SET_1 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sitar ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sitar/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sitar/"  => string dir;
 
 	dir + "001_d_maj_sitar_chordb.wav" => s.wav["a"];
 	dir + "006_d_minor_sitar_chordb.wav" => s.wav["b"];
@@ -2538,7 +2538,7 @@ fun static void _Dirt_samples_sitar ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_arpy ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/arpy/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/arpy/"  => string dir;
 
 	dir + "arpy03.wav" => s.wav["a"];
 	dir + "arpy07.wav" => s.wav["b"];
@@ -2555,7 +2555,7 @@ fun static void _Dirt_samples_arpy ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_peri ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/peri/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/peri/"  => string dir;
 
 	dir + "xbusket.wav" => s.wav["a"];
 	dir + "xbigclang.wav" => s.wav["b"];
@@ -2576,7 +2576,7 @@ fun static void _Dirt_samples_peri ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_moog ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/moog/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/moog/"  => string dir;
 
 	dir + "003_Mighty Moog G1.wav" => s.wav["a"];
 	dir + "004_Mighty Moog G2.wav" => s.wav["b"];
@@ -2589,7 +2589,7 @@ fun static void _Dirt_samples_moog ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_industrial ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/industrial/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/industrial/"  => string dir;
 
 	dir + "012_13.wav" => s.wav["a"];
 	dir + "005_06.wav" => s.wav["b"];
@@ -2627,7 +2627,7 @@ fun static void _Dirt_samples_industrial ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_kurt ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/kurt/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/kurt/"  => string dir;
 
 	dir + "001_kurt02.wav" => s.wav["a"];
 	dir + "006_kurt07.wav" => s.wav["b"];
@@ -2640,14 +2640,14 @@ fun static void _Dirt_samples_kurt ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_moan ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/moan/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/moan/"  => string dir;
 
 	dir + "000_0_moan2.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_arp ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/arp/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/arp/"  => string dir;
 
 	dir + "000_arp2.wav" => s.wav["a"];
 	dir + "001_arp.wav" => s.wav["b"];
@@ -2655,7 +2655,7 @@ fun static void _Dirt_samples_arp ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_speechless ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/speechless/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/speechless/"  => string dir;
 
 	dir + "pepper.wav" => s.wav["a"];
 	dir + "pepepepepe.wav" => s.wav["b"];
@@ -2673,7 +2673,7 @@ fun static void _Dirt_samples_speechless ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_gab ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/gab/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/gab/"  => string dir;
 
 	dir + "gab07.wav" => s.wav["a"];
 	dir + "gab03.wav" => s.wav["b"];
@@ -2689,7 +2689,7 @@ fun static void _Dirt_samples_gab ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_mp3 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mp3/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mp3/"  => string dir;
 
 	dir + "003_mp33.wav" => s.wav["a"];
 	dir + "002_mp32.wav" => s.wav["b"];
@@ -2699,7 +2699,7 @@ fun static void _Dirt_samples_mp3 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bass2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bass2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bass2/"  => string dir;
 
 	dir + "69989__noizemassacre__hardcore-bass-2.wav" => s.wav["a"];
 	dir + "69991__noizemassacre__hardcore-bass-4.wav" => s.wav["b"];
@@ -2710,7 +2710,7 @@ fun static void _Dirt_samples_bass2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dr_few ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dr_few/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dr_few/"  => string dir;
 
 	dir + "005_020.WAV" => s.wav["a"];
 	dir + "006_021.WAV" => s.wav["b"];
@@ -2724,7 +2724,7 @@ fun static void _Dirt_samples_dr_few ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_gretsch ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/gretsch/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/gretsch/"  => string dir;
 
 	dir + "snareslack.wav" => s.wav["a"];
 	dir + "kick.wav" => s.wav["b"];
@@ -2754,7 +2754,7 @@ fun static void _Dirt_samples_gretsch ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hh ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hh/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hh/"  => string dir;
 
 	dir + "011_hh3snare1.wav" => s.wav["a"];
 	dir + "000_hh3closedhh.wav" => s.wav["b"];
@@ -2773,7 +2773,7 @@ fun static void _Dirt_samples_hh ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_baa ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/baa/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/baa/"  => string dir;
 
 	dir + "7.wav" => s.wav["a"];
 	dir + "3.wav" => s.wav["b"];
@@ -2786,7 +2786,7 @@ fun static void _Dirt_samples_baa ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_foo ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/foo/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/foo/"  => string dir;
 
 	dir + "010_dngrsbrk.wav" => s.wav["a"];
 	dir + "000_samthfdbrk.wav" => s.wav["b"];
@@ -2819,7 +2819,7 @@ fun static void _Dirt_samples_foo ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_uxay ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/uxay/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/uxay/"  => string dir;
 
 	dir + "002_foo.wav" => s.wav["a"];
 	dir + "000_bar.wav" => s.wav["b"];
@@ -2828,7 +2828,7 @@ fun static void _Dirt_samples_uxay ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ht ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ht/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ht/"  => string dir;
 
 	dir + "HTAD7.wav" => s.wav["a"];
 	dir + "HT7D7.wav" => s.wav["b"];
@@ -2850,14 +2850,14 @@ fun static void _Dirt_samples_ht ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hmm ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hmm/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hmm/"  => string dir;
 
 	dir + "hmm.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_v ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/v/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/v/"  => string dir;
 
 	dir + "001_v_blipp02.wav" => s.wav["a"];
 	dir + "005_v_snare02.wav" => s.wav["b"];
@@ -2869,7 +2869,7 @@ fun static void _Dirt_samples_v ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_mouth ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mouth/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mouth/"  => string dir;
 
 	dir + "005_14.wav" => s.wav["a"];
 	dir + "007_2.wav" => s.wav["b"];
@@ -2890,7 +2890,7 @@ fun static void _Dirt_samples_mouth ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_armora ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/armora/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/armora/"  => string dir;
 
 	dir + "004_loexp.wav" => s.wav["a"];
 	dir + "001_chopper.wav" => s.wav["b"];
@@ -2903,7 +2903,7 @@ fun static void _Dirt_samples_armora ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dist ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dist/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dist/"  => string dir;
 
 	dir + "012_inddistb7.wav" => s.wav["a"];
 	dir + "001_inddistb2.wav" => s.wav["b"];
@@ -2925,7 +2925,7 @@ fun static void _Dirt_samples_dist ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_space ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/space/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/space/"  => string dir;
 
 	dir + "005_14.wav" => s.wav["a"];
 	dir + "015_7.wav" => s.wav["b"];
@@ -2949,7 +2949,7 @@ fun static void _Dirt_samples_space ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sequential ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sequential/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sequential/"  => string dir;
 
 	dir + "007_Tom Tom2.wav" => s.wav["a"];
 	dir + "000_Tom Clap.wav" => s.wav["b"];
@@ -2963,7 +2963,7 @@ fun static void _Dirt_samples_sequential ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_20010320_Samples ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/20010320-Samples/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/20010320-Samples/"  => string dir;
 
 	dir + "011_perc1.wav" => s.wav["a"];
 	dir + "005_click1.wav" => s.wav["b"];
@@ -2992,7 +2992,7 @@ fun static void _Dirt_samples_20010320_Samples ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_rave2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/rave2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/rave2/"  => string dir;
 
 	dir + "rave_bass03.wav" => s.wav["a"];
 	dir + "rave_bass01.wav" => s.wav["b"];
@@ -3002,7 +3002,7 @@ fun static void _Dirt_samples_rave2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bend ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bend/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bend/"  => string dir;
 
 	dir + "002_6.wav" => s.wav["a"];
 	dir + "003_8.wav" => s.wav["b"];
@@ -3012,14 +3012,14 @@ fun static void _Dirt_samples_bend ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_led ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/led/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/led/"  => string dir;
 
 	dir + "000_foo.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_jvbass ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/jvbass/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/jvbass/"  => string dir;
 
 	dir + "012_13.wav" => s.wav["a"];
 	dir + "005_06.wav" => s.wav["b"];
@@ -3038,7 +3038,7 @@ fun static void _Dirt_samples_jvbass ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_latibro ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/latibro/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/latibro/"  => string dir;
 
 	dir + "005_Sound7.wav" => s.wav["a"];
 	dir + "004_Sound6.wav" => s.wav["b"];
@@ -3052,7 +3052,7 @@ fun static void _Dirt_samples_latibro ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_pad ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/pad/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/pad/"  => string dir;
 
 	dir + "angelpads.wav" => s.wav["a"];
 	dir + "alien-monolith-pad.wav" => s.wav["b"];
@@ -3061,7 +3061,7 @@ fun static void _Dirt_samples_pad ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ulgab ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ulgab/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ulgab/"  => string dir;
 
 	dir + "gab2.wav" => s.wav["a"];
 	dir + "gab1.wav" => s.wav["b"];
@@ -3072,7 +3072,7 @@ fun static void _Dirt_samples_ulgab ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_glasstap ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/glasstap/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/glasstap/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -3081,7 +3081,7 @@ fun static void _Dirt_samples_glasstap ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_gabba ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/gabba/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/gabba/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -3091,7 +3091,7 @@ fun static void _Dirt_samples_gabba ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_print ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/print/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/print/"  => string dir;
 
 	dir + "8.wav" => s.wav["a"];
 	dir + "9.wav" => s.wav["b"];
@@ -3108,7 +3108,7 @@ fun static void _Dirt_samples_print ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_blue ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/blue/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/blue/"  => string dir;
 
 	dir + "howdoesitfeel.wav" => s.wav["a"];
 	dir + "aya.wav" => s.wav["b"];
@@ -3116,7 +3116,7 @@ fun static void _Dirt_samples_blue ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bassdm ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bassdm/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bassdm/"  => string dir;
 
 	dir + "006_BT0AADA.WAV" => s.wav["a"];
 	dir + "017_BT7AAD0.WAV" => s.wav["b"];
@@ -3146,7 +3146,7 @@ fun static void _Dirt_samples_bassdm ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_clak ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/clak/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/clak/"  => string dir;
 
 	dir + "000_clak1.wav" => s.wav["a"];
 	dir + "001_clak2.wav" => s.wav["b"];
@@ -3154,7 +3154,7 @@ fun static void _Dirt_samples_clak ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_techno ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/techno/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/techno/"  => string dir;
 
 	dir + "005_6.wav" => s.wav["a"];
 	dir + "000_0.wav" => s.wav["b"];
@@ -3167,7 +3167,7 @@ fun static void _Dirt_samples_techno ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sid ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sid/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sid/"  => string dir;
 
 	dir + "007_hihat01.wav" => s.wav["a"];
 	dir + "001_bas.wav" => s.wav["b"];
@@ -3185,7 +3185,7 @@ fun static void _Dirt_samples_sid ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_circus ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/circus/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/circus/"  => string dir;
 
 	dir + "001_miss.wav" => s.wav["a"];
 	dir + "000_bounce.wav" => s.wav["b"];
@@ -3194,7 +3194,7 @@ fun static void _Dirt_samples_circus ( SEQ @ s) {
 }
 
 fun static void _20020506_02_glitch ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/20020506/02_glitch/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/20020506/02_glitch/"  => string dir;
 
 	dir + "HH.wav" => s.wav["a"];
 	dir + "FX.wav" => s.wav["b"];
@@ -3208,7 +3208,7 @@ fun static void _20020506_02_glitch ( SEQ @ s) {
 }
 
 fun static void _20020506_01_house ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/20020506/01_house/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/20020506/01_house/"  => string dir;
 
 	dir + "HH.wav" => s.wav["a"];
 	dir + "FX.wav" => s.wav["b"];
@@ -3222,7 +3222,7 @@ fun static void _20020506_01_house ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_if ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/if/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/if/"  => string dir;
 
 	dir + "gab2.wav" => s.wav["a"];
 	dir + "snarl1b.wav" => s.wav["b"];
@@ -3233,7 +3233,7 @@ fun static void _Dirt_samples_if ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_crow ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/crow/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/crow/"  => string dir;
 
 	dir + "000_crow.wav" => s.wav["a"];
 	dir + "002_crow3.wav" => s.wav["b"];
@@ -3243,7 +3243,7 @@ fun static void _Dirt_samples_crow ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_d ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/d/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/d/"  => string dir;
 
 	dir + "000_d1.wav" => s.wav["a"];
 	dir + "001_d2.wav" => s.wav["b"];
@@ -3253,7 +3253,7 @@ fun static void _Dirt_samples_d ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_voodoo ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/voodoo/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/voodoo/"  => string dir;
 
 	dir + "001_VoodooHihat.wav" => s.wav["a"];
 	dir + "003_VoodooSnare.wav" => s.wav["b"];
@@ -3264,7 +3264,7 @@ fun static void _Dirt_samples_voodoo ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sine ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sine/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sine/"  => string dir;
 
 	dir + "004_sine5.wav" => s.wav["a"];
 	dir + "003_sine4.wav" => s.wav["b"];
@@ -3276,14 +3276,14 @@ fun static void _Dirt_samples_sine ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breaks152louder ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks152louder/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks152louder/"  => string dir;
 
 	dir + "000_out.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_odx ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/odx/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/odx/"  => string dir;
 
 	dir + "012_DX_Cl_Hat.wav" => s.wav["a"];
 	dir + "007_DX_Med_Crash.wav" => s.wav["b"];
@@ -3304,7 +3304,7 @@ fun static void _Dirt_samples_odx ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_tech ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tech/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tech/"  => string dir;
 
 	dir + "tn1perc1.wav" => s.wav["a"];
 	dir + "tn1ride.wav" => s.wav["b"];
@@ -3323,7 +3323,7 @@ fun static void _Dirt_samples_tech ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_cosmicg ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/cosmicg/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/cosmicg/"  => string dir;
 
 	dir + "014_cg_m7.wav" => s.wav["a"];
 	dir + "012_cg_m5.wav" => s.wav["b"];
@@ -3344,7 +3344,7 @@ fun static void _Dirt_samples_cosmicg ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_trump ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/trump/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/trump/"  => string dir;
 
 	dir + "trumptightstabschord.wav" => s.wav["a"];
 	dir + "tightstabe.wav" => s.wav["b"];
@@ -3361,7 +3361,7 @@ fun static void _Dirt_samples_trump ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ades4 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ades4/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ades4/"  => string dir;
 
 	dir + "05.wav" => s.wav["a"];
 	dir + "03.wav" => s.wav["b"];
@@ -3373,7 +3373,7 @@ fun static void _Dirt_samples_ades4 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breaks125 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks125/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks125/"  => string dir;
 
 	dir + "016_bllstmp.wav" => s.wav["a"];
 	dir + "015_sdstckbr.wav" => s.wav["b"];
@@ -3381,7 +3381,7 @@ fun static void _Dirt_samples_breaks125 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_perc ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/perc/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/perc/"  => string dir;
 
 	dir + "002_perc2.wav" => s.wav["a"];
 	dir + "005_perc5.wav" => s.wav["b"];
@@ -3393,7 +3393,7 @@ fun static void _Dirt_samples_perc ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_cr ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/cr/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/cr/"  => string dir;
 
 	dir + "RIDED4.wav" => s.wav["a"];
 	dir + "RIDED6.wav" => s.wav["b"];
@@ -3405,7 +3405,7 @@ fun static void _Dirt_samples_cr ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_birds3 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/birds3/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/birds3/"  => string dir;
 
 	dir + "005_14.wav" => s.wav["a"];
 	dir + "010_19.wav" => s.wav["b"];
@@ -3430,7 +3430,7 @@ fun static void _Dirt_samples_birds3 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_db ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/db/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/db/"  => string dir;
 
 	dir + "dbs12hit3.wav" => s.wav["a"];
 	dir + "dbs12crash.wav" => s.wav["b"];
@@ -3449,7 +3449,7 @@ fun static void _Dirt_samples_db ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_gabbaloud ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/gabbaloud/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/gabbaloud/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -3459,7 +3459,7 @@ fun static void _Dirt_samples_gabbaloud ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_speedupdown ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/speedupdown/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/speedupdown/"  => string dir;
 
 	dir + "007_Sound27.wav" => s.wav["a"];
 	dir + "005_Sound25.wav" => s.wav["b"];
@@ -3474,7 +3474,7 @@ fun static void _Dirt_samples_speedupdown ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bass ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bass/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bass/"  => string dir;
 
 	dir + "000_bass1.wav" => s.wav["a"];
 	dir + "003_bass4.wav" => s.wav["b"];
@@ -3484,7 +3484,7 @@ fun static void _Dirt_samples_bass ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_koy ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/koy/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/koy/"  => string dir;
 
 	dir + "01_left.wav" => s.wav["a"];
 	dir + "02_right.wav" => s.wav["b"];
@@ -3492,7 +3492,7 @@ fun static void _Dirt_samples_koy ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ades2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ades2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ades2/"  => string dir;
 
 	dir + "005_06.wav" => s.wav["a"];
 	dir + "000_01.wav" => s.wav["b"];
@@ -3507,7 +3507,7 @@ fun static void _Dirt_samples_ades2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sundance ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sundance/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sundance/"  => string dir;
 
 	dir + "004_ping2.wav" => s.wav["a"];
 	dir + "002_hatch.wav" => s.wav["b"];
@@ -3519,7 +3519,7 @@ fun static void _Dirt_samples_sundance ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_cc ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/cc/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/cc/"  => string dir;
 
 	dir + "CSHD2.wav" => s.wav["a"];
 	dir + "CSHDA.wav" => s.wav["b"];
@@ -3531,7 +3531,7 @@ fun static void _Dirt_samples_cc ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_rave ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/rave/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/rave/"  => string dir;
 
 	dir + "prodigyloop.wav" => s.wav["a"];
 	dir + "stabah.wav" => s.wav["b"];
@@ -3545,7 +3545,7 @@ fun static void _Dirt_samples_rave ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_metal ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/metal/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/metal/"  => string dir;
 
 	dir + "006_6.wav" => s.wav["a"];
 	dir + "000_0.wav" => s.wav["b"];
@@ -3561,7 +3561,7 @@ fun static void _Dirt_samples_metal ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_incoming ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/incoming/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/incoming/"  => string dir;
 
 	dir + "000_Mattel  Snare.wav" => s.wav["a"];
 	dir + "001_Mattel  Tom VHigh.wav" => s.wav["b"];
@@ -3575,7 +3575,7 @@ fun static void _Dirt_samples_incoming ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_cp ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/cp/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/cp/"  => string dir;
 
 	dir + "HANDCLPA.wav" => s.wav["a"];
 	dir + "HANDCLP0.wav" => s.wav["b"];
@@ -3583,14 +3583,14 @@ fun static void _Dirt_samples_cp ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_erk ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/erk/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/erk/"  => string dir;
 
 	dir + "000_123.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_tablex ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tablex/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tablex/"  => string dir;
 
 	dir + "fuckable.wav" => s.wav["a"];
 	dir + "1.wav" => s.wav["b"];
@@ -3599,14 +3599,14 @@ fun static void _Dirt_samples_tablex ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_padlong ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/padlong/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/padlong/"  => string dir;
 
 	dir + "atmospheric-abduction.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_tabla ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tabla/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tabla/"  => string dir;
 
 	dir + "003_dead_hit1.wav" => s.wav["a"];
 	dir + "012_hi_hit3.wav" => s.wav["b"];
@@ -3638,14 +3638,14 @@ fun static void _Dirt_samples_tabla ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_fest ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/fest/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/fest/"  => string dir;
 
 	dir + "000_foo.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_dr ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dr/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dr/"  => string dir;
 
 	dir + "007_010.WAV" => s.wav["a"];
 	dir + "031_040.WAV" => s.wav["b"];
@@ -3693,7 +3693,7 @@ fun static void _Dirt_samples_dr ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bin ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bin/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bin/"  => string dir;
 
 	dir + "001_0.wav" => s.wav["a"];
 	dir + "000_bin1.wav" => s.wav["b"];
@@ -3701,14 +3701,14 @@ fun static void _Dirt_samples_bin ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_fuckable ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/fuckable/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/fuckable/"  => string dir;
 
 	dir + "000_fuckable.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_bass0 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bass0/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bass0/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -3717,7 +3717,7 @@ fun static void _Dirt_samples_bass0 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_blip ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/blip/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/blip/"  => string dir;
 
 	dir + "001_blipp02.wav" => s.wav["a"];
 	dir + "000_blipp01.wav" => s.wav["b"];
@@ -3725,7 +3725,7 @@ fun static void _Dirt_samples_blip ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ifdrums ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ifdrums/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ifdrums/"  => string dir;
 
 	dir + "ignoresd.wav" => s.wav["a"];
 	dir + "ignorehh.wav" => s.wav["b"];
@@ -3734,7 +3734,7 @@ fun static void _Dirt_samples_ifdrums ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_house ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/house/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/house/"  => string dir;
 
 	dir + "002_FX.wav" => s.wav["a"];
 	dir + "001_CB.wav" => s.wav["b"];
@@ -3748,7 +3748,7 @@ fun static void _Dirt_samples_house ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_tink ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tink/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tink/"  => string dir;
 
 	dir + "004_tink5.wav" => s.wav["a"];
 	dir + "000_tink1.wav" => s.wav["b"];
@@ -3759,7 +3759,7 @@ fun static void _Dirt_samples_tink ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_drumtraks ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/drumtraks/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/drumtraks/"  => string dir;
 
 	dir + "008_DT Rimshot.wav" => s.wav["a"];
 	dir + "007_DT Ride.wav" => s.wav["b"];
@@ -3778,7 +3778,7 @@ fun static void _Dirt_samples_drumtraks ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_jazz ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/jazz/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/jazz/"  => string dir;
 
 	dir + "002_FX.wav" => s.wav["a"];
 	dir + "001_CB.wav" => s.wav["b"];
@@ -3792,7 +3792,7 @@ fun static void _Dirt_samples_jazz ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dr55 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dr55/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dr55/"  => string dir;
 
 	dir + "003_DR55 snare.wav" => s.wav["a"];
 	dir + "002_DR55 rimshot.wav" => s.wav["b"];
@@ -3802,7 +3802,7 @@ fun static void _Dirt_samples_dr55 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dork2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dork2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dork2/"  => string dir;
 
 	dir + "2.wav" => s.wav["a"];
 	dir + "4.wav" => s.wav["b"];
@@ -3812,7 +3812,7 @@ fun static void _Dirt_samples_dork2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_pluck ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/pluck/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/pluck/"  => string dir;
 
 	dir + "BS D#3 PI.wav" => s.wav["a"];
 	dir + "BS G2 PI.wav" => s.wav["b"];
@@ -3835,7 +3835,7 @@ fun static void _Dirt_samples_pluck ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_jungle ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/jungle/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/jungle/"  => string dir;
 
 	dir + "jungle4snare1.wav" => s.wav["a"];
 	dir + "jungle4ride.wav" => s.wav["b"];
@@ -3854,7 +3854,7 @@ fun static void _Dirt_samples_jungle ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_gabbalouder ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/gabbalouder/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/gabbalouder/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -3864,7 +3864,7 @@ fun static void _Dirt_samples_gabbalouder ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_baa2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/baa2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/baa2/"  => string dir;
 
 	dir + "7.wav" => s.wav["a"];
 	dir + "3.wav" => s.wav["b"];
@@ -3877,7 +3877,7 @@ fun static void _Dirt_samples_baa2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_diphone ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/diphone/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/diphone/"  => string dir;
 
 	dir + "028_kd1_030.wav" => s.wav["a"];
 	dir + "032_kd1_034.wav" => s.wav["b"];
@@ -3921,7 +3921,7 @@ fun static void _Dirt_samples_diphone ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_co ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/co/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/co/"  => string dir;
 
 	dir + "CLOP4.wav" => s.wav["a"];
 	dir + "CLOP3.wav" => s.wav["b"];
@@ -3931,7 +3931,7 @@ fun static void _Dirt_samples_co ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_alex ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/alex/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/alex/"  => string dir;
 
 	dir + "001_drumx2.wav" => s.wav["a"];
 	dir + "000_drumx1.wav" => s.wav["b"];
@@ -3939,7 +3939,7 @@ fun static void _Dirt_samples_alex ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_chin ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/chin/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/chin/"  => string dir;
 
 	dir + "002_tik3.wav" => s.wav["a"];
 	dir + "000_tik1.wav" => s.wav["b"];
@@ -3949,7 +3949,7 @@ fun static void _Dirt_samples_chin ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_insect ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/insect/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/insect/"  => string dir;
 
 	dir + "001_robust_shieldback.wav" => s.wav["a"];
 	dir + "000_everglades_conehead.wav" => s.wav["b"];
@@ -3958,7 +3958,7 @@ fun static void _Dirt_samples_insect ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dorkbot ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dorkbot/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dorkbot/"  => string dir;
 
 	dir + "2.wav" => s.wav["a"];
 	dir + "1.wav" => s.wav["b"];
@@ -3966,7 +3966,7 @@ fun static void _Dirt_samples_dorkbot ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_mute ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mute/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mute/"  => string dir;
 
 	dir + "FH E3 SC.wav" => s.wav["a"];
 	dir + "FH C#5 SCF.wav" => s.wav["b"];
@@ -4000,7 +4000,7 @@ fun static void _Dirt_samples_mute ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_wind ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/wind/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/wind/"  => string dir;
 
 	dir + "006_wind6.wav" => s.wav["a"];
 	dir + "008_wind8.wav" => s.wav["b"];
@@ -4016,7 +4016,7 @@ fun static void _Dirt_samples_wind ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ades3 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ades3/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ades3/"  => string dir;
 
 	dir + "05.wav" => s.wav["a"];
 	dir + "03.wav" => s.wav["b"];
@@ -4029,7 +4029,7 @@ fun static void _Dirt_samples_ades3 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_feelfx ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/feelfx/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/feelfx/"  => string dir;
 
 	dir + "blnk.wav" => s.wav["a"];
 	dir + "surfactant_15_xilo.wav" => s.wav["b"];
@@ -4043,7 +4043,7 @@ fun static void _Dirt_samples_feelfx ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_e ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/e/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/e/"  => string dir;
 
 	dir + "005_e6.wav" => s.wav["a"];
 	dir + "007_e8.wav" => s.wav["b"];
@@ -4057,7 +4057,7 @@ fun static void _Dirt_samples_e ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ab ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ab/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ab/"  => string dir;
 
 	dir + "007_ab2perc1.wav" => s.wav["a"];
 	dir + "006_ab2openhh.wav" => s.wav["b"];
@@ -4075,7 +4075,7 @@ fun static void _Dirt_samples_ab ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_diphone2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/diphone2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/diphone2/"  => string dir;
 
 	dir + "001_kd1_400.wav" => s.wav["a"];
 	dir + "004_kd1_403.wav" => s.wav["b"];
@@ -4093,7 +4093,7 @@ fun static void _Dirt_samples_diphone2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_subroc3d ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/subroc3d/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/subroc3d/"  => string dir;
 
 	dir + "010_12.wav" => s.wav["a"];
 	dir + "005_06.wav" => s.wav["b"];
@@ -4110,14 +4110,14 @@ fun static void _Dirt_samples_subroc3d ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_909 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/909/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/909/"  => string dir;
 
 	dir + "BT0A0A7.WAV" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_msg ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/msg/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/msg/"  => string dir;
 
 	dir + "004_msg4.wav" => s.wav["a"];
 	dir + "007_msg7.wav" => s.wav["b"];
@@ -4132,7 +4132,7 @@ fun static void _Dirt_samples_msg ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_stomp ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/stomp/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/stomp/"  => string dir;
 
 	dir + "006_6.wav" => s.wav["a"];
 	dir + "004_3.wav" => s.wav["b"];
@@ -4148,7 +4148,7 @@ fun static void _Dirt_samples_stomp ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hand ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hand/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hand/"  => string dir;
 
 	dir + "hand1-mono.wav" => s.wav["a"];
 	dir + "hand12-mono.wav" => s.wav["b"];
@@ -4171,7 +4171,7 @@ fun static void _Dirt_samples_hand ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_glitch ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/glitch/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/glitch/"  => string dir;
 
 	dir + "002_FX.wav" => s.wav["a"];
 	dir + "001_CB.wav" => s.wav["b"];
@@ -4185,7 +4185,7 @@ fun static void _Dirt_samples_glitch ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_procshort ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/procshort/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/procshort/"  => string dir;
 
 	dir + "005_7.wav" => s.wav["a"];
 	dir + "000_1.wav" => s.wav["b"];
@@ -4199,7 +4199,7 @@ fun static void _Dirt_samples_procshort ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_alphabet ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/alphabet/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/alphabet/"  => string dir;
 
 	dir + "b.wav" => s.wav["a"];
 	dir + "r.wav" => s.wav["b"];
@@ -4231,7 +4231,7 @@ fun static void _Dirt_samples_alphabet ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bottle ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bottle/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bottle/"  => string dir;
 
 	dir + "008_5.wav" => s.wav["a"];
 	dir + "000_1.wav" => s.wav["b"];
@@ -4250,7 +4250,7 @@ fun static void _Dirt_samples_bottle ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_mash2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mash2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mash2/"  => string dir;
 
 	dir + "output.wav" => s.wav["a"];
 	dir + "output2.wav" => s.wav["b"];
@@ -4260,7 +4260,7 @@ fun static void _Dirt_samples_mash2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hh27 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hh27/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hh27/"  => string dir;
 
 	dir + "000_hh27closedhh.wav" => s.wav["a"];
 	dir + "010_hh27ride.wav" => s.wav["b"];
@@ -4279,7 +4279,7 @@ fun static void _Dirt_samples_hh27 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_flick ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/flick/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/flick/"  => string dir;
 
 	dir + "000_square-p.wav" => s.wav["a"];
 	dir + "007_2.wav" => s.wav["b"];
@@ -4302,7 +4302,7 @@ fun static void _Dirt_samples_flick ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ul ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ul/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ul/"  => string dir;
 
 	dir + "ulhh.wav" => s.wav["a"];
 	dir + "ulsnare-reverb.wav" => s.wav["b"];
@@ -4318,7 +4318,7 @@ fun static void _Dirt_samples_ul ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_auto ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/auto/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/auto/"  => string dir;
 
 	dir + "sd-ambient.wav" => s.wav["a"];
 	dir + "kick.wav" => s.wav["b"];
@@ -4335,7 +4335,7 @@ fun static void _Dirt_samples_auto ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bubble ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bubble/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bubble/"  => string dir;
 
 	dir + "001_bub1.wav" => s.wav["a"];
 	dir + "004_bub4.wav" => s.wav["b"];
@@ -4349,7 +4349,7 @@ fun static void _Dirt_samples_bubble ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_newnotes ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/newnotes/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/newnotes/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "007_2.wav" => s.wav["b"];
@@ -4370,14 +4370,14 @@ fun static void _Dirt_samples_newnotes ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breaks165 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks165/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks165/"  => string dir;
 
 	dir + "000_RAWCLN.WAV" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_hc ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hc/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hc/"  => string dir;
 
 	dir + "HHCD6.wav" => s.wav["a"];
 	dir + "HHCD4.wav" => s.wav["b"];
@@ -4389,14 +4389,14 @@ fun static void _Dirt_samples_hc ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_made2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/made2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/made2/"  => string dir;
 
 	dir + "output.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_ho ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ho/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ho/"  => string dir;
 
 	dir + "HHOD4.wav" => s.wav["a"];
 	dir + "HHOD2.wav" => s.wav["b"];
@@ -4408,21 +4408,21 @@ fun static void _Dirt_samples_ho ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_xmas ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/xmas/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/xmas/"  => string dir;
 
 	dir + "170535__cognito-perceptu__merry-christmas.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_fire ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/fire/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/fire/"  => string dir;
 
 	dir + "fire.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_amencutup ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/amencutup/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/amencutup/"  => string dir;
 
 	dir + "020_AMENCUT_021.wav" => s.wav["a"];
 	dir + "018_AMENCUT_019.wav" => s.wav["b"];
@@ -4460,7 +4460,7 @@ fun static void _Dirt_samples_amencutup ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sf ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sf/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sf/"  => string dir;
 
 	dir + "015_7.wav" => s.wav["a"];
 	dir + "005_13.wav" => s.wav["b"];
@@ -4484,7 +4484,7 @@ fun static void _Dirt_samples_sf ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hit ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hit/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hit/"  => string dir;
 
 	dir + "laser-powered-sword.wav" => s.wav["a"];
 	dir + "zap-to-crack.wav" => s.wav["b"];
@@ -4496,7 +4496,7 @@ fun static void _Dirt_samples_hit ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_yeah ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/yeah/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/yeah/"  => string dir;
 
 	dir + "027_Sound6.wav" => s.wav["a"];
 	dir + "021_Sound33.wav" => s.wav["b"];
@@ -4533,7 +4533,7 @@ fun static void _Dirt_samples_yeah ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_world ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/world/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/world/"  => string dir;
 
 	dir + "gabbakick.wav" => s.wav["a"];
 	dir + "bd.wav" => s.wav["b"];
@@ -4542,7 +4542,7 @@ fun static void _Dirt_samples_world ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_stab ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/stab/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/stab/"  => string dir;
 
 	dir + "012_stab20.wav" => s.wav["a"];
 	dir + "002_stab11.wav" => s.wav["b"];
@@ -4571,14 +4571,14 @@ fun static void _Dirt_samples_stab ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_off ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/off/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/off/"  => string dir;
 
 	dir + "000_01.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_bev ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bev/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bev/"  => string dir;
 
 	dir + "01-stereo.wav" => s.wav["a"];
 	dir + "00-mono.wav" => s.wav["b"];
@@ -4586,7 +4586,7 @@ fun static void _Dirt_samples_bev ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_glitch2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/glitch2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/glitch2/"  => string dir;
 
 	dir + "002_FX.wav" => s.wav["a"];
 	dir + "001_CB.wav" => s.wav["b"];
@@ -4600,7 +4600,7 @@ fun static void _Dirt_samples_glitch2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_proc ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/proc/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/proc/"  => string dir;
 
 	dir + "000_2.wav" => s.wav["a"];
 	dir + "001_3.wav" => s.wav["b"];
@@ -4608,7 +4608,7 @@ fun static void _Dirt_samples_proc ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_mt ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mt/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mt/"  => string dir;
 
 	dir + "MT7D3.wav" => s.wav["a"];
 	dir + "MT0D7.wav" => s.wav["b"];
@@ -4630,7 +4630,7 @@ fun static void _Dirt_samples_mt ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_short ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/short/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/short/"  => string dir;
 
 	dir + "sampleoftheday-gtt-snare-drum-012.wav" => s.wav["a"];
 	dir + "sampleoftheday-gtt-snare-drum-021.wav" => s.wav["b"];
@@ -4641,7 +4641,7 @@ fun static void _Dirt_samples_short ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_noise2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/noise2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/noise2/"  => string dir;
 
 	dir + "006_6.wav" => s.wav["a"];
 	dir + "000_0.wav" => s.wav["b"];
@@ -4655,7 +4655,7 @@ fun static void _Dirt_samples_noise2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ravemono ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ravemono/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ravemono/"  => string dir;
 
 	dir + "prodigyloop.wav" => s.wav["a"];
 	dir + "Babylon.wav" => s.wav["b"];
@@ -4663,7 +4663,7 @@ fun static void _Dirt_samples_ravemono ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sn ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sn/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sn/"  => string dir;
 
 	dir + "STAT7S7.wav" => s.wav["a"];
 	dir + "ST0T0SA.wav" => s.wav["b"];
@@ -4721,7 +4721,7 @@ fun static void _Dirt_samples_sn ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_h ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/h/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/h/"  => string dir;
 
 	dir + "1_da1.wav" => s.wav["a"];
 	dir + "0_da0-50%_1000_0_R.wav" => s.wav["b"];
@@ -4734,14 +4734,14 @@ fun static void _Dirt_samples_h ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_f ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/f/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/f/"  => string dir;
 
 	dir + "000_f.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_lt ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/lt/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/lt/"  => string dir;
 
 	dir + "LT7D3.wav" => s.wav["a"];
 	dir + "LT3D7.wav" => s.wav["b"];
@@ -4763,7 +4763,7 @@ fun static void _Dirt_samples_lt ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_can ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/can/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/can/"  => string dir;
 
 	dir + "005_14.wav" => s.wav["a"];
 	dir + "007_3.wav" => s.wav["b"];
@@ -4783,28 +4783,28 @@ fun static void _Dirt_samples_can ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breaks152loud ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks152loud/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks152loud/"  => string dir;
 
 	dir + "000_out.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_breaks152 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks152/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks152/"  => string dir;
 
 	dir + "000_AMEN.WAV" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_wobble ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/wobble/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/wobble/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_mash ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/mash/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/mash/"  => string dir;
 
 	dir + "1.wav" => s.wav["a"];
 	dir + "0.wav" => s.wav["b"];
@@ -4812,7 +4812,7 @@ fun static void _Dirt_samples_mash ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_tok ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tok/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tok/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -4822,7 +4822,7 @@ fun static void _Dirt_samples_tok ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_oc ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/oc/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/oc/"  => string dir;
 
 	dir + "OPCL3.wav" => s.wav["a"];
 	dir + "OPCL4.wav" => s.wav["b"];
@@ -4832,7 +4832,7 @@ fun static void _Dirt_samples_oc ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_miniyeah ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/miniyeah/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/miniyeah/"  => string dir;
 
 	dir + "002_Sound23.wav" => s.wav["a"];
 	dir + "003_Sound36.wav" => s.wav["b"];
@@ -4842,7 +4842,7 @@ fun static void _Dirt_samples_miniyeah ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_monsterb ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/monsterb/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/monsterb/"  => string dir;
 
 	dir + "003_warping.wav" => s.wav["a"];
 	dir + "004_wolfman.wav" => s.wav["b"];
@@ -4854,7 +4854,7 @@ fun static void _Dirt_samples_monsterb ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_future ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/future/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/future/"  => string dir;
 
 	dir + "010_MKDRCK06.wav" => s.wav["a"];
 	dir + "002_Bd1_w.wav" => s.wav["b"];
@@ -4877,14 +4877,14 @@ fun static void _Dirt_samples_future ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_noise ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/noise/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/noise/"  => string dir;
 
 	dir + "000_noise.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_sugar ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sugar/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sugar/"  => string dir;
 
 	dir + "000_bark.wav" => s.wav["a"];
 	dir + "001_crab.wav" => s.wav["b"];
@@ -4892,7 +4892,7 @@ fun static void _Dirt_samples_sugar ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_casio ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/casio/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/casio/"  => string dir;
 
 	dir + "low.wav" => s.wav["a"];
 	dir + "noise.wav" => s.wav["b"];
@@ -4901,7 +4901,7 @@ fun static void _Dirt_samples_casio ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sax ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sax/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sax/"  => string dir;
 
 	dir + "017_notes121fsharp2.wav" => s.wav["a"];
 	dir + "011_notes121e2.wav" => s.wav["b"];
@@ -4929,7 +4929,7 @@ fun static void _Dirt_samples_sax ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_hardcore ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/hardcore/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/hardcore/"  => string dir;
 
 	dir + "007_hcperc1.wav" => s.wav["a"];
 	dir + "008_hcperc2.wav" => s.wav["b"];
@@ -4947,7 +4947,7 @@ fun static void _Dirt_samples_hardcore ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_dr2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/dr2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/dr2/"  => string dir;
 
 	dir + "004_DR110OHT.WAV" => s.wav["a"];
 	dir + "002_DR110CYM.WAV" => s.wav["b"];
@@ -4959,7 +4959,7 @@ fun static void _Dirt_samples_dr2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_click ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/click/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/click/"  => string dir;
 
 	dir + "003_click3.wav" => s.wav["a"];
 	dir + "000_click0.wav" => s.wav["b"];
@@ -4969,7 +4969,7 @@ fun static void _Dirt_samples_click ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_speech ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/speech/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/speech/"  => string dir;
 
 	dir + "005_Sound8.wav" => s.wav["a"];
 	dir + "003_Sound6.wav" => s.wav["b"];
@@ -4982,7 +4982,7 @@ fun static void _Dirt_samples_speech ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bleep ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bleep/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bleep/"  => string dir;
 
 	dir + "vidgame-bleep2.wav" => s.wav["a"];
 	dir + "cheesy-synth-wobble-up.wav" => s.wav["b"];
@@ -5012,7 +5012,7 @@ fun static void _Dirt_samples_bleep ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_invaders ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/invaders/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/invaders/"  => string dir;
 
 	dir + "005_14.wav" => s.wav["a"];
 	dir + "015_7.wav" => s.wav["b"];
@@ -5036,7 +5036,7 @@ fun static void _Dirt_samples_invaders ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_seawolf ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/seawolf/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/seawolf/"  => string dir;
 
 	dir + "001_shiphit.wav" => s.wav["a"];
 	dir + "000_minehit.wav" => s.wav["b"];
@@ -5045,7 +5045,7 @@ fun static void _Dirt_samples_seawolf ( SEQ @ s) {
 }
 
 fun static void _808_MC ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/MC/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/MC/"  => string dir;
 
 	dir + "MC00.WAV" => s.wav["a"];
 	dir + "MC10.WAV" => s.wav["b"];
@@ -5056,14 +5056,14 @@ fun static void _808_MC ( SEQ @ s) {
 }
 
 fun static void _808_CB ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/CB/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/CB/"  => string dir;
 
 	dir + "CB.WAV" => s.wav["a"];
 
 }
 
 fun static void _808_LC ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/LC/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/LC/"  => string dir;
 
 	dir + "LC00.WAV" => s.wav["a"];
 	dir + "LC75.WAV" => s.wav["b"];
@@ -5074,7 +5074,7 @@ fun static void _808_LC ( SEQ @ s) {
 }
 
 fun static void _808_HC ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/HC/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/HC/"  => string dir;
 
 	dir + "HC25.WAV" => s.wav["a"];
 	dir + "HC50.WAV" => s.wav["b"];
@@ -5085,14 +5085,14 @@ fun static void _808_HC ( SEQ @ s) {
 }
 
 fun static void _808_RS ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/RS/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/RS/"  => string dir;
 
 	dir + "RS.WAV" => s.wav["a"];
 
 }
 
 fun static void _808_BD ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/BD/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/BD/"  => string dir;
 
 	dir + "BD7525.WAV" => s.wav["a"];
 	dir + "BD0000.WAV" => s.wav["b"];
@@ -5123,7 +5123,7 @@ fun static void _808_BD ( SEQ @ s) {
 }
 
 fun static void _808_CY ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/CY/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/CY/"  => string dir;
 
 	dir + "CY2550.WAV" => s.wav["a"];
 	dir + "CY1025.WAV" => s.wav["b"];
@@ -5154,7 +5154,7 @@ fun static void _808_CY ( SEQ @ s) {
 }
 
 fun static void _808_SD ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/SD/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/SD/"  => string dir;
 
 	dir + "SD1010.WAV" => s.wav["a"];
 	dir + "SD1075.WAV" => s.wav["b"];
@@ -5185,7 +5185,7 @@ fun static void _808_SD ( SEQ @ s) {
 }
 
 fun static void _808_MT ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/MT/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/MT/"  => string dir;
 
 	dir + "MT00.WAV" => s.wav["a"];
 	dir + "MT50.WAV" => s.wav["b"];
@@ -5196,7 +5196,7 @@ fun static void _808_MT ( SEQ @ s) {
 }
 
 fun static void _808_LT ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/LT/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/LT/"  => string dir;
 
 	dir + "LT00.WAV" => s.wav["a"];
 	dir + "LT10.WAV" => s.wav["b"];
@@ -5207,21 +5207,21 @@ fun static void _808_LT ( SEQ @ s) {
 }
 
 fun static void _808_CH ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/CH/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/CH/"  => string dir;
 
 	dir + "CH.WAV" => s.wav["a"];
 
 }
 
 fun static void _808_MA ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/MA/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/MA/"  => string dir;
 
 	dir + "MA.WAV" => s.wav["a"];
 
 }
 
 fun static void _808_OH ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/OH/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/OH/"  => string dir;
 
 	dir + "OH00.WAV" => s.wav["a"];
 	dir + "OH50.WAV" => s.wav["b"];
@@ -5232,14 +5232,14 @@ fun static void _808_OH ( SEQ @ s) {
 }
 
 fun static void _808_CP ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/CP/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/CP/"  => string dir;
 
 	dir + "CP.WAV" => s.wav["a"];
 
 }
 
 fun static void _808_HT ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/HT/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/HT/"  => string dir;
 
 	dir + "HT25.WAV" => s.wav["a"];
 	dir + "HT00.WAV" => s.wav["b"];
@@ -5250,14 +5250,14 @@ fun static void _808_HT ( SEQ @ s) {
 }
 
 fun static void _808_CL ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/808/CL/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/808/CL/"  => string dir;
 
 	dir + "CL.WAV" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_east ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/east/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/east/"  => string dir;
 
 	dir + "taiko_3.wav" => s.wav["a"];
 	dir + "shime_hi.wav" => s.wav["b"];
@@ -5272,7 +5272,7 @@ fun static void _Dirt_samples_east ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_lighter ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/lighter/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/lighter/"  => string dir;
 
 	dir + "006_6.wav" => s.wav["a"];
 	dir + "013_13.wav" => s.wav["b"];
@@ -5311,14 +5311,14 @@ fun static void _Dirt_samples_lighter ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_pebbles ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/pebbles/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/pebbles/"  => string dir;
 
 	dir + "90788__kmoon__pebbles-scrape-drag-foot.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_electro1 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/electro1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/electro1/"  => string dir;
 
 	dir + "004_et1hit3.wav" => s.wav["a"];
 	dir + "005_et1kick1.wav" => s.wav["b"];
@@ -5337,14 +5337,14 @@ fun static void _Dirt_samples_electro1 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breaks157 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breaks157/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breaks157/"  => string dir;
 
 	dir + "000_PLEAD.WAV" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_made ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/made/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/made/"  => string dir;
 
 	dir + "3.wav" => s.wav["a"];
 	dir + "2.wav" => s.wav["b"];
@@ -5357,7 +5357,7 @@ fun static void _Dirt_samples_made ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_toys ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/toys/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/toys/"  => string dir;
 
 	dir + "Numbers-Notes.wav" => s.wav["a"];
 	dir + "Colors.wav" => s.wav["b"];
@@ -5376,7 +5376,7 @@ fun static void _Dirt_samples_toys ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_numbers ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/numbers/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/numbers/"  => string dir;
 
 	dir + "8.wav" => s.wav["a"];
 	dir + "7.wav" => s.wav["b"];
@@ -5391,7 +5391,7 @@ fun static void _Dirt_samples_numbers ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_jungbass ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/jungbass/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/jungbass/"  => string dir;
 
 	dir + "synthy_round.wav" => s.wav["a"];
 	dir + "junglesine3.wav" => s.wav["b"];
@@ -5417,7 +5417,7 @@ fun static void _Dirt_samples_jungbass ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bass3 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bass3/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bass3/"  => string dir;
 
 	dir + "85057__zgump__reverse-bass-02.wav" => s.wav["a"];
 	dir + "83248__zgump__bass-0204.wav" => s.wav["b"];
@@ -5434,7 +5434,7 @@ fun static void _Dirt_samples_bass3 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_rm ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/rm/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/rm/"  => string dir;
 
 	dir + "RIM0.wav" => s.wav["a"];
 	dir + "RIMA.wav" => s.wav["b"];
@@ -5442,7 +5442,7 @@ fun static void _Dirt_samples_rm ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_less ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/less/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/less/"  => string dir;
 
 	dir + "hhxx.wav" => s.wav["a"];
 	dir + "snare.wav" => s.wav["b"];
@@ -5452,7 +5452,7 @@ fun static void _Dirt_samples_less ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_ade ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ade/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ade/"  => string dir;
 
 	dir + "005_fanbass.wav" => s.wav["a"];
 	dir + "001_011112-melody.wav" => s.wav["b"];
@@ -5468,7 +5468,7 @@ fun static void _Dirt_samples_ade ( SEQ @ s) {
 }
 
 fun static void _ade_psr ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/ade/psr/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/ade/psr/"  => string dir;
 
 	dir + "05.wav" => s.wav["a"];
 	dir + "09.wav" => s.wav["b"];
@@ -5504,7 +5504,7 @@ fun static void _ade_psr ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_notes ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/notes/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/notes/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "007_2.wav" => s.wav["b"];
@@ -5525,7 +5525,7 @@ fun static void _Dirt_samples_notes ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bassfoo ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bassfoo/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bassfoo/"  => string dir;
 
 	dir + "000_0.wav" => s.wav["a"];
 	dir + "002_2.wav" => s.wav["b"];
@@ -5534,14 +5534,14 @@ fun static void _Dirt_samples_bassfoo ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_chink ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/chink/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/chink/"  => string dir;
 
 	dir + "000_chink.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_feel ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/feel/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/feel/"  => string dir;
 
 	dir + "Sd 139.wav" => s.wav["a"];
 	dir + "HH 003b.wav" => s.wav["b"];
@@ -5554,7 +5554,7 @@ fun static void _Dirt_samples_feel ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_psr ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/psr/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/psr/"  => string dir;
 
 	dir + "012_13.wav" => s.wav["a"];
 	dir + "005_06.wav" => s.wav["b"];
@@ -5590,7 +5590,7 @@ fun static void _Dirt_samples_psr ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_haw ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/haw/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/haw/"  => string dir;
 
 	dir + "hawaiian-kick.wav" => s.wav["a"];
 	dir + "hawaiian-short1.wav" => s.wav["b"];
@@ -5602,7 +5602,7 @@ fun static void _Dirt_samples_haw ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bass1 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bass1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bass1/"  => string dir;
 
 	dir + "18099__daven__24-sb-bass-hit-f.wav" => s.wav["a"];
 	dir + "18086__daven__11-sb-bass-hit-c.wav" => s.wav["b"];
@@ -5638,7 +5638,7 @@ fun static void _Dirt_samples_bass1 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_printshort ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/printshort/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/printshort/"  => string dir;
 
 	dir + "8.wav" => s.wav["a"];
 	dir + "9.wav" => s.wav["b"];
@@ -5655,7 +5655,7 @@ fun static void _Dirt_samples_printshort ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_tabla2 ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tabla2/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tabla2/"  => string dir;
 
 	dir + "23672_loofa_A_028.wav" => s.wav["a"];
 	dir + "23659_loofa_A_015.wav" => s.wav["b"];
@@ -5707,14 +5707,14 @@ fun static void _Dirt_samples_tabla2 ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_breath ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/breath/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/breath/"  => string dir;
 
 	dir + "000_breath.wav" => s.wav["a"];
 
 }
 
 fun static void _Dirt_samples_battles ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/battles/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/battles/"  => string dir;
 
 	dir + "001_explo2.wav" => s.wav["a"];
 	dir + "000_explo1.wav" => s.wav["b"];
@@ -5722,7 +5722,7 @@ fun static void _Dirt_samples_battles ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_tacscan ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/tacscan/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tacscan/"  => string dir;
 
 	dir + "016_sexpl.wav" => s.wav["a"];
 	dir + "011_flight5.wav" => s.wav["b"];
@@ -5750,7 +5750,7 @@ fun static void _Dirt_samples_tacscan ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_drum ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/drum/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/drum/"  => string dir;
 
 	dir + "001_drum2.wav" => s.wav["a"];
 	dir + "005_drum6.wav" => s.wav["b"];
@@ -5762,7 +5762,7 @@ fun static void _Dirt_samples_drum ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_bd ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/bd/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/bd/"  => string dir;
 
 	dir + "BT0A0D3.wav" => s.wav["a"];
 	dir + "BT0AAD0.wav" => s.wav["b"];
@@ -5792,21 +5792,21 @@ fun static void _Dirt_samples_bd ( SEQ @ s) {
 }
 
 fun static void _Dirt_samples_sheffield ( SEQ @ s) {
-	"../_SAMPLES/Dirt_samples/sheffield/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/sheffield/"  => string dir;
 
 	dir + "jakeinsects.wav" => s.wav["a"];
 
 }
 
 fun static void __SAMPLES_happy_birthday ( SEQ @ s) {
-	"../_SAMPLES/happy_birthday/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/happy_birthday/"  => string dir;
 
 	dir + "japan.wav" => s.wav["a"];
 
 }
 
 fun static void __SAMPLES_REGGAE_SET_1 ( SEQ @ s) {
-	"../_SAMPLES/REGGAE_SET_1/"  => string dir;
+	ROOTPATH.str.my_string + "_SAMPLES/REGGAE_SET_1/"  => string dir;
 
 	dir + "Hi-Hat_Closed3_Reaggae1.wav" => s.wav["a"];
 	dir + "Bass_Drum2_Reaggae1.wav" => s.wav["b"];
