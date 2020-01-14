@@ -1,1 +1,0 @@
-../parallel_test_main/config.ck
