@@ -1,3 +1,7 @@
+Machine.add("rootpath.ck");
+me.yield();
+
+// CHANGE ALSO ROOT PATH HERE
 Machine.add("../include/include.ck");
 me.yield();
 
