@@ -24,6 +24,8 @@ fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 2 /* Q */, 1* 100 /*
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .9 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
+STLHPFC lhpfc;
+lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
