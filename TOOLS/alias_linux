@@ -48,5 +48,7 @@ ctopj() {
 }
 
 
-
+# POST Commands
 eval "$BASH_POST_RC"
+# once command run, empty variable to do not replay command
+BASH_POST_RC=''
