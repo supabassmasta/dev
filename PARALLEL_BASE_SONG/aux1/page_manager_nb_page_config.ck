@@ -1,2 +1,1 @@
-32 =>  data.page_manager_page_nb;
-1::samp =>  now;
+../page_manager_nb_page_config.ck

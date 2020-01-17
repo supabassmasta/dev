@@ -41,10 +41,10 @@ alias killjack='killall -9 jackdbus; killall -9 qjackctl'
 ctopj_solo() { chuckj song_top.ck --bufsize4096 --srate:44100; }
 
 ctopj() {
+  #just in case there is songs remanining
+  killall chuckj;
   if [ -f "parallel_launch.sh" ]; 
     then 
-      #just in case there is songs remanining
-      killall chuckj;
 
       ./parallel_launch.sh; 
     else 

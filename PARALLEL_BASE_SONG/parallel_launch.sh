@@ -1,7 +1,9 @@
 #!/bin/bash
 
-BASH_POST_RC='cd aux1; ctopj;' gnome-terminal
-BASH_POST_RC='cd aux2; ctopj;' gnome-terminal
-BASH_POST_RC='cd aux3; ctopj;' gnome-terminal
+trap "killall chuckj" EXIT
 
-chuckj song_top.ck --bufsize4096 --srate:44100
+BASH_POST_RC='cd aux1; ctopj_solo;' gnome-terminal
+BASH_POST_RC='cd aux2; ctopj_solo;' gnome-terminal
+BASH_POST_RC='cd aux3; ctopj_solo;' gnome-terminal
+
+chuckj song_top.ck --bufsize4096 --srate:44100;
