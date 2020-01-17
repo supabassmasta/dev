@@ -42,10 +42,16 @@ ctopj_solo() { chuckj song_top.ck --bufsize4096 --srate:44100; }
 
 ctopj() {
   if [ -f "parallel_launch.sh" ]; 
-    then ./parallel_launch.sh; 
-    else ctopj_solo;
+    then 
+      #just in case there is songs remanining
+      killall chuckj;
+
+      ./parallel_launch.sh; 
+    else 
+      ctopj_solo;
     fi 
 }
+
 
 
 # POST Commands
