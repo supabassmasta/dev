@@ -20,10 +20,10 @@ t.go();   t $ ST @=> ST @ last;
 
 STFLANGER flang;
 flang.connect(last $ ST); flang $ ST @=>  last; 
-flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  9::ms /* dur base */, 3::ms /* dur range */, 1::second / ( 32 * data.tick ) /* freq */); 
+flang.add_line(2 /* 0 : left, 1: right 2: both */, .6 /* delay line gain */,  9::ms /* dur base */, 3::ms /* dur range */, 1::second / ( 32 * data.tick ) /* freq */); 
 
 STSYNCLPF stsynclpf;
-stsynclpf.freq(100 /* Base */, 26 * 100 /* Variable */, 1. /* Q */);
+stsynclpf.freq(100 /* Base */, 13 * 100 /* Variable */, 1. /* Q */);
 stsynclpf.adsr_set(1.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
 stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
