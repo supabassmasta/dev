@@ -1,67 +1,27 @@
-class synt0 extends SYNT{
+SEQ s;
+SET_WAV.TRIBAL1(s);
 
-8 => int synt_nb; 0 => int i;
-Gain detune[synt_nb];
-TriOsc s[synt_nb];
-Gain final => outlet; .3 => final.gain;
+//data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s); // "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+"*3 
+u_x u_*2z_:2
+*2uu:2_x uy*2zB:2
+u_u x_*2A_:2
+*2BuBu:2x _y*2zB:2
 
-inlet => detune[i] => s[i] => final;    1. => detune[i].gain;     .3 => s[i].width;  .6 => s[i].gain; i++;  
-inlet => detune[i] => s[i] => final;    1.001 => detune[i].gain;  .3 => s[i].width;  .3 => s[i].gain; i++;  
-inlet => detune[i] => s[i] => final;    1.002 => detune[i].gain;  .3 => s[i].width;  .3 => s[i].gain; i++;  
+" => s.seq;
+.7 => s.gain; // s.gain("s", .2); // for single wav 
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
+// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+s.go();     s $ ST @=> ST @ last; 
 
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
-} 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 2 / 4 , .7);  ech $ ST @=>  last; 
 
-TONE t;
-t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
-t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
-t.reg(synt0 s3);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
-t.dor(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-//1|5|81|5|8 
-//}c
-//1|5|8_ 
-" :2
-1|81|8 
-__
-1|8_ 
-__
-
-
-
- "=> t.seq;
-4.7 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
-6 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(800::ms, 600::ms, .7, 2000::ms);
-t.adsr[0].setCurves(1.2, 0.8, 0.9); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
-
-STWPDiodeLadder stdl;
-stdl.connect(last $ ST , 10 * 100 /* cutoff */  , 1. /* resonance */ , true /* nonlinear */, true /* nlp_type */  );       stdl $ ST @=>  last; 
-
-STTREMOLO sttrem;
-.1 => sttrem.mod.gain;  5 => sttrem.mod.freq;
-sttrem.pa.set(700::ms , 0::ms , 1., 1700::ms);
-sttrem.connect(last $ ST, t.note_info_tx_o);  sttrem  $ ST @=>  last;  
-
-//STECHO ech;
-//ech.connect(last $ ST , data.tick * 2 / 4 , .7);  ech $ ST @=>  last; 
-
-//STFILTERMOD fmod;
-//fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 1 /* Q */, 400 /* f_base */ , 200  /* f_var */, 1::second / (7 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
-
-STGVERB stgverb;
-stgverb.connect(last $ ST, .06 /* mix */, 8 * 10. /* room size */, 8::second /* rev time */, 0.1 /* early */ , 0.3 /* tail */ ); stgverb $ ST @=>  last; 
-
-
-
-
+STREV1 rev;
+rev.connect(last $ ST, .10 /* mix */);     rev  $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
 }
  
-
-
