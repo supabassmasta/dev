@@ -506,7 +506,7 @@ ab STREV2K STREV2 rev; // DUCKED
 
 
 ab STAUTOPANK STAUTOPAN autopan;
-\<CR>autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last;
+\<CR>autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last;
 
 ab POLYK lpk25 l;
 \<CR>POLY synta; 
