@@ -392,10 +392,14 @@ class page_manager {
   }
 
   fun void kill_page(int p){
+    int no_light;
+
+    if (p != current_page) -1 => no_light;
+    else 1 => no_light;
     if ( p < nb_p ){
       for (0 => int i; i < 72; i++) {
         if(s[p][i].pad_on) {
-          s[p][i].set(125); // Off only
+          s[p][i].set(no_light * 125); // Off only
         }
       }
     }
@@ -474,14 +478,14 @@ class launchpad_virtual_control extends CONTROL {
 
       if ( sid < 9 ){
         // upside control
-        s2 [0][sid - 1].set(cmd); // on only
+        s2 [0][sid - 1].set(cmd); 
           
       }
       else {
         if (p != pm.current_page) -1 => no_light;
         else 1 => no_light;
           
-        s[p][idx].set(no_light * cmd); // on only   
+        s[p][idx].set(no_light * cmd); 
       }
 
 
