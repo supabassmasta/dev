@@ -1,6 +1,6 @@
 SYNC sy;
-sy.sync(4 * data.tick);
-//sy.sync(4 * data.tick , -.0 *data.tick /* offset */); 
+//sy.sync(8 * data.tick);
+sy.sync(8 * data.tick , -4.0 *data.tick /* offset */); 
 LAUNCHPAD_VIRTUAL.on.set(431);
 8 * data.tick => now;
 LAUNCHPAD_VIRTUAL.off.set(431);
