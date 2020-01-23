@@ -391,6 +391,20 @@ class page_manager {
     }
   }
 
+  fun void kill_page(int p){
+    if ( p < nb_p ){
+      for (0 => int i; i < 72; i++) {
+        if(s[p][i].pad_on) {
+          s[p][i].set(125); // Off only
+        }
+      }
+    }
+    else {
+      <<<"ERROR KILL PAGE: page too high: ", p>>>;
+    }
+
+  }
+
 }
 
 page_manager pm;
@@ -484,7 +498,7 @@ pm @=> launchpad_virtual_control_on.pm;
 LAUNCHPAD_VIRTUAL.on.reg(launchpad_virtual_control_on);
 
 launchpad_virtual_control launchpad_virtual_control_off;
-125 => launchpad_virtual_control_off.cmd; // On only
+125 => launchpad_virtual_control_off.cmd; // Off only
 s @=> launchpad_virtual_control_off.s;
 s2 @=> launchpad_virtual_control_off.s2;
 nb_page => launchpad_virtual_control_off.nb_p;
@@ -493,13 +507,31 @@ pm @=> launchpad_virtual_control_off.pm;
 LAUNCHPAD_VIRTUAL.off.reg(launchpad_virtual_control_off);
 
 launchpad_virtual_control launchpad_virtual_control_toggle;
-127 => launchpad_virtual_control_toggle.cmd; // On only
+127 => launchpad_virtual_control_toggle.cmd; // Toggle
 s @=> launchpad_virtual_control_toggle.s;
 s2 @=> launchpad_virtual_control_toggle.s2;
 nb_page => launchpad_virtual_control_toggle.nb_p;
 pm @=> launchpad_virtual_control_toggle.pm;
 
 LAUNCHPAD_VIRTUAL.toggle.reg(launchpad_virtual_control_toggle);
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class launchpad_virtual_kill_page extends CONTROL {
+     // 0 =>  update_on_reg ;
+     page_manager @ pm;
+     
+     fun void set(float in) {
+        pm.kill_page(in $ int);
+     }
+} 
+
+launchpad_virtual_kill_page launchpad_virtual_kill_page_o;
+pm @=> launchpad_virtual_kill_page_o.pm;
+
+LAUNCHPAD_VIRTUAL.kill_page.reg(launchpad_virtual_kill_page_o);
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
