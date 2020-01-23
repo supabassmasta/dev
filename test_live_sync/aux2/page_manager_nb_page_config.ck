@@ -1,0 +1,1 @@
+../page_manager_nb_page_config.ck
