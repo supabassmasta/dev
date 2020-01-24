@@ -15,6 +15,7 @@ class script_launcher extends CONTROL {
 	0 => int pad_on;
 	0 => int pad_with_file;
 	0 => int red;
+  0 => int color;
   0 => int cont;
 
   fun int file_exist (string filename){ 
@@ -34,8 +35,18 @@ class script_launcher extends CONTROL {
     if( !fio.good() )
         return 0;
     else {
+      if ( fio => color  ){
+          // Do nothing color is read in the "if"
+          <<<"COLOR: ", color>>>;
+
+      }
+      else {
+        <<<"RED: color:", color>>>;
+
+        1 => red;
+      }
+
       fio.close();
-			1 => red;
       return 1;
     }
   } 
@@ -68,9 +79,8 @@ class script_launcher extends CONTROL {
     // turn on light for existing files
     if (file_exist(xname) || file_exist(yname) || file_exist(zname) ) {
       1 => pad_with_file;
-      if (red_file_exist(xname) || red_file_exist(yname) || red_file_exist(zname) ) {
-        1 => red;
-      }
+      // Check red files and colors
+      red_file_exist(xname); red_file_exist(yname) ; red_file_exist(zname) ;
     }
 	}
 
@@ -86,37 +96,55 @@ class script_launcher extends CONTROL {
         <<<"No light">>>;
     }
 
+    if ( color ==-1   ){
+        1 => no_light;
+    }
+
 		if (in == 127.) {
 			if (pad_on) {
 				killer.kill(zid);
 				0 => pad_on;
 
         if ( ! no_light  ){
-          if (nb < 10) 
-            if (red)
-              lau.redc(note);
-            else
-              lau.amberc(note);
+          if (nb < 10) { 
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.colorc(note, color);  
+            }
+            else {
+              if (red)
+                lau.redc(note);
+              else
+                lau.amberc(note);
+            }
+          }
           else {
-            if (red)
-              lau.red(note);
-            else{
-              lau.amber(note);
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.color(note, color);  
+            }
+            else {
+              if (red)
+                lau.red(note);
+              else{
+                lau.amber(note);
+              }
             }
           }
         }
 
 			} 
 			else {
-				Machine.add( xname ) => xid;
-				Machine.add( yname ) => yid;
-				Machine.add( zname ) => zid;
-				if (zid != 0) {
-					1 => pad_on;
-				}
+        Machine.add( xname ) => xid;
+        Machine.add( yname ) => yid;
+        Machine.add( zname ) => zid;
 
         if ( xid != 0 || yid !=0 || zid != 0) {
           1 =>  pad_with_file;
+        }
+
+        if (zid != 0) {
+          1 => pad_on;
           if ( ! no_light  ){
             if (nb < 10) 
               lau.greenc(note);
@@ -124,6 +152,7 @@ class script_launcher extends CONTROL {
               lau.green(note);
           }
         }
+
 			}
 		}
 		else if (in == 126.) { // VIRTUAL KEY ON only if OFF 
@@ -133,13 +162,14 @@ class script_launcher extends CONTROL {
         Machine.add( zname ) => zid;
         if (zid != 0) {
           1 => pad_on;
-        }
 
-        if ( ! no_light  ){
-          if (nb < 10) 
-            lau.greenc(note);
-          else
-            lau.green(note);
+          if ( ! no_light  ){
+            if (nb < 10) 
+              lau.greenc(note);
+            else
+              lau.green(note);
+          }
+
         }
 
 			}
@@ -149,16 +179,29 @@ class script_launcher extends CONTROL {
 				killer.kill(zid);
 				0 => pad_on;
         if ( ! no_light  ){
-          if (nb < 10) 
-            if (red)
-              lau.redc(note);
-            else
-              lau.amberc(note);
+          if (nb < 10) { 
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.colorc(note, color);  
+            }
+            else {
+              if (red)
+                lau.redc(note);
+              else
+                lau.amberc(note);
+            }
+          }
           else {
-            if (red)
-              lau.red(note);
-            else{
-              lau.amber(note);
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.color(note, color);  
+            }
+            else {
+              if (red)
+                lau.red(note);
+              else{
+                lau.amber(note);
+              }
             }
           }
         }
@@ -167,9 +210,12 @@ class script_launcher extends CONTROL {
 
     }
 		else {
+
 			if (yid != 0) {
 				killer.kill(yid);
 			}
+
+      /*
 
 			else if (yid == 0 && 	zid == 0){
         //	Do nothing but keep this case. To do not light up pads.
@@ -177,20 +223,32 @@ class script_launcher extends CONTROL {
 			else if (!pad_on) {
         if ( ! no_light  ){
           if (nb < 10) 
-            if (red)
-              lau.redc(note);
-            else
-              lau.amberc(note);
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.colorc(note, color);  
+            }
+            else {
+              if (red)
+                lau.redc(note);
+              else
+                lau.amberc(note);
+            }
           else {
-            if (red)
-              lau.red(note);
-            else{
-              lau.amber(note);
+            if ( color != 0 ){
+              if (color !=-1) // -1 means no color update
+                lau.color(note, color);  
+            }
+            else {
+              if (red)
+                lau.red(note);
+              else{
+                lau.amber(note);
+              }
             }
           }
         }
 			}
-
+      */
 
 		}
 
@@ -305,7 +363,17 @@ class page_manager {
           l.green(s[p][i].note);
         }
       }
-      else if (  s[p][i].red  ){
+      else if ( s[p][i].color != 0 ) { 
+        if ( s[p][i].color != -1 ){ // -1 means no color update
+          if (s[p][i].cont){
+            l.colorc(s[p][i].note, s[p][i].color);
+          }
+          else {
+            l.color(s[p][i].note, s[p][i].color);
+          }
+        }
+      }
+      else if ( s[p][i].red ){
         if (s[p][i].cont){
           l.redc(s[p][i].note);
         }

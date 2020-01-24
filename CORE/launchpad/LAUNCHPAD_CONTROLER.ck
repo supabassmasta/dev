@@ -152,7 +152,14 @@ public class LAUNCHPAD {
     color => msg.data3;
     mout.send(msg);
   }
-
+  
+  fun void color(int note, int c){
+    if ( MK2  )
+      set_color(144, note, c);
+    else
+      set_color(144, note, 2); // Red
+  }
+  
   fun void red(int note){
     if ( MK2  )
       set_color(144, note, 72);
@@ -176,6 +183,13 @@ public class LAUNCHPAD {
  
   fun void clear(int note){
     set_color(144, note, 0);
+  }
+
+  fun void colorc(int note, int c){
+    if ( MK2  )
+      set_color(176, note, c);
+    else
+      set_color(176, note, 2); // Red
   }
 
   fun void redc(int note){
