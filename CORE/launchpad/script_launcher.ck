@@ -397,7 +397,7 @@ class page_manager {
 
   fun void light_down_page(int p) {
     for (0 => int i; i < 72; i++) {
-      if (   s[p][i].pad_with_file  ){
+      if (   s[p][i].pad_with_file && s[p][i].color != -1 ) { // -1 means no color update ){
         if (s[p][i].cont){
           l.clearc(s[p][i].note);
         }
