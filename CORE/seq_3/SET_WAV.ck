@@ -160,27 +160,44 @@ public class SET_WAV {
   }
 
   fun static void TABLA ( SEQ @ s) {
-    ROOTPATH.str.my_string + "_SAMPLES/Dirt_samples/tabla/" => string dir;
+    ROOTPATH.str.my_string + "_SAMPLES/tabla_oneshot/" => string dir;
     //dir + "" => s.wav[""];
-    dir + "024_lower6_hit.wav" => s.wav["A"];
-    dir + "022_lower4_hit.wav" => s.wav["B"];
-    dir + "019_lower1_hit.wav" => s.wav["C"];
-    dir + "020_lower2_hit.wav" => s.wav["D"];
-    dir + "021_lower3_hit.wav" => s.wav["E"];
+
+    // LOW notes
+
+    dir + "bass01.wav" => s.wav["A"];
+    dir + "lower3_hit.wav" => s.wav["B"];
+    dir + "lower5_hit.wav" => s.wav["C"];
+    dir + "lower6_hit.wav" => s.wav["D"];
+    dir + "022_lower4_hit.wav" => s.wav["E"];
+
+    dir + "lower_hits_descending_04.wav" => s.wav["F"];
+    dir + "lower_hits_descending_01.wav" => s.wav["G"];
+    dir + "lower_hits_descending_02.wav" => s.wav["H"];
+    dir + "lower_hits_descending_03.wav" => s.wav["I"];
+    dir + "bass02.wav" => s.wav["K"];
+
+   // High notes
 
     dir + "006_d_sharp_hit.wav" => s.wav["a"];
-    dir + "018_hi_hit9.wav" => s.wav["b"];
-    dir + "000_bass_flick1.wav" => s.wav["c"];
-    dir + "007_hi_flick1.wav" => s.wav["d"];
-    dir + "008_hi_flick2.wav" => s.wav["e"];
-    dir + "009_hi_hit1.wav" => s.wav["f"];
-    dir + "010_hi_hit10.wav" => s.wav["g"];
-    dir + "012_hi_hit3.wav" => s.wav["h"];
-    dir + "013_hi_hit4.wav" => s.wav["i"];
+    dir + "009_hi_hit1.wav" => s.wav["b"];
+    dir + "016_hi_hit7.wav" => s.wav["c"];
+    dir + "hi_hit3.wav" => s.wav["d"];
+    dir + "hi_hit4.wav" => s.wav["e"];
+    dir + "hi_hit5.wav" => s.wav["f"];
 
-    dir + "003_dead_hit1.wav" => s.wav["F"];
-    dir + "004_dead_hit2.wav" => s.wav["G"];
-    dir + "005_dead_hit3.wav" => s.wav["H"];
+
+    // High hits
+
+    dir + "hi_hit2.wav" => s.wav["x"];
+    dir + "hi_hit9.wav" => s.wav["y"];
+    dir + "hi_hit10.wav" => s.wav["z"];
+
+    // Low hits
+
+    dir + "dead_hit01.wav" => s.wav["X"];
+    dir + "dead_hit02.wav" => s.wav["Y"];
+    dir + "dead_hit03.wav" => s.wav["Z"];
 
   }
 
