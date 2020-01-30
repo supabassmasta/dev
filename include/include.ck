@@ -201,6 +201,7 @@ Machine.add( rt + "CORE/EFFECTS/STGVERB.ck");
 Machine.add( rt + "CORE/EFFECTS/STFLANGER.ck");
 Machine.add( rt + "CORE/EFFECTS/STEPC.ck");
 me.yield();
+Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
 Machine.add( rt + "CORE/LONG_WAV/LONG_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_DOUBLE_WAV.ck");

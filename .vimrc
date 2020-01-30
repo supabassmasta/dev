@@ -577,6 +577,9 @@ ab STBPFK STBPF bpf;
 ab STHPFCK STHPFC hpfc;
 \<CR>hpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       hpfc $ ST @=>  last;
 
+ab STHPFC2K STHPFC2 hpfc2;
+\<CR>hpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       hpfc2 $ ST @=>  last;
+
 ab STHPFK STHPF hpf;
 \<CR>hpf.connect(last $ ST , 1000 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last;
 
