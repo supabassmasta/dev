@@ -4,49 +4,72 @@
     HPF @ hl;
     HPF @ hr;
     1 => update_on_reg ;
+
+    Step one => Envelope ef => blackhole;
+    one => Envelope eh => blackhole;
+    1. => one.next;
+    10::ms => ef.duration => eh.duration;
     
     fun void set (float in) {
       float f;
 
       if ( in < 64  ){
         // Open HPF
-        10 => hl.freq => hr.freq;
+        10 => eh.target;
+        // reset his Q
+        // 1. => hl.Q => hr.Q;
 
         Std.mtof(in * 2) => f;
         if (f>19000) {
           <<<"LPF control_freq TOO HIGH:", f>>>;
-          19000 => fl.freq => fr.freq;
+          19000 => ef.target;
         }
         else if (f< 10) {
           <<<" LPF control_freq TOO LOW:", f>>>;
-          10 => fl.freq => fr.freq;
+          10 => ef.target;
         }
         else {
-          f => fl.freq => fr.freq;
-          <<<"LPF control_freq ", fr.freq()>>>; 
+          f => ef.target;
+          <<<"LPF control_freq ", f>>>; 
         }
       }
       else {
         // Open LPF
-        19000 => fl.freq => fr.freq;
+        19000 => ef.target;
+        // reset his Q
+        // 1. => fl.Q => fr.Q;
+
         Std.mtof((in - 64) * 2) => f;
         if (f>19000) {
           <<<"HPF control_freq TOO HIGH:", f>>>;
-          19000 => hl.freq => hr.freq;
+          19000 => eh.target;
         }
         else if (f< 10) {
           <<<" HPF control_freq TOO LOW:", f>>>;
-          10 => hl.freq => hr.freq;
+          10 => eh.target;
         }
         else {
-          f => hl.freq => hr.freq;
-          <<<"HPF control_freq ", hr.freq()>>>; 
+          f => eh.target;
+          <<<"HPF control_freq ", f>>>; 
         }
 
 
 
       }
     }
+
+
+    fun void f1 (){ 
+      while(1) {
+        ef.last() => fl.freq => fr.freq;
+        eh.last() => hl.freq => hr.freq;
+        1::samp => now;
+      }
+    } 
+    spork ~ f1 ();
+        
+
+
 
   }
 
@@ -64,7 +87,7 @@
     }
   }
 
-public class STLHPFC extends ST{
+public class STLHPFC2 extends ST{
   LPF lpfl => HPF hpfl => outl;
   LPF lpfr => HPF hpfr => outr;
 
@@ -77,19 +100,6 @@ public class STLHPFC extends ST{
   0 => hpfr.freq;
   1 => hpfl.Q;
   1 => hpfr.Q;
-
-  STEPC stepc;
-  stepc.out => blackhole; 
-
-  fun void f1 (){ 
-    while(1) {
-      stepc.out.last() => lpfl.freq => lpfr.freq;
-      1::samp => now;
-    }
-  } 
-  spork ~ f1 ();
-    
-
 
   control_freq cfreq;
   lpfl @=> cfreq.fl;
@@ -108,8 +118,7 @@ public class STLHPFC extends ST{
     tone.left() => lpfl;
     tone.right() => lpfr;
 
-//    f.reg(cfreq);
-    stepc.init(f, 100 /* min */, 3000 /* max */, 50::ms /* transition_dur */);
+    f.reg(cfreq);
     if(q != NULL){
       q.reg(cq);
     }

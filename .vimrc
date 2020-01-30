@@ -550,8 +550,14 @@ ab STECHOC0K STECHOC0 ech;
 ab STLPFCK STLPFC lpfc;
 \<CR>lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last;
 
+ab STLPFC2K STLPFC2 lpfc2;
+\<CR>lpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc2 $ ST @=>  last;
+
 ab STLHPFCK STLHPFC lhpfc;
 \<CR>lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last;
+
+ab STLHPFC2K STLHPFC2 lhpfc2;
+\<CR>lhpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc2 $ ST @=>  last;
 
 ab STECHOLHPFCK STECHOLHPFC echolpfc;
 \<CR>echolpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */ , data.tick * 3. / 4. , HW.lpd8.potar[1][3] /* Delay Gain */ );       echo  lpfc $ ST @=>  last; 
