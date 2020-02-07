@@ -21,11 +21,10 @@ t.reg(synt0 s3); .4 => s1.outlet.gain;
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 ":8 }c
-1|3|5|7_ 1|5|8_ 5|8|c_ 5|8|c_ 
-3|5|7_ 3|5|7_ 5|8|c_ 5|8|c_
+ 5|8|c_ B|5|7|c_ 
 " => t.seq;
 .2 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 8 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(700::ms, 500::ms, .8, 3000::ms);
 t.adsr[1].set(700::ms, 500::ms, .8, 3000::ms);

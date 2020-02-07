@@ -47,7 +47,7 @@ HW.launchpad.virtual_key_on_only(28);
 // CHORUS
 HW.launchpad.virtual_key_on_only(18);
 8 * data.tick => now; // BREAK
-( 64   - 8  /* for END */ ) * data.tick => now; //CHORUS
+( 64 * 2   - 8  /* for END */ ) * data.tick => now; //CHORUS
 
 // END
 HW.launchpad.virtual_key_on_only(17);

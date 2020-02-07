@@ -2,7 +2,7 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 " *4
-k___ x_x_ ksk_ xk_k
+k___ k___ k_k_ k_k_   k_kk kkkk sksk ksxk
 " => s.seq;
 .9 * data.master_gain => s.gain; 
  s.gain("k", 1.2); // for single wav 
