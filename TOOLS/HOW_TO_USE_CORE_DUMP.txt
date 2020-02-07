@@ -1,0 +1,18 @@
+Set ulimit to unlimited, to allow system to generate the core in the current directory:
+ulimit -c unlimited
+
+Check ulimit value with
+ulimit -c
+ulimit -a
+
+To use the core file :
+
+gdb program_who_crash -c core
+
+or 
+
+ddd  program_who_crash -c core
+
+
+It is of course better to compile with -g option to have debub symbols
+
