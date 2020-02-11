@@ -207,17 +207,17 @@ One planet
 ----------------------------
 
 part 1 : Après theme sanranghi attendre la petite montée de Sat pour lancer les HH puis les CC
-         passer à la part 2 après le theme canon quand ils recommence à jouer tout les deux ensemble.
+         passer à la part 2 après le theme canon quand ils recommence à jouer tout les deux ensemble(z18 SYNC % 16 beat).
 PArt 2 : laisser faire 
 
-Part 3 : lancer le congo scratch après le theme canon et après qu'ils jouent à 2.
+Part 3 : lancer le congo scratch et BASS 2 après le theme canon et après qu'ils jouent à 2.
           Prevenir Chass et lancer la transition.
 
 Part 4 : flute en contre chant. 2 themes
          flute freestyle question réponse avec flute au début des phrases : 2 themes.
          flute en contre chant. 2 themes
 
-        Pour la fin lancer le script quand satan a fait 1,5 theme.
+        Pour la fin lancer le script quand satan a fait 1,5 theme.(z48 SYNC % 4 beat)
 
 
 
