@@ -217,7 +217,7 @@ Part 4 : flute en contre chant. 2 themes
          flute freestyle question réponse avec flute au début des phrases : 2 themes.
          flute en contre chant. 2 themes
 
-        Pour la fin lancer le script quand satan a fait 1,5 theme.(z48 SYNC % 4 beat)
+        Pour la fin lancer le script quand satan a fait 1,5 theme(z48 SYNC % 4 beat)
 
 
 
