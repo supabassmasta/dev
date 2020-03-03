@@ -579,5 +579,19 @@ public class SEQ extends ST{
       in => wav_o[s].gain;
     }
   }
+ 
+  fun void gain_subwav (string s, int i, float in) {
+    if (wav_o[s] != NULL){
+      wav_o[s].gainsub(i, in);
+    }
+  }
+
+  fun void add_subwav(string s, string in  ) {
+    if (wav_o[s] != NULL){
+      wav_o[s].readsub(in);
+    }
+  }
+
+
 }
 

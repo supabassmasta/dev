@@ -17,14 +17,16 @@ k___ x___ __k_ x__U   k___ x__b _sk_ x_k_
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+//// SUBWAV ////
+SEQ s2; SET_WAV.TRANCE(s2); s.add_subwav("k", s2.wav["k"]); // s.gain_subwav("K", 0, .3);
 s.go();     s $ ST @=> ST @ last;
 
 
 //STLPF lpf;
 //lpf.connect(last $ ST , 8 * 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
-STLHPFC2 lhpfc2;
-lhpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc2 $ ST @=>  last; 
+//STLHPFC2 lhpfc2;
+//lhpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc2 $ ST @=>  last; 
 
 
 while(1) {

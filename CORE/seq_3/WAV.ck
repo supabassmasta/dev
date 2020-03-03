@@ -1,8 +1,16 @@
     class play_wav extends ACTION {
         SndBuf @ buf;
+        SndBuf @ wavsub[];
         fun int on_time() {
             0 => buf.pos;
-
+            
+            // SUB
+            wavsub.size() => int nb;
+            while(nb) {
+              1 -=> nb;
+              0 => wavsub[nb].pos;
+            }
+            
             return 0;
         }
     }
@@ -53,11 +61,13 @@
 
 public class WAV {
     SndBuf wav0;
+    SndBuf wavsub[0];
     Pan2 pan_wav0;
     Gain gain_wav0; 
     //PLAY 
     play_wav play;
     wav0 @=> play.buf;
+    wavsub @=> play.wavsub;
     "play_wav  " + wav0.toString() => play.name;
 
     // PLAY PROBA
@@ -110,7 +120,7 @@ public class WAV {
         wav0.samples() => wav0.pos;
     }
 
-    // function to get audio out of object
+   // function to get audio out of object
     fun UGen mono() {
             gain_wav0 =< pan_wav0;
             return gain_wav0;
@@ -124,13 +134,33 @@ public class WAV {
             return pan_wav0.right;
     }
 
-    wav0 => gain_wav0 =>  pan_wav0 => dac;
+    wav0 => gain_wav0 => pan_wav0 => dac;
     0. => pan_wav0.pan;
     0.3 => wav0.gain;
     wav0.samples() => wav0.pos;
 
     fun void gain(float in) {
       in => gain_wav0.gain;
+    }
+
+    fun void readsub(string in) {
+        wavsub << new SndBuf;
+        wavsub[wavsub.size() - 1] @=> SndBuf w;
+        in => w.read;
+        w.samples() => w.pos;
+        .3 => w.gain;
+
+        // connect to out
+        w => gain_wav0;
+    }
+
+    fun void gainsub(int i, float in) {
+      if ( i < wavsub.size() ){
+        in => wavsub[i].gain;
+      }
+      else {
+        <<<"ERROR: WAV gainsub(), index too high">>>;
+      }
     }
 
 }
