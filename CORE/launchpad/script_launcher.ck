@@ -1,5 +1,20 @@
 HW.launchpad @=> LAUNCHPAD @ l;
 
+fun int file_exist (string filename){ 
+  FileIO fio;
+  fio.open( filename, FileIO.READ );
+  if( !fio.good() )
+    return 0;
+  else {
+    fio.close();
+    return 1;
+  }
+} 
+
+if ( ! file_exist("aux_song_dont_reset_launchpad") ){
+      l.reset();
+}
+
 data.page_manager_page_nb => int nb_page;
 
 class script_launcher extends CONTROL {

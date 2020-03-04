@@ -25,7 +25,7 @@ public class LAUNCHPAD {
         <<< "device", i, "->", min.name(), "->", "open as input: SUCCESS" >>>;
 
         if(mout.open(i)) {
-          <<< "device", i, "->", min.name(), "->", "open as output: SUCCESS" >>>;
+          <<< "device", i, "->", mout.name(), "->", "open as output: SUCCESS" >>>;
         }
         else {
           <<<"Fail to open launchpad as output">>>; 
@@ -43,7 +43,8 @@ public class LAUNCHPAD {
       break;
     }
 
-  }
+
+}
 
   <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
@@ -314,8 +315,5 @@ public class LAUNCHPAD {
     }
   } 
 
-  if ( ! file_exist("aux_song_dont_reset_launchpad")){
-    reset();
-  }
 
 }
