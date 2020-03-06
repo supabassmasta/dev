@@ -11,7 +11,7 @@ TONE t;
 t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "1" => t.seq;
-.9 * data.master_gain => t.gain;
+.6 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -36,12 +36,23 @@ stepc3.out => z;
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+//STECHO ech;
+//ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+//STECHOC ech;
+//ech.connect(last $ ST , HW.lpd8.potar[1][5] /* Period */ , HW.lpd8.potar[1][6] /* Gain */ );      ech $ ST @=>  last;  
+
+STECHOC0 ech;
+ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][5] /* Gain */ );      ech $ ST @=>  last;    
+
 
 STLIMITER stlimiter;
 7. => float in_gainl;
 stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+STGAIN stgain;
+stgain.connect(last $ ST , 0.6 /* static gain */  );       stgain $ ST @=>  last; 
+
+
 <<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^">>>;
 <<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^">>>;
 <<<"^^^^ Dub Siren Modulator ^^^">>>;
@@ -52,6 +63,7 @@ stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */
 <<<"Potar 1.2 Main synt freq ">>>;
 <<<"Potar 1.3 FM olsiclator Gain ">>>;
 <<<"Potar 1.4 FM olsiclator FReq ">>>;
+<<<"Potar 1.5 ECHO GAin ">>>;
 
 
 while(1) {
