@@ -50,8 +50,8 @@ LAUNCHPAD lp;
 lp.start();
 
 TAP tap;
-lp.keys[16*4 + 4].reg(tap);
-lp.red(16*4 + 4);
+lp.keys[16*1 + 2].reg(tap);
+lp.red(16*1 + 2);
 
 while(1) {
        100::ms => now;
