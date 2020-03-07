@@ -505,6 +505,10 @@ void loop() {
       moon();
       delay(5);
     break;
+    case 15:
+      earth();
+      delay(10);
+    break;
 
 
 
@@ -1456,6 +1460,10 @@ void read_serial(){
       preset = 14;
       valid = 1;
     }
+    else if (b == 'E') {
+      preset = 15;
+      valid = 1;
+    }
     else if (b == '!') {
       fade_in_out.cnt_num = 8;
       fade_in_out.cnt_den = 1;
@@ -2403,3 +2411,43 @@ void dhoomtala() {
   kaleidoscope();
 
 }
+
+uint16_t earth_idx=0;
+void earth() {
+  uint16_t j = earth_idx;
+  bool blue;
+  for (int i = 0; i < strip.numPixels()      ; i++) {
+
+    if ( i < 40  )  blue = 1;
+    else if ( i < 38) blue = 0;
+    else if ( i < 98) blue = 1;
+    else if ( i < 103) blue = 0;
+    else if ( i < 120) blue = 1;
+    else if ( i < 129) blue = 0;
+    else if ( i < 171) blue = 1;
+    else if ( i < 196) blue = 0;
+    else if ( i < 216) blue = 1;
+    else if ( i < 248) blue = 0;
+    else if ( i < 279) blue = 1;
+    else if ( i < 284) blue = 0;
+    else  blue = 1;
+        
+   if ( blue  ){
+      strip.setPixelColor(j, 0, 0, 200);
+   }
+   else {
+      strip.setPixelColor(j, 0, 200, 0);
+   }
+
+    j ++;
+    if ( j > strip.numPixels()  ){
+       j = 0; 
+    }
+  }
+
+  earth_idx ++;
+  if ( earth_idx > strip.numPixels()  ){
+    earth_idx = 0;
+  }
+}
+

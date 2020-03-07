@@ -10,7 +10,8 @@ l___ ___l s|u___ ___l
 l___ __ll s|ul_l _l_d
 
 " => s.seq;
-.9 => s.gain; // s.gain("s", .2); // for single wav 
+.9 => s.gain; //
+s.gain("s", .6); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 

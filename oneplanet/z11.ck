@@ -5,6 +5,9 @@ SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET
 1.1 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+ //// SUBWAV ////
+SEQ s2; SET_WAV.TRANCE(s2); s.add_subwav("k", s2.wav["K"]);  
+s.gain_subwav("k", 0, .1);
 s.go();     s $ ST @=> ST @ last; 
 
 STLPF lpf;
@@ -16,4 +19,3 @@ duckm.connect(last $ ST, 9. /* In Gain */, .07 /* Tresh */, .5 /* Slope */, 6::m
 while(1) {
        100::ms => now;
 }
- 

@@ -86,8 +86,11 @@ stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain +  .3/* out gain */
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+STGAIN stgain;
+stgain.connect(last $ ST , 0.85 /* static gain */  );       stgain $ ST @=>  last; 
+
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
