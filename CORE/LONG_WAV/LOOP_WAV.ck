@@ -1,24 +1,30 @@
   class END extends end { 
-		dur sync;
+		0::ms => dur fixed_end_dur;
+    dur sync;
 		ADSR @ al;
 		ADSR @ ar;
     fun void kill_me () {
 			SYNC sy;
 
+
 			if (sync == 0::ms) {
 				<<<"END LOOP WAV NO SYNC">>>; 
-				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
-				<<<"REAL END LOOP WAV">>>; 
 			}
 			else {
 				<<<"END LOOP WAV SYNC">>>; 
         sy.sync(sync ,-1* al.releaseTime());
-				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
-				<<<"REAL END LOOP WAV">>>; 
 			}
-    }
+
+		  al.keyOff(); ar.keyOff();  
+			al.releaseTime() => now;
+      
+      if ( fixed_end_dur != 0::ms  ){
+          fixed_end_dur => now;
+      }
+
+			<<<"REAL END LOOP WAV">>>; 
+
+      }
   }; 
 
 public class LOOP_WAV extends ST {

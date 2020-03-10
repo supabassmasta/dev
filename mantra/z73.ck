@@ -16,6 +16,7 @@ t.mix();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+ 8 * data.tick => t.the_end.fixed_end_dur;
 t.go();   t $ ST @=> ST @ last; 
 
 

@@ -43,6 +43,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+ 8 * data.tick => t.the_end.fixed_end_dur;
 t.go(); 
 
 STECHO ech;
