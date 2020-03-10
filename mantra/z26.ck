@@ -23,7 +23,7 @@ t.go();   t $ ST @=> ST @ last;
 
 class SINMODONE {
 
-STEPC stepc; stepc.init(HW.lpd8.potar[1][3], .5 /* min */, 10 /* max */, 50::ms /* transition_dur */);
+STEPC stepc; stepc.init(HW.lpd8.potar[1][3], .2 /* min */, 10 /* max */, 50::ms /* transition_dur */);
 stepc.out =>  SinOsc s => Gain gsin=> Gain out;
 3 => gsin.op;
 STEPC stepc2; stepc2.init(HW.lpd8.potar[1][4], 0 /* min */, 30 /* max */, 50::ms /* transition_dur */);
