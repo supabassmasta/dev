@@ -392,7 +392,8 @@ ab gverbK GVerb gverb0  =>
 \<CR>0.3 => gverb0.tail;            // tail (float) [0.0 - 1.0], default 0.5      
 
 ab TONEK TONE t;
-\<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+\<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+\<CR>t.dor();// t.aeo(); // t.phr();// t.loc();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"1" => t.seq;
 \<CR>.9 * data.master_gain => t.gain;
@@ -1037,4 +1038,8 @@ ab STCUTTERK STCUTTER stcutter;
 \<CR>"*8 1_1_" => stcutter.t.seq;
 \<CR>stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last;
 
+ab DETUNEK DETUNE detune;
+\<CR>detune.base_synt(s0 /* base synt, controlling others */);
+\<CR>detune.reg_aux(synt0 aux1); /* declare and register aux here */
+\<CR>detune.config_aux(1.02 /* detune percentage */, .6 /* aux gain output */ ); 
 

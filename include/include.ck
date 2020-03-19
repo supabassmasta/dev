@@ -200,6 +200,7 @@ Machine.add( rt + "CORE/EFFECTS/STLIMITER.ck");
 Machine.add( rt + "CORE/EFFECTS/STGVERB.ck");
 Machine.add( rt + "CORE/EFFECTS/STFLANGER.ck");
 Machine.add( rt + "CORE/EFFECTS/STEPC.ck");
+Machine.add( rt + "CORE/EFFECTS/DETUNE.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
