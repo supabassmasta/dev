@@ -11,7 +11,7 @@ HW.launchpad.virtual_key_off_only(13); // HH
 HW.launchpad.virtual_key_on_only(53);  // Slide
 HW.launchpad.virtual_key_on_only(57); // Kick
 HW.launchpad.virtual_key_on_only(76); // blips
-HW.launchpad.virtual_key_on_only(34); // Slide BAss
+HW.launchpad.virtual_key_on_only(44); // Slide BAss END
 
 HW.launchpad.virtual_key_on_only(72); // SNR echo
 
@@ -25,7 +25,7 @@ HW.launchpad.virtual_key_off_only(76); // Glitch
 HW.launchpad.virtual_key_off_only(53);  // Slide
 HW.launchpad.virtual_key_off_only(57); // Kick
 HW.launchpad.virtual_key_off_only(76); // blips
-HW.launchpad.virtual_key_off_only(34); // Slide BAss
+HW.launchpad.virtual_key_off_only(44); // Slide BAss END
 
 4 * data.tick => now;
 

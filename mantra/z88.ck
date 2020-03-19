@@ -8,7 +8,7 @@ l.AttackRelease(0::ms, 0::ms);
 l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
 [ "tabla bass", "synt","BEAT START", "BASS START", "STOP for BRIDGE", "DUB KICK START", "reaggae bass"] @=> string next_s[];
-[4,       6,              8,           12,         32,          34 , 56  ] @=> int next[];
+[4,       6,              8,           12,         32,          34 , 54  ] @=> int next[];
 fun void f1 (){ 
   SYNC sy;
   0 => int m;
