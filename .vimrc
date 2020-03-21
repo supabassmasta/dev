@@ -1043,3 +1043,7 @@ ab DETUNEK DETUNE detune;
 \<CR>detune.reg_aux(synt0 aux1); /* declare and register aux here */
 \<CR>detune.config_aux(1.02 /* detune percentage */, .6 /* aux gain output */ ); 
 
+ab STRECK STREC strec;
+\<CR>strec.connect(last $ ST, 8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); strec $ ST @=>  last; 
+
+
