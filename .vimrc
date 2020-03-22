@@ -1046,4 +1046,7 @@ ab DETUNEK DETUNE detune;
 ab STRECK STREC strec;
 \<CR>strec.connect(last $ ST, 8*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); strec $ ST @=>  last; 
 
+ab STSAMPLERK STSAMPLER stsampler;
+\<CR>stsampler.connect(last $ ST, 8*data.tick, "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); stsampler $ ST @=>  last; 
+
 
