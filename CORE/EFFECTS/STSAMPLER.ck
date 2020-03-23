@@ -9,7 +9,8 @@ public class STSAMPLER extends ST {
   string name;
 
   in => out;
-  in => del => blackhole;
+  in[0] => del[0] => blackhole;
+  in[1] => del[1] => blackhole;
   1. => del[0].gain => del[1].gain;
 
   fun void f1 ( dur d, dur sync_dur, int no_sync ){ 
@@ -49,6 +50,7 @@ public class STSAMPLER extends ST {
 
     del => del;
     del => out;
+
     in[0] =< del[0];
     in[1] =< del[1];
     in[0] =< out[0];

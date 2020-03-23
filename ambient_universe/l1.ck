@@ -11,6 +11,8 @@ lpf.connect(last $ ST , 22 * 10 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .2 /* span 0..1 */, data.tick * 1 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
+STDUCK duck;
+duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
