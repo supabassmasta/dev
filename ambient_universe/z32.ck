@@ -36,6 +36,11 @@ ech.connect(last $ ST , data.tick * 3 / 4 + 10::ms , .8);  ech $ ST @=>  last;
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
+STDELAY stdelay;
+stdelay.connect(ech $ ST , data.tick * 2. / 4. /* static delay */ );       stdelay $ ST @=>  last; 
+STAUTOPAN autopan2;
+autopan2.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 4 /* period */, 0.95 /* phase 0..1 */ );       autopan2 $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }

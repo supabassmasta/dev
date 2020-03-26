@@ -1049,4 +1049,6 @@ ab STRECK STREC strec;
 ab STSAMPLERK STSAMPLER stsampler;
 \<CR>stsampler.connect(last $ ST, 8*data.tick, "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); stsampler $ ST @=>  last; 
 
+ab STDELAYK STDELAY stdelay;
+ \<CR>stdelay.connect(ech $ ST , data.tick * 2. / 4. /* static delay */ );       stdelay $ ST @=>  last; 
 

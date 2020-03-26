@@ -26,8 +26,14 @@ autopan.connect(last $ ST, .8 /* span 0..1 */, data.tick * 5 / 1 /* period */, 0
 STECHO ech;
 ech.connect(last $ ST , data.tick * 2 / 4 + 8::ms , .7);  ech $ ST @=>  last; 
 
+ STDELAY stdelay;
+ stdelay.connect(ech $ ST , data.tick * 2. / 4. /* static delay */ );       stdelay $ ST @=>  last; 
+ STAUTOPAN autopan2;
+ autopan2.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 4 /* period */, 0.95 /* phase 0..1 */ );       autopan2 $ ST @=>  last; 
+ 
 STHPF hpf;
 hpf.connect(last $ ST , 1000 /* freq */  , 3.8 /* Q */  );       hpf $ ST @=>  last; 
+
 
 while(1) {
        100::ms => now;

@@ -203,6 +203,7 @@ Machine.add( rt + "CORE/EFFECTS/STEPC.ck");
 Machine.add( rt + "CORE/EFFECTS/DETUNE.ck");
 Machine.add( rt + "CORE/EFFECTS/STREC.ck");
 Machine.add( rt + "CORE/EFFECTS/STSAMPLER.ck");
+Machine.add( rt + "CORE/EFFECTS/STDELAY.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
