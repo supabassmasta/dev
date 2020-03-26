@@ -29,7 +29,7 @@
     fun void set (float in) {
       1. + in/16. => fl.Q => fr.Q;
 
-      <<<"control_freq ", fr.freq()>>>; 
+      <<<"control_Q ", fr.Q()>>>; 
     }
   }
 
