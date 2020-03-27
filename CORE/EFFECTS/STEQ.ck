@@ -273,9 +273,7 @@ class contoutg extends CONTROL {
 
 }
 
-
-
-class STEQ extends ST {
+public class STEQ extends ST {
 
   Gain ginl => Gain ginhpfl => Gain gouthpfl => Gain ginlpfl => Gain goutlpfl => Gain ginbrf1l => Gain goutbrf1l => Gain ginbrf2l => Gain goutbrf2l  => Gain ginbpf1l => Gain gbpbpf1l => Gain goutbpf1l=>   Gain ginbpf2l => Gain gbpbpf2l => Gain goutbpf2l=> outl;
   Gain ginr => Gain ginhpfr => Gain gouthpfr => Gain ginlpfr => Gain goutlpfr => Gain ginbrf1r => Gain goutbrf1r => Gain ginbrf2r => Gain goutbrf2r   => Gain ginbpf1r => Gain gbpbpf1r => Gain goutbpf1r=>  Gain ginbpf2r => Gain gbpbpf2r => Gain goutbpf2r=> outr;
@@ -496,29 +494,3 @@ class STEQ extends ST {
     }
   }
 }
-
-ST st;
-Noise n => st.mono_in; st @=> ST @ last;
-.01 => n.gain;
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 4 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
-
-STEQ steq;
-steq.connect(last $ ST, HW.lpd8.potar[1][1] /* HPF freq */, HW.lpd8.potar[1][2] /* HPF Q */, HW.lpd8.potar[1][3] /* LPF freq */, HW.lpd8.potar[1][4] /* LPF Q */
- , HW.lpd8.potar[1][5] /* BRF1 freq */, HW.lpd8.potar[1][6] /* BRF1 Q */, HW.lpd8.potar[1][7] /* BRF2 freq */, HW.lpd8.potar[1][8] /* BRF2 Q */
- , HW.lpd8.potar[2][1] /* BPF1 freq */, HW.lpd8.potar[2][2] /* BPF1 Q */, HW.lpd8.potar[2][3] /* BPF1 Gain */
- , HW.lpd8.potar[2][5] /* BPF2 freq */, HW.lpd8.potar[2][6] /* BPF2 Q */, HW.lpd8.potar[2][7] /* BPF2 Gain */
- , HW.lpd8.potar[2][8] /* Output Gain */  ); steq $ ST @=>  last;
-
-// steq.static_connect(last $ ST,  1237.340097  /* HPF freq */,  4.000000  /* HPF Q */,  19012.927242  /* LPF freq */,  5.000000  /* LPF Q */
-//       ,  3883.189454  /* BRF1 freq */,  2.416667  /* BRF1 Q */,  15713.239768  /* BRF2 freq */,  3.666667  /* BRF2 Q */
-//       ,  12986.212006  /* BPF1 freq */,  22.166667  /* BPF1 Q */,  7.937500  /* BPF1 Gain */
-//       ,  6058.282118  /* BPF2 freq */,  13.333333  /* BPF2 Q */,  7.937500   /* BPF2 Gain */
-//       ,  1.480315  /* Output Gain */ ); steq $ ST @=>  last;
-
-while(1) {
-       100::ms => now;
-}
- 
-

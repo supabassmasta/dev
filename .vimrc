@@ -1052,3 +1052,10 @@ ab STSAMPLERK STSAMPLER stsampler;
 ab STDELAYK STDELAY stdelay;
  \<CR>stdelay.connect(ech $ ST , data.tick * 2. / 4. /* static delay */ );       stdelay $ ST @=>  last; 
 
+ab STEQK STEQ steq;
+\<CR>steq.connect(last $ ST, HW.lpd8.potar[1][1] /* HPF freq */, HW.lpd8.potar[1][2] /* HPF Q */, HW.lpd8.potar[1][3] /* LPF freq */, HW.lpd8.potar[1][4] /* LPF Q */
+\<CR> , HW.lpd8.potar[1][5] /* BRF1 freq */, HW.lpd8.potar[1][6] /* BRF1 Q */, HW.lpd8.potar[1][7] /* BRF2 freq */, HW.lpd8.potar[1][8] /* BRF2 Q */
+\<CR> , HW.lpd8.potar[2][1] /* BPF1 freq */, HW.lpd8.potar[2][2] /* BPF1 Q */, HW.lpd8.potar[2][3] /* BPF1 Gain */
+\<CR> , HW.lpd8.potar[2][5] /* BPF2 freq */, HW.lpd8.potar[2][6] /* BPF2 Q */, HW.lpd8.potar[2][7] /* BPF2 Gain */
+\<CR> , HW.lpd8.potar[2][8] /* Output Gain */  ); steq $ ST @=>  last;
+
