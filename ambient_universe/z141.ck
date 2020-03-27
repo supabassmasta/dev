@@ -224,7 +224,7 @@ class contbpfq extends CONTROL {
   0 => update_on_reg ;
   
   fun void set (float in) {
-    1. + in/12. => fl.Q => fr.Q;
+    1. + in/6. => fl.Q => fr.Q;
 
     <<<"control_Q ", fr.Q()>>>; 
     fr.Q() @=> ps.bpfq[filter_index];
@@ -238,7 +238,7 @@ class contbpfg extends CONTROL {
   int filter_index;
   0 => update_on_reg ;
   fun void set (float in) {
-    in/24. => fl.gain => fr.gain;
+    in/16. => fl.gain => fr.gain;
 
     <<<"control_Gain ", fr.gain()>>>; 
     fr.gain() @=> ps.bpfg[filter_index];
@@ -419,6 +419,12 @@ steq.connect(last, HW.lpd8.potar[1][1] /* HPF freq */, HW.lpd8.potar[1][2] /* HP
 , HW.lpd8.potar[2][5] /* BPF2 freq */, HW.lpd8.potar[2][6] /* BPF2 Q */, HW.lpd8.potar[2][7] /* BPF2 Gain */
 );
 
+//STEQ steq;
+//steq.connect(last, HW.lpd8.potar[2][1] /* HPF freq */, HW.lpd8.potar[2][2] /* HPF Q */, HW.lpd8.potar[2][3] /* LPF freq */, HW.lpd8.potar[2][4] /* LPF Q */
+//, HW.lpd8.potar[2][5] /* BRF1 freq */, HW.lpd8.potar[2][6] /* BRF1 Q */, HW.lpd8.potar[2][7] /* BRF2 freq */, HW.lpd8.potar[2][8] /* BRF2 Q */
+//, HW.lpd8.potar[1][1] /* BPF1 freq */, HW.lpd8.potar[1][2] /* BPF1 Q */, HW.lpd8.potar[1][3] /* BPF1 Gain */
+//, HW.lpd8.potar[1][5] /* BPF2 freq */, HW.lpd8.potar[1][6] /* BPF2 Q */, HW.lpd8.potar[1][7] /* BPF2 Gain */
+//);
 
 while(1) {
        100::ms => now;
