@@ -334,6 +334,15 @@ ab multiK 8 => int synt_nb; 0 => int i;
 \<CR>
 \<CR>inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .6 => s[i].gain; i++; 
 
+ab multi2K 8 => int synt_nb; 0 => int i;
+\<CR>Gain detune[synt_nb];
+\<CR>Step det_amount[synt_nb];
+\<CR>SinOsc s[synt_nb];
+\<CR>Gain final => outlet; .3 => final.gain;
+\<CR>
+\<CR>inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain; i++;  
+\<CR>inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  -3.51 => det_amount[i].next;      .1 => s[i].gain; i++;  
+\<CR>inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  3.51 => det_amount[i].next;      .1 => s[i].gain; i++;  
 
 ab SYNTK class synt0 extends SYNT{
 \<CR>
