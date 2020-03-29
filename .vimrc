@@ -1068,3 +1068,21 @@ ab STEQK STEQ steq;
 \<CR> , HW.lpd8.potar[2][5] /* BPF2 freq */, HW.lpd8.potar[2][6] /* BPF2 Q */, HW.lpd8.potar[2][7] /* BPF2 Gain */
 \<CR> , HW.lpd8.potar[2][8] /* Output Gain */  ); steq $ ST @=>  last;
 
+
+ab TONEMULTIK TONE t[3];
+\<CR>0 => int id;
+\<CR>ST @ last;
+\<CR>
+\<CR>t[id].reg(synt0 s0);  //data.tick * 8 => t[id].max; //60::ms => t[id].glide;  // t[id].lyd(); // t[id].ion(); // t[id].mix();//
+\<CR>t[id].dor();// t[id].aeo(); // t[id].phr();// t[id].loc();
+\<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+\<CR>"1" => t[id].seq;
+\<CR>.9 * data.master_gain => t[id].gain;
+\<CR>//t[id].sync(4*data.tick);// t[id].element_sync();//  t[id].no_sync();//  t[id].full_sync(); // 1 * data.tick => t[id].the_end.fixed_end_dur;  // 16 * data.tick => t[id].extra_end;   //t[id].print(); //t[id].force_off_action();
+\<CR>// t[id].mono() => dac;//  t[id].left() => dac.left; // t[id].right() => dac.right; // t[id].raw => dac;
+\<CR>//t[id].adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+\<CR>//t[id].adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>t[id].go();   t[id] $ ST @=>  last; 
+\<CR>
+\<CR>1 +=> id; 
+

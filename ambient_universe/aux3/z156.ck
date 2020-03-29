@@ -70,6 +70,9 @@ stepc2.out => mult;
 STEPC stepc3; stepc3.init(HW.lpd8.potar[1][4], 0 /* min */, 100 /* max */, 50::ms /* transition_dur */);
 stepc3.out => z; 
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+
 STGVERB stgverb;
 stgverb.connect(last $ ST, .5 /* mix */, 14 * 10. /* room size */, 11::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
 
@@ -80,6 +83,7 @@ stgverb.connect(last $ ST, .5 /* mix */, 14 * 10. /* room size */, 11::second /*
 <<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^">>>;
 <<<"^^^^^^^^^^^^^^^^^^^^^^^^^^^^">>>;
 
+<<<"Potar 1.1 Gain ">>>;
 <<<"Potar 1.3 FM olsiclator Gain ">>>;
 <<<"Potar 1.4 FM olsiclator FReq ">>>;
 
