@@ -66,14 +66,18 @@ public class STLPFC2 extends ST{
   lpfl @=> cq.fl;
   lpfr @=> cq.fr;
 
+  END_CONTROL endf;
+  END_CONTROL endq;
 
   fun void connect(ST @ tone, CONTROLER f, CONTROLER q) {
     tone.left() => lpfl;
     tone.right() => lpfr;
 
     f.reg(cfreq);
+    endf.conf(endf, f ,cfreq);
     if(q != NULL){
       q.reg(cq);
+      endq.conf(endq, q ,cq);
     }
   }
 

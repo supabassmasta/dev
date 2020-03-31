@@ -50,14 +50,19 @@ public class STHPFC extends ST{
   hpfl @=> cq.fl;
   hpfr @=> cq.fr;
 
+  END_CONTROL endf;
+  END_CONTROL endq;
+
 
   fun void connect(ST @ tone, CONTROLER f, CONTROLER q) {
     tone.left() => hpfl;
     tone.right() => hpfr;
 
     f.reg(cfreq);
+    endf.conf(endf, f ,cfreq);
     if(q != NULL){
       q.reg(cq);
+      endq.conf(endq, q ,cq);
     }
   }
 

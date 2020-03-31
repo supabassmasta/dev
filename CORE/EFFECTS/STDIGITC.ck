@@ -40,13 +40,18 @@ public class STDIGITC extends ST{
   digl @=> cquant.dlp;
   digr @=> cquant.drp;
 
+  END_CONTROL endf;
+  END_CONTROL endq;
+
   fun void connect(ST @ tone, CONTROLER ech, CONTROLER quant) {
 
     tone.left() => inl;
     tone.right() => inr;
     
     ech.reg(cech);
+    endf.conf(endf, ech ,cech);
     quant.reg(cquant);
+    endq.conf(endq, quant, cquant);
   }
 
 }

@@ -70,6 +70,7 @@ public class STADSRC extends ST{
   al @=> ca.alp;
   ar @=> ca.arp;
 
+ 
   fun void connect(ST @ tone, CONTROLER cont, dur attack, dur release, int default_on, int toggle) {
     default_on => ca.def_on;
     toggle =>  ca.tog;

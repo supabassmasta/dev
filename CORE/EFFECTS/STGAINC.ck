@@ -23,6 +23,7 @@ public class STGAINC extends ST{
   control_gain cgain;
   gainl @=> cgain.gl;
   gainr @=> cgain.gr;
+  END_CONTROL endg;
 
   fun void connect(ST @ tone, CONTROLER g, float fact) {
 
@@ -31,6 +32,7 @@ public class STGAINC extends ST{
 
     fact => cgain.factor;
     g.reg(cgain);
+    endg.conf(endg, g ,cgain);
 
   }
 

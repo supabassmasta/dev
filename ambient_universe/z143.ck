@@ -11,11 +11,18 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.go();   t $ ST @=> ST @ last; 
 
 
+STDELAY stdelay;
+stdelay.connect(last $ ST , data.tick * 2. / 4. /* static delay */ );       stdelay $ ST @=>  last;  
+
+//STGAINC gainc;
+//gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+//gainc.connect(t $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+
+
 STLPFC lpfc;
 lpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last; 
+lpfc.connect(t $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lpfc $ ST @=>  last; 
 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

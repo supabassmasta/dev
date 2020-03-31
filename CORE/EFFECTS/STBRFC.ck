@@ -50,14 +50,18 @@ public class STBRFC extends ST{
   brfl @=> cq.fl;
   brfr @=> cq.fr;
 
+  END_CONTROL endf;
+  END_CONTROL endq;
 
   fun void connect(ST @ tone, CONTROLER f, CONTROLER q) {
     tone.left() => brfl;
     tone.right() => brfr;
 
     f.reg(cfreq);
+    endf.conf(endf, f ,cfreq);
     if(q != NULL){
       q.reg(cq);
+      endq.conf(endq, q ,cq);
     }
   }
 

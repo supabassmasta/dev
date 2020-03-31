@@ -42,6 +42,7 @@ public class STECHOC0 extends ST{
 //  control_delay cdelay;
 //  dr @=> cdelay.drp; 
 //  dl @=> cdelay.dlp; 
+  END_CONTROL endg;
 
   fun void connect(ST @ tone, dur d, CONTROLER g) {
     tone.left() => fbl;
@@ -49,6 +50,7 @@ public class STECHOC0 extends ST{
 
 //    d.reg(cdelay);
     g.reg(cgain);
+    endg.conf(endg, g ,cgain);
     d => dl.max => dl.delay => dr.max => dr.delay;
 
   }

@@ -121,18 +121,25 @@ public class STECHOLHPFC extends ST{
   hpfl @=> cq.hl;
   hpfr @=> cq.hr;
 
+  END_CONTROL endf;
+  END_CONTROL endq;
+  END_CONTROL endg;
 
   fun void connect(ST @ tone, CONTROLER f, CONTROLER q, dur d, CONTROLER g) {
     tone.left() => fbl;
     tone.right() => fbr;
 
     g.reg(cgain);
+    endg.conf(endg, g,cgain);
+
     d => dl.max => dl.delay => dr.max => dr.delay;
 
 
     f.reg(cfreq);
+    endf.conf(endf, f ,cfreq);
     if(q != NULL){
       q.reg(cq);
+      endq.conf(endq, q ,cq);
     }
   }
 

@@ -44,13 +44,17 @@ public class STECHOC extends ST{
   dr @=> cdelay.drp; 
   dl @=> cdelay.dlp; 
 
+  END_CONTROL endg;
+  END_CONTROL endd;
+  
   fun void connect(ST @ tone, CONTROLER d, CONTROLER g) {
     tone.left() => fbl;
     tone.right() => fbr;
 
     d.reg(cdelay);
+    endd.conf(endd, d ,cdelay);
     g.reg(cgain);
-
+    endg.conf(endg, g ,cgain);
   }
 
 }

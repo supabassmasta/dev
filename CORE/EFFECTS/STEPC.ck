@@ -18,10 +18,13 @@ public class STEPC {
   control_step cs;
   out @=> cs.st;
 
+  END_CONTROL end;
+
   fun void init(CONTROLER cont, float min, float max, dur transition_dur) {
     min => cs.min;
     max => cs.max;
     cont.reg(cs);
+    end.conf(end, cont ,cs);
     transition_dur => out.duration;
   }
 
