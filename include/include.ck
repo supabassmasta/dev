@@ -60,6 +60,9 @@ me.yield();
 Machine.add( rt + "CORE/seq_3/MASTER_SEQ3.ck");
 
 Machine.add( rt + "CORE/EFFECTS/CONTROLER.ck");
+me.yield();
+Machine.add(rt + "CORE/EFFECTS/END_CONTROL.ck");
+me.yield();
 
 // SYNTA
 Machine.add(rt + "CORE/SYNTA/GLIDE.ck");
@@ -231,6 +234,8 @@ Machine.add(rt + "CORE/SYNT/CELLO3.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA0.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA1.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA2.ck");
+
+
 
 me.yield();
 Machine.add(rt + "CORE/EFFECTS/STREV2.ck");
