@@ -35,7 +35,7 @@ public class STDIGITC extends ST{
   control_ech cech;
   digl @=> cech.dlp;
   digr @=> cech.drp;
-  
+
   control_quant cquant;
   digl @=> cquant.dlp;
   digr @=> cquant.drp;
@@ -43,15 +43,20 @@ public class STDIGITC extends ST{
   END_CONTROL endf;
   END_CONTROL endq;
 
+  0 => int connected;
+
   fun void connect(ST @ tone, CONTROLER ech, CONTROLER quant) {
 
     tone.left() => inl;
     tone.right() => inr;
-    
-    ech.reg(cech);
-    endf.conf(endf, ech ,cech);
-    quant.reg(cquant);
-    endq.conf(endq, quant, cquant);
+
+    if (!connected) {
+      ech.reg(cech);
+      endf.conf(endf, ech ,cech);
+      quant.reg(cquant);
+      endq.conf(endq, quant, cquant);
+      1 =>  connected;
+    }
   }
 
 }

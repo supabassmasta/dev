@@ -46,15 +46,20 @@ public class STECHOC extends ST{
 
   END_CONTROL endg;
   END_CONTROL endd;
-  
+
+  0 => int connected;
+
   fun void connect(ST @ tone, CONTROLER d, CONTROLER g) {
     tone.left() => fbl;
     tone.right() => fbr;
 
-    d.reg(cdelay);
-    endd.conf(endd, d ,cdelay);
-    g.reg(cgain);
-    endg.conf(endg, g ,cgain);
+    if (!connected) {
+      d.reg(cdelay);
+      endd.conf(endd, d ,cdelay);
+      g.reg(cgain);
+      endg.conf(endg, g ,cgain);
+      1 =>  connected;
+    }
   }
 
 }

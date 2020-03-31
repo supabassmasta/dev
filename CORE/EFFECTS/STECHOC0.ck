@@ -39,19 +39,24 @@ public class STECHOC0 extends ST{
   dr @=> cgain.drp; 
   dl @=> cgain.dlp; 
 
-//  control_delay cdelay;
-//  dr @=> cdelay.drp; 
-//  dl @=> cdelay.dlp; 
+  //  control_delay cdelay;
+  //  dr @=> cdelay.drp; 
+  //  dl @=> cdelay.dlp; 
   END_CONTROL endg;
+
+  0 => int connected;
 
   fun void connect(ST @ tone, dur d, CONTROLER g) {
     tone.left() => fbl;
     tone.right() => fbr;
 
-//    d.reg(cdelay);
-    g.reg(cgain);
-    endg.conf(endg, g ,cgain);
-    d => dl.max => dl.delay => dr.max => dr.delay;
+    if (!connected) {
+      //    d.reg(cdelay);
+      g.reg(cgain);
+      endg.conf(endg, g ,cgain);
+      d => dl.max => dl.delay => dr.max => dr.delay;
+      1 =>  connected;
+    }
 
   }
 

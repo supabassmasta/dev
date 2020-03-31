@@ -67,8 +67,8 @@ public class STLPFC extends ST{
         q.reg(cq);
         endq.conf(endq, q ,cq);
       }
+      1 =>  connected;
     }
-    1 =>  connected;
  
   }
 

@@ -23,16 +23,21 @@ public class STGAINC extends ST{
   control_gain cgain;
   gainl @=> cgain.gl;
   gainr @=> cgain.gr;
+
   END_CONTROL endg;
+  0 => int connected;
 
   fun void connect(ST @ tone, CONTROLER g, float fact) {
 
     tone.left() => gainl;
     tone.right() => gainr;
 
-    fact => cgain.factor;
-    g.reg(cgain);
-    endg.conf(endg, g ,cgain);
+    if (!connected) {
+      fact => cgain.factor;
+      g.reg(cgain);
+      endg.conf(endg, g ,cgain);
+      1 =>  connected;
+    }
 
   }
 
