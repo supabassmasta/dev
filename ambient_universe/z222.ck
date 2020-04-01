@@ -1,53 +1,36 @@
-//ST st; st @=> ST @ last;
+ST st; st @=> ST @ last;
 
-SndBuf2 mod => blackhole;
+SndBuf2 s;
 
-//mod.chan(0) => st.outl;
-//mod.chan(1) => st.outr;
+s.chan(0) => st.outl;
+s.chan(1) => st.outr;
 
-"../_SAMPLES/CostaRica/processed/ZOOM0016.wav" => mod.read;
-13 * 10 => mod.gain;
--0.21 => mod.rate;
+"../_SAMPLES/CostaRica/processed/ZOOM0016.wav" => s.read;
+.12 => s.gain;
+-0.21 => s.rate;
 
-class synt0 extends SYNT{
+STDELAY stdelay;
+stdelay.connect(last $ ST , data.tick * 4. / 4. /* static delay */ );       stdelay $ ST @=>  last;  
 
-//    inlet => SinOsc sin =>  outlet; 
-//    s => sin;
-//    .5 => sin.gain;
-    
-    8 => int synt_nb; 0 => int i;
-    Gain detune[synt_nb];
-    Step det_amount[synt_nb];
-    SinOsc s[synt_nb];
-    Gain final => outlet; .3 => final.gain;
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 2 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
-    inlet => detune[i] => s[i] => final; mod => detune[i]; det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain; i++;  
-    inlet => detune[i] => s[i] => final; mod => detune[i]; det_amount[i] => detune[i];  -3.51 => det_amount[i].next;      .1 => s[i].gain; i++;  
-    inlet => detune[i] => s[i] => final; mod => detune[i]; det_amount[i] => detune[i];  3.51 => det_amount[i].next;      .1 => s[i].gain; i++;   
+STAUTOPAN autopan2;
+autopan2.connect(st $ ST, .5 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan2 $ ST @=>  last; 
 
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
-} 
+STGAIN stgain;
+stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+stgain.connect(autopan $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
 
-lpk25 l;
-POLY synta; 
-l.reg(synta);
-synta.reg(synt0 s0);  synta.a[0].set(3::ms, 30::ms, .7, 100::ms);
-synta.reg(synt0 s1);  synta.a[1].set(3::ms, 30::ms, .7, 100::ms);
-synta.reg(synt0 s2);  synta.a[2].set(3::ms, 30::ms, .7, 100::ms);
-synta.reg(synt0 s3);  synta.a[3].set(3::ms, 30::ms, .7, 100::ms);
-
-// Note info duration
-10 * 100::ms => synta.ni.d;
-
-synta $ ST @=> ST @ last; 
-
-STGVERB stgverb;
-stgverb.connect(last $ ST, .2 /* mix */, 14 * 10. /* room size */, 11::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
-
-
+STEQ steq;
+steq.static_connect(last $ ST,  1022.600117  /* HPF freq */,  1.000000  /* HPF Q */,  2652.296559  /* LPF freq */,  1.000000  /* LPF Q */
+      ,  0.000000  /* BRF1 freq */,  1.000000  /* BRF1 Q */,  0.000000  /* BRF2 freq */,  1.000000  /* BRF2 Q */
+      ,  0.000000  /* BPF1 freq */,  1.000000  /* BPF1 Q */,  0.000000  /* BPF1 Gain */
+      ,  0.000000  /* BPF2 freq */,  1.000000  /* BPF2 Q */,  0.000000   /* BPF2 Gain */
+      ,  1.000000  /* Output Gain */ ); steq $ ST @=>  last; 
 
 while(1) {
-       mod.samples() => mod.pos;
+       s.samples() => s.pos;
        33 * data.tick => now;
 }
  

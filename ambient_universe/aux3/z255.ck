@@ -41,6 +41,13 @@ synta.reg(synt0 s3);  synta.a[3].set(3::ms, 30::ms, .7, 100::ms);
 
 synta $ ST @=> ST @ last; 
 
+
+STBPF bpf;
+bpf.connect(last $ ST , 100 /* freq */  , 1.0 /* Q */  );       bpf $ ST @=>  last; 
+
+STGAIN stgain;
+stgain.connect(last $ ST , 6. /* static gain */  );       stgain $ ST @=>  last; 
+
 STGVERB stgverb;
 stgverb.connect(last $ ST, .2 /* mix */, 14 * 10. /* room size */, 11::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
 
