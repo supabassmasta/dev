@@ -1,0 +1,25 @@
+ST st; st @=> ST @ last;
+
+SndBuf2 s;
+
+s.chan(0) => st.outl;
+s.chan(1) => st.outr;
+
+"../_SAMPLES/CostaRica/processed/ZOOM0016.wav" => s.read;
+.12 => s.gain;
+-0.21 => s.rate;
+
+
+STEQ steq;
+steq.static_connect(last $ ST,  1022.600117  /* HPF freq */,  1.000000  /* HPF Q */,  2652.296559  /* LPF freq */,  1.000000  /* LPF Q */
+      ,  0.000000  /* BRF1 freq */,  1.000000  /* BRF1 Q */,  0.000000  /* BRF2 freq */,  1.000000  /* BRF2 Q */
+      ,  0.000000  /* BPF1 freq */,  1.000000  /* BPF1 Q */,  0.000000  /* BPF1 Gain */
+      ,  0.000000  /* BPF2 freq */,  1.000000  /* BPF2 Q */,  0.000000   /* BPF2 Gain */
+      ,  1.000000  /* Output Gain */ ); steq $ ST @=>  last; 
+
+while(1) {
+       s.samples() => s.pos;
+       33 * data.tick => now;
+}
+ 
+
