@@ -70,7 +70,8 @@ public class STADSRC extends ST{
   al @=> ca.alp;
   ar @=> ca.arp;
 
- 
+  END_CONTROL end;
+
   fun void connect(ST @ tone, CONTROLER cont, dur attack, dur release, int default_on, int toggle) {
     default_on => ca.def_on;
     toggle =>  ca.tog;
@@ -81,6 +82,7 @@ public class STADSRC extends ST{
     ar.set(attack, 0::ms, 1., release);
 
     cont.reg(ca);
+    end.conf(end, cont, ca);
 
     if (default_on) {
       al.keyOn();
