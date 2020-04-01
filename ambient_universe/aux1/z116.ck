@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../../_SAMPLES/ambient_universe/amb4.wav" => l.read;
+"../../_SAMPLES/ambient_universe/amb5.wav" => l.read;
 1.0 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(10::ms, 4000::ms);

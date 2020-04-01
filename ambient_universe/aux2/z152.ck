@@ -6,7 +6,7 @@ Step det_amount[synt_nb];
 SERUM0 s[synt_nb];
 Gain final => outlet; .3 => final.gain;
 
-49 =>int  nb;
+47 =>int  nb;
 0 => int rk;
 
 inlet => detune[i] => s[i] => final; s[i].config(nb, rk); det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain; i++;  
@@ -26,7 +26,7 @@ Step det_amount[synt_nb];
 SERUM0 s[synt_nb];
 Gain final => outlet; .3 => final.gain;
 
-48 =>int  nb;
+45 =>int  nb;
 0 => int rk;
 
 inlet => detune[i] => s[i] => final; s[i].config(nb, rk); det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain; i++;  
@@ -52,7 +52,7 @@ t[id].reg(synt0 s3); .6 => s1.outlet.gain;
 t[id].dor();// t[id].aeo(); // t[id].phr();// t[id].loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c}c:4
-1|3|5___ {c 4|6|8___
+2|4|6___  0|2|4___
 " => t[id].seq;
 .9 * data.master_gain => t[id].gain;
 //t[id].sync(4*data.tick);// t[id].element_sync();//  t[id].no_sync();//  t[id].full_sync(); // 1 * data.tick => t[id].the_end.fixed_end_dur;  // 16 * data.tick => t[id].extra_end;   //t[id].print(); //t[id].force_off_action();
@@ -84,7 +84,7 @@ t[id].reg(synt1 S3); .6 => s1.outlet.gain;
 t[id].dor();// t[id].aeo(); // t[id].phr();// t[id].loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c}c:4
-__0|2|4_ {c __5|7|9_
+__4|6|8_  __1|3|5_
 " => t[id].seq;
 .9 * data.master_gain => t[id].gain;
 //t[id].sync(4*data.tick);// t[id].element_sync();//  t[id].no_sync();//  t[id].full_sync(); // 1 * data.tick => t[id].the_end.fixed_end_dur;  // 16 * data.tick => t[id].extra_end;   //t[id].print(); //t[id].force_off_action();
@@ -113,7 +113,7 @@ stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last;
 stgain.connect(stsynclpf2 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
 
 STREC strec;
-strec.connect(last $ ST, 32*data.tick, "../../_SAMPLES/ambient_universe/amb4.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); strec $ ST @=>  last;  
+strec.connect(last $ ST, 32*data.tick, "../../_SAMPLES/ambient_universe/amb5.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); strec $ ST @=>  last;  
 
 while(1) {
        100::ms => now;
