@@ -58,15 +58,29 @@ public class killer {
 				0=> int inside;
         end @ e;
         0 => int pos;
+
+        1 => int not_removed;
+
 				for (0 => int i; i < list.size()      ; i++) {
+
 					if (list[i].shred_id == id ) {
 						<<<"kill", id>>>;
 						list[i] @=> e;	
+
+            if (!e.no_remove) {
+              0 => not_removed;
+            }
+
 						rem(i);	
 						spork~e.kill_me_bad();	
             // kill sub end in same shred
             while(e.next != NULL) {
               e.next @=> e;
+              
+              if (!e.no_remove) {
+                0 => not_removed;
+              }
+              
               spork~e.kill_me_bad();
               1 +=> pos;
               <<<"Kill sub end, id: ", id, " position: ", pos>>>;
@@ -76,8 +90,8 @@ public class killer {
 					}
 				}
 
-				if (!inside) {
-						<<< id,  "not registered kill it directly">>>;
+				if (!inside || not_removed) {
+						<<< id,  "not registered or not removed, kill it directly">>>;
 						Machine.remove(id);
 				}
 				
