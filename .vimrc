@@ -402,7 +402,7 @@ ab gverbK GVerb gverb0  =>
 
 ab TONEK TONE t;
 \<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-\<CR>t.dor();// t.aeo(); // t.phr();// t.loc();
+\<CR>t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"1" => t.seq;
 \<CR>.9 * data.master_gain => t.gain;

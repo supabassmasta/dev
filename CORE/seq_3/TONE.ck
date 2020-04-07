@@ -1032,6 +1032,10 @@ public class TONE extends ST {
     scale << 1 << 2 << 2 << 1 << 2 << 2 << 2;
   }
 
+  fun void double_harmonic () {
+    0 => scale.size;
+    scale << 1 << 3 << 1 << 2 << 1 << 3 << 1;
+  }
 
 
 

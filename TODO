@@ -1,8 +1,6 @@
 
 live piano recoder SYNTA. output: " 1111 1111 2333 ____ ...
 
-supersaw => flanger (bien metal) => tone_filter (fast transition)
-
 
 Perc chamanic, kick beat with DUCK,  for mong step
 
@@ -16,8 +14,6 @@ Fix Bug: Ghost scripts using  HW.launchpad.virtual_key_X. Call stack from the sc
 Fix Bug: long TONE SEQ do xrun @ .seq() loading and maybe .go(). Use inawah/z33 for test
 
 
-
-create vim ab for TONE[] arrays, allowing to manage several TONE in the same script.
 
 create SYNC modulators with TONE.in as input
 
@@ -48,7 +44,4 @@ Make sync script hardcore: if diff_time to high reset counter
 
 Bangra 6 temps
 
-Create korg stereo sampler
-
-Try to kill/unreg control objects on script end to free memory
 
