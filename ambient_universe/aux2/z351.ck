@@ -46,12 +46,12 @@ ST @ last;
 
 t[id].reg(synt0 s0);  
 t[id].reg(synt0 s1); .8 => s1.outlet.gain; 
-t[id].reg(synt0 s2); .7 => s1.outlet.gain; 
-t[id].reg(synt0 s3); .6 => s1.outlet.gain;  
+t[id].reg(synt0 s2); .6 => s1.outlet.gain; 
+t[id].reg(synt0 s3); .5 => s1.outlet.gain;  
 //data.tick * 8 => t[id].max; //60::ms => t[id].glide;  // t[id].lyd(); // t[id].ion(); // t[id].mix();//
 t[id].double_harmonic();// t[id].aeo(); // t[id].phr();// t[id].loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c}c:4
+"}c}c:4 }2
 1|3|5___ {c 4|6|8___
 " => t[id].seq;
 .9 * data.master_gain => t[id].gain;
@@ -78,8 +78,8 @@ stsynclpf2.connect(last $ ST, t[0].note_info_tx_o); stsynclpf2 $ ST @=>  last;
 
 t[id].reg(synt1 S0);  
 t[id].reg(synt1 S1); .8 => s1.outlet.gain; 
-t[id].reg(synt1 S2); .7 => s1.outlet.gain; 
-t[id].reg(synt1 S3); .6 => s1.outlet.gain;  
+t[id].reg(synt1 S2); .6 => s1.outlet.gain; 
+t[id].reg(synt1 S3); .5 => s1.outlet.gain;  
 //data.tick * 8 => t[id].max; //60::ms => t[id].glide;  // t[id].lyd(); // t[id].ion(); // t[id].mix();//
 t[id].double_harmonic();// t[id].aeo(); // t[id].phr();// t[id].loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
