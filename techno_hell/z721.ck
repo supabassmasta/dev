@@ -16,6 +16,9 @@ t.go();   t $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 7 * 100 /* freq */  , 1.1 /* Q */  );       lpf $ ST @=>  last; 
 
+STMIX stmix;
+stmix.send(last, 14);
+
 while(1) {
        100::ms => now;
 }

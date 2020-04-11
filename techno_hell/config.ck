@@ -14,5 +14,8 @@
 //HW.ledstrip.open();
 //HW.ledstrip._load_preset('0');
 
-//1::ms => now;
+// KICK BASS OUT
+LAUNCHPAD_VIRTUAL.on.set(14);
+
+1::ms => now;
 

@@ -19,6 +19,9 @@ lpf.connect(last $ ST , 41 * 10 /* freq */  , 1.1 /* Q */  );       lpf $ ST @=>
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
 
+//STMIX stmix;
+//stmix.send(last, 14);
+
 while(1) {
        100::ms => now;
 }

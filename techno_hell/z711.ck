@@ -20,6 +20,9 @@ lpf.connect(last $ ST , 118 *10 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
+STMIX stmix;
+stmix.send(last, 14);
+
 while(1) {
        100::ms => now;
 }

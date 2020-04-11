@@ -21,7 +21,8 @@ _1_1 ____
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
-
+STMIX stmix;
+stmix.send(last, 14);
 while(1) {
        100::ms => now;
 }

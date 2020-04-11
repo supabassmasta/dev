@@ -6,7 +6,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 *4 
 __1!1
 " => t.seq;
-.8 * data.master_gain => t.gain;
+.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -16,9 +16,11 @@ t.go();   t $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 40 *10 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
+STMIX stmix;
+stmix.send(last, 14);
 
 while(1) {
        100::ms => now;
