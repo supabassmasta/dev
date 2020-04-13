@@ -13,14 +13,6 @@ s.go();     s $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 118 *10 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
-class STDUCKMASTER2 extends ST {
-
-  fun void connect(ST @ tone) {
-    tone.left()  => global_mixer.duck2_sidel => outl;
-    tone.right() => global_mixer.duck2_sider => outr; 
-  }
-
-}
 
 STDUCKMASTER2 duckm2;
 duckm2.connect(last $ ST );      duckm2 $ ST @=>  last; 

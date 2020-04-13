@@ -1086,3 +1086,9 @@ ab TONEMULTIK TONE t[3];
 \<CR>
 \<CR>1 +=> id; 
 
+ab STDUCKMASTER2K STDUCKMASTER2 duckm2;
+\<CR>duckm2.connect(last $ ST );      duckm2 $ ST @=>  last; 
+
+ab STDUCK2K STDUCK2 duck2;
+\<CR>duck2.connect(last $ ST, 9. /* Side Chain Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duck2 $ ST @=>  last; 
+
