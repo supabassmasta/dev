@@ -16,11 +16,62 @@ t.go();   t $ ST @=> ST @ last;
 STLPF lpf;
 lpf.connect(last $ ST , 41 * 10 /* freq */  , 1.1 /* Q */  );       lpf $ ST @=>  last; 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+ class STDUCK2 extends ST {
+   Dyno dl;
+   Dyno dr;
+   dl.duck();
+   dr.duck();
 
-//STMIX stmix;
-//stmix.send(last, 14);
+   Gain sidein_l => blackhole;
+   Gain sidein_r => blackhole;
+
+
+   fun void side_process(){ 
+
+     while(1) 
+     {
+       sidein_l.last() =>  dl.sideInput;
+       sidein_r.last() =>  dr.sideInput;
+       1::samp => now;
+     }
+
+   } 
+
+   fun void connect(ST @ tone, float in_gain, float tresh, float slope, dur attack, dur release) {
+     in_gain => sidein_l.gain;
+     in_gain => sidein_r.gain;
+
+     tresh =>   dl.thresh;
+     tresh =>   dr.thresh;
+
+     slope =>   dl.slopeAbove;
+     slope =>   dr.slopeAbove;
+
+     attack =>  dl.attackTime;
+     attack =>  dr.attackTime;
+
+     release => dl.releaseTime;
+     release => dr.releaseTime;
+
+
+     global_mixer.duck2_sidel => sidein_l;
+     global_mixer.duck2_sider => sidein_r;
+
+     tone.left()  => dl => outl;
+     tone.right() => dr => outr; 
+
+     spork ~ side_process();
+
+   }
+
+}
+
+
+STDUCK2 duck2;
+duck2.connect(last $ ST, 9. /* Side Chain Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duck2 $ ST @=>  last; 
+
+STMIX stmix;
+stmix.send(last, 14);
 
 while(1) {
        100::ms => now;
