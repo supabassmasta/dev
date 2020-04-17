@@ -15,3 +15,10 @@ Program terminated with signal SIGSEGV, Segmentation fault.
 (gdb) frame 1
 #1  0x000000000045ee7c in Chuck_Event::broadcast() ()
 (gdb)
+
+
+Other crach with pthread:
+chuckj: ../nptl/pthread_mutex_lock.c:352: __pthread_mutex_lock_full: Assertion `INTERNAL_SYSCALL_ERRNO (e, __err) != ESRCH || !robust' failed.
+core in TH aux3
+
+

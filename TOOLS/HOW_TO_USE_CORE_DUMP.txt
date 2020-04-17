@@ -16,3 +16,18 @@ ddd  program_who_crash -c core
 
 It is of course better to compile with -g option to have debub symbols
 
+
+
+If source files are missing:
+--------------------------
+in ddd use command: dir path_to_add
+be careful of '..' in relative path known by ddd.
+
+To find source in linux:
+install package source in package manager. Look at its properties in packet manager to find where are sources.
+for glibc (pthread nptl etc...) it is /usr/src/glibc, in the tar file.
+
+
+
+
+
