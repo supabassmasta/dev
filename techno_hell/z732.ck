@@ -9,13 +9,13 @@ s2.wav["s"] => s.wav["s"];
 //____ ____ ____
 //xx_k k_k_ l_s_
 " *4 __xk _lx_ x_k_ l_ss :4" => s.seq;
-.8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+1.2 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
 
 STLPF lpf;
-lpf.connect(last $ ST , 15 *100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+lpf.connect(last $ ST , 18 *100 /* freq */  , 2.0 /* Q */  );       lpf $ ST @=>  last; 
 
 
 while(1) {
