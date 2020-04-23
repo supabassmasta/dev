@@ -11,7 +11,7 @@ ____ ____ ____ __a_
 
 
 " => s.seq;
-.9 * data.master_gain => s.gain; // 
+1.0 * data.master_gain => s.gain; // 
 //s.gain("u", .4); // for single wav 
 //s.gain("s", .1); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
