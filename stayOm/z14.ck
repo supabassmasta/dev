@@ -4,19 +4,19 @@ SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"];
 //*3:2
 //k__ __k k__ u__
 "*2
-k___ u___
-k___ u___
-k___ u__k
-k___ uk__
+____ ____
+____ ____
+____ ____
+____ *2 ___u ____ :2
 
-k___ u___
-k___ u___
-kk__ u__k
-k___ uk__
+____ ____
+____ ____
+__ab ____
+____ *2 ___u ____ :2
 
 " => s.seq;
-.9 * data.master_gain => s.gain; // 
-s.gain("u", .4); // for single wav 
+.4 * data.master_gain => s.gain; // 
+s.gain("u", .3); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 //// SUBWAV //// 
@@ -25,8 +25,8 @@ s.gain_subwav("K", 0, .3);
 
 s.go();     s $ ST @=> ST @ last; 
 
-STDUCKMASTER2 duckm2;
-duckm2.connect(last $ ST );      duckm2 $ ST @=>  last;  
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

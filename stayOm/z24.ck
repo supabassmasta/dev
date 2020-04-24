@@ -9,11 +9,6 @@ k___ u___
 k___ u__k
 k___ uk__
 
-k___ u___
-k___ u___
-kk__ u__k
-k___ uk__
-
 " => s.seq;
 .9 * data.master_gain => s.gain; // 
 s.gain("u", .4); // for single wav 
