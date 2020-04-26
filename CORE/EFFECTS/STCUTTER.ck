@@ -31,8 +31,8 @@ public class STCUTTER extends ST {
   fun void connect(ST @ tone, dur attack, dur release) {
     tone.left() => s0.al;
     tone.right() => s0.ar;
-    s0.al.set(3::ms, 0::ms, 1., 3::ms);
-    s0.ar.set(3::ms, 0::ms, 1., 3::ms);
+    s0.al.set(attack, 0::ms, 1., release);
+    s0.ar.set(attack, 0::ms, 1., release);
     t.go();
   }
 }
