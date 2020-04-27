@@ -3,11 +3,16 @@ t.reg(SERUM0 s0); s0.config(3,2);  //data.tick * 8 => t.max; //
 91::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" }c 
+" }c *4 
 
-1111 5522 3333 0000
-1111 5522 3355 0000
-
+____ ____ ____ ____
+____ ____ _021 ____
+____ ____ ____ ____
+____ ____ 8//1__ ____
+____ ____ ____ ____
+____ ___2 021_ ____
+____ ____ ____ ____
+____ ____ __b//1 ____
 " => t.seq;
 .16 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
@@ -28,6 +33,9 @@ flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3:
 
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 STGVERB stgverb;
 stgverb.connect(last $ ST, .1 /* mix */, 9 * 10. /* room size */, 3::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 

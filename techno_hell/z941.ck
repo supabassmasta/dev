@@ -1,0 +1,9 @@
+55 => data.ref_note;
+157 => data.bpm; (60.0/data.bpm)::second => data.tick;
+
+
+
+while(1) {
+       100::ms => now;
+}
+ 
