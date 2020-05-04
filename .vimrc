@@ -1092,3 +1092,9 @@ ab STDUCKMASTER2K STDUCKMASTER2 duckm2;
 ab STDUCK2K STDUCK2 duck2;
 \<CR>duck2.connect(last $ ST, 9. /* Side Chain Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duck2 $ ST @=>  last; 
 
+ab ADSRMODK ADSRMOD adsrmod;
+\<CR>adsrmod.adsr_set(0.001 /* relative attack dur */, 0.000001 /* relative decay dur */ , 1.0 /* sustain */, - 0.5 /* relative sustain pos */, .3 /* relative sustain dur */);
+\<CR>adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
+\<CR>adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */);
+
+
