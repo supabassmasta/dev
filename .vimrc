@@ -872,41 +872,49 @@ ab STPADSRK STPADSR stpadsr;
 ab STSYNCLPFK STSYNCLPF stsynclpf;
 \<CR>stsynclpf.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsynclpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynclpf.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last;
 
 ab STSYNCBPFK STSYNCBPF stsyncbpf;
 \<CR>stsyncbpf.freq(100 /* Base */, 9 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsyncbpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncbpf.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsyncbpf.connect(last $ ST, t.note_info_tx_o); stsyncbpf $ ST @=>  last; 
 
 ab STSYNCHPFK STSYNCHPF stsynchpf;
 \<CR>stsynchpf.freq(1000 /* Base */, 20 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsynchpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynchpf.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsynchpf.connect(last $ ST, t.note_info_tx_o); stsynchpf $ ST @=>  last; 
 
 ab STSYNCBRFK STSYNCBRF stsyncbrf;
 \<CR>stsyncbrf.freq(100 /* Base */, 31 * 100 /* Variable */, 1. /* Q */);
 \<CR>stsyncbrf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncbrf.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsyncbrf.connect(last $ ST, t.note_info_tx_o); stsyncbrf $ ST @=>  last; 
 
 ab STSYNCRESK STSYNCRES stsyncres;
 \<CR>stsyncres.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
 \<CR>stsyncres.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsyncres.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsyncres.connect(last $ ST, t.note_info_tx_o); stsyncres $ ST @=>  last;
 
 ab STSYNCLPF2K STSYNCLPF2 stsynclpf2;
 \<CR>stsynclpf2.freq(100 /* Base */, 11 * 100 /* Variable */, 1.0 /* Q */);
 \<CR>stsynclpf2.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+\<CR>stsynclpf2.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsynclpf2.connect(last $ ST, t.note_info_tx_o); stsynclpf2 $ ST @=>  last;
 
 ab STSYNCDLK STSYNCWPDiodeLadder stsyncdl;
 \<CR>stsyncdl.freq(3*100 /* Base */, 5 * 100 /* Variable */, 5. /* resonance */ , true /* nonlinear */, true /* nlp_type */ );
 \<CR>stsyncdl.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
+\<CR>stsyncdl.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsyncdl.connect(last $ ST, t.note_info_tx_o); stsyncdl $ ST @=>  last; 
 
 ab STSYNCKORGK STSYNCWPKorg35 stsynckorg;
 \<CR>stsynckorg.freq(3*100 /* Base */, 2 * 100 /* Variable */, 1.1 /*   /!\ < 1.7 !!!!   resonance */ , true /* nonlinear */ );
 \<CR>stsynckorg.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.00001 /* Sustain */, .0 /* Relative Sustain dur */, 0.0 /* Relative release */);
+\<CR>stsynckorg.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stsynckorg.connect(last $ ST, t.note_info_tx_o); stsynckorg $ ST @=>  last; 
 
 ab STRECCONVK STRECCONV strecconv;
