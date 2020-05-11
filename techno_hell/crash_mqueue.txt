@@ -1,0 +1,32 @@
+Techno hell (main and aux1) run into 2 ddd 
+
+Crash:
+
+Thread 13 "chuckj" received signal SIGSEGV, Segmentation fault.
+[Switching to Thread 0x7ffff7e82700 (LWP 16444)]
+Chuck_Event::signal (this=0x7fffe37546e0) at chuck_oo.cpp:1974
+(gdb) frame 1
+
+
+
+In
+
+void Chuck_Event::signal()
+{
+    m_queue_lock.acquire();
+    if( !m_queue.empty() )
+    {
+        // get the shred on top of the queue
+=>        Chuck_VM_Shred * shred = m_queue.front();
+
+
+
+Backtrace
+
+bool RtApiJack :: callbackEvent( unsigned long nframes )
+int ChuckAudio::cb( void * output_buffer, void * input_buffer, unsigned int buffer_size,
+                    double streamTime, RtAudioStreamStatus status, void * user_data )
+t_CKBOOL Chuck_VM::run( t_CKINT N, const SAMPLE * input, SAMPLE * output )
+t_CKBOOL Chuck_VM::compute()
+void Chuck_Event::broadcast()
+void Chuck_Event::signal()
