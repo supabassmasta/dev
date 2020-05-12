@@ -2,7 +2,7 @@ class synt0 extends SYNT{
 
     inlet => SqrOsc s =>  outlet; 
       .5 => s.gain;
-      .5 => s.width;
+      .1 => s.width;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
@@ -32,8 +32,8 @@ arp.t.go();
 arp.t.raw() => s0.inlet; 
 
 STCUTTER stcutter;
-"  
-____ *8 1___ 1_1_ __1_ 1___   1_1_ __1_ 1_1_ 1_1_  :8 
+"*4  1_1_ 1111 ____ ____
+ 1_11 _111 ____ ____
 " => stcutter.t.seq; 16 * data.tick => stcutter.t.the_end.fixed_end_dur;
 stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
 

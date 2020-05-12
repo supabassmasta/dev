@@ -2,7 +2,7 @@ class synt0 extends SYNT{
 
     inlet => SqrOsc s =>  outlet; 
       .5 => s.gain;
-      .5 => s.width;
+      .1 => s.width;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
@@ -13,7 +13,7 @@ t.reg(synt0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c G|f///h|H 1|G//G|f h|H/1|G " => t.seq;
-.2 * data.master_gain => t.gain;
+.1 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 16 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -32,13 +32,17 @@ arp.t.go();
 arp.t.raw() => s0.inlet; 
 
 STCUTTER stcutter;
-"  
-____ *8 1___ 1_1_ __1_ 1___   1_1_ __1_ 1_1_ 1_1_  :8 
+"*4   ____ 1_1_ 1111 ____
+ ____ 1_11 _111 ____
 " => stcutter.t.seq; 16 * data.tick => stcutter.t.the_end.fixed_end_dur;
 stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
 
 STHPF hpf;
 hpf.connect(last $ ST , 35 * 10 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last; 
+
+STFLANGER flang;
+flang.connect(last $ ST); flang $ ST @=>  last; 
+flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */); 
 
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 2 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 

@@ -48,6 +48,8 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 <<<"~~~  LPF  Q    lpd8 1.4   ~~~~~~">>>;
 <<<"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">>>;
 
+STGAIN stgain;
+stgain.connect(last $ ST , 0.6 /* static gain */  );       stgain $ ST @=>  last; 
 
 
 
