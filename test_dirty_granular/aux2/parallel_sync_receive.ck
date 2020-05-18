@@ -1,0 +1,1 @@
+../parallel_sync_receive.ck
