@@ -207,7 +207,7 @@ One planet
 ----------------------------
 
 part 1 : Après theme sanranghi attendre la petite montée de Sat pour lancer les HH puis les CC
-         passer à la part 2 après le theme canon quand ils recommence à jouer tout les deux ensemble(z18 SYNC % 16 beat).
+         passer à la part 2 après le theme canon quand ils recommence à jouer tout les deux ensemble(z28 SYNC % 16 beat).
 PArt 2 : laisser faire 
 
 Part 3 : lancer le congo scratch et BASS 2 après le theme canon et après qu'ils jouent à 2.
