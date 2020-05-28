@@ -1037,6 +1037,11 @@ public class TONE extends ST {
     scale << 1 << 3 << 1 << 2 << 1 << 3 << 1;
   }
 
+  fun void gypsy_minor () {
+    0 => scale.size;
+    scale << 2 << 1 << 3 << 1 << 1 << 3 << 1 ;
+  }
+
 
 
 

@@ -241,6 +241,7 @@ Machine.add(rt + "CORE/SYNT/CHORUSA2.ck");
 
 
 me.yield();
+Machine.add(rt + "CORE/seq_3/POLYTONE.ck");
 Machine.add(rt + "CORE/EFFECTS/STREV2.ck");
 Machine.add( rt + "include/HW.ck");
 Machine.add( rt + "CORE/seq_3/SET_WAV.ck");
