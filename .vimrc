@@ -419,21 +419,21 @@ ab POLYTONEK POLYTONE pt;
 \<CR>// data.tick * 5 => pt.max; // 60::ms => pt.t[0].glide;// 1 * data.tick => pt.t[0].the_end.fixed_end_dur; // 16 * data.tick => pt.extra_end;  
 \<CR>
 \<CR>// /!\ Not managed for all TONE in POLY TONE
-\<CR> //pt.t[0].force_off_action();
+\<CR>//pt.t[0].force_off_action();
 \<CR>// pt.t[0].mono() => dac;//  pt.t[0].left() => dac.left; // pt.t[0].right() => dac.right; // pt.t[0].raw => dac;
 \<CR>
-\<CR>pt.dor();// pt.lyd();// pt.ion();// pt.mix();// pt.aeo();// pt.phr();// pt.loc();// pt.double_harmonic();// pt.gypsy_minor();
-\<CR> //pt.sync(4*data.tick);// pt.element_sync();//  pt.no_sync();//  pt.full_sync();
+\<CR>pt.dor();// pt.lyd();// pt.ion();// pt.mix();// pt.aeo();// pt.phr();// pt.loc();// pt.double_harmonic();// pt.gypsy_minor();
+\<CR>//pt.sync(4*data.tick);// pt.element_sync();//  pt.no_sync();//  pt.full_sync();
 \<CR>
 \<CR>.6 * data.master_gain =>  pt.gain_common;
 \<CR>// .6 * data.master_gain => pt.t[0].gain; // For individual gain
 \<CR>
-\<CR> pt.t[0].reg(synt0 s0); 
-\<CR> pt.t[1].reg(synt0 s1); 
-\<CR> pt.t[2].reg(synt0 s2); 
+\<CR>pt.t[0].reg(synt0 s0); 
+\<CR>pt.t[1].reg(synt0 s1); 
+\<CR>pt.t[2].reg(synt0 s2); 
 \<CR>
-\<CR> pt.adsr0_set(1500::ms, 1000::ms, .8, 3000::ms); // Only works for ADSR 0
-\<CR> pt.adsr0_setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>pt.adsr0_set(1500::ms, 1000::ms, .8, 3000::ms); // Only works for ADSR 0
+\<CR>pt.adsr0_setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>"" +=> pt.tseq[0];
@@ -445,10 +445,6 @@ ab POLYTONEK POLYTONE pt;
 \<CR>// CONNECTIONS
 \<CR>pt.stout_connect(); pt.stout $ ST  @=> ST @ last; // comment to connect each TONE separately
 \<CR>// pt.t[0] $ ST @=> ST @ last;
-
-
-
-
 
 
 ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
