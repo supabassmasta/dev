@@ -393,12 +393,23 @@ Fade_in_out fade_in_out;
 int preset = 0;
 
 void setup() {
-  preset = 0;
+  
   strip.begin();
   strip.setBrightness(255); // Max 255
   strip.show(); // Initialize all pixels to 'off'
 
 
+  // Kaleido HACK ////////////////////////
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      init_colorRamps();
+      init_kaleidoscope();
+
+      preset = 11;
+//////////////////////////////////////
+      
   pinMode(LED_BUILTIN, OUTPUT);
 
   Serial.begin(115200);
@@ -486,6 +497,7 @@ void loop() {
 
     case 11:
       dhoomtala();
+    randyellow();
     break;
 
     case 12:
@@ -1766,7 +1778,7 @@ void randyellow() {
   int b;
   int c;
   int white;
-  for (int i=0; i< 10 ; i++){
+  for (int i=0; i< 5 ; i++){
     b = msws();
     c = b >> 9;
     if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
@@ -2061,13 +2073,13 @@ class colorRampElt {
   }
 };
 
-#define CRAMP_RED_NB 2
+#define CRAMP_RED_NB 6
 colorRampElt cramp_r[CRAMP_RED_NB];
 
-#define CRAMP_GREEN_NB 2
+#define CRAMP_GREEN_NB 6
 colorRampElt cramp_g[CRAMP_GREEN_NB];
 
-#define CRAMP_BLUE_NB 2
+#define CRAMP_BLUE_NB 6
 colorRampElt cramp_b[CRAMP_BLUE_NB];
 
 void init_colorRamps() {
@@ -2083,6 +2095,22 @@ void init_colorRamps() {
   cramp_r[idx].step = -16;
   idx++;
 
+  cramp_r[idx].target = 24;
+  cramp_r[idx].step = 12;
+  idx++;
+
+  cramp_r[idx].target = -32;
+  cramp_r[idx].step = -2;
+  idx++;
+
+  cramp_r[idx].target = 6;
+  cramp_r[idx].step = 1;
+  idx++;
+
+  cramp_r[idx].target = -128;
+  cramp_r[idx].step = -1;
+  idx++;
+
   ////////////// GREEN //////////////////
   idx = 0;
   cramp_g[idx].target = -128;
@@ -2093,6 +2121,21 @@ void init_colorRamps() {
   cramp_g[idx].step = 4;
   idx++;
 
+  cramp_g[idx].target = -53;
+  cramp_g[idx].step = -5;
+  idx++;
+
+  cramp_g[idx].target = 19;
+  cramp_g[idx].step = 13;
+  idx++;
+
+  cramp_g[idx].target = 6;
+  cramp_g[idx].step = 1;
+  idx++;
+
+  cramp_g[idx].target = -128;
+  cramp_g[idx].step = -1;
+  idx++;
   ////////////// BLUE //////////////////
   idx = 0;
 
@@ -2100,10 +2143,25 @@ void init_colorRamps() {
   cramp_b[idx].step = -1;
   idx++;
 
-  cramp_b[idx].target = 56;
+  cramp_b[idx].target = 90;
   cramp_b[idx].step = 1;
   idx++;
 
+  cramp_b[idx].target = -56;
+  cramp_b[idx].step = -3;
+  idx++;
+
+  cramp_b[idx].target = 72;
+  cramp_b[idx].step = 1;
+  idx++;
+
+  cramp_b[idx].target = 6;
+  cramp_b[idx].step = 1;
+  idx++;
+
+  cramp_b[idx].target = -128;
+  cramp_b[idx].step = -1;
+  idx++;
 
 
 
