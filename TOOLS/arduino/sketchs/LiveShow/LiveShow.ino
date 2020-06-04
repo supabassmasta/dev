@@ -518,12 +518,12 @@ void loop() {
       delay(5);
     break;
     case 15:
-      earth();
-      delay(10);
+     // earth();
+     // delay(10);
+     colorRamp();
+     kaleidoscope();
+
     break;
-
-
-
 
   }
 
@@ -1333,6 +1333,25 @@ rainbowStar4.cnt_num = 3;
 rainbowStar4.cnt_den = 1;
 rainbowStar4.cnt_den_tmp = 0;
 }
+void config_one_planet() {
+  perc1.cnt_reload = 55;
+  perc1.cnt_num = 3;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x0000FFFF;
+  train1.train_size = 60;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 150;
+  train1.cnt_num = 1;
+  train1.cnt_den = 1;
+  train1.cnt_den_tmp = 0;
+
+}
 
 int kick_cnt;
 int snare_cnt;
@@ -1472,7 +1491,16 @@ void read_serial(){
       preset = 14;
       valid = 1;
     }
+    // One planet
     else if (b == 'E') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      init_colorRamps_one_planet();
+      init_kaleidoscope();
+      config_one_planet();
+
       preset = 15;
       valid = 1;
     }
@@ -1660,6 +1688,17 @@ void read_serial(){
           perc2.reload();
           train1.reload();
 
+          valid = 1;
+        }
+        break;
+       /////////// ONE PLANET ////////////////////////
+      case 15:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'o' ){
+          train1.reload();
           valid = 1;
         }
         break;
@@ -2163,11 +2202,96 @@ void init_colorRamps() {
   cramp_b[idx].step = -1;
   idx++;
 
+}
 
+void init_colorRamps_one_planet() {
+  uint8_t idx = 0;
 
+  ////////////// RED //////////////////
+
+  // No red
+
+  idx = 0;
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+  
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  ////////////// GREEN //////////////////
+  idx = 0;
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 64;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 64;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 64;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  ////////////// BLUE //////////////////
+  idx = 0;
+
+  cramp_b[idx].target = 64;
+  cramp_b[idx].step = 4;
+  idx++;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
+
+  cramp_b[idx].target = 64;
+  cramp_b[idx].step = 4;
+  idx++;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
+
+  cramp_b[idx].target = 64;
+  cramp_b[idx].step = 4;
+  idx++;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
 
 
 }
+
 
 uint8_t cramp_start = 0;
 uint16_t cramp_sub_cnt = 0;
