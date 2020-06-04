@@ -57,6 +57,13 @@ gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 4. /* static gain */
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 
 
+<<<"******************************">>>;
+<<<"** ARP FIlter Low          ***">>>;
+<<<"** lpd 1.5 : Gain          ***">>>;
+<<<"** lpd 1.7 : LHPF Freq     ***">>>;
+<<<"** lpd 1.8 : LHPF Q        ***">>>;
+<<<"******************************">>>;
+
 
 while(1) {
        100::ms => now;
