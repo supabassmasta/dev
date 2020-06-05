@@ -399,15 +399,12 @@ void setup() {
   strip.show(); // Initialize all pixels to 'off'
 
 
-  // Kaleido HACK ////////////////////////
+// Indian kid at boot for Test ////////////////////////
+      config_indian_kid();
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
-      
-      init_colorRamps();
-      init_kaleidoscope();
-
-      preset = 11;
+      preset = 3;
 //////////////////////////////////////
       
   pinMode(LED_BUILTIN, OUTPUT);
