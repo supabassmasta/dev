@@ -30,9 +30,9 @@ pt.adsr0_set(1500::ms, 1000::ms, .8, 3000::ms); // Only works for ADSR 0
 pt.adsr0_setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"" +=> pt.tseq[0];
-"" +=> pt.tseq[1];
-"" +=> pt.tseq[2];
+"1" +=> pt.tseq[0];
+"3" +=> pt.tseq[1];
+"5" +=> pt.tseq[2];
 
 pt.go();
 

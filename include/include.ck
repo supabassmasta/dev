@@ -5,6 +5,8 @@ Machine.add( rt + "CORE/EFFECTS/note_info.ck");
 Machine.add( rt + "CORE/EFFECTS/note_info_rx.ck");
 Machine.add( rt + "CORE/EFFECTS/note_info_tx.ck");
 Machine.add( rt + "CORE/EFFECTS/ST.ck");
+Machine.add( rt + "CORE/EFFECTS/OFFSET.ck");
+Machine.add( rt + "CORE/EFFECTS/MULT.ck");
 Machine.add( rt + "include/global_data.ck" );
 Machine.add( rt + "include/global_mixer.ck" );
 Machine.add( rt + "include/global_event.ck" );
