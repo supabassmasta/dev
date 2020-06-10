@@ -404,7 +404,7 @@ void setup() {
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
-      preset = 3;
+      preset = 8;
 //////////////////////////////////////
       
   pinMode(LED_BUILTIN, OUTPUT);
@@ -1209,7 +1209,7 @@ void config_bondlywood() {
   perc2.color_fact = 15;
   perc2.max = 255;
   perc2.pos = strip.numPixels() / 4;
-  perc2.color_mask = 0x000FF;
+  perc2.color_mask = 0xFF0000;
 
   perc3.cnt_reload = 30;
   perc3.cnt_num = 1;
@@ -1217,7 +1217,17 @@ void config_bondlywood() {
   perc3.color_fact = 15;
   perc3.max = 255;
   perc3.pos = strip.numPixels() * 3 / 4;
-  perc3.color_mask = 0x000FF;
+  perc3.color_mask = 0xFF0000;
+
+  perc4.cnt_reload = strip.numPixels() / 2;
+  perc4.cnt_num = 1;
+  perc4.cnt_den = 1;
+//  perc4.color_fact = 5;
+  perc4.color_fact = 3;
+  perc4.max = 255;
+  perc4.pos = strip.numPixels() / 2;
+  perc4.color_mask = strip.Color(40, 0, 0 );
+
 }
 void config_kudunbao() {
 
@@ -1586,6 +1596,10 @@ void read_serial(){
         else if ( b == 'm' ){
           perc2.reload();
           perc3.reload();
+          valid = 1;
+        }
+        else if ( b == 'n' ){
+          perc4.reload();
           valid = 1;
         }
         break;
@@ -2601,13 +2615,13 @@ void earth() {
 
 long bond_colors[8] = {
   strip.Color(255, 0, 0 ),
+  strip.Color(255, 64, 0 ),
+  strip.Color(128, 0, 64 ),
+  strip.Color(255, 32, 24 ), // Saumon Salmon
   strip.Color(255, 0, 0 ),
-  strip.Color(255, 0, 0 ),
-  strip.Color(255, 0, 0 ),
-  strip.Color(255, 255, 0 ),
-  strip.Color(255, 255, 0 ),
-  strip.Color(255, 255, 0 ),
-  strip.Color(255, 255, 0 )
+  strip.Color(255, 96, 0 ),
+  strip.Color(255, 200, 64 ),
+  strip.Color(64, 0, 4 )
 };
 
 void bondlywood() {
@@ -2615,31 +2629,30 @@ void bondlywood() {
       allOff();
       
       bond_cnt ++;
-      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
+      if ( bond_cnt > 60 +  train1.target & 0xFF /* (r & 0x7F ) */){
         bond_cnt = 0;
 
         r = msws();
         train1.pos = 86 + (r & 0x7F);
-        train1.target = 35 + ((r>>8) & 0x3F);;
+        train1.target = 35 + (r & 0x1FF);;
 //        long l = (long)(msws()<<16 | r ); 
 //        train1.color =  l;
-        train1.color =  bond_colors[ msws() & 0xFF ];
+        train1.color =  bond_colors[ msws() & 0x07 ];
         train1.reload();
       }
-      /*
       
       bond_cnt2 ++;
-      if ( bond_cnt2 > 160 +train2.target ){
+      if ( bond_cnt2 > 52 +train2.target ){
         bond_cnt2 = 0;
 
         r = msws();
         train2.pos = 86 + (r & 0x7F);
-        train2.target = 35 + ((r>>8) & 0x0F);;
-        train2.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+        train2.target = 35 + ((r>>8) & 0x3F);;
+//        train2.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+        train2.color = bond_colors[ msws() & 0x07 ]; 
 
 
         train2.reload();
       }
-      */
-
+//
 }

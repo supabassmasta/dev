@@ -17,6 +17,9 @@ s.go();     s $ ST @=> ST @ last;
 STREV1 rev;
 rev.connect(last $ ST, .05 /* mix */);     rev  $ ST @=>  last; 
 
+// launch final led strip show
+LAUNCHPAD_VIRTUAL.on.set(18);
+
 while(1) {
        100::ms => now;
 }
