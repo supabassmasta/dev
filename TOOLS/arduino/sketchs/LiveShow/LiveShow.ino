@@ -404,7 +404,7 @@ void setup() {
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
-      preset = 8;
+      preset = 3;
 //////////////////////////////////////
       
   pinMode(LED_BUILTIN, OUTPUT);
