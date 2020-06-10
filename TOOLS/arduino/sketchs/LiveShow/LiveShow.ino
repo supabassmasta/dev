@@ -452,38 +452,7 @@ void loop() {
       // greenblueriver();
     break;
     case 8:
-      int r;
-
-      allOff();
-      
-//      symetricmorsered();
-      bond_cnt ++;
-      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
-        bond_cnt = 0;
-
-        r = msws();
-        train1.pos = 86 + (r & 0x7F);
-        train1.target = 35 + ((r>>8) & 0x3F);;
-        long l = (long)(msws()<<16 | r ); 
-        train1.color =  l;
-//        train1.color = 0xFFFF0000; 
-        train1.reload();
-      }
-      /*
-      
-      bond_cnt2 ++;
-      if ( bond_cnt2 > 160 +train2.target ){
-        bond_cnt2 = 0;
-
-        r = msws();
-        train2.pos = 86 + (r & 0x7F);
-        train2.target = 35 + ((r>>8) & 0x0F);;
-        train2.color = 0x00FFFFFF & (long)(r<<16 | r ); 
-
-
-        train2.reload();
-      }
-      */
+      bondlywood();
     break;
     case 9:
       randyellow();
@@ -2630,3 +2599,47 @@ void earth() {
   }
 }
 
+long bond_colors[8] = {
+  strip.Color(255, 0, 0 ),
+  strip.Color(255, 0, 0 ),
+  strip.Color(255, 0, 0 ),
+  strip.Color(255, 0, 0 ),
+  strip.Color(255, 255, 0 ),
+  strip.Color(255, 255, 0 ),
+  strip.Color(255, 255, 0 ),
+  strip.Color(255, 255, 0 )
+};
+
+void bondlywood() {
+      int r;
+      allOff();
+      
+      bond_cnt ++;
+      if ( bond_cnt > 60 +train1.target /* (r & 0x7F ) */){
+        bond_cnt = 0;
+
+        r = msws();
+        train1.pos = 86 + (r & 0x7F);
+        train1.target = 35 + ((r>>8) & 0x3F);;
+//        long l = (long)(msws()<<16 | r ); 
+//        train1.color =  l;
+        train1.color =  bond_colors[ msws() & 0xFF ];
+        train1.reload();
+      }
+      /*
+      
+      bond_cnt2 ++;
+      if ( bond_cnt2 > 160 +train2.target ){
+        bond_cnt2 = 0;
+
+        r = msws();
+        train2.pos = 86 + (r & 0x7F);
+        train2.target = 35 + ((r>>8) & 0x0F);;
+        train2.color = 0x00FFFFFF & (long)(r<<16 | r ); 
+
+
+        train2.reload();
+      }
+      */
+
+}

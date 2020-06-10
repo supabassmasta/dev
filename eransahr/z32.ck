@@ -1,13 +1,14 @@
 SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // 
-SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+SET_WAV.TRIBAL1(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-"
-____ ____
-____ ___t
-
+"*4
+____ ____ __vu __B_ 
+____ ____ _vuv _CB_ 
+____ ____ __vx u_A_ 
+____ ____ ___v __xy 
 " => s.seq;
 .9 * data.master_gain => s.gain; //
-s.gain("s", .4); // for single wav 
+//s.gain("s", .4); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 //// SUBWAV ////
@@ -16,15 +17,7 @@ s.gain("s", .4); // for single wav
 s.go();     s $ ST @=> ST @ last; 
 
 STGVERB stgverb;
-stgverb.connect(last $ ST, .2 /* mix */, 9 * 10. /* room size */, 8::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
-
-STCOMPRESSOR stcomp;
-9. => float in_gain;
-stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 30::ms /* releaseTime */);   stcomp $ ST @=>  last;   
-
-STGAIN stgain;
-stgain.connect(last $ ST , 1.1 /* static gain */  );       stgain $ ST @=>  last; 
-
+stgverb.connect(last $ ST, .04 /* mix */, 5 * 10. /* room size */, 2::second /* rev time */, 0.1 /* early */ , 0.3 /* tail */ ); stgverb $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

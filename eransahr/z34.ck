@@ -3,7 +3,7 @@ SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"];
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
 ____ ____
-____ ___t
+____ __t_
 
 " => s.seq;
 .9 * data.master_gain => s.gain; //
@@ -24,7 +24,6 @@ stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3
 
 STGAIN stgain;
 stgain.connect(last $ ST , 1.1 /* static gain */  );       stgain $ ST @=>  last; 
-
 
 while(1) {
        100::ms => now;
