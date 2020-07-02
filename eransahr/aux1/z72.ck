@@ -19,7 +19,7 @@ __
 5|^7|a|c_
 
 " => t.seq;
-0.8 * data.master_gain => t.gain;
+0.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 2 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -46,7 +46,7 @@ STGVERB stgverb;
 stgverb.connect(last $ ST, .1 /* mix */, 8 * 10. /* room size */, 7::second /* rev time */, 0.4 /* early */ , 0.8 /* tail */ ); stgverb $ ST @=>  last; 
 
 STFADEIN fadein;
-fadein.connect(last, 4*16*data.tick);     fadein  $ ST @=>  last; 
+fadein.connect(last, 8*16*data.tick);     fadein  $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
