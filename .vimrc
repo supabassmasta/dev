@@ -1140,4 +1140,31 @@ ab ADSRMODK ADSRMOD adsrmod;
 \<CR>adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
 \<CR>adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */);
 
-
+ab POLYSEQK POLYSEQ ps;
+\<CR>
+\<CR>3 => ps.size;
+\<CR>
+\<CR>//data.tick * 8 => ps.max;
+\<CR>// SET_WAV.DUBSTEP(ps.s[0]);// SET_WAV.VOLCA(ps.s[0]); // SET_WAV.ACOUSTIC(ps.s[0]); // SET_WAV.TABLA(ps.s[0]);// SET_WAV.CYMBALS(ps.s[0]); // SET_WAV.DUB(ps.s[0]); // SET_WAV.TRANCE(ps.s[0]); // SET_WAV.TRANCE_VARIOUS(ps.s[0]);// SET_WAV.TEK_VARIOUS(ps.s[0]);// SET_WAV.TEK_VARIOUS2(ps.s[0]);// SET_WAV2.__SAMPLES_KICKS(ps.s[0]); // SET_WAV2.__SAMPLES_KICKS_1(ps.s[0]); // SET_WAV.BLIPS(ps.s[0]);  // SET_WAV.TRIBAL(ps.s[0]);// "test.wav" => ps.s[0].wav["a"];  // act @=> ps.s[0].action["a"];
+\<CR>SET_WAV.TRANCE(ps.s[0]);
+\<CR>SET_WAV.ACOUSTIC(ps.s[1]);
+\<CR>SET_WAV.TRIBAL(ps.s[2]);
+\<CR>
+\<CR>//ps.sync(4*data.tick);// ps.element_sync(); //ps.no_sync(); //ps.full_sync(); // 1 * data.tick => ps.s[0].the_end.fixed_end_dur;  // 16 * data.tick => ps.extra_end;   //ps.s[0].print();
+\<CR>
+\<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+\<CR>"" +=> ps.sseq[0];
+\<CR>"" +=> ps.sseq[1];
+\<CR>"" +=> ps.sseq[2];
+\<CR>
+\<CR>ps.go();
+\<CR>
+\<CR>//// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); ps.s[0].add_subwav("K", s2.wav["s"]); // ps.s[0].gain_subwav("K", 0, .3);
+\<CR>
+\<CR>// GAIN
+\<CR>.6 * data.master_gain =>  ps.gain_common;
+\<CR>// .6 * data.master_gain => ps.s[0].gain; // For individual gain
+\<CR>
+\<CR>// CONNECTIONS
+\<CR>ps.stout_connect(); ps.stout $ ST  @=> ST @ last; // comment to connect each SEQ separately
+\<CR>// ps.s[0] $ ST @=> ST @ last;

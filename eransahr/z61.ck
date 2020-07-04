@@ -13,7 +13,7 @@ SinOsc g => OFFSET o => m;
 .4 => o.gain;
 .1 => o.offset;
 
-STEPC stepc; stepc.init(HW.lpd8.potar[1][3], 0 /* min */, 2 /* max */, 50::ms /* transition_dur */);
+STEPC stepc; stepc.init(HW.lpd8.potar[1][3], 0 /* min */, 3 /* max */, 50::ms /* transition_dur */);
 stepc.out =>  m;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
@@ -37,7 +37,7 @@ t.ion(); // t.mix();//
 1A312A23
 
 " => t.seq;
-2.2 * data.master_gain => t.gain;
+2.8 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 2 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
