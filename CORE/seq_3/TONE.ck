@@ -563,10 +563,10 @@ public class TONE extends ST {
         }
         else
         {
-          e.actions << set_synt_new_note(synt[id], s.elements.size()); 
           s.elements.size() => e.note_info_s.idx;
           // Add freq_synt action every time in case SEQ3 start here
           e.actions << set_freq_synt(env[id], temp_freq ); 
+          e.actions << set_synt_new_note(synt[id], s.elements.size()); 
           if (temp_freq != freq[id]) {
             temp_freq => freq[id];
 
