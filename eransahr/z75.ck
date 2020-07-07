@@ -106,15 +106,20 @@
 //       STREC strec;
 //       strec.connect(last $ ST, 32*data.tick, "../_SAMPLES/Eransahr/pads2.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); strec $ ST @=>  last;  
 
+//MASTER_SEQ3.update_ref_times(now + 2 * data.tick , data.tick * 16 * 128 );
+
   LOOP_DOUBLE_WAV l;
   "../_SAMPLES/Eransahr/pads2.wav" => l.read;
   1.0 * data.master_gain => l.buf.gain => l.buf2.gain;
   l.AttackRelease(1 * data.tick, 5 * data.tick);
-  l.start(16 * data.tick /* sync */ ,   1 * data.tick /* END sync */ ,  16 * data.tick /* loop */); l $ ST @=> ST @ last;   
+  l.start(1 * data.tick /* sync */ ,   4 * data.tick /* END sync */ ,  16 * data.tick /* loop */); l $ ST @=> ST @ last;   
   
   
   STGVERB stgverb;
   stgverb.connect(last $ ST, .1 /* mix */, 9 * 10. /* room size */, 7::second /* rev time */, 0.4 /* early */ , 0.8 /* tail */ ); stgverb $ ST @=>  last; 
+
+  STFADEIN fadein;
+  fadein.connect(last, 8*data.tick);     fadein  $ ST @=>  last; 
   
 while(1) {
        100::ms => now;

@@ -8,7 +8,7 @@
 53 => data.ref_note;
 
 // Start synchro
-//HW.launchpad.virtual_key_on(7);
+HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
 //HW.ledstrip.open();

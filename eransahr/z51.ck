@@ -17,7 +17,7 @@ t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 :2
 G|f|0/g|F|h g|F|h/G|f|0
 " => t.seq;
-.2 * data.master_gain => t.gain;
+.3 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 8 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -42,6 +42,8 @@ stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ S
 
 //STGVERB stgverb;
 //stgverb.connect(last $ ST, .5 /* mix */, 5 * 10. /* room size */, 3::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .4 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.05 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
