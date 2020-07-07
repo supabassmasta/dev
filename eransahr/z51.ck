@@ -17,7 +17,7 @@ t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 :2
 G|f|0/g|F|h g|F|h/G|f|0
 " => t.seq;
-.1 * data.master_gain => t.gain;
+.2 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 8 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
