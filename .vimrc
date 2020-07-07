@@ -1164,6 +1164,7 @@ ab POLYSEQK POLYSEQ ps;
 \<CR>// GAIN
 \<CR>.6 * data.master_gain =>  ps.gain_common;
 \<CR>// .6 * data.master_gain => ps.s[0].gain; // For individual gain
+\<CR>// ps.s[0].gain("s", .4); // for single wav 
 \<CR>
 \<CR>// CONNECTIONS
 \<CR>ps.stout_connect(); ps.stout $ ST  @=> ST @ last; // comment to connect each SEQ separately
