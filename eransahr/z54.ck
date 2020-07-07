@@ -1,6 +1,8 @@
 SYNC sy;
 //sy.sync(8 * data.tick);
-sy.sync(8 * data.tick , - 0.5 * data.tick /* offset */); 
+sy.sync(4 * data.tick , - 0.5 * data.tick /* offset */); 
+
+2 * data.tick => now;
 
 // Off dub
 LAUNCHPAD_VIRTUAL.off.set(16);
@@ -10,10 +12,19 @@ LAUNCHPAD_VIRTUAL.off.set(17);
 LAUNCHPAD_VIRTUAL.on.set(38);
 LAUNCHPAD_VIRTUAL.on.set(48);
 
+LAUNCHPAD_VIRTUAL.on.set(34); // break
+
+2 * data.tick => now;
+
+
 // Slow beat
 LAUNCHPAD_VIRTUAL.on.set(31);
 
-16 * data.tick => now;
+1 * data.tick => now;
+
+LAUNCHPAD_VIRTUAL.off.set(34); // break
+
+15 * data.tick => now;
 LAUNCHPAD_VIRTUAL.on.set(32); // HH
 
 3 * 16 * data.tick => now;
