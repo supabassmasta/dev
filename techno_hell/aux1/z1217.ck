@@ -62,7 +62,7 @@ pt.adsr0_setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convex
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4 }c " +=> pt.tseq[0];
 "*4 " +=> pt.tseq[1];
-"*4 }c" +=> pt.tseq[2];
+"*4 " +=> pt.tseq[2];
 
 "1__1 __1_ _1__ 1_1_" +=> pt.tseq[0];
 "____ ____ ____ ___1" +=> pt.tseq[1];

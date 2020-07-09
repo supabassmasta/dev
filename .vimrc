@@ -1153,9 +1153,9 @@ ab POLYSEQK POLYSEQ ps;
 \<CR>//ps.sync(4*data.tick);// ps.element_sync(); //ps.no_sync(); //ps.full_sync(); // 1 * data.tick => ps.s[0].the_end.fixed_end_dur;  // 16 * data.tick => ps.extra_end;   //ps.s[0].print();
 \<CR>
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-\<CR>"" +=> ps.sseq[0];
-\<CR>"" +=> ps.sseq[1];
-\<CR>"" +=> ps.sseq[2];
+\<CR>"_" +=> ps.sseq[0];
+\<CR>"_" +=> ps.sseq[1];
+\<CR>"_" +=> ps.sseq[2];
 \<CR>
 \<CR>ps.go();
 \<CR>
