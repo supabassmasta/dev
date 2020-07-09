@@ -1,17 +1,28 @@
-1 => float fact;
+SYNC sy;
+sy.sync(4 * data.tick);
+//sy.sync(4 * data.tick , 0::ms /* offset */); 
 
-adc => Delay d0 => Gain out;
-fact * data.tick - 186::ms * 2 => d0.max => d0.delay;
-.6 => d0.gain;
-d0 => Delay d1 => out;
-fact * data.tick  => d1.max => d1.delay;
-.6 => d1.gain;
-d1 => Gain fb => d1;
+1.5 * data.tick => now;
 
-out => dac;
+LAUNCHPAD_VIRTUAL.off.set(15);
+
+.5 * data.tick => now;
+
+LAUNCHPAD_VIRTUAL.off.set(13);
+LAUNCHPAD_VIRTUAL.off.set(14);
+
+
+1.5 * data.tick => now;
+
+LAUNCHPAD_VIRTUAL.on.set(13);
+.5 * data.tick => now;
+LAUNCHPAD_VIRTUAL.on.set(14);
+
+LAUNCHPAD_VIRTUAL.on.set(15);
+
+LAUNCHPAD_VIRTUAL.on.set(16); // NAP
 
 while(1) {
        100::ms => now;
 }
  
-

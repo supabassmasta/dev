@@ -5,12 +5,12 @@ sy.sync(4 * data.tick , - 0.5 * data.tick /* offset */);
 2 * data.tick => now;
 
 // Off dub
-LAUNCHPAD_VIRTUAL.off.set(16);
-LAUNCHPAD_VIRTUAL.off.set(17);
+LAUNCHPAD_VIRTUAL.off.set(13);
+LAUNCHPAD_VIRTUAL.off.set(14);
 
 // On flute effects
-LAUNCHPAD_VIRTUAL.on.set(38);
-LAUNCHPAD_VIRTUAL.on.set(48);
+LAUNCHPAD_VIRTUAL.on.set(58);
+LAUNCHPAD_VIRTUAL.on.set(68);
 
 LAUNCHPAD_VIRTUAL.on.set(34); // break
 
@@ -31,11 +31,11 @@ LAUNCHPAD_VIRTUAL.on.set(32); // HH
 LAUNCHPAD_VIRTUAL.off.set(31); // slow beat
 LAUNCHPAD_VIRTUAL.off.set(32); // HH
 
-LAUNCHPAD_VIRTUAL.on.set(11); // High beat
+LAUNCHPAD_VIRTUAL.on.set(51); // High beat
 
 // Off flute effects
-LAUNCHPAD_VIRTUAL.off.set(38);
-LAUNCHPAD_VIRTUAL.off.set(48);
+LAUNCHPAD_VIRTUAL.off.set(58);
+LAUNCHPAD_VIRTUAL.off.set(68);
 
 
 while(1) {
