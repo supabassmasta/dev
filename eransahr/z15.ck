@@ -71,6 +71,15 @@ stgverb.connect(last $ ST, .5 /* mix */, 3 * 10. /* room size */, 1::second /* r
 STLHPFC2 lhpfc2;
 lhpfc2.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc2 $ ST @=>  last; 
 
+
+<<<"*******************************">>>;
+<<<"**        ARP LHPF FM        **">>>;
+<<<"** lpd8 1.1 LHPF freq        **">>>;
+<<<"** lpd8 1.2 LHPF Q           **">>>;
+<<<"** lpd8 1.3 FM amp boost     **">>>;
+<<<"*******************************">>>;
+
+
 while(1) {
        100::ms => now;
 }

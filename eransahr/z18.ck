@@ -27,9 +27,13 @@ LAUNCHPAD_VIRTUAL.off.set(34); // break
 15 * data.tick => now;
 LAUNCHPAD_VIRTUAL.on.set(32); // HH
 
-3 * 16 * data.tick => now;
+(3 * 16 - 2) * data.tick => now;
 LAUNCHPAD_VIRTUAL.off.set(31); // slow beat
 LAUNCHPAD_VIRTUAL.off.set(32); // HH
+
+LAUNCHPAD_VIRTUAL.on.set(34); // break
+LAUNCHPAD_VIRTUAL.on.set(44); // slide
+2 * data.tick => now;
 
 LAUNCHPAD_VIRTUAL.on.set(51); // High beat
 
@@ -37,6 +41,9 @@ LAUNCHPAD_VIRTUAL.on.set(51); // High beat
 LAUNCHPAD_VIRTUAL.off.set(58);
 LAUNCHPAD_VIRTUAL.off.set(68);
 
+2 * data.tick => now;
+LAUNCHPAD_VIRTUAL.off.set(34); // break
+LAUNCHPAD_VIRTUAL.off.set(44); // slide
 
 while(1) {
        100::ms => now;
