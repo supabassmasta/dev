@@ -25,6 +25,8 @@ HW.launchpad.virtual_key_on_only(53); // Big Drum
 
 HW.launchpad.virtual_key_on_only(54); // Leds
 
+.5 * data.tick => now;
+
 HW.launchpad.virtual_key_on_only(71); // Synt
 HW.launchpad.virtual_key_on_only(72); // Synt
 
