@@ -225,11 +225,21 @@ Part 4 : flute en contre chant. 2 themes
 Eranhsar
 --------------------------------------
 
-Intro NAP 1 :
+Intro NAP 1 z11
 Start with NAP 1. + glitchs
 Chass gong on F (low chord)
-Envoyer le dub sur le violet
+z13: Envoyer le dub juste avant le violet (SYNC 4)
+
+z18 : Flute part, à lancer sur le début de dernier paquet de 8 (SYNC 4 + 2 + Break)
+
+z28 : Break de la fin de violons (en rouge chez Chass) , à lancer sur le début de dernier paquet de 8 (SYNC 4 + 2 + Break)
+
+Envoyer l'arpeggio z15:
+**     ARP LHPF FM     
+** lpd8 1.1 LHPF freq     
+** lpd8 1.2 LHPF Q      
+** lpd8 1.3 FM amp boost
 
 
-
+ z38 : Mini break (en rouge chez Chass), à lancer sur le début de dernier paquet ( size < 8) (SYNC 4 + 2 + Break)
 

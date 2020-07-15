@@ -220,6 +220,7 @@ Machine.add( rt + "CORE/EFFECTS/STLHPFC2.ck");
 Machine.add( rt + "CORE/LONG_WAV/LONG_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_DOUBLE_WAV.ck");
+Machine.add( rt + "CORE/LONG_WAV/LOOP_DOUBLE_WAV_SYNC.ck");
 Machine.add( rt + "CORE/EFFECTS/REV2.ck");
 //Machine.add(rt + "CORE/seq_2/FREQ_STR.ck");
 //Machine.add(rt + "CORE/seq_2/SEQ_STR.ck");
