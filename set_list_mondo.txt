@@ -190,7 +190,7 @@ z22: wolf
 z27: strange pad low  z37 ADSRC
 z28: strange pad high z38 ADSRC
 
-=> z51: Switch to 6:4 beat
+=> z51: Switch to 6:4 beat  (SYNC 8 )
 
 z71 72: ARPS Synt low high
 
@@ -199,8 +199,10 @@ lpd8 1.5 gain low
      1.7 LHPF cutoff
      1.8 LHPF Q
 
-=> z81: switch back to 4:4 beat
+=> z81: switch back to 4:4 beat (SYNC 8  == full arp seq )
 
+=> z83: Rappel: take care to get the synt potar ready
+=> z84: End rappel  (SYNC 8  == full arp seq )
 
 ----------------------------
 One planet
