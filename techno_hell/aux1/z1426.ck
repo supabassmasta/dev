@@ -5,6 +5,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 "*8 8_3_5_1_ " => t.seq;
 .4 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+4 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
@@ -13,6 +14,7 @@ t.go();   t $ ST @=> ST @ last;
 
 STCUTTER stcutter;
 " *2 11__ ____ 111_ ____" => stcutter.t.seq;
+4 * data.tick => stcutter.t.the_end.fixed_end_dur;
 stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
 
 STECHO ech;
@@ -22,6 +24,7 @@ ARP arp;
 arp.t.dor();
 50::ms => arp.t.glide;
 "*4  1538 3851 0083 B " => arp.t.seq;
+4 * data.tick => arp.t.the_end.fixed_end_dur;
 arp.t.go();   
 
 // CONNECT SYNT HERE
