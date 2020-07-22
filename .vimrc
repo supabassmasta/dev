@@ -1169,3 +1169,8 @@ ab POLYSEQK POLYSEQ ps;
 \<CR>// CONNECTIONS
 \<CR>ps.stout_connect(); ps.stout $ ST  @=> ST @ last; // comment to connect each SEQ separately
 \<CR>// ps.s[0] $ ST @=> ST @ last;
+
+
+ab STLPFNK STLPFN lpfn;
+\<CR>lpfn.connect(last $ ST , 4 * 100 /* freq */  , 1.0 /* Q */ , 3 /* order */ );       lpfn $ ST @=>  last; 
+

@@ -202,7 +202,7 @@ lpd8 1.5 gain low
 => z81: switch back to 4:4 beat (SYNC 8  == full arp seq )
 
 => z83: Rappel: take care to get the synt potar ready
-=> z84: End rappel  (SYNC 8  == full arp seq )
+=> z84: End rappel with synt transition  (SYNC 8  == full arp seq )
 
 ----------------------------
 One planet

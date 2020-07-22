@@ -217,6 +217,7 @@ me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STLHPFC2.ck");
+Machine.add( rt + "CORE/EFFECTS/STLPFN.ck");
 Machine.add( rt + "CORE/LONG_WAV/LONG_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_DOUBLE_WAV.ck");
