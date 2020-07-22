@@ -1174,3 +1174,32 @@ ab POLYSEQK POLYSEQ ps;
 ab STLPFNK STLPFN lpfn;
 \<CR>lpfn.connect(last $ ST , 4 * 100 /* freq */  , 1.0 /* Q */ , 3 /* order */ );       lpfn $ ST @=>  last; 
 
+ab SinK SinOsc sin0 => 
+\<CR>10.0 => sin0.freq;
+\<CR>1.0 => sin0.gain;
+\<CR><Up><Up><Up><End>
+
+ab SawK SawOsc saw0 => 
+\<CR>10.0 => saw0.freq;
+\<CR>1.0 => saw0.gain;
+\<CR><Up><Up><Up><End>
+
+ab SqrK SqrOsc sqr0 => 
+\<CR>10.0 => sqr0.freq;
+\<CR>1.0 => sqr0.gain;
+\<CR>0.5 => sqr0.width;
+\<CR><Up><Up><Up><Up><End>
+
+ab TriK TriOsc tri0 => 
+\<CR>10.0 => tri0.freq;
+\<CR>1.0 => tri0.gain;
+\<CR>0.5 => tri0.width;
+\<CR><Up><Up><Up><Up><End>
+
+ab OFFSETK OFFSET ofs0 =>
+\<CR>1. => ofs0.offset;
+\<CR>1. => ofs0.gain;
+\<CR><Up><Up><Up><End>
+
+
+
