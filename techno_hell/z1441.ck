@@ -1,6 +1,6 @@
 147 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 
-50 => data.ref_note;
+51 => data.ref_note;
 
 SYNC sy;
 //sy.sync(64 * data.tick);
@@ -10,7 +10,11 @@ LAUNCHPAD_VIRTUAL.on.set(1431); // Big Precs
 LAUNCHPAD_VIRTUAL.on.set(1432); // Slides
 LAUNCHPAD_VIRTUAL.on.set(1433); // PADS
 
-64 * data.tick => now;
+32 * data.tick => now;
+
+LAUNCHPAD_VIRTUAL.on.set(1424); // ABOs
+
+32 * data.tick => now;
 
 LAUNCHPAD_VIRTUAL.off.set(1431); // Big Precs
 LAUNCHPAD_VIRTUAL.off.set(1432); // Slides
