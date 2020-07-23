@@ -30,7 +30,7 @@ stgverb.connect(last $ ST, .1 /* mix */, 4 * 10. /* room size */, 1::second /* r
 
 while(1) {
   32 * data.tick => now;
-  0 => buf.pos;
+//  0 => buf.pos;
 }
  
 

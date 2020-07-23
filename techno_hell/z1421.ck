@@ -1,7 +1,12 @@
 class synt0 extends SYNT{
 
     inlet => SawOsc s =>  outlet; 
-      .5 => s.gain;
+    .5 => s.gain;
+
+    // SUB 
+    inlet => Gain half => SinOsc sin => outlet;  
+    .5 => half.gain;
+    0.4 => sin.gain;
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 

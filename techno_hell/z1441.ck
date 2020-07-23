@@ -4,14 +4,14 @@
 
 SYNC sy;
 //sy.sync(64 * data.tick);
-sy.sync(64 * data.tick , - .5 * data.tick /* offset */); 
+sy.sync(4 * data.tick , - .5 * data.tick /* offset */); 
 
-LAUNCHPAD_VIRTUAL.on.set(1431); // Big Precs
-LAUNCHPAD_VIRTUAL.on.set(1432); // Slides
 LAUNCHPAD_VIRTUAL.on.set(1433); // PADS
 
 32 * data.tick => now;
 
+LAUNCHPAD_VIRTUAL.on.set(1431); // Big Precs
+LAUNCHPAD_VIRTUAL.on.set(1432); // Slides
 LAUNCHPAD_VIRTUAL.on.set(1424); // ABOs
 
 32 * data.tick => now;
