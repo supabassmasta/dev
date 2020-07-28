@@ -26,6 +26,10 @@ t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STLPFN lpfn;
+lpfn.connect(last $ ST , 22 * 100 /* freq */  , 1.0 /* Q */ , 3 /* order */ );       lpfn $ ST @=>  last;  
+
+
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 

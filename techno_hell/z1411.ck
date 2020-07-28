@@ -11,7 +11,7 @@ mm mm mm *2 mm_m :2
 
 
 " => s.seq;
-.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+1.1 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
 2 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
