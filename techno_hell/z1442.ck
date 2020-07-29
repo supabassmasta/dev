@@ -1,10 +1,9 @@
 SYNC sy;
-sy.sync(32 * data.tick, - .25 * data.tick);
+sy.sync(32 * data.tick, - 16.25 * data.tick);
 //sy.sync(4 * data.tick , 0::ms /* offset */); 
 
 
 while(1) {
-   3 * 16 * data.tick => now;
 
   LAUNCHPAD_VIRTUAL.on.set(1456); // Break Slide
   
@@ -30,5 +29,7 @@ while(1) {
   LAUNCHPAD_VIRTUAL.off.set(1457); // PADS
   LAUNCHPAD_VIRTUAL.off.set(1458); // Percs
   LAUNCHPAD_VIRTUAL.off.set(1465); // Abos
+
+  3 * 16 * data.tick => now;
 }
  
