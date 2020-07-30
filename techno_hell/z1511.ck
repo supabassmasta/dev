@@ -2,26 +2,23 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
-K|kK|kK|kK|k   K|kK|kK|k    *2 _ K|k :2
-K|kK|kK|kK|k   K|kK|kK|k    *2 K|kK|k :2
-K|kK|kK|kK|k   K|kK|kK|k    *2 _ K|k :2
-K|kK|kK|kK|k   K|kK|kK|k    *4 K|k __ K|k :2
+mmmmmmm*4_mm_  :4
+mmmmmmm*4m_m_  :4
+mmmmmmm*4_m_m  :4
+mmmmmmm*4__mm  :4
+
 
 " => s.seq;
-.8 * data.master_gain => s.gain; // 
-s.gain("X", 1.1); // for single wav 
+.6 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+//// SUBWAV ////
+SEQ s2; SET_WAV.TRANCE(s2); s.add_subwav("m", s2.wav["M"]); // 
+s.gain_subwav("m", 0, .03);
 s.go();     s $ ST @=> ST @ last; 
 
-STLPF lpf;
-lpf.connect(last $ ST , 213 *10 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
-
-STDUCKMASTER2 duckm2;
-duckm2.connect(last $ ST );      duckm2 $ ST @=>  last;  
-
-STMIX stmix;
-stmix.send(last, 14);
+STDUCKMASTER duckm;
+duckm.connect(last $ ST, 9. /* In Gain */, .09 /* Tresh */, .3 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

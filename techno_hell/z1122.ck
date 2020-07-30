@@ -17,7 +17,7 @@ STLPF lpf;
 lpf.connect(last $ ST , 7 * 100 /* freq */  , 1.1 /* Q */  );       lpf $ ST @=>  last; 
 
 STGVERB stgverb;
-stgverb.connect(last $ ST, .01 /* mix */, 6 * 10. /* room size */, .5::second /* rev time */, 0.2 /* early */ , 0.5 /* tail */ ); stgverb $ ST @=>  last; 
+stgverb.connect(last $ ST, .001 /* mix */, 6 * 10. /* room size */, .5::second /* rev time */, 0.2 /* early */ , 0.5 /* tail */ ); stgverb $ ST @=>  last; 
 
 STMIX stmix;
 stmix.send(last, 14);
