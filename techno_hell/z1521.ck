@@ -8,6 +8,9 @@ class synt0 extends SYNT{
           } 0 => own_adsr;
 } 
 
+SYNC sy;
+sy.sync(1 * data.tick);
+//sy.sync(4 * data.tick , 0::ms /* offset */); 
 
 TONE t;
 t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
