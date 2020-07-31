@@ -451,7 +451,7 @@ ab SEQK SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLC
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>"" => s.seq;
 \<CR>.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-\<CR>//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
+\<CR>//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 \<CR>//// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
 \<CR>s.go();     s $ ST @=> ST @ last;
@@ -896,8 +896,10 @@ ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
 \<CR>stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last;
 
 ab STADSRK STADSR stadsr;
-\<CR>stadsr.set(0::ms /* Attack */, 6::ms /* Decay */, .6 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
 \<CR>stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
+\<CR>//stadsr.connect(s $ ST);  stadsr  $ ST @=>  last; 
+\<CR>// stadsr.keyOn(); stadsr.keyOff();
 
 ab STPADSRK STPADSR stpadsr;
 \<CR>stpadsr.set(0::ms /* Attack */, 24::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);

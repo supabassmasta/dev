@@ -60,4 +60,18 @@ public class STADSR extends ST{
     ni_tx.reg(nio);
   }
 
+  fun void connect(ST @ tone) {
+
+    tone.left() => adsrl;
+    tone.right() => adsrr;
+  }
+
+  fun void keyOn(){
+      adsrl.keyOn();
+      adsrr.keyOn();
+  }
+  fun void keyOff(){
+      adsrl.keyOff();
+      adsrr.keyOff();
+  }
 }
