@@ -15,11 +15,18 @@ stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last;
 
 // ECHO Line
 
-STADSR stadsr;
-stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
-stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
+//STADSR stadsr;
+//stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+//stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
 //stadsr.connect(s $ ST);  stadsr  $ ST @=>  last; 
 // stadsr.keyOn(); stadsr.keyOff(); 
+
+STPADSR stpadsr;
+stpadsr.set(3::ms /* Attack */, 30::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+stpadsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+//stpadsr.connect(last $ ST, s.note_info_tx_o); stpadsr $ ST @=>  last;
+stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 
+// stpadsr.keyOn(); stpadsr.keyOff(); 
 
 //STADSR stadsr;
 //stadsr.set(6::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
@@ -34,8 +41,8 @@ sy.sync(8 * data.tick);
 
 while(1) {
        (8 + 6 ) * data.tick => now;
-       stadsr.keyOn();
+       stpadsr.keyOn();
        2 * data.tick => now;
-       stadsr.keyOff();
+       stpadsr.keyOff();
 }
  

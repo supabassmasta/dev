@@ -902,9 +902,11 @@ ab STADSRK STADSR stadsr;
 \<CR>// stadsr.keyOn(); stadsr.keyOff();
 
 ab STPADSRK STPADSR stpadsr;
-\<CR>stpadsr.set(0::ms /* Attack */, 24::ms /* Decay */, .6 /* Sustain */, 10::ms /* Sustain dur */,  10::ms /* release */);
-\<CR>stpadsr.setCurves(2, .7, .5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stpadsr.set(3::ms /* Attack */, 30::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stpadsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stpadsr.connect(last $ ST, s.note_info_tx_o); stpadsr $ ST @=>  last;
+\<CR>//stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 
+\<CR>// stpadsr.keyOn(); stpadsr.keyOff();
 
 ab STSYNCLPFK STSYNCLPF stsynclpf;
 \<CR>stsynclpf.freq(100 /* Base */, 3 * 100 /* Variable */, 4. /* Q */);
