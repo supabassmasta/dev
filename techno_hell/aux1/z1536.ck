@@ -6,6 +6,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 8351 7241
 " => t.seq;
 .4 * data.master_gain => t.gain;
+6 * data.tick => t.the_end.fixed_end_dur;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -14,6 +15,7 @@ t.go();   t $ ST @=> ST @ last;
 
 ARP arp;
 arp.t.dor();
+6 * data.tick => arp.t.the_end.fixed_end_dur;
 50::ms => arp.t.glide;
 "*4 8 318413095315329  " => arp.t.seq;
 arp.t.go();   
