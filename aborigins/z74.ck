@@ -1,3 +1,4 @@
+
 class synt0 extends SYNT{
 
     inlet => SawOsc s =>  outlet; 
@@ -28,17 +29,6 @@ t.sync(1*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 t.go();   t $ ST @=> ST @ last; 
 
 
-class STLPFN extends ST{
-  fun void connect(ST @ tone,float f, float q, int o) {
-    STLPF @ lpf;
-    tone @=> ST @ last;
-    for (0 => int i; i <  o; i++) {
-        new STLPF @=> lpf;
-        lpf.connect(last, f, q);
-        lpf @=> last;
-    }
-  }
-}
 
 STSYNCLPF stsynclpf;
 stsynclpf.freq(100 /* Base */, 7 * 100 /* Variable */, 1.3 /* Q */);
@@ -49,6 +39,42 @@ stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last;
 STLPFN lpfn;
 lpfn.connect(last $ ST , 4 * 100 /* freq */  , 1.0 /* Q */ , 3 /* order */ );       lpfn $ ST @=>  last; 
 
+STGAIN stgain;
+stgain.connect(last $ ST , 0. /* static gain */  );       stgain $ ST @=>  last; 
+
+lpfn.left() => HPF h => dac;
+
+20 => h.freq;
+1.0 => h.Q;
+
+Step stp0 =>  Envelope e0 =>  blackhole;
+10 => e0.value;
+
+1.0 => stp0.next;
+
+fun void f1 (){ 
+    while(1) {
+     
+    e0.last() => h.freq;
+    10::ms => now;
+    }
+   } 
+ spork ~ f1 ();
+    
+SYNC sy;
+sy.sync(4 * data.tick);
+//sy.sync(4 * data.tick , 0::ms /* offset */); 
+
+while(1) {
+<<<"UP">>>;
+
+12 * 100.0 => e0.target;
+16.0 * data.tick => e0.duration  => now;
+<<<"DOWN">>>;
+71.0 => e0.target;
+16.0 * data.tick => e0.duration  => now;
+}
+ 
 while(1) {
        100::ms => now;
 }
