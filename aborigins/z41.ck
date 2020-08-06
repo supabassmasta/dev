@@ -27,7 +27,7 @@ LAUNCHPAD_VIRTUAL.on.set(21); // BASS
 
 4 * data.tick => now;
 
-LAUNCHPAD_VIRTUAL.on.set(51); // Mod synt
+LAUNCHPAD_VIRTUAL.on.set(45); // Mod synt
 
 LAUNCHPAD_VIRTUAL.off.set(23); // ABOs
 

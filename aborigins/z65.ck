@@ -4,7 +4,7 @@
 SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 //"../../_SAMPLES/Aborigines/abo1.wav" => s.wav["a"];
-"../_SAMPLES/Aborigines/aboscream0 warp.wav" => s.wav["b"];
+"../_SAMPLES/Aborigines/aboscream7 warp.wav" => s.wav["b"];
 "../_SAMPLES/Aborigines/aboscream1 warp.wav" => s.wav["d"];
 "../_SAMPLES/Aborigines/aboscream2 warp.wav" => s.wav["e"];
 "../_SAMPLES/Aborigines/aboscream3 warp.wav" => s.wav["f"];

@@ -1,51 +1,47 @@
-class synt0 extends SYNT{
-
-    inlet => SawOsc s =>  outlet; 
-      .5 => s.gain;
-
-  SinOsc mod2 => OFFSET o =>   SinOsc mod => s;
-
-  .1 => mod2.freq;
-  1 => o.offset;
-  11 => o.gain;
-//    18 => mod.freq;
-    7 => mod.gain;
-
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
-} 
-
-TONE t;
-t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" 
-____ ____
-1////1 __8/1_
-____ ____
-1////1 __1/8_
+  LAUNCHPAD_VIRTUAL.on.set(41); // Intro 
+2 * 32 * data.tick => now;
+<<<"!!!!!!!!!!!! SHORT DJEMBE !!!!!!!!!!!! ">>>;
 
 
-" => t.seq;
+3 * 16 * data.tick => now; // Trance 1
+  LAUNCHPAD_VIRTUAL.on.set(23); // Abos
+1 * 16 * data.tick => now; // Trance 1
+  LAUNCHPAD_VIRTUAL.off.set(23); // Abos
+  LAUNCHPAD_VIRTUAL.off.set(45); // Trancy synt
+<<<"!!!!!!!!!!!! DIDGE !!!!!!!!!!!!">>>;
 
-1.1 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
-8 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(20::ms, 10::ms, 1., 40::ms);
-t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-t.go();   t $ ST @=> ST @ last; 
+(2 * 32 - 16 ) * data.tick => now; // Trance 2
 
+  LAUNCHPAD_VIRTUAL.on.set(42); // AUto break
 
-STSYNCBPF stsyncbpf;
-stsyncbpf.freq(10 *100 /* Base */, 36 * 100 /* Variable */, 7. /* Q */);
-stsyncbpf.adsr_set(.4 /* Relative Attack */, .0/* Relative Decay */, 1. /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
-stsyncbpf.nio.padsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-stsyncbpf.connect(last $ ST, t.note_info_tx_o); stsyncbpf $ ST @=>  last;  
+( 4 * 32 ) * data.tick => now; // AUto break
 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+  LAUNCHPAD_VIRTUAL.off.set(42); // AUto break
+<<<"!!!!!!!!!!!! LONG BREAK !!!!!!!!!!!!">>>;
+  LAUNCHPAD_VIRTUAL.on.set(43); // long break
+2 * 32 * data.tick => now; // AUto break
+  LAUNCHPAD_VIRTUAL.off.set(43); // long break
 
-while(1) {
-       100::ms => now;
-}
- 
+32 * data.tick => now; // AUto break
+
+LAUNCHPAD_VIRTUAL.on.set(42); // AUto break
+
+6 * 32 * data.tick => now; // AUto break
+
+  LAUNCHPAD_VIRTUAL.off.set(42); // AUto break
+<<<"!!!!!!!!!!!! LONG BREAK ABOS !!!!!!!!!!!!">>>;
+  LAUNCHPAD_VIRTUAL.on.set(43); // long break
+1 * 32 * data.tick => now; 
+//16 * data.tick => now;
+  LAUNCHPAD_VIRTUAL.on.set(23); // Abos
+16 * data.tick => now; 
+
+  LAUNCHPAD_VIRTUAL.off.set(23); // Abos
+16 * data.tick => now; 
+  LAUNCHPAD_VIRTUAL.off.set(43); // long break
+
+1 * 32 * data.tick => now; // AUto break
+  LAUNCHPAD_VIRTUAL.on.set(42); // AUto break
+
+4 * 32 * data.tick => now; // AUto break
+
