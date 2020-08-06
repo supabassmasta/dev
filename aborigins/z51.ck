@@ -1,6 +1,5 @@
 NOREPLACE no;
 
-
   LAUNCHPAD_VIRTUAL.on.set(41); // Intro 
 2 * 32 * data.tick => now;
 <<<"!!!!!!!!!!!! SHORT DJEMBE !!!!!!!!!!!! ">>>;
