@@ -97,11 +97,14 @@ ab  forK          for (0 => int i; i <       ; i++) {
 \<CR>}
 \<CR>
 
-ab  funK          fun void f1 (){ 
+ab  funK fun void f1 (){ 
+\<CR>while(1) {
 \<CR>
-\<CR> } 
+\<CR>  10::ms => now;
+\<CR>}
+\<CR>} 
 \<CR>spork ~ f1 ();
-\<CR>
+\<CR><Up><Up><Up><Up><Up><End>
 
 ab  whileK           while(1) {
 \<CR>     100::ms => now;
@@ -1214,3 +1217,33 @@ ab EnvK Envelope e0 =>
 ab StepK Step stp0 => 
 \<CR>1.0 => stp0.next;
 \<CR><Up><Up><End>
+
+
+ab AUTOK ///////////////// AUTOMATION ///////////////////////
+\<CR>
+\<CR>Step stpauto =>  Envelope eauto =>  blackhole;
+\<CR>10 => eauto.value; // INITIAL VALUE
+\<CR>
+\<CR>1.0 => stpauto.next;
+\<CR>
+\<CR>fun void f1 (){ 
+\<CR>while(1) {
+\<CR>eauto.last() =>     TODO       ;
+\<CR>10::ms => now; // REFRESH RATE
+\<CR>}
+\<CR>}
+\<CR>spork ~ f1 ();
+\<CR>
+\<CR>SYNC sy;
+\<CR>sy.sync(4 * data.tick);
+\<CR>//sy.sync(4 * data.tick , 0::ms /* offset */);
+\<CR>
+\<CR>while(1) {
+\<CR>15 * 100.0 => eauto.target;
+\<CR>16.0 * data.tick => eauto.duration  => now;
+\<CR>
+\<CR>20.0 => eauto.target;
+\<CR>16.0 * data.tick => eauto.duration  => now;
+\<CR>}
+\<CR>///////////////// AUTOMATION ///////////////////////
+ 
