@@ -104,6 +104,33 @@ public class killer {
       }
     }
 
+		fun static int no_replace(int id) {
+      0 => int no;
+      end @ e;
+
+      for (0 => int i; i < list.size()      ; i++) {
+        //  <<<"no rep zid: ",list[i].shred_id, list[i].no_replace >>>;
+        if (list[i].shred_id == id ) {
+          list[i] @=> e;	
+
+          if ( e.no_replace  ){
+            1 => no;
+            break;
+          }
+          while(e.next != NULL) {
+            e.next @=> e;
+            if ( e.no_replace  ){
+              1 => no;
+              break;
+            }
+          }
+
+        }
+      }
+      //<<<"NO REPLACE STATUS:", no>>>;
+
+      return no;
+    }
 
 }
 

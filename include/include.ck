@@ -44,6 +44,8 @@ Machine.add( rt + "CORE/seq_3/ELEMENT.ck");
 
 Machine.add( rt + "include/SIN.ck");
 
+Machine.add( rt + "include/NOREPLACE.ck");
+
 me.yield();
 Machine.add( rt + "CORE/lpk25/lpk25.ck"); 
 //Machine.add(rt + "CORE/seq_2/top_seq.ck");

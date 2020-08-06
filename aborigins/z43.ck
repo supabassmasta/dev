@@ -1,3 +1,6 @@
+
+NOREPLACE no;
+
 SYNC sy;
 sy.sync(32 * data.tick, - 8.25 * data.tick);
 //sy.sync(4 * data.tick , 0::ms /* offset */); 

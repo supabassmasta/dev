@@ -657,14 +657,19 @@ fun void kb_management (Hid hi)
 				//--------------------------------------------//
 				if(msg.which == 31)
 				{
-					<<<"replace YI">>>;
           500::ms => now;
-					// Get last key (note, will not work wity controls on the top of launchpad)
+					// Get last key (note, will not work with controls on the top of launchpad)
 					l.keys[l.last_key].controls[0] $ script_launcher @=> script_launcher last;
-					if (last.pad_on == 1) {
-							 killer.kill(last.zid);	
-						   Machine.add(last.zname) => last.zid;
-					}
+          if ( killer.no_replace(last.zid)  ){
+              <<<"NO REPLACE zid:", last.zid>>>;
+          }
+          else {
+            if (last.pad_on == 1) {
+              <<<"REPLACE zid:", last.zid>>>;
+              killer.kill(last.zid);	
+              Machine.add(last.zname) => last.zid;
+            }
+          }
 				}
 			} 
 		}

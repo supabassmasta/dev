@@ -3,6 +3,7 @@ public class end  {
  int shred_id;
  NULL @=> end @ next; 
  0 => int no_remove;
+ 0 => int no_replace;
 
  fun void kill_me () {}
 
