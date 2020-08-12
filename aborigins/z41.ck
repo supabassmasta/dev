@@ -1,8 +1,4 @@
-
 NOREPLACE no;
-
-
-MASTER_SEQ3.update_ref_times(now - 30*data.tick, data.tick * 16 * 128 );
 
 SYNC sy;
 //sy.sync(64 * data.tick);
