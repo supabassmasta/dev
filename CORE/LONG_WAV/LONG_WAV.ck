@@ -82,7 +82,14 @@ public class LONG_WAV extends ST {
     killer.reg(the_end);
 	}
 
-
+ fun void _stop () {
+				al.keyOff(); ar.keyOff();  
+				al.releaseTime() => now;
+     		buf.samples() => buf.pos;
+}
+ fun void stop () {
+    spork ~ _stop();
+ }
 //  Machine.remove(start_id.id());
 
 
