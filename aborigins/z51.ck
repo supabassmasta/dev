@@ -30,7 +30,13 @@ spork ~ glitchs ();
         LAUNCHPAD_VIRTUAL.off.set(43); // long break
 LAUNCHPAD_VIRTUAL.on.set(42); // AUto break
 
-6 * 32 * data.tick => now; // AUto break
+2 * 32 * data.tick => now; // AUto break
+        LAUNCHPAD_VIRTUAL.off.set(42); // AUto break
+LAUNCHPAD_VIRTUAL.on.set(44); // Special break
+2 * 32 * data.tick => now; // AUto break
+        LAUNCHPAD_VIRTUAL.off.set(44); // Special break
+LAUNCHPAD_VIRTUAL.on.set(42); // AUto break
+2 * 32 * data.tick => now; // AUto break
 
         LAUNCHPAD_VIRTUAL.off.set(42); // AUto break
 <<<"!!!!!!!!!!!! LONG BREAK ABOS !!!!!!!!!!!!">>>;
