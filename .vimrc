@@ -1247,3 +1247,6 @@ ab AUTOK ///////////////// AUTOMATION ///////////////////////
 \<CR>}
 \<CR>///////////////// AUTOMATION ///////////////////////
  
+ab STODK STOVERDRIVE stod;
+\<CR>stod.connect(last $ ST, 1.1 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last;
+
