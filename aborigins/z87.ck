@@ -1,3 +1,6 @@
+<<<"TICK:", data.tick/2::ms>>>;
+
+
 TONE t;
 t.reg(PLOC0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
