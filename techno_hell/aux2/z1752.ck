@@ -25,7 +25,7 @@ POLYTONE pt;
 //pt.t[0].force_off_action();
 // pt.t[0].mono() => dac;//  pt.t[0].left() => dac.left; // pt.t[0].right() => dac.right; // pt.t[0].raw => dac;
 
-pt.ion();// pt.lyd();// pt.ion();// pt.mix();// pt.aeo();// pt.phr();// pt.loc();// pt.double_harmonic();// pt.gypsy_minor();
+pt.dor();// pt.lyd();// pt.ion();// pt.mix();// pt.aeo();// pt.phr();// pt.loc();// pt.double_harmonic();// pt.gypsy_minor();
 //pt.sync(4*data.tick);// pt.element_sync();//  pt.no_sync();//  pt.full_sync();
 
 14 * 0.01 * data.master_gain =>  pt.gain_common;

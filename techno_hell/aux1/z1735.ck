@@ -9,8 +9,8 @@ SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); //
 //a___ ____ b___ ____
 //c___ ____ d___ ____
 "
-____ ____ ____ e___
-____ ____ ____ f___
+____ ____ ____ ____ ____ ____ ____ e___
+____ ____ ____ ____ ____ ____ ____ f___
 
 " => s.seq;
 1.5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 

@@ -901,7 +901,7 @@ ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
 ab STADSRK STADSR stadsr;
 \<CR>stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
 \<CR>stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
-\<CR>//stadsr.connect(s $ ST);  stadsr  $ ST @=>  last; 
+\<CR>//stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 \<CR>// stadsr.keyOn(); stadsr.keyOff();
 
 ab STPADSRK STPADSR stpadsr;
