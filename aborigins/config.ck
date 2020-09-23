@@ -11,8 +11,8 @@
 LAUNCHPAD_VIRTUAL.on.set(88);
 
 // LED STRIP
-//HW.ledstrip.open();
-//HW.ledstrip._load_preset('0');
+HW.ledstrip.open();
+HW.ledstrip._load_preset('4');
 
 //1::ms => now;
 

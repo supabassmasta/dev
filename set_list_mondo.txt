@@ -234,7 +234,7 @@ z13: Envoyer le dub juste avant le violet (SYNC 4)
 
 z18 : Flute part, à lancer sur le début de dernier paquet de 8 (SYNC 4 + 2 + Break)
 
-z28 : Break de la fin de violons (en rouge chez Chass) , à lancer sur le début de dernier paquet de 8 (SYNC 4 + 2 + Break)
+z28 : Break de la fin de violons (Brk en rouge chez Chass) , à lancer sur le début de dernier paquet de 8 (SYNC 4 + 2 + Break)
 
 Envoyer l'arpeggio z15:
 **     ARP LHPF FM     

@@ -484,11 +484,15 @@ void loop() {
       delay(5);
     break;
     case 15:
-     // earth();
-     // delay(10);
      colorRamp();
      kaleidoscope();
 
+    break;
+    // Quasar
+    case 16:
+     colorRamp();
+     kaleidoscope();
+    randwhite();
     break;
 
   }
@@ -1329,6 +1333,33 @@ void config_one_planet() {
 
 }
 
+void config_quasar() {
+  perc1.cnt_reload = 40;
+  perc1.cnt_num = 3;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x0FFFFFF;
+
+  perc2.cnt_reload = 30;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x00000FF;
+
+  perc3.cnt_reload = 30;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x00000FF;
+}
+
+
 int kick_cnt;
 int snare_cnt;
 
@@ -1478,6 +1509,19 @@ void read_serial(){
       config_one_planet();
 
       preset = 15;
+      valid = 1;
+    }
+    // Quasar
+    else if (b == 'F') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      init_colorRamps_quasar();
+      init_kaleidoscope();
+      config_quasar();
+
+      preset = 16;
       valid = 1;
     }
     else if (b == '!') {
@@ -1682,6 +1726,18 @@ void read_serial(){
           valid = 1;
         }
         break;
+        /////////// QUASAR ////////////////////////
+      case 16:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        break;
 
         /*
 
@@ -1817,6 +1873,18 @@ void randyellow() {
 
 
 }
+void randwhite() {
+  int b;
+  int c;
+  int white;
+  for (int i=0; i< 3 ; i++){
+    b = msws();
+    b = b & 0x1FF;
+    strip.setPixelColor(b, strip.Color(55, 55, 55));
+  }
+
+}
+
 void randall() {
   int b;
   int c;
@@ -2267,6 +2335,94 @@ void init_colorRamps_one_planet() {
 
   cramp_b[idx].target = -64;
   cramp_b[idx].step = -4;
+  idx++;
+
+
+}
+
+void init_colorRamps_quasar() {
+  uint8_t idx = 0;
+
+  ////////////// RED //////////////////
+
+  // No red
+
+  idx = 0;
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+  
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  cramp_r[idx].target = 0;
+  cramp_r[idx].step = 0;
+  idx++;
+
+  ////////////// GREEN //////////////////
+  idx = 0;
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 57;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 64;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  cramp_g[idx].target = -64;
+  cramp_g[idx].step = -4;
+  idx++;
+
+  cramp_g[idx].target = 0;
+  cramp_g[idx].step = 4;
+  idx++;
+
+  ////////////// BLUE //////////////////
+  idx = 0;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
+
+  cramp_b[idx].target = 64;
+  cramp_b[idx].step = 4;
+  idx++;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
+
+  cramp_b[idx].target = 57;
+  cramp_b[idx].step = 4;
+  idx++;
+
+  cramp_b[idx].target = -64;
+  cramp_b[idx].step = -4;
+  idx++;
+
+  cramp_b[idx].target = 0;
+  cramp_b[idx].step = 4;
   idx++;
 
 

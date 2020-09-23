@@ -15,7 +15,7 @@
 //HW.ledstrip._load_preset('0');
 
 HW.ledstrip.open();
-HW.ledstrip._load_preset('A');
+HW.ledstrip._load_preset('F');
 
 
 1::ms => now;
