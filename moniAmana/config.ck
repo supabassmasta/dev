@@ -10,7 +10,7 @@
 // autre: B Min + D Maj /E min
 
 // Start synchro
-//HW.launchpad.virtual_key_on(7);
+HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
 //HW.ledstrip.open();
