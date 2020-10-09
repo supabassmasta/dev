@@ -7,6 +7,7 @@ Machine.add( rt + "CORE/EFFECTS/note_info_tx.ck");
 Machine.add( rt + "CORE/EFFECTS/ST.ck");
 Machine.add( rt + "CORE/EFFECTS/OFFSET.ck");
 Machine.add( rt + "CORE/EFFECTS/MULT.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX.ck");
 Machine.add( rt + "include/global_data.ck" );
 Machine.add( rt + "include/global_mixer.ck" );
 Machine.add( rt + "include/global_event.ck" );
@@ -37,6 +38,10 @@ Machine.add( rt + "CORE/EFFECTS/CONTROL.ck");
 Machine.add( rt + "CORE/EFFECTS/REV0.ck");
 Machine.add( rt + "CORE/EFFECTS/REV1.ck");
 Machine.add( rt + "CORE/EFFECTS/REC.ck");
+
+Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX_FACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/LPFX.ck");
+
 Machine.add( rt + "CORE/NANOKONTROL/NANO.ck");
 
 Machine.add( rt + "CORE/seq_3/ACTION.ck");
@@ -60,6 +65,10 @@ Machine.add(rt + "CORE/EFFECTS/DUCK.ck");
 
 Machine.add( rt + "CORE/seq_3/SEQ3.ck");
 Machine.add( rt + "CORE/seq_3/WAV.ck");
+
+Machine.add( rt + "CORE/EFFECTS/FILTERX/LPF_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX_PATH.ck");
+
 me.yield();
 Machine.add( rt + "CORE/seq_3/MASTER_SEQ3.ck");
 
