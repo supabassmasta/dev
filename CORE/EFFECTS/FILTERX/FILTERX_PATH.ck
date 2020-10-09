@@ -2,7 +2,7 @@ public class FILTERX_PATH {
   Gain in[0];
   Gain out[0];
   
-  FILTERX @ fx[0];
+  FILTERX  fx[0];
   FILTERX_FACTORY @ fact;
   0 => int channels;
   0 => int order;
@@ -36,7 +36,10 @@ public class FILTERX_PATH {
     orderr => order;
     factory @=> fact;
 
-    channels => in.size => out.size;
+    for (0 => int i; i < channels ; i++) {
+      in << new Gain;
+      out << new Gain;
+    }
 
     for (0 => int i; i < channels ; i++) {
       in[i] $ UGen @=> last;

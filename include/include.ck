@@ -73,6 +73,9 @@ me.yield();
 Machine.add( rt + "CORE/seq_3/MASTER_SEQ3.ck");
 
 Machine.add( rt + "CORE/EFFECTS/CONTROLER.ck");
+
+Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTER.ck");
+
 me.yield();
 Machine.add(rt + "CORE/EFFECTS/END_CONTROL.ck");
 me.yield();
