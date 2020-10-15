@@ -41,6 +41,12 @@ Machine.add( rt + "CORE/EFFECTS/REC.ck");
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX_FACTORY.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/LPFX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/BPFX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/BRFX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/HPFX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/RESX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/DLX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/KGX.ck");
 
 Machine.add( rt + "CORE/NANOKONTROL/NANO.ck");
 
@@ -67,6 +73,13 @@ Machine.add( rt + "CORE/seq_3/SEQ3.ck");
 Machine.add( rt + "CORE/seq_3/WAV.ck");
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/LPF_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/BPF_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/BRF_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/HPF_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/RES_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/DL_XFACTORY.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/KG_XFACTORY.ck");
+
 Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX_PATH.ck");
 
 me.yield();
