@@ -1,4 +1,4 @@
-public class STFILTER extends ST{
+public class STFILTERX extends ST{
   FILTERX_PATH fpath;
 
   fun void connect(ST @ tone, FILTERX_FACTORY @ factory, float f, float q, int order, int channels) {
