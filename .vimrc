@@ -1254,3 +1254,6 @@ ab STODK STOVERDRIVE stod;
 ab MGAINCK mgainc0 => 
 \<esc>OMGAINC mgainc0; mgainc0.config( HW.lpd8.potar[1][1] /* gain */, 1.0 /* Static gain */ ); <Down><End> 
 
+ab MGAINC2K mgain2c0 => 
+\<esc>OMGAINC2 mgain2c0; mgain2c0.config( HW.lpd8.potar[1][1] /* gain */, 1.0 /* Static gain */ , 50::ms /* ramp dur */ ); <Down><End> 
+

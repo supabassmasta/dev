@@ -183,6 +183,7 @@ Machine.add(rt + "CORE/SYNT/VOICEA2.ck");
 
 // MONO EFFECTS
 Machine.add(rt + "CORE/EFFECTS/MGAINC.ck");
+Machine.add(rt + "CORE/EFFECTS/MGAINC2.ck");
 
 // STEREO EFFECTS
 Machine.add(rt + "CORE/EFFECTS/LPF_ST.ck");
