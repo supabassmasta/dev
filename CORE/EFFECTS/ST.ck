@@ -5,6 +5,9 @@ public class ST {
   Gain outl => dac.left;
   Gain outr => dac.right;
 
+  fun void gain(float g) {
+    g => outl.gain => outr.gain;
+  }
 
   0=> int left_out_active;
   Gain left_out;

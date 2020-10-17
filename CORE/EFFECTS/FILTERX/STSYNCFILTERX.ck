@@ -62,7 +62,10 @@ class nirx extends note_info_rx {
 
 public class STSYNCFILTERX extends ST{
   FILTERX_PATH fpath;
-
+  
+  // Enable Filter LIMITS
+  1 => fpath.enable_limit;
+  
   nirx nio;
   fpath @=> nio.fp;
 
