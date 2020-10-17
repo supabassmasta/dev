@@ -1250,3 +1250,7 @@ ab AUTOK ///////////////// AUTOMATION ///////////////////////
 ab STODK STOVERDRIVE stod;
 \<CR>stod.connect(last $ ST, 1.1 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last;
 
+
+ab MGAINCK mgainc0 => 
+\<esc>OMGAINC mgainc0; mgainc0.config( HW.lpd8.potar[1][1] /* gain */, 1.0 /* Static gain */ ); <Down><End> 
+

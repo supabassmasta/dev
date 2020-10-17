@@ -50,8 +50,46 @@ stfilter.connect(last $ ST ,  stfilterfactory, t.note_info_tx_o , 2 /* order */,
 STEPC stepc; stepc.init(HW.lpd8.potar[1][1], 0 /* min */, 144 * 100 /* max */, 50::ms /* transition_dur */);
 stepc.out =>  stfilter.nio.padsr;
 
+class control_gain extends CONTROL {
+    Gain @ gl;
+    float factor;
+
+
+    1 => update_on_reg ;
+    
+    fun void set (float in) {
+      in  * factor  / 127. => gl.gain ;
+
+     <<<"control_gain ", gl.gain()>>>; 
+    }
+
+  }
+
+class MGAINC extends Chubgraph {
+
+  inlet => Gain G => outlet;
+
+  control_gain cgain;
+  G @=> cgain.gl;
+
+  END_CONTROL endg;
+
+  fun void config(CONTROLER c, float  fact) {
+    c.reg(cgain);
+
+    fact => cgain.factor;
+
+    endg.conf(endg, c ,cgain);
+
+  }
+}
+
+MGAINC mgainc0; mgainc0.config( HW.lpd8.potar[1][2] /* gain */, 1.0 /* Static gain */ );
+//mgainc0 => 
+stfilter.mono() => mgainc0 => dac;
 
 while(1) {
        100::ms => now;
 }
  
+
