@@ -32,10 +32,22 @@ highlight iCursor guifg=black guibg=orange
 " Switch to alternate file
 map <C-Tab> :bnext<cr>
 map <C-S-Tab> :bprevious<cr>
-map <C-s> :w<cr>
+nmap <C-s> :w<cr>
 map <C-d> <C-]>
 map <C-Q> <Esc>0i//<Esc>
 map <C-f> :tnext<cr>
+imap <C-s> <esc>:w<cr>  
+
+" Leader mapping
+let mapleader = ","
+
+" Copy current line and increment first number
+:nnoremap <leader>a Yp0<C-a>
+
+
+" For command example:
+":for i in range(1, 255) | put=i.' text  '.i*i | endfor 
+
 
 " vim shell to use bash: DO NOT WORK
 "set shell=/bin/bash\ -l

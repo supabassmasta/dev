@@ -6,4 +6,3 @@ SinOsc sin0 => mgain2c0 =>   dac;
 while(1) {
        100::ms => now;
 }
- 
