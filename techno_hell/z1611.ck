@@ -13,13 +13,13 @@ KKKK KK *4 K_K_ :4
 s.go();     s $ ST @=> ST @ last; 
 
 STOVERDRIVE stod;
-stod.connect(last $ ST, 45.5 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
+stod.connect(last $ ST, 18.5 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
 
 STGAIN stgain;
 stgain.connect(last $ ST , 0.15 /* static gain */  );       stgain $ ST @=>  last; 
 
 STDUCKMASTER duckm;
-duckm.connect(last $ ST, 9. /* In Gain */, .07 /* Tresh */, .3 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+duckm.connect(last $ ST, 9. /* In Gain */, .08 /* Tresh */, .5 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
 //STGVERB stgverb;
 //stgverb.connect(last $ ST, .1 /* mix */, 6 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 

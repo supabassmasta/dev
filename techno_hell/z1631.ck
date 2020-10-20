@@ -63,6 +63,14 @@ gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 1. /* static gain */
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
 
+<<<"**********************************">>>;
+<<<"*      ACID SYNT                 *">>>;
+<<<"*   lpd 1.1 target freq filter   *">>>;
+<<<"*   lpd 1.2 output volume        *">>>;
+<<<"**********************************">>>;
+
+
+
 while(1) {
        100::ms => now;
 }

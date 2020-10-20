@@ -7,6 +7,8 @@ SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
 s.go();     s $ ST @=> ST @ last; 
+STDUCKMASTER duckm;
+duckm.connect(last $ ST, 9. /* In Gain */, .06 /* Tresh */, .4 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

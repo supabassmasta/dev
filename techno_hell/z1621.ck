@@ -10,6 +10,19 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STEQ steq;
+//steq.connect(last $ ST, HW.lpd8.potar[1][1] /* HPF freq */, HW.lpd8.potar[1][2] /* HPF Q */, HW.lpd8.potar[1][3] /* LPF freq */, HW.lpd8.potar[1][4] /* LPF Q */
+// , HW.lpd8.potar[1][5] /* BRF1 freq */, HW.lpd8.potar[1][6] /* BRF1 Q */, HW.lpd8.potar[1][7] /* BRF2 freq */, HW.lpd8.potar[1][8] /* BRF2 Q */
+//  , HW.lpd8.potar[2][1] /* BPF1 freq */, HW.lpd8.potar[2][2] /* BPF1 Q */, HW.lpd8.potar[2][3] /* BPF1 Gain */
+//   , HW.lpd8.potar[2][5] /* BPF2 freq */, HW.lpd8.potar[2][6] /* BPF2 Q */, HW.lpd8.potar[2][7] /* BPF2 Gain */
+//    , HW.lpd8.potar[2][8] /* Output Gain */  ); steq $ ST @=>  last; 
+steq.static_connect(last $ ST,  48.436623  /* HPF freq */,  8.250000  /* HPF Q */,  2489.015870  /* LPF freq */,  2.562500  /* LPF Q */
+      ,  0.000000  /* BRF1 freq */,  1.000000  /* BRF1 Q */,  0.000000  /* BRF2 freq */,  1.000000  /* BRF2 Q */
+      ,  0.000000  /* BPF1 freq */,  1.000000  /* BPF1 Q */,  0.000000  /* BPF1 Gain */
+      ,  0.000000  /* BPF2 freq */,  1.000000  /* BPF2 Q */,  0.000000   /* BPF2 Gain */
+      ,  1.000000  /* Output Gain */ ); steq $ ST @=>  last; 
+
+
 STGVERB stgverb;
 stgverb.connect(last $ ST, .2 /* mix */, 11 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.5 /* tail */ ); stgverb $ ST @=>  last; 
 
