@@ -96,6 +96,8 @@ me.yield();
 Machine.add(rt + "CORE/EFFECTS/END_CONTROL.ck");
 me.yield();
 
+Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERXC.ck");
+
 // SYNTA
 Machine.add(rt + "CORE/SYNTA/GLIDE.ck");
 Machine.add(rt + "CORE/SYNTA/POLY.ck");
