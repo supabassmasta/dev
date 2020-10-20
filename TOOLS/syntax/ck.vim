@@ -106,18 +106,19 @@ syn keyword ckStatement	        new goto break return continue spork
 syn keyword ckConditional       if else switch
 syn keyword ckLoop		while for do until
 syn keyword ckNow               now 
-syn keyword ckType              dur time Shred UGen Event Object 
-syn keyword cType               int float string void
+syn keyword ckType              dur time Shred UGen Event Object samp ms second minute hour day week
+syn keyword cType               int float string void Chubgraph
 syn keyword ckAccess		public protected private
 syn keyword ckOperator		and bitor or xor compl bitand and_eq or_eq xor_eq not not_eq
 syn match ckCast               "\s*\$\s*\(int\|float\)\s"
 syn keyword ckStructure	        class fun 
-syn keyword ckUgen		gain noise impulse step phasor sinosc pulseosc triosc sqrosc sawosc halfrec fullrect zerox delayp sndbuf pan2      
-syn keyword ckSDK               bandedWG blowbotl BlowHole Bowed Brass Clarinet Flute Mandolin ModalBar Moog Saxofony Shakers Sitar StifKarp VoicForm FM BeeThree FMVoices HevyMetl PercFlut Rhodey TubeBell Wurley Delay DelayA DelayL Echo Envelope ADSR biquad Filter OnePole TwoPole OneZero TwoZero PoleZero JCRev NRev PRCRev Chorus Modulate PitShift SubNoise WvIn WvOut WaveLoop
+
+syn keyword ckUgen	 SinOsc PulseOsc SqrOsc TriOsc SawOsc Phasor Noise Impulse Step Gain SndBuf HalfRect FullRect ZeroX Mix2 Pan2 GenX CurveTable WarpTable LiSa 
+syn keyword ckSDK     Envelope ADSR PowerADSR Delay DelayA DelayL Echo JCRev NRev PRCRev Chorus Modulate PitShift SubNoise Blit BlitSaw BlitSquare WvIn WaveLoop WvOut StkInstrument BandedWG BlowBotl BlowHole Bowed Brass Clarinet Flute Mandolin ModalBar Moog Saxofony Shakers Sitar StifKarp VoicForm FM BeeThree FMVoices HevyMetl PercFlut Rhodey TubeBell Wurley 
 syn keyword ckBoolean		true false
-syn keyword ckShreds            me machine
+syn keyword ckShreds            me Machine
 syn keyword ckInheritance       subClass extends 
-syn keyword ckIO                dac adc blackhole 
+syn keyword ckIO                dac adc blackhole inlet outlet outl outr 
 syn keyword ckNetwork           netin netout
 syn keyword ckCommunication     MidiIn MidiOut MidiMsg OSC_Recv OSC_Addr OSC_Send
 syn keyword ckConstants 	pi

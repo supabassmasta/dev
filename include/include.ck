@@ -90,6 +90,7 @@ Machine.add( rt + "CORE/EFFECTS/CONTROLER.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STSYNCFILTERX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFREEFILTERX.ck");
+Machine.add( rt + "CORE/EFFECTS/FILTERX/STAUTOFILTERX.ck");
 
 me.yield();
 Machine.add(rt + "CORE/EFFECTS/END_CONTROL.ck");
