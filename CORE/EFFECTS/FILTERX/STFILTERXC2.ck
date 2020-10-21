@@ -1,10 +1,11 @@
 class control_freq extends CONTROL {
-  FILTERX_PATH @ fp;
+  Envelope @ e;
   1 => update_on_reg ;
   
   fun void set (float in) {
-    Std.mtof(in) => float f => fp.freq ;
-    <<<"control_freq ", f>>>; 
+    Std.mtof(in) => float f =>  e.target ;
+    <<<"control_freq: ", f>>>;
+
   }
 
 }
@@ -21,13 +22,28 @@ class control_q extends CONTROL {
   }
 }
 
-public class STFILTERXC extends ST{
+public class STFILTERXC2 extends ST{
   FILTERX_PATH fpath;
+  1::ms => dur Period; 
+
   // Enable Filter LIMITS
   1 => fpath.enable_limit;
 
+  Step one => Envelope e => blackhole;
+  1. => one.next;
+  10::ms => e.duration;
+
+  fun void f1 (){ 
+    while(1) {
+        e.last() => fpath.freq;
+        Period => now;
+    }
+  } 
+  spork ~ f1 ();
+
+
   control_freq cfreq;
-  fpath @=> cfreq.fp;
+  e @=> cfreq.e;
 
   control_q cq;
   fpath @=> cq.fp;
@@ -37,7 +53,7 @@ public class STFILTERXC extends ST{
 
   0 => int connected;
 
-  fun void connect(ST @ tone, FILTERX_FACTORY @ factory,  CONTROLER f, CONTROLER q, int order, int channels) {
+  fun void connect(ST @ tone, FILTERX_FACTORY @ factory,  CONTROLER f, CONTROLER q, int order, int channels, dur rd, dur period) {
     fpath.build(channels,  order, factory);
 
     if ( channels == 1  ){
@@ -55,6 +71,8 @@ public class STFILTERXC extends ST{
     }
 
     if (!connected) {
+      rd => e.duration;
+      period => Period;
       f.reg(cfreq);
       endf.conf(endf, f ,cfreq);
       if(q != NULL){
