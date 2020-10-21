@@ -1273,6 +1273,9 @@ ab MGAINC2K mgain2c0 =>
 """""""""""""""""""
 """" FILTERX """"""
 """""""""""""""""""
+
+""" LPF
+
 ab STLPFXK STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 \<CR>stlpfx0.connect(last $ ST ,  stlpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last; 
 
@@ -1297,6 +1300,147 @@ ab STLPFXC2K STFILTERXC2 stlpfxc2_0; LPF_XFACTORY stlpfxc2_0fact;
 \<CR>stlpfxc2_0.connect(last $ ST ,  stlpfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stlpfxc2_0 $ ST @=>  last; 
 
 
+""" BPF
+ab STBPFXK STFILTERX stbpfx0; BPF_XFACTORY stbpfx0_fact;
+\<CR>stbpfx0.connect(last $ ST ,  stbpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stbpfx0 $ ST @=>  last; 
 
+ab STFREEBPFXK STFREEFILTERX stfreebpfx0; BPF_XFACTORY stfreebpfx0_fact;
+\<CR>stfreebpfx0.connect(last $ ST , stfreebpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreebpfx0 $ ST @=>  last; 
+\<CR>=> stfreebpfx0.freq; // CONNECT THIS
 
+ab STSYNCBPFXK STSYNCFILTERX stsyncbpfx0; BPF_XFACTORY stsyncbpfx0_fact;
+\<CR>stsyncbpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsyncbpfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsyncbpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsyncbpfx0.connect(last $ ST ,  stsyncbpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsyncbpfx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsyncbpfx0.nio.padsr;
+
+ab STAUTOBPFXK STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
+\<CR>stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last; 
+
+ab STBPFXCK STFILTERXC stbpfxc_0; BPF_XFACTORY stbpfxc_0fact;
+\<CR>stbpfxc_0.connect(last $ ST ,  stbpfxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stbpfxc_0 $ ST @=>  last; 
+
+ab STBPFXC2K STFILTERXC2 stbpfxc2_0; BPF_XFACTORY stbpfxc2_0fact;
+\<CR>stbpfxc2_0.connect(last $ ST ,  stbpfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stbpfxc2_0 $ ST @=>  last; 
+
+""" BRF
+ab STBRFXK STFILTERX stbrfx0; BRF_XFACTORY stbrfx0_fact;
+\<CR>stbrfx0.connect(last $ ST ,  stbrfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stbrfx0 $ ST @=>  last; 
+
+ab STFREEBRFXK STFREEFILTERX stfreebrfx0; BRF_XFACTORY stfreebrfx0_fact;
+\<CR>stfreebrfx0.connect(last $ ST , stfreebrfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreebrfx0 $ ST @=>  last; 
+\<CR>=> stfreebrfx0.freq; // CONNECT THIS
+
+ab STSYNCBRFXK STSYNCFILTERX stsyncbrfx0; BRF_XFACTORY stsyncbrfx0_fact;
+\<CR>stsyncbrfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsyncbrfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsyncbrfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsyncbrfx0.connect(last $ ST ,  stsyncbrfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsyncbrfx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsyncbrfx0.nio.padsr;
+
+ab STAUTOBRFXK STAUTOFILTERX stautobrfx0; BRF_XFACTORY stautobrfx0_fact;
+\<CR>stautobrfx0.connect(last $ ST ,  stautobrfx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobrfx0 $ ST @=>  last; 
+
+ab STBRFXCK STFILTERXC stbrfxc_0; BRF_XFACTORY stbrfxc_0fact;
+\<CR>stbrfxc_0.connect(last $ ST ,  stbrfxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stbrfxc_0 $ ST @=>  last; 
+
+ab STBRFXC2K STFILTERXC2 stbrfxc2_0; BRF_XFACTORY stbrfxc2_0fact;
+\<CR>stbrfxc2_0.connect(last $ ST ,  stbrfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stbrfxc2_0 $ ST @=>  last; 
+
+""" HPF
+ab STHPFXK STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
+\<CR>sthpfx0.connect(last $ ST ,  sthpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last; 
+
+ab STFREEHPFXK STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
+\<CR>stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
+\<CR>=> stfreehpfx0.freq; // CONNECT THIS
+
+ab STSYNCHPFXK STSYNCFILTERX stsynchpfx0; HPF_XFACTORY stsynchpfx0_fact;
+\<CR>stsynchpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsynchpfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsynchpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsynchpfx0.connect(last $ ST ,  stsynchpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynchpfx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsynchpfx0.nio.padsr;
+
+ab STAUTOHPFXK STAUTOFILTERX stautohpfx0; HPF_XFACTORY stautohpfx0_fact;
+\<CR>stautohpfx0.connect(last $ ST ,  stautohpfx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautohpfx0 $ ST @=>  last; 
+
+ab STHPFXCK STFILTERXC sthpfxc_0; HPF_XFACTORY sthpfxc_0fact;
+\<CR>sthpfxc_0.connect(last $ ST ,  sthpfxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       sthpfxc_0 $ ST @=>  last; 
+
+ab STHPFXC2K STFILTERXC2 sthpfxc2_0; HPF_XFACTORY sthpfxc2_0fact;
+\<CR>sthpfxc2_0.connect(last $ ST ,  sthpfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       sthpfxc2_0 $ ST @=>  last; 
+
+""" RES
+ab STRESXK STFILTERX stresx0; RES_XFACTORY stresx0_fact;
+\<CR>stresx0.connect(last $ ST ,  stresx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stresx0 $ ST @=>  last; 
+
+ab STFREERESXK STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
+\<CR>stfreeresx0.connect(last $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
+\<CR>=> stfreeresx0.freq; // CONNECT THIS
+
+ab STSYNCRESXK STSYNCFILTERX stsyncresx0; RES_XFACTORY stsyncresx0_fact;
+\<CR>stsyncresx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsyncresx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsyncresx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsyncresx0.connect(last $ ST ,  stsyncresx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsyncresx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsyncresx0.nio.padsr;
+
+ab STAUTORESXK STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+\<CR>stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last; 
+
+ab STRESXCK STFILTERXC stresxc_0; RES_XFACTORY stresxc_0fact;
+\<CR>stresxc_0.connect(last $ ST ,  stresxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stresxc_0 $ ST @=>  last; 
+
+ab STRESXC2K STFILTERXC2 stresxc2_0; RES_XFACTORY stresxc2_0fact;
+\<CR>stresxc2_0.connect(last $ ST ,  stresxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stresxc2_0 $ ST @=>  last; 
+
+""" DL
+ab STDLXK STFILTERX stdlx0; DL_XFACTORY stdlx0_fact;
+\<CR>stdlx0.connect(last $ ST ,  stdlx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stdlx0 $ ST @=>  last; 
+
+ab STFREEDLXK STFREEFILTERX stfreedlx0; DL_XFACTORY stfreedlx0_fact;
+\<CR>stfreedlx0.connect(last $ ST , stfreedlx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreedlx0 $ ST @=>  last; 
+\<CR>=> stfreedlx0.freq; // CONNECT THIS
+
+ab STSYNCDLXK STSYNCFILTERX stsyncdlx0; DL_XFACTORY stsyncdlx0_fact;
+\<CR>stsyncdlx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsyncdlx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsyncdlx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsyncdlx0.connect(last $ ST ,  stsyncdlx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsyncdlx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsyncdlx0.nio.padsr;
+
+ab STAUTODLXK STAUTOFILTERX stautodlx0; DL_XFACTORY stautodlx0_fact;
+\<CR>stautodlx0.connect(last $ ST ,  stautodlx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautodlx0 $ ST @=>  last; 
+
+ab STDLXCK STFILTERXC stdlxc_0; DL_XFACTORY stdlxc_0fact;
+\<CR>stdlxc_0.connect(last $ ST ,  stdlxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stdlxc_0 $ ST @=>  last; 
+
+ab STDLXC2K STFILTERXC2 stdlxc2_0; DL_XFACTORY stdlxc2_0fact;
+\<CR>stdlxc2_0.connect(last $ ST ,  stdlxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stdlxc2_0 $ ST @=>  last; 
+
+""" KG
+ab STKGXK STFILTERX stkgx0; KG_XFACTORY stkgx0_fact;
+\<CR>stkgx0.connect(last $ ST ,  stkgx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stkgx0 $ ST @=>  last; 
+
+ab STFREEKGXK STFREEFILTERX stfreekgx0; KG_XFACTORY stfreekgx0_fact;
+\<CR>stfreekgx0.connect(last $ ST , stfreekgx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreekgx0 $ ST @=>  last; 
+\<CR>=> stfreekgx0.freq; // CONNECT THIS
+
+ab STSYNCKGXK STSYNCFILTERX stsynckgx0; KG_XFACTORY stsynckgx0_fact;
+\<CR>stsynckgx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsynckgx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsynckgx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsynckgx0.connect(last $ ST ,  stsynckgx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynckgx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsynckgx0.nio.padsr;
+
+ab STAUTOKGXK STAUTOFILTERX stautokgx0; KG_XFACTORY stautokgx0_fact;
+\<CR>stautokgx0.connect(last $ ST ,  stautokgx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautokgx0 $ ST @=>  last; 
+
+ab STKGXCK STFILTERXC stkgxc_0; KG_XFACTORY stkgxc_0fact;
+\<CR>stkgxc_0.connect(last $ ST ,  stkgxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stkgxc_0 $ ST @=>  last; 
+
+ab STKGXC2K STFILTERXC2 stkgxc2_0; KG_XFACTORY stkgxc2_0fact;
+\<CR>stkgxc2_0.connect(last $ ST ,  stkgxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stkgxc2_0 $ ST @=>  last; 
 
