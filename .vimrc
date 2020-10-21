@@ -1269,3 +1269,34 @@ ab MGAINCK mgainc0 =>
 ab MGAINC2K mgain2c0 => 
 \<esc>OMGAINC2 mgain2c0; mgain2c0.config( HW.lpd8.potar[1][1] /* gain */, 1.0 /* Static gain */ , 50::ms /* ramp dur */ ); <Down><End> 
 
+
+"""""""""""""""""""
+"""" FILTERX """"""
+"""""""""""""""""""
+ab STLPFXK STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+\<CR>stlpfx0.connect(last $ ST ,  stlpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last; 
+
+ab STFREELPFXK STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+\<CR>stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+\<CR>=> stfreelpfx0.freq; // CONNECT THIS
+
+ab STSYNCLPFXK STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
+\<CR>stsynclpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
+\<CR>stsynclpfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stsynclpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr;
+
+ab STAUTOLPFXK STAUTOFILTERX stautolpfx0; LPF_XFACTORY stautolpfx0_fact;
+\<CR>stautolpfx0.connect(last $ ST ,  stautolpfx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautolpfx0 $ ST @=>  last; 
+
+ab STLPFXCK STFILTERXC stlpfxc_0; LPF_XFACTORY stlpfxc_0fact;
+\<CR>stlpfxc_0.connect(last $ ST ,  stlpfxc_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */);       stlpfxc_0 $ ST @=>  last; 
+
+ab STLPFXC2K STFILTERXC2 stlpfxc2_0; LPF_XFACTORY stlpfxc2_0fact;
+\<CR>stlpfxc2_0.connect(last $ ST ,  stlpfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stlpfxc2_0 $ ST @=>  last; 
+
+
+
+
+

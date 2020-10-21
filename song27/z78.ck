@@ -19,7 +19,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STFILTERXC2 stautofx0; LPF_XFACTORY stfilterfactory;
-stautofx0.connect(last $ ST ,  stfilterfactory, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 3 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stautofx0 $ ST @=>  last; 
+stautofx0.connect(last $ ST ,  stfilterfactory, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stautofx0 $ ST @=>  last; 
 
 
 while(1) {
