@@ -72,7 +72,7 @@ public class STSYNCFILTERX extends ST{
   fun void connect(ST @ tone, FILTERX_FACTORY @ factory, note_info_tx @ ni_tx, int order, int channels, dur period) {
     fpath.build(channels,  order, factory);
     fpath.freq(200);
-    fpath.Q(1);
+//    fpath.Q(1);
 
      if ( channels == 1  ){
          tone.left() => fpath.in[0];

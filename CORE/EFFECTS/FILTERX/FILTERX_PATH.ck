@@ -8,6 +8,9 @@ public class FILTERX_PATH {
   0 => int order;
   0 => int enable_limit;
 
+  1. => float privateQ;
+  100. => float privateF;
+
   fun void freq(float in) {
     if ( enable_limit ){
         if ( in < fx[0].min || in > fx[0].max  ){
@@ -20,9 +23,11 @@ public class FILTERX_PATH {
       fx[i].freq(in);
     }
 
+    in => privateF;
   }
 
   fun void Q (float in) {
+    in => privateQ;
     for (0 => int i; i <   fx.size()    ; i++) {
       fx[i].Q(in);
     }
@@ -53,6 +58,10 @@ public class FILTERX_PATH {
       // connect out  
       last => out[i];
     }
+
+    // in case Q or f has been set before filterpath is created
+    Q ( privateQ );
+    freq ( privateF );
   }
 
 }

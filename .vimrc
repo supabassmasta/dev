@@ -1444,3 +1444,18 @@ ab STKGXCK STFILTERXC stkgxc_0; KG_XFACTORY stkgxc_0fact;
 ab STKGXC2K STFILTERXC2 stkgxc2_0; KG_XFACTORY stkgxc2_0fact;
 \<CR>stkgxc2_0.connect(last $ ST ,  stkgxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stkgxc2_0 $ ST @=>  last; 
 
+ab polyserumK class synt0 extends SYNT{
+\<CR>8 => int synt_nb; 0 => int i;
+\<CR>Gain detune[synt_nb];
+\<CR>SERUM0 s[synt_nb]; 
+\<CR>Gain final => outlet; .3 => final.gain;
+\<CR>
+\<CR>0 => int n;
+\<CR>0 => int k;
+\<CR>
+\<CR>inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .6 => s[i].gain;   s[i].config(n, k) ; i++;  
+\<CR>
+\<CR>fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+\<CR>
+\<CR>} 
+

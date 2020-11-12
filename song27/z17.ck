@@ -73,7 +73,10 @@ SinOsc sin0 =>  OFFSET ofs0 =>  stsynckgx0.nio.padsr;
 1800.0 => sin0.gain;
 
 
+STAUTOFILTERX stautodlx0; DL_XFACTORY stautodlx0_fact;
+stautodlx0.connect(last $ ST ,  stautodlx0_fact, 1.0 /* Q */, 6 * 100 /* freq base */, 18 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautodlx0 $ ST @=>  last;  
 
+4. => stautodlx0.gain;
 
 while(1) {
        100::ms => now;
