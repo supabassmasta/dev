@@ -1,5 +1,5 @@
 // RYTHM
-109 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+173 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 16 => data.meas_size;
 // MIX
 1. => data.master_gain;
