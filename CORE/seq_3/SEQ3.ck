@@ -138,9 +138,6 @@ public class SEQ3 {
                 <<<"element ", idx, "skiped, time",  elements[idx].next_time, "<", now>>>; 
             }
 
-            if (idx == 0  && elements[0].next_time_validity ) {
-               elements[idx].next_time => ref_time;   
-            }
             
             elements[idx].next_time + duration => elements[idx].next_time;
 

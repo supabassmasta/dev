@@ -42,7 +42,7 @@ MidiMsg msg;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
-24 * 4 => int midi_clock_interval_update;
+1 * 24 * 2 => int midi_clock_interval_update;
 0 - midi_clock_interval_update => int last_total_midi_clocks; // initialize to trig on the first midi colock
 
 data.T0 => time spp_ref_time;
