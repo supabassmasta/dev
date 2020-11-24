@@ -35,7 +35,6 @@ MidiMsg msg;
 // print out device that was opened
 <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
-100 => int dispaly_cnt;
 0 => int total_midi_clocks;
 0 => int start_recvd;
 0 => int spp_recvd;
@@ -43,9 +42,13 @@ MidiMsg msg;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
-now => time start;
+data.T0 => time spp_ref_time;
+time last_midi_clock_time;
+
+//100 => int dispaly_cnt;
+//now => time start;
 while(1) {
-  0 => int nb_midi_clocks;
+  // 0 => int nb_midi_clocks;
   min => now;
   while( min.recv(msg) )
   {
@@ -54,7 +57,6 @@ while(1) {
         1 => spp_recvd;
         msg.data3 << 7 | msg.data2 => midi_beats;
         <<<"SPP midi beats: ", midi_beats >>>;
-
       }
 
       if (  msg.data1 == 250 ) {
@@ -63,16 +65,41 @@ while(1) {
       if ( start_recvd && spp_recvd  ){
         1 => started;
         <<<"STARTED">>>;
-
       }
     }
     else { // started
       if ( msg.data1 == 248 ) {
         // 1 +=> nb_midi_clocks;
+        now => last_midi_clock_time;
         1 +=> total_midi_clocks;
       }
     }
   }
+
+  // Exit loop, no more message in midi buffer
+
+  if (started) {
+    if (total_midi_clocks) { // At least one midi clock received
+      if ( spp_ref_time == data.T0 ){ // not initialized
+        // Last midi clock received is the most accurate in Chuck time
+        // Use it to convert midi spp to chuck time
+        
+        // Compute spp message arrival
+        // For now we have to use default tick
+        last_midi_clock_time - total_midi_clocks * data.tick / (24*4) => spp_ref_time;
+
+        // Adjust SPP with midi beats inside message
+        spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
+
+        // We can adjust ref time
+        MASTER_SEQ3.update_ref_times(spp_ref_time, data.tick * 16 * 128 );
+        <<<"REF TIME Updated with SPP. spp_ref_time: ", spp_ref_time, " last_midi_clock_time: ", last_midi_clock_time, " total_midi_clocks: ", total_midi_clocks >>>;
+
+      }
+
+    }
+  }
+
 
   // 1 -=> dispaly_cnt;
   // if ( dispaly_cnt == 0 ){
