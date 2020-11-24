@@ -42,6 +42,9 @@ MidiMsg msg;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
+24 * 4 => int midi_clock_interval_update;
+0 - midi_clock_interval_update => int last_total_midi_clocks; // initialize to trig on the first midi colock
+
 data.T0 => time spp_ref_time;
 time last_midi_clock_time;
 
@@ -79,8 +82,7 @@ while(1) {
   // Exit loop, no more message in midi buffer
 
   if (started) {
-    if (total_midi_clocks) { // At least one midi clock received
-      if ( spp_ref_time == data.T0 ){ // not initialized
+    if (total_midi_clocks > last_total_midi_clocks + midi_clock_interval_update) { // At least one midi clock received
         // Last midi clock received is the most accurate in Chuck time
         // Use it to convert midi spp to chuck time
         
@@ -95,7 +97,8 @@ while(1) {
         MASTER_SEQ3.update_ref_times(spp_ref_time, data.tick * 16 * 128 );
         <<<"REF TIME Updated with SPP. spp_ref_time: ", spp_ref_time, " last_midi_clock_time: ", last_midi_clock_time, " total_midi_clocks: ", total_midi_clocks >>>;
 
-      }
+        total_midi_clocks => last_total_midi_clocks;
+
 
     }
   }
