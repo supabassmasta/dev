@@ -27,6 +27,10 @@ public class SEQ3 {
    }
   }
 
+  fun void compute_ref_time() {
+    now - ((now - data.wait_before_start)%duration)  => ref_time;
+  }
+
   fun void _go() {
     
     // compute duration and rel_time
@@ -86,11 +90,6 @@ public class SEQ3 {
            }
          // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
-                if (idx == 0 && ref_time <= now) {
-                    // recompute ref_time
-                    ref_time + duration => ref_time;
-                    //  <<<"New ref_time ", ref_time>>>;
-                }
 
                 ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
                 1 => elements[idx].next_time_validity;
@@ -137,10 +136,11 @@ public class SEQ3 {
             }
             else {
                 <<<"element ", idx, "skiped, time",  elements[idx].next_time, "<", now>>>; 
-                0 => elements[idx].next_time_validity;
+                // NOT SURE IT IS USEFUL : COMMENTED
+                // 0 => elements[idx].next_time_validity;
             }
 
-            if (idx == 0 && elements[0].next_time_validity) {
+            if (idx == 0 /* && elements[0].next_time_validity */) {
                elements[idx].next_time => ref_time;   
             }
             

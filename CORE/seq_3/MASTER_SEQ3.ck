@@ -9,35 +9,12 @@ public class MASTER_SEQ3 {
     time ref_test;
     float last_diff;
     int j; 
-    // for future seqs
+
     r - data.T0 => data.wait_before_start;
 
-
     for (0 => int i; i < seqs.size(); i++) {
-       // find new ref time the closer to old one (modulo synchro sequence duration)
-       0 => j; 
-       if (r > seqs[i].ref_time) {
-         r/1::samp - seqs[i].ref_time/1::samp => last_diff;  
-         while ( Std.fabs ( (r - duration * (j+1))/1::samp - seqs[i].ref_time/1::samp ) < last_diff ) {
-            Std.fabs ( (r - duration * (j+1))/1::samp - seqs[i].ref_time/1::samp ) => last_diff;
-            1 +=> j;
-         }
-          
-         r - (duration * j) => seqs[i].ref_time;
 
-       }
-       else {
-         seqs[i].ref_time/1::samp - r/1::samp  => last_diff;  
-         while ( Std.fabs ( (r + duration * (j+1))/1::samp - seqs[i].ref_time/1::samp ) < last_diff ) {
-            Std.fabs ( (r + duration * (j+1))/1::samp - seqs[i].ref_time/1::samp )  => last_diff;
-            1 +=> j;
-         }
-
-         r + (duration * j) => seqs[i].ref_time;
-       }
-
-
-
+       seqs[i].compute_ref_time();
        seqs[i].set_all_next_time_invalid();
     }
      
