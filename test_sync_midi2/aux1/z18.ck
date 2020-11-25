@@ -130,7 +130,7 @@ while(1) {
 
 
         // BPM
-       (last_total_midi_clocks - total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - old_last_midi_clock_time ) * 24 * 4) => float bpm;
+       (total_midi_clocks - last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - old_last_midi_clock_time ) * 24 * 4) => float bpm;
 
         <<<"BPM:", bpm >>>;
 
