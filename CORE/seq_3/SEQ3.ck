@@ -134,7 +134,6 @@ public class SEQ3 {
                if (on_flag) {
                    // ON_TIME
                    // <<<"SEQ3 Execute element: ", idx>>>; 
-
                    for (0 => int i; i < elements[idx].actions.size()      ; i++) {
                        elements[idx].actions[i].on_time();
                        //  <<<"action ", i>>>; 
@@ -145,9 +144,7 @@ public class SEQ3 {
                       for (0 => int i; i < elements[idx].on_actions.size()      ; i++) {
                         elements[idx].on_actions[i].on_time();
                       }
-
                    }
-
                }
                else {
                  if (just_off) {
@@ -155,26 +152,18 @@ public class SEQ3 {
                    for (0 => int i; i < elements[idx].off_actions.size()      ; i++) {
                      elements[idx].off_actions[i].on_time();
                    }
-
                  }
-
-
                }
             }
             else {
                 <<<"element ", idx, "skiped, time",  elements[idx].next_time, "<", now>>>; 
             }
-
             
             elements[idx].next_time + duration => elements[idx].next_time;
 
             idx => last_idx;
             (idx + 1) %  elements.size() => idx;
-
-
-
     }
-    
   }
 
   
