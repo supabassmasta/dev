@@ -1,9 +1,9 @@
 public class SEQ3 {
-  0::ms => dur sync_offset;
   time ref_time;
   dur duration;
   float nb_tick;
   0 => int idx;
+  -1 => int last_idx;
   0 => int exit;  
   1 => int on_flag;
   0=> int just_on;
@@ -31,6 +31,45 @@ public class SEQ3 {
     now - ((now - data.wait_before_start)%duration)  => ref_time;
   }
 
+  fun time set_element_next_time(int i) {
+    elements[i].rel_pos * duration + ref_time => elements[i].next_time => time ret;
+    // As we just compute it next time is valid
+    1 =>  elements[i].next_time_validity;
+
+    return ret;
+  }
+
+  fun int find_next_to_play() {
+        -1 => int res;
+        time next;
+        while (res == -1 ) {
+          0=> int i;
+          do {
+            set_element_next_time(i) => next;
+            if ( next > now && res == -1 ){
+              i => res; 
+            }
+            i++;
+          } while (i < elements.size());
+
+          if(res == -1) {
+            // We dont find next, in current sequence period
+            // Try in next one
+            ref_time + duration => ref_time;
+          }
+        }
+        
+        // update next time of element before res as we know there are invalid
+        // They will happen in next sequence period
+        ref_time + duration => ref_time;
+
+        for (0 => int i; i <  res     ; i++) {
+          set_element_next_time(i);
+        }
+
+        return res;
+  }
+
   fun void _go() {
     
     // compute duration and rel_time
@@ -48,31 +87,26 @@ public class SEQ3 {
     }
 
     // initial SYNC
+    // NO SYNC
     if (sync_mode == 0) {
         // Start now (+ 10::ms for processing) and save ref_time
         now + 10::ms => ref_time;
     }
+    // ELEMENT SYNC
     else if (sync_mode == 1) {
-        now - ((now - sync_offset)%duration) => ref_time;
-        0=> int i;
-        while (i < elements.size() && elements[i].rel_time + ref_time < now) {
-            i++;
-        }
-        i => idx;
-        if (idx >= elements.size()){
-            0=> idx;
-        }
+        compute_ref_time();
+        find_next_to_play () => idx;
         // <<<"SYNC on Element ", idx>>>;
-
-
     }
+    // FULL SYNC
     else if (sync_mode == 2) {
-        now - ((now - sync_offset)%duration) => ref_time;
+        now - ((now - data.wait_before_start)%duration) => ref_time;
         // wait next ref_time to start
         duration + ref_time => ref_time;
     }
+    // DUR SYNC
     else if (sync_mode == 3) {
-        now - ((now - sync_offset)%dur_sync) => ref_time;
+        now - ((now - data.wait_before_start)%dur_sync) => ref_time;
         // wait next ref_time to start
         dur_sync + ref_time => ref_time;
     }
@@ -82,17 +116,10 @@ public class SEQ3 {
 
     // LOOP
     while (!exit) {
-        // PRE
-           if (on_flag) {
-               for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                   elements[idx].actions[i].pre();
-               }
-           }
          // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
-
-                ref_time + (duration * elements[idx].rel_pos) => elements[idx].next_time;
-                1 => elements[idx].next_time_validity;
+                // Maybe next element is not the good one anymore
+                find_next_to_play() => idx;
            }
 
            if(elements[idx].next_time > now) {
@@ -117,10 +144,6 @@ public class SEQ3 {
 
                    }
 
-                   // POST
-                   for (0 => int i; i < elements[idx].actions.size()      ; i++) {
-                       elements[idx].actions[i].post();
-                   }
                }
                else {
                  if (just_off) {
@@ -141,10 +164,8 @@ public class SEQ3 {
             
             elements[idx].next_time + duration => elements[idx].next_time;
 
-            idx + 1 => idx;
-            if (idx >= elements.size()){
-                0=> idx;
-            }
+            idx => last_idx;
+            (idx + 1) %  elements.size() => idx;
 
 
 
