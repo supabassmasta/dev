@@ -81,6 +81,6 @@ while(1) {
 
     1 +=> midi_cnt;
 
-    data.tick / (4 * 24 )=> now;
+    data.tick / (4 * 24 )   + 0::samp /* drift */=> now;
 }
 

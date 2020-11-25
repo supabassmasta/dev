@@ -45,15 +45,14 @@ MidiMsg msg;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
-1 * 25 * 5 => int midi_clock_interval_update;
+1 * 24 * 12 => int midi_clock_interval_update;
 0 => int last_total_midi_clocks; // initialize to trig on the first midi colock
-
 data.T0 => time spp_ref_time;
 data.T0 => time last_spp_ref_time;
 0::ms => dur delta_acc;
 0 => int delta_acc_cnt;
-
 time last_midi_clock_time;
+time old_last_midi_clock_time;
 
 //100 => int dispaly_cnt;
 //now => time start;
@@ -105,6 +104,7 @@ while(1) {
         
         spp_ref_time => last_spp_ref_time;
         total_midi_clocks => last_total_midi_clocks;
+        last_midi_clock_time => old_last_midi_clock_time;
 
     }
     else {
@@ -128,10 +128,19 @@ while(1) {
         MASTER_SEQ3.update_ref_times(spp_ref_time + experimental_offset, data.tick * 16 * 128 );
         <<<"REF TIME Updated with SPP. spp_ref_time: ", spp_ref_time, " last_midi_clock_time: ", last_midi_clock_time, " total_midi_clocks: ", total_midi_clocks, "delta ",  (delta_acc/delta_acc_cnt) / 1::ms, " delta_acc_cnt ", delta_acc_cnt >>>;
 
+
+        // BPM
+       (last_total_midi_clocks - total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - old_last_midi_clock_time ) * 24 * 4) => float bpm;
+
+        <<<"BPM:", bpm >>>;
+
+
         total_midi_clocks => last_total_midi_clocks;
         spp_ref_time => last_spp_ref_time;
         0::ms =>  delta_acc;
         0 =>  delta_acc_cnt;
+        last_midi_clock_time => old_last_midi_clock_time;
+
 
       }
     }
