@@ -100,7 +100,7 @@ public class SEQ3 {
     }
     // FULL SYNC
     else if (sync_mode == 2) {
-        now - ((now - data.wait_before_start)%duration) => ref_time;
+        compute_ref_time();
         // wait next ref_time to start
         duration + ref_time => ref_time;
     }
@@ -116,11 +116,15 @@ public class SEQ3 {
 
     // LOOP
     while (!exit) {
-         // Manage next element time   
            if (elements[idx].next_time_validity == 0) {
-                // Maybe next element is not the good one anymore
-                find_next_to_play() => idx;
-           }
+             // Maybe next element is not the good one anymore
+             find_next_to_play() => idx;
+             if ( idx == last_idx ){
+               // We already just played this index (probably a short time adjustemnet backward
+               // Don't play it again skip to next
+               (idx + 1) %  elements.size() => idx;
+             }
+          }
 
            if(elements[idx].next_time > now) {
 
