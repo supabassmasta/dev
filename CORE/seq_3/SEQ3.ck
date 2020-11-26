@@ -117,6 +117,9 @@ public class SEQ3 {
     // LOOP
     while (!exit) {
            if (elements[idx].next_time_validity == 0) {
+             // Maybe bpm change, recompute duration
+             nb_tick * data.tick => duration;
+
              // Maybe next element is not the good one anymore
              find_next_to_play() => idx;
              if ( idx == last_idx ){

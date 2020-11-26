@@ -37,6 +37,10 @@ MidiMsg msg;
 
 6::ms => dur experimental_offset;
 
+0.01 => float tick_cor_percent;
+5 => int tick_update_reload;
+tick_update_reload => int tick_update_cnt;
+
 0 => int total_midi_clocks;
 0 => int start_recvd;
 0 => int spp_recvd;
@@ -45,14 +49,18 @@ MidiMsg msg;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
-1 * 24 * 12 => int midi_clock_interval_update;
+1 * 24 * 4 => int midi_clock_interval_update;
 0 => int last_total_midi_clocks; // initialize to trig on the first midi colock
 data.T0 => time spp_ref_time;
 data.T0 => time last_spp_ref_time;
 0::ms => dur delta_acc;
 0 => int delta_acc_cnt;
 time last_midi_clock_time;
-time old_last_midi_clock_time;
+
+8 * 24 * 4 => int bpm_interval_update;
+time bpm_last_midi_clock_time;
+0 => int bpm_last_total_midi_clocks;
+float bpm;
 
 //100 => int dispaly_cnt;
 //now => time start;
@@ -104,8 +112,9 @@ while(1) {
         
         spp_ref_time => last_spp_ref_time;
         total_midi_clocks => last_total_midi_clocks;
-        last_midi_clock_time => old_last_midi_clock_time;
 
+        last_midi_clock_time => bpm_last_midi_clock_time;
+        total_midi_clocks => bpm_last_total_midi_clocks;
     }
     else {
        // Compute spp message arrival
@@ -122,24 +131,63 @@ while(1) {
         // Use it to convert midi spp to chuck time
         
         // Mean delta and add it to last spp ref time
-        last_spp_ref_time + delta_acc/delta_acc_cnt => spp_ref_time;
+        delta_acc/delta_acc_cnt => dur delta;
+        last_spp_ref_time + delta => spp_ref_time;
 
+        ////////////////////////////////////////////////
+        // BPM
+       
+       if (total_midi_clocks > bpm_last_total_midi_clocks + bpm_interval_update) {
+
+         (total_midi_clocks - bpm_last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - bpm_last_midi_clock_time ) * 24 * 4) => bpm;
+
+         60::second / bpm => data.tick;
+          
+
+          last_midi_clock_time => bpm_last_midi_clock_time;
+          total_midi_clocks => bpm_last_total_midi_clocks;
+       }
+       <<<"BPM:", bpm >>>;
+ //        1 -=> tick_update_cnt;
+ //        if (tick_update_cnt == 0) {
+ //          tick_update_reload => tick_update_cnt;
+ //          // UPDATE TICK
+ 
+ //           10::samp => dur max_cor;  
+ //           if (delta > 4::ms || delta < -1 * 4::ms) {
+ //             delta * tick_cor_percent => dur cor;
+//             if ( cor > max_cor ) max_cor => cor;
+//             else if ( cor < -1 * max_cor )  -1 * max_cor => cor;
+//             
+//             
+//             cor + data.tick => data.tick;
+//           }
+
+
+//           data.tick - delta * tick_cor_percent  => data.tick;
+
+
+          // recompute spp ref time with new tick
+////          last_midi_clock_time - total_midi_clocks * data.tick / (24*4) => spp_ref_time;
+//          spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
+          // fix it with the rest of delta
+//          delta * (1 - tick_cor_percent) + spp_ref_time => spp_ref_time;
+//        }
+          <<<"DATA.TICK ", data.tick / 1::ms >>>;
+
+
+        /////////////////////////////////////////////////
         // We can adjust ref time
         MASTER_SEQ3.update_ref_times(spp_ref_time + experimental_offset, data.tick * 16 * 128 );
         <<<"REF TIME Updated with SPP. spp_ref_time: ", spp_ref_time, " last_midi_clock_time: ", last_midi_clock_time, " total_midi_clocks: ", total_midi_clocks, "delta ",  (delta_acc/delta_acc_cnt) / 1::ms, " delta_acc_cnt ", delta_acc_cnt >>>;
 
 
-        // BPM
-       (total_midi_clocks - last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - old_last_midi_clock_time ) * 24 * 4) => float bpm;
-
-        <<<"BPM:", bpm >>>;
 
 
         total_midi_clocks => last_total_midi_clocks;
         spp_ref_time => last_spp_ref_time;
         0::ms =>  delta_acc;
         0 =>  delta_acc_cnt;
-        last_midi_clock_time => old_last_midi_clock_time;
 
 
       }

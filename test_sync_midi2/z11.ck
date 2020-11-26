@@ -81,6 +81,14 @@ while(1) {
 
     1 +=> midi_cnt;
 
-    data.tick / (4 * 24 )   + 0::samp /* drift */=> now;
+    data.tick / (4 * 24 )   => now;
+
+//    (LPD8.pot[0][0] + 50) => int bpm;
+
+//    <<<"BPM:", bpm >>>;
+
+//    60::second / bpm => data.tick;
+
+
 }
 
