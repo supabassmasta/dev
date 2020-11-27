@@ -57,6 +57,7 @@ Machine.add( rt + "include/SIN.ck");
 
 Machine.add( rt + "include/NOREPLACE.ck");
 
+
 me.yield();
 Machine.add( rt + "CORE/lpk25/lpk25.ck"); 
 //Machine.add(rt + "CORE/seq_2/top_seq.ck");
@@ -93,7 +94,8 @@ Machine.add( rt + "CORE/EFFECTS/FILTERX/STFREEFILTERX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STAUTOFILTERX.ck");
 
 me.yield();
-Machine.add(rt + "CORE/EFFECTS/END_CONTROL.ck");
+Machine.add( rt + "CORE/EFFECTS/END_CONTROL.ck");
+Machine.add( rt + "CORE/seq_3/MIDI_CLOCK_TRACKER.ck");
 me.yield();
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERXC.ck");
