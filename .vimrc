@@ -386,9 +386,9 @@ ab FREQ_STRK class synt0 extends SYNT{
 \<CR>//data.meas_size * data.tick => now;
 
 ab ENDK class END extends end { fun void kill_me () {
-\<CR>		<<<"THE END">>>; 	
-\<CR>		1500::ms => now;	
-\<CR>		<<<"THE real END">>>; 	
+\<CR><<<"THE END">>>; 	
+\<CR>1500::ms => now;	
+\<CR><<<"THE real END">>>; 	
 \<CR>}}; END the_end; me.id() => the_end.shred_id; killer.reg(the_end); 
 
 ab <<< <<<"">>>;<CR><Up><Right><Right><Right><Right>
@@ -1459,3 +1459,6 @@ ab polyserumK class synt0 extends SYNT{
 \<CR>
 \<CR>} 
 
+ab WAITK WAIT w;
+\<CR>8 *data.tick => w.fixed_end_dur;
+\<CR>//2 * data.tick =>  w.wait;

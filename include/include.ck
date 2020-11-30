@@ -57,6 +57,8 @@ Machine.add( rt + "include/SIN.ck");
 
 Machine.add( rt + "include/NOREPLACE.ck");
 
+Machine.add( rt + "include/WAIT.ck");
+
 
 me.yield();
 Machine.add( rt + "CORE/lpk25/lpk25.ck"); 
