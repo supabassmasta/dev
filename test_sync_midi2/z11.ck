@@ -40,7 +40,7 @@ MidiOut mout;
 Step f => PLOC0 p =>dac;
 
 Std.mtof(60 + 7) => f.next;
-.7 => p.gain;
+.4 => p.gain;
 
 ////////////////////////////////////////////
 

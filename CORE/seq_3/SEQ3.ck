@@ -43,14 +43,12 @@ public class SEQ3 {
         -1 => int res;
         time next;
         while (res == -1 ) {
-          0=> int i;
-          do {
+          for (0 => int i; i < elements.size() ; i++) {
             set_element_next_time(i) => next;
             if ( next > now && res == -1 ){
               i => res; 
             }
-            i++;
-          } while (i < elements.size());
+          } 
 
           if(res == -1) {
             // We dont find next, in current sequence period
@@ -66,6 +64,12 @@ public class SEQ3 {
         for (0 => int i; i <  res     ; i++) {
           set_element_next_time(i);
         }
+
+        // <<<"OUTPUT find_next_to_play">>>;
+        // <<<"res idx", res, "now", now, "ref_time", ref_time>>>;
+        // for (0 => int i; i < elements.size() ; i++) {
+        //   <<<"elt", i , elements[i].next_time>>>;
+        // }
 
         return res;
   }
@@ -119,13 +123,22 @@ public class SEQ3 {
            if (elements[idx].next_time_validity == 0) {
              // Maybe bpm change, recompute duration
              nb_tick * data.tick => duration;
+             
+             // Maybe ref time change too
+             compute_ref_time();
 
              // Maybe next element is not the good one anymore
              find_next_to_play() => idx;
+
              if ( idx == last_idx ){
                // We already just played this index (probably a short time adjustemnet backward
-               // Don't play it again skip to next
+               //==>  Don't play it again
+
+               // Update its next_time 
+               elements[idx].next_time + duration => elements[idx].next_time;
+               // skip to next
                (idx + 1) %  elements.size() => idx;
+               // <<<"DISCARD DOUBLE PLAY">>>;
              }
           }
 
@@ -159,7 +172,13 @@ public class SEQ3 {
                }
             }
             else {
-                <<<"element ", idx, "skiped, time",  elements[idx].next_time, "<", now>>>; 
+                <<<"SKIPED element ", idx, ", time",  elements[idx].next_time, "<", now>>>; 
+
+                // <<<"ref_time", ref_time, "duration", duration>>>;
+                // for (0 => int i; i < elements.size()      ; i++) {
+                //   <<<"elt", i , elements[i].next_time>>>;
+                // }
+                 
             }
             
             elements[idx].next_time + duration => elements[idx].next_time;
