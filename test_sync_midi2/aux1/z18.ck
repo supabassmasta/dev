@@ -49,7 +49,7 @@ tick_update_reload => int tick_update_cnt;
 
 0 => int midi_beats; // 1 midi beat == 6 midi clocks
 
-1 * 24 * 4 => int midi_clock_interval_update;
+1 * 24 * 2 => int midi_clock_interval_update;
 0 => int last_total_midi_clocks; // initialize to trig on the first midi colock
 data.T0 => time spp_ref_time;
 data.T0 => time last_spp_ref_time;
@@ -57,7 +57,7 @@ data.T0 => time last_spp_ref_time;
 0 => int delta_acc_cnt;
 time last_midi_clock_time;
 
-2 * 24 * 4 => int bpm_interval_update;
+1 * 24 * 4 => int bpm_interval_update;
 time bpm_last_midi_clock_time;
 0 => int bpm_last_total_midi_clocks;
 float bpm;
@@ -142,7 +142,7 @@ while(1) {
          (total_midi_clocks - bpm_last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - bpm_last_midi_clock_time ) * 24 * 4) => bpm;
         
          // FILTER BPM
-         0.2  => float fact_bpm; 
+         0.5  => float fact_bpm; 
          bpm * fact_bpm + data.bpm * (1 - fact_bpm) => bpm;
 
          if (Std.fabs(bpm - data.bpm) > 0.2) {
