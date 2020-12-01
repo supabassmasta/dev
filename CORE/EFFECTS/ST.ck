@@ -71,4 +71,11 @@ public class ST {
     }
   }
 
+  fun void disconnect() {
+    outl =< dac.left;
+    outr =< dac.right;
+    outl =< left_out;
+    outr =< right_out;
+  }
+
 }
