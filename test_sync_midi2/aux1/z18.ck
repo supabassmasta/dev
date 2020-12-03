@@ -1,4 +1,5 @@
-"Midi Through Port-0" => string device;
+"Scarlett 2i4 USB MIDI 1" => string device;
+//"Midi Through Port-0" => string device;
 
 // the midi event
 MidiIn min;
@@ -35,7 +36,7 @@ MidiMsg msg;
 // print out device that was opened
 <<< "MIDI device:", min.num(), " -> ", min.name() >>>;
 
-6::ms => dur experimental_offset;
+-1 * 198::ms + 6::ms => dur experimental_offset;
 
 0.01 => float tick_cor_percent;
 5 => int tick_update_reload;
@@ -90,6 +91,10 @@ while(1) {
         now => last_midi_clock_time;
         1 +=> total_midi_clocks;
       }
+      else {
+        <<<msg.data1, msg.data2, msg.data3>>>;
+
+      }
     }
   }
 
@@ -102,7 +107,7 @@ while(1) {
         // Use it to convert midi spp to chuck time
         
         // Compute spp message arrival
-        last_midi_clock_time - total_midi_clocks * data.tick / (24*4) => spp_ref_time;
+        last_midi_clock_time - total_midi_clocks * data.tick / (24*1) => spp_ref_time;
         // Adjust SPP with midi beats inside message
         spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
 
@@ -118,7 +123,7 @@ while(1) {
     }
     else {
        // Compute spp message arrival
-        last_midi_clock_time - total_midi_clocks * data.tick / (24*4) => spp_ref_time;
+        last_midi_clock_time - total_midi_clocks * data.tick / (24*1) => spp_ref_time;
         // Adjust SPP with midi beats inside message
         spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
 
@@ -139,7 +144,7 @@ while(1) {
        
        if (total_midi_clocks > bpm_last_total_midi_clocks + bpm_interval_update) {
 
-         (total_midi_clocks - bpm_last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - bpm_last_midi_clock_time ) * 24 * 4) => bpm;
+         (total_midi_clocks - bpm_last_total_midi_clocks ) * 60::second / ( ( last_midi_clock_time - bpm_last_midi_clock_time ) * 24 * 1) => bpm;
         
          // FILTER BPM
          0.5  => float fact_bpm; 
