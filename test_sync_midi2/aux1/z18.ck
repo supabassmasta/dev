@@ -77,13 +77,16 @@ while(1) {
         <<<"SPP midi beats: ", midi_beats >>>;
       }
 
-      if (  msg.data1 == 250 ) {
+      if (  msg.data1 == 250 || msg.data1 == 251 /* continue */ ) {
         1 => start_recvd;
       }
       if ( start_recvd && spp_recvd  ){
         1 => started;
         <<<"STARTED">>>;
       }
+
+        <<<msg.data1, msg.data2, msg.data3>>>;
+
     }
     else { // started
       if ( msg.data1 == 248 ) {
@@ -92,6 +95,13 @@ while(1) {
         1 +=> total_midi_clocks;
       }
       else {
+        if (  msg.data1 == 242 ) {
+          1 => spp_recvd;
+          msg.data3 << 7 | msg.data2 => midi_beats;
+          <<<"RESTARTED SPP midi beats: ", midi_beats >>>;
+          1 => first_sync;
+          0 => total_midi_clocks;
+        }
         <<<msg.data1, msg.data2, msg.data3>>>;
 
       }
@@ -109,7 +119,7 @@ while(1) {
         // Compute spp message arrival
         last_midi_clock_time - total_midi_clocks * data.tick / (24*1) => spp_ref_time;
         // Adjust SPP with midi beats inside message
-        spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
+        spp_ref_time - midi_beats * data.tick / (4 * 1) => spp_ref_time;
 
         // We can adjust ref time
         MASTER_SEQ3.update_ref_times(spp_ref_time + experimental_offset, data.tick * 16 * 128 );
@@ -125,7 +135,7 @@ while(1) {
        // Compute spp message arrival
         last_midi_clock_time - total_midi_clocks * data.tick / (24*1) => spp_ref_time;
         // Adjust SPP with midi beats inside message
-        spp_ref_time - midi_beats * data.tick / (4 * 4) => spp_ref_time;
+        spp_ref_time - midi_beats * data.tick / (4 * 1) => spp_ref_time;
 
         // Accumulate delta in ref time calculation
         spp_ref_time - last_spp_ref_time +=> delta_acc;

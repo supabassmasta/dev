@@ -1,7 +1,7 @@
 tick 248 9 0   Midi Clock only first byte sent
 
 
-24 tick par quarer beat
+24 tick par quarer beat  (quarter beat seems to be one "noire")
 
 
 start 250 9 0 
@@ -9,6 +9,8 @@ start 250 9 0
 SPP Song position pointer: 242 0 0  => restart to begining; 11110010   0lllllll 0mmmmmmm This is an internal 14 bit register that holds the number of MIDI beats (1 beat= six MIDI clocks) since the start of the song. l is the LSB, m the MSB.
 
 stop/pause 252 9 0 
+
+Continue 251
 
 Jackd2:
 Ech/period: 512
