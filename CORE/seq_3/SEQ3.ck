@@ -1,6 +1,7 @@
 public class SEQ3 {
   time ref_time;
   dur duration;
+  0 => float ref_time_offset_relative;
   float nb_tick;
   0 => int idx;
   -1 => int last_idx;
@@ -28,7 +29,7 @@ public class SEQ3 {
   }
 
   fun void compute_ref_time() {
-    now - ((now - data.wait_before_start)%duration)  => ref_time;
+    now - ((now - data.wait_before_start - (duration * ref_time_offset_relative) )%duration)  => ref_time;
   }
 
   fun time set_element_next_time(int i) {
@@ -93,8 +94,12 @@ public class SEQ3 {
     // initial SYNC
     // NO SYNC
     if (sync_mode == 0) {
-        // Start now (+ 10::ms for processing) and save ref_time
-        now + 10::ms => ref_time;
+        // compute ref time as there is no offset
+        compute_ref_time();
+        // As we want to start now, compute relative offset
+        ( now + 1::ms - ref_time ) / duration => ref_time_offset_relative;
+        // Recompute ref time including the offset
+        compute_ref_time();
     }
     // ELEMENT SYNC
     else if (sync_mode == 1) {
@@ -110,9 +115,18 @@ public class SEQ3 {
     }
     // DUR SYNC
     else if (sync_mode == 3) {
-        now - ((now - data.wait_before_start)%dur_sync) => ref_time;
-        // wait next ref_time to start
-        dur_sync + ref_time => ref_time;
+       // sync on dur_sync before go
+       dur_sync - ((now - data.wait_before_start)%dur_sync) => now;
+
+        // Do like in mode no_sync:
+
+        // compute ref time as there is no offset
+        compute_ref_time();
+        // As we want to start now, compute relative offset
+        ( now + 1::ms - ref_time ) / duration => ref_time_offset_relative;
+        // Recompute ref time including the offset
+        compute_ref_time();
+       
     }
      
     //    <<<"SEQ3 dur: ",duration," ref_time:",ref_time>>>;

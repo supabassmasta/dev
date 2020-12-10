@@ -38,8 +38,9 @@ fun void SNR() {
   SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   "s___ ____" => s.seq;
-  .3 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-  s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  .5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
   s.go();     s $ ST @=> ST @ last; 
@@ -70,7 +71,7 @@ fun void BLIP () {
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "}c *8 4103124801234 :8 ____ ____" => t.seq;
   .3 * data.master_gain => t.gain;
-  t.sync(1*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
   //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
@@ -86,8 +87,89 @@ fun void BLIP () {
 }
 
 
+fun void GLITCH (string seq, int instru, dur dura ) {
+  
+  TONE t;
+  t.reg(SERUM0 s0); s0.config(instru, 0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  "*8 "  + seq => t.seq;
+  .4 * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+  
+  
+  STCUTTER stcutter;
+  stcutter.t.no_sync();
+  " *2 11__ 1_1_ 111_ 1__1 1111 1_1_" => stcutter.t.seq;
+  stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
+  
+  STGVERB stgverb;
+  stgverb.connect(last $ ST, .1 /* mix */, 7 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.5 /* tail */ ); stgverb $ ST @=>  last; 
+  
+  ARP arp;
+  arp.t.dor();
+  50::ms => arp.t.glide; 
+  arp.t.no_sync();
+  "*4 {c 1538 3851 0083 B " => arp.t.seq;
+  arp.t.go();   
+  
+  // CONNECT SYNT HERE
+  3 => s0.inlet.op;
+  arp.t.raw() => s0.inlet; 
+  
+  
+  // MOD ////////////////////////////////
+  
+   SinOsc mod => SinOsc s => OFFSET o => s0.inlet;
+   1::second / (13 * data.tick) => s.freq;
+ 
+//   SYNC sy;
+//   sy.sync(1 * data.tick);
+   //sy.sync(4 * data.tick , 0::ms /* offset */); 
+   0 => s.phase;
+   
+   .2 => mod.freq;
+   
+   1.2 => o.offset;
+   .7 => o.gain;
+   
+  // MOD ////////////////////////////////
+  
+  STMIX stmix;
+  stmix.send(last, 11);
+
+  dura  => now;
+
+}
 
 
+fun void CLIC () {
+
+TONE t;
+t.reg(PLOC0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+"}c*2  51___" => t.seq;
+.6 * data.master_gain => t.gain;
+//t.sync(1::ms);// t.element_sync();//  
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+//t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+t.go();   t $ ST @=> ST @ last; 
+
+<<<"clic">>>;
+
+1 * data.tick => now;
+
+<<<"clic end">>>;
+
+}
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -103,6 +185,9 @@ STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 
+SYNC sy;
+//sy.sync(4 * data.tick);
+sy.sync(4 * data.tick , 10::ms /* offset */); 
 
 WAIT w;
 4 *data.tick => w.fixed_end_dur;
@@ -111,7 +196,19 @@ while(1) {
   spork ~ SNR();
   2 * data.tick =>  w.wait;
  spork ~ BLIP();
-  2 * data.tick =>  w.wait;
+2 * data.tick =>  w.wait;
+spork ~ CLIC();
+2 * data.tick =>  w.wait;
+
+spork ~ GLITCH(" 8_3_5_1_______", 23, 1 *data.tick );
+ 2 * data.tick =>  w.wait;
+
+spork ~ GLITCH(" G/f_______", 23, 1 *data.tick );
+ 2 * data.tick =>  w.wait;
+
+spork ~ GLITCH(" f//////G_______", 23, 1 *data.tick );
+ 2 * data.tick =>  w.wait;
+
 }
  
 
