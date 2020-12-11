@@ -97,7 +97,7 @@ Machine.add( rt + "CORE/EFFECTS/FILTERX/STAUTOFILTERX.ck");
 
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/END_CONTROL.ck");
-Machine.add( rt + "CORE/seq_3/MIDI_CLOCK_TRACKER.ck");
+Machine.add( rt + "CORE/seq_3/MIDI_BPM_TRACKER.ck");
 me.yield();
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERXC.ck");

@@ -1,5 +1,5 @@
-"Scarlett 2i4 USB MIDI 1" => string device;
-//"Midi Through Port-0" => string device;
+//"Scarlett 2i4 USB MIDI 1" => string device;
+"Midi Through Port-0" => string device;
 
 // the midi event
 MidiIn min;
