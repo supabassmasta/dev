@@ -9,7 +9,8 @@ kkkk kkkk kkkk kk *4kk_k k__k  :4
 kkkk kkkk kkkk kk *4k__k kk_k  :4
 " => s.seq;
 .6 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
+1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 //// SUBWAV //// 
 SEQ s2; SET_WAV.TRANCE(s2); s.add_subwav("k", s2.wav["l"]);  s.gain_subwav("k", 0, .25);
