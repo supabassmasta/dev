@@ -98,7 +98,7 @@ fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d
 
 } 
 
-fun void slide (float start, float stop, dur d, ST @ st){ 
+fun void slide (float start, float stop, dur d, ST @ st, float g, float w, dur ar){ 
       Step stp0 => Envelope e0 =>  TriOsc s => ADSR a => st.mono_in;
       start => e0.value;
       stop => e0.target;
@@ -107,16 +107,16 @@ fun void slide (float start, float stop, dur d, ST @ st){
       1.0 => stp0.next;
       
       g => s.gain;
-      width => s.width;
+      w => s.width;
 
-      a.set(attackRelease, 0::ms, 1., attackRelease);
+      a.set(ar, 0::ms, 1., ar);
 
       a.keyOn();
 
       d => now;
 
       a.keyOff();
-      attackRelease => now;
+      ar => now;
 } 
 
 fun void  SLIDES  (float a[], dur d[], float width, float g){ 
@@ -140,9 +140,9 @@ fun void  SLIDES  (float a[], dur d[], float width, float g){
 
 
     for (0 => int i; i < d.size()      ; i++) {
-      spork ~ slide (a[i*2], a[i*2 + 1], d[i], st); 
-      if ( d> dmax  ){
-         d => dmax;   
+      spork ~ slide (a[i*2], a[i*2 + 1], d[i], st, g, width, attackRelease); 
+      if ( d[i]> dmax  ){
+         d[i] => dmax;   
       }
     }
      
@@ -172,16 +172,16 @@ WAIT w;
 //2 * data.tick =>  w.wait; 
 
 while(1) {
-  spork ~  SLIDES([100., 500.] @=> float b[], [1 * data.tick] @=> dur d[], .5, .1); 
+  [100., 500., 800., 300.] @=> float b[]; [1 * data.tick, 2* data.tick] @=> dur d[];
+  spork ~  SLIDES(b, d, .5, .05); 
 
 4 * data.tick =>  w.wait;
 
-
-//   spork ~  RAND("*4 }c", 12); 
-//   4 * data.tick =>  w.wait;
-// 
-//   spork ~   FROG(4, 10, 23 * 100, 100, 2* data.tick, .3); 
-//   4 * data.tick =>  w.wait;
+   spork ~  RAND("*4 }c", 12); 
+   4 * data.tick =>  w.wait;
+ 
+   spork ~   FROG(4, 10, 23 * 100, 100, 2* data.tick, .3); 
+   4 * data.tick =>  w.wait;
 // 
 //   spork ~  RAND("*4 }c", 12); 
 //   4 * data.tick =>  w.wait;
@@ -192,8 +192,11 @@ while(1) {
 //   spork ~  RAND("*4 }c", 12); 
 //   4 * data.tick =>  w.wait;
 // 
-//   spork ~   FROG(19, 4, 9 * 100, 24 * 100, 1* data.tick, .3); 
-//   4 * data.tick =>  w.wait;
+   spork ~   FROG(19, 4, 9 * 100, 24 * 100, 1* data.tick, .3); 
+  [700., 100., 80., 300.] @=>  b; [1 * data.tick, 2* data.tick] @=>  d;
+  spork ~  SLIDES(b, d, .9, .05); 
+
+  4 * data.tick =>  w.wait;
 // 
 //   spork ~  RAND("*4 }c", 12); 
 //   4 * data.tick =>  w.wait;
