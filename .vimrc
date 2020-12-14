@@ -109,7 +109,7 @@ ab  forK          for (0 => int i; i <       ; i++) {
 \<CR>}
 \<CR>
 
-ab  funK fun void f1 (){ 
+ab  sporkfunK fun void f1 (){ 
 \<CR>while(1) {
 \<CR>
 \<CR>  10::ms => now;
@@ -117,6 +117,14 @@ ab  funK fun void f1 (){
 \<CR>} 
 \<CR>spork ~ f1 ();
 \<CR><Up><Up><Up><Up><Up><End>
+
+ab funK  fun void   (){ 
+\<CR> 
+\<CR>} 
+\<CR><Up><Up><Up><End><esc>hhhhhi
+
+ab sporK spork ~   (); 
+\<CR><Up><End><esc>hhhhi
 
 ab  whileK           while(1) {
 \<CR>     100::ms => now;
@@ -1462,3 +1470,6 @@ ab polyserumK class synt0 extends SYNT{
 ab WAITK WAIT w;
 \<CR>8 *data.tick => w.fixed_end_dur;
 \<CR>//2 * data.tick =>  w.wait;
+
+
+
