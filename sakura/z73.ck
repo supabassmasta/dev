@@ -64,6 +64,97 @@ fun void  RAND  (string begin, int nb){
 } 
 
 
+fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d, float g){ 
+    ST st; st $ ST @=> ST @ last;
+
+    Step step => Envelope e0 => SqrOsc s => st.mono_in;
+    1. => step.next;
+    .2 => s.gain;
+
+    fstart => e0.value;
+    fstop => e0.target;
+    d => e0.duration ;// => now;
+
+    STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+    stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 3 /* Q */, 2 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+
+    g => stfreelpfx0.gain;
+
+    Step step2 => Envelope e1 =>  stfreelpfx0.freq; // CONNECT THIS 
+    lpfstart => e1.value;
+    lpfstop => e1.target;
+    d => e1.duration ;// => now;
+
+    1. => step2.next;
+
+    
+    STHPF hpf;
+    hpf.connect(last $ ST , 5 * 10 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  last; 
+
+    STMIX stmix;
+    stmix.send(last, mixer);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+    d => now;
+
+} 
+
+fun void slide (float start, float stop, dur d, ST @ st){ 
+      Step stp0 => Envelope e0 =>  TriOsc s => ADSR a => st.mono_in;
+      start => e0.value;
+      stop => e0.target;
+      d => e0.duration ;// => now;
+      
+      1.0 => stp0.next;
+      
+      g => s.gain;
+      width => s.width;
+
+      a.set(attackRelease, 0::ms, 1., attackRelease);
+
+      a.keyOn();
+
+      d => now;
+
+      a.keyOff();
+      attackRelease => now;
+} 
+
+fun void  SLIDES  (float a[], dur d[], float width, float g){ 
+  3::ms => dur attackRelease;
+
+   if (a.size() % 2 || d.size() != a.size() / 2) {
+      <<<"SLIDES ERROR: input params must be [freq start, freq stop, .... ] [dur, ....]">>>;
+   }
+  else {
+   
+   ST st; st $ ST @=> ST @ last;
+
+
+    
+
+   STMIX stmix;
+   stmix.send(last, mixer);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+    
+    0::ms => dur dmax;
+
+
+    for (0 => int i; i < d.size()      ; i++) {
+      spork ~ slide (a[i*2], a[i*2 + 1], d[i], st); 
+      if ( d> dmax  ){
+         d => dmax;   
+      }
+    }
+     
+   dmax + attackRelease => now;
+
+  }
+
+   
+} 
+
+//SLIDES([1.1, 2., 3.] @=> float b[]);
+
 STMIX stmix;
 //stmix.send(last, 11);
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
@@ -81,8 +172,40 @@ WAIT w;
 //2 * data.tick =>  w.wait; 
 
 while(1) {
-  spork ~  RAND("*4 }c", 12); 
-  8 * data.tick =>  w.wait;
+  spork ~  SLIDES([100., 500.] @=> float b[], [1 * data.tick] @=> dur d[], .5, .1); 
+
+4 * data.tick =>  w.wait;
+
+
+//   spork ~  RAND("*4 }c", 12); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~   FROG(4, 10, 23 * 100, 100, 2* data.tick, .3); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~  RAND("*4 }c", 12); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~   FROG(19, 4, 23 * 100, 12 * 100, 1* data.tick, .3); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~  RAND("*4 }c", 12); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~   FROG(19, 4, 9 * 100, 24 * 100, 1* data.tick, .3); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~  RAND("*4 }c", 12); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~  RAND("*4 }c", 12); 
+//   4 * data.tick =>  w.wait;
+// 
+//   spork ~   FROG(10, 2, 3 * 100, 24 * 100, 1* data.tick, .3); 
+//   1 * data.tick =>  w.wait;
+//   spork ~   FROG(2, 20, 24 * 100, 4 * 100, 1* data.tick, .3); 
+//   3 * data.tick =>  w.wait;
+
 }
  
 

@@ -1231,7 +1231,7 @@ ab OFFSETK OFFSET ofs0 =>
 ab EnvK Envelope e0 => 
 \<CR>0.0 => e0.value;
 \<CR>1.0 => e0.target;
-\<CR>4.0 * data.tick => e0.time ;// => now;
+\<CR>4.0 * data.tick => e0.duration ;// => now;
 \<CR><Up><Up><Up><Up><End>
 
 ab StepK Step stp0 => 
