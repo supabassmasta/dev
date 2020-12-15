@@ -9,7 +9,7 @@ public class STROTATE extends ST{
   // Rear front gain
   SinOsc sin0 => OFFSET ofs0 => blackhole;
   1. => ofs0.offset;
-  0.5 => ofs0.gain;
+  1.0 => ofs0.gain;
   
   0 => sin0.phase;
 

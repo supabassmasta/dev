@@ -1482,3 +1482,6 @@ ab STECHOVK STECHOV echv;
 \<CR>// =>  echv.del; /* Delay in samp */
 \<CR>// => echv.g;   /* Gain */
 
+ab STCROSSOUTK STCROSSOUT stcrossout;
+\<CR>stcrossout.connect(last $ ST, 4 * data.tick /* crossorver duration */ );   stcrossout$ ST @=>  last; 
+\<CR>// stcrossout.AUX // Aux output 
