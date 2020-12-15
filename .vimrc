@@ -1476,3 +1476,9 @@ ab STROTATEK STROTATE strot;
 \<CR>strot.connect(last $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 \<CR>// => strot.sin0;  => strot.sin1; // connect to make freq change
 
+ab STECHOVK STECHOV echv;
+\<CR>echv.connect(last $ ST , data.tick * 2 /* delay max */, 1::samp /* update rate */);  echv $ ST @=>  last; 
+\<CR>// spork ~ echv.control (data.tick * 3 /4 /* delay sart */ , data.tick * 1 /8/* delay stop */, data.tick * 4 /* delay transition dur */, .8 /* gainstart */, 0.6 /* gainstop */, data.tick * 4 /* gain_trans_dur */ );  // Use control for classical ramping delay and gain control, or connect below 
+\<CR>// =>  echv.del; /* Delay in samp */
+\<CR>// => echv.g;   /* Gain */
+
