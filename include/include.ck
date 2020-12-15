@@ -255,6 +255,7 @@ Machine.add( rt + "CORE/EFFECTS/STDUCK2.ck");
 Machine.add( rt + "CORE/EFFECTS/STDUCKMASTER2.ck");
 Machine.add( rt + "CORE/EFFECTS/ADSRMOD.ck");
 Machine.add( rt + "CORE/EFFECTS/STOVERDRIVE.ck");
+Machine.add( rt + "CORE/EFFECTS/STROTATE.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");

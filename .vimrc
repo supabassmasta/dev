@@ -1094,7 +1094,7 @@ ab FILTER_TONEK class filter0 extends SYNT{
 \<CR>filt0.connect(last, 6.0); filt0.lpf @=> last;
 
 ab STGVERBK STGVERB stgverb;
-\<CR>stgverb.connect(last $ ST, .5 /* mix */, 14 * 10. /* room size */, 11::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last;
+\<CR>stgverb.connect(last $ ST, .05 /* mix */, 4 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last;
 
 ab STFLANGERK STFLANGER flang;
 \<CR>flang.connect(last $ ST); flang $ ST @=>  last; 
@@ -1472,4 +1472,7 @@ ab WAITK WAIT w;
 \<CR>//2 * data.tick =>  w.wait;
 
 
+ab STROTATEK STROTATE strot;
+\<CR>strot.connect(last $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
+\<CR>// => strot.sin0;  => strot.sin1; // connect to make freq change
 
