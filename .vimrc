@@ -1488,3 +1488,9 @@ ab STCROSSOUTK STCROSSOUT stcrossout;
 \<CR>// stcrossout.to_aux( 4 * data.tick /* crossorver duration */);  // SWITCH TO AUX OUT
 \<CR>// stcrossout.to_main( 4 * data.tick /* crossorver duration */); // SWITCH BACK TO MAIN
 
+ab STCROSSINK STCROSSIN stcrossin;
+\<CR>stcrossin.connect(last $ ST /* main */, t $ ST);
+\<CR>// stcrossin.to_aux(4 * data.tick /* crossorver duration */); // SWITCH TO AUX IN
+\<CR>// stcrossin.to_main(4 * data.tick /* crossorver duration */);// SWITCH BACK TO MAIN IN
+
+

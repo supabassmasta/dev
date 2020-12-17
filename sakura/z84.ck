@@ -18,6 +18,68 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+SEQ s;  //data.tick * 8 => s.max;  //
+SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.ACOUSTICTOM(s);// SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+// _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+"kk*2_k" => s.seq;
+.5 * data.master_gain => s.gain; // s.gain("s", .1); // for single wav 
+//s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+//// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+s.go();     s $ ST @=> last; 
+
+
+// class STCROSSIN extends ST {
+// 
+//   STADSR stadsr;
+//   stadsr.left() => outl;
+//   stadsr.right() => outr;
+// 
+//   STADSR stadsraux;
+//   stadsraux.left() => outl;
+//   stadsraux.right() => outr;
+// 
+//   fun void to_aux(dur d){ 
+//     stadsr.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d /* release */);
+//     stadsraux.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d/* release */);
+//     stadsr.keyOff(); 
+//     stadsraux.keyOn(); 
+//     <<<"ST CROSS IN TO AUX">>>;
+//   } 
+// 
+//   fun void to_main(dur d){ 
+//     stadsr.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d /* release */);
+//     stadsraux.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d/* release */);
+//     stadsr.keyOn(); 
+//     stadsraux.keyOff(); 
+//     <<<"ST CROSS IN TO MAIN">>>;
+//   } 
+// 
+//   fun void connect(ST @ main, ST @ aux) {
+// 
+//     stadsr.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  0::ms /* release */);
+//     stadsr.connect(main $ ST); 
+// 
+//     stadsraux.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  100::ms/* release */);
+//     stadsraux.connect(aux $ ST);
+// 
+//     stadsr.keyOn(); 
+//     stadsraux.keyOff(); 
+// 
+//   }
+// 
+// }
+
+
+STCROSSIN stcrossin;
+stcrossin.connect(last $ ST /* main */, t $ ST);
+// stcrossin.to_aux(4 * data.tick /* crossorver duration */); // SWITCH TO AUX IN
+// stcrossin.to_main(4 * data.tick /* crossorver duration */);// SWITCH BACK TO MAIN IN 
+
+//STCROSSIN stcrossin;
+//stcrossin.connect(last $ ST /* main */, t $ ST);
+// stcrossin.to_aux(4 * data.tick);
+// stcrossin.to_main(4 * data.tick);
 
 // class STCROSSOUT extends ST{
 // 
@@ -77,8 +139,8 @@ t.go();   t $ ST @=> ST @ last;
 // }
 
 
-STCROSSOUT stcrossout;
-stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last; 
+//STCROSSOUT stcrossout;
+//stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last; 
 // stcrossout.AUX // Aux output  
 // stcrossout.to_aux( 4 * data.tick /* crossorver duration */);  // SWITCH TO AUX OUT
 // stcrossout.to_main( 4 * data.tick /* crossorver duration */); // SWITCH BACK TO MAIN 
@@ -94,11 +156,11 @@ stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last;
 // stcrossout.AUX // Aux output 
 
 
-STROTATE strot;
-strot.connect(stcrossout.AUX $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
+//STROTATE strot;
+//strot.connect(stcrossout.AUX $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 //strot.connect(last $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 // => strot.sin0;  => strot.sin1; // connect to make freq change 
-1.5 => strot.gain;
+//1.5 => strot.gain;
 
 
 //STFLANGER flang;
@@ -111,9 +173,9 @@ strot.connect(stcrossout.AUX $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* wi
 
 while(1) {
   8* data.tick => now;
-  stcrossout.to_aux(4 * data.tick);
+  stcrossin.to_aux(4 * data.tick);
   8* data.tick => now;
-  stcrossout.to_main(4 * data.tick);
+  stcrossin.to_main(4 * data.tick);
 
 
 }
