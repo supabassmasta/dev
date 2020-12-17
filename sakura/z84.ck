@@ -19,7 +19,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 
-//  class STCROSSOUT extends ST{
+// class STCROSSOUT extends ST{
 // 
 //   ST IN;
 // 
@@ -33,29 +33,44 @@ t.go();   t $ ST @=> ST @ last;
 //   stadsraux.left() => AUX.outl;
 //   stadsraux.right() => AUX.outr;
 // 
-//   fun void  go  (dur d){ 
+//   fun void  go  (){ 
 // 
 // 
-//     stadsr.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d /* release */);
+//     stadsr.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  0::ms /* release */);
 //     stadsr.connect(IN $ ST);  stadsr  $ ST @=>  last; 
 //     stadsr.keyOn(); 
 // 
-//     stadsraux.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  100::ms/* release */);
+//     stadsraux.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  100::ms/* release */);
 //     stadsraux.connect(IN $ ST);  stadsraux  $ ST @=>  last; 
 //     stadsraux.keyOff(); 
 // 
 //     1::samp => now;
+//   }
+// 
+//   fun void to_aux(dur d){ 
+//     stadsr.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d /* release */);
+//     stadsraux.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d/* release */);
 //     stadsr.keyOff(); 
 //     stadsraux.keyOn(); 
-//     1::samp => now;
+//     <<<"ST CROSS OUT TO AUX">>>;
+// 
+// //    1::samp => now;
 //   } 
 // 
+//   fun void to_main(dur d){ 
+//     stadsr.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d /* release */);
+//     stadsraux.set(d /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, 0::ms /* Sustain dur */,  d/* release */);
+//     stadsr.keyOn(); 
+//     stadsraux.keyOff(); 
+//     <<<"ST CROSS OUT TO MAIN">>>;
+// //    1::samp => now;
+//   } 
 // 
-//   fun void connect(ST @ tone, dur d) {
+//   fun void connect(ST @ tone) {
 //     tone.left() => IN.outl;
 //     tone.right() => IN.outr;
 //      
-//     spork ~   go (d); 
+//     spork ~   go (); 
 // 
 //   }
 // 
@@ -63,9 +78,16 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STCROSSOUT stcrossout;
-stcrossout.connect(last $ ST, 4 * data.tick /* crossorver duration */ );   stcrossout$ ST @=>  last; 
+stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last; 
 // stcrossout.AUX // Aux output  
+// stcrossout.to_aux( 4 * data.tick /* crossorver duration */);  // SWITCH TO AUX OUT
+// stcrossout.to_main( 4 * data.tick /* crossorver duration */); // SWITCH BACK TO MAIN 
 
+//STCROSSOUT stcrossout;
+//stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last; 
+// stcrossout.AUX // Aux output  
+//stcrossout.to_aux( 4 * data.tick /* crossorver duration */);  // SWITCH TO AUX OUT
+//stcrossout.to_main( 4 * data.tick /* crossorver duration */); // SWITCH BACK TO MAIN
 
 //STCROSSOUT stcrossout;
 //stcrossout.connect(last $ ST, 4 * data.tick /* crossorver duration */ );   stcrossout$ ST @=>  last; 
@@ -76,6 +98,7 @@ STROTATE strot;
 strot.connect(stcrossout.AUX $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 //strot.connect(last $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 // => strot.sin0;  => strot.sin1; // connect to make freq change 
+1.5 => strot.gain;
 
 
 //STFLANGER flang;
@@ -87,6 +110,11 @@ strot.connect(stcrossout.AUX $ ST , 0.6 /* freq */  , 0.8 /* depth */, 1.0 /* wi
 //flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */); 
 
 while(1) {
-       100::ms => now;
+  8* data.tick => now;
+  stcrossout.to_aux(4 * data.tick);
+  8* data.tick => now;
+  stcrossout.to_main(4 * data.tick);
+
+
 }
  

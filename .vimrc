@@ -1483,5 +1483,8 @@ ab STECHOVK STECHOV echv;
 \<CR>// => echv.g;   /* Gain */
 
 ab STCROSSOUTK STCROSSOUT stcrossout;
-\<CR>stcrossout.connect(last $ ST, 4 * data.tick /* crossorver duration */ );   stcrossout$ ST @=>  last; 
-\<CR>// stcrossout.AUX // Aux output 
+\<CR>stcrossout.connect(last $ ST );   stcrossout$ ST @=>  last; 
+\<CR>// stcrossout.AUX // Aux output  
+\<CR>// stcrossout.to_aux( 4 * data.tick /* crossorver duration */);  // SWITCH TO AUX OUT
+\<CR>// stcrossout.to_main( 4 * data.tick /* crossorver duration */); // SWITCH BACK TO MAIN
+
