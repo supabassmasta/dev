@@ -1,3 +1,6 @@
+12 => int mixer;
+
+
 fun void MOD1 () {
   ST st;
 
@@ -129,7 +132,8 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
 v * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.adsr[0].set(2 * data.tick, 10::ms, .2, 400::ms);
 t.adsr[1].set(2 * data.tick, 10::ms, .2, 400::ms);
@@ -143,11 +147,11 @@ STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 stlpfx0.connect(last $ ST ,  stlpfx0_fact, 10* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STMIX stmix;
-stmix.send(last, 12);
+stmix.send(last, mixer);
 //stmix.receive(11); stmix $ ST @=> ST @ last; 
 
-
-  8 * data.tick => now;
+  1::samp => now; // let seq() be sporked to compute duration
+  t.s.duration => now;
 
 }
 
@@ -167,9 +171,8 @@ WAIT w;
 8 *data.tick => w.fixed_end_dur;
 
 while(1) {
-   2 * data.tick => now; 
 
-   spork ~ PAD("}c 2|9", 1, 0, .4);
+   spork ~ PAD("}c  :4 2|9_", 1, 0, .4);
    4 * data.tick =>  w.wait; 
 
 
