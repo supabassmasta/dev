@@ -1,3 +1,9 @@
+147 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+55 => data.ref_note;
+
+
+
+
 13 => int mixer;
 
 fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, float g){ 

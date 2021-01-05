@@ -112,7 +112,7 @@ spork ~ ACOUSTICTOM("*4 A_AB B_CC D_DV UNNU ");
 
 LONG_WAV l;
 "../_SAMPLES/HighMaintenance/DrgRecreative.wav" => l.read;
-0.4 * data.master_gain => l.buf.gain;
+0.6 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 l.start(1::samp /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=>  last;  
