@@ -605,3 +605,26 @@ fun void  SINGLEWAVRATEECHO  (string file, float r, float g){
 }
 
 spork ~   SINGLEWAVRATEECHO("../_SAMPLES/", 1.8, .6); 
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+
+fun void  IBNIZ  (string s, dur d, float g){ 
+
+  ST st; st @=> ST @ last;
+
+  ibniz I => st.mono_in;
+  g => I.gain;
+  s => I.code;
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+
+  d => now;
+} 
+
+
+spork ~   IBNIZ ("4*d4r1A&*", data.tick * 4 /2 , 0.08); // "4*d2r1A&*" "4*d3r1A&*"
+
