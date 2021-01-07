@@ -1493,4 +1493,8 @@ ab STCROSSINK STCROSSIN stcrossin;
 \<CR>// stcrossin.to_aux(4 * data.tick /* crossorver duration */); // SWITCH TO AUX IN
 \<CR>// stcrossin.to_main(4 * data.tick /* crossorver duration */);// SWITCH BACK TO MAIN IN
 
+ab SERUM1K SERUM1
+\<esc>os0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
 
+ab SERUM0K SERUM0
+\<esc>os0.config(0 /* synt nb */ , 0 /* rank */ );
