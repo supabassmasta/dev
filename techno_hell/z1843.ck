@@ -263,10 +263,10 @@ spork ~  TRANCEBREAK ("*4 L___ L_L_ LLLL *2 LLLL LLLL");
 
 3.5 * data.tick =>  w.wait; 
 LAUNCHPAD_VIRTUAL.on.set(1811);
-LAUNCHPAD_VIRTUAL.on.set(1862);
 .5 * data.tick =>  w.wait; 
+LAUNCHPAD_VIRTUAL.on.set(1862);
 LAUNCHPAD_VIRTUAL.on.set(1812);
 LAUNCHPAD_VIRTUAL.on.set(1821);
 8 * data.tick =>  w.wait; 
-LAUNCHPAD_VIRTUAL.off.set(1861); // AUTOOFF
+LAUNCHPAD_VIRTUAL.off.set(1843); // AUTOOFF
 1 * data.tick =>  w.wait; 

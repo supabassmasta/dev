@@ -64,6 +64,9 @@ WAIT w;
 1::ms => w.fixed_end_dur;
 
 while(1) {
+
+
+
 spork ~   IBNIZ ("3/d2r4B&*", -1,  data.tick * 4 /2 , 0.7); 
   2 * data.tick => w.wait;
 

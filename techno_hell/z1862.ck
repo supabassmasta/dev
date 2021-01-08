@@ -27,6 +27,8 @@ SinOsc sin0 =>  s0.inlet;
 10.0 => sin0.freq;
 3.0 => sin0.gain;
 
+
+
 fun void ARPI (){ 
   TONE t;
   t.reg(SERUM1 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
