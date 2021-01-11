@@ -2,6 +2,27 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+// OUTPUT
+
+STMIX stmix;
+stmix.receive(mixer); stmix $ ST @=> ST @ last; 
+
+SYNC sy;
+//sy.sync(4 * data.tick);
+sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
+
+WAIT w;
+8 *data.tick => w.fixed_end_dur;
+//4 * data.tick =>  w.wait; 
+
+
+
+// VIRTUAL LAUNCHER
+LAUNCHPAD_VIRTUAL.on.set(0);
+LAUNCHPAD_VIRTUAL.off.set(0);
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
 class syntRand extends SYNT{
     inlet => SinOsc s =>  outlet; 
     .5 => s.gain;
@@ -304,6 +325,79 @@ fun void ACOUSTICTOM(string seq) {
 
 spork ~ ACOUSTICTOM("*4 AA_B B_CC _DD_ SKKS ");
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+fun void TRANCEBREAK(string seq) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+//  STMIX stmix;
+//  stmix.send(last, mixer);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+
+spork ~  TRANCEBREAK ("*4 L___ L_L_ LLLL *2 LLLL LLLL"); 
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+fun void TRANCEHPF() {
+
+    SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+    SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+    // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+    "L" => s.seq;
+    .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+    s.no_sync();// s.element_sync(); //s.no_sync()
+  ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+    // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+    //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+    s.go();     s $ ST @=> ST @ last; 
+
+  //  STMIX stmix;
+  //  stmix.send(last, mixer);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  //  1::samp => now; // let seq() be sporked to compute length
+  //  s.s.duration => now;
+
+  STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
+  stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 2 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
+
+
+  Step stp0 =>  Envelope e0 => stfreehpfx0.freq; // CONNECT THIS 
+  1.0 => stp0.next;
+  // HPF freq start value
+  4.0 => e0.value; 
+
+  // HPF freq target value
+  25 * 100=> e0.target;
+  
+  // Rising duration
+  32.0 * data.tick => e0.duration  => now;
+
+  // HPF freq end value
+  4 => e0.target;
+  // Falling duration
+  28.0 * data.tick => e0.duration  => now;
+
+
+}
+
+spork ~   TRANCEHPF (); 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -628,3 +722,45 @@ fun void  IBNIZ  (string s, dur d, float g){
 
 spork ~   IBNIZ ("4*d4r1A&*", data.tick * 4 /2 , 0.08); // "4*d2r1A&*" "4*d3r1A&*"
 
+
+/////////////////////////////////////////////////////////////////////////
+
+
+
+fun void  IBNIZMOD  (string s, int b, dur d, float g){ 
+
+  ST st; st @=> ST @ last;
+
+  ibniz I => SinOsc sin0 => Gain out;
+
+  117 => I.gain;
+
+  10.0 => sin0.freq;
+  0.3 => sin0.gain;
+
+  SinOsc sin1 =>  OFFSET ofs0 => sin0;
+  Std.mtof(data.ref_note + b * 12) => ofs0.offset;
+  1. => ofs0.gain;
+
+  .3 => sin1.freq;
+  .0 => sin1.gain;
+
+  
+  
+  out => st.mono_in;
+  g => out.gain;
+  s => I.code;
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+
+  I.reset();
+
+  d => now;
+} 
+
+
+spork ~   IBNIZ ("3/d2r4B&*", -1 /* octave offset */,  data.tick * 4 /2 /* dur */ , 0.7 /* gain */); 
+
+
+///////////////////////////////////////////////////////////////////////////////

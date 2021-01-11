@@ -46,7 +46,7 @@ stod.connect(last $ ST, 50.1 /* drive 1 == no drive, > 1 == drive */ ); stod $ S
 0.1 => stod.gain;
 
 
-STSYNCFILTERX stfilter;KG_XFACTORY stfilterfactory;
+STSYNCFILTERX stfilter;LPF_XFACTORY stfilterfactory;
 stfilter.freq(100 /* Base */, 5 * 100 /* Variable */, 5. /* Q */);
 stfilter.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
 stfilter.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
@@ -60,8 +60,8 @@ stepc.out =>  stfilter.nio.padsr;
 STGAINC gainc;
 gainc.connect(last $ ST , HW.lpd8.potar[1][2] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 <<<"**********************************">>>;
 <<<"*      ACID SYNT                 *">>>;
