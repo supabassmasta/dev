@@ -1,0 +1,124 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+.DEFAULT_GOAL	makefile	/^.DEFAULT_GOAL:=$(CK_TARGET)$/;"	m
+CC	makefile	/^CC=gcc$/;"	m
+CHUG	makefile	/^CHUG=$(addsuffix $(SUFFIX),$(CHUGIN_NAME))$/;"	m
+CHUGIN_NAME	makefile	/^CHUGIN_NAME=ibniz$/;"	m
+CHUGIN_PATH	makefile	/^CHUGIN_PATH=\/usr\/local\/lib\/chuck$/;"	m
+CK_CHUGIN_STATIC	makefile	/^CK_CHUGIN_STATIC?=0$/;"	m
+CK_DLL_CTOR	ibniz.cpp	/^CK_DLL_CTOR(ibniz_ctor)$/;"	f
+CK_DLL_DTOR	ibniz.cpp	/^CK_DLL_DTOR(ibniz_dtor)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_getCode)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_getParam)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_off)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_on)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_reset)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_setCode)$/;"	f
+CK_DLL_MFUN	ibniz.cpp	/^CK_DLL_MFUN(ibniz_setParam)$/;"	f
+CK_DLL_QUERY	ibniz.cpp	/^CK_DLL_QUERY( ibniz )$/;"	f
+CK_DLL_TICK	ibniz.cpp	/^CK_DLL_TICK(ibniz_tick)$/;"	f
+CK_SRC_PATH	makefile	/^CK_SRC_PATH?=..\/chuck\/include\/$/;"	m
+CXX	makefile	/^CXX=gcc$/;"	m
+CXX_MODULES	makefile	/^CXX_MODULES=ibniz.cpp$/;"	m
+CXX_OBJECTS	makefile	/^CXX_OBJECTS=$(addsuffix .o,$(basename $(CXX_MODULES)))$/;"	m
+CYCLESPERRUN	vm_slow.c	381;"	d	file:
+C_MODULES	makefile	/^C_MODULES=vm_slow.c$/;"	m
+C_OBJECTS	makefile	/^C_OBJECTS=$(addsuffix .o,$(basename $(C_MODULES)))$/;"	m
+GLOBAL	ibniz.h	7;"	d
+GLOBAL	ibniz.h	9;"	d
+IBNIZ_H	ibniz.h	4;"	d
+LD	makefile	/^LD=g++$/;"	m
+MAKECMDGOALS	makefile	/^MAKECMDGOALS:=$(.DEFAULT_GOAL)$/;"	m
+MAXCODESIZE	vm.h	5;"	d
+MAXDATASIZE	vm.h	6;"	d
+MEMSIZE	vm.h	3;"	d
+MOVERSP	vm_slow.c	21;"	d	file:
+MOVESP	vm_slow.c	20;"	d	file:
+OP_LOADIMM	vm_slow.c	15;"	d	file:
+ROL	vm_slow.c	17;"	d	file:
+ROR	vm_slow.c	18;"	d	file:
+SUFFIX	makefile	/^SUFFIX=.chug$/;"	m
+SUFFIX	makefile	/^SUFFIX=.schug$/;"	m
+SWAP	vm_slow.c	293;"	d	file:
+active	ibniz.cpp	/^    int active;$/;"	m	class:ibniz	file:
+audiomode	vm.h	/^  char     audiomode;    \/* 0=mono, 1=stereo *\/$/;"	m	struct:__anon1
+audiotime	vm.h	/^  uint32_t audiotime;$/;"	m	struct:__anon1
+code_s	ibniz.cpp	/^    Chuck_String * code_s;$/;"	m	class:ibniz	file:
+codelgt	vm.h	/^  int      codelgt;$/;"	m	struct:__anon1
+compiled_code	vm.h	/^  char compiled_code[MAXCODESIZE];$/;"	m	struct:__anon1
+compiled_data	vm.h	/^  uint32_t compiled_data[MAXDATASIZE];$/;"	m	struct:__anon1
+compiled_hints	vm.h	/^  uint32_t compiled_hints[MAXCODESIZE];$/;"	m	struct:__anon1
+compute_nb_of_ibniz_run	ibniz.cpp	/^    int compute_nb_of_ibniz_run (double freq) {$/;"	f	class:ibniz	file:
+corsp	vm.h	/^  uint32_t corsp;$/;"	m	struct:__anon1
+corstack	vm.h	/^  uint32_t*corstack;$/;"	m	struct:__anon1
+corstackmask	vm.h	/^  uint32_t corstackmask;$/;"	m	struct:__anon1
+cosp	vm.h	/^  uint32_t cosp;$/;"	m	struct:__anon1
+costack	vm.h	/^   int32_t*costack;$/;"	m	struct:__anon1
+costackmask	vm.h	/^  uint32_t costackmask;$/;"	m	struct:__anon1
+currentwcount	vm.h	/^  int      currentwcount[2];$/;"	m	struct:__anon1
+datalgt	vm.h	/^  int      datalgt;$/;"	m	struct:__anon1
+dataptr	vm.h	/^  int      dataptr;$/;"	m	struct:__anon1
+flipvideopage	vm_slow.c	/^void flipvideopage(vm_t * vm_p)$/;"	f
+getParam	ibniz.cpp	/^    float getParam() { return vm_p->test \/*m_param*\/; }$/;"	f	class:ibniz
+get_code	ibniz.cpp	/^    Chuck_String * get_code(void) {return code_s;}$/;"	f	class:ibniz
+getdatabits	vm_slow.c	/^uint32_t getdatabits(int n, vm_t * vm_p)$/;"	f
+gettimevalue	vm_slow.c	/^uint32_t gettimevalue()$/;"	f
+ib_sample_per_tick	ibniz.cpp	/^    double  ib_sample_per_tick ;$/;"	m	class:ibniz	file:
+ibniz	ibniz.cpp	/^    ibniz( t_CKFLOAT fs)$/;"	f	class:ibniz
+ibniz	ibniz.cpp	/^class ibniz$/;"	c	file:
+ibniz_ctor	ibniz.cpp	/^CK_DLL_CTOR(ibniz_ctor);$/;"	v
+ibniz_data_offset	ibniz.cpp	/^t_CKINT ibniz_data_offset = 0;$/;"	v
+ibniz_dtor	ibniz.cpp	/^CK_DLL_DTOR(ibniz_dtor);$/;"	v
+ibniz_getCode	ibniz.cpp	/^CK_DLL_MFUN(ibniz_getCode);$/;"	v
+ibniz_getParam	ibniz.cpp	/^CK_DLL_MFUN(ibniz_getParam);$/;"	v
+ibniz_off	ibniz.cpp	/^CK_DLL_MFUN(ibniz_off);$/;"	v
+ibniz_on	ibniz.cpp	/^CK_DLL_MFUN(ibniz_on);$/;"	v
+ibniz_reset	ibniz.cpp	/^CK_DLL_MFUN(ibniz_reset);$/;"	v
+ibniz_setCode	ibniz.cpp	/^CK_DLL_MFUN(ibniz_setCode);$/;"	v
+ibniz_setParam	ibniz.cpp	/^CK_DLL_MFUN(ibniz_setParam);$/;"	v
+ibniz_tick	ibniz.cpp	/^CK_DLL_TICK(ibniz_tick);$/;"	v
+ip	vm.h	/^    char  *ip;$/;"	m	struct:__anon1
+last_freq	ibniz.cpp	/^    double last_freq ;$/;"	m	class:ibniz	file:
+last_ib_out	ibniz.cpp	/^    int32_t last_ib_out ;$/;"	m	class:ibniz	file:
+m_param	ibniz.cpp	/^    float m_param;$/;"	m	class:ibniz	file:
+mediacontext	vm.h	/^  char     mediacontext; \/* 0=video, 1=audio, 2=stdio *\/$/;"	m	struct:__anon1
+mem	vm.h	/^  int32_t  mem[MEMSIZE];$/;"	m	struct:__anon1
+off	ibniz.cpp	/^    void off () {$/;"	f	class:ibniz
+on	ibniz.cpp	/^    void on () {$/;"	f	class:ibniz
+preferredmediacontext	vm.h	/^  char     preferredmediacontext;$/;"	m	struct:__anon1
+prevsp	vm.h	/^  uint32_t prevsp[2];$/;"	m	struct:__anon1
+prevstackval	vm.h	/^  uint32_t prevstackval[2];$/;"	m	struct:__anon1
+pushmediavariables	vm_slow.c	/^void pushmediavariables(vm_t * vm_p)$/;"	f
+remainder_d	ibniz.cpp	/^    double remainder_d ;$/;"	m	class:ibniz	file:
+reset	ibniz.cpp	/^    void reset() {$/;"	f	class:ibniz
+rsp	vm.h	/^  uint32_t rsp;$/;"	m	struct:__anon1
+rstack	vm.h	/^  uint32_t*rstack;$/;"	m	struct:__anon1
+rstackmask	vm.h	/^  uint32_t rstackmask;$/;"	m	struct:__anon1
+setParam	ibniz.cpp	/^    float setParam( t_CKFLOAT p )$/;"	f	class:ibniz
+set_code	ibniz.cpp	/^    void set_code(Chuck_String * in) {$/;"	f	class:ibniz
+sp	vm.h	/^  uint32_t sp;$/;"	m	struct:__anon1
+spchange	vm.h	/^  int16_t  spchange[2];$/;"	m	struct:__anon1
+srate_f	ibniz.cpp	/^    float srate_f;$/;"	m	class:ibniz	file:
+stack	vm.h	/^   int32_t*stack;$/;"	m	struct:__anon1
+stackmask	vm.h	/^  uint32_t stackmask;$/;"	m	struct:__anon1
+stepmediacontext	vm_slow.c	/^void stepmediacontext(int skippoint,int at_eoc, vm_t * vm_p)$/;"	f
+stopped	vm.h	/^  char     stopped;$/;"	m	struct:__anon1
+switchmediacontext	vm_slow.c	/^void switchmediacontext(vm_t * vm_p)$/;"	f
+test	vm.h	/^  float test;$/;"	m	struct:__anon1
+tick	ibniz.cpp	/^    SAMPLE tick( SAMPLE in )$/;"	f	class:ibniz
+userinput	vm.h	/^  uint32_t userinput;$/;"	m	struct:__anon1
+videomode	vm.h	/^  char     videomode;    \/* 0=txy, 1=t *\/$/;"	m	struct:__anon1
+videotime	vm.h	/^  uint32_t videotime;$/;"	m	struct:__anon1
+visiblepage	vm.h	/^  char     visiblepage;$/;"	m	struct:__anon1
+vm_compile	vm_slow.c	/^void vm_compile(char*src, vm_t * vm_p)$/;"	f
+vm_init	vm_slow.c	/^void vm_init(vm_t * vm_p)$/;"	f
+vm_p	ibniz.cpp	/^    vm_t * vm_p;$/;"	m	class:ibniz	file:
+vm_run	vm_slow.c	/^int32_t vm_run(int32_t in, vm_t * vm_p)$/;"	f
+vm_t	vm.h	/^} vm_t;$/;"	t	typeref:struct:__anon1
+waitfortimechange	vm_slow.c	/^void waitfortimechange()$/;"	f
+wcount	vm.h	/^  int      wcount[2];$/;"	m	struct:__anon1
+~ibniz	ibniz.cpp	/^    ~ibniz()$/;"	f	class:ibniz

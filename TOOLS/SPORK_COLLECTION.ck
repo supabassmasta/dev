@@ -272,7 +272,41 @@ spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){ 
+  3::ms => dur attackRelease;
 
+   
+   ST st; st $ ST @=> ST @ last;
+
+   STMIX stmix;
+   stmix.send(last, mixer);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+    
+   Step stp0 => Envelope e0 =>  SERUM1 s0 => st.mono_in;
+   s0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
+   s0.add(10 /* synt nb */ , 1 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
+
+
+   fstart => e0.value;
+   fstop => e0.target;
+   d => e0.duration ;// => now;
+   
+   1.0 => stp0.next;
+   
+   g => st.gain;
+
+   s0.on();
+
+   d => now;
+
+   s0.off();
+   attackRelease => now;
+    
+} 
+
+spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 16* data.tick /* dur */,  .11 /* gain */); 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 fun void ACOUSTIC(string seq) {
