@@ -31,6 +31,7 @@ public class data {
 
 // Page manager
    static int page_manager_page_nb;
+   static int page_manager_start_page;
 
 }
 
@@ -52,6 +53,7 @@ Event bar3[8] @=> data.break_ev;
 [0, 0, 0, 0, 0, 0, 0, 0]  @=> data.break_state;
 
 8 => data.page_manager_page_nb;
+0 => data.page_manager_start_page;
 
 while(1) 1000::ms => now;
 

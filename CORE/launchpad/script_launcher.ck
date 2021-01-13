@@ -499,8 +499,14 @@ l @=> pm.l;
 s @=> pm.s;
 nb_page => pm.nb_p;
 // Load first page
-pm.register_in_lp(0);
-pm.light_up_page(0);
+pm.register_in_lp(data.page_manager_start_page);
+pm.light_up_page(data.page_manager_start_page);
+data.page_manager_start_page =>  pm.current_page;
+
+<<<"**********************">>>;
+<<<"** START PAGE: ",data.page_manager_start_page,"   **">>>;
+<<<"**********************">>>;
+
 
 
 // CONTROL Page up an down
