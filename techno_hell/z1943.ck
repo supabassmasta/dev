@@ -146,6 +146,7 @@ LAUNCHPAD_VIRTUAL.off.set(1912);
 LAUNCHPAD_VIRTUAL.off.set(1913);
 LAUNCHPAD_VIRTUAL.off.set(1914);
 LAUNCHPAD_VIRTUAL.off.set(1921);
+LAUNCHPAD_VIRTUAL.off.set(1923); // Darbuka
 
 
    spork ~ ACOUSTICTOM("*6 AAABBB CCCDDD UKKUUK SABCDU ");
@@ -164,6 +165,7 @@ LAUNCHPAD_VIRTUAL.on.set(1911);
 .25 * data.tick =>  w.wait;
 LAUNCHPAD_VIRTUAL.on.set(1912);
 LAUNCHPAD_VIRTUAL.on.set(1921);
+LAUNCHPAD_VIRTUAL.on.set(1913);
    8 * data.tick =>  w.wait; 
 LAUNCHPAD_VIRTUAL.off.set(1943); // AUTOOFF
    8 * data.tick =>  w.wait; 

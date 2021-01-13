@@ -162,6 +162,7 @@ LAUNCHPAD_VIRTUAL.off.set(1921);
     4 * data.tick - 1::samp =>  w.wait; 
 LAUNCHPAD_VIRTUAL.on.set(1911);
 .25 * data.tick =>  w.wait;
+LAUNCHPAD_VIRTUAL.on.set(1923); // Darbuka
 LAUNCHPAD_VIRTUAL.on.set(1912);
 LAUNCHPAD_VIRTUAL.on.set(1921);
    8 * data.tick =>  w.wait; 
