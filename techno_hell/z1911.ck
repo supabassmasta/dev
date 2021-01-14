@@ -3,7 +3,12 @@ SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "
 
-L" => s.seq;
+LLLL LLLL LLLL *3 L__ L__ L__ L_L :3
+LLLL LLLL LLLL *3 L__ L__ L__ LLL :3
+LLLL LLLL LLLL *3 L_L _L_ L_L LLL :3
+LLLL LLLL LLLL *3 L_L _L_ *2 L_L_L_ LLLLLL :6
+
+" => s.seq;
 .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
