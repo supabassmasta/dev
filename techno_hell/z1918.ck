@@ -8,14 +8,17 @@ class synt0 extends SYNT{
 
 
 TONE t;
-t.reg(SERUM1 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-s0.add(26 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */, 20::ms /* attack */, 2 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
+t.reg(SERUM1 s0);  //data.tick * 8 => t.max; /
+171::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.add(13 /* synt nb */ , 0 /* rank */ , 0.1 /* GAIN */, 1.0 /* in freq gain */, 20::ms /* attack */, 2 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
+s0.add(13 /* synt nb */ , 0 /* rank */ , 0.1001 /* GAIN */, 1.0 /* in freq gain */, 20::ms /* attack */, 2 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
+s0.add(13 /* synt nb */ , 0 /* rank */ , 0.998 /* GAIN */, 1.0 /* in freq gain */, 20::ms /* attack */, 2 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
 s0.add(27 /* synt nb */ , 0 /* rank */ , 0.1 /* GAIN */, 0.5 /* in freq gain */, 3 * data.tick /* attack */, 2 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-" :4 1_" => t.seq;
-.6 * data.master_gain => t.gain;
+"1///1_ ____" => t.seq;
+.3 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 
 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -103,6 +106,12 @@ SinOsc sin0 =>   adsrmod.in; // CONNECT this
 
 //adsrmod.out => Gain g => dac;
 //.1 => g.gain;
+
+STLHPFC lhpfc;
+lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last; 
+
+STDUCK duck;
+duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
