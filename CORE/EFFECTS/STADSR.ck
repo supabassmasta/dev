@@ -1,9 +1,13 @@
   class nirx extends note_info_rx {
     ADSR @ al;
     ADSR @ ar;
+    Gain @ ol;
+    Gain @ or;
     10::ms => dur d_to_keyoff;
 
     0 => int push_nb; // To avoid keyOff overlap
+    0 => int connected; // to avoid double connect when release not over
+
     
     fun void off_delayed( int off_nb){
       d_to_keyoff => now;
@@ -12,16 +16,28 @@
         al.keyOff();
         ar.keyOff();
         //<<<"ADSR OFF">>>;
-
       }
       //else {
       //  <<<"ADSR off discarded">>>;
       //}
+
+      al.releaseTime() => now;
+      if (off_nb == push_nb) {
+        al =< ol;
+        ar =< or;
+        0 => connected; 
+      }
+
     }
 
     fun void push(note_info_t @ ni ) {
       // <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
       if(ni.on) {
+        if ( ! connected ){
+          al => ol;
+          ar => or;
+          1 => connected;
+        }
         al.keyOn();
         ar.keyOn();
         1 +=> push_nb;
@@ -33,18 +49,25 @@
   }
 
 public class STADSR extends ST{
-  ADSR adsrl => outl;
-  ADSR adsrr => outr;
+
+  ADSR adsrl;
+  ADSR adsrr;
+
+  nirx nio;
+  adsrl @=> nio.al;
+  adsrr @=> nio.ar;
+
+  outl @=> nio.ol;
+  outr @=> nio.or;
+
+
   dur dur_to_keyoff;
 
 
   adsrl.set(1::ms, 10::ms, .00001, 10::ms);
   adsrr.set(1::ms, 10::ms, .00001, 10::ms);
 
-  nirx nio;
-  adsrl @=> nio.al;
-  adsrr @=> nio.ar;
-  
+
   fun void set(dur a, dur d, float s, dur sd, dur r){
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
@@ -67,11 +90,11 @@ public class STADSR extends ST{
   }
 
   fun void keyOn(){
-      adsrl.keyOn();
-      adsrr.keyOn();
+    adsrl.keyOn();
+    adsrr.keyOn();
   }
   fun void keyOff(){
-      adsrl.keyOff();
-      adsrr.keyOff();
+    adsrl.keyOff();
+    adsrr.keyOff();
   }
 }

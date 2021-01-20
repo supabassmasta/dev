@@ -1,9 +1,14 @@
   class nirx extends note_info_rx {
     PowerADSR @ al;
     PowerADSR @ ar;
+    Gain @ ol;
+    Gain @ or;
     10::ms => dur d_to_keyoff;
 
     0 => int push_nb; // To avoid keyOff overlap
+    0 => int connected; // to avoid double connect when release not over
+
+    dur rDur;
     
     fun void off_delayed( int off_nb){
       d_to_keyoff => now;
@@ -17,11 +22,23 @@
       //else {
       //  <<<"ADSR off discarded">>>;
       //}
+      rDur => now;
+      if (off_nb == push_nb) {
+        al =< ol;
+        ar =< or;
+        0 => connected; 
+      }
+
     }
 
     fun void push(note_info_t @ ni ) {
       // <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
       if(ni.on) {
+        if ( ! connected ){
+          al => ol;
+          ar => or;
+          1 => connected;
+        }
         al.keyOn();
         ar.keyOn();
         1 +=> push_nb;
@@ -33,8 +50,15 @@
   }
 
 public class STPADSR extends ST{
-  PowerADSR adsrl => outl;
-  PowerADSR adsrr => outr;
+  PowerADSR adsrl ;
+  PowerADSR adsrr ;
+  nirx nio;
+  adsrl @=> nio.al;
+  adsrr @=> nio.ar;
+
+  outl @=> nio.ol;
+  outr @=> nio.or;
+
   dur dur_to_keyoff;
 
 
@@ -43,15 +67,12 @@ public class STPADSR extends ST{
 
   adsrl.setCurves(2.0, 2.0, .5);
   adsrr.setCurves(2.0, 2.0, .5);
-
-  nirx nio;
-  adsrl @=> nio.al;
-  adsrr @=> nio.ar;
   
   fun void set(dur a, dur d, float s, dur sd, dur r){
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
     a + d + sd => dur_to_keyoff => nio.d_to_keyoff;
+    r => nio.rDur;
   }
   
   fun void setCurves(float a, float d, float r) {
