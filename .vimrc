@@ -1507,3 +1507,8 @@ ab SERUM1K SERUM1
 
 ab SERUM0K SERUM0
 \<esc>os0.config(0 /* synt nb */ , 0 /* rank */ );
+
+ab SERUM2K SERUM2
+\<esc>os0.config(0 /* synt nb */ );
+\<CR>// s0.set_chunk(0);
+

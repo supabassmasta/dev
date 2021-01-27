@@ -178,6 +178,7 @@ Machine.add(rt + "CORE/SYNT/AMB9.ck");
 Machine.add(rt + "CORE/SYNT/AMB10.ck");
 Machine.add(rt + "CORE/SYNT/AMB11.ck");
 Machine.add(rt + "CORE/SYNT/SERUM0.ck");
+Machine.add(rt + "CORE/SYNT/SERUM2.ck");
 Machine.add(rt + "CORE/SYNT/PAD0.ck");
 Machine.add(rt + "CORE/SYNT/PAD1.ck");
 Machine.add(rt + "CORE/SYNT/PAD2.ck");
