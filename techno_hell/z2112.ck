@@ -39,9 +39,9 @@ ps.go();
 //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); ps.s[0].add_subwav("K", s2.wav["s"]); // ps.s[0].gain_subwav("K", 0, .3);
 
 // GAIN
-.7 * data.master_gain =>  ps.gain_common;
- .8 * data.master_gain => ps.s[0].gain; // For individual gain
- .4 * data.master_gain => ps.s[1].gain; // For individual gain
+.6 * data.master_gain =>  ps.gain_common;
+ .7 * data.master_gain => ps.s[0].gain; // For individual gain
+ .3 * data.master_gain => ps.s[1].gain; // For individual gain
 // ps.s[0].gain("s", .4); // for single wav 
 
 // CONNECTIONS

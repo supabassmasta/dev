@@ -1512,3 +1512,7 @@ ab SERUM2K SERUM2
 \<esc>os0.config(0 /* synt nb */ );
 \<CR>// s0.set_chunk(0);
 
+ab SERUM3K SERUM3
+\<esc>os0.config(0 /* synt nb */ );
+\<CR>// => s0.in; s0.control_update(10::ms);
+
