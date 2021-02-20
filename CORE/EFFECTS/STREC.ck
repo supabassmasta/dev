@@ -48,5 +48,11 @@ public class STREC extends ST {
 
     spork ~ f1 (d, name, sync_dur, no_sync );
   }
+
+
+  fun void rec(dur d, string name,  dur sync_dur, int no_sync) {
+    spork ~ f1 (d, name, sync_dur, no_sync );
+  }
+
 }
 
