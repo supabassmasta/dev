@@ -1516,3 +1516,21 @@ ab SERUM3K SERUM3
 \<esc>os0.config(0 /* synt nb */ );
 \<CR>// => s0.in; s0.control_update(10::ms);
 
+
+ab SYNTLABK class syntL extends SYNT{
+\<CR>inlet => SqrOsc s =>  outlet; 
+\<CR>.5 => s.gain;
+\<CR>
+\<CR>fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+\<CR>} 
+\<CR>class syntR extends SYNT{
+\<CR>inlet => TriOsc s =>  outlet; 
+\<CR>.5 => s.gain;
+\<CR>
+\<CR>fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+\<CR>} 
+\<CR>
+\<CR>syntL sl; syntR sr;
+\<CR>
+\<CR>SYNTLAB syntlab;
+\<CR>syntlab.go( sl, sr, 48 /* start_note */, 49 /* last_note */, 3000::ms /* note_dur */,  1000::ms /* attack */, 1000::ms /* release */, "../_SAMPLES/ambient_universe/SYNTTEST" /* base_name */ );

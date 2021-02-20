@@ -291,6 +291,7 @@ Machine.add(rt + "CORE/SYNT/CHORUSA1.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA2.ck");
 Machine.add(rt + "CORE/SYNT/SERUM1.ck");
 Machine.add(rt + "CORE/SYNT/SERUM3.ck");
+Machine.add(rt + "CORE/SYNT/SYNTLAB.ck");
 
 
 
