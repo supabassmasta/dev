@@ -62,6 +62,7 @@ public class STADSR extends ST{
 
 
   dur dur_to_keyoff;
+  dur rel;
 
 
   adsrl.set(1::ms, 10::ms, .00001, 10::ms);
@@ -72,6 +73,7 @@ public class STADSR extends ST{
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
     a + d + sd => dur_to_keyoff => nio.d_to_keyoff;
+    r => rel;
   }
 
   fun void connect(ST @ tone, note_info_tx @ ni_tx) {
@@ -83,6 +85,12 @@ public class STADSR extends ST{
     ni_tx.reg(nio);
   }
 
+
+
+  // MANUAL noteOn Off
+    0 => int push_nb; // To avoid keyOff overlap
+    0 => int connected; // to avoid double connect when release not over
+
   fun void connect(ST @ tone) {
 
     tone.left() => adsrl;
@@ -90,11 +98,28 @@ public class STADSR extends ST{
   }
 
   fun void keyOn(){
+    if ( ! connected ){
+      adsrl => outl;
+      adsrr => outr;
+      1 => connected;
+    }
     adsrl.keyOn();
     adsrr.keyOn();
+    1 +=> push_nb;
   }
+  
+  fun void off_delayed( int off_nb){
+    rel => now;
+    if (off_nb == push_nb) {
+      adsrl =< outl;
+      adsrr =< outr;
+      0 => connected; 
+    }
+  }
+
   fun void keyOff(){
     adsrl.keyOff();
     adsrr.keyOff();
+    spork ~ off_delayed(push_nb);
   }
 }
