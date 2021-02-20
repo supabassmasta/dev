@@ -88,8 +88,8 @@ public class STADSR extends ST{
 
 
   // MANUAL noteOn Off
-    0 => int push_nb; // To avoid keyOff overlap
-    0 => int connected; // to avoid double connect when release not over
+  0 => int push_nb; // To avoid keyOff overlap
+  0 => int connected; // to avoid double connect when release not over
 
   fun void connect(ST @ tone) {
 
