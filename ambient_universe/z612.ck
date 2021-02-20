@@ -21,7 +21,7 @@ fun Gain  offset (float o){
 class synt0 extends SYNT{
 
 
-//80 => int conf; //Theremin
+//80 => int conf; Theremin
 57 => int conf;
 1::ms => dur ut;
 
@@ -32,9 +32,9 @@ Step det_amount[synt_nb];
 SERUM3 s[synt_nb];
 Gain final => outlet; .5 => final.gain;
 
-inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain;sin(.27 /* g */,  .04 /* f */ , .40/* o */) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;  
-inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  -3.51 => det_amount[i].next; .03 => s[i].gain;sin(.27 /* g */,  .04 /* f */ , .40/* o */) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;  
-inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  4.53 => det_amount[i].next;  .04 => s[i].gain;sin(.27 /* g */,  .04 /* f */ , .40/* o */) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;   
+inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  0 => det_amount[i].next;      .6 => s[i].gain;sin(.047,  .04 , .20) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;  
+inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  -3.51 => det_amount[i].next; .03 => s[i].gain;sin(.050,  .04 , .21) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;  
+inlet => detune[i] => s[i] => final; det_amount[i] => detune[i];  4.53 => det_amount[i].next;  .04 => s[i].gain;sin(.027,  .04 , .22) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );i++;   
 //                                                                                                               .6 => s[i].gain;sin(.052,  .4 , .23) => s[i].in;  s[i].control_update(ut); s[i].config(conf /* synt nb */ );
 
 
@@ -84,7 +84,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 80* 100.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 13* 100.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STADSR stadsr;
 stadsr.set(4 * data.tick  /* Attack */, 2 * data.tick  /* Decay */, 0.4 /* Sustain */, 2 * data.tick /* Sustain dur */,  4 * data.tick/* release */);
