@@ -33,6 +33,9 @@ public class SYNTLAB {
       1::samp => now;
 
       stadsr.keyOn();
+      sL.on(); sL.new_note(0);
+      sR.on(); sR.new_note(0);
+
 
       if ( first  ){
         strec.connect(last $ ST, note_dur, base_name + i + ".wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 1 /* no sync */ ); strec $ ST @=>  last;  
@@ -44,7 +47,8 @@ public class SYNTLAB {
 
       note_dur - release => now; 
       stadsr.keyOff();
-
+      sL.off();
+      sR.off();   
       release => now;
 
     }
