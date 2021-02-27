@@ -1534,3 +1534,8 @@ ab SYNTLABK class syntL extends SYNT{
 \<CR>
 \<CR>SYNTLAB syntlab;
 \<CR>syntlab.go( sl, sr, 48 /* start_note */, 49 /* last_note */, 3000::ms /* note_dur */,  1000::ms /* attack */, 1000::ms /* release */, "../_SAMPLES/ambient_universe/SYNTTEST" /* base_name */ );
+
+
+ab SYNTWAVK SYNTWAV
+\<esc>os0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, "../_SAMPLES/ambient_universe/SYNTTEST" /* FILE */, 100::ms /* UPDATE */);
+

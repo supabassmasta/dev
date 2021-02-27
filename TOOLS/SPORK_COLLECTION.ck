@@ -843,3 +843,41 @@ spork ~   IBNIZ ("3/d2r4B&*", -1 /* octave offset */,  data.tick * 4 /2 /* dur *
 
 
 ///////////////////////////////////////////////////////////////////////////////
+
+fun void  KEY  (int note, float g, dur d, dur attack, dur release,  string file){ 
+	SndBuf2 buf;
+
+  file + note + ".wav" => buf.read;
+  g => buf.gain;
+
+  ST out; out @=> ST @ last;
+
+	buf.chan(0) => ADSR al => out.outl;
+	buf.chan(1)=> ADSR ar => out.outr;
+
+  al.set(attack, 0::ms, 1. , release);
+  ar.set(attack, 0::ms, 1. , release);
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+
+  al.keyOn();
+  ar.keyOn();
+
+  d - release => now;
+
+  al.keyOff();
+  ar.keyOff();
+
+  release => now;
+
+  out.disconnect();
+}
+
+"../_SAMPLES/SYNTWAVS/MULTI2SIN0" => string f1;
+spork ~  KEY(60     /* note */, .2 /* g */, 12 * data.tick /* d */, 4::second /* attack */, 4::second/*  release */,  f1 /* file */);
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////
