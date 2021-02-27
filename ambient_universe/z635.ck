@@ -1,5 +1,7 @@
 class SYNTWAV extends SYNT{
-  ST stout;
+  1 => own_adsr;
+  1 => stereo;
+
   float g; dur attack; dur release;  string file; dur update;  
 
   fun void  config  (float G, dur ATTACK, dur RELEASE,  string FILE , dur UPDATE){ 
@@ -53,9 +55,6 @@ class SYNTWAV extends SYNT{
 
     inlet => blackhole;
 
-    // TEMP TODO TONE Stereo out
-    stout.left() => outlet;
-
     fun void on()  { }
     
     fun void off() {
@@ -68,7 +67,6 @@ class SYNTWAV extends SYNT{
      
     }
     
-    1 => own_adsr;
 }
 
 

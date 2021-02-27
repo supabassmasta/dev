@@ -239,11 +239,24 @@ public class TONE extends ST {
     a.setCurves(2.0, 2.0, .5);
     init_gain => a.gain;
 
-    if (in.own_adsr) {
-      one => e => in => out;
+    if ( in.stereo ){
+      // intput freq
+      one => e => in;
+      // output  
+      in.stout.left() => outl;
+      in.stout.right() => outr;
+
+      if (! in.own_adsr) {
+        <<<"WARNING: TONE stereo out , ADSR not implemented, use own ADSR">>>;
+      }
     }
     else {
-      one => e => in => a => out;
+      if (in.own_adsr) {
+        one => e => in => out;
+      }
+      else {
+        one => e => in => a => out;
+      }
     }
     in => raw_out;
 
