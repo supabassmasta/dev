@@ -872,6 +872,9 @@ fun void  KEY  (int note, float g, dur d, dur attack, dur release,  string file)
   release => now;
 
   out.disconnect();
+  // Work around: try to read a no existing file to close the previous one.
+  // Avoid Error: reason: System error : Too many open files.
+  "dummmy_not_exist_file" => buf.read;
 }
 
 "../_SAMPLES/SYNTWAVS/MULTI2SIN0" => string f1;

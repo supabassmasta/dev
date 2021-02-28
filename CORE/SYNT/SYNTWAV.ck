@@ -12,7 +12,25 @@ public class SYNTWAV extends SYNT{
     UPDATE => update;
   } 
 
-  0 => int spork_cnt;
+  fun void  config  (float G, dur ATTACK, dur RELEASE,  int i , dur UPDATE){ 
+    string str[0];    
+    str << "../_SAMPLES/SYNTWAVS/MULTI2SIN0";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2SIN1";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2SIN2";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2GROAN0";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2GROAN1";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2GENTLESPEECH0";
+    str << "../_SAMPLES/SYNTWAVS/MULTI2GENTLESPEECH1";
+
+    if ( i >= str.size() ){
+      <<<"ERROR SYNTWAV : FILE number TOO HIGH">>>;
+      0=> i; 
+    }
+
+    config  (G, ATTACK, RELEASE,  str[i], UPDATE);
+} 
+
+0 => int spork_cnt;
 
   fun void  KEY  ( int own_cnt){ 
 
@@ -48,7 +66,9 @@ public class SYNTWAV extends SYNT{
 
     al =< stout.outl;
     ar =< stout.outr;  
-
+    // Work around try to read a no existing file to close the previous one.
+    // Avoid reason: System error : Too many open files.
+    "dummmy_not_exist_file" => buf.read;
     1::samp => now;
 
   }
