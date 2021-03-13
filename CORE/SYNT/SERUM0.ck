@@ -103,10 +103,13 @@ public class SERUM0 extends SYNT{
 /* 74 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M2-Basic/23-Sinarmonic I.wav";
 /* 75 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M2-Basic/24-Sinarmonic II.wav";
 
-/* 75 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/01-Camchord.wav";
-/* 76 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/02-Colors.wav";
-/* 77 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/03-Iron.wav";
-/* 78 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/04-Cicada.wav";
+/* 76 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/01-Camchord.wav";
+/* 77 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/02-Colors.wav";
+/* 78 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/03-Iron.wav";
+/* 79 */    st << ROOTPATH.str.my_string + "_SAMPLES/wavetable/TriSamples Wavetables For Serum/M5-FX-Chords/04-Cicada.wav";
+
+
+
     
    if ( wn >= st.size()  ){
        <<<"SERUM: WARNING WAVTABLE NUMER TOO HIGH">>>;
