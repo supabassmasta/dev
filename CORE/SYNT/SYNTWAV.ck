@@ -36,9 +36,9 @@ public class SYNTWAV extends SYNT{
 
     1::ms => now;
     inlet.last() => float freq;
-    Std.ftom(freq) $ int => int note;
+    Math.round(Std.ftom(freq)) $ int  => int note;
 
-    //<<<"SYNTWAV f: ", freq, " note: ", note>>>;
+    <<<"SYNTWAV f: ", freq, " note: ", note>>>;
 
     SndBuf2 buf;
 
