@@ -1,12 +1,13 @@
 TONE t;
-t.reg(SERUM1 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-s0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  3::ms /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 10::ms /* release */ );
+t.reg(SERUM0 s0); s0.config(1, 0); //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+//s0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  3::ms /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 10::ms /* release */ );
 // s0.add(synt0 /* SYNT, to declare outside */, 0.4 /* GAIN */, 1.5 /* in freq gain */,  0 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
 //t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"}c }c*4
+"
+}c }c*4
 1_1_ 1_1_ ____ ____ 8_1_ __1_ ____ ____
 *21_1_ 1_1_ :2 1_1_ ____ 8_5_ *2 1_1_1_1_ :2 5_1_ ____ 8__8
 
