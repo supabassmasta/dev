@@ -335,96 +335,96 @@ WAIT w;
 1::samp => w.fixed_end_dur;
 
 while(1) {
-//   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   spork ~   PADS (":6 1|3_"); 
-//   8 * data.tick =>  w.wait;      
-//   
-// 
-//   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   spork ~   PADS (":6 5|3_"); 
-//   spork ~   FROG(19 /* fstart */, 4 /* fstop */, 9 * 100 /* lpfstart */, 46 * 100 /* lpfstop */, 3* data.tick /* dur */, .3 /* gain */);
-//   8 * data.tick =>  w.wait;      
-// 
-// 
-//   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   spork ~   PADS (":6 1|3_"); 
-//   8 * data.tick =>  w.wait;      
-// 
-// 
-//   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   spork ~   PADS (":6 0|2_"); 
-//   8 * data.tick =>  w.wait;   
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   spork ~   PADS (":6 1|3_"); 
+   8 * data.tick =>  w.wait;      
+   
+ 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   spork ~   PADS (":6 5|3_"); 
+   spork ~   FROG(19 /* fstart */, 4 /* fstop */, 9 * 100 /* lpfstart */, 46 * 100 /* lpfstop */, 3* data.tick /* dur */, .3 /* gain */);
+   8 * data.tick =>  w.wait;      
+ 
+ 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   spork ~   PADS (":6 1|3_"); 
+   8 * data.tick =>  w.wait;      
+ 
+ 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   spork ~   PADS (":6 0|2_"); 
+   8 * data.tick =>  w.wait;   
 
-////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
 
-//  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//  spork ~   PADS (":6 1|3_"); 
-//  spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___");  8 * data.tick =>  w.wait;      
-//  
-//
-//  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//  spork ~   PADS (":6 5|3_"); 
-//  spork ~   FROG(19 /* fstart */, 4 /* fstop */, 9 * 100 /* lpfstart */, 46 * 100 /* lpfstop */, 3* data.tick /* dur */, .3 /* gain */);
-//  8 * data.tick =>  w.wait;      
-//
-//
-//  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//  spork ~   PADS (":6 1|3_"); 
-//  spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
-//  8 * data.tick =>  w.wait;      
-//
-//
-//  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ KKK_ K__K KK_K KK_K"); 
-//  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
-//  spork ~   PADS (":6 0|2_"); 
-//  spork ~   FROG(9 /* fstart */, 16 /* fstop */, 37 * 100 /* lpfstart */, 6 * 100 /* lpfstop */, 2* data.tick /* dur */, .3 /* gain */);
-//   8 * data.tick =>  w.wait;   
-//
-//
-////////////////////////////////////////////////////////////////////////////////
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+  spork ~   PADS (":6 1|3_"); 
+  spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___");  8 * data.tick =>  w.wait;      
+  
 
-//     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
-//     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   //  spork ~   PADS (":6 1|3_"); 
-//     spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
-//     spork ~   HIGH ("}c}c *4  ____ ____ ____ ____ ____ _431 __433"); 
-//   
-//     8 * data.tick =>  w.wait;      
-//     
-//   
-//     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
-//     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   //  spork ~   PADS (":6 5|3_"); 
-//     spork ~  LEAD        ("*4 3232 1_1_ _1__ 8__B 3232 1___ 88___"); 
-//     spork ~   HIGH ("}c}c *4  ____ _1_5 3_81 _43_ __"); 
-//     8 * data.tick =>  w.wait;      
-//   
-//   
-//     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
-//     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
-//     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
-//   //  spork ~   PADS (":6 1|3_"); 
-//     spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
-//     spork ~   HIGH ("}c}c *4  _41_ _1_5 3__1 _"); 
-//      8 * data.tick =>  w.wait;      
-//   
-//   
-//     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K_K_ K_K_ KK_K KK_K"); 
-//     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
-//     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
-//   //  spork ~   PADS (":6 0|2_"); 
-//     spork ~  LEAD        ("*4 8__8 __1_ 3232 1__B 3232 1___ 88___"); 
-//     spork ~  HIGH        ("*3 ____ ____ ____ 8__B 3232 1___ 88___"); 
-//      8 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+  spork ~   PADS (":6 5|3_"); 
+  spork ~   FROG(19 /* fstart */, 4 /* fstop */, 9 * 100 /* lpfstart */, 46 * 100 /* lpfstop */, 3* data.tick /* dur */, .3 /* gain */);
+  8 * data.tick =>  w.wait;      
+
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+  spork ~   PADS (":6 1|3_"); 
+  spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
+  8 * data.tick =>  w.wait;      
+
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ KKK_ K__K KK_K KK_K"); 
+  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
+  spork ~   PADS (":6 0|2_"); 
+  spork ~   FROG(9 /* fstart */, 16 /* fstop */, 37 * 100 /* lpfstart */, 6 * 100 /* lpfstop */, 2* data.tick /* dur */, .3 /* gain */);
+   8 * data.tick =>  w.wait;   
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   //  spork ~   PADS (":6 1|3_"); 
+     spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
+     spork ~   HIGH ("}c}c *4  ____ ____ ____ ____ ____ _431 __433"); 
+   
+     8 * data.tick =>  w.wait;      
+     
+   
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
+     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   //  spork ~   PADS (":6 5|3_"); 
+     spork ~  LEAD        ("*4 3232 1_1_ _1__ 8__B 3232 1___ 88___"); 
+     spork ~   HIGH ("}c}c *4  ____ _1_5 3_81 _43_ __"); 
+     8 * data.tick =>  w.wait;      
+   
+   
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+   //  spork ~   PADS (":6 1|3_"); 
+     spork ~  LEAD        ("*4 8__8 __1_ _1__ 8__B 3232 1___ 88___"); 
+     spork ~   HIGH ("}c}c *4  _41_ _1_5 3__1 _"); 
+      8 * data.tick =>  w.wait;      
+   
+   
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K_K_ K_K_ KK_K KK_K"); 
+     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
+     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
+   //  spork ~   PADS (":6 0|2_"); 
+     spork ~  LEAD        ("*4 8__8 __1_ 3232 1__B 3232 1___ 88___"); 
+     spork ~  HIGH        ("*3 ____ ____ ____ 8__B 3232 1___ 88___"); 
+      8 * data.tick =>  w.wait;   
 
 
 ////////////////////////////////////////////////////////////////////////////////
