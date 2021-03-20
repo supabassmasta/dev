@@ -129,6 +129,63 @@ arp.t.raw() => s0.inlet;
 
 
 //////////////////////////////////////////////////////////////////////////////////
+fun void SUPERHIGH (string seq) {
+  TONE t;
+  t.reg(SERUM2 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  s0.config(2 /* synt nb */ );
+  // s0.set_chunk(0); 
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  .31 * data.master_gain => t.gain;
+  t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 40* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+
+  // MOD ////////////////////////////////
+
+//   SinOsc mod => SinOsc s => OFFSET o => s0.inlet;
+//   1::second / (13 * data.tick) => s.freq;
+//   //   0 => s.phase;
+//   Std.rand2f(0, 1) => s.phase;
+//   0.2 => mod.freq;
+// 
+//   1.2 => o.offset;
+//   5.7 => o.gain;
+// 
+//   ARP arp;
+//   arp.t.dor();
+//   50::ms => arp.t.glide;
+//   "*4 1538123412315  " => arp.t.seq;
+//   arp.t.go();   
+
+//  // CONNECT SYNT HERE
+//  3 => s0.inlet.op;
+//  arp.t.raw() => s0.inlet; 
+
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration + now => time target;
+    while(now < target) {
+      s0.set_chunk(Std.rand2(0, 63)); 
+        .5 * data.tick => now;
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
 fun void LEAD (string seq) {
   TONE t;
   t.reg(SERUM0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -454,6 +511,15 @@ WAIT w;
 1::samp => w.fixed_end_dur;
 
 
+/********************************************************/
+if (    0     ){
+}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+    
+
+
+
+
 // INTRO
 
 spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 8* data.tick /* dur */,  .11 /* gain */); 
@@ -464,8 +530,8 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
 3.8 * data.tick =>  w.wait;      
 
 
+while(1) { /********************************************************/
 
-while(1) {
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
   spork ~   PADS (":6 1|3_"); 
@@ -570,6 +636,9 @@ while(1) {
   8 * data.tick =>  w.wait;      
   spork ~   PADS (":6 0|2_"); 
   8 * data.tick =>  w.wait;     
+  
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -609,6 +678,67 @@ while(1) {
     spork ~  HIGH        ("*3 ____ ____ ____ 8__B 3232 1___ 88___"); 
      8 * data.tick =>  w.wait;   
 
+
+  ///////////////////////////////////////////////////////////////////////////////::
+
+
+
+
+
+    spork ~   SUPERHIGH ("}c *4 4_3_4___4_3_3__24231423131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+     8 * data.tick =>  w.wait;   
+    spork ~   SUPERHIGH ("}c *4 42314231423131424231423131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+     8 * data.tick =>  w.wait;   
+    spork ~   SUPERHIGH ("}c *4 423_42__42__3_4_4__14__131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+    8 * data.tick =>  w.wait;   
+
+    spork ~   SUPERHIGH ("}c *4 4231 4231 4231 4231 4231 4231 4231 4231  "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_   "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 "); 
+
+     8 * data.tick =>  w.wait;   
+
+
+
+
+    spork ~   SUPERHIGH ("}c *4 4_3_4___4_3_3__2 {c +5 4231423131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+     8 * data.tick =>  w.wait;   
+    spork ~   SUPERHIGH ("}c *4 42314231423131424{c +5231423131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+     8 * data.tick =>  w.wait;   
+    spork ~   SUPERHIGH ("}c *4 423_42__42__3_4_4{c +5__14__131423142 "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
+
+    8 * data.tick =>  w.wait;   
+
+    spork ~   SUPERHIGH ("}c *4 4231 4231 4231 4231 {c +54231 4231 4231 4231  "); 
+    spork ~  SLIDESERUM1(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */,  .11 /* gain */); 
+    spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
+    spork ~  TRANCEBREAK ("*4 ____ ____ ____ ____ K___ K_K_ K__K K_KK"); 
+
+     8 * data.tick =>  w.wait;   
 
 }
 
