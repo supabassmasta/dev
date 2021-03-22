@@ -16,8 +16,11 @@ fun void TRANCEBREAK(string seq) {
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
   s.go();     s $ ST @=> ST @ last; 
 
-  STDUCKMASTER duckm;
-  duckm.connect(last $ ST, 6. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+//  STDUCKMASTER duckm;
+//  duckm.connect(last $ ST, 6. /* In Gain */, .10 /* Tresh */, .5 /* Slope */, 30::ms /* Attack */, 100::ms /* Release */ );      duckm $ ST @=>  last; 
+
+//  STGAIN stgain;
+//  stgain.connect(last $ ST , 0. /* static gain */  );       stgain $ ST @=>  last; 
 
 //  STMIX stmix;
 //  stmix.send(last, mixer);
@@ -37,7 +40,7 @@ fun void TRANCEHH(string seq) {
  s3.wav["U"] => s.wav["S"];  // act @=> s.action["a"]; 
   seq => s.seq;
   .8 * data.master_gain => s.gain; //
-  s.gain("S", .07); // for single wav 
+  s.gain("S", .12); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
    1.1 => s.wav_o["S"].wav0.rate;
@@ -65,7 +68,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .36 * data.master_gain => t.gain;
+  .40 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -73,7 +76,7 @@ fun void BASS (string seq) {
   t.go();   t $ ST @=> ST @ last; 
 
   STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 250.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 270.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //  STMIX stmix;
 //  stmix.send(last, mixer);
@@ -137,7 +140,7 @@ fun void SUPERHIGH (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .31 * data.master_gain => t.gain;
+  .28 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -265,7 +268,7 @@ fun void PADS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .4 * data.master_gain => t.gain;
+  .35 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -274,6 +277,9 @@ fun void PADS (string seq) {
 
 //  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+//STGVERB stgverb;
+//stgverb.connect(last $ ST, .05 /* mix */, 12 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
 
   STDUCK duck;
   duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -293,9 +299,10 @@ fun void TRANCEHPF() {
     SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
     // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
     "K" => s.seq;
-    .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+    .7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
     s.no_sync();// s.element_sync(); //s.no_sync()
   ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  .7 => s.wav_o["K"].wav0.rate;
     // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
     //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
     s.go();     s $ ST @=> ST @ last; 
@@ -513,12 +520,17 @@ WAIT w;
 
 /********************************************************/
 if (    0     ){
-    
+////////////////////////////////////////////////////////////////////////////////
 
 }/***********************   MAGIC CURSOR *********************/
 //while(1) { /********************************************************/
 
 
+    
+
+/***************************/
+//} if  ( 0 ){
+ 
 // INTRO
 
 spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 8* data.tick /* dur */,  .11 /* gain */); 
@@ -528,14 +540,12 @@ spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, 
 spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3); 
 3.8 * data.tick =>  w.wait;      
 
-
 while(1) { /********************************************************/
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
   spork ~   PADS (":6 1|3_"); 
   8 * data.tick =>  w.wait;      
-  
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K_K_"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
@@ -623,11 +633,11 @@ while(1) { /********************************************************/
       8 * data.tick =>  w.wait;   
 
 
-////////////////////////////////////////////////////////////////////////////////
 
 
 
-  spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/DTCcomp2_reduced.wav", .3); 
+
+  spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/DTCcomp2_reduced.wav", .21); 
   spork ~   TRANCEHPF (); 
   spork ~   PADS (":6 1|3_"); 
   spork ~  HIGH        ("*3 ____ _8/1__ ___3 ____ 329_ ____ _1_4_"); 
@@ -642,7 +652,6 @@ while(1) { /********************************************************/
   spork ~  HIGH        ("*3 ____ _12_ __3_ 4__B 3242 1___ 08___"); 
   8 * data.tick =>  w.wait;     
   
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -729,15 +738,15 @@ while(1) { /********************************************************/
     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
 
-     8 * data.tick =>  w.wait;   
+ 
+    8 * data.tick =>  w.wait;   
     spork ~   SUPERHIGH ("}c *4 423_42__42__3_4_4{c +5__14__131423142 "); 
     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K KKKK"); 
     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1"); 
 
     8 * data.tick =>  w.wait;   
-
-    spork ~   SUPERHIGH ("}c *4 4231 4231 4231 4231 {c +54231 4231 4231 42__  "); 
+    spork ~   SUPERHIGH ("}c *4 4231 4231 4231 4231 {c +54231 4231 4231 4231  "); 
     spork ~  SLIDESERUM1(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */,  .11 /* gain */); 
     spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
     spork ~  TRANCEBREAK ("*4 ____ ____ ____ ____ K___ K_K_ K__K K_KK"); 
