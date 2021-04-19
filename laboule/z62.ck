@@ -14,6 +14,9 @@ __h_ __h_ s_hs _hhT
 //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
 s.go();     s $ ST @=> ST @ last; 
 
+STADSRC stadsrc;
+stadsrc.connect(last, HW.launchpad.keys[16*6 + 6] /* pad 1:1 */ /* controler */, 10::ms /* attack */, 10::ms /* release */, 1 /* default_on */, 0  /* toggle */); stadsrc $ ST @=> last; 
+
 while(1) {
        100::ms => now;
 }

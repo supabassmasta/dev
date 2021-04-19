@@ -1,5 +1,5 @@
 LONG_WAV l;
-"../_SAMPLES/la boule/la boule loop1+speed percu1.wav" => l.read;
+"../_SAMPLES/la boule/la boule loop1+dohl.wav" => l.read;
 0.4 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 10::ms);
