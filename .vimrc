@@ -1505,8 +1505,15 @@ ab SERUM1K SERUM1
 \<esc>os0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
 \<CR>// s0.add(synt0 /* SYNT, to declare outside */, 0.4 /* GAIN */, 1.5 /* in freq gain */,  0 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
 
+ab SERUM01K SERUM01
+\<esc>os0.add(0 /* synt nb */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
+\<CR>// s0.add(synt0 /* SYNT, to declare outside */, 0.4 /* GAIN */, 1.5 /* in freq gain */,  0 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ );
+
 ab SERUM0K SERUM0
 \<esc>os0.config(0 /* synt nb */ , 0 /* rank */ );
+
+ab SERUM00K SERUM00
+\<esc>os0.config(0 /* synt nb */ );
 
 ab SERUM2K SERUM2
 \<esc>os0.config(0 /* synt nb */ );

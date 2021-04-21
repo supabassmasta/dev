@@ -61,6 +61,7 @@ Machine.add( rt + "include/NOREPLACE.ck");
 Machine.add( rt + "include/WAIT.ck");
 
 
+
 me.yield();
 Machine.add( rt + "CORE/lpk25/lpk25.ck"); 
 //Machine.add(rt + "CORE/seq_2/top_seq.ck");
@@ -180,6 +181,7 @@ Machine.add(rt + "CORE/SYNT/AMB10.ck");
 Machine.add(rt + "CORE/SYNT/AMB11.ck");
 Machine.add(rt + "CORE/SYNT/SERUM0.ck");
 Machine.add(rt + "CORE/SYNT/SERUM2.ck");
+Machine.add(rt + "CORE/SYNT/SERUM00.ck");
 Machine.add(rt + "CORE/SYNT/PAD0.ck");
 Machine.add(rt + "CORE/SYNT/PAD1.ck");
 Machine.add(rt + "CORE/SYNT/PAD2.ck");
@@ -292,6 +294,7 @@ Machine.add(rt + "CORE/SYNT/CHORUSA0.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA1.ck");
 Machine.add(rt + "CORE/SYNT/CHORUSA2.ck");
 Machine.add(rt + "CORE/SYNT/SERUM1.ck");
+Machine.add(rt + "CORE/SYNT/SERUM01.ck");
 Machine.add(rt + "CORE/SYNT/SERUM3.ck");
 Machine.add(rt + "CORE/SYNT/SYNTLAB.ck");
 
