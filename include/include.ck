@@ -314,3 +314,15 @@ me.yield();
 Machine.add( rt + "CORE/launchpad/script_launcher.ck");
 Machine.add("config.ck");
 me.yield();
+
+<<<"---------------------------------------------------------------------------------------" >>>;
+<<<"SERUM Memo:" >>>;
+<<<"SERUM0 : Single wav with rank for distortion">>>;
+<<<"SERUM1 : multi wav from SERUM0 with ADSR for each, classic synt can be added">>>;
+<<<"SERUM2 : InspectorGadget single wav collection, with dynamic on the flight rank ">>>;
+<<<"SERUM3 : InspectorGadget multi wav collection, smooth trnasition from wav to wav with a UGen input ">>>;
+<<<"SERUM00 : Single wav massive collection">>>;
+<<<"SERUM01 : Same as SERUM1 with massive collection">>>;
+<<<"---------------------------------------------------------------------------------------" >>>;
+
+
