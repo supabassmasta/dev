@@ -8,6 +8,7 @@
   }
 
   class CONNECTION {
+    0 => int disconnect_mode_on;
     0 => int off_nb;
     0 => int connected;
     dur rDur;
@@ -30,7 +31,9 @@
 
     fun int on_time() {
       a.keyOff();
-      spork ~  release_disconnect ( c.off_nb, c, a ); 
+      if ( c.disconnect_mode_on ){
+        spork ~  release_disconnect ( c.off_nb, c, a ); 
+      }
 
     }
   }
@@ -309,6 +312,12 @@ public class TONE extends ST {
       adsr[i].setCurves(a, d,r);
     }
   }
+
+  fun void  set_disconnect_mode (int on){ 
+    for (0 => int i; i <  connections.size() ; i++) {
+      on => connections[i].disconnect_mode_on;
+    }
+  } 
 
 
   // function to get audio out of object

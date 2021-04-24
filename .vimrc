@@ -433,6 +433,7 @@ ab TONEK TONE t;
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
 \<CR>//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>1 => t.set_disconnect_mode;
 \<CR>t.go();   t $ ST @=> ST @ last;
 
 ab POLYTONEK POLYTONE pt;
