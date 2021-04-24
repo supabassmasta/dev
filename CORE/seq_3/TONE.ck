@@ -7,18 +7,44 @@
     }
   }
 
+  class CONNECTION {
+    0 => int off_nb;
+    0 => int connected;
+    dur rDur;
+    Gain @ output;
+  }
+
+  fun void  release_disconnect (int off_n, CONNECTION @ c, PowerADSR @ a){ 
+    c.rDur => now;
+    if ( off_n == c.off_nb ){
+      // No new keyOn: disconnect
+      0 => c.connected;
+      a =< c.output;
+    }
+  } 
+
+
   class off_adsr extends ACTION {
     PowerADSR @ a;
+    CONNECTION @ c;
 
     fun int on_time() {
       a.keyOff();
+      spork ~  release_disconnect ( c.off_nb, c, a ); 
+
     }
   }
 
   class on_adsr extends ACTION {
     PowerADSR @ a;
+    CONNECTION @ c;
 
     fun int on_time() {
+      1+=> c.off_nb;
+      if ( ! c.connected ){
+          1 => c.connected;
+          a => c.output;
+      }
       a.keyOn();
     }
   }
@@ -145,6 +171,7 @@ public class TONE extends ST {
   SYNT synt[0];
   Envelope env[0];
   PowerADSR adsr[0];
+  CONNECTION connections[0];
   int on_state[0];
   float freq[0];
   float scale[0];
@@ -227,6 +254,7 @@ public class TONE extends ST {
   fun void reg(SYNT @ in) {
     Envelope @ e;
     PowerADSR @ a;
+    CONNECTION @ c;
 
     synt << in;
 
@@ -238,6 +266,11 @@ public class TONE extends ST {
     a.set(3::ms, 0::ms, 1., 3::ms);
     a.setCurves(2.0, 2.0, .5);
     init_gain => a.gain;
+
+    new CONNECTION @=> c;
+    connections << c;
+    out @=> c.output;
+    3::ms => c.rDur;
 
     if ( in.stereo ){
       // intput freq
@@ -255,7 +288,7 @@ public class TONE extends ST {
         one => e => in => out;
       }
       else {
-        one => e => in => a => out;
+        one => e => in => a; // => out; // Now connect on key on
       }
     }
     in => raw_out;
@@ -263,6 +296,20 @@ public class TONE extends ST {
     on_state << 0;
     freq << 0;
   }
+
+  fun void  set_adsrs (dur a, dur d, float s, dur r){ 
+    for (0 => int i; i <  adsr.size() ; i++) {
+      adsr[i].set(a, d, s, r);
+      r => connections[i].rDur;
+    }
+  } 
+
+  fun void set_adsrs_curves(float a, float d, float r) {
+    for (0 => int i; i < adsr.size(); i++) {
+      adsr[i].setCurves(a, d,r);
+    }
+  }
+
 
   // function to get audio out of object
   // only one of this to use at a time
@@ -327,16 +374,18 @@ public class TONE extends ST {
     return act;
   }
 
-  fun ACTION set_off_adsr (PowerADSR @ a) {
+  fun ACTION set_off_adsr (PowerADSR @ a, CONNECTION @ c) {
     new off_adsr @=> off_adsr @ act;
     a @=> act.a;
+    c @=> act.c;
     "off_adsr  " + a.toString() => act.name;
     return act;
   }
 
-  fun ACTION set_on_adsr (PowerADSR @ a) {
+  fun ACTION set_on_adsr (PowerADSR @ a, CONNECTION @ c) {
     new on_adsr @=> on_adsr @ act;
     a @=> act.a;
+    c @=> act.c;
     "on_adsr  " + a.toString() => act.name;
 
     return act;
@@ -523,7 +572,7 @@ public class TONE extends ST {
                 on_state[i] - 1 => on_state[i];
                 if (on_state[i] <= 0 ){
                   0 => on_state[i];
-                  s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i]);
+                  s.elements[s.elements.size() - 1].actions << set_off_adsr(adsr[i], connections[i]);
                   s.elements[s.elements.size() - 1].actions << set_synt_off(synt[i]);
                 }
               }
@@ -596,7 +645,7 @@ public class TONE extends ST {
                   glide => e_glide.duration;
                   s.elements << e_glide;
                   // set on action if seq start by glide event
-                  e_glide.on_actions << set_on_adsr(adsr[id]); 
+                  e_glide.on_actions << set_on_adsr(adsr[id], connections[id]); 
                   e_glide.on_actions << set_synt_on(synt[id]); 
                }
                 else {
@@ -614,14 +663,14 @@ public class TONE extends ST {
 						  s.elements[0] == e) ){
 
             if (on_state[id] == 0) {
-              e.actions << set_on_adsr(adsr[id]); 
+              e.actions << set_on_adsr(adsr[id], connections[id]); 
               e.actions << set_synt_on(synt[id]); 
               1 => e.note_info_s.on;
             }
             else {
               // Manage on_actions
               // synt already on but we need to on it if the seq start here
-              e.on_actions << set_on_adsr(adsr[id]); 
+              e.on_actions << set_on_adsr(adsr[id], connections[id]); 
               e.on_actions << set_synt_on(synt[id]); 
               // also set freq and new note
               e.actions << set_freq_synt(env[id], freq[id] ); 
@@ -643,7 +692,7 @@ public class TONE extends ST {
           if (force_new_note != 0){
             e.actions << set_synt_new_note(synt[id], s.elements.size()); 
             s.elements.size() => e.note_info_s.idx;
-            e.actions << set_on_adsr(adsr[id]); 
+            e.actions << set_on_adsr(adsr[id], connections[id]); 
             e.actions << set_synt_on(synt[id]); 
             0 => force_new_note;
             1 => e.note_info_s.on;
@@ -726,7 +775,7 @@ public class TONE extends ST {
           // KeyOff all adsr
           for (0 => int j; j < adsr.size() ; j++) {
             if (on_state[j] != 0) {
-              e.actions << set_off_adsr(adsr[j]);                
+              e.actions << set_off_adsr(adsr[j], connections[j]);                
               e.actions << set_synt_off(synt[j]);                
               0 => on_state[j];
             }
@@ -907,20 +956,20 @@ public class TONE extends ST {
     for (0 => int j; j < adsr.size() ; j++) {
       if (on_state[j] != 0 && on_state_on_start[j] == 0) {
       // KeyOff all adsr that are not on in first element
-        s.elements[0].actions << set_off_adsr(adsr[j]);                
+        s.elements[0].actions << set_off_adsr(adsr[j], connections[j]);                
         s.elements[0].actions << set_synt_off(synt[j]);                
         0 => on_state[j];
       }
       else if (on_state[j] == 0 && on_state_on_start[j] != 0) {
         // synt off on last, On on first
-        s.elements[0].actions << set_on_adsr(adsr[j]);                
+        s.elements[0].actions << set_on_adsr(adsr[j], connections[j]);                
         s.elements[0].actions << set_synt_on(synt[j]);                
         1 => s.elements[0].note_info_s.on;
       }
       else if (on_state[j] != 0 && on_state_on_start[j] != 0) {
         // Manage on_actions
         // synt already on but we need to on it if the seq start here
-        s.elements[0].on_actions << set_on_adsr(adsr[j]); 
+        s.elements[0].on_actions << set_on_adsr(adsr[j], connections[j]); 
         s.elements[0].on_actions << set_synt_on(synt[j]); 
 
 
@@ -938,7 +987,7 @@ public class TONE extends ST {
             glide => e_glide.duration;
             s.elements << e_glide;
             // set on action if seq start by glide event
-            e_glide.on_actions << set_on_adsr(adsr[j]); 
+            e_glide.on_actions << set_on_adsr(adsr[j], connections[j]); 
             e_glide.on_actions << set_synt_on(synt[j]); 
           }
           else {
@@ -969,7 +1018,7 @@ public class TONE extends ST {
       for (0 => int j; j < s.elements.size() ; j++) {
         // if off seq is requested: off all synt 
 				for (0 => int k; k < synt.size()     ; k++) {
-          s.elements[j].off_actions << set_off_adsr(adsr[k]);                
+          s.elements[j].off_actions << set_off_adsr(adsr[k], connections[k]);                
           s.elements[j].off_actions << set_synt_off(synt[k]);                
 				}
       }
