@@ -15,7 +15,7 @@
   }
 
   fun void  release_disconnect (int off_n, CONNECTION @ c, PowerADSR @ a){ 
-    c.rDur => now;
+    c.rDur  => now;
     if ( off_n == c.off_nb ){
       // No new keyOn: disconnect
       0 => c.connected;
@@ -264,7 +264,7 @@ public class TONE extends ST {
     new PowerADSR @=> a;
     adsr << a;
     a.set(3::ms, 0::ms, 1., 3::ms);
-    a.setCurves(2.0, 2.0, .5);
+    a.setCurves(1.0, 1.0, 1.0);
     init_gain => a.gain;
 
     new CONNECTION @=> c;
