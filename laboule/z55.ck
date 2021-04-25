@@ -14,7 +14,7 @@ stbpfx0.connect(last $ ST ,  stbpfx0_fact, 16* 100.0 /* freq */ , 0.7 /* Q */ , 
 STCOMPRESSOR stcomp;
 9. => float in_gain;
 stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
-4.3 => stcomp.gain;
+4.5 => stcomp.gain;
 
 STFILTERX stresx0; RES_XFACTORY stresx0_fact;
 stresx0.connect(last $ ST ,  stresx0_fact, 13* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stresx0 $ ST @=>  last;  
@@ -26,6 +26,8 @@ stgain.connect(stcomp $ ST , 1. /* static gain */  );       stgain $ ST @=>  las
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
 
+////STAUTOPAN autopan;
+//autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 1 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
