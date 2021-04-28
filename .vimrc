@@ -1164,13 +1164,13 @@ ab STDUCK2K STDUCK2 duck2;
 \<CR>duck2.connect(last $ ST, 9. /* Side Chain Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duck2 $ ST @=>  last; 
 
 ab ADSRMODK ADSRMOD adsrmod; // Direct ADSR freq input modulation
-\<CR>adsrmod.adsr_set(0.01 /* relative attack dur */, 0.01 /* relative decay dur */ , 1.0 /* sustain */, - 0.5 /* relative sustain pos */, .3 /* relative sustain dur */);
+\<CR>adsrmod.adsr_set(0.01 /* relative attack dur */, 0.01 /* relative decay dur */ , 1.0 /* sustain */, - 0.5 /* relative release pos */, .3 /* relative release dur */);
 \<CR>adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
 \<CR>adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */);
 
 
 ab ADSRMOD2K ADSRMOD2 adsrmod; // Freq input modulation with external input and ADSR
-\<CR>adsrmod.adsr_set(0.2 /* relative attack dur */, 0.5 /* relative decay dur */ , 0.001 /* sustain */, - 0.5 /* relative sustain pos */, .3 /* relative sustain dur */);
+\<CR>adsrmod.adsr_set(0.2 /* relative attack dur */, 0.5 /* relative decay dur */ , 0.001 /* sustain */, - 0.5 /* relative release pos */, .3 /* relative release dur */);
 \<CR>adsrmod.padsr.setCurves(1., 2., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
 \<CR>adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 \<CR> => adsrmod.in; // CONNECT this /!\ WARNING Modulator Gain to set as ratio of main frequeny example 0.1
