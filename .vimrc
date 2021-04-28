@@ -920,13 +920,13 @@ ab STMULT_BASE_ZEROK STMULT_BASE_ZERO stmult;
 \<CR>stmult.connect(last $ ST, stmix $ ST); stmult $ ST @=>  last;
 
 ab STADSRK STADSR stadsr;
-\<CR>stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur of Relative release pos (float) */,  10::ms /* release */);
 \<CR>stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
 \<CR>//stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 \<CR>// stadsr.keyOn(); stadsr.keyOff();
 
 ab STPADSRK STPADSR stpadsr;
-\<CR>stpadsr.set(3::ms /* Attack */, 30::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur */,  10::ms /* release */);
+\<CR>stpadsr.set(3::ms /* Attack */, 30::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur of Relative release pos (float)*/,  10::ms /* release */);
 \<CR>stpadsr.setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 \<CR>stpadsr.connect(last $ ST, s.note_info_tx_o); stpadsr $ ST @=>  last;
 \<CR>//stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 

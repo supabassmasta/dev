@@ -4,10 +4,11 @@
     Gain @ ol;
     Gain @ or;
     10::ms => dur d_to_keyoff;
-
     0 => int push_nb; // To avoid keyOff overlap
     0 => int connected; // to avoid double connect when release not over
 
+    0 => int relative_release_mode;
+    0 => float rel_release_pos;
     
     fun void off_delayed( int off_nb){
       d_to_keyoff => now;
@@ -29,7 +30,26 @@
       }
 
     }
+    fun void off_delayed( int off_nb, dur att_dec_sus){
+      att_dec_sus => now;
 
+      if (off_nb == push_nb) {
+        al.keyOff();
+        ar.keyOff();
+        //<<<"ADSR OFF">>>;
+      }
+      //else {
+      //  <<<"ADSR off discarded">>>;
+      //}
+
+      al.releaseTime() => now;
+      if (off_nb == push_nb) {
+        al =< ol;
+        ar =< or;
+        0 => connected; 
+      }
+    }
+    
     fun void push(note_info_t @ ni ) {
       // <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
       if(ni.on) {
@@ -41,7 +61,11 @@
         al.keyOn();
         ar.keyOn();
         1 +=> push_nb;
-        spork ~ off_delayed(push_nb);
+        if ( relative_release_mode  ){
+          spork ~ off_delayed(push_nb,  ni.d + (rel_release_pos*ni.d) );
+        } else {
+          spork ~ off_delayed(push_nb);
+        }
       }
 
 
@@ -70,11 +94,24 @@ public class STADSR extends ST{
 
 
   fun void set(dur a, dur d, float s, dur sd, dur r){
+    0 => nio.relative_release_mode;
+
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
     a + d + sd => dur_to_keyoff => nio.d_to_keyoff;
     r => rel;
   }
+
+  fun void set(dur a, dur d, float s, float relative_r_pos, dur r){
+    1 => nio.relative_release_mode;
+
+    adsrl.set(a, d, s, r);
+    adsrr.set(a, d, s, r);
+    r => rel;
+
+    relative_r_pos => nio.rel_release_pos;
+  }
+
 
   fun void connect(ST @ tone, note_info_tx @ ni_tx) {
 

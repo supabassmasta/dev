@@ -9,6 +9,9 @@
     0 => int connected; // to avoid double connect when release not over
 
     dur rDur;
+
+    0 => int relative_release_mode;
+    0 => float rel_release_pos;
     
     fun void off_delayed( int off_nb){
       d_to_keyoff => now;
@@ -30,7 +33,26 @@
       }
 
     }
+    fun void off_delayed( int off_nb, dur att_dec_sus){
+      att_dec_sus => now;
 
+      if (off_nb == push_nb) {
+        al.keyOff();
+        ar.keyOff();
+        //<<<"ADSR OFF">>>;
+      }
+      //else {
+      //  <<<"ADSR off discarded">>>;
+      //}
+
+      rDur => now;
+      if (off_nb == push_nb) {
+        al =< ol;
+        ar =< or;
+        0 => connected; 
+      }
+    }
+ 
     fun void push(note_info_t @ ni ) {
       // <<<"Note info, idx ", ni.idx, " dur ", ni.d/1::ms, " ms, on ", ni.on>>>;
       if(ni.on) {
@@ -42,8 +64,12 @@
         al.keyOn();
         ar.keyOn();
         1 +=> push_nb;
-        spork ~ off_delayed(push_nb);
-      }
+        if ( relative_release_mode  ){
+          spork ~ off_delayed(push_nb,  ni.d + (rel_release_pos*ni.d) );
+        } else {
+          spork ~ off_delayed(push_nb);
+        }
+       }
 
 
     }
@@ -70,11 +96,23 @@ public class STPADSR extends ST{
   adsrr.setCurves(2.0, 2.0, .5);
   
   fun void set(dur a, dur d, float s, dur sd, dur r){
+    0 => nio.relative_release_mode;
+
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
     a + d + sd => dur_to_keyoff => nio.d_to_keyoff;
     r => nio.rDur;
     r => rel;
+  }
+  fun void set(dur a, dur d, float s, float relative_r_pos, dur r){
+    1 => nio.relative_release_mode;
+
+    adsrl.set(a, d, s, r);
+    adsrr.set(a, d, s, r);
+    r => nio.rDur;
+    r => rel;
+
+    relative_r_pos => nio.rel_release_pos;
   }
   
   fun void setCurves(float a, float d, float r) {
