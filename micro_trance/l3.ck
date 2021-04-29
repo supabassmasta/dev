@@ -558,7 +558,7 @@ stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 7 * 100 /* freq 
 
 
 
-173 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
 SYNC sy;
@@ -584,19 +584,87 @@ if (    0     ){
  
 // INTRO
 
-fun void  MAIN  (){ 
-} 
 
+spork ~   SINGLEWAV("../_SAMPLES/bamboche/full.wav", .3); 
+ 9 * data.tick =>  w.wait;   
+spork ~   SINGLEWAV("../_SAMPLES/bamboche/maisfermetagueule.wav", .3); 
+ 4 * data.tick =>  w.wait;   
 
 while(1) { /********************************************************/
 
- 
 
    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
    spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
    spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
    4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+
+   spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
+   spork ~  BASS        ("*4 __!1!1 __ "); 
+   2 * data.tick =>  w.wait;   
+   spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
+    
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
  
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K_K_   "); 
+   spork ~  TRANCEHH ("*4 +1 __h_   "); 
+   spork ~  BASS        ("*4 __ "); 
+   1 * data.tick =>  w.wait;   
+   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter.wav", .3); 
+   3 * data.tick =>  w.wait;   
+
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+   4 * data.tick =>  w.wait;   
+
+
+   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
+   spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
+   spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
+   spork ~  BASS        ("*4 __!1!1 __ "); 
+   2 * data.tick =>  w.wait;   
+   spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
+    
+
 
 }
 
