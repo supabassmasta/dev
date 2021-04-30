@@ -343,13 +343,16 @@ fun void PADS (string seq) {
   t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.reg(SYNTWAV s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.reg(SYNTWAV s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-  s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
-  s1.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
-  s2.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
-  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  1=> int n;
+  13::ms => dur a;
+  200::ms => dur r;
+  s0.config(.3 /* G */, a /* ATTACK */, r /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */); 
+  s1.config(.3 /* G */, a /* ATTACK */, r /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */); 
+  s2.config(.3 /* G */, a /* ATTACK */, r /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */); 
+  t.ion();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .35 * data.master_gain => t.gain;
+  .15 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -362,8 +365,12 @@ fun void PADS (string seq) {
 //STGVERB stgverb;
 //stgverb.connect(last $ ST, .05 /* mix */, 12 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
 
-  STDUCK duck;
-  duck.connect(last $ ST);      duck $ ST @=>  last; 
+//  STDUCK duck;
+//  duck.connect(last $ ST);      duck $ ST @=>  last; 
+
+STMIX stmix;
+stmix.send(last, mixer);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
@@ -585,10 +592,10 @@ if (    0     ){
 // INTRO
 
 
-spork ~   SINGLEWAV("../_SAMPLES/bamboche/full.wav", .3); 
- 9 * data.tick =>  w.wait;   
-spork ~   SINGLEWAV("../_SAMPLES/bamboche/maisfermetagueule.wav", .3); 
- 4 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV("../_SAMPLES/bamboche/full.wav", .3); 
+   9 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV("../_SAMPLES/bamboche/maisfermetagueule.wav", .3); 
+   4 * data.tick =>  w.wait;   
 
 while(1) { /********************************************************/
 
@@ -596,74 +603,76 @@ while(1) { /********************************************************/
    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
    spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
    spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+//   spork ~   PADS (" *4 __1|3|5_ __1|3|5_ ____ __:21|3|5"); 
+
    4 * data.tick =>  w.wait;   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
 
 
-   spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
-   spork ~  BASS        ("*4 __!1!1 __ "); 
-   2 * data.tick =>  w.wait;   
-   spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
-    
+  spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
+  spork ~  BASS        ("*4 __!1!1 __ "); 
+  2 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
+   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
-
- 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
-
-   spork ~  TRANCEBREAK ("*4 K_K_   "); 
-   spork ~  TRANCEHH ("*4 +1 __h_   "); 
-   spork ~  BASS        ("*4 __ "); 
-   1 * data.tick =>  w.wait;   
-   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter.wav", .3); 
-   3 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
 
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
-
-   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
-   spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
-   4 * data.tick =>  w.wait;   
+  spork ~  TRANCEBREAK ("*4 K_K_   "); 
+  spork ~  TRANCEHH ("*4 +1 __h_   "); 
+  spork ~  BASS        ("*4 __ "); 
+  1 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter.wav", .3); 
+  3 * data.tick =>  w.wait;   
 
 
-   spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
-   spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
-   spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
-   spork ~  BASS        ("*4 __!1!1 __ "); 
-   2 * data.tick =>  w.wait;   
-   spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
-    
+ spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
+
+  spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh __h_ shhh "); 
+  spork ~  BASS        ("*4 __!1!1 __!1!1 __!1!1 __!1!1"); 
+  4 * data.tick =>  w.wait;   
+
+
+  spork ~   SINGLEWAV("../_SAMPLES/CouvreFeu/RienAPeter_reduced.wav", .3); 
+  spork ~  TRANCEBREAK ("*4 K_K_ K_KKK  "); 
+  spork ~  TRANCEHH ("*4 +1 __h_ s_hh  "); 
+  spork ~  BASS        ("*4 __!1!1 __ "); 
+  2 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .3); 
+   
 
 
 }
