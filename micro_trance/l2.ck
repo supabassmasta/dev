@@ -8,7 +8,7 @@ fun void TRANCEBREAK(string seq) {
 // s3.wav["k"] => s.wav["K"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .75 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
   .7 => s.wav_o["K"].wav0.rate;
@@ -68,7 +68,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .56 * data.master_gain => t.gain;
+  .71 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   t.adsr[0].set(4::ms, 19::ms, .8, 87::ms);
@@ -76,7 +76,7 @@ fun void BASS (string seq) {
   t.go();   t $ ST @=> ST @ last; 
 
   STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 323.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 226.1 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -507,6 +507,7 @@ fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){
 
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
+.65 => stmix.gain;
 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .4);  ech $ ST @=>  last; 
@@ -564,9 +565,9 @@ while(1) { /********************************************************/
    spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
    4 * data.tick =>  w.wait;   
  
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K__K "); 
    spork ~  TRANCEHH ("*4 +3 hhhh shhh hhhh shhh "); 
-   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!B!7!1"); 
    spork ~ DIST ("*8 8_1_ f___ 1_1_ 1_1_   __f_ 8_18 1___ 8_8_" );
    4 * data.tick =>  w.wait;   
  
@@ -578,9 +579,9 @@ while(1) { /********************************************************/
  
    4 * data.tick =>  w.wait;   
  
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K_K_ "); 
    spork ~  TRANCEHH ("*4 +3 hhhh shhh hhhh shhh "); 
-   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!8!5!1"); 
    spork ~ DIST ("*8 1_1_ 1___ 8_1_ 1_1_   __f_ 8_18 1___ 8_8_" );
    4 * data.tick =>  w.wait;   
  
@@ -591,15 +592,15 @@ while(1) { /********************************************************/
    spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
  
    4 * data.tick =>  w.wait;   
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K__ K _K_K "); 
    spork ~  TRANCEHH ("*4 +3 hhhh shhh hhhh shhh "); 
-   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!B!5!8"); 
    spork ~ DIST ("*8 f_1_ 1___ f_1_ 1_1_   __f_ 8_18 1___ 8_8_" );
    4 * data.tick =>  w.wait;   
  
    spork ~   LEAD ("}c *8 1155 3333 1111 5151 5_51 0_11 5_51 0_11 "); 
    spork ~ DIST ("*8 f_1_ 1___ f_1_ 1_1_   __f_ 8_18 1___ 8_8_" );
-   spork ~  TRANCEBREAK ("*4 ____ ____ K___ K___ "); 
+   spork ~  TRANCEBREAK ("*4 K___ ____ K___ K___ "); 
  
    4 * data.tick =>  w.wait;   
    spork ~  TRANCEBREAK ("*4 K___ K_K_ KKKK *2 KKKK KKKK "); 
