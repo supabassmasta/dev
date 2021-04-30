@@ -591,6 +591,21 @@ public class SEQ extends ST{
     }
   }
 
+  // Get out of a single wav and disconnect it from main SEQ out
+  fun ST out(string s) {
+    new ST @=> ST @ o;
+    if (wav_o[s] != NULL){
+      // Disconnect from ST main
+      wav_o[s].pan_wav0.left =< left_out;
+      wav_o[s].pan_wav0.right =< right_out;
+      
+      // disconnect to dac if still, connect to out
+      wav_o[s].left() => o.outl;
+      wav_o[s].right() => o.outr;
+    }
+
+    return o;
+  }
 
 }
 
