@@ -7,6 +7,8 @@
     0 => int push_nb; // To avoid keyOff overlap
     0 => int connected; // to avoid double connect when release not over
 
+    dur rDur;
+
     0 => int relative_release_mode;
     0 => float rel_release_pos;
     
@@ -22,7 +24,7 @@
       //  <<<"ADSR off discarded">>>;
       //}
 
-      al.releaseTime() => now;
+      rDur => now;
       if (off_nb == push_nb) {
         al =< ol;
         ar =< or;
@@ -42,7 +44,7 @@
       //  <<<"ADSR off discarded">>>;
       //}
 
-      al.releaseTime() => now;
+      rDur => now;
       if (off_nb == push_nb) {
         al =< ol;
         ar =< or;
@@ -99,6 +101,7 @@ public class STADSR extends ST{
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
     a + d + sd => dur_to_keyoff => nio.d_to_keyoff;
+    r => nio.rDur;
     r => rel;
   }
 
@@ -107,6 +110,7 @@ public class STADSR extends ST{
 
     adsrl.set(a, d, s, r);
     adsrr.set(a, d, s, r);
+    r => nio.rDur;
     r => rel;
 
     relative_r_pos => nio.rel_release_pos;
