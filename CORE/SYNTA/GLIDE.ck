@@ -71,7 +71,7 @@ msg.data2 => last_note;
 		}
 
 		fun void end(int note) {
-       adsr.releaseTime() => now;
+       release => now;
 				if (note == last_note)
 					0 => last_note;
 		}

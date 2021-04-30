@@ -2,20 +2,21 @@
 		dur sync;
 		ADSR @ al;
 		ADSR @ ar;
+    10::ms => dur rDur;
     fun void kill_me () {
 			SYNC sy;
 
 			if (sync == 0::ms) {
 				<<<"END LOOP WAV NO SYNC">>>; 
 				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
+				rDur => now;
 				<<<"REAL END LOOP WAV">>>; 
 			}
 			else {
 				<<<"END LOOP WAV SYNC">>>; 
-        sy.sync(sync ,-1* al.releaseTime());
+        sy.sync(sync ,-1* rDur);
 				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
+				rDur => now;
 				<<<"REAL END LOOP WAV">>>; 
 			}
     }
@@ -27,6 +28,7 @@ public class LOOP_DOUBLE_WAV extends ST {
 	SYNC sy;
 	Shred start_id;
   0::ms => dur end_sync;
+  10::ms => dur rDur;
 
   1. => buf.gain;
   1. => buf2.gain;
@@ -37,12 +39,6 @@ public class LOOP_DOUBLE_WAV extends ST {
 	buf2.chan(0) =>  al;
 	buf2.chan(1)=>  ar;
 
-	fun void AttackRelease(dur a, dur r){
-		al.set(a, 0::ms, 1., r);
-		ar.set(a, 0::ms, 1., r);
-	}
-	
-	AttackRelease(0::ms, 0::ms);
 
 	fun void read(string in) {
 		in => buf.read;
@@ -56,6 +52,14 @@ public class LOOP_DOUBLE_WAV extends ST {
 	al @=> the_end.al;
 	ar @=> the_end.ar;
 
+	fun void AttackRelease(dur a, dur r){
+		al.set(a, 0::ms, 1., r);
+		ar.set(a, 0::ms, 1., r);
+    r => the_end.rDur;
+    r => rDur;
+	}
+	
+	AttackRelease(0::ms, 0::ms);
 
 
 	fun void _start(dur synchro,   dur endsync, dur loop){

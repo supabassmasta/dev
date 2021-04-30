@@ -2,20 +2,21 @@
 		dur sync;
 		ADSR @ al;
 		ADSR @ ar;
+    10::ms => dur rDur;
     fun void kill_me () {
 			SYNC sy;
 
 			if (sync == 0::ms) {
 				<<<"END LONG WAV NO SYNC">>>; 
 				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
+				rDur => now;
 				<<<"REAL END LONG WAV">>>; 
 			}
 			else {
 				<<<"END LONG WAV SYNC">>>; 
-        sy.sync(sync ,-1* al.releaseTime());
+        sy.sync(sync ,-1* rDur);
 				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
+				rDur => now;
 				<<<"REAL END LONG WAV">>>; 
 			}
     }
@@ -27,18 +28,13 @@ public class LONG_WAV extends ST {
   0 => int update_ref_time; 
 	Shred start_id;
   0::ms => dur end_sync;
+  10::ms => dur rDur;
 
   1. => buf.gain;
 
 	buf.chan(0) => ADSR al => outl;
 	buf.chan(1)=> ADSR ar => outr;
 
-	fun void AttackRelease(dur a, dur r){
-		al.set(a, 0::ms, 1., r);
-		ar.set(a, 0::ms, 1., r);
-	}
-	
-	AttackRelease(0::ms, 0::ms);
 
 	fun void read(string in) {
 		in => buf.read;
@@ -49,6 +45,15 @@ public class LONG_WAV extends ST {
 	end_sync => the_end.sync;
 	al @=> the_end.al;
 	ar @=> the_end.ar;
+
+	fun void AttackRelease(dur a, dur r){
+		al.set(a, 0::ms, 1., r);
+		ar.set(a, 0::ms, 1., r);
+    r => the_end.rDur;
+    r => rDur;
+	}
+	
+	AttackRelease(0::ms, 0::ms);
 
 
 
@@ -84,7 +89,7 @@ public class LONG_WAV extends ST {
 
  fun void _stop () {
 				al.keyOff(); ar.keyOff();  
-				al.releaseTime() => now;
+				rDur => now;
      		buf.samples() => buf.pos;
 }
  fun void stop () {
