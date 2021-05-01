@@ -10,7 +10,7 @@
 // SACLE 1 2 3b 4# 5 6 7
 
 // Start synchro
-HW.launchpad.virtual_key_on(7);
+//HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
 //HW.ledstrip.open();

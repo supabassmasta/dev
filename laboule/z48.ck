@@ -148,7 +148,7 @@ sy.sync(16 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
-1 *data.tick => w.fixed_end_dur;
+16 *data.tick => w.fixed_end_dur;
 //4 * data.tick =>  w.wait; 
 
 
@@ -161,12 +161,12 @@ while(1) {
 //16 * data.tick =>  w.wait; 
 
 //spork ~   SINGLEWAV("../_SAMPLES/la boule/la boule musicboxF.wav", .05); 
-spork ~ KICK("*4 m___ ____ ____  ____ m___ ____ ____  ___m  ____ ____");
+spork ~ KICK("*4 m___ ____ ____  ____ m___ ____ ____  ___m  ____ ____ ____ ____");
 spork ~   SNR ("*4 ____ ____ u___  ____ ____ ____ u___  ____ "); 
 spork ~   RIDE ("*4 z__x z___ z__x  _z__ z__x z___ z__x  _z_x ____ ____"); 
 
 8 * data.tick =>  w.wait; 
-spork ~ KICK("*4 m___ ____ ____  ____ m___ ____ ___m  ___m ____ ____");
+spork ~ KICK("*4 m___ ____ ____  ____ m___ ____ ___m  ___m ____ ____ ____ ____");
 spork ~   SNR ("*4____ _aa_ u___  ____ ___b _b__ u___  __q_  "); 
 spork ~   RIDE ("*4 z__x z___ z__x  _z__ z__x z___ z__x  _z_x____ ____ "); 
 

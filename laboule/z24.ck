@@ -1,5 +1,5 @@
 
-17 => int mixer;
+14 => int mixer;
 
 fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){ 
   3::ms => dur attackRelease;
@@ -12,13 +12,9 @@ fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){
     //stmix.receive(11); stmix $ ST @=> ST @ last; 
     
    Step stp0 => Envelope e0 =>  SERUM1 s0 => st.mono_in;
-   s0.add(27 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
-   s0.add(27 /* synt nb */ , 3 /* rank */ , 0.4 /* GAIN */, 1.001 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
+   s0.add(0 /* synt nb */ , 0 /* rank */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
+   s0.add(46 /* synt nb */ , 3 /* rank */ , 0.4 /* GAIN */, 1.001 /* in freq gain */,  2 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
 
-  // Mod
-  SinOsc sin0 =>  e0;
-  2.0 => sin0.freq;
-  15.0 => sin0.gain;
 
    fstart => e0.value;
    fstop => e0.target;
@@ -57,11 +53,10 @@ SYNC sy;
 sy.sync(16 * data.tick , -4.0*data.tick /* offset */); 
 LAUNCHPAD_VIRTUAL.off.set(48); // Trip hop
 
-spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 4* data.tick /* dur */,  .09 /* gain */); 
-  3.5 * data.tick => now;
+spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 4* data.tick /* dur */,  .11 /* gain */); 
+  3 * data.tick => now;
 
-LAUNCHPAD_VIRTUAL.on.set(86); // TRIBAL
-LAUNCHPAD_VIRTUAL.on.set(61); // Lounge Beat
+LAUNCHPAD_VIRTUAL.on.set(71); // TRIBAL
 
 
 
