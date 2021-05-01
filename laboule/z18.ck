@@ -30,8 +30,15 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.adsr[0].set(2::ms, 7::ms, .1, 400::ms);
+//t.adsr[0].set(2::ms, 7::ms, .1, 400::ms);
+t.adsr[0].set(1::ms, 7::ms, 1, 1::ms);
 t.go(); t $ ST @=> ST  last;
+
+STADSR stadsr;
+stadsr.set(3::ms /* Attack */, 7::ms /* Decay */, 1 /* Sustain */, .125 * data.tick /* Sustain dur */,  40::ms /* release */);
+stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
+//stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+// stadsr.keyOn(); stadsr.keyOff(); 
 
 STGVERB stgverb;
 stgverb.connect(last $ ST, .1/* mix */, 4 * 10. /* room size */, 1::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
