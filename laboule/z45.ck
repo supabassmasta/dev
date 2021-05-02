@@ -41,7 +41,7 @@ STAUTOPAN autopan;
 autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 6 / 4 , .6);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 6 / 4 , .3);  ech $ ST @=>  last; 
 
 
 [6,6, 14, 15] @=> int a[];
