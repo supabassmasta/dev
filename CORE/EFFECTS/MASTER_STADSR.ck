@@ -6,14 +6,16 @@ public class MASTER_STADSR {
     
     if (list.size() <= group) {
       group + 1 => list.size;
+      new STADSR [0] @=> list[group];
     }
     <<<"list.size()", list.size()>>>;
     <<<"list[0].size()", list[0].size()>>>;
     list[group] << in;
+    <<<"list[0].size()", list[0].size()>>>;
   }
   
   fun static void keyOn(int g) {
-    if (list.size() <= g) {
+    if (list.size() > g) {
       for (0 => int i; i < list[g].size()  ; i++) {
         list[g][i].keyOn();
       }
@@ -21,7 +23,7 @@ public class MASTER_STADSR {
   }
 
   fun static void keyOff(int g) {
-    if (list.size() <= g) {
+    if (list.size() > g) {
       for (0 => int i; i < list[g].size()  ; i++) {
         list[g][i].keyOff();
       }
