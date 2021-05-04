@@ -28,6 +28,13 @@ t.go();   t $ ST @=> ST @ last;
   
   MASTER_STADSR.reg(stadsr, 0);
 
+//   class END extends end {
+//     STADSR @ sta;
+//     fun void kill_me () {
+//     MASTER_STADSR.unreg(sta, 0);
+//   }}; END the_end; me.id() => the_end.shred_id; killer.reg(the_end);  
+//   stadsr @=> the_end.sta;
+
 while(1) {
        100::ms => now;
 }
