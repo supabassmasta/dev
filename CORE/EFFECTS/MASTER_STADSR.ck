@@ -1,26 +1,38 @@
 class END_MA extends end {
   STADSR @ sta;
   fun void kill_me () {
-  <<<"REMOVE STADSR">>>;
+//  <<<"REMOVE STADSR">>>;
 
   MASTER_STADSR.unreg(sta, 0);
 }}; 
+
 public class MASTER_STADSR {
   static STADSR @ list[0][0];
+  static int   state[];
 
   fun static void reg (STADSR @ in, int group) {  
-    <<<"list.size()", list.size()>>>;
+//    <<<"list.size()", list.size()>>>;
     
     if (list.size() <= group) {
-      group + 1 => list.size;
+      group + 1 => list.size ;
       new STADSR [0] @=> list[group];
+
+      group + 1  => state.size;
+      0 => state[state.size() - 1];
     }
-    <<<"list.size()", list.size()>>>;
-    <<<"list[0].size()", list[0].size()>>>;
+//    <<<"list.size()", list.size()>>>;
+//    <<<"list[0].size()", list[0].size()>>>;
     list[group] << in;
-    <<<"list[0].size()", list[0].size()>>>;
+//    <<<"list[0].size()", list[0].size()>>>;
     END_MA the_end; me.id() => the_end.shred_id; killer.reg(the_end);  
     in @=> the_end.sta;
+    
+    if ( state[group] ){
+       in.keyOn(); 
+    }
+    else {
+       in.keyOff(); 
+    }
   }
   
   fun static void unreg (STADSR @ in, int g) {  
@@ -33,7 +45,7 @@ public class MASTER_STADSR {
           }
         }
         if ( idx != -1  ){
-          <<<"found STADSR">>>;
+//          <<<"found STADSR">>>;
           for (idx => int i; i < list[g].size() - 1     ; i++) {
             list[g][i+1] @=> list[g][i];
           }
@@ -50,6 +62,7 @@ public class MASTER_STADSR {
       for (0 => int i; i < list[g].size()  ; i++) {
         list[g][i].keyOn();
       }
+      1 => state[g];
     }
   }
 
@@ -58,13 +71,14 @@ public class MASTER_STADSR {
       for (0 => int i; i < list[g].size()  ; i++) {
         list[g][i].keyOff();
       }
+      0 => state[g];
     }
   }
 
 }
 
  STADSR  list[0][0] @=> MASTER_STADSR.list;
-
+int dummy_state[0] @=> MASTER_STADSR.state;
  while(1) {
         1::week => now;
  }
