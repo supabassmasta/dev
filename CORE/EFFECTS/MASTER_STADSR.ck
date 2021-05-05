@@ -12,7 +12,7 @@ public class MASTER_STADSR {
   static int   state[];
 
   fun static void reg (STADSR @ in, int group) {  
-//    <<<"list.size()", list.size()>>>;
+    //    <<<"list.size()", list.size()>>>;
     
     if (list.size() <= group) {
       // group doesn't exist
@@ -20,7 +20,7 @@ public class MASTER_STADSR {
       // increase list size till group number
       group + 1 => list.size ;
       // Allocate array for all new groups created
-      for (old_size => int i; i <  list.size() - 1; i++) {
+      for (old_size => int i; i <  list.size(); i++) {
         new STADSR [0] @=> list[i];
       }
     }
@@ -29,14 +29,14 @@ public class MASTER_STADSR {
       state.size() => int old_size;
       group + 1  => state.size;
       // initialize state for all new states created
-      for (old_size => int i; i <  state.size() - 1; i++) {
+      for (old_size => int i; i <  state.size(); i++) {
         0 => state[i];
       }
     }
-//    <<<"list.size()", list.size()>>>;
-//    <<<"list[0].size()", list[0].size()>>>;
+    //    <<<"list.size()", list.size()>>>;
+    //    <<<"list[0].size()", list[0].size()>>>;
     list[group] << in;
-//    <<<"list[0].size()", list[0].size()>>>;
+    //    <<<"list[0].size()", list[0].size()>>>;
     END_MA the_end; me.id() => the_end.shred_id; killer.reg(the_end);  
     in @=> the_end.sta;
     group => the_end.g;
@@ -59,7 +59,7 @@ public class MASTER_STADSR {
           }
         }
         if ( idx != -1  ){
-//          <<<"found STADSR">>>;
+          //   <<<"found STADSR">>>;
           for (idx => int i; i < list[g].size() - 1     ; i++) {
             list[g][i+1] @=> list[g][i];
           }
@@ -78,7 +78,7 @@ public class MASTER_STADSR {
       // increase list size till group number
       g + 1  => state.size;
       // initialize state for all new states created, current gropu initialized bellow
-      for (old_size => int i; i <  state.size() - 1; i++) {
+      for (old_size => int i; i <  state.size(); i++) {
         0 => state[i];
       }
     }
@@ -98,7 +98,7 @@ public class MASTER_STADSR {
       // increase list size till group number
       g + 1  => state.size;
       // initialize state for all new states created
-      for (old_size => int i; i <  state.size() - 1; i++) {
+      for (old_size => int i; i <  state.size(); i++) {
         0 => state[i];
       }
     }
