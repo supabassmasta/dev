@@ -1,11 +1,20 @@
 public class WAIT {
   class END extends end { 
     0 => int trigged;
+    0 => int sync_mode;
     1::ms => dur fixed_dur;    
+    1::ms => dur sync_dur;    
+
     fun void kill_me () {
       <<<"Wait THE END">>>;  
       1 => trigged;
-      fixed_dur => now;  
+      if ( sync_mode  ){
+         SYNC sy;
+         sy.sync(sync_dur);
+      }
+      else {
+        fixed_dur => now;  
+      }
       <<<"Wait THE real END">>>;   
     }
   }
@@ -15,6 +24,11 @@ public class WAIT {
 
   fun void fixed_end_dur(dur d){
     d => the_end.fixed_dur;
+  }
+
+  fun void sync_end_dur(dur d){
+    1 => the_end.sync_mode;
+    d => the_end.sync_dur;
   }
 
   fun void wait(dur d) {

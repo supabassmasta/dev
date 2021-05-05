@@ -3,20 +3,33 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+55 => data.ref_note;
+
+SYNC sy;
+sy.sync(8 * data.tick);
+//sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
+
+WAIT w;
+//8 *data.tick => w.fixed_end_dur;
+8*data.tick => w.sync_end_dur;
+
+//2 * data.tick =>  w.wait; 
+
 // OUTPUT
 
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
 
-SYNC sy;
-//sy.sync(4 * data.tick);
-sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
+// LOOP
 
-WAIT w;
-8 *data.tick => w.fixed_end_dur;
-//4 * data.tick =>  w.wait; 
+/********************************************************/
+if (    0     ){
+}/***********************   MAGIC CURSOR *********************/
+while(1) { /********************************************************/
 
-
+  8 * data.tick =>  w.wait; 
+} 
 
 // VIRTUAL LAUNCHER
 LAUNCHPAD_VIRTUAL.on.set(0);

@@ -1478,6 +1478,8 @@ ab polyserumK class synt0 extends SYNT{
 
 ab WAITK WAIT w;
 \<CR>8 *data.tick => w.fixed_end_dur;
+\<CR>//4*data.tick => w.sync_end_dur;
+\<CR>
 \<CR>//2 * data.tick =>  w.wait;
 
 
