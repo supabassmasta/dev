@@ -40,6 +40,7 @@ public class MASTER_STADSR {
     END_MA the_end; me.id() => the_end.shred_id; killer.reg(the_end);  
     in @=> the_end.sta;
     group => the_end.g;
+    1 => the_end.no_remove;
 
     if ( state[group] ){
        in.keyOn(); 
