@@ -17,7 +17,7 @@ s.go();     s $ ST @=> ST @ last;
 //STADSRC stadsrc;
 //stadsrc.connect(last, HW.launchpad.keys[16*6 + 6] /* pad 1:1 */ /* controler */, 10::ms /* attack */, 10::ms /* release */, 1 /* default_on */, 0  /* toggle */); stadsrc $ ST @=> last; 
 
-STADSR stadsr;
+STADSR stadsr;1 => stadsr.disconnect_mode_off;
 stadsr.set(10::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 100::ms /* Sustain dur of Relative release pos (float) */,  10::ms /* release */);
 stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 
