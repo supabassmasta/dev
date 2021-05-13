@@ -280,7 +280,8 @@ fun void SYNTGLIDE (string seq, dur gldur, float v) {
   TONE t;
   t.reg(syntGlide s0);  //data.tick * 8 => t.max; 
   gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
   v * data.master_gain => t.gain;
