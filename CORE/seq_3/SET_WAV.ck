@@ -932,5 +932,19 @@ public class SET_WAV {
      dir + "../57_Perc_SP_88_06.wav" => s.wav["Z"];
 
      }
-}
+  fun  static  void TRANCE_KICK ( SEQ @ s) {
+    ROOTPATH.str.my_string + "_SAMPLES/KICKS/Inspektor_Gadjet.SuperKicks-V1/8 - One Shot Kicks/" => string dir;
 
+    dir + "InspektorGadjet-SuperKicks-V1 (1).wav" => s.wav["k"];
+    dir + "InspektorGadjet-SuperKicks-V1 (2).wav" => s.wav["l"];
+    dir + "InspektorGadjet-SuperKicks-V1 (3).wav" => s.wav["m"];
+    dir + "InspektorGadjet-SuperKicks-V1 (4).wav" => s.wav["n"];
+    dir + "InspektorGadjet-SuperKicks-V1 (5).wav" => s.wav["K"];
+    dir + "InspektorGadjet-SuperKicks-V1 (6).wav" => s.wav["L"];
+    dir + "InspektorGadjet-SuperKicks-V1 (7).wav" => s.wav["M"];
+    dir + "InspektorGadjet-SuperKicks-V1 (8).wav" => s.wav["N"];
+
+  }
+
+
+}
