@@ -191,7 +191,7 @@ public class TONE extends ST {
 //  .2 => raw_out.gain;
 
   fun void gain(float in) {
-    in => out.gain => raw_out.gain;
+    in => out.gain => raw_out.gain => outl.gain => outr.gain;
   }
 
   data.ref_note => int base_note;
