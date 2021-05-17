@@ -297,7 +297,7 @@ fun void  ARP1  (){
     B031 5275 B031 5275 B031 5275    B031 5275  
 
     " => t.seq;
-    .12 * data.master_gain => t.gain;
+    .24 * data.master_gain => t.gain;
     //t.sync(4*data.tick);// t.element_sync();// 
     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -311,7 +311,7 @@ fun void  ARP1  (){
     1::samp => now; // Let duration computed by go() sub sporking
     
     STAUTOPAN autopan;
-    autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+    autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
     STECHO ech;
     ech.connect(last $ ST , data.tick * 1 / 4 , .1);  ech $ ST @=>  last; 
@@ -383,8 +383,8 @@ fun void  ARP2  (){
 
     1::samp => now; // Let duration computed by go() sub sporking
     
-//    STAUTOPAN autopan;
-//    autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+    STAUTOPAN autopan;
+    autopan.connect(last $ ST, .5 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.45 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 //    STECHO ech;
 //    ech.connect(last $ ST , data.tick * 1 / 4 , .1);  ech $ ST @=>  last; 
@@ -457,8 +457,8 @@ fun void  ARP3  (){
 
     1::samp => now; // Let duration computed by go() sub sporking
     
-//    STAUTOPAN autopan;
-//    autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+    STAUTOPAN autopan;
+    autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.15 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 //    STECHO ech;
 //    ech.connect(last $ ST , data.tick * 1 / 4 , .1);  ech $ ST @=>  last; 
@@ -563,7 +563,7 @@ fun void CHORD1  (){
      //stmix.receive(11); stmix $ ST @=> ST @ last; 
 
    STGAIN stgain;
-   stgain.connect(s $ ST , 5.5 /* static gain */  );       stgain $ ST @=>  last; 
+   stgain.connect(s $ ST , 5.0 /* static gain */  );       stgain $ ST @=>  last; 
    
      1::samp => now; // let seq() be sporked to compute length
      while(rept) {
@@ -677,7 +677,7 @@ STGAIN stgain;
 stgain.connect(last $ ST , 2. /* static gain */  );       stgain $ ST @=>  last; 
 
 STGVERB stgverb;
-stgverb.connect(last $ ST, .05 /* mix */, 4 * 10. /* room size */, 5::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+stgverb.connect(last $ ST, .10 /* mix */, 4 * 10. /* room size */, 5::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
 
 
 STMIX stmix2;
@@ -700,18 +700,70 @@ stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last;
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-   spork ~   NIAP1 (); 
-  spork ~  TRANCE (":2 llll", 8); 
-   spork ~   ARP3 (); 
-   spork ~   ARP2 (); 
-   spork ~   CHORD1 (); 
-   spork ~   AMB4 (); 
-   spork ~   AMB3 (); 
-   spork ~   ARP1 (); 
-   spork ~   AMB2 (); 
-   spork ~   AMB1 (); 
+
+
+  ////////////////
+
+  spork ~   AMB3 (); 
+  spork ~   AMB1 (); 
+  spork ~   CHORD1 (); 
 
   64 * data.tick =>  w.wait; 
+
+  spork ~   AMB3 (); 
+  spork ~   AMB1 (); 
+  spork ~   CHORD1 (); 
+  spork ~   ARP2 (); 
+
+  64 * data.tick =>  w.wait; 
+
+  spork ~  TRANCE (":2 llll", 8); 
+  spork ~   AMB3 (); 
+  spork ~   AMB1 (); 
+  spork ~   CHORD1 (); 
+  spork ~   ARP2 (); 
+
+  64 * data.tick =>  w.wait; 
+
+  spork ~  TRANCE (":2 llll", 8); 
+  spork ~   AMB3 (); 
+  spork ~   AMB4 (); 
+  spork ~   AMB1 (); 
+  spork ~   CHORD1 (); 
+  spork ~   ARP2 (); 
+
+  64 * data.tick =>  w.wait; 
+
+  spork ~   AMB3 (); 
+  spork ~   AMB4 (); 
+  spork ~   AMB2 (); 
+  spork ~   AMB1 (); 
+  spork ~   NIAP1 (); 
+  spork ~   CHORD1 (); 
+  spork ~   ARP1 (); 
+  spork ~   ARP2 (); 
+
+  64 * data.tick =>  w.wait; 
+
+
+  /////////
+
+  while(1) {
+
+    spork ~   NIAP1 (); 
+    spork ~  TRANCE (":2 llll", 8); 
+    spork ~   ARP3 (); 
+    spork ~   ARP2 (); 
+    spork ~   CHORD1 (); 
+    spork ~   AMB4 (); 
+    spork ~   AMB3 (); 
+    spork ~   ARP1 (); 
+    spork ~   AMB2 (); 
+    spork ~   AMB1 (); 
+
+    64 * data.tick =>  w.wait; 
+  }
+
 } 
 
 
