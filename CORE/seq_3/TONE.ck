@@ -185,13 +185,13 @@ public class TONE extends ST {
 
   // Output for all synt and adsr
   Gain out  => Pan2 pan ;
-  pan.right => outr ; // got to dac via ST class
+  pan.right => outr ; // go to dac via ST class
   pan.left => outl ;
   Gain raw_out;
 //  .2 => raw_out.gain;
 
   fun void gain(float in) {
-    in => out.gain => raw_out.gain => outl.gain => outr.gain;
+    in => raw_out.gain => outl.gain => outr.gain;
   }
 
   data.ref_note => int base_note;
