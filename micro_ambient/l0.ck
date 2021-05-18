@@ -35,7 +35,7 @@ fun void  AMB1  (){
     TONE t;
     t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
     s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     ":4 111_666_444_555_" => t.seq;
     .4 * data.master_gain => t.gain;
@@ -90,7 +90,7 @@ fun void  AMB2  (){
     t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
     s0.config(.5 /* G */, 50::ms /* ATTACK */, 2::second /* RELEASE */, 1 /* FILE */, 100::ms /* UPDATE */); 
     s0.config(.5 /* G */, 50::ms /* ATTACK */, 2::second /* RELEASE */, 1 /* FILE */, 100::ms /* UPDATE */); 
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     ":4 }c 1___6___4___5___" => t.seq;
     .2 * data.master_gain => t.gain;
@@ -145,7 +145,7 @@ fun void  AMB3  (){
     TONE t;
     t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
     s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 4 /* FILE */, 100::ms /* UPDATE */); 
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     ":4 {c{c  1///1_6///6_4///4_5///5_" => t.seq;
     .3 * data.master_gain => t.gain;
@@ -207,7 +207,7 @@ fun void  AMB4  (){
     TONE t;
     t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
     s0.config(.5 /* G */, 20::ms /* ATTACK */, 1600::ms /* RELEASE */, 4 /* FILE */, 100::ms /* UPDATE */); 
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     ":2  {c 1_1_1_1_ 6_6_6_6_  4_4_4_4_ 5_5_5_5_ " => t.seq;
     .3 * data.master_gain => t.gain;
@@ -281,7 +281,7 @@ fun void  ARP1  (){
     TONE t;
     t.reg(arp1 s0);  //data.tick * 8 => t.max; //
     20::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     " }c *4
     8532 1BA0  8532 1BA0  8532 1BA0  8532 1BA0  
@@ -297,7 +297,7 @@ fun void  ARP1  (){
     B031 5275 B031 5275 B031 5275    B031 5275  
 
     " => t.seq;
-    .24 * data.master_gain => t.gain;
+    .11 * data.master_gain => t.gain;
     //t.sync(4*data.tick);// t.element_sync();// 
     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -354,7 +354,7 @@ fun void  ARP2  (){
     TONE t;
     t.reg(PLOC0 s0);  //data.tick * 8 => t.max; //
 //    20::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     " }c *4
     8532 1BA0  8532 1BA0  8532 1BA0  8532 1BA0  
@@ -370,7 +370,7 @@ fun void  ARP2  (){
     B031 5275 B031 5275 B031 5275    B031 5275  
 
     " => t.seq;
-    .25 * data.master_gain => t.gain;
+    .13 * data.master_gain => t.gain;
     //t.sync(4*data.tick);// t.element_sync();// 
     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -428,7 +428,7 @@ fun void  ARP3  (){
     TONE t;
     t.reg(PLOC1 s0);  //data.tick * 8 => t.max; //
 //    20::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     " }c}c *4
     1BA0 8532 1BA0  8532 1BA0  8532 1BA0  8532   
@@ -444,7 +444,7 @@ fun void  ARP3  (){
     5275 B031 5275 B031 5275 B031 5275    B031   
 
     " => t.seq;
-    .24 * data.master_gain => t.gain;
+    .10 * data.master_gain => t.gain;
     //t.sync(4*data.tick);// t.element_sync();// 
     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -505,7 +505,7 @@ fun void CHORD1  (){
     t.reg(SYNTWAV s1);  
     s1.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
 
-    t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+    t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     ":4 1|5_1|31|26|26|8__4|24|64|8_5|95|75|1_" => t.seq;
     .4 * data.master_gain => t.gain;
@@ -614,7 +614,7 @@ fun void  NIAP1  (){
     t.reg(synt0 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
     t.reg(synt0 s3);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
     t.reg(synt0 s4);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();
-    t.dor();// t.aeo(); // t.phr();// t.loc();
+    t.aeo();// t.aeo(); // t.phr();// t.loc();
     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
     "}c
     _1|3|5|8 ____ ____ __2|4_
@@ -622,7 +622,7 @@ fun void  NIAP1  (){
     *4 ____ 4|6|1|2_ _4|6|1|2:4 ____ ____ __7|2_
     _B|2|5|1 ____ ____ ____
     " => t.seq;
-    0.7 => t.gain;
+    0.4 => t.gain;
     //t.sync(4*data.tick);// t.element_sync();// 
     t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
