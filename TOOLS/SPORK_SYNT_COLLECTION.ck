@@ -486,7 +486,7 @@ fun void  AMB1  (){
     STMIX stmix;
     stmix.send(last, mixer);
 
-    .5 => s.gain;
+    1. * data.master_gain  => s.gain;
 
     name => s.read;
 
@@ -543,7 +543,7 @@ fun void  AMB1  (int idx, string seq, float playback_gain){
     STMIX stmix;
     stmix.send(last, mixer);
 
-    playback_gain => s.gain;
+    playback_gain * data.master_gain  => s.gain;
 
     name => s.read;
 
