@@ -21,11 +21,22 @@ public class SYNTWAV extends SYNT{
     str << "../_SAMPLES/SYNTWAVS/MULTI2GROAN1";
     str << "../_SAMPLES/SYNTWAVS/MULTI2GENTLESPEECH0";
     str << "../_SAMPLES/SYNTWAVS/MULTI2GENTLESPEECH1";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_Cello_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_CombinedChoir_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_GC3Brass_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_M300B_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_MkIIBrass_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_MkIIFlute_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_MkIIViolins_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_StringSection_";
+    str << "../_SAMPLES/SYNTWAVS/MELLOTRON_Woodwind2_";
 
     if ( i >= str.size() ){
       <<<"ERROR SYNTWAV : FILE number TOO HIGH">>>;
       0=> i; 
     }
+
+    <<<"LOADING ", str [i] >>>;
 
     config  (G, ATTACK, RELEASE,  str[i], UPDATE);
 } 

@@ -18,7 +18,7 @@ instruments = [
 "Woodwind2"
 ]
 
-print (instruments)
+# print (instruments)
 
 
 notes = {
@@ -59,10 +59,11 @@ notes = {
 "F5.wav":  77,
 }
 
-print (notes)
+# print (notes)
 
 
 for i in instruments :
+  print ("MELLOTRON_" + i + "_\n" )
   for n in notes :
     os.symlink(src + i + "/" + n, dest + "MELLOTRON_" + i + "_" + str(notes[n]) + ".wav")
 
