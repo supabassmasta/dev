@@ -84,7 +84,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c  {c" + seq => t.seq;
-  0.9 * data.master_gain => t.gain;
+  0.8 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //  t.adsr[0].set(4::ms, 19::ms, .8, 87::ms);
@@ -130,7 +130,7 @@ fun void BASS3 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c  {c" + seq => t.seq;
-  0.85 * data.master_gain => t.gain;
+  0.80 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //  t.adsr[0].set(4::ms, 19::ms, .8, 87::ms);

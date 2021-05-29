@@ -9,7 +9,7 @@
 
 
 // CHORD
-Cm  ACD# BDF BDF
+//  Cm  ACD# BDF BDF
 // Start synchro
 //HW.launchpad.virtual_key_on(7);
 
