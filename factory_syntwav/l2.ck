@@ -1,5 +1,7 @@
 // SYNTWAV LAB FOR PROGRESSIVE TRANCE AMBIANT PADS
 
+// PART 2, cause too many file open in l0.ck
+// Start at 32 
 
 "../_SAMPLES/Progressive-Trance-Loops---Samples/Progressive_Trance_Loops_&_Samples/Ambient&Trance_Pads&Strings/WAV_Multisamples/" => string src_path;
 
@@ -13,7 +15,7 @@ SndBuf buf => ADSR a;
 // TOREMOVE
 //.3 => buf.gain; a => dac;
 
-for (0 => int i; i <  16     ; i++) {
+for (32 => int i; i <  synts.size()     ; i++) {
   <<<synts[i]>>>;
   for (1 => int j; j <   6    ; j++) {
       
