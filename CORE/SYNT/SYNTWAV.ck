@@ -2,6 +2,10 @@ public class SYNTWAV extends SYNT{
   1 => own_adsr;
   1 => stereo;
 
+  // TO allow hack
+  0 => int start_pos;
+  1.0 => float wav_rate;
+
   float g; dur attack; dur release;  string file; dur update;  
 
   fun void  config  (float G, dur ATTACK, dur RELEASE,  string FILE , dur UPDATE){ 
@@ -97,6 +101,8 @@ public class SYNTWAV extends SYNT{
     al.set(attack, 0::ms, 1. , release);
     ar.set(attack, 0::ms, 1. , release);
 
+    start_pos => buf.pos;
+    wav_rate => buf.rate;
 
     al.keyOn();
     ar.keyOn();

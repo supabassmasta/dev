@@ -1555,3 +1555,6 @@ ab MAGICK /********************************************************/
 \<CR>while(1) { /********************************************************/
 \<CR>
 \<CR>}
+
+ab SYNTADDK SYNTADD syntadd
+\<esc>osyntadd.add(s0 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */);

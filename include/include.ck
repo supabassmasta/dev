@@ -193,6 +193,7 @@ Machine.add(rt + "CORE/SYNT/VOICEA0.ck");
 Machine.add(rt + "CORE/SYNT/VOICEA1.ck");
 Machine.add(rt + "CORE/SYNT/VOICEA2.ck");
 Machine.add(rt + "CORE/SYNT/SYNTWAV.ck");
+Machine.add(rt + "CORE/SYNT/SYNTADD.ck");
 
 // MONO EFFECTS
 Machine.add(rt + "CORE/EFFECTS/MGAINC.ck");
