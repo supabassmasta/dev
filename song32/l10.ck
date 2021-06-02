@@ -61,7 +61,7 @@ syntadd.add(synt2 $ SYNT, .2 /* Gain */, 2.0 /* freq gain */);
 SYNTWAV synt3;
 synt3.config(.5 /* G */, 500::ms /* ATTACK */, 1500::ms /* RELEASE */, 5 /* FILE */, 100::ms /* UPDATE */); 
 syntadd.add(synt3 $ SYNT, .2 /* Gain */, 2.0 /* freq gain */); 
-.9999 => synt3.wav_rate;
+.9999 => synt3.rate;
 
 NOISE0 s4;
 syntadd.add(s4 $ SYNT, .3 /* Gain */, 4.0 /* freq gain */); 

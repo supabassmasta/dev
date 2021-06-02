@@ -3,8 +3,9 @@ public class SYNTWAV extends SYNT{
   1 => stereo;
 
   // TO allow hack
-  0 => int start_pos;
-  1.0 => float wav_rate;
+  0 => int pos;
+  1.0 => float rate;
+  SndBuf2 @ lastbuf;
 
   float g; dur attack; dur release;  string file; dur update;  
 
@@ -91,7 +92,7 @@ public class SYNTWAV extends SYNT{
     <<<"SYNTWAV f: ", freq, " note: ", note>>>;
 
     SndBuf2 buf;
-
+    buf @=> lastbuf;
     file + note + ".wav" => buf.read;
     g => buf.gain;
 
@@ -101,8 +102,8 @@ public class SYNTWAV extends SYNT{
     al.set(attack, 0::ms, 1. , release);
     ar.set(attack, 0::ms, 1. , release);
 
-    start_pos => buf.pos;
-    wav_rate => buf.rate;
+    pos => buf.pos;
+    rate => buf.rate;
 
     al.keyOn();
     ar.keyOn();

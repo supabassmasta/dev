@@ -1548,6 +1548,7 @@ ab SYNTLABK class syntL extends SYNT{
 
 ab SYNTWAVK SYNTWAV
 \<esc>os0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, "../_SAMPLES/ambient_universe/SYNTTEST" /* FILE */, 100::ms /* UPDATE */);
+\<CR>// s0.pos s0.rate s0.lastbuf
 
 ab MAGICK /********************************************************/
 \<CR>if (    0     ){
