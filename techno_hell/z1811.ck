@@ -9,7 +9,7 @@ LLLL LLLL LLLL LL *4 L__L __L_ :4
 LLLL LLLL LLLL LL *4 L___ L_L_ :4
 
 " => s.seq;
-.8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+1.10 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); //
 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;

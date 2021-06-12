@@ -45,7 +45,7 @@ fun void TRANCE(string seq) {
   // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .6 * data.master_gain => s.gain; //
+  .7 * data.master_gain => s.gain; //
   s.gain("s", .8); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
@@ -72,7 +72,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .47 * data.master_gain => t.gain;
+  .53 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

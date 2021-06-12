@@ -9,7 +9,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
  __1!1 __1!1 __3!2 1!0!1!1/8
 
 " => t.seq;
-.6 * data.master_gain => t.gain;
+.65 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -18,7 +18,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 338.0 /* freq */ , 1.1 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 312.0 /* freq */ , 1.03 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 

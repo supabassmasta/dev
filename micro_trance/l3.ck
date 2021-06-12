@@ -8,10 +8,10 @@ fun void TRANCEBREAK(string seq) {
 // s3.wav["k"] => s.wav["K"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
-  .7 => s.wav_o["K"].wav0.rate;
+  .6 => s.wav_o["K"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
   s.go();     s $ ST @=> ST @ last; 
@@ -84,7 +84,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c  {c" + seq => t.seq;
-  .33 * data.master_gain => t.gain;
+  .48 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //  t.adsr[0].set(4::ms, 19::ms, .8, 87::ms);
@@ -99,7 +99,7 @@ stpadsr.connect(last $ ST, t.note_info_tx_o); stpadsr $ ST @=>  last;
 // stpadsr.keyOn(); stpadsr.keyOff(); 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(100 /* Base */, 54 * 10 /* Variable */, 1.3 /* Q */);
+stsynclpfx0.freq(100 /* Base */, 38 * 10 /* Variable */, 1.1 /* Q */);
 stsynclpfx0.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.3 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 0.7, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
@@ -111,7 +111,7 @@ adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other conv
 adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 25* 10.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 22* 10.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 323.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
@@ -460,6 +460,8 @@ arp.t.raw() => s0.inlet;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
+SYNC sy;
+sy.sync(4 * data.tick);
 
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
@@ -484,13 +486,14 @@ stgverb.connect(last $ ST, .03 /* mix */, 9 * 10. /* room size */, 3::second /* 
 148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
-SYNC sy;
-sy.sync(1 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
-1::samp => w.fixed_end_dur;
+//1::samp => w.fixed_end_dur;
 
+4*data.tick => w.sync_end_dur;
+
+//2 * data.tick =>  w.wait; 
 
 /********************************************************/
 //if (    0     ){
@@ -500,7 +503,7 @@ WAIT w;
     
 
 /***************************/
-//} if  ( 0 ){
+//} 
  
 // INTRO
 
@@ -509,7 +512,6 @@ WAIT w;
   9 * data.tick =>  w.wait;   
  spork ~   SINGLEWAV("../_SAMPLES/bamboche/maisfermetagueule.wav", .25); 
   4 * data.tick =>  w.wait;   
-
 while(1) { /********************************************************/
 
 //}/***********************   MAGIC CURSOR *********************/

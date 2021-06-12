@@ -22,7 +22,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
 //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-1 => t.set_disconnect_mode;
+//1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
 
 STECHO ech;

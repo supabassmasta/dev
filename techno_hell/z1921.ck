@@ -11,8 +11,11 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 6* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
 STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
-stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.4 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
+stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.0 /* Q */, 2 /* order */, 1 /* channels */ , 1::samp /* period */ ); stfreehpfx0 $ ST @=>  last; 
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -24,7 +27,7 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
  Step stpauto =>  Envelope eauto => stfreehpfx0.freq; // CONNECT THIS 
- 10 => eauto.value; // INITIAL VALUE
+ 4 => eauto.value; // INITIAL VALUE
 
 // 1.0 => stpauto.next;
 
@@ -34,10 +37,11 @@ sy.sync(32 * data.tick , - 8 * data.tick /* offset */);
 
 
  while(1) {
-   15 * 100.0 => eauto.target;
+   9 * 100.0 => eauto.target;
    7.8 * data.tick => eauto.duration  => now;
 
-   10.0 => eauto.target;
+   4.0 => eauto.target;
+//   4.0 => eauto.value;
    0.2 * data.tick => eauto.duration  => now;
 
    24 * data.tick => now; 
