@@ -11,8 +11,8 @@ seq => s.seq;
 s.gain("a", .3); // for single wav 
 s.gain("b", .2); // for single wav 
 s.gain("u", .5); // for single wav 
-s.gain("m", 1.8); // for single wav 
-s.gain("n", 1.8); // for single wav 
+s.gain("m", 2.7); // for single wav 
+s.gain("n", 2.7); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //
 s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
 1.5=> s.wav_o["u"].wav0.rate;
@@ -39,7 +39,7 @@ SET_WAV.ACOUSTIC(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// S
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 
 seq => s.seq;
-.1 * data.master_gain => s.gain; // 
+.18 * data.master_gain => s.gain; // 
 //s.sync(4*data.tick);// s.element_sync(); 
 s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -63,9 +63,10 @@ SYNC sy;
 sy.sync(16 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
+//16 * data.tick =>  w.wait; 
 WAIT w;
 16 *data.tick => w.fixed_end_dur;
-//4 * data.tick =>  w.wait; 
+//16*data.tick => w.sync_end_dur;
 
 
 while(1) {

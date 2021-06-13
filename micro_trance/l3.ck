@@ -69,7 +69,7 @@ Gain detune[synt_nb];
 SawOsc s[synt_nb];
 Gain final => outlet; .8 => final.gain;
 
-inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    .8 => s[i].gain; i++;  
+inlet => detune[i] => s[i] => final;    1. => detune[i].gain;    0.9 => s[i].gain; i++;  
 inlet => detune[i] => s[i] => final;    2. => detune[i].gain;    .5 => s[i].gain; i++;  
 
         fun void on()  { }  fun void off() { }  fun void new_note(int idx)  {
@@ -99,8 +99,8 @@ stpadsr.connect(last $ ST, t.note_info_tx_o); stpadsr $ ST @=>  last;
 // stpadsr.keyOn(); stpadsr.keyOff(); 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(100 /* Base */, 38 * 10 /* Variable */, 1.1 /* Q */);
-stsynclpfx0.adsr_set(.1 /* Relative Attack */, .7/* Relative Decay */, 0.3 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+stsynclpfx0.freq(100 /* Base */, 42 * 10 /* Variable */, 1.2 /* Q */);
+stsynclpfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.2 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 0.7, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -111,7 +111,7 @@ adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other conv
 adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 22* 10.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 32* 10.0 /* freq */ , 1.05 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 323.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
@@ -508,10 +508,16 @@ WAIT w;
 // INTRO
 
 
+//if ( 0  ){
+    
  spork ~   SINGLEWAV("../_SAMPLES/bamboche/full.wav", .25); 
   9 * data.tick =>  w.wait;   
  spork ~   SINGLEWAV("../_SAMPLES/bamboche/maisfermetagueule.wav", .25); 
   4 * data.tick =>  w.wait;   
+//}
+
+
+
 while(1) { /********************************************************/
 
 //}/***********************   MAGIC CURSOR *********************/

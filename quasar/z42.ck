@@ -1,12 +1,12 @@
 ST st;
 
 STEPC stepc; stepc.init(HW.lpd8.potar[1][6], 1 /* min */, 30 /* max */, 50::ms /* transition_dur */);
-stepc.out =>  SqrOsc sqr0 => OFFSET ofs0 => MULT m => SqrOsc sqr1 => st.mono_in;
+stepc.out =>  SawOsc sqr0 => OFFSET ofs0 => MULT m => TriOsc sqr1 => st.mono_in;
 
 //Step stp => m;
 //Std.mtof(55 + 12) => stp.next;
 
-Std.mtof(55) => sqr1.freq;
+Std.mtof(55 - 12) => sqr1.freq;
 0.15 => sqr1.gain;
 0.6 => sqr1.width;
 
@@ -32,7 +32,7 @@ STEPC stepc1; stepc1.init(HW.lpd8.potar[1][5], 0 /* min */, 3000 /* max */, 50::
 stepc1.out => m; 
 
 <<<"************************">>>;
-<<<"* Sqr Mod echo      ****">>>;
+<<<"* Saw Mod echo      ****">>>;
 <<<"* lpd 1.5 Gain Pitch    **">>>;
 <<<"* lpd 1.6 Mod     **">>>;
 <<<"************************">>>;

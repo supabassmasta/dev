@@ -15,7 +15,7 @@ fun void TRANCEBREAK(string seq) {
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   // SUBWAV //// 
   SEQ s2; SET_WAV.TRANCE_KICK(s2); s.add_subwav("K", s2.wav["K"]); 
-  s.gain_subwav("K", 0, .15);
+  s.gain_subwav("K", 0, .12);
   s.go();     s $ ST @=> ST @ last; 
 
 //  STDUCKMASTER duckm;
@@ -198,7 +198,7 @@ fun void LEAD (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .23 * data.master_gain => t.gain;
+  .45 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);

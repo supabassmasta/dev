@@ -6,7 +6,7 @@ ____ ____
 s|t___ ____
 
 " => s.seq;
-.3 * data.master_gain => s.gain; // 
+.5 * data.master_gain => s.gain; // 
 s.gain("t", .3); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;

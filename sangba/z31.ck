@@ -41,6 +41,11 @@ stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl  + 0.10/* out 
 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+<<<"*********************************">>>;
+<<<"*** FROG ECHO     LPF       *****">>>;
+<<<"*** lpd1.3 freq          *****">>>;
+<<<"***  1.4 Q                  *****">>>;
+<<<"*********************************">>>;
 
 while(1) {
        100::ms => now;

@@ -3,16 +3,10 @@ SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"];
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 "*4
 ____ ____
-____ ____
-____ ____
-s|t___ ____
-____ ____
-____ ____
-____ ____
 s|t___ ____
 
 " => s.seq;
-.7 * data.master_gain => s.gain; // 
+.85 * data.master_gain => s.gain; // 
 s.gain("t", .3); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -22,7 +16,7 @@ STLPF lpf;
 lpf.connect(last $ ST , 15 *100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
 STGVERB stgverb;
-stgverb.connect(last $ ST, .3 /* mix */, 6 * 10. /* room size */, 6::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
+stgverb.connect(last $ ST, .3 /* mix */, 6 * 10. /* room size */, 8::second /* rev time */, 0.4 /* early */ , 0.9 /* tail */ ); stgverb $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
