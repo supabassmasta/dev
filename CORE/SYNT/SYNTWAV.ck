@@ -5,7 +5,6 @@ public class SYNTWAV extends SYNT{
   // TO allow hack
   0 => int pos;
   1.0 => float rate;
-  SndBuf2 @ lastbuf;
 
   float g; dur attack; dur release;  string file; dur update;  
 
@@ -92,7 +91,6 @@ public class SYNTWAV extends SYNT{
     <<<"SYNTWAV f: ", freq, " note: ", note>>>;
 
     SndBuf2 buf;
-    buf @=> lastbuf;
     file + note + ".wav" => buf.read;
     g => buf.gain;
 
