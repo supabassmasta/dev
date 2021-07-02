@@ -9,6 +9,12 @@ SET_WAV.ACOUSTIC(ps.s[1]);
 SET_WAV.TRIBAL(ps.s[2]);
 SET_WAV.TRIBAL(ps.s[3]);
 
+// LED
+HW.ledstrip.set_tx('k') @=> ps.s[0].action["k"];
+HW.ledstrip.set_tx('m') @=> ps.s[0].action["u"];
+HW.ledstrip.set_tx('l') @=> ps.s[2].action["u"];
+HW.ledstrip.set_tx('l') @=> ps.s[3].action["t"];
+
 //ps.sync(4*data.tick);// ps.element_sync(); //ps.no_sync(); //ps.full_sync(); // 
 8 * data.tick => ps.s[0].the_end.fixed_end_dur;  // 16 * data.tick => ps.extra_end;   //ps.s[0].print();
 
