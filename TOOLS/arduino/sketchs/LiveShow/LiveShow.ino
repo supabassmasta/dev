@@ -494,6 +494,10 @@ void loop() {
      kaleidoscope();
     randwhite();
     break;
+    // Erhansar
+    case 17:
+    pinkriver();
+    break;
 
   }
 
@@ -1359,6 +1363,51 @@ void config_quasar() {
   perc3.color_mask = 0x00000FF;
 }
 
+void config_erhansar() {
+  perc1.cnt_reload = 75;
+  perc1.cnt_num = 3;
+  perc1.cnt_den = 1;
+  perc1.color_fact = 15;
+  perc1.max = 255;
+  perc1.pos = strip.numPixels() / 2;
+  perc1.color_mask = 0x00000FF;
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x00FFFFFF;
+  train1.train_size = 80;
+  train1.train_mask = 0x32A6; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  perc2.cnt_reload = 40;
+  perc2.cnt_num = 1;
+  perc2.cnt_den = 1;
+  perc2.color_fact = 15;
+  perc2.max = 255;
+  perc2.pos = strip.numPixels() / 4;
+  perc2.color_mask = 0x03F000F;
+
+  perc3.cnt_reload = 40;
+  perc3.cnt_num = 1;
+  perc3.cnt_den = 1;
+  perc3.color_fact = 15;
+  perc3.max = 255;
+  perc3.pos = strip.numPixels() * 3 / 4;
+  perc3.color_mask = 0x0FFFF00;
+
+  train2.pos = 0;
+  train2.color = 0x0000FF1F;
+  train2.train_size = 80;
+  train2.train_mask = 0x32A6; // lower pixel density with simple mask
+  train2.target = strip.numPixels();
+  train2.cnt_num = 1;
+  train2.cnt_den = 2;
+  train2.cnt_den_tmp = 0;
+
+}
+
 
 int kick_cnt;
 int snare_cnt;
@@ -1522,6 +1571,16 @@ void read_serial(){
       config_quasar();
 
       preset = 16;
+      valid = 1;
+    }
+    // Erhansar
+    else if (b == 'G') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      config_erhansar();
+      fade_in_out.start_in();
+      
+      preset = 17;
       valid = 1;
     }
     else if (b == '!') {
@@ -1735,6 +1794,26 @@ void read_serial(){
         else if ( b == 'm' ){
           perc2.reload();
           perc3.reload();
+          valid = 1;
+        }
+        break;
+       /////////// ERhansar ////////////////////////
+      case 17:
+        if (b == 'k') {
+          perc1.reload();
+          valid = 1;
+        }
+        else if ( b == 'l' ){
+          train1.reload();
+          valid = 1;
+        }
+        else if ( b == 'm' ){
+          perc2.reload();
+          perc3.reload();
+          valid = 1;
+        }
+        else if ( b == 'n' ){
+          train2.reload();
           valid = 1;
         }
         break;
@@ -1984,6 +2063,61 @@ void greenblueriver() {
   }
 
 }
+void pinkriver() {
+  #define RED_DIM 71
+  long c;
+  int i;
+  int r;
+  dj ++;
+
+  if ( dj == 5  ){
+   di ++;
+   dj =  0;
+      
+  }
+
+  for (i=0; i< strip.numPixels() / 2 ; i++){
+     c = di + i/4;
+     c = c * c;
+     r = c & 0xFF - RED_DIM + ((di >> 10) & 0xF)  ;
+     if ( r <0  ) r = 0;
+
+    strip.setPixelColor(i,strip.Color(r ,0,  c));
+    //symetry
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(r ,0,  c));
+  }
+
+}
+
+
+// HARD FLASHY PINK RIVER: SPARE
+#if 0
+void Speedriver() {
+  #define RED_DIM 71
+  long c;
+  int i;
+  int r;
+  dj ++;
+
+  if ( dj == 3  ){
+   di ++;
+   dj =  0;
+      
+  }
+
+  for (i=0; i< strip.numPixels() / 2 ; i++){
+     c = di + i/4;
+     c = c * c;
+     r = c & 0xFF - RED_DIM;
+     if ( r <0  ) r = 0;
+
+    strip.setPixelColor(i,strip.Color(r ,0,  c));
+    //symetry
+    strip.setPixelColor(strip.numPixels() - i,strip.Color(r ,0,  c));
+  }
+
+}
+#endif 
 
 int ni = 0;
 int nj = 0;
