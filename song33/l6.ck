@@ -4,11 +4,15 @@ SYNTWAV s0; s0.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 20
 SYNTWAV s1; s1.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 7 /* FILE */, 100::ms /* UPDATE */); // s0.pos s0.rate s0.lastbuf 
 SYNTWAV s2; s2.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 15 /* FILE */, 100::ms /* UPDATE */); // s0.pos s0.rate s0.lastbuf 
 SYNTWAV s3; s3.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 48 /* FILE */, 100::ms /* UPDATE */); // s0.pos s0.rate s0.lastbuf 
+SYNTWAV s4; s4.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 46 /* FILE */, 100::ms /* UPDATE */); // s0.pos s0.rate s0.lastbuf 
+SYNTWAV s5; s5.config(.5 /* G */, 1::ms  /* ATTACK */, 500::ms /* RELEASE */, 46 /* FILE */, 100::ms /* UPDATE */); // s0.pos s0.rate s0.lastbuf AA
 
-syntadd.add(s0 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
-syntadd.add(s1 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
-syntadd.add(s2 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
+// syntadd.add(s0 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
+// syntadd.add(s1 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
+// syntadd.add(s2 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */); 
 syntadd.add(s3 /* SYNT, to declare outside */, 1.5 /* Gain */, 0.5 /* freq gain */); 
+syntadd.add(s4 /* SYNT, to declare outside */, 1.5 /* Gain */, 1. /* freq gain */); 
+syntadd.add(s5 /* SYNT, to declare outside */, 1.5 /* Gain */, 0.5 /* freq gain */); 
 
 
 
