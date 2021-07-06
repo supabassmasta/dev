@@ -1559,3 +1559,7 @@ ab MAGICK /********************************************************/
 
 ab SYNTADDK SYNTADD syntadd
 \<esc>osyntadd.add(s0 /* SYNT, to declare outside */, .5 /* Gain */, 1. /* freq gain */);
+
+ab NOTESK //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+\<CR>//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+\<CR>
