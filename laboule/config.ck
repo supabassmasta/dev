@@ -17,8 +17,8 @@ MASTER_STADSR.keyOn(1);
 //HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
-//HW.ledstrip.open();
-//HW.ledstrip._load_preset('0');
+HW.ledstrip.open();
+HW.ledstrip._load_preset('E');
 
 //1::ms => now;
 

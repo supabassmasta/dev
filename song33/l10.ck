@@ -13,7 +13,7 @@ ____ ___ *4 5831 :4
 ____ ___ *8 1_1_1_1_1_1_1_1_ 8_8_8_8_8_8_8_8_:8
 ____ ___ *8 8_1_8_1_8_1_8_1_9_2_9_2_a_3_b_c_ :8
 " => t.seq;
-.1 * data.master_gain => t.gain;
+.08 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
@@ -33,6 +33,13 @@ t.go();   t $ ST @=> ST @ last;
 
 //STAUTOFILTERX stautohpfx0; HPF_XFACTORY stautohpfx0_fact;
 //stautohpfx0.connect(last $ ST ,  stautohpfx0_fact, 2.0 /* Q */, 21 * 100 /* freq base */, 28 * 100 /* freq var */, data.tick * 17 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautohpfx0 $ ST @=>  last;  
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 7 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+
 
 while(1) {
        100::ms => now;

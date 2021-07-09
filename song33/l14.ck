@@ -59,8 +59,8 @@ s0.config(1339 /* synt nb */ );
 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-//"*4{c __!1!1" => t.seq;
-"*2{c _!1" => t.seq;
+"*4{c __!1!1" => t.seq;
+//"*2{c _!1" => t.seq;
 1.7 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -76,7 +76,7 @@ stsynclpf.nio.padsr.setCurves(1.0, 0.7, 1.0); // curves: > 1 = Attack concave, o
 stsynclpf.connect(last $ ST, t.note_info_tx_o); stsynclpf $ ST @=>  last; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 40* 10.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 33* 10.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
 sthpfx0.connect(last $ ST ,  sthpfx0_fact, 45.0 /* freq */ , 3.0 /* Q */ , 1 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
