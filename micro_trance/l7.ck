@@ -59,6 +59,57 @@ fun void TRANCEHH(string seq) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+fun void ACOUSTICTOM(string seq) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  SET_WAV.ACOUSTICTOM(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+//spork ~ ACOUSTICTOM("*4 AA_B B_CC _DD_ SKKS ");
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////////
+fun void ACOUSTICTOM(string seq) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  SET_WAV.ACOUSTICTOM(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  .5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  STMIX stmix;
+  stmix.send(last, mixer);
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+//spork ~ ACOUSTICTOM("*4 AA_B B_CC _DD_ SKKS ");
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 fun void BASS (string seq) {
   TONE t;
   t.reg(PSYBASS0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -277,14 +328,17 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .4 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
 // INTRO
 
-if ( 1  ){
+if ( 1 ){
     
   spork ~   SINGLEWAV("../_SAMPLES/IlesMarquises/NukuHivaDanseDuCochon/IntroHomme.wav", 0.8); 
   65 * data.tick =>  w.wait; 
   spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
-  10 * data.tick =>  w.wait;
+  6 * data.tick =>  w.wait;
+  spork ~ ACOUSTICTOM("*4 __U_  AABB CCDD D_UU  ");
+  4 * data.tick =>  w.wait;
 }
 
 // LOOP
@@ -304,11 +358,14 @@ while(1) { /********************************************************/
   spork ~  CHANT (" ab_c_ba_ ");
   spork ~  CHANT (" AB_C_BA_ ");
 
+
   8 * data.tick =>  w.wait; 
   spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
-  8 * data.tick =>  w.wait;
-
+  4 * data.tick =>  w.wait;
+  spork ~ ACOUSTICTOM("*4 __UM|D _M|DU_  ABCD M|D_UU  ");
+  4 * data.tick =>  w.wait;
  
+
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ BASS ("*4  __11__11__1!1__11  __11__11__1!1_1_1  __11__11__1!1__11  __11__11__1!1_3_1 "); 
   spork ~ GLITCH("*8 }c  8_3_5_1_ ____ _____ f////F_" /* seq */,  "*2 11__ 1_1_ 111_ 1__1 1111 1_1_" /* seq_cutter */,  "*4 {c 1538 3851 0083 B " /* seq_arp */, 25 /* instru */);
@@ -316,13 +373,14 @@ while(1) { /********************************************************/
 
   16 * data.tick =>  w.wait; 
 
-
   spork ~ TRANCE ("kkkk kkkk kkkk kk__"); 
   spork ~ BASS ("*4  __11__11__1!1__11  __11__11__1!1_1_1  __11__11__1!1__11  __11__11__*2 8_5_3_1_ 1111 "); 
    spork ~ GLITCH("*8 }c 89abcdefghijkl 89abcde " /* seq */,  "*2 11" /* seq_cutter */,  "*4 {c 1538 3851 0083 B " /* seq_arp */, 25 /* instru */);
   spork ~ GLITCH(" }c}c +0  ____ ____ *4 M////ff////M" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18" /* seq_arp */, 35 /* instru */);
 
-  16 * data.tick =>  w.wait; 
+  12 * data.tick =>  w.wait; 
+  spork ~ TRIBAL("*4 fghhgf ", 1 /* bank */, 1 /* tomix */, 1.1 /* gain */);
+  4 * data.tick =>  w.wait; 
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -332,7 +390,6 @@ while(1) { /********************************************************/
   spork ~  CHANT (" AB_C_BA_ ab_c_ba_");
 
   16 * data.tick =>  w.wait; 
-
 
   spork ~ TRANCE ("kkkk kkkk kkkk "); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_  ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -345,7 +402,10 @@ while(1) { /********************************************************/
 
   8 * data.tick =>  w.wait; 
   spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
-  8 * data.tick =>  w.wait;
+  4 * data.tick =>  w.wait; 
+  spork ~ ACOUSTICTOM("*4 __UM|D M|DUM|DM|D UBCD M|DU_U  ");
+  4 * data.tick =>  w.wait; 
+
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_  ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -361,8 +421,10 @@ while(1) { /********************************************************/
   spork ~ GLITCH(" }c +3 M////1 " /* seq */,  "*8 11" /* seq_cutter */,  "*4  1" /* seq_arp */, 24 /* instru */);
   spork ~ GLITCH(" }c -3  ____ ____ *4 1_1_1_1_1_1_1_1_1_1_1_1_" /* seq */,  "*8 1" /* seq_cutter */,  "*4  f18" /* seq_arp */, 26 /* instru */);
 
-  16 * data.tick =>  w.wait; 
 
+  12 * data.tick =>  w.wait; 
+  spork ~ TRIBAL("*4 ZZZ", 1 /* bank */, 1 /* tomix */, 0.8 /* gain */);
+  4 * data.tick =>  w.wait; 
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -387,7 +449,9 @@ while(1) { /********************************************************/
 
   8 * data.tick =>  w.wait; 
   spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
-  8 * data.tick =>  w.wait;
+  4 * data.tick =>  w.wait;
+  spork ~ ACOUSTICTOM("*4 __U_  AABB CCDD D_UU  ");
+  4 * data.tick =>  w.wait;
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -405,7 +469,9 @@ while(1) { /********************************************************/
   spork ~ GLITCH(" }c +5 f////M " /* seq */,  "*8 1" /* seq_cutter */,  "*4  18" /* seq_arp */, 24 /* instru */);
   spork ~ GLITCH(" }c -3  ____ __f////M M//m" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18f" /* seq_arp */, 25 /* instru */);
 
-  16 * data.tick =>  w.wait; 
+  12 * data.tick =>  w.wait; 
+  spork ~ TRIBAL("*4 cdbacbd ", 1 /* bank */, 1 /* tomix */, 0.9 /* gain */);
+  4 * data.tick =>  w.wait; 
 
 } 
  
