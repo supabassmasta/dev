@@ -11,7 +11,7 @@ fun void TRANCE(string seq) {
  
   
   seq => s.seq;
-  .8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -19,8 +19,8 @@ fun void TRANCE(string seq) {
   s.go();     s $ ST @=> ST @ last; 
 
 STOVERDRIVE stod;
-stod.connect(last $ ST, 6.8 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
-.3 => stod.gain;
+stod.connect(last $ ST, 7.8 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
+.33 => stod.gain;
 
 //  STMIX stmix;
 //  stmix.send(last, mixer);
@@ -65,7 +65,7 @@ fun void ACOUSTICTOM(string seq) {
   SET_WAV.ACOUSTICTOM(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -120,7 +120,7 @@ SEQ s;
 "../_SAMPLES/IlesMarquises/NukuHivaDanseDuCochon/Hi2.wav" => s.wav["C"];  // act @=> s.action["a"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
  seq => s.seq;
-1.1 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+0.9 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();
   s.go();     s $ ST @=> ST @ last; 
 
@@ -182,7 +182,7 @@ fun void GLITCH (string seq, string seq_cutter, string seq_arp,  int instru ) {
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   seq => t.seq;
-  .4 * data.master_gain => t.gain;
+  .3 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -250,7 +250,7 @@ fun void TRIBAL(string seq, int nb, int tomix, float g) {
   }
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  g * 0.8 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -308,9 +308,9 @@ autopan.connect(last $ ST, .4 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0
 
 if ( 1 ){
     
-  spork ~   SINGLEWAV("../_SAMPLES/IlesMarquises/NukuHivaDanseDuCochon/IntroHomme.wav", 0.8); 
+  spork ~   SINGLEWAV("../_SAMPLES/IlesMarquises/NukuHivaDanseDuCochon/IntroHomme.wav", 0.7); 
   65 * data.tick =>  w.wait; 
-  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
+  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
   6 * data.tick =>  w.wait;
   spork ~ ACOUSTICTOM("*4 __U_  AABB CCDD D_UU  ");
   4 * data.tick =>  w.wait;
@@ -335,7 +335,7 @@ while(1) { /********************************************************/
 
 
   8 * data.tick =>  w.wait; 
-  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
+  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
   4 * data.tick =>  w.wait;
   spork ~ ACOUSTICTOM("*4 __UM|D _M|DU_  ABCD M|D_UU  ");
   4 * data.tick =>  w.wait;
@@ -376,7 +376,7 @@ while(1) { /********************************************************/
   spork ~  CHANT (" AB_C_BA_ ");
 
   8 * data.tick =>  w.wait; 
-  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
+  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
   4 * data.tick =>  w.wait; 
   spork ~ ACOUSTICTOM("*4 __UM|D M|DUM|DM|D UBCD M|DU_U  ");
   4 * data.tick =>  w.wait; 
@@ -423,17 +423,18 @@ while(1) { /********************************************************/
   spork ~  CHANT (" AB_C_BA_ ");
 
   8 * data.tick =>  w.wait; 
-  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.7); 
+  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
   4 * data.tick =>  w.wait;
   spork ~ ACOUSTICTOM("*4 __U_  AABB CCDD D_UU  ");
   4 * data.tick =>  w.wait;
+
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
   spork ~ TRIBAL("*4 _aaa _a_a _bb_ _b_b _aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
   spork ~ BASS ("*4  __11__11__1!1__11  __11__11__1!1_1_1  __11__11__1!1__11  __11__11__1!1_3_1 "); 
-  spork ~ GLITCH(" }c +5 m//F__ F/mm/F " /* seq */,  "*8 11" /* seq_cutter */,  "*4  1" /* seq_arp */, 24 /* instru */);
-  spork ~ GLITCH(" }c -3  ____ ____ *4 1_1_1_1_1_1_1_1_1_1_1_1_" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18f" /* seq_arp */, 25 /* instru */);
+  spork ~ GLITCH(" }c +7 m//F__ F/mm/F " /* seq */,  "*8 11" /* seq_cutter */,  "*4  1" /* seq_arp */, 24 /* instru */);
+  spork ~ GLITCH(" }c -2  ____ ____ *4 1_1_1_1_1_1_1_1_1_1_1_1_" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18f" /* seq_arp */, 25 /* instru */);
 
   16 * data.tick =>  w.wait; 
 
@@ -441,8 +442,8 @@ while(1) { /********************************************************/
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
   spork ~ TRIBAL("*4 _aaa _a_a _bb_ _b_b _aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
   spork ~ BASS ("*4  __11__11__1!1__11  __11__11__1!1_1_1  __11__11__1!1__11  __11__11__*2 8_5_3_1_ 1111 "); 
-  spork ~ GLITCH(" }c +5 f////M " /* seq */,  "*8 1" /* seq_cutter */,  "*4  18" /* seq_arp */, 24 /* instru */);
-  spork ~ GLITCH(" }c -3  ____ __f////M M//m" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18f" /* seq_arp */, 25 /* instru */);
+  spork ~ GLITCH(" }c +7 f////M " /* seq */,  "*8 1" /* seq_cutter */,  "*4  18" /* seq_arp */, 24 /* instru */);
+  spork ~ GLITCH(" }c -2  ____ __f////M M//m" /* seq */,  "*8 1" /* seq_cutter */,  "*4  18f" /* seq_arp */, 25 /* instru */);
 
   12 * data.tick =>  w.wait; 
   spork ~ TRIBAL("*4 cdbacbd ", 1 /* bank */, 1 /* tomix */, 0.9 /* gain */);

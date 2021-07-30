@@ -19,8 +19,8 @@ fun void TRANCE(string seq) {
   s.go();     s $ ST @=> ST @ last; 
 
 STOVERDRIVE stod;
-stod.connect(last $ ST, 6.8 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
-.3 => stod.gain;
+stod.connect(last $ ST, 7.8 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
+.33 => stod.gain;
 
 //  STMIX stmix;
 //  stmix.send(last, mixer);
@@ -264,7 +264,7 @@ fun void SUPERHIGH (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .21 * data.master_gain => t.gain;
+  .16 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -326,7 +326,7 @@ fun void SUPERHIGH2 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .17 * data.master_gain => t.gain;
+  .14 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -423,7 +423,7 @@ if ( 1  ){
     
   spork ~   SINGLEWAV("../_SAMPLES/visiteurs/contournerlaforet.wav", 1.3); 
   30 * data.tick =>  w.wait; 
-spork ~  SLIDE(200 /* fstart */, 1000 /* fstop */, 3.5* data.tick /* dur */, .5 /* width */, .05 /* gain */); 
+  spork ~  SLIDE(200 /* fstart */, 1000 /* fstop */, 3.5* data.tick /* dur */, .5 /* width */, .05 /* gain */); 
   4 * data.tick =>  w.wait; 
 
 }
