@@ -621,6 +621,8 @@ fun void  RAND  (string begin, int nb){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -662,7 +664,6 @@ if (    0     ){
 /////////////////////////////////////////////////////////////////////
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-
    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
    spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
    spork ~  RAND("*4 }c" /* Seq begining */ , 8 /* Nb rand elements */ );
@@ -681,11 +682,42 @@ while(1) { /********************************************************/
    spork ~   RANDSERUMMOD ("}c}c __ *8 ", Std.rand2(8, 16));   
    4 * data.tick =>  w.wait;   
 
-   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
-   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  TRANCEBREAK ("*4 K___ K___ K_K_ KKKK "); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 "); 
    spork ~  RAND("*4 }c}c" /* Seq begining */ , 8 /* Nb rand elements */ );
    spork ~   RANDSERUMMOD ("}c}c __ *8 ", Std.rand2(8, 16));   
    4 * data.tick =>  w.wait;   
+
+ spork ~   SINGLEWAV("../_SAMPLES/MrRobot/full.wav", .7); 
+
+  for (0 => int i; i < 6       ; i++) {
+   
+  <<<"i", i>>>;
+
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  RAND("*4 }c" /* Seq begining */ , 8 /* Nb rand elements */ );
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  RAND("*4}c }c" /* Seq begining */ , 8 /* Nb rand elements */ );
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  RAND("*4 }c" /* Seq begining */ , 12 /* Nb rand elements */ );
+   4 * data.tick =>  w.wait;   
+
+   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ "); 
+   spork ~  BASS        ("*4 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1"); 
+   spork ~  RAND("*4}c }c" /* Seq begining */ , 12 /* Nb rand elements */ );
+   4 * data.tick =>  w.wait;   
+
+
+
+  }
 
   ////////////////////////////////////////////////////////////////////////////
 
