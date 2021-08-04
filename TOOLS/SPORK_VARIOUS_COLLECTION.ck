@@ -141,7 +141,7 @@ fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, float g){
 } 
 
 
-spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
+// spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
