@@ -432,6 +432,7 @@ if ( 1  ){
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+
  
 
 /********************************************************/
@@ -552,7 +553,6 @@ while(1) { /********************************************************/
 
 //---------------------------------------------------------------------------
 
-
   spork ~   SINGLEWAV("../_SAMPLES/visiteurs/latinvisigotte.wav", 1.3); 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1 _1_1_1_1 "); 
@@ -571,6 +571,46 @@ while(1) { /********************************************************/
   4 * data.tick =>  w.wait; 
 
 //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+ 
+  spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
+  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+  spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1 _1_1_1_1 "); 
+  spork ~ SQR("{c{c *2  f_f_f/F_F_F/m ");
+  spork ~ SUPERHIGH ("____ ____*8}c}c 1_1_ __1_ 1_1_ __1_  1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_*2 1_1_1_1_  "); 
+
+   16 * data.tick =>  w.wait; 
+ 
+  spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
+  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+  spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1 _1_1_1_1 "); 
+  spork ~ SQR("{c{c *2  f/F___ F/ff/F__ __F//1 1/m___ *2 f_f_ _f_");
+  spork ~ SUPERHIGH ("____ ____*8}c}c  8181 8181 8181 8181 8181 8181 8181 8181 8F18F18F18F18F18F1   "); 
+
+   16 * data.tick =>  w.wait; 
+
+  spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
+  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+  spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1 _1_1_1_1 "); 
+  spork ~ SQR("{c{c *4  8_5_1_f/M_ 8_5_1_f/M_ !8!5!1!f/M!8!5!1!f/M!8!5!1!f/M!8!5!1!f/M ");
+  spork ~ SUPERHIGH ("____ ____*8}c}c 5431 5431 5431 5431 5431 5431 5431 5431   "); 
+
+   16 * data.tick =>  w.wait; 
+
+
+ 
+  spork ~ TRANCE ("kkkk kkkk kkkk "); 
+  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh "); 
+  spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1  "); 
+  spork ~ SQR("{c{c *8    !8_5_1_f/M_ 8_5_1_f/M_ }c !8_5_1_f/M_ 8_5_1_f/M_  }c !8_5_1_f/M_ 8_5_1_f/M_ }c !8_5_1_f/M_ 8_5_1_f/M_ ");
+  spork ~ SUPERHIGH ("____ ____*8}c 1_1_ __1_ 1_1_ __1_  1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_1_*2 1_1_1_1_  "); 
+   12 * data.tick =>  w.wait; 
+  spork ~  SLIDE(500 /* fstart */, 2200 /* fstop */, 4.0* data.tick /* dur */, .5 /* width */, .05 /* gain */); 
+   4 * data.tick =>  w.wait; 
+ 
+
+// ------------------------------------------------------------------
+
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
@@ -592,9 +632,6 @@ while(1) { /********************************************************/
   spork ~   SINGLEWAV("../_SAMPLES/owl/owl5.wav", .4); 
   4 * data.tick =>  w.wait; 
 
-//---------------------------------------------------------------------------
-
-
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
   spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _8/1_1_1_1 _1_1_1_1 "); 
@@ -614,6 +651,9 @@ while(1) { /********************************************************/
   12 * data.tick =>  w.wait; 
   spork ~   SINGLEWAV("../_SAMPLES/visiteurs/rendtoisatanique.wav", 1.4); 
   4 * data.tick =>  w.wait; 
+
+
+
 
 // ------------------------------------------------------------------
 
