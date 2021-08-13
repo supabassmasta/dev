@@ -377,13 +377,13 @@ fun void PADS (string seq) {
   t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.reg(SYNTWAV s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.reg(SYNTWAV s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-  s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
+  s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 2 /* FILE */, 100::ms /* UPDATE */); 
   s1.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
   s2.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, 0 /* FILE */, 100::ms /* UPDATE */); 
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .28 * data.master_gain => t.gain;
+  .68 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -398,6 +398,10 @@ fun void PADS (string seq) {
 
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
+
+STROTATE strot;
+strot.connect(last $ ST , 0.6 /* freq */  , 0.8 /* depth */, 0.7 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
+// => strot.sin0;  => strot.sin1; // connect to make freq change 
 
 STMIX stmix;
 stmix.send(last, mixer + 1);
@@ -418,7 +422,7 @@ fun void SYNT1 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .06 * data.master_gain => t.gain;
+  .04 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -459,7 +463,7 @@ fun void SYNT2 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .6 * data.master_gain => t.gain;
+  .3 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -740,7 +744,7 @@ fun void  RAND  (string begin, int nb){
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   s => t.seq;
-  .5 * data.master_gain => t.gain;
+  .25 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
@@ -788,7 +792,7 @@ fun void  RANDMOD  (string begin, int nb){
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   s => t.seq;
-  .3 * data.master_gain => t.gain;
+  .4 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
@@ -924,7 +928,8 @@ while(1) { /********************************************************/
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
  
 
-    spork ~  PADS(":4 }c 11");
+
+    spork ~  PADS(":4  11");
 
    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___ "); 
    spork ~  BASS        ("*4 !1_!1!1 !1_!1!1 !1_!1!1 !1_!1!1   !1_!1!1 !1_!1!1 !1_!1!1 !1!1!1!1"); 
@@ -934,7 +939,7 @@ while(1) { /********************************************************/
    spork ~  RAND(" __ __ __ *4 }c }c" /* Seq begining */ , 8 /* Nb rand elements */ );
    8 * data.tick =>  w.wait;   
 
-    spork ~  PADS(":4 }c 88");
+    spork ~  PADS(":4  88");
 
    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
    spork ~  BASS        ("*4 !1_!1!1 !1_!1!1 !1_!1!1 !1_!1!1   !1_!1!1 !1_!1!1 !1_!3!0 !1!5!3!1"); 
