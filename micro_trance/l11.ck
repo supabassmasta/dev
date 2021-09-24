@@ -577,6 +577,100 @@ fun void  SINGLEWAVRATE  (string file, float r, float g){
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  SINGLEWAVFLANG  (string file, float r, float g){ 
+  ST st; st $ ST @=> ST @ last;
+  SndBuf s => st.mono_in;
+
+  STFLANGER flang;
+  flang.connect(last $ ST); flang $ ST @=>  last; 
+  flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  109::ms /* dur base */, 49::ms /* dur range */, 1 /* freq */); 
+
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   r => s.rate;
+   g => s.gain;
+
+   file => s.read;
+
+   3.5 * data.tick => now;
+   s.samples() => s.pos;
+   4.5 * data.tick => now;
+} 
+
+//   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .8,  .4); 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+fun void  SINGLEWAVFLANG2  (string file, float r, float g){ 
+  ST st; st $ ST @=> ST @ last;
+  SndBuf s => st.mono_in;
+
+  STFLANGER flang;
+  flang.connect(last $ ST); flang $ ST @=>  last; 
+  flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  35::ms /* dur base */, 24::ms /* dur range */, 1 /* freq */); 
+
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   r => s.rate;
+   g => s.gain;
+
+   file => s.read;
+
+   3.5 * data.tick => now;
+   s.samples() => s.pos;
+   4.5 * data.tick => now;
+} 
+
+//   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .8,  .4); 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+fun void  SINGLEWAVFLANG3  (string file, float r, float g){ 
+  ST st; st $ ST @=> ST @ last;
+  SndBuf s => st.mono_in;
+
+  STFLANGER flang;
+  flang.connect(last $ ST); flang $ ST @=>  last; 
+  flang.add_line(2 /* 0 : left, 1: right 2: both */, .7 /* delay line gain */,  35::ms /* dur base */, 24::ms /* dur range */, 1 /* freq */); 
+
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .3);  ech $ ST @=>  last; 
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   r => s.rate;
+   g => s.gain;
+
+   file => s.read;
+   (s.samples() * 0.63 ) $ int  => s.pos;
+
+   4.5 * data.tick => now;
+   s.samples() => s.pos;
+   4.5 * data.tick => now;
+} 
+
+//   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .8,  .4); 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, float g){ 
   3::ms => dur attackRelease;
@@ -791,7 +885,7 @@ fun void  SERUM2MOD  (string seq ){
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .50 * data.master_gain => t.gain;
+  .70 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
@@ -802,6 +896,20 @@ fun void  SERUM2MOD  (string seq ){
   1 => t.set_disconnect_mode;
   t.go();   t $ ST @=> ST @ last; 
 
+  ARP arp;
+  arp.t.dor();
+  50::ms => arp.t.glide;
+  "f/FF//f " => arp.t.seq;
+  arp.t.go();   
+
+  // CONNECT SYNT HERE
+  3 => s0.inlet.op;
+  arp.t.raw() => s0.inlet; 
+
+STLIMITER stlimiter;
+6. => float in_gainl;
+stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last; 
+.4 => stlimiter.gain; 
 
  STMIX stmix;
  stmix.send(last, mixer);
@@ -810,8 +918,10 @@ fun void  SERUM2MOD  (string seq ){
   1::samp => now; // Let duration computed by go() sub sporking
   t.s.duration + now => time end;
   while(end > now) {
-    s0.set_chunk(Std.rand2(0,63));
-    data.tick / 4 => now;
+    Std.rand2(10, 100) =>mod1.freq; Std.rand2(10, 100) => mod1.gain; 
+    Std.rand2(0,63) => int n1;
+    s0.set_chunk(n1);
+    data.tick  => now;
   }
    
   0 => t.on;
@@ -1141,6 +1251,7 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
+  spork ~ SINGLEWAVFLANG  ("../_SAMPLES/HighMaintenance/LaTolerance.wav", 1., .2);
 
   spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
   spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
@@ -1148,27 +1259,27 @@ while(1) { /********************************************************/
   spork ~  DIST        ("*8  1_1_ 1  "); 
 
   spork ~   RANDSERUMMOD (24,"____ }c}c *4 ", 16, .7);
-//  spork ~   RANDSERUMMOD (25,"____ }c *8*2 ", 32, .7);
-//  spork ~   RANDSERUMMOD (28,"____ }c *8 ", 32, .6);
-//  spork ~   RANDSERUMMOD (32,"____ }c *8 ", 32, .6);
-//  spork ~   RANDSERUMMOD (25,"____ }c}c *8*2 ", 32, .5);
 
-8 * data.tick =>  w.wait;   
+  spork ~ SERUM2MOD (" }c ___1 __11"); 
+  8 * data.tick =>  w.wait;   
 
-//} if (0) {
 
   spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
   spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
   spork ~  BASS        ("*4  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
   spork ~  DIST        ("*8 }c 1_1_ 1  "); 
-  spork ~   RANDSERUMMOD (23, "____ }c *8 ", 16, .4);
+  spork ~   RANDSERUMMOD (23, "____ }c *8 ", 16, .3);
+  spork ~ SERUM2MOD (" }c __8/1 __*41_1_1_1_"); 
   8 * data.tick =>  w.wait;   
+
+  spork ~ SINGLEWAVFLANG2  ("../_SAMPLES/HighMaintenance/EnprendreDeuxJours.wav", 1.0, .2);
 
   spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
   spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
   spork ~  BASS        ("*4 }5 __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
   spork ~  DIST        ("*8 }c 5_1_ 1  "); 
   spork ~   RANDSERUMMOD (24,"____ }c *8 ", 16, .7);
+  spork ~ SERUM2MOD (" 8////1 *41_1_1_1_"); 
   8 * data.tick =>  w.wait;   
 
   spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
@@ -1176,6 +1287,53 @@ while(1) { /********************************************************/
   spork ~  BASS        ("*4 }5 __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
   spork ~  DIST        ("*8 }c1_1_ 1_ 1_1_ 1  "); 
   spork ~   RANDSERUMMOD (33,"____ }c *4 ", 16, .4);
+  spork ~ SERUM2MOD (" 8//FF//1  }c*41___1_1_1_1_"); 
+  8 * data.tick =>  w.wait;   
+
+//////////////////////////////////////////////////////////////////////////////
+  // La puissance
+  spork ~ SINGLEWAVFLANG3  ("../_SAMPLES/HighMaintenance/EnprendreDeuxJours.wav", 1.0, .2);
+
+
+  spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
+  spork ~  BASS        ("*4  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
+  spork ~  DIST        ("*8  1_1_ 1  "); 
+
+  spork ~   RANDSERUMMOD (25,"____ }c *8*2 ", 32, .7);
+  spork ~ SERUM2MOD ("  }c*4 1_1__1_1_1__8531"); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
+  spork ~  BASS        ("*4  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
+  spork ~  DIST        ("*8 }c 1_1_ 1  "); 
+  spork ~   RANDSERUMMOD (28,"____ }c *8 ", 32, .6);
+  spork ~ SERUM2MOD ("  }c ___F/f __*4 853185318531"); 
+  8 * data.tick =>  w.wait;   
+
+
+  // La puissance
+  spork ~ SINGLEWAVFLANG3  ("../_SAMPLES/HighMaintenance/EnprendreDeuxJours.wav", 1.3, .25);
+
+  spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
+  spork ~  BASS        ("*4 }5 __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
+  spork ~  DIST        ("*8 }c 5_1_ 1  "); 
+  spork ~   RANDSERUMMOD (32,"____ }c *8 ", 32, .6);
+  spork ~ SERUM2MOD (" 8//FF//1  }c*41___1_1_1_1_"); 
+  8 * data.tick =>  w.wait;   
+
+  // La puissance
+  spork ~ SINGLEWAVFLANG3  ("../_SAMPLES/HighMaintenance/EnprendreDeuxJours.wav", 1.5, .25);
+
+
+  spork ~  KICK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __j_ __j_ __j_ __j_ __j_ __j_ __j_ __jj  "); 
+  spork ~  BASS        ("*4 }5 __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  __!1!1  "); 
+  spork ~  DIST        ("*8 }c1_1_ 1_ 1_1_ 1  "); 
+  spork ~   RANDSERUMMOD (25,"____ }c}c *8*2 ", 32, .5);
+  spork ~ SERUM2MOD (" 8////1 *41_1_1_1_"); 
   8 * data.tick =>  w.wait;   
 
 
