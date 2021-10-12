@@ -541,6 +541,25 @@ fun void TRANCEHPF() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+fun void  SINGLEWAV_SPECIAL  (string file, float g){ 
+   ST st; st $ ST @=> ST @ last;
+   SndBuf s => st.mono_in;
+
+   STMIX stmix;
+   stmix.send(last, mixer);
+   
+   g => s.gain;
+
+   file => s.read;
+
+   s.length() => now;
+} 
+
+//   spork ~   SINGLEWAV_SPECIAL("../_SAMPLES/", .4); 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////
+
 fun void  SINGLEWAV  (string file, float g){ 
    ST st; st $ ST @=> ST @ last;
    SndBuf s => st.mono_in;
@@ -1240,7 +1259,13 @@ WAIT w;
 1::samp => w.fixed_end_dur;
 
 // INTRO
-if ( 0 ) {
+if ( 1 ) {
+  spork ~   SINGLEWAV_SPECIAL("../_SAMPLES/HighMaintenance/LaTolerance.wav", 0.6); 
+  spork ~   RANDSERUMMOD (23, "}c *8 ", 8 *10, .3);
+  10 * data.tick =>  w.wait;   
+  spork ~   SINGLEWAV_SPECIAL("../_SAMPLES/HighMaintenance/EnprendreDeuxJours.wav", 0.6); 
+  spork ~   RANDSERUMMOD (33,"}c *8 ", 8 *10, .4);
+  12 * data.tick =>  w.wait;   
 
 }
 
