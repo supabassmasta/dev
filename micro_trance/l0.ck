@@ -8,7 +8,7 @@ fun void TRANCEBREAK(string seq) {
 // s3.wav["k"] => s.wav["K"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .70 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .80 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
   .7 => s.wav_o["K"].wav0.rate;
@@ -62,9 +62,60 @@ fun void TRANCEHH(string seq) {
 }
 
 
+class syntBASS extends SYNT{
+
+    inlet => SawOsc s =>  outlet; 
+      .8 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 
+          .5 => s.phase;
+          } 0 => own_adsr;
+}
+
 //spork ~  TRANCEBREAK ("*4 L___ L_L_ LLLL *2 LLLL LLLL"); 
 
 fun void BASS (string seq) {
+  TONE t;
+  t.reg(syntBASS s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+//  "*4{c {c  _!1!1!1" => t.seq;
+  "{c{c " + seq => t.seq;
+  1.3 * data.master_gain => t.gain;
+  t.no_sync();// s.element_sync(); //s.no_sync()
+  //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  t.set_adsrs(1::samp, data.tick *1/16, .7, data.tick *1/16);
+  //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+
+  STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
+  stsynclpfx0.freq(5 * 10 /* Base */, 34 * 10 /* Variable */, 1. /* Q */);
+  stsynclpfx0.adsr_set(.01 /* Relative Attack */, .22/* Relative Decay */, 0.6 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
+  stsynclpfx0.nio.padsr.setCurves(1.0, 0.6, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
+  // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
+
+  //STCOMPRESSOR stcomp;
+  //7. => float in_gain;
+  //stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
+  //2.1 => stcomp.gain;
+
+  STDUCK duck;
+  duck.connect(last $ ST);      duck $ ST @=>  last; 
+
+
+  //  STMIX stmix;
+  //  stmix.send(last, mixer);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+fun void BASS2 (string seq) {
   TONE t;
   t.reg(PSYBASS0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
