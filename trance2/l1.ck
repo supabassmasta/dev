@@ -8,7 +8,7 @@ class synt0 extends SYNT{
           } 0 => own_adsr;
 }
 
-137 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+144 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
 
@@ -37,6 +37,18 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order
 //7. => float in_gain;
 //stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
 //2.1 => stcomp.gain;
+
+STFILTERX stbpfx0; BPF_XFACTORY stbpfx0_fact;
+stbpfx0.connect(last $ ST ,  stbpfx0_fact, 12* 10.0 /* freq */ , 2.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stbpfx0 $ ST @=>  last;  
+0.40 => stbpfx0.gain;
+//0.0 => stbpfx0.gain;
+
+STGAIN stgain;
+stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+stgain.connect(stsynclpfx0 , 1. /* static gain */  );       stgain $ ST @=>  last; 
+
+STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
+sthpfx0.connect(last $ ST ,  sthpfx0_fact, 35.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
