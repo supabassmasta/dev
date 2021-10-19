@@ -18,8 +18,8 @@ fun void TRANCEBREAK(string seq) {
 //  s.gain_subwav("K", 0, .12);
   s.go();     s $ ST @=> ST @ last; 
 
-  STDUCKMASTER duckm;
-  duckm.connect(last $ ST, 7. /* In Gain */, .10 /* Tresh */, .2 /* Slope */, 30::ms /* Attack */, 160::ms /* Release */ );      duckm $ ST @=>  last; 
+//  STDUCKMASTER duckm;
+//  duckm.connect(last $ ST, 5. /* In Gain */, .10 /* Tresh */, .3 /* Slope */, 1::ms /* Attack */, 130::ms /* Release */ );      duckm $ ST @=>  last; 
 
 //  STGAIN stgain;
 //  stgain.connect(last $ ST , 0. /* static gain */  );       stgain $ ST @=>  last; 
@@ -51,7 +51,7 @@ fun void TRANCEHH(string seq) {
   s.go();     s $ ST @=> ST @ last; 
 
 //  STDUCKMASTER duckm;
-//  duckm.connect(last $ ST, 6. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+//  duckm.connect(last $ ST, 5. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 
 //  STMIX stmix;
 //  stmix.send(last, mixer);
@@ -81,7 +81,7 @@ fun void BASS (string seq) {
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 //  "*4{c {c  _!1!1!1" => t.seq;
   "{c{c " + seq => t.seq;
-  2.7 * data.master_gain => t.gain;
+  1.8 * data.master_gain => t.gain;
   t.no_sync();// s.element_sync(); //s.no_sync()
   //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -94,7 +94,7 @@ fun void BASS (string seq) {
   STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
   stsynclpfx0.freq(73 /* Base */, 37 * 10 /* Variable */, 1.0 /* Q */);
   stsynclpfx0.adsr_set(.001 /* Relative Attack */, .22/* Relative Decay */, 0.6 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
-  stsynclpfx0.nio.padsr.setCurves(1.0, 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stsynclpfx0.nio.padsr.setCurves(1.0, 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
@@ -102,6 +102,19 @@ fun void BASS (string seq) {
   //7. => float in_gain;
   //stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
   //2.1 => stcomp.gain;
+
+STFILTERX stbpfx0; BPF_XFACTORY stbpfx0_fact;
+stbpfx0.connect(last $ ST ,  stbpfx0_fact, 11* 10.0 /* freq */ , 2.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stbpfx0 $ ST @=>  last;  
+-.2 => stbpfx0.gain;
+//.3 => stbpfx0.gain;
+
+STGAIN stgain;
+stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+stgain.connect(stsynclpfx0 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+
+
+STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
+sthpfx0.connect(last $ ST ,  sthpfx0_fact, 55.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
 
   STDUCK duck;
   duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -603,6 +616,7 @@ while(1) { /********************************************************/
   spork ~   PADS (":6 1|3_"); 
   8 * data.tick =>  w.wait;      
 
+//} if (0) {
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K_K_"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
