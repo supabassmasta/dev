@@ -3,15 +3,17 @@
 fun void TRANCEBREAK(string seq) {
 
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
-  SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+//  SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+  SET_WAV.TRANCE_KICK(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
 // SEQ s3; SET_WAV.TRANCE(s3);
-// s3.wav["k"] => s.wav["K"];  // act @=> s.action["a"]; 
+//
+s.wav["k"] => s.wav["K"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  .87 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  .57 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
-  .65 => s.wav_o["K"].wav0.rate;
+  .69 => s.wav_o["K"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   // SUBWAV //// 
 //  SEQ s2; SET_WAV.TRANCE_KICK(s2); s.add_subwav("K", s2.wav["K"]); 
@@ -671,7 +673,6 @@ while(1) { /********************************************************/
   spork ~   PADS (":6 1|3_"); 
   8 * data.tick =>  w.wait;      
 
-////} if (0) {
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K_K_"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
@@ -679,6 +680,7 @@ while(1) { /********************************************************/
   spork ~   PADS (":6 5|3_"); 
   spork ~   FROG(19 /* fstart */, 4 /* fstop */, 9 * 100 /* lpfstart */, 46 * 100 /* lpfstop */, 3* data.tick /* dur */, .25 /* gain */);
   8 * data.tick =>  w.wait;      
+//} if (0) {
 
 
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
