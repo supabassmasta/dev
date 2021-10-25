@@ -17,7 +17,7 @@ t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4{c {c *3  ___!11_!11_!11_" => t.seq;
-1.3 * data.master_gain => t.gain;
+1.2 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 t.set_adsrs(1::samp, data.tick *1/16, .7, data.tick *1/16);
@@ -47,8 +47,8 @@ STGAIN stgain;
 stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
 stgain.connect(stsynclpfx0 , 1. /* static gain */  );       stgain $ ST @=>  last; 
 
-STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
-sthpfx0.connect(last $ ST ,  sthpfx0_fact, 35.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
+//STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
+//sthpfx0.connect(last $ ST ,  sthpfx0_fact, 35.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
