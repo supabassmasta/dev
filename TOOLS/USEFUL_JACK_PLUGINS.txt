@@ -1,0 +1,20 @@
+LSP (Linux Studio Plugins)
+https://lsp-plug.in/
+
+
+HOW TO:
+-------
+Downloaf Jack version
+Untar
+
+create symb link for bin an lib-core
+/usr/local/lib $ sudo ln -s /home/toup/Downloads/lsp-plugins-jack-1.1.30-Linux-x86_64/usr/local/lib/lsp-plugins/* .
+/usr/bin $ sudo ln -s /home/toup/Downloads/lsp-plugins-jack-1.1.30-Linux-x86_64/usr/local/bin/lsp-plugins-* .
+
+
+run it in terminal!!
+
+
+Tested:
+-------
+lsp-plugins-para-equalizer-x16-mono
