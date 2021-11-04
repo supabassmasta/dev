@@ -1563,3 +1563,12 @@ ab SYNTADDK SYNTADD syntadd
 ab NOTESK //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
 \<CR>//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
 \<CR>
+
+ab STLOSHELFK STLOSHELF stloshelf0; 
+\<CR>stloshelf0.connect(last $ ST , 10 * 100 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* Gain */ );       stloshelf0 $ ST @=>  last;  
+
+ab STHISHELFK STHISHELF sthishelf0; 
+\<CR>sthishelf0.connect(last $ ST , 20 * 100 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* Gain */ );       sthishelf0 $ ST @=>  last;  
+
+ab STBELLK STBELL stbell0; 
+\<CR>stbell0.connect(last $ ST , 20 * 10 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* Gain */ );       stbell0 $ ST @=>  last;  

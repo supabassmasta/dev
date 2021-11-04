@@ -104,7 +104,6 @@ me.yield();
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERXC.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/STFILTERXC2.ck");
-
 // SYNTA
 Machine.add(rt + "CORE/SYNTA/GLIDE.ck");
 Machine.add(rt + "CORE/SYNTA/POLY.ck");
@@ -271,6 +270,10 @@ Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STLHPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STLPFN.ck");
+Machine.add( rt + "CORE/EFFECTS/STHISHELF.ck");
+Machine.add( rt + "CORE/EFFECTS/STLOSHELF.ck");
+Machine.add( rt + "CORE/EFFECTS/STBELL.ck");
+
 Machine.add( rt + "CORE/EFFECTS/MASTER_STADSR.ck");
 
 Machine.add( rt + "CORE/LONG_WAV/LONG_WAV.ck");
