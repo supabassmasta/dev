@@ -18,7 +18,7 @@ SET_WAV.TRANCE_KICK(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// S
 act @=> s.action["k"]; 
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 seq => s.seq;
-0.59 * data.master_gain => s.gain; //
+0.76 * data.master_gain => s.gain; //
 s.gain("L", .4); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //
 s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
@@ -801,8 +801,8 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 
-152 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-56 => data.ref_note;
+144 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+55 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
@@ -818,8 +818,8 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-  spork ~  KICK0 ("*4 k___ k___ k___ k___ k___ k___ k___ k_k_ "); 
-  spork ~  BASS6 ("*4 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!3!1 _!1!1!1  "); 
+  spork ~  KICK0 ("*4 k___ k___ k___ k___ k___ k___ k___  "); 
+  spork ~  BASS8 ("*4 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8  "); 
   8 * data.tick =>  w.wait;   
 
 
