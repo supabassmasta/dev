@@ -852,41 +852,6 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 
-fun void BASS13 (string seq) {
-
-
-TONE t;
-t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
-// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"{c{c" + seq => t.seq;
-1.1 * data.master_gain => t.gain;
-//t.sync(4*data.tick);// t.element_sync();// 
-t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-t.set_adsrs(1::samp, data.tick *1/16, .7, data.tick *1/16);
-//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-1 => t.set_disconnect_mode;
-t.go();   t $ ST @=> ST @ last; 
-
-STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(17 * 10 /* Base */, 44 * 10 /* Variable */, 1. /* Q */);
-stsynclpfx0.adsr_set(.01 /* Relative Attack */, .11/* Relative Decay */, 0.7 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
-stsynclpfx0.nio.padsr.setCurves(1.0, 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
-// CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
-
-
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
-
-
-  1::samp => now; // let seq() be sporked to compute length
-  t.s.duration => now;
-}
-
-
-
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -904,7 +869,7 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 145 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-55 => data.ref_note;
+51 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
@@ -920,14 +885,11 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-  spork ~  KICK0 ("*4 k___ k___ k___ k___ k___ k___ k___ __k_  "); 
+  spork ~  KICK0 ("*4 k___ k___ k___ k___ k___ k___ k___  "); 
 //  spork ~  BASS11 ("*4 _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1___   "); 
 //  spork ~  BASS12 ("*4 _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1___   "); 
 //  spork ~  BASS11 ("*4 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8_  "); 
-//  spork ~  BASS12 ("*4 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 _  "); 
-//  spork ~  BASS13 ("*4 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 _  "); 
-  spork ~  BASS13 ("*4 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1  _  "); 
-//  spork ~  BASS5 ("*4  ____ ___1 ____ ___5 ____ ___1 ____ ___1   "); 
+  spork ~  BASS12 ("*4__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 _  "); 
   8 * data.tick =>  w.wait;   
 
 
