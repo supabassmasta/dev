@@ -652,8 +652,8 @@ t.go();   t $ ST @=> ST @ last;
 /// adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(12 * 10 /* Base */, 38 * 10 /* Variable */, 1. /* Q */);
-stsynclpfx0.adsr_set(.01 /* Relative Attack */, .20/* Relative Decay */, 0.6 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
+stsynclpfx0.freq(12 * 10 /* Base */, 31 * 10 /* Variable */, 1. /* Q */);
+stsynclpfx0.adsr_set(.01 /* Relative Attack */, .23/* Relative Decay */, 0.6 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 43 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -868,8 +868,8 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 
-144 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-55 => data.ref_note;
+145 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+57 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
@@ -885,11 +885,11 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-  spork ~  KICK0 ("*4 k___ k___ k___ k___ k___ k___ k___  "); 
+  spork ~  KICK1 ("*4 k___ k___ k___ k___ k___ k___ k___  "); 
 //  spork ~  BASS11 ("*4 _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1___   "); 
 //  spork ~  BASS12 ("*4 _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1  _!1!1!1___   "); 
-//  spork ~  BASS12 ("*4 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8_  "); 
-  spork ~  BASS12 ("*4 _!1!1!1 __11 _!1!1!1 __11 _!1!1!1 __11 _!5!3!1 __11_  "); 
+//  spork ~  BASS11 ("*4 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8 _!1!1!1 _!1!8!5 _!1!1!1 _!1!5!8_  "); 
+  spork ~  BASS8 ("*4__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 _  "); 
   8 * data.tick =>  w.wait;   
 
 
