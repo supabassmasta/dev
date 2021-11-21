@@ -273,6 +273,7 @@ Machine.add( rt + "CORE/EFFECTS/STLPFN.ck");
 Machine.add( rt + "CORE/EFFECTS/STHISHELF.ck");
 Machine.add( rt + "CORE/EFFECTS/STLOSHELF.ck");
 Machine.add( rt + "CORE/EFFECTS/STBELL.ck");
+Machine.add( rt + "CORE/EFFECTS/STCROSSOVER.ck");
 
 Machine.add( rt + "CORE/EFFECTS/MASTER_STADSR.ck");
 

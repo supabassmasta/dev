@@ -1572,3 +1572,6 @@ ab STHISHELFK STHISHELF sthishelf0;
 
 ab STBELLK STBELL stbell0; 
 \<CR>stbell0.connect(last $ ST , 20 * 10 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* Gain */ );       stbell0 $ ST @=>  last;  
+
+ab STCROSSOVERK STCROSSOVER stcrossover0;
+\<CR>stcrossover0.connect(last $ ST , 57 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* LPF Gain */ );       stcrossover0 $ ST @=>  last;  
