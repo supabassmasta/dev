@@ -117,7 +117,7 @@ class KICK_CUSTOM extends Chubgraph{
     100.0 => e0.target;
     20::ms => e0.duration  => now;
 
-    31.0 => e0.target;
+    43.0 => e0.target;
     10 * 10::ms => e0.duration  => now;
      
   } 
@@ -125,7 +125,7 @@ class KICK_CUSTOM extends Chubgraph{
   fun void  trig_env  (){ 
 //    <<<"TRIG">>>;
 
-    0.1 => sin0.phase;
+    0.7 => sin0.phase;
 
     // Attack
     0.4 => e1.value;
@@ -1001,8 +1001,8 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 
-142 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-53 => data.ref_note;
+138 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+51 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
@@ -1019,10 +1019,10 @@ if (    0     ){
 while(1) { /********************************************************/
 
   spork ~  KICK2 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-  spork ~  BASS13 ("*4 _!1!1!1 _!1!3!1 _!1!5!1 _!1!4!1 _!1!7!1 _!1!8!1 _!1!3!1 _!1!5!1 _    "); 
+//  spork ~  BASS13 ("*4 _!1!1!1 _!1!3!1 _!1!5!1 _!1!4!1 _!1!7!1 _!1!8!1 _!1!3!1 _!1!5!1 _    "); 
 //  spork ~  BASS13 ("*4 _!1!1!1 ___!1 _!1!1!1 _8///1 _!1!1!1 _!1!3!1 ___!8 _!8!5!1 _    "); 
-//  spork ~  BASS8 ("*4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
-//  spork ~  BASS8 ("*4  +0 !1!1!1!1  !1!1!1!1  !1!1!5!1  !1!1!0!1  !1!1!5!3  !0!1!2!4  !1!1!8!5  !1!1!0!1_   "); 
+  spork ~  BASS8 ("*4 -1  __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1_   "); 
+//  spork ~  BASS8 ("*4  +1 !1!1!1!1  !1!1!1!1  !1!1!5!1  !1!1!0!1  !1!1!5!3  !0!1!2!4  !1!1!8!5  !1!1!0!1_   "); 
   8 * data.tick =>  w.wait;   
 
 }
