@@ -1016,17 +1016,17 @@ t.go();   t $ ST @=> ST @ last;
 //adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(5 * 10 /* Base */, 41 * 10 /* Variable */, 1.0 /* Q */);
+stsynclpfx0.freq(7 * 10 /* Base */, 48 * 10 /* Variable */, 1.0 /* Q */);
 stsynclpfx0.adsr_set(.01 /* Relative Attack */, .19/* Relative Decay */, 0.6 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 43 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 250.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 285.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STBELL stbell0; 
-stbell0.connect(last $ ST , 23 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 /* channels */, 0.4 /* Gain */ );       stbell0 $ ST @=>  last;   
+stbell0.connect(last $ ST , 18 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 /* channels */, 0.5 /* Gain */ );       stbell0 $ ST @=>  last;   
 
 //STCOMPRESSOR stcomp;
 //7. => float in_gain;
@@ -1073,7 +1073,7 @@ duck.connect(last $ ST);      duck $ ST @=>  last;
 
 
 146 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-51 => data.ref_note;
+53 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
