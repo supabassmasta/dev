@@ -1066,7 +1066,7 @@ stbell0.connect(last $ ST , 23 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 
 
 
 STDELAY2 stdelay;
-stdelay.connect(last $ ST , 12::ms, 15::ms, 0.3 );       stdelay $ ST @=>  last;  
+stdelay.connect(last $ ST , 14::ms, 10::ms, 0.1 );       stdelay $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
