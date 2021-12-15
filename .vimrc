@@ -1575,3 +1575,7 @@ ab STBELLK STBELL stbell0;
 
 ab STCROSSOVERK STCROSSOVER stcrossover0;
 \<CR>stcrossover0.connect(last $ ST , 57 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 1.0 /* LPF Gain */ );       stcrossover0 $ ST @=>  last;  
+
+ab STDELAY2K STDELAY2 stdelay2; // Stereo simple delay + passthrough
+\<CR>stdelay2.connect(last $ ST , 12::ms /* delay right */, 15::ms /* delay left */, 0.3 /* delay gain */ );       stdelay2 $ ST @=>  last;  
+

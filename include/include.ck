@@ -255,6 +255,7 @@ Machine.add( rt + "CORE/EFFECTS/DETUNE.ck");
 Machine.add( rt + "CORE/EFFECTS/STREC.ck");
 Machine.add( rt + "CORE/EFFECTS/STSAMPLER.ck");
 Machine.add( rt + "CORE/EFFECTS/STDELAY.ck");
+Machine.add( rt + "CORE/EFFECTS/STDELAY2.ck");
 Machine.add( rt + "CORE/EFFECTS/STEQ.ck");
 Machine.add( rt + "CORE/EFFECTS/STDUCK2.ck");
 Machine.add( rt + "CORE/EFFECTS/STDUCKMASTER2.ck");
