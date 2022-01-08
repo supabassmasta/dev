@@ -39,6 +39,7 @@ Machine.add( rt + "CORE/EFFECTS/CONTROL.ck");
 Machine.add( rt + "CORE/EFFECTS/REV0.ck");
 Machine.add( rt + "CORE/EFFECTS/REV1.ck");
 Machine.add( rt + "CORE/EFFECTS/REC.ck");
+Machine.add( rt + "CORE/EFFECTS/STTOAUX.ck");
 
 Machine.add( rt + "CORE/EFFECTS/FILTERX/FILTERX_FACTORY.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/LPFX.ck");

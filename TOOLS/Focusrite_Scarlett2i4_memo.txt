@@ -1,4 +1,4 @@
-Balanced outputs are 2 mono outs, use mono jacks.
+Balanced outputs are 2 mono outs, use 2 stereo jacks to be balanced.
 
 
 In Qjackctl/Settings Select Interface hw:USB Scarlett

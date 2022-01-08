@@ -17,6 +17,33 @@ t.go();   t $ ST @=> ST @ last;
 STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
 stautoresx0.connect(last $ ST ,  stautoresx0_fact, 2.0 /* Q */, 1 * 100 /* freq base */, 32 * 100 /* freq var */, data.tick * 27 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
 
+class STTOAUX extends ST{
+  Gain gainl => outl;
+  Gain gainr => outr;
+
+  1. => gainl.gain => gainr.gain;
+
+  fun void connect(ST @ tone, float g2main, float g2aux, int stnb) {
+    // TO main
+    tone.left() => gainl;
+    tone.right() => gainr;
+    g2main => gainl.gain => gainr.gain;
+
+    // To AUX
+    if (stnb != 0) {
+    tone.left() => Gain auxl=> dac.chan(2*stnb);
+    tone.right() => Gain auxr =>dac.chan(2*stnb + 1);
+    g2aux => auxl.gain => auxr.gain;
+    }
+  }
+
+
+}
+
+STTOAUX sttoaux0; 
+sttoaux0.connect(last $ ST ,  1.0 /* gain to main */, 0.3  /* gain  to aux */, 1 /* st pair number */ ); sttoaux0 $ ST @=>  last;
+
+
 while(1) {
        100::ms => now;
 }

@@ -87,9 +87,9 @@ STROTATE strot;
 strot.connect(last $ ST , 0.2 /* freq */  , 0.5 /* depth */, 0.6 /* width */, 1::samp /* update rate */ ); strot$ ST @=>  last; 
 // => strot.sin0;  => strot.sin1; // connect to make freq change 
 
-STGVERB stgverb;
-stgverb.connect(last $ ST, .07 /* mix */, 4 * 10. /* room size */, 4::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
-
+STTOAUX sttoaux0; 
+ // WARNING use it with option :   --out4 or more, else make the script crash
+ sttoaux0.connect(last $ ST ,  1.0 /* gain to main */, 0.5  /* gain  to aux */, 1 /* st pair number */ ); sttoaux0 $ ST @=>  last; 
 
 
 while(1) {

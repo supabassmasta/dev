@@ -61,14 +61,24 @@ s0.add(1 /* synt nb */ , 0.4 /* GAIN */, 1.0 /* in freq gain */,  3::ms /* attac
 // s0.add(synt0 /* SYNT, to declare outside */, 0.4 /* GAIN */, 1.5 /* in freq gain */,  0 * data.tick /* attack */, 0 * data.tick /* decay */, 1. /* sustain */, 3* data.tick /* release */ ); 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"1/////1 ___" => t.seq;
-.3 * data.master_gain => t.gain;
+"1/////1 ___ ____ ____" => t.seq;
+.05 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 60* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+STLOSHELF stloshelf0; 
+stloshelf0.connect(last $ ST , 10 * 100 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 2.0 /* Gain */ );       stloshelf0 $ ST @=>  last;   
+
+
+STTOAUX sttoaux0; 
+ // WARNING use it with option :   --out4 or more, else make the script crash
+ sttoaux0.connect(last $ ST ,  1.0 /* gain to main */, 0.6  /* gain  to aux */, 1 /* st pair number */ ); sttoaux0 $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
