@@ -20,11 +20,6 @@ class KIK extends SYNT{
      freqDur << d;
   } 
 
-  fun void  addGainPoint (float g, dur d){ 
-     gainValue << g;
-     gainDur << d;
-  } 
-
 
   fun void  config  (float p, float ife, float ifg){ 
     p => initSinPhase;
@@ -53,11 +48,22 @@ class KIK extends SYNT{
     // Attack
     initfg => ge.value;
 
-    for (0 => int i; i <  gainValue.size() ; i++) {
-      gainValue[i] =>  ge.target;
-      gainDur[i] => ge.duration  => now;
-    }
- 
+    0.6 => ge.target;
+    2::ms  => fe.duration  => now;
+
+    0.3 => ge.target;
+    10::ms  => fe.duration  => now;
+    1.0 => ge.target;
+    10::ms  => fe.duration  => now;
+
+    // Rest
+    171::ms => now;
+
+    // Release
+    0.0 => ge.target;
+    4::ms => fe.duration  => now;
+
+
   }
 
   //fun void on()  { }  fun void off() { }  
@@ -73,33 +79,9 @@ class KIK extends SYNT{
 TONE t;
 t.reg(KIK kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 kik.config(0.7 /* init Sin Phase */, 76 * 100 /* init freq env */, 0.4 /* init gain env */);
-kik.addFreqPoint (233.0, 10::ms);
-kik.addFreqPoint (100.0, 20::ms);
-kik.addFreqPoint (35.0, 17 * 10::ms);
-
-kik.addGainPoint (0.6, 2::ms);
-kik.addGainPoint (0.3, 10::ms);
-kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 171::ms);
-kik.addGainPoint (0.0, 4::ms);
-
-
-//    0.6 => ge.target;
-//    2::ms  => fe.duration  => now;
-
-//    0.3 => ge.target;
-//    10::ms  => fe.duration  => now;
-//    1.0 => ge.target;
-//    10::ms  => fe.duration  => now;
-
-//    // Rest
-//    171::ms => now;
-
-    // Release
-//    0.0 => ge.target;
-//    4::ms => fe.duration  => now;
-
-
+kik.addFreqPoint (233.0 , 10::ms);
+kik.addFreqPoint (100.0 , 20::ms);
+kik.addFreqPoint (35.0 , 17 * 10::ms);
 //    233.0 => fe.target;
 //    10::ms => fe.duration  => now;
 //    100.0 => fe.target;
