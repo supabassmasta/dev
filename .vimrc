@@ -1579,3 +1579,17 @@ ab STCROSSOVERK STCROSSOVER stcrossover0;
 ab STDELAY2K STDELAY2 stdelay2; // Stereo simple delay + passthrough
 \<CR>stdelay2.connect(last $ ST , 12::ms /* delay right */, 15::ms /* delay left */, 0.3 /* delay gain */ );       stdelay2 $ ST @=>  last;  
 
+
+ab KIKK KIK kik
+\<esc>okik.config(0.1 /* init Sin Phase */, 76 * 100 /* init freq env */, 0.4 /* init gain env */);
+\<CR>kik.addFreqPoint (233.0, 2::ms);
+\<CR>kik.addFreqPoint (100.0, 20::ms);
+\<CR>kik.addFreqPoint (35.0, 17 * 10::ms);
+\<CR>
+\<CR>kik.addGainPoint (0.6, 2::ms);
+\<CR>kik.addGainPoint (0.3, 10::ms);
+\<CR>kik.addGainPoint (1.0, 10::ms);
+\<CR>kik.addGainPoint (1.0, 171::ms);
+\<CR>kik.addGainPoint (0.0, 15::ms);
+
+
