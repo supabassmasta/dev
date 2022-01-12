@@ -944,6 +944,15 @@ public class SET_WAV {
     dir + "InspektorGadjet-SuperKicks-V1 (7).wav" => s.wav["M"];
     dir + "InspektorGadjet-SuperKicks-V1 (8).wav" => s.wav["N"];
 
+     ROOTPATH.str.my_string + "_SAMPLES/SNARE_Trance/" => dir;
+     dir + "snrt1.wav" => s.wav["s"];
+     dir + "snrt2.wav" => s.wav["t"];
+     dir + "snr3.wav" => s.wav["u"];
+     dir + "snr4.wav" => s.wav["v"];
+     dir + "snr5.wav" => s.wav["S"];
+     dir + "snr6.wav" => s.wav["T"];
+     dir + "snr7.wav" => s.wav["U"];
+     dir + "snr8.wav" => s.wav["V"];
   }
 
 
