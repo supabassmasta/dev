@@ -1,4 +1,67 @@
 21 => int mixer;
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void KICK3(string seq) {
+
+TONE t;
+t.reg(KIK kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+kik.config(0.1 /* init Sin Phase */, 8 * 100 /* init freq env */, 0.4 /* init gain env */);
+kik.addFreqPoint (233.0, 2::ms);
+kik.addFreqPoint (90.0, 50::ms);
+kik.addFreqPoint (31.0, 13 * 10::ms);
+
+kik.addGainPoint (0.5, 13::ms);
+kik.addGainPoint (0.3, 25::ms);
+kik.addGainPoint (1.0, 10::ms);
+kik.addGainPoint (1.0, 13 * 10::ms);
+kik.addGainPoint (0.0, 15::ms); 
+
+
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+seq => t.seq;
+.25 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+
+STDUCKMASTER duckm;
+duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 3::ms /* Attack */, 10::ms /* Release */ );      duckm $ ST @=>  last; 
+
+
+
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+fun void TRANCEHH(string seq) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.ACOUSTICTOM(s);// SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s); //
+  SET_WAV.TRANCE_KICK(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+   s.wav["u"]=> s.wav["u"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  .9 * data.master_gain => s.gain; //
+  s.gain("u", 1.3); // for single wav 
+  //s.sync(4*data.tick);// s.element_sync(); //
+  s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate; // s.out("k") /* return ST */
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 
 class KICKACT extends ACTION {
     SndBuf @ s;
@@ -1009,7 +1072,7 @@ t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); //
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c{c" + seq => t.seq;
-1.6 * data.master_gain => t.gain;
+0.8 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -1037,11 +1100,24 @@ stsynclpfx0.nio.padsr.setCurves(1.0, 43 * 0.001, 1.0); // curves: > 1 = Attack c
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
+STBELL stbell0; 
+stbell0.connect(last $ ST , 23 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 /* channels */, 0.4 /* Gain */ );       stbell0 $ ST @=>  last;   
+
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 stlpfx0.connect(last $ ST ,  stlpfx0_fact, 250.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
-STBELL stbell0; 
-stbell0.connect(last $ ST , 23 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 /* channels */, 0.4 /* Gain */ );       stbell0 $ ST @=>  last;   
+
+
+STPADSR stpadsr;
+stpadsr.set(1::ms /* Attack */, 30::ms /* Decay */, 1.0 /* Sustain */, 4 * 10::ms /* Sustain dur of Relative release pos (float)*/,  2 * 10::ms /* release */);
+stpadsr.setCurves(1.0, 1.0, 0.8); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+stpadsr.connect(last $ ST, t.note_info_tx_o); stpadsr $ ST @=>  last;
+//stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 
+// stpadsr.keyOn(); stpadsr.keyOff(); 
+
+//STFILTERX stlpfx1; LPF_XFACTORY stlpfx1_fact;
+//stlpfx1.connect(last $ ST ,  stlpfx0_fact, 17 * 100.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       stlpfx1 $ ST @=>  last;  
+
 
 //STCOMPRESSOR stcomp;
 //7. => float in_gain;
@@ -1065,8 +1141,8 @@ stbell0.connect(last $ ST , 23 * 10 /* freq */ , 1.2 /* Q */ , 1 /* order */, 1 
 //sthpfx0.connect(last $ ST ,  sthpfx0_fact, 24.0 /* freq */ , 1.0 /* Q */ , 3 /* order */, 1 /* channels */ );       sthpfx0 $ ST @=>  last;  
 
 
-STDELAY2 stdelay;
-stdelay.connect(last $ ST , 14::ms, 10::ms, 0.1 );       stdelay $ ST @=>  last;  
+//STDELAY2 stdelay;
+//stdelay.connect(last $ ST , 14::ms, 10::ms, 0.1 );       stdelay $ ST @=>  last;  
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -1108,12 +1184,13 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-  spork ~  KICK2 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
 //  spork ~  BASS13 ("*4 _!1!1!1 _!1!3!1 _!1!5!1 _!1!4!1 _!1!7!1 _!1!8!1 _!1!3!1 _!1!5!1 _    "); 
 //  spork ~  BASS13 ("*4 _!1!1!1 ___!1 _!1!1!1 _8///1 _!1!1!1 _!1!3!1 ___!8 _!8!5!1 _    "); 
   spork ~  BASS14 ("*4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1_   "); 
 //  spork ~  BASS14 ("*4  _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _ "); 
 //  spork ~  BASS8 ("*4  +1 !1!1!1!1  !1!1!1!1  !1!1!5!1  !1!1!0!1  !1!1!5!3  !0!1!2!4  !1!1!8!5  !1!1!0!1_   "); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh _huh    "); 
   8 * data.tick =>  w.wait;   
 
 }
