@@ -953,6 +953,15 @@ public class SET_WAV {
      dir + "snr6.wav" => s.wav["T"];
      dir + "snr7.wav" => s.wav["U"];
      dir + "snr8.wav" => s.wav["V"];
+
+    ROOTPATH.str.my_string + "_SAMPLES/PsytranceDrumKit1Examples/G-Sonique PsytranceDrumKit1 Examples/" =>  dir;
+    dir + "Closed hat 01.wav" => s.wav["h"];
+    dir + "Closed hat 10.wav" => s.wav["i"];
+    dir + "Closed hat 43.wav" => s.wav["j"];
+
+    dir + "Open Hat 04.wav" => s.wav["H"];
+    dir + "Open Hat 21.wav" => s.wav["I"];
+    dir + "Open Hat 26.wav" => s.wav["J"];
   }
 
 
