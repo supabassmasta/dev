@@ -26,6 +26,8 @@ Machine.add( rt + "CORE/SYNC/SYNC.ck" );
 Machine.add( rt + "CORE/launcher/launcher_hold.ck" );
 
 Machine.add( rt + "CORE/SYNT/list_SERUM0.ck" );
+
+Machine.add( rt + "CORE/MISC/RAND.ck" );
 me.yield();
 Machine.add( rt + "CORE/SYNTA/SYNTA.ck" );
 
