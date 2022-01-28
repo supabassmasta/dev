@@ -321,6 +321,7 @@ Machine.add( rt + "CORE/seq_3/SET_WAV.ck");
 Machine.add( rt + "CORE/seq_3/SET_WAV2.ck");
 Machine.add(rt + "CORE/EFFECTS/ARP.ck");
 Machine.add(rt + "CORE/EFFECTS/STCUTTER.ck");
+Machine.add(rt + "CORE/EFFECTS/STREVAUX.ck");
 Machine.add("page_manager_nb_page_config.ck"); // PAGE MANAGER : NUMBER OF PAGES
 me.yield();
 Machine.add( rt + "CORE/launchpad/script_launcher.ck");
