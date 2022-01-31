@@ -7,13 +7,13 @@ fun void KICK3(string seq) {
 
 TONE t;
 t.reg(KIK kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-kik.config(0.1 /* init Sin Phase */, 8 * 100 /* init freq env */, 0.4 /* init gain env */);
+kik.config(0.3 /* init Sin Phase */, 24 * 100 /* init freq env */, 0.4 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
 kik.addFreqPoint (90.0, 50::ms);
 kik.addFreqPoint (31.0, 13 * 10::ms);
 
-kik.addGainPoint (0.5, 13::ms);
-kik.addGainPoint (0.3, 25::ms);
+kik.addGainPoint (0.5, 8::ms);
+kik.addGainPoint (0.3, 30::ms);
 kik.addGainPoint (1.0, 10::ms);
 kik.addGainPoint (1.0, 13 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
@@ -22,7 +22,7 @@ kik.addGainPoint (0.0, 15::ms);
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-.25 * data.master_gain => t.gain;
+.28 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -55,7 +55,7 @@ fun void TRANCEHH(string seq) {
   s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate; // s.out("k") /* return ST */
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
-  s.go();     s $ ST @=> ST @ last; 
+  s.go();   //  s $ ST @=> ST @ last; 
 
   1::samp => now; // let seq() be sporked to compute length
   s.s.duration => now;
@@ -448,8 +448,12 @@ if (    0     ){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+    spork ~  TRANCEHH (" *2 _huh _huh _huh _huh    "); 
+   8 * data.tick =>  w.wait;   
 
-   spork ~   AMB1 ( 0 /* idx */, ":4  1111_" , 1./* g */ ); 
+} if(0) {
+
+//   spork ~   AMB1 ( 0 /* idx */, ":4  1111_" , 1./* g */ ); 
 
    spork ~  SYNT1 ("*4  {c {c  {c " + RAND.seq("1////1_, F//f_,8///8, f//1, F////1_", 6) ); 
   
@@ -474,7 +478,7 @@ while(1) { /********************************************************/
   spork ~  TRANCEHH (" *2 _huh _huh _huh _huh    "); 
 
   8 * data.tick =>  w.wait;   
-   spork ~   AMB1 ( 0 /* idx */, ":4  1111_" , 1.5 /* g */ ); 
+//   spork ~   AMB1 ( 0 /* idx */, ":4  1111_" , 1.5 /* g */ ); 
 
    spork ~  SYNT2 ("*4  {c {c  {c " + RAND.seq("1////1_, F//f_,8///8, f//1, F////1_", 6) ); 
   
