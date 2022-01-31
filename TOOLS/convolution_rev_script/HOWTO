@@ -1,0 +1,6 @@
+copy every files in song directory
+
+Start song with ./conv_chuck.sh
+
+Note: Use STREXAUX in scrpit
+this way ctopj can be used with no external REV. STREV1 is used instead.
