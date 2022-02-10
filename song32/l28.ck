@@ -1,6 +1,6 @@
 // Gain synt F note is -1, f : 1, 1 : 0
 class gainSYNT extends SYNT{
-    inlet => Gain minus => Gain fact => outlet; 
+    inlet => Gain minus => Gain fact => Gain minus2 => outlet; 
     
     1. => minus.gain;
     Step stp;
@@ -8,7 +8,12 @@ class gainSYNT extends SYNT{
     stp => minus;
     2 => minus.op;
 
-   1 / Std.mtof(data.ref_note)   => fact.gain;
+    Step stp2;
+    1 => stp2.next;
+    stp2 => minus2;
+    2 => minus2.op;
+
+   2 / Std.mtof(data.ref_note)   => fact.gain;
    <<<"fact.gain", fact.gain()>>>;
    
 
@@ -45,7 +50,7 @@ fun UGen  AUTOGAIN(string s){
   return a.outlet;
 } 
 
-AUTOGAIN("T")=> Gain test => blackhole; 
+AUTOGAIN("5")=> Gain test => blackhole; 
 
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
