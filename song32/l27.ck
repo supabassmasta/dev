@@ -1,4 +1,4 @@
-// Gain synt F note is -1, f : 1, 1 : 0
+// Gain synt 1 note is  0.0, 8 is 1.0
 class gainSYNT extends SYNT{
     inlet => Gain minus => Gain fact => outlet; 
     
@@ -45,7 +45,7 @@ fun UGen  AUTOGAIN(string s){
   return a.outlet;
 } 
 
-AUTOGAIN("T")=> Gain test => blackhole; 
+AUTOGAIN("8")=> Gain test => blackhole; 
 
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"

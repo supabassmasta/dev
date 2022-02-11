@@ -51,6 +51,7 @@ Machine.add( rt + "CORE/EFFECTS/FILTERX/HPFX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/RESX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/DLX.ck");
 Machine.add( rt + "CORE/EFFECTS/FILTERX/KGX.ck");
+Machine.add( rt + "CORE/EFFECTS/STFREEPAN.ck");
 
 Machine.add( rt + "CORE/NANOKONTROL/NANO.ck");
 
@@ -323,6 +324,7 @@ Machine.add(rt + "CORE/EFFECTS/ARP.ck");
 Machine.add(rt + "CORE/EFFECTS/STCUTTER.ck");
 Machine.add(rt + "CORE/EFFECTS/STREVAUX.ck");
 Machine.add("page_manager_nb_page_config.ck"); // PAGE MANAGER : NUMBER OF PAGES
+Machine.add(rt + "CORE/SYNT/AUTO.ck");
 me.yield();
 Machine.add( rt + "CORE/launchpad/script_launcher.ck");
 Machine.add("config.ck");

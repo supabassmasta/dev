@@ -1248,7 +1248,7 @@ ab StepK Step stp0 =>
 \<CR><Up><Up><End>
 
 
-ab AUTOK ///////////////// AUTOMATION ///////////////////////
+ab AUTOMATIONK ///////////////// AUTOMATION ///////////////////////
 \<CR>
 \<CR>Step stpauto =>  Envelope eauto =>  blackhole;
 \<CR>10 => eauto.value; // INITIAL VALUE
@@ -1599,3 +1599,11 @@ ab STTOAUXK STTOAUX sttoaux0;
 
 ab STREVAUXK STREVAUX strevaux;
 \<CR>strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last; 
+
+ab STFREEPANK STFREEPAN stfreepan0;
+\<CR>stfreepan0.connect(last $ ST); stfreepan0 $ ST @=>  last; 
+\<CR>=> stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0
+
+" AUTO freq: dorian scale based on ref note , gain 1 : 0.0, 8 : 1.0 and pan 1 : -1.0, 5 ~ 0.0, 8 : 1.0
+ab AUTOK AUTO.freq("") => 
+
