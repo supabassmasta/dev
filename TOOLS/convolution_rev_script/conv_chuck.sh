@@ -11,7 +11,7 @@ function ctrl_c() {
   exit 0
 }
 
-./conv_rev_connect.sh &
+./_conv_rev_connect.sh &
 echo 4 > output_numbers.txt
 chuckj song_top.ck --out4
 
