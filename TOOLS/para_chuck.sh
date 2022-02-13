@@ -1,6 +1,6 @@
 #!/bin/bash
 killall lsp-plugins-para-equalizer-x16-stereo
-lsp-plugins-para-equalizer-x16-stereo -c para_eq_base_conf.cfg &
+lsp-plugins-para-equalizer-x16-stereo -c /home/toup/ChucK/dev/TOOLS/para_eq_base_conf.cfg &
 
 sleep 1
 
