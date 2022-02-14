@@ -15,6 +15,8 @@ public class KIK extends SYNT{
   float gainValue [0];
   dur gainDur [0];
 
+  0 => int spork_cnt;
+
   fun void  addFreqPoint (float f, dur d){ 
      freqValue << f;
      freqDur << d;
@@ -35,9 +37,10 @@ public class KIK extends SYNT{
   
 
    fun void  trig_freq  (){ 
+    spork_cnt => int own_cnt;
     initfe => fe.value;
 
-    for (0 => int i; i <  freqValue.size() ; i++) {
+    for (0 => int i; i <  freqValue.size() &&  spork_cnt == own_cnt  ; i++) {
       freqValue[i] =>  fe.target;
       freqDur[i] => fe.duration  => now;
     }
@@ -47,13 +50,13 @@ public class KIK extends SYNT{
  
   fun void  trig_env  (){ 
 //    <<<"TRIG">>>;
-
+    spork_cnt => int own_cnt;
     initSinPhase => sin0.phase;
 
     // Attack
     initfg => ge.value;
 
-    for (0 => int i; i <  gainValue.size() ; i++) {
+    for (0 => int i; i <  gainValue.size() &&  spork_cnt == own_cnt ; i++) {
       gainValue[i] =>  ge.target;
       gainDur[i] => ge.duration  => now;
     }
@@ -63,6 +66,7 @@ public class KIK extends SYNT{
   //fun void on()  { }  fun void off() { }  
   
   fun void new_note(int idx)  {
+        1 +=> spork_cnt;
         spork ~ trig_freq();
         spork ~ trig_env();
   }
