@@ -168,6 +168,61 @@ fun void TRANCEHH(string seq) {
   s.s.duration => now;
 }
 
+////////////////////////////////////////////////////////////////////////////////////////
+
+fun void MEGAMOD (int n, int nmod, string seq, string modf, string modg, string arpi, dur d){ 
+   
+   TONE t;
+   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   s0.config(n /* synt nb */ ); 
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   .2 * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();// 
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   t.set_adsrs(2::ms, 30::ms, .7, 40::ms);
+   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+
+STFREEPAN stfreepan0;
+stfreepan0.connect(last $ ST); stfreepan0 $ ST @=>  last; 
+AUTO.pan("*2 1//88/5/8/1*28/11/88/11/88/11/88/11/8")  => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0 
+
+//STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+//stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+//AUTO.freq(arpi)  => stfreelpfx0.freq; // CONNECT THIS 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+
+
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
+
+//SERUM00 s1;
+//s1.config(nmod /* synt nb */ ); 
+
+//AUTO.freq(modf) =>  s1 => MULT m0 => s0.inlet;
+AUTO.freq(modf) =>  SinOsc sin0 =>  MULT m0 => s0.inlet;
+AUTO.freq(modg) =>  m0; 
+//
+//ARP arp;
+//arp.t.dor();
+//50::ms => arp.t.glide;
+////arpi => arp.t.seq;
+//arp.t.go();   
+////
+// CONNECT SYNT HERE
+//3 => s0.inlet.op;
+//arp.t.raw() => s0.inlet; 
+
+
+  d => now; // let seq() be sporked to compute length
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
@@ -192,6 +247,29 @@ sy.sync(1 * data.tick);
 
 WAIT w;
 1::samp => w.fixed_end_dur;
+
+fun void  LAB_LOOP(){ 
+ while(1) {
+  //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+  //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+   
+ int a[0];
+ a << 137;
+ a << 138;
+ a << 141;
+ a << 170;
+ a << 208;
+// spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "TFTF8" /*modg*/, "}c mn/tn/Tmt" /* lpf */, 16 * data.tick)  ;
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 " + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
+  16 * data.tick =>  w.wait;   
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*4 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
+  16 * data.tick =>  w.wait;   
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c:4 g/11/FF/g" /* lpf */, 16 * data.tick)  ;
+  16 * data.tick =>  w.wait;   
+ }
+} 
+spork ~ LAB_LOOP();
+//LAB_LOOP();
 
 /********************************************************/
 if (    0     ){
