@@ -395,8 +395,8 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(11 * 10 /* Base */, 70 * 10 /* Variable */, 1. /* Q */);
-stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 68*  .01/* Relative Decay */, 0.20 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.freq(11 * 10 /* Base */, 50 * 10 /* Variable */, 1. /* Q */);
+stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 60*  .01/* Relative Decay */, 0.25 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -409,7 +409,7 @@ stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 // stadsr.keyOn(); stadsr.keyOff();
 
 //STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-//stlpfx0.connect(last $ ST ,  stlpfx0_fact, 9* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+//stlpfx0.connect(last $ ST ,  stlpfx0_fact, 3* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -425,31 +425,35 @@ fun void BASS15_HPF (string seq, string hpfseq) {
 
 
 TONE t;
-t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(SERUM00X s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(2217 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright 2370 : saw_gap 
+
+
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"{c{c" + seq => t.seq;
-1.2 * data.master_gain => t.gain;
+"{c" + seq => t.seq;
+0.55 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//t.set_adsrs(1::samp, data.tick *1/16, .7, data.tick *1/16);
-t.set_adsrs(1::samp, data.tick *1/16, 1., 1::ms);
+//t.set_adsrs(2::ms, 10::ms, .8, 40::ms);
 //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
 
+
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(14 * 10 /* Base */, 24 * 10 /* Variable */, 1. /* Q */);
-stsynclpfx0.adsr_set(.01 /* Relative Attack */, .16/* Relative Decay */, 0.7 /* Sustain */, .5 /* Relative Sustain dur */, 0.2 /* Relative release */);
-stsynclpfx0.nio.padsr.setCurves(1.0, 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+stsynclpfx0.freq(11 * 10 /* Base */, 50 * 10 /* Variable */, 1. /* Q */);
+stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 60*  .01/* Relative Decay */, 0.25 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
-STPADSR stpadsr;
-stpadsr.set(4::ms /* Attack */, 43::ms /* Decay */, 0.7 /* Sustain */, 10::ms /* Sustain dur of Relative release pos (float)*/,  40::ms /* release */);
-stpadsr.setCurves(1.0, 0.7, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-stpadsr.connect(last $ ST, t.note_info_tx_o); stpadsr $ ST @=>  last;
+
+STADSR stadsr;
+stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.3 /* Sustain dur of Relative release pos (float) */,  20::ms /* release */);
+stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
+
 //stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 
 // stpadsr.keyOn(); stpadsr.keyOff(); 
 
