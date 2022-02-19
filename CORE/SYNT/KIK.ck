@@ -35,8 +35,17 @@ public class KIK extends SYNT{
   } 
 
   
+  0 => int ongoing;
+2::ms => dur stop_dur;
+
 
    fun void  trig_freq  (){ 
+
+    // Attack
+    if ( ongoing) {
+      stop_dur => now;
+    }
+
     spork_cnt => int own_cnt;
     initfe => fe.value;
 
@@ -49,17 +58,25 @@ public class KIK extends SYNT{
   } 
  
   fun void  trig_env  (){ 
-//    <<<"TRIG">>>;
+    //    <<<"TRIG">>>;
     spork_cnt => int own_cnt;
-    initSinPhase => sin0.phase;
+
 
     // Attack
-    initfg => ge.value;
+    if ( ongoing) {
+      0 => ge.target;
+      stop_dur => ge.duration => now;
+    }
 
+    initfg => ge.value;
+    initSinPhase => sin0.phase;
+
+    1=> ongoing;
     for (0 => int i; i <  gainValue.size() &&  spork_cnt == own_cnt ; i++) {
       gainValue[i] =>  ge.target;
       gainDur[i] => ge.duration  => now;
     }
+    0=> ongoing;
  
   }
 

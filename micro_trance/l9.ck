@@ -1096,8 +1096,10 @@ autopan.connect(last $ ST, .5 /* span 0..1 */, data.tick * 5 / 1 /* period */, 0
 STMIX stmix2;
 stmix2.receive(mixer + 1); stmix2 $ ST @=>  last; 
 
-STGVERB stgverb;
-stgverb.connect(last $ ST, .2 /* mix */, 4 * 10. /* room size */, 4::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+//STGVERB stgverb;
+//stgverb.connect(last $ ST, .2 /* mix */, 4 * 10. /* room size */, 4::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last;  
 
 STMIX stmix3;
 stmix3.receive(mixer + 2); stmix3 $ ST @=>  last; 

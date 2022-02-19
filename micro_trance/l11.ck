@@ -1390,6 +1390,10 @@ stgverb.connect(last $ ST, .2 /* mix */, 4 * 10. /* room size */, 4::second /* r
 STMIX stmix3;
 stmix3.receive(mixer + 2); stmix3 $ ST @=>  last; 
 
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last;  
+
+
 STECHO ech2;
 ech2.connect(last $ ST , data.tick * 3 / 4 , .95);  ech2 $ ST @=>  last; 
 
