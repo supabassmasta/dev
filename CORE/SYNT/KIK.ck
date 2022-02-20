@@ -36,7 +36,7 @@ public class KIK extends SYNT{
 
   
   0 => int ongoing;
-2::ms => dur stop_dur;
+  2::ms => dur stop_dur;
 
 
    fun void  trig_freq  (){ 
@@ -76,8 +76,10 @@ public class KIK extends SYNT{
       gainValue[i] =>  ge.target;
       gainDur[i] => ge.duration  => now;
     }
-    0=> ongoing;
- 
+
+    if (spork_cnt == own_cnt){
+      0=> ongoing;
+    }
   }
 
   //fun void on()  { }  fun void off() { }  

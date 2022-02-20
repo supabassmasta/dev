@@ -189,8 +189,8 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(11 * 10 /* Base */, 27 * 10 /* Variable */, 1. /* Q */);
-stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 26*  .01/* Relative Decay */, 0.6 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.freq(11 * 10 /* Base */, 31 * 10 /* Variable */, 1. /* Q */);
+stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 28*  .01/* Relative Decay */, 0.58 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -796,10 +796,13 @@ WAIT w;
 fun void  LAB_LOOP  (){ 
   while(1) {
 //  spork ~   PADS (":6 1|3_"); 
-  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K_K_ KKKK *2KKKK KKKK"); 
-//  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1___"); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
+//  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K_K_ KKKK *2KKKK *2KKKK KKKK:4 K__"); 
+  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1___"); 
 //  spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__   _1__"); 
   8 * data.tick =>  w.wait;      
+//  spork ~  TRANCEBREAK ("*4 ____ K___ K___ K___ K___ K_K_KKK_K_K__ "); 
+//  8 * data.tick =>  w.wait;      
 
 
 
