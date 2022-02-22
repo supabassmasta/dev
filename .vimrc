@@ -1602,11 +1602,11 @@ ab STREVAUXK STREVAUX strevaux;
 
 ab STFREEPANK STFREEPAN stfreepan0;
 \<CR>stfreepan0.connect(last $ ST); stfreepan0 $ ST @=>  last; 
-\<CR>AUTOK AUTO.pan("") => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0
+\<CR>AUTO.pan("") => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0
 
 " AUTO freq: dorian scale based on ref note , gain 1 : 0.0, 8 : 1.0 and pan 1 : -1.0, 5 ~ 0.0, 8 : 1.0
 ab AUTOK AUTO.freq("") => 
 
 ab STFREEGAINK STFREEGAIN stfreegain;
 \<CR>stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
-\<CR>AUTOK AUTO.gain("") => stfreegain.g; // connect this
+\<CR>AUTO.gain("") => stfreegain.g; // connect this
