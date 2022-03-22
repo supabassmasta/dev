@@ -6,15 +6,15 @@ fun void KICK3(string seq) {
 
 TONE t;
 t.reg(KIK kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-kik.config(0.1 /* init Sin Phase */, 15 * 100 /* init freq env */, 0.4 /* init gain env */);
-kik.addFreqPoint (233.0, 2::ms);
+kik.config(0.1 /* init Sin Phase */, 17 * 100 /* init freq env */, 0.4 /* init gain env */);
+kik.addFreqPoint (250.0, 2::ms);
 kik.addFreqPoint (90.0, 50::ms);
-kik.addFreqPoint (31.0, 13 * 10::ms);
+kik.addFreqPoint (31.0, 4 * 10::ms);
 
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.4, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 13 * 10::ms);
+kik.addGainPoint (1.0, 4 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 
@@ -154,34 +154,117 @@ stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
   t.s.duration => now;
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////
 fun void TRANCEHH(string seq) {
 
-  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
-  SET_WAV.TRANCE(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // SET_WAV.ACOUSTIC(s); // SET_WAV.ACOUSTICTOM(s);// SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s); //
+  SET_WAV.TRANCE_KICK(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+   s.wav["U"]=> s.wav["u"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
- SEQ s3; SET_WAV.TRIBAL(s3);
-// s3.wav["s"] => s.wav["S"];  // act @=> s.action["a"]; 
- s3.wav["U"] => s.wav["S"];  // act @=> s.action["a"]; 
   seq => s.seq;
-  .8 * data.master_gain => s.gain; //
-  s.gain("S", .06); // for single wav 
-  s.no_sync();// s.element_sync(); //s.no_sync()
-; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
-   0.8 => s.wav_o["S"].wav0.rate;
+  .9 * data.master_gain => s.gain; //
+  s.gain("u", 1.6); // for single wav 
+  //s.sync(4*data.tick);// s.element_sync(); //
+  s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate; // s.out("k") /* return ST */
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
-  s.go();     s $ ST @=> ST @ last; 
-
-//  STDUCKMASTER duckm;
-//  duckm.connect(last $ ST, 5. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
-
-//  STMIX stmix;
-//  stmix.send(last, mixer);
-  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+  s.go();   //  s $ ST @=> ST @ last; 
 
   1::samp => now; // let seq() be sporked to compute length
   s.s.duration => now;
 }
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+fun void  SYNT1 (string seq, string Arp, int nb, dur glide, float g, dur d){ 
+   
+   TONE t;
+   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+   s0.config(nb /* synt nb */ ); 
+
+   glide => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   g * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();// 
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+    ARP arp;
+    arp.t.dor();
+    50::ms => arp.t.glide;
+    Arp => arp.t.seq;
+    arp.t.go();   
+
+    // CONNECT SYNT HERE
+    3 => s0.inlet.op;
+    arp.t.raw() => s0.inlet; 
+
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 4 * 100 /* freq base */, 25 * 100 /* freq var */, data.tick * 13 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 5 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last;  
+
+
+   d => now;
+
+} 
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////
+fun void  SYNT2 (string seq, string Arp, int nb, dur glide, float g, dur d){ 
+   
+   TONE t;
+   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+   s0.config(nb /* synt nb */ ); 
+
+   glide => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   g * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();// 
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+    ARP arp;
+    arp.t.dor();
+    50::ms => arp.t.glide;
+    Arp => arp.t.seq;
+    arp.t.go();   
+
+    // CONNECT SYNT HERE
+    3 => s0.inlet.op;
+    arp.t.raw() => s0.inlet; 
+
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 4 * 100 /* freq base */, 25 * 100 /* freq var */, data.tick * 13 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last;  
+
+   d => now;
+
+} 
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -215,11 +298,47 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
+  spork ~ SYNT1 ("*4  84B21" /* seq*/, "*2 11118 111B" /*arp*/, 8 /* SERUM00 nb */ , 10::ms /* glide */, .3 /* g */ , 64 * data.tick /* dur */ );
+
+  //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+  //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+   
+  spork ~ SYNT2 ("*8  5_3_1_" /* seq*/, "*3:211F" /*arp*/, 10 /* SERUM00 nb */ , 10::ms /* glide */, .3 /* g */ , 64 * data.tick /* dur */ );
+
+
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
-  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
-//  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _"); 
-//  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
-//  spork ~  TRANCEHH ("*4  ____ ____ ____ ____ ____ ____ ____ ___S  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!5!3 _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
   8 * data.tick =>  w.wait;   
+//}if (0) {
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k__k k_kk__  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1_ _!1_ _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!5!3 _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k_k_ k_kk__  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1_!1 _!1_ _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!5!3 _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ kk_k k_*2 kkkk k___  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 __!1_"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 ____ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!5!3 _"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ kk_k k_   "); 
+  spork ~  BASS0 ("*4    _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 __!1_ __!88_"); 
+  spork ~  TRANCEHH (" *2 _huh _huh _huh *2_hhh:2uh    "); 
+  8 * data.tick =>  w.wait;   
+
 
 }
