@@ -582,25 +582,6 @@ for (0 => int i; i < 4 ; i++) {
 8 * data.tick =>  w.wait;   
 }
 
-//}/***********************   MAGIC CURSOR *********************/
-//while(1) { /********************************************************/
-
-
-for (0 => int i; i < 4 ; i++) {
- 
-//   spork ~ SYNTGLIDE("*4 " +  RAND.seq("321,A01,345,765,51,58,_,_,__,1,8",8) /* seq */, 3 /* Serum00 synt */,  3 * 1000 /* lpf_f */, 34::ms /* glide dur */, .29 /* gain */, 7 * data.tick);
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
-    spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
-    spork ~  TRANCEHH ("*4 -4 jjjj jjjj jjjj jjjj jjjj jjjj jjjj jjjj  "); 
-    spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
-   spork ~ TEK_VARIOUS("*4 __a_ ____ __b_ ____ __c_ ____ ___N__", 0 /* tomix */, .15 /* gain */);
-
-  spork ~ SYNTGLIDE("*4 {c " +  RAND.seq("321,A01,345,765,51,58,_,_,__,1,8",8) /* seq */, 6 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, .17 /* gain */, 4 * data.tick);
-4 * data.tick =>  w.wait;   
-   spork ~ SYNTGLIDE("__ *4 {c " +  RAND.seq("321,A01,345,765,51,58,_,_,__,1,8",8) /* seq */, 10 /* Serum00 synt */,  3 * 1000 /* lpf_f */, 34::ms /* glide dur */, .14 /* gain */, 6 * data.tick);
-
-4 * data.tick =>  w.wait;   
-}
 
 //}/***********************   MAGIC CURSOR *********************/
 //while(1) { /********************************************************/
@@ -610,8 +591,8 @@ for (0 => int i; i < 4 ; i++) {
  
 for (0 => int i; i < 4 ; i++) {
  
-    spork ~ ACID ("*8 {c " +  RAND.seq("1_1_,1_,_,8,f",8) /* seq */, 6 /* Serum00 synt */,  34::ms /* glide dur */, 10 * 0.01 /* gain */, 2 * data.tick);
-    spork ~ SYNTGLIDE2("____ *8 }c  " +  RAND.seq("_,__,_,_,_,8/1,F/8,f/1,1/8",32) /* seq */, 55 /* Serum00 synt */,  9 * 1000 /* lpf_f */, 34::ms /* glide dur */, .03 /* gain */, 7 * data.tick);
+    spork ~ ACID ("*8 {c " +  RAND.seq("!1_!1_,!1_,_,!8,!f",5) /* seq */, 6 /* Serum00 synt */,  34::ms /* glide dur */, 9 * 0.01 /* gain */, 2 * data.tick);
+    spork ~ SYNTGLIDE2("____ *8 }c  " +  RAND.seq("*2,_,__,_,_,_,8/1,F/8,f/1,1/8,f/F,8//1,F//f",32) /* seq */, 55 /* Serum00 synt */,  9 * 1000 /* lpf_f */, 34::ms /* glide dur */, .04 /* gain */, 7 * data.tick);
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
     spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
