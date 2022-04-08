@@ -431,6 +431,60 @@ autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 8 / 1 /* period */, S
 
 }
 
+fun void ACID3 (string seq, int n,  dur gldur, float v) {
+  <<<"SEQ SYNTGLIDE: ", seq>>>;
+
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+  s0.config(n /* synt nb */ ); 
+  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+// MOD
+  TriOsc tri0 =>  s0.inlet;
+  2 * 10.0 => tri0.freq;
+  11 * 10 => tri0.gain;
+  0.5 => tri0.width;
+
+
+  STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
+  stsynclpfx0.freq(66 /* Base */, 78 * 100 /* Variable */, 2.4 /* Q */);
+  stsynclpfx0.adsr_set(.1 /* Relative Attack */, .4/* Relative Decay */, 0.4 /* Sustain */, .3 /* Relative Sustain dur */, 0.2 /* Relative release */);
+  stsynclpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
+  // CONNECT THIS to play on freq target //   
+//  ofs0 => stsynclpfx0.nio.padsr; 
+
+//  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+//  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 7 * 100 /* freq base */, 68 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+3. => stautoresx0.gain;
+
+STGAIN stgain;
+stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+stgain.connect(stsynclpfx0 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+
+STMIX stmix;
+stmix.send(last, mixer + 0);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -689,6 +743,26 @@ sy.sync(1 * data.tick);
 
 WAIT w;
 1::samp => w.fixed_end_dur;
+
+fun void  LOOP_LAB  (){ 
+    
+    while(1) {
+    spork ~ SYNTGLIDE_GAIN("*4 }c    8351 8351 8351 8351 8351 8351 8351 8351 8351   " /* seq */, 57 /* Serum00 synt */,  2 * 1000 /* lpf_f */, 17::ms /* glide dur */, .21 /* gain */, ":8 5/8" /* seq_gain */ );
+ 
+    spork ~ ACID3 ("*8   8_1_1_8_ 1_1_1_1_  8_1_1_8_ 1_1_8_ 1_1_f_ 8_1_f_ 1_1_1_1_  1_1_1_1_ 1_1_1_1_   "/* seq */, 2663 /* Serum00 synt */,  34::ms /* glide dur */, 10 * 0.01 /* gain */);
+//    spork ~ ACID3 ("*8   f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_  f_f_ _1__ 1_8_     "/* seq */, 2663 /* Serum00 synt */,  34::ms /* glide dur */, 10 * 0.01 /* gain */);
+//    spork ~ ACID3 ("*8   8_8_8_8_ __ f_1_ _1__1_1_1_    "/* seq */, 2663 /* Serum00 synt */,  34::ms /* glide dur */, 10 * 0.01 /* gain */);
+
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+    spork ~  TRANCEHH ("*4 -4 jjjj jjjj jjjj jjjj jjjj jjjj jjjj jjjj  "); 
+//   spork ~  TRANCEHH ("*4  __h_  __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+   spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+    8 * data.tick =>  w.wait;  
+    }
+} 
+//spork ~   LOOP_LAB (); 
+ LOOP_LAB (); 
+
 
 /********************************************************/
 if (    0     ){
