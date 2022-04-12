@@ -48,7 +48,7 @@ HW.launchpad.virtual_key_off_only(76);
 4 * data.tick => now;
 
 HW.launchpad.virtual_key_on_only(78); // ECHO FLUTE
-HW.launchpad.virtual_key_on_only(88); // REV FLUTE
+//HW.launchpad.virtual_key_on_only(88); // REV FLUTE
 
 
 

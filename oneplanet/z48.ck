@@ -42,7 +42,7 @@ HW.launchpad.virtual_key_off_only(26);
 HW.launchpad.virtual_key_off_only(76); 
 HW.launchpad.virtual_key_off_only(81); // VS
 HW.launchpad.virtual_key_off_only(78); // ECHO FLUTE
-HW.launchpad.virtual_key_off_only(88); // REV FLUTE
+//HW.launchpad.virtual_key_off_only(88); // REV FLUTE
 
 
 while(1) {
