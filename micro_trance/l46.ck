@@ -184,10 +184,10 @@ stsynclpfx0.nio.padsr.setCurves(1.0,196 * 0.001, 1.0); // curves: > 1 = Attack c
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
-//ADSRMOD adsrmod; // Direct ADSR freq input modulation
-//adsrmod.adsr_set(0.01 /* relative attack dur */, 0.03 /* relative decay dur */ , 0.6 /* sustain */, - 0.3 /* relative release pos */, .3 /* relative release dur */);
-//adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
-//adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
+ADSRMOD adsrmod; // Direct ADSR freq input modulation
+adsrmod.adsr_set(0.01 /* relative attack dur */, 0.03 /* relative decay dur */ , 0.6 /* sustain */, - 0.3 /* relative release pos */, .3 /* relative release dur */);
+adsrmod.padsr.setCurves(1., 1., 2.); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
+adsrmod.connect(s0 /* synt */, t.note_info_tx_o /* note info TX */); 
 
 STADSR stadsr;
 stadsr.set(4::ms /* Attack */, 0::ms /* Decay */, 1. /* Sustain */, -0.4 /* Sustain dur of Relative release pos (float) */,  20::ms /* release */);
@@ -572,7 +572,7 @@ while(1) {
 
 
 } 
-//LOOP_LAB();
+LOOP_LAB();
 
 // INTRO
 if ( 1  ){
