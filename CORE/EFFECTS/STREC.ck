@@ -54,5 +54,58 @@ public class STREC extends ST {
     spork ~ f1 (d, name, sync_dur, no_sync );
   }
 
+  //////////////////////// START STOP METHOD /////////////////////////////////////////////////
+  WvOut2 wss;
+
+  fun void connect(ST @ tone ) {
+    tone.left() => in[0];
+    tone.right() => in[1];
+  }
+
+  fun void rstart (  string name, dur sync_dur, int no_sync ){ 
+    // sync
+    if ( !no_sync ){
+        sync_dur  - ((now - data.wait_before_start)%sync_dur) => now;
+    }
+
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+    <<<"***   REC " + name + " ****">>>; 
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+
+    in =>   wss => blackhole;
+    name => wss.wavFilename;
+
+  }
+
+  fun void rstop (  dur sync_dur, int no_sync ){ 
+
+    // sync
+    if ( !no_sync ){
+      sync_dur  - ((now - data.wait_before_start)%sync_dur) => now;
+    }
+
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+    <<<"***  END  REC   ****">>>; 
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+
+    wss =< blackhole;
+
+    1::samp => now;
+
+  } 
+
+  fun void rec_start( string name,  dur sync_dur, int no_sync) {
+    spork ~ rstart ( name, sync_dur, no_sync );
+  }
+
+  fun void rec_stop( dur sync_dur, int no_sync) {
+    spork ~ rstop ( sync_dur, no_sync );
+  }
+
+
 }
 

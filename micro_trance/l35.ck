@@ -384,6 +384,10 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .3);  ech $ ST @=>  last; 
 
+STREC strecaux;
+strecaux.connect(last $ ST); strecaux $ ST @=>  last;  
+
+
 STREVAUX strevaux;
 strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
 
@@ -444,7 +448,7 @@ fun void LOOP_MOD   (){
 // LOOP_MOD ();
 
 /********************************************************/
-if (    0     ){
+//if (    0     ){
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
@@ -463,9 +467,19 @@ if (    0     ){
 
 ////////////////////////////////////////////////////////////////////////////////
 
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
 
+ST st; st $ ST @=>   last;
+dac.left => st.outl;
+dac.right => st.outr;
+
+STREC strec;
+strec.connect(last $ ST); strec $ ST @=>  last;  
+0 => strec.gain;
+strec.rec_start("l35_main.wav", 0::ms, 1);
+
+strecaux.rec_start("l35_aux.wav", 0::ms, 1);
 
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k__k k_k___  "); 
   spork ~  BASS0 ("*4   __!3!2 __!1!2 __!3!2 __!1!1   __!3!2 __!1!2 __!3!2 __!1!1    "); 
@@ -579,6 +593,14 @@ while(1) { /********************************************************/
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
 
+strec.rec_stop( 0::ms, 1);
+strecaux.rec_stop( 0::ms, 1);
 
+2::ms => now;
 
+while(1) {
+       100::ms => now;
 }
+ 
+
+//}
