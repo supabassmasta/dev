@@ -487,13 +487,13 @@ if ( 1 && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
 
     LONG_WAV l2;
     name_aux => l2.read;
-    1.0 * data.master_gain => l2.buf.gain;
+    0.2 * data.master_gain => l2.buf.gain;
     0 => l2.update_ref_time;
     l2.AttackRelease(0::ms, 10::ms);
     l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
 
     STREVAUX strevaux;
-    strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
+    strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
 
 
   while(1) {
