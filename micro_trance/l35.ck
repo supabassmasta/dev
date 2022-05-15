@@ -470,6 +470,40 @@ fun void LOOP_MOD   (){
 //}/***********************   MAGIC CURSOR *********************/
 //while(1) { /********************************************************/
 
+
+
+///////////////////// PLAYBACK/REC /////////////////////////
+
+"l35_main.wav" => string name_main;
+"l35_aux.wav" => string name_aux;
+
+if ( 1 && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
+    LONG_WAV l;
+    name_main => l.read;
+    1.0 * data.master_gain => l.buf.gain;
+    0 => l.update_ref_time;
+    l.AttackRelease(0::ms, 10::ms);
+    l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
+    LONG_WAV l2;
+    name_aux => l2.read;
+    1.0 * data.master_gain => l2.buf.gain;
+    0 => l2.update_ref_time;
+    l2.AttackRelease(0::ms, 10::ms);
+    l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
+
+    STREVAUX strevaux;
+    strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
+
+
+  while(1) {
+       100::ms => now;
+  }
+ 
+    
+}
+else {
+     
 ST st; st $ ST @=>   last;
 dac.left => st.outl;
 dac.right => st.outr;
@@ -477,9 +511,14 @@ dac.right => st.outr;
 STREC strec;
 strec.connect(last $ ST); strec $ ST @=>  last;  
 0 => strec.gain;
-strec.rec_start("l35_main.wav", 0::ms, 1);
+strec.rec_start(name_main, 0::ms, 1);
 
-strecaux.rec_start("l35_aux.wav", 0::ms, 1);
+strecaux.rec_start(name_aux, 0::ms, 1);
+
+//////////////////////////////////////////////////
+
+
+
 
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k__k k_k___  "); 
   spork ~  BASS0 ("*4   __!3!2 __!1!2 __!3!2 __!1!1   __!3!2 __!1!2 __!3!2 __!1!1    "); 
@@ -598,9 +637,7 @@ strecaux.rec_stop( 0::ms, 1);
 
 2::ms => now;
 
-while(1) {
-       100::ms => now;
 }
+
  
 
-//}

@@ -55,7 +55,7 @@ public class STREC extends ST {
   }
 
   //////////////////////// START STOP METHOD /////////////////////////////////////////////////
-  WvOut2 wss;
+  Event e;
 
   fun void connect(ST @ tone ) {
     tone.left() => in[0];
@@ -74,8 +74,19 @@ public class STREC extends ST {
     <<<"********************">>>; 
     <<<"********************">>>; 
 
-    in =>   wss => blackhole;
+    in => WvOut2  wss => blackhole;
     name => wss.wavFilename;
+  
+    e => now;
+
+    wss =< blackhole;
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+    <<<"***  END  REC " + name + "  ****">>>; 
+    <<<"********************">>>; 
+    <<<"********************">>>; 
+
+    1::samp => now;
 
   }
 
@@ -86,15 +97,9 @@ public class STREC extends ST {
       sync_dur  - ((now - data.wait_before_start)%sync_dur) => now;
     }
 
-    <<<"********************">>>; 
-    <<<"********************">>>; 
-    <<<"***  END  REC   ****">>>; 
-    <<<"********************">>>; 
-    <<<"********************">>>; 
+    e.signal();
 
-    wss =< blackhole;
 
-    1::samp => now;
 
   } 
 
