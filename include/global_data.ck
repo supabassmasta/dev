@@ -33,6 +33,9 @@ public class data {
    static int page_manager_page_nb;
    static int page_manager_start_page;
 
+// loop updater
+  static int next;
+
 }
 
 now => data.T0;
@@ -54,6 +57,8 @@ Event bar3[8] @=> data.break_ev;
 
 8 => data.page_manager_page_nb;
 0 => data.page_manager_start_page;
+
+0 => data.next;
 
 while(1) 1000::ms => now;
 
