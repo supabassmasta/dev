@@ -399,6 +399,47 @@ fun void  SINGLEWAV  (string file, float g){
 } 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////
+class WAVCTL {
+  STADSR stadsr;
+  stadsr.keyOff();
+  SndBuf s;
+  3::ms => dur att_dur;
+  3::ms => dur rel_dur;
+  fun void  load_connect (string file, float g){ 
+    ST st; st $ ST @=> ST @ last;
+    s => st.mono_in;
+
+    stadsr.set(att_dur /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 0 ,rel_dur   /* release */);
+    //stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
+    stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+    // stadsr.keyOn(); stadsr.keyOff(); 
+
+//    STMIX stmix;
+//    stmix.send(last, mixer + 1);
+
+    STREVAUX strevaux;
+    strevaux.connect(last $ ST, .25/* mix */); strevaux $ ST @=>  last;  
+
+    g => s.gain;
+
+    file => s.read;
+  }
+
+ fun void _play(float phase, float rate, dur d){
+    phase => s.phase;
+    rate => s.rate;
+    stadsr.keyOn();
+    d => now;
+    stadsr.keyOff();
+    rel_dur=> now;
+  }
+  fun void play(float phase, float rate, dur d){
+    spork ~ _play(phase, rate, d);
+  }
+ }
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -574,6 +615,97 @@ fun void  LEAD  (){
   4 * data.tick =>  w.wait; 
 } 
 
+//////////////////////////////////////////////////////////////////////
+fun void  CUT_VOICES  (){ 
+   WAVCTL wc;
+   wc.load_connect ("../_SAMPLES/Kecak/ooh.wav", .2);
+
+   WAIT w;
+   1 *data.tick => w.fixed_end_dur;
+
+   wc.play(.4, 1., .5 * data.tick);    1 * data.tick => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+     
+   wc.play(.4, 1., .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   wc.play(.4, 1., .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+
+    wc.play(.3, 1., .5 * data.tick);    1 * data.tick => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+
+   16 * data.tick =>  w.wait; 
+
+
+    
+} 
+//////////////////////////////////////////////////////////////////////
+fun void  CUT_VOICES1  (){ 
+   WAVCTL wc;
+   wc.load_connect ("../_SAMPLES/Kecak/ooh.wav", .2);
+
+   WAIT w;
+   1 *data.tick => w.fixed_end_dur;
+
+   wc.play(.4, 1., .5 * data.tick);    1 * data.tick => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+     
+   wc.play(.4, 1., .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   wc.play(.4, 1., .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+
+    wc.play(.3, 1., .5 * data.tick);    1 * data.tick => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .25 * data.tick);    data.tick * 1. / 3. => w.wait;
+   wc.play(.4, 1., .5 * data.tick);   data.tick * 1 => w.wait;
+
+   for (0 => int i; i < 3 * 8      ; i++) {
+     wc.play(.4 , 1 + i *.1 , .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   }
+   16 * data.tick =>  w.wait; 
+
+
+    
+} 
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////
+fun void  CUT_VOICES2  (){ 
+   WAVCTL wc;
+   wc.load_connect ("../_SAMPLES/Kecak/ooh.wav", .2);
+
+   WAIT w;
+   1 *data.tick => w.fixed_end_dur;
+
+   for (0 => int i; i < 3 * 4      ; i++) {
+     wc.play(Std.rand2f(0.2, .5) , Std.rand2f(0.5, 2.0) , .125 * data.tick);    data.tick * 1. / 3. => w.wait;
+   }
+ 
+   for (0 => int i; i < 3 * 6      ; i++) {
+     wc.play(Std.rand2f(0.2, .5) , Std.rand2f(0.5, 2.0) , .125 * data.tick);    data.tick * 1. / 4. => w.wait;
+   }
+   for (0 => int i; i < 3 * 12      ; i++) {
+     wc.play(Std.rand2f(0.2, .5) , Std.rand2f(0.5, 2.2) , .125 * data.tick);    data.tick * 1. / 6. => w.wait;
+   }
+    16 * data.tick =>  w.wait; 
+
+
+    
+} 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -618,6 +750,36 @@ sy.sync(1 * data.tick);
 WAIT w;
 1 *data.tick => w.fixed_end_dur;
 
+fun void  LOOP_LAB  (){ 
+   WAVCTL wc;
+   wc.load_connect ("../_SAMPLES/Kecak/ooh.wav", .5);
+
+   while(1) {
+   wc.play(.5, 1., .5 * data.tick);
+   1 * data.tick => w.wait;
+   wc.play(.5, 1., .25 * data.tick);
+   data.tick * 1. / 3. => w.wait;
+   wc.play(.5, 1., .25 * data.tick);
+   data.tick * 1. / 3. => w.wait;
+   wc.play(.5, 1., .25 * data.tick);
+   data.tick * 1. / 3. => w.wait;
+   wc.play(.5, 1., .25 * data.tick);
+   data.tick * 1. / 3. => w.wait;
+     
+//  spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
+//  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+//                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+
+  16 * data.tick =>  w.wait; 
+
+
+   }
+    
+} 
+//LOOP_LAB();
+
+
+
 // INTRO
 
 if ( 1  ){
@@ -657,10 +819,10 @@ if ( 1  ){
 //MASTER_SEQ3.update_ref_times(now - 16 * data.tick + 1::samp, data.tick * 16 * 128 );
 
 /********************************************************/
-if (    0     ){
+//if (    0     ){
 
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
 
   spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
   spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
@@ -806,6 +968,119 @@ while(1) { /********************************************************/
                            !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  ", ":8 F/8"); 
   spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
   16 * data.tick =>  w.wait;   
+
+////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+
+   spork ~ ACOUSTICTOM("*6 AAABBB CCCDDD UKKUUK SABCDU ");
+   spork ~  KICK3("____ *8 L___ L_L_ LLLL LLLL*2 LLLL LLLL LLLL LLLLLLLL LLLL LLLL LLLL"); 
+
+   8 * data.tick =>  w.wait; 
+   spork ~   SINGLEWAV("../_SAMPLES/Kecak/kecak.wav", .5); 
+
+    //    4 * data.tick - 1::samp =>  w.wait; 
+    4 * data.tick =>  w.wait; 
+    spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+    spork ~ ACOUSTICTOM("__ *4 ABCD :4 *6 +2U+2A+2B+2C+2D+2U ");
+    4 * data.tick =>  w.wait; 
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////
+
+  spork ~ CUT_VOICES  ();
+  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+  spork ~  KICK3 ("LLLL LLLL LLLL *3 L_L _L_ L_L LLL :3"); 
+  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+  spork ~ CUT_VOICES2  ();
+  spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ LLL :3 "); 
+  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+  spork ~ CUT_VOICES1  ();
+  spork ~  KICK3 ("LLLL LLLL LLLL *3 L_L _L_ L_L LLL :3"); 
+  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+  spork ~ CUT_VOICES2  ();
+  spork ~  KICK3 ("  LLLL LLLL LLLL *3 L_L _L_ *2 L_L_L_ LLLLLL :6  "); 
+  spork ~  BASS0     ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                           _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  "); 
+  spork ~  BASS0_HPF ("*3  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  
+                           !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  ", ":8 F/8"); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+//////////////////////////////////////////////////////////////////////////////////
+   spork ~ ACOUSTICTOM("*6 AAABBB CCCDDD UKKUUK SABCDU ");
+   4 * data.tick =>  w.wait; 
+   spork ~   SINGLEWAV("../_SAMPLES/Kecak/ooh.wav", .5); 
+   8 * data.tick  =>  w.wait; 
+   spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+   spork ~  KICK3 ("*8 L___ L_L_ LLLL LLLL*2 LLLL LLLL LLLL LLLLLLLL LLLL LLLL LLLL"); 
+    4 * data.tick =>  w.wait; 
+//////////////////////////////////////////////////////////////////////////////////
+/// END ///
+0 => data.next;
+while (! data.next) {
+
+  /// LEAD ///////
+  spork ~ LEAD (); // 32 tick 
+  /////////////////
+
+  spork ~ TRIBAL("*3 _y_ A_u _yy _AB yy_ A_u _yy yAB _y_ A_u _yy _AB CDC yAB yAB yAA ", 1 /* bank */, 0 /* tomix */, .4 /* gain */);
+
+  spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
+  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  spork ~ TRIBAL("*3 _y_ A_u _yy _AB yy_ A_u _yy yAB _y_ A_u _yy _AB CDC yAB yAB yAA ", 1 /* bank */, 0 /* tomix */, .4 /* gain */);
+
+  spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ LLL :3  "); 
+  spork ~  BASS0     ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                           _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  "); 
+  spork ~  BASS0_HPF ("*3  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  
+                           !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  ", ":8 F/8"); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  /// LEAD ///////
+  spork ~ LEAD (); // 32 tick 
+  /////////////////
+
+  spork ~ TRIBAL("*3 _y_ A_u _yy _AB yy_ A_u _yy yAB _y_ A_u _yy _AB CDC yAB yAB yAA ", 1 /* bank */, 0 /* tomix */, .4 /* gain */);
+
+  spork ~  KICK3 ("LLLL LLLL LLLL *3 L_L _L_ L_L LLL :3"); 
+  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+  spork ~ TRIBAL("*3 _y_ A_u _yy _AB yy_ A_u _yy yAB _y_ A_u _yy _AB CDC yAB yAB yAA ", 1 /* bank */, 0 /* tomix */, .4 /* gain */);
+
+  spork ~  KICK3 ("  LLLL LLLL LLLL *3 L_L _L_ *2 L_L_L_ LLLLLL :6  "); 
+
+  spork ~  BASS0     ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+                           _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  "); 
+  spork ~  BASS0_HPF ("*3  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  _ _ _  
+                           !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  ", ":8 F/8"); 
+  spork ~  TRANCEHH ("*3 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 _hhS|Thh_hhS|Thh_hhS|Thh *2 __h_h_S|T_h_hh :2 "); 
+  16 * data.tick =>  w.wait;   
+
+
 }
+   spork ~   SINGLEWAV("../_SAMPLES/Kecak/ooh.wav", .5); 
+   16 * data.tick  =>  w.wait; 
  
 
