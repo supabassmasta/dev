@@ -40,11 +40,110 @@ SinOsc sin0 =>  s0.sl[0].inlet;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+class KIK_TEST extends SYNT{
+
+    // inlet 
+  Step stp0 =>  Envelope fe =>  SinOsc sin0 =>  Envelope ge => outlet; 
+  1.0 => stp0.next;
+  0.0 => ge.value;
+  1.0 => sin0.gain;
+  
+  float initSinPhase;
+  float initfe;
+  float initfg;
+
+  float freqValue [0];
+  dur freqDur [0];
+  float gainValue [0];
+  dur gainDur [0];
+
+  0 => int spork_cnt;
+
+  fun void  addFreqPoint (float f, dur d){ 
+     freqValue << f;
+     freqDur << d;
+  } 
+
+  fun void  addGainPoint (float g, dur d){ 
+     gainValue << g;
+     gainDur << d;
+  } 
+
+
+  fun void  config  (float p, float ife, float ifg){ 
+    p => initSinPhase;
+    ife => initfe;
+    ifg => initfg;
+  } 
+
+  
+  0 => int ongoing;
+  2::ms => dur stop_dur;
+
+
+   fun void  trig_freq  (){ 
+
+    // Attack
+    if ( ongoing) {
+      stop_dur => now;
+    }
+
+    spork_cnt => int own_cnt;
+    initfe => fe.value;
+
+    for (0 => int i; i <  freqValue.size() &&  spork_cnt == own_cnt  ; i++) {
+      freqValue[i] =>  fe.target;
+      freqDur[i] => fe.duration  => now;
+    }
+     
+     
+  } 
+ 
+  fun void  trig_env  (){ 
+    //    <<<"TRIG">>>;
+    spork_cnt => int own_cnt;
+
+<<<"ongoing", ongoing,spork_cnt >>>;
+
+
+    // Attack
+    if ( ongoing) {
+      0 => ge.target;
+      stop_dur => ge.duration => now;
+    }
+
+    initfg => ge.value;
+    initSinPhase => sin0.phase;
+
+    1=> ongoing;
+    for (0 => int i; i <  gainValue.size() &&  spork_cnt == own_cnt ; i++) {
+      gainValue[i] =>  ge.target;
+      gainDur[i] => ge.duration  => now;
+    }
+
+    if (spork_cnt == own_cnt){
+      0=> ongoing;
+    }
+  }
+
+  //fun void on()  { }  fun void off() { }  
+  
+  fun void new_note(int idx)  {
+        <<<"new note", idx>>>;
+
+        1 +=> spork_cnt;
+        spork ~ trig_freq();
+        spork ~ trig_env();
+  }
+  
+  1 => own_adsr;
+} 
+
 
 fun void KICK3(string seq) {
 
 TONE t;
-t.reg(KIK kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(KIK_TEST kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 kik.config(0.1 /* init Sin Phase */, 15 * 100 /* init freq env */, 0.4 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
 kik.addFreqPoint (117.0, 50::ms);
@@ -52,8 +151,8 @@ kik.addFreqPoint (31.0, 13 * 10::ms);
 
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.3, 25::ms);
-kik.addGainPoint (0.8, 10::ms);
-kik.addGainPoint (1.0, 13 * 10::ms);
+kik.addGainPoint (1.0, 10::ms);
+kik.addGainPoint (0.7, 13 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 
@@ -68,10 +167,10 @@ t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 
 //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
-
+t.print();
 
 STDUCKMASTER duckm;
-duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 4::ms /* Release */ );      duckm $ ST @=>  last; 
+duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 14::ms /* Attack */, 13::ms /* Release */ );      duckm $ ST @=>  last; 
 
 
 
@@ -181,7 +280,8 @@ class SERUM00X extends SYNT{
     w.setTable (myTable);
   }
 
-  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.52 =>p.phase; } 1 => own_adsr;
+          fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.52 =>p.phase; <<<"new note", idx>>>;
+} 1 => own_adsr;
 } 
 
 class synt0 extends SYNT{
@@ -206,7 +306,8 @@ fun void BASS0 (string seq) {
   "{c" + seq => t.seq;
   0.8 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
-  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //
+  t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   //t.set_adsrs(0::ms, 10::ms, 1, 4::ms);
   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
@@ -751,29 +852,22 @@ WAIT w;
 1 *data.tick => w.fixed_end_dur;
 
 fun void  LOOP_LAB  (){ 
-   WAVCTL wc;
-   wc.load_connect ("../_SAMPLES/Kecak/ooh.wav", .5);
 
-   while(1) {
-   wc.play(.5, 1., .5 * data.tick);
-   1 * data.tick => w.wait;
-   wc.play(.5, 1., .25 * data.tick);
-   data.tick * 1. / 3. => w.wait;
-   wc.play(.5, 1., .25 * data.tick);
-   data.tick * 1. / 3. => w.wait;
-   wc.play(.5, 1., .25 * data.tick);
-   data.tick * 1. / 3. => w.wait;
-   wc.play(.5, 1., .25 * data.tick);
-   data.tick * 1. / 3. => w.wait;
-     
-//  spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
-//  spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
-//                       !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
-
-  16 * data.tick =>  w.wait; 
+  while(1) {
 
 
-   }
+//    spork ~  KICK3 (":4  LLLL   "); 
+    spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
+//  spork ~  KICK3 (" *2  L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_ "); 
+//    spork ~  KICK3 (" LLLL LLLL LLLL  LLL *3L_L :3  "); 
+//    spork ~  BASS0 ("  !1!1!1 ");
+    spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
+        !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
+
+      16 * data.tick =>  w.wait; 
+  }
+
+
     
 } 
 //LOOP_LAB();
