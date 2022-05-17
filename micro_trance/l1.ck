@@ -140,20 +140,27 @@ class KIK_TEST extends SYNT{
 } 
 
 
-fun void KICK3(string seq) {
-
-TONE t;
-t.reg(KIK_TEST kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+// Declare KIK outside funk 
+KIK kik;
 kik.config(0.1 /* init Sin Phase */, 15 * 100 /* init freq env */, 0.4 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
+kik.addFreqPoint (1500.0, 2::ms);
+kik.addFreqPoint (241.0, 2::ms);
 kik.addFreqPoint (117.0, 50::ms);
 kik.addFreqPoint (31.0, 13 * 10::ms);
 
+kik.addGainPoint (0.6, 2::ms);
+kik.addGainPoint (-0.5, 2::ms);
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.3, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
 kik.addGainPoint (0.7, 13 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
+
+fun void KICK3(string seq) {
+
+TONE t;
+t.reg( kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 
 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
@@ -170,13 +177,13 @@ t.go();   t $ ST @=> ST @ last;
 t.print();
 
 STDUCKMASTER duckm;
-duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 14::ms /* Attack */, 13::ms /* Release */ );      duckm $ ST @=>  last; 
+duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 4::ms /* Attack */, 13::ms /* Release */ );      duckm $ ST @=>  last; 
 
 
 
 
   1::samp => now; // let seq() be sporked to compute length
-  t.s.duration => now;
+  t.s.duration  - 1::samp=> now;
 }
 
 
@@ -280,19 +287,11 @@ class SERUM00X extends SYNT{
     w.setTable (myTable);
   }
 
-          fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.52 =>p.phase; <<<"new note", idx>>>;
+          fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.52 =>p.phase; 
+          //<<<"new note", idx>>>;
 } 1 => own_adsr;
 } 
 
-class synt0 extends SYNT{
-
-    inlet => SawOsc s =>  outlet; 
-      .8 => s.gain;
-
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 
-          .50 => s.phase;
-          } 0 => own_adsr;
-}
 
 fun void BASS0 (string seq) {
   TONE t;
@@ -857,10 +856,12 @@ fun void  LOOP_LAB  (){
 
 
 //    spork ~  KICK3 (":4  LLLL   "); 
-    spork ~  KICK3 (" LLLL LLLL LLLL *3 L__ L__ L__ L_L :3  "); 
+//    spork ~  KICK3 (":2  L_L_L_L_   "); 
+    spork ~  KICK3 (" LLLL LLLL *3L__L__L__L__  L__ L__ L__ L_L :3  "); 
 //  spork ~  KICK3 (" *2  L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_L_ "); 
 //    spork ~  KICK3 (" LLLL LLLL LLLL  LLL *3L_L :3  "); 
 //    spork ~  BASS0 ("  !1!1!1 ");
+//    spork ~  BASS0 ("  !111 ");
     spork ~  BASS0 ("*3  !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1
         !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  "); 
 
@@ -878,7 +879,7 @@ fun void  LOOP_LAB  (){
 
 if ( 1  ){
 
-  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 16* data.tick /* dur */,  .11 /* gain */); 
+  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 16* data.tick /* dur */,  .08 /* gain */); 
 
   8 * data.tick =>  w.wait; 
 
@@ -903,7 +904,7 @@ if ( 1  ){
   32::second =>  w.wait; 
   spork ~ l.the_end.kill_me();
 
-  spork ~  SLIDESERUM1(37 /* fstart */, 2000 /* fstop */, 12* data.tick /* dur */,  .17 /* gain */); 
+  spork ~  SLIDESERUM1(37 /* fstart */, 2000 /* fstop */, 12* data.tick /* dur */,  .12 /* gain */); 
 
 
   16 * data.tick =>  w.wait; 
@@ -953,7 +954,7 @@ if ( 1  ){
   spork ~  TRANCEHH ("*3 _hh_hh_hh_hh_hh_hh *2 __h_h___h_hh :2 _hh_hh_hh_hh_hh_hh *2 __h_h___h_hh :2 "); 
 
   8 * data.tick =>  w.wait; 
-  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 8* data.tick /* dur */,  .10 /* gain */); 
+  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 8* data.tick /* dur */,  .08 /* gain */); 
   8 * data.tick =>  w.wait; 
   ////////////////////////////////////////////////////////////////////////////////////
 
@@ -965,7 +966,7 @@ if ( 1  ){
 
     //    4 * data.tick - 1::samp =>  w.wait; 
     4 * data.tick =>  w.wait; 
-    spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+    spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .08 /* gain */); 
     spork ~ ACOUSTICTOM("__ *4 ABCD :4 *6 +2U+2A+2B+2C+2D+2U ");
     4 * data.tick =>  w.wait; 
 
@@ -1005,7 +1006,7 @@ if ( 1  ){
                            !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1 !1!1!1  ", ":8 F/8"); 
   spork ~  TRANCEHH ("*3 _hh_hh_hh_hh_hh_hh *2 __h_h___h_hh :2 _hh_hh_hh_hh_hh_hh *2 __h_h___h_hh :2 "); 
   8 * data.tick =>  w.wait;   
-  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 8* data.tick /* dur */,  .14 /* gain */); 
+  spork ~  SLIDESERUM1(2000 /* fstart */, 37 /* fstop */, 8* data.tick /* dur */,  .10 /* gain */); 
   8 * data.tick =>  w.wait; 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -1013,7 +1014,7 @@ if ( 1  ){
    4 * data.tick =>  w.wait; 
    spork ~   SINGLEWAV("../_SAMPLES/Kecak/ooh.wav", .5); 
    8 * data.tick  =>  w.wait; 
-   spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+   spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .08 /* gain */); 
    spork ~  KICK3 ("*8 L___ L_L_ LLLL LLLL*2 LLLL LLLL LLLL LLLLLLLL LLLL LLLL LLLL"); 
     4 * data.tick =>  w.wait; 
 //////////////////////////////////////////////////////////////////////////////////
@@ -1074,7 +1075,7 @@ if ( 1  ){
 
     //    4 * data.tick - 1::samp =>  w.wait; 
     4 * data.tick =>  w.wait; 
-    spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+    spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .08 /* gain */); 
     spork ~ ACOUSTICTOM("__ *4 ABCD :4 *6 +2U+2A+2B+2C+2D+2U ");
     4 * data.tick =>  w.wait; 
 
@@ -1119,7 +1120,7 @@ if ( 1  ){
    4 * data.tick =>  w.wait; 
    spork ~   SINGLEWAV("../_SAMPLES/Kecak/ooh.wav", .5); 
    8 * data.tick  =>  w.wait; 
-   spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .12 /* gain */); 
+   spork ~  SLIDESERUM1(20/* fstart */, 3000 /* fstop */, 4* data.tick /* dur */,  .08 /* gain */); 
    spork ~  KICK3 ("*8 L___ L_L_ LLLL LLLL*2 LLLL LLLL LLLL LLLLLLLL LLLL LLLL LLLL"); 
     4 * data.tick =>  w.wait; 
 //////////////////////////////////////////////////////////////////////////////////

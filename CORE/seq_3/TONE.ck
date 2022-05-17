@@ -682,8 +682,12 @@ public class TONE extends ST {
               e.on_actions << set_on_adsr(adsr[id], connections[id]); 
               e.on_actions << set_synt_on(synt[id]); 
               // also set freq and new note
-              e.actions << set_freq_synt(env[id], freq[id] ); 
-              e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+              
+              // + TENTATIVE FIX: Already done above :
+              //e.actions << set_freq_synt(env[id], freq[id] ); 
+              //e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+              // - TENTATIVE FIX
+
               s.elements.size() => e.note_info_s.idx;
 
             }
@@ -699,7 +703,10 @@ public class TONE extends ST {
           }
 
           if (force_new_note != 0){
-            e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+            // + TENTATIVE FIX: Already done above :
+            // e.actions << set_synt_new_note(synt[id], s.elements.size()); 
+            // - TENTATIVE FIX
+
             s.elements.size() => e.note_info_s.idx;
             e.actions << set_on_adsr(adsr[id], connections[id]); 
             e.actions << set_synt_on(synt[id]); 
