@@ -174,7 +174,7 @@ t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 
 //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
-t.print();
+//t.print();
 
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 4::ms /* Attack */, 13::ms /* Release */ );      duckm $ ST @=>  last; 
