@@ -6,7 +6,7 @@ POLYSEQ ps;
 // SET_WAV.DUBSTEP(ps.s[0]);// SET_WAV.VOLCA(ps.s[0]); // SET_WAV.ACOUSTIC(ps.s[0]); // SET_WAV.TABLA(ps.s[0]);// SET_WAV.CYMBALS(ps.s[0]); // SET_WAV.DUB(ps.s[0]); // SET_WAV.TRANCE(ps.s[0]); // SET_WAV.TRANCE_VARIOUS(ps.s[0]);// SET_WAV.TEK_VARIOUS(ps.s[0]);// SET_WAV.TEK_VARIOUS2(ps.s[0]);// SET_WAV2.__SAMPLES_KICKS(ps.s[0]); // SET_WAV2.__SAMPLES_KICKS_1(ps.s[0]); // SET_WAV.BLIPS(ps.s[0]);  // SET_WAV.TRIBAL(ps.s[0]);// "test.wav" => ps.s[0].wav["a"];  // act @=> ps.s[0].action["a"];
 SET_WAV.TRIBAL(ps.s[0]);
 SET_WAV.TRIBAL1(ps.s[1]);
-SET_WAV.TRIBAL(ps.s[2]);
+SET_WAV.DUB(ps.s[2]);
 SET_WAV.TRIBAL(ps.s[3]);
 
 // LED
@@ -20,18 +20,18 @@ HW.ledstrip.set_tx('l') @=> ps.s[0].action["u"];
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 
 
-"*4
+"*8
 ____ ____ u|s___ ____ 
 ____ ____ u|s___ ____ 
 ____ ____ u|s___ ____ 
 ____ ____ u|s___ _s__ 
 " +=> ps.sseq[0];
 
-"*2
+"*4
 ____ ____ __vu __B_ 
 ____ ____ _vuv _CB_ 
 ____ ____ __vx u_A_ 
-____ ____ ___v __xy 
+____ *2vuvu:2__ ___v __xy 
 " +=> ps.sseq[1];
 
 "
@@ -55,8 +55,8 @@ SEQ s2; SET_WAV.TRANCE(s2); ps.s[0].add_subwav("k", s2.wav["k"]);  ps.s[0].gain_
 
 // GAIN
 1. * data.master_gain =>  ps.gain_common;
-.9 * data.master_gain => ps.s[0].gain; // For individual gain
-.9 * data.master_gain => ps.s[1].gain; // For individual gain
+.8 * data.master_gain => ps.s[0].gain; // For individual gain
+.8 * data.master_gain => ps.s[1].gain; // For individual gain
 .8 * data.master_gain => ps.s[2].gain; // For individual gain
 .9 * data.master_gain => ps.s[3].gain; // For individual gain
 ps.s[0].gain("s", .4); // for single wav 
