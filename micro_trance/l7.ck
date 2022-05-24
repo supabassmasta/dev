@@ -317,9 +317,9 @@ if ( 1 ){
 }
 
 // LOOP
-if (    0     ){
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
+//if (    0     ){
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ BASS ("*2 _1_1_1_1 _1_1_1_1  _1_1_1_1 _1_1_1_1 "); 
@@ -401,6 +401,13 @@ while(1) { /********************************************************/
   spork ~ TRIBAL("*4 ZZZ", 1 /* bank */, 1 /* tomix */, 0.8 /* gain */);
   4 * data.tick =>  w.wait; 
 
+0 => data.next;
+while (!data.next) {
+  
+  <<<"********">>>;
+  <<<"END LOOP">>>;
+  <<<"********">>>;
+
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
   spork ~ TRIBAL("*4 _aaa _a_a _bb_ _b_b _aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b_aaa _a_a _bb_ _b_b", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -410,6 +417,8 @@ while(1) { /********************************************************/
   spork ~  CHANT (" AB_C_BA_ ab_c_ba_");
 
   16 * data.tick =>  w.wait; 
+
+
 
 
   spork ~ TRANCE ("kkkk kkkk kkkk "); 
@@ -427,7 +436,6 @@ while(1) { /********************************************************/
   4 * data.tick =>  w.wait;
   spork ~ ACOUSTICTOM("*4 __U_  AABB CCDD D_UU  ");
   4 * data.tick =>  w.wait;
-
 
   spork ~ TRANCE ("kkkk kkkk kkkk kk*4k_kk_kkk:4"); 
   spork ~ TRIBAL("*4 __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_  __h_ s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ ", 2 /* bank */, 0 /* tomix */, .4 /* gain */);
@@ -450,4 +458,7 @@ while(1) { /********************************************************/
   4 * data.tick =>  w.wait; 
 
 } 
+
+  spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
+  6 * data.tick =>  w.wait;
  
