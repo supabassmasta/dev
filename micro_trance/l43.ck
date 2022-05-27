@@ -449,6 +449,115 @@ fun void  SINGLEWAV  (string file, float g){
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  SERUM01X (int nb, string seq, float cut, float g){ 
+   
+TONE t;
+t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(nb /* synt nb */ ); 
+t.lyd();
+//t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+seq => t.seq;
+g * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+
+//AUTO.freq(modf) =>  SinOsc sin0 => MULT m => s0.inlet;
+//AUTO.freq(modg) =>  m;
+
+
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, cut /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+//STMIX stmix;
+//stmix.send(last, mixer  + 0);
+
+//STREVAUX strevaux;
+//strevaux.connect(last $ ST, .11 /* mix */); strevaux $ ST @=>  last;  
+STMIX stmix;
+stmix.send(last, mixer  + 0);
+
+1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  MODU5 (int nb, string seq, string modf, string modg, float cut, float g){ 
+   
+TONE t;
+t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(nb /* synt nb */ ); 
+t.lyd();
+//t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+seq => t.seq;
+g * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+
+AUTO.freq(modf) =>  SinOsc sin0 => MULT m => s0.inlet;
+AUTO.freq(modg) =>  m;
+
+
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, cut /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+//STMIX stmix;
+//stmix.send(last, mixer  + 0);
+
+//STREVAUX strevaux;
+//strevaux.connect(last $ ST, .11 /* mix */); strevaux $ ST @=>  last;  
+STMIX stmix;
+stmix.send(last, mixer  + 0);
+
+1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+fun void  SEQ8_1  (){ 
+WAIT w;
+1::samp => w.fixed_end_dur;
+
+ spork ~   PLOC ("  {c ____  *4 __1", 21, 29 * 100, 0.2 ); 
+  spork ~  KICK3 ("*4     k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4     ___1 __1_ ___1 __1_ ___1 __1_ __1!1 __1     "); 
+  spork ~  TRANCEHH ("*4  __h_ S_h_ _hh_ S_h_ __h_ S_ht __h_ ShhT "); 
+  spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
+  8 * data.tick =>  w.wait;   
+
+    
+}
+fun void  SEQ8_2  (){ 
+WAIT w;
+1::samp => w.fixed_end_dur;
+
+  spork ~ TRIBAL("*4      ____ ____ ____ ____ ____ ____ __"+ RAND.seq("xx,a_a,HH,I,LLL,{4LLL,{4L}6LL,{4M}4M,}4M}4MM",1) +"_ ____   ", 0 /* bank */, 1 /* tomix */, 0.29 /* gain */);
+
+  spork ~   PLOC ("  {c ____  *4 __1", 21, 29 * 100, 0.2 ); 
+  spork ~  KICK3 ("*4     k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4     ___1 __1_ ___1 __1_ ___1 __1_ __1!1 __1     "); 
+  spork ~  TRANCEHH ("*4  __h_ S_h_ _hh_ S_h_ __h_ S_ht __h_ ShhT "); 
+  spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
+  8 * data.tick =>  w.wait;   
+} 
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
@@ -516,9 +625,9 @@ if ( 1  ){
 
 /********************************************************/
 if (    0     ){
+
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-
 ////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
   spork ~   PLOC ("  {c ____  *4 __1", 21, 29 * 100, 0.2 ); 
@@ -597,6 +706,92 @@ while(1) { /********************************************************/
   spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
   8 * data.tick =>  w.wait;   
 
-
    spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/Love.wav", .23); 
+
+
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+ 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/CloseYourEyes.wav", .23); 
+
+   spork ~   SERUM01X (109, " }c *4 F18_    ", 11 *100, .33); 
+   SEQ8_1 ();
+    spork ~   MODU5 (274, "}c m/FF//f_  ", " {c T///ZZ//T", "f", 114 *100, .20); 
+   SEQ8_2 (); 
+   spork ~   MODU5 (274, "*2 m//F_  ", " M", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SERUM01X (109, " }c *4 158f_    ", 11 *100, .33); 
+   SEQ8_1 ();
+   spork ~   MODU5 (274, "*2}c m/FF//f_  ", " {c T///Z", "f", 114 *100, .20); 
+   SEQ8_2 (); 
+   spork ~   MODU5 (274, "*2}c 8__5__1_   ", " M", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   MODU5 (274, "*2}c m//FF///f  ", " T///Z", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SERUM01X (109, "  *4 158f_    ", 11 *100, .33); 
+   SEQ8_1 (); 
+    spork ~   MODU5 (273, "*8 }c}c 1_1_1_1_1_1_1_1_  ", " T///ZZ//T", "f", 114 *100, .13); 
+   SEQ8_2 (); 
+
+
+
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/SmellTheFire.wav", .23); 
+
+   spork ~   SERUM01X (109, " }c *4 81F_    ", 11 *100, .33); 
+   SEQ8_1 ();
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/TheLove.wav", .23); 
+   spork ~   MODU5 (274, "*2}c F//m  ", " P", "f", 114 *100, .20); 
+  SEQ8_2 (); 
+    spork ~   MODU5 (275, "}c F/ff//m_  ", " {c T///ZZ//T", "f", 114 *100, .13); 
+   SEQ8_1 ();  SEQ8_2 (); 
+    spork ~   MODU5 (275, "*8 }c}c 1_1_1_1_1_1_1_1_  ", " T///ZZ//T", "f", 114 *100, .13); 
+   SEQ8_1 (); 
+    spork ~   MODU5 (274, "}c m/FF//f_  ", " {c T///ZZ//T", "f", 114 *100, .20); 
+ SEQ8_2 (); 
+   spork ~   SERUM01X (111, " }c *4 FB8_    ", 11 *100, .33); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/WalkIntoTeepee.wav", .23); 
+
+    spork ~   MODU5 (274, "*2 1_1_1_   ", " M", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/YouMightHere.wav", .23); 
+    spork ~   MODU5 (274, "*2 185_  ", " M", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/MadeUsWhoWeAre.wav", .23); 
+    spork ~   MODU5 (274, "*2 1_1_1_   ", " M", "f", 114 *100, .20); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SERUM01X (107, "  *4 fc851_    ", 43 *100, .33); 
+   SEQ8_1 ();  SEQ8_2 (); 
+    spork ~   MODU5 (274, "*2}c m/FF//f_  ", " {c T///Z", "f", 114 *100, .20); 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/YouCanFeelTheLove.wav", .23); 
+   SEQ8_1 ();  SEQ8_2 (); 
+   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/myHeart.wav", .23); 
+   spork ~   SERUM01X (109, " }c *4 158f_    ", 11 *100, .33); 
+   SEQ8_1 ();  SEQ8_2 (); 
+    spork ~   MODU5 (274, "*2}c m//F  ", " P", "f", 114 *100, .20); 
+
+
+
+} if  ( 0 ){
+
+  spork ~   FROG(19 /* fstart */, 4 /* fstop */, 13 * 100 /* lpfstart */, 35 * 100 /* lpfstop */, 2* data.tick /* dur */, .2 /* gain */);
+  spork ~ TRIBAL("*4      ____ ____ ____ ____ ____ ____ ____ fff_    ", 0 /* bank */, 1 /* tomix */, .39 /* gain */);
+
+  spork ~   PLOC ("  {c ____  *4 __1", 21, 29 * 100, 0.2 ); 
+  spork ~  KICK3 ("*4     k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4     ___1 __1_ ___1 __1_ ___1 __1_ __1!1 __1     "); 
+  spork ~  TRANCEHH ("*4  __h_ S_h_ _hh_ S_h_ __h_ S_ht __h_ ShhT "); 
+  spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
+  8 * data.tick =>  w.wait;   
+
+  spork ~   MODU (3157, "111" , "{c{c Z//MM", "f//mm", 3 *1000, .17); 
+  spork ~ TRIBAL("*4      ____ ____ ____ ____ ____ ____ __U_ ____   ", 0 /* bank */, 1 /* tomix */, 0.29 /* gain */);
+
+  spork ~   PLOC ("  {c ____  *4 __1", 21, 29 * 100, 0.2 ); 
+  spork ~  KICK3 ("*4     k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4     ___1 __1_ ___1 __1_ ___1 __1_ __1!1 __1     "); 
+  spork ~  TRANCEHH ("*4  __h_ S_h_ _hh_ S_h_ __h_ S_ht __h_ ShhT "); 
+  spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
+  8 * data.tick =>  w.wait;   
+
 }
