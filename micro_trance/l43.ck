@@ -706,7 +706,6 @@ while(1) { /********************************************************/
   spork ~ TRIBAL("*4      ____ _a_a ____ __AF ____ ____ _u__ __xx  ", 1 /* bank */, 0 /* tomix */, .25 /* gain */);
   8 * data.tick =>  w.wait;   
 
-   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/Love.wav", .23); 
 
 
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
@@ -726,6 +725,7 @@ while(1) { /********************************************************/
    SEQ8_2 (); 
    spork ~   MODU5 (274, "*2}c 8__5__1_   ", " M", "f", 114 *100, .20); 
    SEQ8_1 ();  SEQ8_2 (); 
+//   spork ~   SINGLEWAV("../_SAMPLES/LovinaLouie/Love.wav", .23); 
    spork ~   MODU5 (274, "*2}c m//FF///f  ", " T///Z", "f", 114 *100, .20); 
    SEQ8_1 ();  SEQ8_2 (); 
    spork ~   SERUM01X (109, "  *4 158f_    ", 11 *100, .33); 

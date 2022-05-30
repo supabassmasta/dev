@@ -1252,6 +1252,9 @@ spork ~  SLIDENOISE(4000 /* fstart */, 200 /* fstop */, 4* data.tick /* dur */, 
   0 => data.next;
 
   while(! data.next ) {
+    <<<"********">>>;
+    <<<"END LOOP">>>;
+    <<<"********">>>;
 
     spork ~ SUPERS ( 64 * data.tick  );
     spork ~ ARPI ( 64 * data.tick  );
