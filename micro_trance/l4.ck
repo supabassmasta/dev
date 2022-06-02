@@ -27,7 +27,7 @@ t.reg( kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.i
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-.28 * data.master_gain => t.gain;
+.33 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -70,7 +70,7 @@ kik.addGainPoint (0.0, 15::ms);
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-.28 * data.master_gain => t.gain;
+.33 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -164,7 +164,7 @@ fun void BASS0 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  0.8 * data.master_gain => t.gain;
+  1.0 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //
   // t.print(); //t.force_off_action();
@@ -696,38 +696,38 @@ fun void  SINGLEWAVRATEECHO  (string file, float r, float g){
 fun void  VOICES  (){ 
    WAIT w;
    8 *data.tick => w.fixed_end_dur;
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/MicroDosage.wav", .4); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/MicroDosage.wav", .3); 
    8 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .5); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .4); 
    8 * data.tick =>  w.wait; 
    spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/DoncJusteUnBout.wav", .5); 
    12 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/CestpourCaQuonDitMicorDosage.wav", .6); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/CestpourCaQuonDitMicorDosage.wav", .5); 
    12 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.1, .6); 
+   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.1, .5); 
    2 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.4, .6); 
+   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.4, .5); 
    2 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.6, .6); 
+   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.6, .5); 
    2 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATEECHO("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.8, .6); 
+   spork ~   SINGLEWAVRATEECHO("../_SAMPLES/HighMaintenance/MicroDosage2.wav", 1.8, .5); 
    16 * data.tick =>  w.wait; 
 } 
 
 fun void  VOICES_2  (){ 
    WAIT w;
    8 *data.tick => w.fixed_end_dur;
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/AChaqueFois.wav", .6); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/AChaqueFois.wav", .5); 
    16 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/EnPrendreCombien.wav", .4); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/EnPrendreCombien.wav", .3); 
    8 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/CaJenSaisRien.wav", .6); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/CaJenSaisRien.wav", .5); 
    8 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .6); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .5); 
    4 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .8,  .6); 
+   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .8,  .5); 
    4 * data.tick =>  w.wait; 
-   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .6, .6); 
+   spork ~   SINGLEWAVRATE("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .6, .5); 
    16 * data.tick =>  w.wait; 
 //   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/.wav", .4); 
 //   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/.wav", .4); 
@@ -1013,7 +1013,7 @@ spork ~ ACOUSTICTOM("*4 AA_B B_CC _DD_ UNNU ");
 
 LONG_WAV l;
 "../_SAMPLES/HighMaintenance/VousFumezTjr.wav" => l.read;
-0.3 * data.master_gain => l.buf.gain;
+0.25 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
 l.start(1::samp /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=>  last;  
