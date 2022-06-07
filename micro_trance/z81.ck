@@ -10,7 +10,7 @@ t.force_off_action();
  P////mm//////////z
 
 " => t.seq;
-.9 => t.gain;
+.9 * data.potar_synts_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;

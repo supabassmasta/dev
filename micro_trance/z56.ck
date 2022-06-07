@@ -9,7 +9,7 @@ stepc.out => TriOsc tri1 => OFFSET ofs0 =>SUPERSAW3 tri0 => st.mono_in;
 1. => ofs0.gain;
 
 //50 10.0 => tri0.freq;
-0.7 => tri0.gain;
+0.3 * data.potar_synts_gain => tri0.gain;
 //0.5 => tri0.width;
 
 //STLPFC lpfc;

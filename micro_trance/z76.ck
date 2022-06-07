@@ -7,7 +7,7 @@ stepc.out =>  SqrOsc sqr0 => OFFSET ofs0 => MULT m => SqrOsc sqr1 => st.mono_in;
 //Std.mtof(55 + 12) => stp.next;
 
 Std.mtof(55) => sqr1.freq;
-0.15 => sqr1.gain;
+0.15 * data.potar_synts_gain => sqr1.gain;
 0.6 => sqr1.width;
 
 1. => ofs0.offset;

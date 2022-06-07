@@ -15,6 +15,7 @@ public class data {
     static int ref_note;
 // MIX
    static float master_gain;
+   static float potar_synts_gain; // For micro trance
 
 
 // EVENTS
@@ -44,6 +45,7 @@ now => data.T0;
 500::ms => data.tick;
 130 => data.bpm;
 1. => data.master_gain;
+1. => data.potar_synts_gain;
 
 1000::ms=> data.wait_before_start;
 
