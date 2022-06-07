@@ -1,35 +1,52 @@
 21 => int mixer;
+// Declare KIK outside funk 
+KIK kik;
+kik.config(0.1 /* init Sin Phase */, 20 * 100 /* init freq env */, 0.4 /* init gain env */);
+kik.addFreqPoint (233.0, 2::ms);
+kik.addFreqPoint (1500.0, 2::ms);
+kik.addFreqPoint (241.0, 2::ms);
+kik.addFreqPoint (131.0, 50::ms);
+kik.addFreqPoint (31.0, 13 * 10::ms);
+
+kik.addGainPoint (0.6, 2::ms);
+kik.addGainPoint (-0.5, 2::ms);
+kik.addGainPoint (0.6, 13::ms);
+kik.addGainPoint (0.3, 25::ms);
+kik.addGainPoint (1.0, 10::ms);
+kik.addGainPoint (0.7, 13 * 10::ms);
+kik.addGainPoint (0.0, 15::ms); 
 
 fun void KICK(string seq) {
 
-  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
-  SET_WAV.TRANCE_KICK(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
-// SEQ s3; SET_WAV.TRANCE(s3);
- s.wav["L"] => s.wav["K"];  // act @=> s.action["a"]; 
-  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
-  seq => s.seq;
-  .56 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
-  s.no_sync();// s.element_sync(); //s.no_sync()
-; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
-  1.0 => s.wav_o["K"].wav0.rate;
-  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
-  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
-  s.go();     s $ ST @=> ST @ last; 
+TONE t;
+t.reg( kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 
-  STDUCKMASTER duckm;
-  duckm.connect(last $ ST, 6. /* In Gain */, .10 /* Tresh */, .5 /* Slope */, 30::ms /* Attack */, 100::ms /* Release */ );      duckm $ ST @=>  last; 
 
-//  STGAIN stgain;
-//  stgain.connect(last $ ST , 0. /* static gain */  );       stgain $ ST @=>  last; 
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+seq => t.seq;
+.28 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+//t.print();
 
-//  STMIX stmix;
-//  stmix.send(last, mixer);
-  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+STDUCKMASTER duckm;
+duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 4::ms /* Attack */, 13::ms /* Release */ );      duckm $ ST @=>  last; 
+
+
+
 
   1::samp => now; // let seq() be sporked to compute length
-  s.s.duration => now;
+  t.s.duration  - 1::samp=> now;
 }
 
+
+///////////////////////////////////////////////////////////////////////////////////////////////
 fun void TRANCEHH(string seq) {
 
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
@@ -162,7 +179,7 @@ s0.config(2217 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright
 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"{c" + seq => t.seq;
+"" + seq => t.seq;
 0.75 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
@@ -1361,6 +1378,16 @@ fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d
 
 } 
 
+////////////////////////////////////////////////////////////////////////////////////////
+SYNC sy;
+sy.sync(1 * data.tick);
+
+148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+53 -12 => data.ref_note;
+
+
+WAIT w;
+1::samp => w.fixed_end_dur;
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1411,15 +1438,6 @@ autopan2.connect(last $ ST, .4 /* span 0..1 */, data.tick * 7 / 1 /* period */, 
 
 
 
-148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-50 => data.ref_note;
-
-SYNC sy;
-sy.sync(1 * data.tick);
-//sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
-
-WAIT w;
-1::samp => w.fixed_end_dur;
 
 fun void  LAB_LOOP  (){ 
    
