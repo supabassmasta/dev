@@ -460,5 +460,5 @@ while (!data.next) {
 } 
 
   spork ~   SINGLEWAVRATE("../_SAMPLES/IlesMarquises/conque.wav", 1.0, 0.6); 
-  6 * data.tick =>  w.wait;
+  10 * data.tick =>  w.wait;
  

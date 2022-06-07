@@ -27,7 +27,7 @@ t.reg( kik);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.i
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-.33 * data.master_gain => t.gain;
+.44 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -70,7 +70,7 @@ kik.addGainPoint (0.0, 15::ms);
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-.33 * data.master_gain => t.gain;
+.44 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -164,7 +164,7 @@ fun void BASS0 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  1.0 * data.master_gain => t.gain;
+  1.31 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //
   // t.print(); //t.force_off_action();
@@ -214,7 +214,7 @@ s0.config(2331 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c" + seq => t.seq;
-0.8 * data.master_gain => t.gain;
+1.05 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -342,7 +342,7 @@ fun void MOD1 () {
 
   SinOsc tri0 =>  SinOsc sin0 =>  st.mono_in; st $ ST @=> ST last;
   10.0 => sin0.freq;
-  0.03 => sin0.gain;
+  0.02 => sin0.gain;
 
   6.0 => tri0.freq;
   34.0 *100=> tri0.gain;
@@ -624,7 +624,7 @@ fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d
     STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
     stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 3 /* Q */, 2 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
 
-    g => stfreelpfx0.gain;
+    g * data.master_gain => stfreelpfx0.gain;
 
     Step step2 => Envelope e1 =>  stfreelpfx0.freq; // CONNECT THIS 
     lpfstart => e1.value;
@@ -652,7 +652,7 @@ fun void  SINGLEWAV  (string file, float g){
 //   STMIX stmix;
 //   stmix.send(last, mixer);
    
-   g => s.gain;
+   g * data.master_gain => s.gain;
 
    file => s.read;
 
@@ -666,7 +666,7 @@ fun void  SINGLEWAVRATE  (string file, float r, float g){
 //   STMIX stmix;
 //   stmix.send(last, mixer);
    r => s.rate;
-   g => s.gain;
+   g* data.master_gain => s.gain;
 
    file => s.read;
 
@@ -683,7 +683,7 @@ fun void  SINGLEWAVRATEECHO  (string file, float r, float g){
 //   stmix.send(last, mixer);
 
    r => s.rate;
-   g => s.gain;
+   g * data.master_gain => s.gain;
 
    file => s.read;
 
@@ -696,7 +696,7 @@ fun void  SINGLEWAVRATEECHO  (string file, float r, float g){
 fun void  VOICES  (){ 
    WAIT w;
    8 *data.tick => w.fixed_end_dur;
-   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/MicroDosage.wav", .3); 
+   spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/MicroDosage.wav",  .3); 
    8 * data.tick =>  w.wait; 
    spork ~   SINGLEWAV("../_SAMPLES/HighMaintenance/JpenseQuifautPasAbuser.wav", .4); 
    8 * data.tick =>  w.wait; 
@@ -952,6 +952,8 @@ fun void ARPI (dur d){
 
 SYNC sy;
 sy.sync(1 * data.tick);
+
+.7 => data.master_gain;
 
 147 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
@@ -1283,7 +1285,7 @@ spork ~  SLIDENOISE(4000 /* fstart */, 200 /* fstop */, 4* data.tick /* dur */, 
   }
 
   spork ~  SLIDENOISE(3000 /* fstart */, 200 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
-  8 * data.tick =>  w.wait;   
+  16 * data.tick =>  w.wait;   
  
 //    LLLL LLLL LLLL LL *4 L___ L__L :4
 //    LLLL LLLL LLLL LL *4 L___ __L_ :4
