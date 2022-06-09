@@ -589,13 +589,13 @@ fun void TRANCEHPF() {
   //  s.s.duration => now;
 
   STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
-  stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 2 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
+  stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.5 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
 
 
   Step stp0 =>  Envelope e0 => stfreehpfx0.freq; // CONNECT THIS 
   1.0 => stp0.next;
   // HPF freq start value
-  4.0 => e0.value; 
+  30.0 => e0.value; 
 
   // HPF freq target value
   11 * 100=> e0.target;
@@ -604,12 +604,31 @@ fun void TRANCEHPF() {
   16.0 * data.tick => e0.duration  => now;
 
   // HPF freq end value
-  4 => e0.target;
+  20 => e0.target;
   // Falling duration
   16.0 * data.tick => e0.duration  => now;
 
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  SINGLEWAV_ECH (string file, float g){ 
+   ST st; st $ ST @=> ST @ last;
+   SndBuf s => st.mono_in;
+
+STECHO ech;
+ech.connect(last $ ST , data.tick * 8 / 4 , .6);  ech $ ST @=>  last; 
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   
+   g => s.gain;
+
+   file => s.read;
+
+   s.length() + 32* data.tick => now;
+} 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -854,14 +873,14 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
 //} if (0) {
 
 
-  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
   spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
   spork ~   PADS (":6 1|3_"); 
   8 * data.tick =>  w.wait;      
 
 
-  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K_"); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
   spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
   spork ~   PADS (":6 0|2_"); 
@@ -884,7 +903,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
  8 * data.tick =>  w.wait;      
 
 
- spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+ spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
  spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
  spork ~   PADS (":6 1|3_"); 
@@ -892,7 +911,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
  8 * data.tick =>  w.wait;      
 
 
- spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K_"); 
+ spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K"); 
  spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
  spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__    "); 
  spork ~   PADS (":6 0|2_"); 
@@ -923,7 +942,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
      8 * data.tick =>  w.wait;      
    
    
-     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
      spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
      spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
      spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
@@ -933,8 +952,8 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
       8 * data.tick =>  w.wait;      
    
    
-     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K_"); 
-     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K ___"); 
+     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS__ "); 
      spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
      spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__    "); 
    //  spork ~   PADS (":6 0|2_"); 
@@ -987,7 +1006,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
     8 * data.tick =>  w.wait;      
   
   
-    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
     spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
@@ -997,7 +1016,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
      8 * data.tick =>  w.wait;      
   
   
-    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K_"); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K"); 
     spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
     spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__    "); 
@@ -1027,7 +1046,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
 
      8 * data.tick =>  w.wait;   
     spork ~   SUPERHIGH ("}c *4 423_42__42__3_}c -5 4_4__14__131423142 "); 
-    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K KK_K_"); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K KK_K"); 
     spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
     spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
@@ -1058,11 +1077,12 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
     spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
 
- 
     8 * data.tick =>  w.wait;   
+
+ 
     spork ~   SUPERHIGH ("}c *4 423_42__42__3_4_4{c +5__14__131423142 "); 
-    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K KKKK_"); 
-    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
+    spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K KKKK"); 
+    spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS__ "); 
     spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
     spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
 
@@ -1070,7 +1090,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
     spork ~   SUPERHIGH ("}c *4 4231 4231 4231 4231 {c +54231 4231 4231 4231  "); 
     spork ~  SLIDESERUM1(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */,  .11 /* gain */); 
     spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
-    spork ~  TRANCEBREAK ("*4 ____ ____ ____ ____ K___ K_K_ K__K K_KK_"); 
+    spork ~  TRANCEBREAK ("*4 ____ ____ ____ ____ K___ K_K_ K__K K_KK"); 
 
      8 * data.tick =>  w.wait;   
 
@@ -1095,7 +1115,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
 //} if (0) {
 
 
-  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
   spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
   spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
@@ -1103,7 +1123,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
   8 * data.tick =>  w.wait;      
 
 
-  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K_"); 
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
   spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
   spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
@@ -1135,7 +1155,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
      8 * data.tick =>  w.wait;      
    
    
-     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K_"); 
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ KK_K"); 
      spork ~  TRANCEHH ("*4 __h_ S_h_ __h_ S_h_ __h_ S_h_ __hS S_hS "); 
      spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 _8!1!1_"); 
      spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__  "); 
@@ -1145,7 +1165,7 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
       8 * data.tick =>  w.wait;      
    
    
-     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K___"); 
+     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K _K_K "); 
      spork ~  TRANCEHH ("*4 __h_ S_h_ __hh S_h_ __h_ S_h_ _hhS __hS___ "); 
      spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __"); 
      spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__    "); 
@@ -1164,8 +1184,13 @@ spork ~   SINGLEWAV("../_SAMPLES/DeepTCruise/magic.wav", .3);
 
      8 * data.tick =>  w.wait;   
 
+
 0 => data.next;
 while (!data.next) {
+
+  <<<"********">>>;
+  <<<"END LOOP">>>;
+  <<<"********">>>;
 
     spork ~   SUPERHIGH ("}c *4 4_3_4___4_3_3__2 {c +5 4231423131423142 "); 
     spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
@@ -1200,5 +1225,7 @@ while (!data.next) {
 
 
 }
-
+    spork ~   SINGLEWAV_ECH("../_SAMPLES/DeepTCruise/ahah.wav", .3); 
+    spork ~  TRANCEBREAK ("*4 K___ "); 
+     32 * data.tick =>  w.wait;   
 
