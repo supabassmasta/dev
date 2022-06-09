@@ -1011,8 +1011,17 @@ if ( 0  ){
  
   spork ~   SINGLEWAV("../_SAMPLES/bamboche/labamboche.wav", .25); 
 
+  spork ~ SLIDENOISE  (200, 5000, 7 * data.tick ,.2 , .2);
+  spork ~  KICK3 ("*4 K_K_ K_KK ____ ____ K___ K_K_ KKKK *2 KKKK KKKK :2 "); 
+  
+  8 * data.tick =>  w.wait;   
+  
   0 => data.next;
   while(!data.next) {
+
+<<<"***************">>>;
+<<<"   END LOOP    ">>>;
+<<<"***************">>>;
 
   spork ~   MODLEAD ("{c*4 " + RAND.seq("F///f,G//f,f//1,e/0", 1), 6 ); 
  
