@@ -508,20 +508,20 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
     
 // END LOOP 
     ST stout;
-  	SndBuf2 buf_end_0; name_main+"_end_loop" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
-  	SndBuf2 buf_end_1; name_main+"_end_loop" => buf_end_1.read; buf_end_1.samples() => buf_end_1.pos; buf_end_1.chan(0) => stout.outl; buf_end_1.chan(1) => stout.outr;
+  	SndBuf2 buf_end_loop_0; name_main+"_end_loop" => buf_end_loop_0.read; buf_end_loop_0.samples() => buf_end_loop_0.pos; buf_end_loop_0.chan(0) => stout.outl; buf_end_loop_0.chan(1) => stout.outr;
+  	SndBuf2 buf_end_loop_1; name_main+"_end_loop" => buf_end_loop_1.read; buf_end_loop_1.samples() => buf_end_loop_1.pos; buf_end_loop_1.chan(0) => stout.outl; buf_end_loop_1.chan(1) => stout.outr;
 
 
-  	SndBuf2 buf_end_aux_0; name_aux+"_end_loop" => buf_end_aux_0.read; buf_end_aux_0.samples() => buf_end_aux_0.pos; aux_out_gain => buf_end_aux_0.gain;
-  	SndBuf2 buf_end_aux_1; name_aux+"_end_loop" => buf_end_aux_1.read; buf_end_aux_1.samples() => buf_end_aux_1.pos; aux_out_gain => buf_end_aux_1.gain;
+  	SndBuf2 buf_end_loop_aux_0; name_aux+"_end_loop" => buf_end_loop_aux_0.read; buf_end_loop_aux_0.samples() => buf_end_loop_aux_0.pos; aux_out_gain => buf_end_loop_aux_0.gain;
+  	SndBuf2 buf_end_loop_aux_1; name_aux+"_end_loop" => buf_end_loop_aux_1.read; buf_end_loop_aux_1.samples() => buf_end_loop_aux_1.pos; aux_out_gain => buf_end_loop_aux_1.gain;
 
 
     ST stauxout;
-    buf_end_aux_0.chan(0) => stauxout.outl;
-    buf_end_aux_0.chan(1) => stauxout.outr;
+    buf_end_loop_aux_0.chan(0) => stauxout.outl;
+    buf_end_loop_aux_0.chan(1) => stauxout.outr;
 
-    buf_end_aux_1.chan(0) => stauxout.outl;
-    buf_end_aux_1.chan(1) => stauxout.outr;
+    buf_end_loop_aux_1.chan(0) => stauxout.outl;
+    buf_end_loop_aux_1.chan(1) => stauxout.outr;
 
 //    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
 
@@ -537,21 +537,32 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
 
       if ( !toggle ) {
         1 => toggle;
-        0 => buf_end_0.pos;
-        0 => buf_end_aux_0.pos;
+        0 => buf_end_loop_0.pos;
+        0 => buf_end_loop_aux_0.pos;
       } else {
         0 => toggle;
-        0 => buf_end_1.pos;
-        0 => buf_end_aux_1.pos;
+        0 => buf_end_loop_1.pos;
+        0 => buf_end_loop_aux_1.pos;
           
       }
       
       // WAIT end loop to finish
-      buf_end_0.length() - end_loop_extra_time =>  w.wait;
+      buf_end_loop_0.length() - end_loop_extra_time =>  w.wait;
     }
+
+    // END
+  	SndBuf2 buf_end_0; name_main+"_end" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
+
+  	SndBuf2 buf_end_aux_0; name_aux+"_end" => buf_end_aux_0.read; buf_end_aux_0.samples() => buf_end_aux_0.pos; aux_out_gain => buf_end_aux_0.gain;
  
+    buf_end_aux_0.chan(0) => stauxout.outl;
+    buf_end_aux_0.chan(1) => stauxout.outr;
     
-}
+    0 => buf_end_0.pos;
+    0 => buf_end_aux_0.pos;
+    buf_end_0.length() =>  w.wait;
+   
+  }
 else {
 
 
@@ -697,6 +708,7 @@ else {
     strecaux.rec_stop( 0::ms, 1);
     2::ms => now;
   }
+//////////////////////////////////////////////////
 
   
 ///////////////////////// END LOOP ///////////////////////////////////::
@@ -738,6 +750,9 @@ while (!data.next) {
     strecendloopaux.connect(last $ ST); strecendloopaux $ ST @=>  last;  
 
     strecendloopaux.rec_start(name_aux + "_end_loop", 0::ms, 1);
+
+    // As we are in rec mode, directly go out end loop
+    1 => data.next;
   }
 //////////////////////////////////////////////////
 
@@ -767,6 +782,57 @@ while (!data.next) {
 
 
 }
+
+
+// END
+// REC  MAIN END LOOP /////////////////////////////////////////     
+  STREC strecend;
+  STREC strecendaux;
+  if (rec_mode) {
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strecend.connect(last $ ST); strecend $ ST @=>  last;  
+    0 => strecend.gain;
+    strecend.rec_start(name_main +"_end", 0::ms, 1);
+    // REC AUX END LOOP //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecendaux.connect(last $ ST); strecendaux $ ST @=>  last;  
+
+    strecendaux.rec_start(name_aux + "_end", 0::ms, 1);
+  }
+//////////////////////////////////////////////////
+
+// END
+
+  spork ~   PLOC ("  {c *8 1__1 __1_1__1 __1_1__1 __1_1__1 __1_1__1 __1_1__1 __1_1__1 __1_1__1 __1_", 18, 29 * 100, 0.3 ); 
+  spork ~   PLOC ("     *8 ____1 __1____1 ____1__1 ____1__1 ____1__1 __1____1 ____1___ __1____1 1_1_", 16, 29 * 100, 0.3 );
+  spork ~  SLIDENOISE(4000 /* fstart */, 200 /* fstop */, 8* data.tick /* dur */, .9 /* width */, .14 /* gain */); 
+  16 * data.tick =>  w.wait;  
+
+  //// STOP REC ///////////////////////////////
+  if (rec_mode) {     
+    // Note extra time to add above
+    strecend.rec_stop( 0::ms, 1);
+    strecendaux.rec_stop( 0::ms, 1);
+    2::ms => now;
+  }
+//////////////////////////////////////////////////
+
 
 }
 

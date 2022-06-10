@@ -1,6 +1,8 @@
 *.swp
 *.swo
 *.wav
+*.wav_end_loop
+*.wav_end
 *.WAV
 *~
 *.au
