@@ -477,10 +477,14 @@ fun void LOOP_MOD   (){
 "l35_aux.wav" => string name_aux;
 8 * data.tick => dur main_extra_time;
 8 * data.tick => dur end_loop_extra_time;
-
+0.2 => float aux_out_gain;
 1 => int end_loop_rec_once;
 
 if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
+
+//if ( 0  ){
+    
+
     LONG_WAV l;
     name_main => l.read;
     1.0 * data.master_gain => l.buf.gain;
@@ -490,7 +494,7 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
 
     LONG_WAV l2;
     name_aux => l2.read;
-    0.2 * data.master_gain => l2.buf.gain;
+    aux_out_gain * data.master_gain => l2.buf.gain;
     0 => l2.update_ref_time;
     l2.AttackRelease(0::ms, 10::ms);
     l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
@@ -500,8 +504,29 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
 
     // WAIT Main to finish
     l.buf.length() - main_extra_time =>  w.wait;
+//}
     
 // END LOOP 
+    ST stout;
+  	SndBuf2 buf_end_0; name_main+"_end_loop" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
+  	SndBuf2 buf_end_1; name_main+"_end_loop" => buf_end_1.read; buf_end_1.samples() => buf_end_1.pos; buf_end_1.chan(0) => stout.outl; buf_end_1.chan(1) => stout.outr;
+
+
+  	SndBuf2 buf_end_aux_0; name_aux+"_end_loop" => buf_end_aux_0.read; buf_end_aux_0.samples() => buf_end_aux_0.pos; aux_out_gain => buf_end_aux_0.gain;
+  	SndBuf2 buf_end_aux_1; name_aux+"_end_loop" => buf_end_aux_1.read; buf_end_aux_1.samples() => buf_end_aux_1.pos; aux_out_gain => buf_end_aux_1.gain;
+
+
+    ST stauxout;
+    buf_end_aux_0.chan(0) => stauxout.outl;
+    buf_end_aux_0.chan(1) => stauxout.outr;
+
+    buf_end_aux_1.chan(0) => stauxout.outl;
+    buf_end_aux_1.chan(1) => stauxout.outr;
+
+//    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+    0 => int toggle;
+
     0 => data.next;
 
     while (!data.next) {
@@ -510,25 +535,19 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
       <<<" END LOOP ">>>;
       <<<"**********">>>;
 
-      LONG_WAV l;
-      name_main+"_end_loop" => l.read;
-      1.0 * data.master_gain => l.buf.gain;
-      0 => l.update_ref_time;
-      l.AttackRelease(0::ms, 10::ms);
-      l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
-
-      LONG_WAV l2;
-      name_aux+"_end_loop" => l2.read;
-      0.2 * data.master_gain => l2.buf.gain;
-      0 => l2.update_ref_time;
-      l2.AttackRelease(0::ms, 10::ms);
-      l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
-
-      STREVAUX strevaux;
-      strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
-
+      if ( !toggle ) {
+        1 => toggle;
+        0 => buf_end_0.pos;
+        0 => buf_end_aux_0.pos;
+      } else {
+        0 => toggle;
+        0 => buf_end_1.pos;
+        0 => buf_end_aux_1.pos;
+          
+      }
+      
       // WAIT end loop to finish
-      l.buf.length() - end_loop_extra_time =>  w.wait;
+      buf_end_0.length() - end_loop_extra_time =>  w.wait;
     }
  
     
