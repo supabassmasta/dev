@@ -477,7 +477,7 @@ fun void LOOP_MOD   (){
 "l35_aux.wav" => string name_aux;
 8 * data.tick => dur main_extra_time;
 8 * data.tick => dur end_loop_extra_time;
-0.2 => float aux_out_gain;
+1.0 => float aux_out_gain;
 1 => int end_loop_rec_once;
 
 if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
