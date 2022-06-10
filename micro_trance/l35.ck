@@ -384,10 +384,6 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .3);  ech $ ST @=>  last; 
 
-STREC strecaux;
-strecaux.connect(last $ ST); strecaux $ ST @=>  last;  
-
-
 STREVAUX strevaux;
 strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
 
@@ -477,7 +473,7 @@ fun void LOOP_MOD   (){
 "l35_main.wav" => string name_main;
 "l35_aux.wav" => string name_aux;
 
-if ( 1 && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
+if ( 0 && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
     LONG_WAV l;
     name_main => l.read;
     1.0 * data.master_gain => l.buf.gain;
@@ -503,15 +499,34 @@ if ( 1 && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
     
 }
 else {
+
+
+// REC  MAIN /////////////////////////////////////////     
      
-ST st; st $ ST @=>   last;
-dac.left => st.outl;
-dac.right => st.outr;
+ST stmain; stmain $ ST @=>   last;
+dac.left => stmain.outl;
+dac.right => stmain.outr;
 
 STREC strec;
 strec.connect(last $ ST); strec $ ST @=>  last;  
 0 => strec.gain;
 strec.rec_start(name_main, 0::ms, 1);
+
+// REC AUX //////////////////////////////////////////
+STREC strecaux;
+ST staux; staux $ ST @=>   last;
+
+if ( MISC.check_output_nb() >= 4  ){
+  // Rec out Aux
+  dac.chan(2) => staux.outl;
+  dac.chan(3) => staux.outr;
+} else {
+  // rec Default reverb STREV1
+  global_mixer.rev1_left => staux.outl;
+  global_mixer.rev1_right => staux.outr;
+}
+
+strecaux.connect(last $ ST); strecaux $ ST @=>  last;  
 
 strecaux.rec_start(name_aux, 0::ms, 1);
 
