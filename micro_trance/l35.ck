@@ -523,7 +523,7 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
     buf_end_loop_aux_1.chan(0) => stauxout.outl;
     buf_end_loop_aux_1.chan(1) => stauxout.outr;
 
-//    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
 
     0 => int toggle;
 
