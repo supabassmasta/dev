@@ -616,6 +616,10 @@ while(1) {
 
 // INTRO
 if ( 0  ){
+}
+
+
+
   spork ~   AMB1 ( 0 /* idx */, ":4:4:4 1|1|1_" , 1.0 /* g */ );  
   8 * data.tick =>  w.wait;   
 
@@ -770,7 +774,6 @@ for (0 => int i; i <  4     ; i++) {
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
 }
-}
 
     spork ~   MODU6 (274, "*8  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_ f_m_ ", " M", "f", 144 *100, .13); 
 spork ~   SERUM01SEQ (796, "*4  834251" , ":8:2 M/p" , ":8:2 8/7" , 16 * data.tick,  .4 );
@@ -805,5 +808,87 @@ for (0 => int i; i <  4     ; i++) {
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
 }
+
+  ///////////////////////////////////////////////////////////////////////////:
+
+spork ~   SERUM01SEQ (796, "*4  834251" , ":8:2 M/p" , ":8:2 8/7" , 16 * data.tick,  .4 );
+
+//spork ~   AMB1 ( 0 /* idx */, ":4:4:4 1|1|1_" , 1.0 /* g */ );  
+  
+  spork ~  KICK3_HPF ("*4 k___ k___ k___ k___ k___ k___ k___ k___  k___ k___ k___ k___ k___ k___ k___ k___   ", ":8M/ff/M"); 
+  spork ~  BASS0_HPF ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1_    ", ":8M/ff/M"); 
+  8 * data.tick =>  w.wait;   
+  spork ~   MODU5 (123, "*2 M/ff//T__ ", " f/T", "M", 130 *100, .34); 
+  4 * data.tick =>  w.wait;   
+ spork ~  SLIDENOISE(152 /* fstart */, 3000 /* fstop */, 3* data.tick /* dur */, .8 /* width */, .12 /* gain */); 
+  4 * data.tick =>  w.wait;   
+  
+  ///////////////////////////////////////////////////////////////////////////:
+
+  
+  spork ~   AMB1 ( 0 /* idx */, ":4:4:4 1|1|1_" , 1.0 /* g */ );  
+for (0 => int i; i <  4     ; i++) {
+    // FRENETIK
+  spork ~   MODU5 (Std.rand2(121, 125),"}c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " T/f", "a", 154 *100, .28); 
+  spork ~   MODU5 (Std.rand2(146, 146), RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " T/f", "a", 154 *100, .40); 
+//    spork ~   MODU6 (274, "*8  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_ f_m_ ", " M", "f", 144 *100, .13); 
+
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
+  8 * data.tick =>  w.wait;   
+}
+
+
+  spork ~   AMB1 ( 1 /* idx */, ":4:4 8|1|8_" , 0.7 /* g */ );  
+for (0 => int i; i <  4     ; i++) {
+    // FRENETIK
+  spork ~   MODU5 (Std.rand2(121, 125),"}c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " T/f", "a", 154 *100, .27); 
+  spork ~   MODU5 (Std.rand2(50, 51), "{c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " f/Tf/TT/f", "a", 84 *100, .25); 
+  spork ~   MODU6 (75, "*8  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_ }c " + RAND.seq("f_m_,f_f_,f_  f_,m_f_,f_f_ ,f_m_ ", 6), " M", "1", 53 *100, .10); 
+
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
+  8 * data.tick =>  w.wait;   
+}
+
+spork ~   SERUM01SEQ (796, "*4  834251" , ":8:4 M/f" , ":8:2 8/5" , 32 * data.tick,  .4 );
+
+for (0 => int i; i <  4     ; i++) {
+    // FRENETIK
+  spork ~   MODU5 (Std.rand2(121, 125),"}c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " T/f", "a", 154 *100, .27); 
+  spork ~   MODU5 (Std.rand2(50, 51), "{c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " f/Tf/TT/f", "a", 84 *100, .25); 
+  spork ~   MODU6 (75, "*8  "+ RAND.seq("f_m_,f_f_,f_  f_,m_f_,f_f_ ,f_m_ ", 8) + " }c " + RAND.seq("f_m_,f_f_,f_  f_,m_f_,f_f_ ,f_m_ ", 6), " *2 {c{c{c{9 " + RAND.seq("M/f,f/M,*2f/MM/f:2,*2", 8), "f", 53 *100, .10); 
+
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
+  8 * data.tick =>  w.wait;   
+}
+
+  spork ~  KICK3 ("*4 k___   "); 
+
+  8 * data.tick =>  w.wait;   
+
+for (0 => int i; i <  4     ; i++) {
+    // FRENETIK
+//  spork ~   MODU5 (Std.rand2(121, 125),"}c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " T/f", "a", 154 *100, .27); 
+//  spork ~   MODU5 (Std.rand2(50, 51), "{c" + RAND.seq("_,__,___, , ",1) + RAND.seq("F/f,M/a,b/G,*2,:2",3) , " f/Tf/TT/f", "a", 84 *100, .25); 
+//  spork ~   MODU6 (75, "*8  "+ RAND.seq("f_m_,f_f_,f_  f_,m_f_,f_f_ ,f_m_ ", 8) + " }c " + RAND.seq("f_m_,f_f_,f_  f_,m_f_,f_f_ ,f_m_ ", 6), " *2 {c{c{c{9 " + RAND.seq("M/f,f/M,*2f/MM/f:2,*2", 8), "f", 53 *100, .10); 
+
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
+  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+//  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
+  8 * data.tick =>  w.wait;   
+}
+
+
+
+
+
+
+
+
   4 * 8 * data.tick =>  w.wait;   
 
