@@ -744,7 +744,6 @@ while(1) {
 
 if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
 
-//if ( 0  ){
     
 
     LONG_WAV l;
@@ -752,21 +751,20 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
     1.0 * data.master_gain => l.buf.gain;
     0 => l.update_ref_time;
     l.AttackRelease(0::ms, 10::ms);
-    l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+    l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
     LONG_WAV l2;
     name_aux => l2.read;
     aux_out_gain * data.master_gain => l2.buf.gain;
     0 => l2.update_ref_time;
     l2.AttackRelease(0::ms, 10::ms);
-    l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
+    l2.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
 
     STREVAUX strevaux;
     strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
 
     // WAIT Main to finish
     l.buf.length() - main_extra_time =>  w.wait;
-//}
     
 // END LOOP 
     ST stout;

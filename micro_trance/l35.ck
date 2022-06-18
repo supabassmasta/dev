@@ -236,7 +236,7 @@ fun void TRANCEHH(string seq) {
  s3.wav["U"] => s.wav["S"];  // act @=> s.action["a"]; 
   seq => s.seq;
   .8 * data.master_gain => s.gain; //
-  s.gain("S", .06); // for single wav 
+  s.gain("S", .12); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
    0.8 => s.wav_o["S"].wav0.rate;
@@ -263,7 +263,7 @@ s0.config(nb /* synt nb */ );
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 seq => t.seq;
-g * data.master_gain => t.gain;
+g * data.master_gain *  .6 => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -300,7 +300,7 @@ fun void PLOC (string seq, int n, float lpf_f,  float v) {
   t.dor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  v * data.master_gain => t.gain;
+  v * data.master_gain * .7 => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -471,7 +471,7 @@ fun void LOOP_MOD   (){
 ///////////////////// PLAYBACK/REC /////////////////////////
 
 0 => int compute_mode; // play song with real computing
-1 => int rec_mode; // While playing song in compute mode, rec it
+0 => int rec_mode; // While playing song in compute mode, rec it
 
 "l35_main.wav" => string name_main;
 "l35_aux.wav" => string name_aux;
@@ -482,7 +482,6 @@ fun void LOOP_MOD   (){
 
 if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
 
-//if ( 0  ){
     
 
     LONG_WAV l;
@@ -490,23 +489,22 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
     1.0 * data.master_gain => l.buf.gain;
     0 => l.update_ref_time;
     l.AttackRelease(0::ms, 10::ms);
-    l.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+    l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
     LONG_WAV l2;
     name_aux => l2.read;
     aux_out_gain * data.master_gain => l2.buf.gain;
     0 => l2.update_ref_time;
     l2.AttackRelease(0::ms, 10::ms);
-    l2.start(1 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
+    l2.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
 
     STREVAUX strevaux;
     strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
 
     // WAIT Main to finish
-    l.buf.length() - main_extra_time =>  w.wait;
-//}
+    l.buf.length() - main_extra_time  =>  w.wait;
     
-// END LOOP 
+    // END LOOP 
     ST stout;
   	SndBuf2 buf_end_loop_0; name_main+"_end_loop" => buf_end_loop_0.read; buf_end_loop_0.samples() => buf_end_loop_0.pos; buf_end_loop_0.chan(0) => stout.outl; buf_end_loop_0.chan(1) => stout.outr;
   	SndBuf2 buf_end_loop_1; name_main+"_end_loop" => buf_end_loop_1.read; buf_end_loop_1.samples() => buf_end_loop_1.pos; buf_end_loop_1.chan(0) => stout.outl; buf_end_loop_1.chan(1) => stout.outr;
@@ -698,6 +696,8 @@ else {
   spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 4* data.tick /* dur */, .9 /* width */, .24 /* gain */); 
   4 * data.tick =>  w.wait;   
 
+
+
 //************************************************************************
 
 
@@ -767,7 +767,7 @@ while (!data.next) {
   spork ~   PLOC ("     *8 ____1 __1____1 ____1__1 ____1__1 ____1__1 __1____1 ____1___ __1____1 1_1_", 16, 29 * 100, 0.3 ); 
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k_kk k___   "); 
   spork ~  BASS0 ("*4   __!3!2 __!1!2 __!3!2 __!1!1   __!3!2 __!1!2 !3!2!1!5 !4!3!2!1      "); 
-  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ "); 
+  spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
 
   
