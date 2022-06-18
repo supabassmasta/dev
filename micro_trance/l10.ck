@@ -101,7 +101,7 @@ fun void BASS (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .90 * data.master_gain => t.gain;
+  .95 * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   t.adsr[0].set(4::ms, 19::ms, .8, 87::ms);
@@ -1074,6 +1074,18 @@ fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d
 
 
 
+SYNC sy;
+sy.sync(1 * data.tick);
+
+
+155 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+53 => data.ref_note;
+
+
+WAIT w;
+1*data.tick => w.sync_end_dur;
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
 
@@ -1116,20 +1128,137 @@ STAUTOPAN autopan2;
 autopan2.connect(last $ ST, .4 /* span 0..1 */, data.tick * 7 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan2 $ ST @=>  last; 
 
 
+///////////////////// PLAYBACK/REC /////////////////////////
+
+0 => int compute_mode; // play song with real computing
+0 => int rec_mode; // While playing song in compute mode, rec it
+
+"WolfsParade_main.wav" => string name_main;
+"WolfsParl35_aux.wav" => string name_aux;
+8 * data.tick => dur main_extra_time;
+8 * data.tick => dur end_loop_extra_time;
+1.0 => float aux_out_gain;
+1 => int end_loop_rec_once;
+
+if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
+
+    
+
+    LONG_WAV l;
+    name_main => l.read;
+    1.0 * data.master_gain => l.buf.gain;
+    0 => l.update_ref_time;
+    l.AttackRelease(0::ms, 10::ms);
+    l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
+    LONG_WAV l2;
+    name_aux => l2.read;
+    aux_out_gain * data.master_gain => l2.buf.gain;
+    0 => l2.update_ref_time;
+    l2.AttackRelease(0::ms, 10::ms);
+    l2.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
+
+    STREVAUX strevaux;
+    strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+    // WAIT Main to finish
+    l.buf.length() - main_extra_time  =>  w.wait;
+    
+    // END LOOP 
+    ST stout;
+  	SndBuf2 buf_end_loop_0; name_main+"_end_loop" => buf_end_loop_0.read; buf_end_loop_0.samples() => buf_end_loop_0.pos; buf_end_loop_0.chan(0) => stout.outl; buf_end_loop_0.chan(1) => stout.outr;
+  	SndBuf2 buf_end_loop_1; name_main+"_end_loop" => buf_end_loop_1.read; buf_end_loop_1.samples() => buf_end_loop_1.pos; buf_end_loop_1.chan(0) => stout.outl; buf_end_loop_1.chan(1) => stout.outr;
 
 
-155 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-53 => data.ref_note;
+  	SndBuf2 buf_end_loop_aux_0; name_aux+"_end_loop" => buf_end_loop_aux_0.read; buf_end_loop_aux_0.samples() => buf_end_loop_aux_0.pos; aux_out_gain => buf_end_loop_aux_0.gain;
+  	SndBuf2 buf_end_loop_aux_1; name_aux+"_end_loop" => buf_end_loop_aux_1.read; buf_end_loop_aux_1.samples() => buf_end_loop_aux_1.pos; aux_out_gain => buf_end_loop_aux_1.gain;
 
-SYNC sy;
-sy.sync(1 * data.tick);
-//sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
-WAIT w;
-1::samp => w.fixed_end_dur;
+    ST stauxout;
+    buf_end_loop_aux_0.chan(0) => stauxout.outl;
+    buf_end_loop_aux_0.chan(1) => stauxout.outr;
 
-// INTRO
-if ( 1 ) {
+    buf_end_loop_aux_1.chan(0) => stauxout.outl;
+    buf_end_loop_aux_1.chan(1) => stauxout.outr;
+
+    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+    0 => int toggle;
+
+    0 => data.next;
+
+    while (!data.next) {
+
+      <<<"**********">>>;
+      <<<" END LOOP ">>>;
+      <<<"**********">>>;
+
+      if ( !toggle ) {
+        1 => toggle;
+        0 => buf_end_loop_0.pos;
+        0 => buf_end_loop_aux_0.pos;
+      } else {
+        0 => toggle;
+        0 => buf_end_loop_1.pos;
+        0 => buf_end_loop_aux_1.pos;
+          
+      }
+      
+      // WAIT end loop to finish
+      buf_end_loop_0.length() - end_loop_extra_time =>  w.wait;
+    }
+
+    // END
+  	SndBuf2 buf_end_0; name_main+"_end" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
+
+  	SndBuf2 buf_end_aux_0; name_aux+"_end" => buf_end_aux_0.read; buf_end_aux_0.samples() => buf_end_aux_0.pos; aux_out_gain => buf_end_aux_0.gain;
+ 
+    buf_end_aux_0.chan(0) => stauxout.outl;
+    buf_end_aux_0.chan(1) => stauxout.outr;
+    
+    0 => buf_end_0.pos;
+    0 => buf_end_aux_0.pos;
+    buf_end_0.length() =>  w.wait;
+   
+  }
+else {
+
+
+// REC  MAIN /////////////////////////////////////////     
+  STREC strec;
+  STREC strecaux;
+  if (rec_mode) {     
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strec.connect(last $ ST); strec $ ST @=>  last;  
+    0 => strec.gain;
+    strec.rec_start(name_main, 0::ms, 1);
+
+    // REC AUX //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecaux.connect(last $ ST); strecaux $ ST @=>  last;  
+
+    strecaux.rec_start(name_aux, 0::ms, 1);
+  }
+//////////////////////////////////////////////////
+
+//if ( 0  ){ // MAGIC ////////////////////////
+    
 
   spork ~   PADS (":8 {c 11__", 4, 0.8); 
 
@@ -1195,14 +1324,8 @@ if ( 1 ) {
 
 
 
-}
 
-/********************************************************/
-if (    0     ){
-////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
 
 
   spork ~   PADS (":4 {c 11__", 4, 0.8); 
@@ -1344,9 +1467,9 @@ while(1) { /********************************************************/
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K_K_ K_K_ K_K_ KKKK "); 
   spork ~  TRANCEHH ("*4 U_h_ U_hh U_h_ U_h_ "); 
   spork ~  BASS        ("*4 ____ ____ ____ ____   _1_1_1_1_1_1 *2 _1_1_1_1 "); 
-//  spork ~  SERUM2MOD ("*8}c}c  1_3_5___ 8_8_ __1_ 1___ 1_1_1_1_1_1_ }c 1_1_1_1_1_1_1_1_ 1_1_1_1_1_1_1_1_ " ); 
   8 * data.tick =>  w.wait;   
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////
  
 
 
@@ -1521,6 +1644,240 @@ while(1) { /********************************************************/
   8 * data.tick =>  w.wait;   
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
+//} // MAGIC ///////////////
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+
+  spork ~   PLOC ("}c}c *4 1__1 __1_  1__1 __1_ 1__1 __11 1__1 111_ ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+  spork ~   PLOC ("}c}c *4 3__2 __1_  0__1 __2_ 3__2 __1_ *2 1_1_ 1_1_ :2 __1 ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K_K_ K_K_ K_K_ KKKK "); 
+  spork ~  TRANCEHH ("*4 U_h_ U_hh U_h_ U_h_ "); 
+  spork ~  BASS        ("*4 ____ ____ ____ ____   _1_1_1_1_1_1 *2 _1_1_1_1 "); 
+  8 * data.tick =>  w.wait;   
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1!f!c!a  !18!5!3  "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1    "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1!f!c!a  !18!5!3  "); 
+  8 * data.tick =>  w.wait;   
+  
+  spork ~  TRANCEBREAK ("*4 K_K_ K_K_ K_K_ K_K_KKKK  KKKK *2 KKKK KKKK *2 KKKK KKKK KKKK KKKK "); 
+  spork ~  BASS        ("*4 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1     "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   SINGLEWAV("../_SAMPLES/wolfs/139901__y89312__33.wav", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1!f!c!a  !18!5!3  "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1 !1!1!f!1    "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1_!1!1  !1!f!c!a  !18!5!3  "); 
+  8 * data.tick =>  w.wait;   
+  
+  spork ~  TRANCEBREAK ("*4 K_K_ K_K_ K_K_ K_K_KKKK  KKKK *2 KKKK KKKK *2 KKKK KKKK KKKK KKKK "); 
+  spork ~  BASS        ("*4 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1 !1!f!f!1     "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   SINGLEWAV("../_SAMPLES/wolfs/139901__y89312__33.wav", .4); 
+  spork ~  TRANCEBREAK ("*4 ____ ____ ____ K___ K_K_KKKK  KKKK *2 KKKK  *2 KKKK KKKK  "); 
+  spork ~ SLIDENOISE  (8000, 100, 3 * data.tick, 0, .4);
+  3 * data.tick =>  w.wait;   
+  spork ~ SLIDENOISE  (100, 8000, 5 * data.tick, 0, .4);
+  5 * data.tick =>  w.wait;   
+
+
+
+
+
+
+  //// STOP REC ///////////////////////////////
+  if (rec_mode) {     
+    main_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+    strec.rec_stop( 0::ms, 1);
+    strecaux.rec_stop( 0::ms, 1);
+    2::ms => now;
+  }
+//////////////////////////////////////////////////
+
+  
+///////////////////////// END LOOP ///////////////////////////////////::
+0 => data.next;
+
+while (!data.next) {
+
+  <<<"**********">>>;
+  <<<" END LOOP ">>>;
+  <<<"**********">>>;
+
+// REC  MAIN END LOOP /////////////////////////////////////////     
+  STREC strecendloop;
+  STREC strecendloopaux;
+  if (rec_mode && end_loop_rec_once) {     
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strecendloop.connect(last $ ST); strecendloop $ ST @=>  last;  
+    0 => strecendloop.gain;
+    strecendloop.rec_start(name_main +"_end_loop", 0::ms, 1);
+
+    // REC AUX END LOOP //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecendloopaux.connect(last $ ST); strecendloopaux $ ST @=>  last;  
+
+    strecendloopaux.rec_start(name_aux + "_end_loop", 0::ms, 1);
+
+    // As we are in rec mode, directly go out end loop
+    1 => data.next;
+  }
+//////////////////////////////////////////////////
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+
+  spork ~   PLOC ("}c}c *4 1__1 __1_  1__1 __1_ 1__1 __11 1__1 111_ ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+//} if (0) {
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+  spork ~   PLOC ("}c}c *4 3__2 __1_  0__1 __2_ 3__2 __1_ *2 1_1_ 1_1_ :2 __1 ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K_K_ KKKK "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  4 * data.tick =>  w.wait;   
+  spork ~ SLIDENOISE  (8000, 100, 6 * data.tick, 0, .4);
+  4 * data.tick =>  w.wait;   
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+  spork ~   PLOC ("}c}c *4 1__1 __1_  1__1 __1_ 1__1 __11 1__1 111_ ", .4); 
+
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~ SLIDENOISE  (100, 8000, 16 * data.tick, 0, .4);
+
+  8 * data.tick =>  w.wait;   
+
+  spork ~  TRANCEBREAK ("*4 ____ ____ ____ ____ K___ K_K_ KKKK *2 KKKK KKKK "); 
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+  spork ~   PLOC ("}c}c *4 3__2 __1_  0__1 __2_ 3__2 __1_ *2 1_1_ 1_1_ :2 __1 ", .4); 
+
+  8 * data.tick =>  w.wait;   
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+
 
   spork ~   LEAD (" }c 1111 1/88///1",    .06); 
   spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
@@ -1568,7 +1925,125 @@ while(1) { /********************************************************/
   spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
   8 * data.tick =>  w.wait;   
 
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+
+  spork ~   PLOC ("}c}c *4 1__1 __1_  1__1 __1_ 1__1 __11 1__1 111_ ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+
+  spork ~   LEAD (" }c 1111 1/88///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//88//1 1111",       .06); 
+
+  spork ~   PLOC ("}c *4 1__1 __1_  1__1 __1_ 5__5 __5_ 5__5 __5_ ", .6); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K___ K_K_ "); 
+  spork ~  TRANCEHH ("*4 __h_ U_hh __h_ U_h_ __h_ U_hh _hh_ U_h_ "); 
+  spork ~  BASS        ("*4 !1_!1!1 !1__!1 !1_!1!1 !1__!1   !1_!1!1 !1__!1 !1_!8!1 !1!1!f!1 "); 
+  8 * data.tick =>  w.wait;   
+
+  spork ~   LEAD (" }c 1111 1/BB///1",    .06); 
+  spork ~   LEAD (" }c}c 11 1/88///1 11", .06); 
+  spork ~   LEAD (" 1//ff//1 1111",       .06); 
+
+  spork ~   PLOC ("}c}c *4 3__2 __1_  0__1 __2_ 3__2 __1_ *2 1_1_ 1_1_ :2 __1 ", .4); 
+
+  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K_K_ K_K_ K_K_ KKKK "); 
+  spork ~  TRANCEHH ("*4 U_h_ U_hh U_h_ U_h_ "); 
+  spork ~  BASS        ("*4 ____ ____ ____ ____   _1_1_1_1_1_1 *2 _1_1_1_1 "); 
+  8 * data.tick =>  w.wait;   
+
+
+  //// STOP REC ///////////////////////////////
+  if (rec_mode && end_loop_rec_once) {     
+    end_loop_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+    strecendloop.rec_stop( 0::ms, 1);
+    strecendloopaux.rec_stop( 0::ms, 1);
+    0 => end_loop_rec_once;
+    2::ms => now;
+  }
+
 
 }
 
+
+// END
+// REC  MAIN END LOOP /////////////////////////////////////////     
+  STREC strecend;
+  STREC strecendaux;
+  if (rec_mode) {
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strecend.connect(last $ ST); strecend $ ST @=>  last;  
+    0 => strecend.gain;
+    strecend.rec_start(name_main +"_end", 0::ms, 1);
+    // REC AUX END LOOP //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecendaux.connect(last $ ST); strecendaux $ ST @=>  last;  
+
+    strecendaux.rec_start(name_aux + "_end", 0::ms, 1);
+  }
+//////////////////////////////////////////////////
+
+// END
+
+  spork ~  TRANCEBREAK ("*4 K___  "); 
+  spork ~ SLIDENOISE  (8000, 100, 4 * data.tick, 0, .4);
+  spork ~   SINGLEWAV("../_SAMPLES/wolfs/139901__y89312__33.wav", .4); 
+
+
+
+
+
+  32 * data.tick =>  w.wait;   
+
+
+  //// STOP REC ///////////////////////////////
+  if (rec_mode) {     
+    // Note extra time to add above
+    strecend.rec_stop( 0::ms, 1);
+    strecendaux.rec_stop( 0::ms, 1);
+    2::ms => now;
+  }
+//////////////////////////////////////////////////
+
+
+}
+
+ 
 
