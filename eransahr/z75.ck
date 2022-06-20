@@ -12,11 +12,11 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4 
 
-Z/a___ Z/a____ ____ ____ ____
+{c{cA/z___ ____ ____
 
 
 " => t.seq;
-.6 * data.master_gain => t.gain;
+.3 * data.master_gain => t.gain;
 t.sync(1*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 
 8 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -25,15 +25,15 @@ t.sync(1*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
 t.go();   t $ ST @=> ST @ last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 1 / 4 , .6);  ech $ ST @=>  last; 
 
 SYNC sy;
 sy.sync(1 * data.tick);
 //sy.sync(4 * data.tick , 0::ms /* offset */); 
 
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 1 / 2 /* period */, 0. /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 1 / 2 /* period */, 1. /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
