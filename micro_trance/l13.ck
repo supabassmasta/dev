@@ -1076,12 +1076,137 @@ fun void  BEAT (){
 
 } 
 
-/********************************************************/
-//if (    0     ){
-////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////
-//}/***********************   MAGIC CURSOR *********************/
-//while(1) { /********************************************************/
+
+///////////////////// PLAYBACK/REC /////////////////////////
+
+0 => int compute_mode; // play song with real computing
+0 => int rec_mode; // While playing song in compute mode, rec it
+
+"l5d_main.wav" => string name_main;
+"l5d_aux.wav" => string name_aux;
+8 * data.tick => dur main_extra_time;
+8 * data.tick => dur end_loop_extra_time;
+1.0 => float aux_out_gain;
+1 => int end_loop_rec_once;
+
+if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  ){
+
+    
+
+    LONG_WAV l;
+    name_main => l.read;
+    1.0 * data.master_gain => l.buf.gain;
+    0 => l.update_ref_time;
+    l.AttackRelease(0::ms, 10::ms);
+    l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+
+    LONG_WAV l2;
+    name_aux => l2.read;
+    aux_out_gain * data.master_gain => l2.buf.gain;
+    0 => l2.update_ref_time;
+    l2.AttackRelease(0::ms, 10::ms);
+    l2.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l2 $ ST @=>  last;  
+
+    STREVAUX strevaux;
+    strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+    // WAIT Main to finish
+    l.buf.length() - main_extra_time  =>  w.wait;
+    
+    // END LOOP 
+    ST stout;
+  	SndBuf2 buf_end_loop_0; name_main+"_end_loop" => buf_end_loop_0.read; buf_end_loop_0.samples() => buf_end_loop_0.pos; buf_end_loop_0.chan(0) => stout.outl; buf_end_loop_0.chan(1) => stout.outr;
+  	SndBuf2 buf_end_loop_1; name_main+"_end_loop" => buf_end_loop_1.read; buf_end_loop_1.samples() => buf_end_loop_1.pos; buf_end_loop_1.chan(0) => stout.outl; buf_end_loop_1.chan(1) => stout.outr;
+
+
+  	SndBuf2 buf_end_loop_aux_0; name_aux+"_end_loop" => buf_end_loop_aux_0.read; buf_end_loop_aux_0.samples() => buf_end_loop_aux_0.pos; aux_out_gain => buf_end_loop_aux_0.gain;
+  	SndBuf2 buf_end_loop_aux_1; name_aux+"_end_loop" => buf_end_loop_aux_1.read; buf_end_loop_aux_1.samples() => buf_end_loop_aux_1.pos; aux_out_gain => buf_end_loop_aux_1.gain;
+
+
+    ST stauxout;
+    buf_end_loop_aux_0.chan(0) => stauxout.outl;
+    buf_end_loop_aux_0.chan(1) => stauxout.outr;
+
+    buf_end_loop_aux_1.chan(0) => stauxout.outl;
+    buf_end_loop_aux_1.chan(1) => stauxout.outr;
+
+    strevaux.connect(stauxout $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+    0 => int toggle;
+
+    0 => data.next;
+
+    while (!data.next) {
+
+      <<<"**********">>>;
+      <<<" END LOOP ">>>;
+      <<<"**********">>>;
+
+      if ( !toggle ) {
+        1 => toggle;
+        0 => buf_end_loop_0.pos;
+        0 => buf_end_loop_aux_0.pos;
+      } else {
+        0 => toggle;
+        0 => buf_end_loop_1.pos;
+        0 => buf_end_loop_aux_1.pos;
+          
+      }
+      
+      // WAIT end loop to finish
+      buf_end_loop_0.length() - end_loop_extra_time =>  w.wait;
+    }
+
+    // END
+  	SndBuf2 buf_end_0; name_main+"_end" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
+
+  	SndBuf2 buf_end_aux_0; name_aux+"_end" => buf_end_aux_0.read; buf_end_aux_0.samples() => buf_end_aux_0.pos; aux_out_gain => buf_end_aux_0.gain;
+ 
+    buf_end_aux_0.chan(0) => stauxout.outl;
+    buf_end_aux_0.chan(1) => stauxout.outr;
+    
+    0 => buf_end_0.pos;
+    0 => buf_end_aux_0.pos;
+    buf_end_0.length() =>  w.wait;
+   
+  }
+else {
+
+
+// REC  MAIN /////////////////////////////////////////     
+  STREC strec;
+  STREC strecaux;
+  if (rec_mode) {     
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strec.connect(last $ ST); strec $ ST @=>  last;  
+    0 => strec.gain;
+    strec.rec_start(name_main, 0::ms, 1);
+
+    // REC AUX //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecaux.connect(last $ ST); strecaux $ ST @=>  last;  
+
+    strecaux.rec_start(name_aux, 0::ms, 1);
+  }
+//////////////////////////////////////////////////
+
+
 
   spork ~  BEAT (); 
 
@@ -1256,10 +1381,61 @@ fun void  BEAT (){
   8 * data.tick =>  w.wait;   
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+  //// STOP REC ///////////////////////////////
+  if (rec_mode) {     
+    main_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+    strec.rec_stop( 0::ms, 1);
+    strecaux.rec_stop( 0::ms, 1);
+    2::ms => now;
+  }
+//////////////////////////////////////////////////
 
+  
+///////////////////////// END LOOP ///////////////////////////////////::
 0 => data.next;
 
-while(!data.next) {
+while (!data.next) {
+
+  <<<"**********">>>;
+  <<<" END LOOP ">>>;
+  <<<"**********">>>;
+
+// REC  MAIN END LOOP /////////////////////////////////////////     
+  STREC strecendloop;
+  STREC strecendloopaux;
+  if (rec_mode && end_loop_rec_once) {     
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strecendloop.connect(last $ ST); strecendloop $ ST @=>  last;  
+    0 => strecendloop.gain;
+    strecendloop.rec_start(name_main +"_end_loop", 0::ms, 1);
+
+    // REC AUX END LOOP //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecendloopaux.connect(last $ ST); strecendloopaux $ ST @=>  last;  
+
+    strecendloopaux.rec_start(name_aux + "_end_loop", 0::ms, 1);
+
+    // As we are in rec mode, directly go out end loop
+    1 => data.next;
+  }
+//////////////////////////////////////////////////
+
 
   spork ~  BEAT (); 
   spork ~   SYNT4 (8 * data.tick, .7);
@@ -1285,9 +1461,68 @@ while(!data.next) {
   spork ~   ONEP0 ("____ __*4  " + RAND.seq("8//1_,f/8_,F/1_,5//F_,f/1_", 2), 4.1); 
 
   8 * data.tick =>  w.wait;   
+
+  //// STOP REC ///////////////////////////////
+  if (rec_mode && end_loop_rec_once) {     
+    end_loop_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+    strecendloop.rec_stop( 0::ms, 1);
+    strecendloopaux.rec_stop( 0::ms, 1);
+    0 => end_loop_rec_once;
+    2::ms => now;
+  }
+
+
 }
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+
+
+// END
+// REC  MAIN END LOOP /////////////////////////////////////////     
+  STREC strecend;
+  STREC strecendaux;
+  if (rec_mode) {
+    ST stmain; stmain $ ST @=>   last;
+    dac.left => stmain.outl;
+    dac.right => stmain.outr;
+
+    strecend.connect(last $ ST); strecend $ ST @=>  last;  
+    0 => strecend.gain;
+    strecend.rec_start(name_main +"_end", 0::ms, 1);
+    // REC AUX END LOOP //////////////////////////////////////////
+    ST staux; staux $ ST @=>   last;
+
+    if ( MISC.check_output_nb() >= 4  ){
+      // Rec out Aux
+      dac.chan(2) => staux.outl;
+      dac.chan(3) => staux.outr;
+    } else {
+      // rec Default reverb STREV1
+      global_mixer.rev1_left => staux.outl;
+      global_mixer.rev1_right => staux.outr;
+    }
+
+    /// START REC
+
+    strecendaux.connect(last $ ST); strecendaux $ ST @=>  last;  
+
+    strecendaux.rec_start(name_aux + "_end", 0::ms, 1);
+  }
+//////////////////////////////////////////////////
+
+// END
   spork ~   ONEP0 ("*4  " + RAND.seq("8//1_,f/8_,F/1_,5//F_,f/1_", 4), 4.1); 
   spork ~  KICK3 ("*4 k___  "); 
   16 * data.tick =>  w.wait;   
+  //// STOP REC ///////////////////////////////
+  if (rec_mode) {     
+    // Note extra time to add above
+    strecend.rec_stop( 0::ms, 1);
+    strecendaux.rec_stop( 0::ms, 1);
+    2::ms => now;
+  }
+//////////////////////////////////////////////////
+
+
+}
+
+ 
 
