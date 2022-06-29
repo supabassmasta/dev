@@ -850,6 +850,9 @@ sy.sync(1 * data.tick);
 151 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
+WAIT w;
+1*data.tick => w.sync_end_dur;
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
@@ -879,15 +882,12 @@ ech2.connect(last $ ST , data.tick * 3 / 4 , .8);  ech2 $ ST @=>  last;
 
 
 
-//sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
-WAIT w;
-1::samp => w.fixed_end_dur;
 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
 0 => int compute_mode; // play song with real computing
-1 => int rec_mode; // While playing song in compute mode, rec it
+0 => int rec_mode; // While playing song in compute mode, rec it
 
 "MrRobot_main.wav" => string name_main;
 "MrRobot_aux.wav" => string name_aux;
@@ -917,6 +917,8 @@ if ( !compute_mode && MISC.file_exist(name_main) && MISC.file_exist(name_aux)  )
 
     STREVAUX strevaux;
     strevaux.connect(last $ ST, 1. /* mix */); strevaux $ ST @=>  last;  
+
+ 
 
     // WAIT Main to finish
     l.buf.length() - main_extra_time =>  w.wait;

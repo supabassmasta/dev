@@ -1177,7 +1177,7 @@ autopan2.connect(last $ ST, .4 /* span 0..1 */, data.tick * 7 / 1 /* period */, 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
 0 => int compute_mode; // play song with real computing
-1 => int rec_mode; // While playing song in compute mode, rec it
+0 => int rec_mode; // While playing song in compute mode, rec it
 
 "l9_main.wav" => string name_main;
 "l9_aux.wav" => string name_aux;
