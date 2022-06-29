@@ -929,6 +929,18 @@ fun void TRIBAL(string seq, int nb, int tomix, float g) {
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
+SYNC sy;
+sy.sync(1 * data.tick);
+
+1. => data.master_gain;
+
+150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+54 => data.ref_note;
+
+WAIT w;
+1*data.tick => w.sync_end_dur;
+
+
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
 
@@ -980,18 +992,6 @@ strevaux3.connect(last $ ST, .2 /* mix */); strevaux3 $ ST @=>  last;
 //Std.atoi("15")  => int i;
 //<<<"i", i>>>;
 
-
-
-
-150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-54 => data.ref_note;
-
-SYNC sy;
-sy.sync(1 * data.tick);
-//sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
-
-WAIT w;
-1::samp => w.fixed_end_dur;
 
 fun void  LOOP_LAB  (){ 
     

@@ -743,6 +743,8 @@ fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){
 SYNC sy;
 sy.sync(1 * data.tick);
 
+1. => data.master_gain;
+
 143 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 57 => data.ref_note;
 

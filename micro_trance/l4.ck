@@ -5,18 +5,15 @@
 KIK kik;
 kik.config(0.1 /* init Sin Phase */, 15 * 100 /* init freq env */, 0.4 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
-kik.addFreqPoint (1500.0, 2::ms);
-kik.addFreqPoint (241.0, 2::ms);
 kik.addFreqPoint (117.0, 50::ms);
 kik.addFreqPoint (31.0, 13 * 10::ms);
 
-kik.addGainPoint (0.6, 2::ms);
-kik.addGainPoint (-0.5, 2::ms);
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.3, 25::ms);
-kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (0.7, 13 * 10::ms);
+kik.addGainPoint (0.8, 10::ms);
+kik.addGainPoint (1.0, 13 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
+
 
 fun void KICK3(string seq) {
 
@@ -961,7 +958,7 @@ sy.sync(1 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
-1 *data.tick => w.fixed_end_dur;
+1*data.tick => w.sync_end_dur;
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -982,7 +979,7 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
-0 => int compute_mode; // play song with real computing
+1 => int compute_mode; // play song with real computing
 0 => int rec_mode; // While playing song in compute mode, rec it
 
 "HighM_main.wav" => string name_main;

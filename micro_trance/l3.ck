@@ -654,6 +654,8 @@ arp.t.raw() => s0.inlet;
 SYNC sy;
 sy.sync(1 * data.tick);
 
+0.8 => data.master_gain;
+
 153 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 

@@ -812,6 +812,8 @@ fun void  CUT_VOICES2  (){
 SYNC sy;
 sy.sync(1 * data.tick);
 
+0.9 => data.master_gain;
+
 140 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 53 => data.ref_note;
 

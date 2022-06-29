@@ -876,6 +876,8 @@ fun void TRIBAL(string seq, int nb, int tomix, float g) {
 SYNC sy;
 sy.sync(1 * data.tick);
 
+1. => data.master_gain;
+
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 

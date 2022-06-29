@@ -680,6 +680,8 @@ fun void  SERUM2  (string seq ){
 SYNC sy;
 sy.sync(1 * data.tick);
 
+1. => data.master_gain;
+
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 56 => data.ref_note;
 
