@@ -1077,7 +1077,7 @@ fun void  FROG  (float fstart, float fstop, float lpfstart, float lpfstop, dur d
 SYNC sy;
 sy.sync(1 * data.tick);
 
-1. => data.master_gain;
+0.8 => data.master_gain;
 
 155 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 53 => data.ref_note;

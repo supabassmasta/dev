@@ -759,7 +759,7 @@ fun void SYNTGLIDE (string seq, dur gldur, int synt_nb , float v) {
 SYNC sy;
 sy.sync(1 * data.tick);
 
-1. => data.master_gain;
+0.9 => data.master_gain;
 
 151 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 53 => data.ref_note;

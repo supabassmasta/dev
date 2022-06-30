@@ -1127,7 +1127,7 @@ d => now; // let seq() be sporked to compute length
 SYNC sy;
 sy.sync(1 * data.tick);
 
-1. => data.master_gain;
+1.1 => data.master_gain;
 
 148  => data.bpm;   (60.0/data.bpm)::second => data.tick;
 52  => data.ref_note;

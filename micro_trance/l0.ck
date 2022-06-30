@@ -180,7 +180,7 @@ s0.config(2212 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c" + seq => t.seq;
-0.75 * data.master_gain => t.gain;
+0.67 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -819,7 +819,7 @@ fun void  LAB_LOOP  (){
   spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K___ K__K K___"); 
 //  spork ~  TRANCEBREAK ("*4 K___ K___ K___ K___ K___ K_K_ KKKK *2KKKK *2KKKK KKKK:4 K__"); 
   spork ~  BASS        ("*4 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1 __1!1___"); 
-//  spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__   _1__"); 
+  spork ~  BASS3       ("*4 _1__  _1__  _1__  _1__  _1__  _1__  _1__   _1__"); 
   8 * data.tick =>  w.wait;      
 //  spork ~  TRANCEBREAK ("*4 ____ K___ K___ K___ K___ K_K_KKK_K_K__ "); 
 //  8 * data.tick =>  w.wait;      
