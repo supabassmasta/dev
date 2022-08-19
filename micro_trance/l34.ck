@@ -149,7 +149,7 @@ fun void TRANCEHH(string seq) {
  s3.wav["U"] => s.wav["S"];  // act @=> s.action["a"]; 
   seq => s.seq;
   .8 * data.master_gain => s.gain; //
-  s.gain("S", .06); // for single wav 
+  s.gain("S", .05); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
    0.8 => s.wav_o["S"].wav0.rate;
@@ -170,6 +170,74 @@ fun void TRANCEHH(string seq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
+class synt0 extends SYNT{
+
+    inlet => SinOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+} 
+
+fun void SIN (string seq, float g) {
+
+  TONE t;
+  t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  g * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+  //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+STMIX stmix;
+stmix.send(last, mixer);
+
+  1::samp => now;
+  t.s.duration => now;
+
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+fun void PADS (string seq,int n, float g) {
+
+  TONE t;
+  t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  s0.config(.3 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */);
+  t.reg(SYNTWAV s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  s1.config(.3 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */);
+  // s0.pos s0.rate s0.lastbuf 
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  g * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+  //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+STMIX stmix;
+stmix.send(last, mixer +1 );
+
+  1::samp => now;
+  t.s.duration => now;
+
+
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+
 fun void MEGAMOD (int n, int nmod, string seq, string modf, string modg, string arpi, dur d){ 
    
    TONE t;
@@ -187,22 +255,11 @@ fun void MEGAMOD (int n, int nmod, string seq, string modf, string modg, string 
    1 => t.set_disconnect_mode;
    t.go();   t $ ST @=> ST @ last; 
 
-
-STFREEPAN stfreepan0;
-stfreepan0.connect(last $ ST); stfreepan0 $ ST @=>  last; 
-AUTO.pan("*2 1//88/5/8/1*28/11/88/11/88/11/88/11/8")  => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0 
-
-//STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
-//stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
-//AUTO.freq(arpi)  => stfreelpfx0.freq; // CONNECT THIS 
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+STMIX stmix;
+stmix.send(last, mixer);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
 
-STREVAUX strevaux;
-strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
-
-//SERUM00 s1;
 //s1.config(nmod /* synt nb */ ); 
 
 //AUTO.freq(modf) =>  s1 => MULT m0 => s0.inlet;
@@ -224,12 +281,143 @@ AUTO.freq(modg) =>  m0;
 }
 
 
-////////////////////////////////////////////////////////////////////////////////////////
-// OUTPUT
 
-//STMIX stmix;
-//stmix.receive(mixer); stmix $ ST @=> ST @ last; 
-//.65 => stmix.gain;
+////////////////////////////////////////////////////////////////////////////////////////////
+class syntOneP extends SYNT{
+  inlet => Gain in;
+  Gain out =>  outlet;   
+
+  0 => int i;
+  Gain opin[8];
+  Gain opout[8];
+  ADSR adsrop[8];
+  TriOsc osc[8];
+
+  // build and config operators
+  //---------------------
+  opin[i] => osc[i] => adsrop[i] => opout[i];
+  1. => opin[i].gain;
+  adsrop[i].set(1::ms, 20::ms, 1. , 2::ms);
+  1 => adsrop[i].gain;
+  i++;
+
+  //---------------------
+  opin[i] => osc[i] => adsrop[i] => opout[i];
+  1./4. + 0.00 => opin[i].gain;
+  adsrop[i].set(10::ms, 100::ms, 1. , 200::ms);
+  100 * 7 => adsrop[i].gain;
+  i++;
+
+  //---------------------
+  //      opin[i] =>;
+  Step st => osc[i] => adsrop[i] => opout[i];
+  2. => st.next;
+  1./8. +0.0 => opin[i].gain;
+  adsrop[i].set(100::ms, 186::ms, 1. , 1800::ms);
+  15 * 100 => adsrop[i].gain;
+  i++;
+
+  //---------------------
+  opin[i] => osc[i] => adsrop[i] => opout[i];
+  1./2. +0.000 => opin[i].gain;
+  adsrop[i].set(200::ms, 186::ms, .2 , 400::ms);
+  30 => adsrop[i].gain;
+  i++;
+
+  // connect operators
+  // main osc
+  in => opin[0]; opout[0]=> out; 
+
+  // modulators
+  in => opin[1];
+  opout[1] => opin[0];
+
+  in => opin[2];
+  opout[2] => opin[0];
+
+  in => opin[3];
+  //      opout[3] => opin[0];
+
+
+  .5 => out.gain;
+
+  fun void on()  
+  {
+    for (0 => int i; i < 8      ; i++)
+    {
+      adsrop[i].keyOn();
+      // 0=> osc[i].phase;
+    }
+
+  } 
+
+  fun void off() 
+  {
+    for (0 => int i; i < 8      ; i++) 
+    {
+      adsrop[i].keyOff();
+    }
+
+
+  } 
+
+  fun void new_note(int idx)  
+  { 
+
+    if(idx == 0) {
+
+      0.2 => osc[2].phase;        
+      <<<"PHASE UPDATE">>>;
+    }
+
+  }
+  0 => own_adsr;
+}  
+
+
+fun void  ONEP0  (string s, float g){ 
+
+
+  TONE t;
+  t.reg(syntOneP s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
+  //t.lyd(); // t.ion(); // t.mix();// 
+  t.dor();// t.aeo(); // t.phr();// t.loc();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  s => t.seq;
+  1.7 * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+  STLPF lpf;
+  lpf.connect(last $ ST ,  6 * 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
+
+  //==============================================================================================
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 8 / 8 , .3);  ech $ ST @=>  last; 
+
+  STFILTERMOD fmod;
+  fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 1 /* Q */, 600 /* f_base */ , 8* 100  /* f_var */, 1::second / (12 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+
+
+
+  STCOMPRESSOR stcomp;
+  4. => float in_gain;
+  stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
+
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .3 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STMIX stmix;
+stmix.send(last, mixer + 0);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration  => now;
+} 
 
 
 
@@ -237,8 +425,7 @@ AUTO.freq(modg) =>  m0;
 
 
 
-
-150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+157 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
 SYNC sy;
@@ -247,6 +434,48 @@ sy.sync(1 * data.tick);
 
 WAIT w;
 1::samp => w.fixed_end_dur;
+
+////////////////////////////////////////////////////////////////////////////////////////
+// OUTPUT
+
+STMIX stmix;
+
+stmix.receive(mixer); stmix $ ST @=> ST @ last; 
+//.65 => stmix.gain;
+
+
+STCOMPRESSOR stcomp;
+5. => float in_gain;
+stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 30::ms /* releaseTime */);   stcomp $ ST @=>  last;   
+
+.8 => stcomp.gain;
+
+STFREEPAN stfreepan0;
+stfreepan0.connect(last $ ST); stfreepan0 $ ST @=>  last; 
+AUTO.pan("*2 1//88/5/8/1*28/11/88/11/88/11/88/11/8")  => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 to 1.0 
+
+//STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+//stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+//AUTO.freq(arpi)  => stfreelpfx0.freq; // CONNECT THIS 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+
+
+STREVAUX strevaux;
+strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
+
+STMIX stmix1;
+stmix1.receive(mixer + 1); stmix1 $ ST @=>  last; 
+
+STFLANGER flang;
+flang.connect(last $ ST); flang $ ST @=>  last; 
+flang.add_line(0 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,4 *  10::ms /* dur base */, 3::ms /* dur range */, 7 /* freq */); 
+flang.add_line(1 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,4 *  10::ms /* dur base */, 3::ms /* dur range */, 6 /* freq */); 
+
+STREVAUX strevaux1;
+strevaux1.connect(last $ ST, .5 /* mix */); strevaux1 $ ST @=>  last;  
+
+//SERUM00 s1;
 
 fun void  LAB_LOOP(){ 
  while(1) {
@@ -260,10 +489,24 @@ fun void  LAB_LOOP(){
  a << 170;
  a << 208;
 // spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "TFTF8" /*modg*/, "}c mn/tn/Tmt" /* lpf */, 16 * data.tick)  ;
- spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 " + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
-  16 * data.tick =>  w.wait;   
+ spork ~   PADS ("}c :8 :2 " + RAND.seq("1|3, F, 1|5, 3|2", 1) + "_" , 12, .3 ); 
+ spork ~   SIN ("}c ____ ____ *8__" + RAND.char("87654321__",4) + "____:8 __ *8 " + RAND.char("87654321__",8) , .2 ); 
  spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*4 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
   16 * data.tick =>  w.wait;   
+
+   spork ~   ONEP0 ("*4*2 }c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 8), 2.6); 
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 " + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, " }c -8 " + RAND.seq("1__, *2,:2,*2,8/1,13,  2, 3/8, __, _,____,__,____", 16)," {c{c {c {cZTF8m" /* modf */, "}c ZZtZZ8Z1Z8ZTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
+  16 * data.tick =>  w.wait;   
+ 
+ spork ~   PADS ("}c :8:2 " + RAND.seq("1|3, F, 1|5, 3|2", 1)+ "_" , 13, .2 ); 
+   spork ~   ONEP0 ("*4*2 }c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 4), 2.6); 
+ spork ~   SIN ("}c}c ____ ____ *8__" + RAND.char("87654321__",4) + "____:8 __ *8 " + RAND.char("87654321__",8) , .2 ); 
+ spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*4 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
+  16 * data.tick =>  w.wait;   
+
+   spork ~   ONEP0 ("*4*2 }c }c" + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 12), 1.6); 
+spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "* 4 }c -8 " + RAND.seq("1__, *2,:2,*2,8/1,13,  2, 3/8, __, _,____,__,____", 16)," {c{c {c {cZTF8m" /* modf */, "}c ZZtZZ8Z1Z8ZTT" /*modg*/, "}c g" /* lpf */, 16 * data.tick)  ;
  spork ~ MEGAMOD (a[Std.rand2(0, a.size() -1 )] /*137*/ , 23 /* nmod */, "*2 }c" + RAND.seq("1_1_, *2,:2,*2,8531,135, 4, 6, 2, 358, __, _", 16)," {c{c  ZTF8m" /* modf */, "ZZZtZZ88Z1Z8ZZZfTTTT" /*modg*/, "}c:4 g/11/FF/g" /* lpf */, 16 * data.tick)  ;
   16 * data.tick =>  w.wait;   
  }
@@ -279,19 +522,19 @@ if (    0     ){
 while(1) { /********************************************************/
 
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!8!1 __8//1 __!1!1 __!1!1 __!B!1 __b//1_   "); 
+  spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
-  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ ____ k___ _____  "); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!8!1 __8//1 __!1!1 !1!1!1!1 __!B!1!1!1!b//1_   "); 
+  spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k__k_  "); 
+  spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!8!1 __8//1 __!1!1 __!1!1 __!B!1 __b//1_   "); 
+  spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ __h_ S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ ____ k_k_ kkkk_  "); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!8!1 __8//1 __!1!1 !1!1!1!1 __   "); 
+  spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __    "); 
   spork ~  TRANCEHH ("*4  __h_  S_h_ __h_ S_h_ "); 
   8 * data.tick =>  w.wait;   
 
