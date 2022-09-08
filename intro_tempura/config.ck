@@ -9,9 +9,9 @@
 
 // D#/G     //    Bb/B - C/B
 
-// Start REV and ECHO
+// Start ECHO
 HW.launchpad.virtual_key_on(38);
-HW.launchpad.virtual_key_on(48);
+//HW.launchpad.virtual_key_on(48); // REV
 
 HW.ledstrip.open();
 HW.ledstrip._load_preset('&');
