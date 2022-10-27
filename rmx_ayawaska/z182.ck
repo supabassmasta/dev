@@ -954,25 +954,51 @@ fun void  LOOPLAB2  (){
 fun void  LOOPLAB3  (){ 
   while(1) {
   spork ~ KICK3 ("kkkk kkkk kkkk kkk_"); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
+  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1   __!5!5 __!5!5 __!5!5 __!5!5  __!5!5 __!5!5 __!5!5 __!5!5 "); 
   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
   16 * data.tick =>  w.wait; 
+
+  spork ~ KICK3 ("kkkk kkkk kkkk kkk_"); 
+  spork ~  BASS0 ("*4   __!4!4 __!4!4 __!4!4 __!4!4  __!4!4 __!4!4 __!4!4 __!4!4     __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
+  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+  16 * data.tick =>  w.wait; 
+    
+//   spork ~ KICK3 ("kkkk kkkk kkkk kkk_"); 
+//   spork ~  BASS0 ("*4   __!5!5 __!5!5 __!5!5 __!5!5  __!5!5 __!5!5 __!5!5 __!5!5    __!5!5 __!5!5 __!5!5 __!5!5  __!5!5 __!5!5 __!5!5 __!5!5 "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
+//    
+//   
+//   spork ~ KICK3 ("kkkk kkkk kkkk kkk_"); 
+//   spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
    
-  spork ~ KICK3 ("kkkk kkkk kkkk kkk*2_k"); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!4!4 __!4!4 __!4!4 __!4!4   __!4!4 __!4!4 __!4!4 __!4!4    "); 
-  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
-  16 * data.tick =>  w.wait; 
-  spork ~ KICK3 ("kkkk kkkk kkkk kkk*2kk"); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
-  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
-  16 * data.tick =>  w.wait; 
-  spork ~ KICK3 ("kkkk kkkk kkkk kk*2kkkk"); 
-  spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!4!4 __!4!4 __!4!4 __!4!4  __!4!4 __!8!8 __!4!4 __!3!3    "); 
-  spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
-  16 * data.tick =>  w.wait; 
-  }
+   }
 } 
  LOOPLAB3();
+
+// fun void  LOOPLAB4  (){ 
+//   while(1) {
+//   spork ~ KICK3 ("kkkk kkkk kkkk kkk_"); 
+//   spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
+//    
+//   spork ~ KICK3 ("kkkk kkkk kkkk kkk*2_k"); 
+//   spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!4!4 __!4!4 __!4!4 __!4!4   __!4!4 __!4!4 __!4!4 __!4!4    "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
+//   spork ~ KICK3 ("kkkk kkkk kkkk kkk*2kk"); 
+//   spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1 "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
+//   spork ~ KICK3 ("kkkk kkkk kkkk kk*2kkkk"); 
+//   spork ~  BASS0 ("*4   __!1!1 __!1!1 __!1!1 __!1!1  __!1!1 __!1!1 __!1!1 __!1!1    __!4!4 __!4!4 __!4!4 __!4!4  __!4!4 __!8!8 __!4!4 __!3!3    "); 
+//   spork ~ TRANCEHH ("*2 _hsh_hsh _hsh_hsh  _hsh_hsh _hsh_s_T"); 
+//   16 * data.tick =>  w.wait; 
+//   }
+// } 
 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
