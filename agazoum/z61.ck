@@ -138,6 +138,9 @@ ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][6] /*
 STLHPFC lhpfc;
 lhpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );       lhpfc $ ST @=>  last; 
 
+STLIMITER stlimiter;
+5. => float in_gainl;
+stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 

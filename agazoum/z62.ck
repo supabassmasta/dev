@@ -114,6 +114,11 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
 t.go(); t $ ST @=> ST @ last; 
 
+
+
+Noise n => s0.outlet;
+0.1 => n.gain;
+
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .9 /* span 0..1 */, 8*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
@@ -133,11 +138,14 @@ gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 7. /* static gain */
 //ech.connect(last $ ST , data.tick * 3 / 4  /* freq */ , HW.lpd8.potar[1][4] /* Q */ );      ech $ ST @=>  last;  
 
 STECHOC0 ech;
-ech.connect(last $ ST , data.tick * 3 / 4  /* period */ , HW.lpd8.potar[1][6] /* Gain */ );      ech $ ST @=>  last;   
+ech.connect(last $ ST , data.tick * 3 / 4 + 10::ms /* period */ , HW.lpd8.potar[1][6] /* Gain */ );      ech $ ST @=>  last;   
 
 STLHPFC lhpfc;
 lhpfc.connect(last $ ST , HW.lpd8.potar[1][7] /* freq */  , HW.lpd8.potar[1][8] /* Q */  );       lhpfc $ ST @=>  last; 
 
+STLIMITER stlimiter;
+5. => float in_gainl;
+stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
 
 STREV1 rev;
 rev.connect(last $ ST, .3 /* mix */);     rev  $ ST @=>  last; 

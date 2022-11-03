@@ -20,7 +20,7 @@ HW.ledstrip.set_tx('l') @=> ps.s[0].action["u"];
 // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 
 
-"*8
+"*4
 ____ ____ u|s___ ____ 
 ____ ____ u|s___ ____ 
 ____ ____ u|s___ ____ 
@@ -29,15 +29,17 @@ ____ ____ u|s___ _s__
 
 "*4
 ____ ____ __vu __B_ 
-____ ____ _vuv _CB_ 
 ____ ____ __vx u_A_ 
-____ *2vuvu:2__ ___v __xy 
+____ ____ _vuv x_B_ 
+____ ____ __vx u_A_ 
 " +=> ps.sseq[1];
+//____ *2vuvu:2__ ___v __xy 
 
-"
-____ __t_
- _c_a ____
- ____ RR__
+"*4
+____ ____ ____ ____
+____ ____ ____ ____
+____ ____ u|s___ ____ 
+____ ____ ____ ____
 " +=> ps.sseq[2];
 
 "
@@ -74,7 +76,7 @@ stgverb.connect(last $ ST, .04 /* mix */, 5 * 10. /* room size */, 2::second /* 
 ps.s[2] $ ST @=>  last; 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 /////////////////////////////////////////
 ps.s[3] $ ST @=>  last; 
