@@ -1,5 +1,5 @@
 ST st; st @=> ST @ last;
-STEPC stepc; stepc.init(HW.lpd8.potar[1][2],.1 /* min */, 15 /* max */, 50::ms /* transition_dur */);
+STEPC stepc; stepc.init(HW.lpd8.potar[1][6],.1 /* min */, 15 /* max */, 50::ms /* transition_dur */);
 stepc.out => TriOsc tri1 => OFFSET ofs0 =>SUPERSAW3 tri0 => st.mono_in;
 //10.0 => tri1.freq;
 60 * 10.0 => tri1.gain;
@@ -19,7 +19,7 @@ stepc.out => TriOsc tri1 => OFFSET ofs0 =>SUPERSAW3 tri0 => st.mono_in;
 //lpf.connect(last $ ST , 71 * 100 /* freq */  , 1.0 /* Q */  );       lpf $ ST @=>  last; 
 
 STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 0.5 /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(last $ ST , HW.lpd8.potar[1][5] /* gain */  , 0.5 /* static gain */  );       gainc $ ST @=>  last; 
 
 /// OUTPUT
 STGAIN stgain;
@@ -41,8 +41,8 @@ ech.connect(gainc $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last;
 
 <<<"****************************">>>;
 <<<"**        SIREN          ***">>>;
-<<<"** lpd 1.1 GAin          ***">>>;
-<<<"** lpd 1.2 Freq Mod      ***">>>;
+<<<"** lpd 1.5 GAin          ***">>>;
+<<<"** lpd 1.6 Freq Mod      ***">>>;
 <<<"****************************">>>;
 
 
