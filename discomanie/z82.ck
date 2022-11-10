@@ -6,7 +6,7 @@ t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 t.force_off_action();
 
-":4 
+":8 
  P////mm//////////z
 
 " => t.seq;

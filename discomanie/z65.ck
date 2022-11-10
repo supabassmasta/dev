@@ -34,11 +34,22 @@ stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last;
 
 STFLANGER flang;
 flang.connect(last $ ST); flang $ ST @=>  last; 
-flang.add_line(0 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  8::ms /* dur base */, 5::ms /* dur range */, 3 /* freq */); 
-flang.add_line(1 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  7::ms /* dur base */, 4::ms /* dur range */, 3.2 /* freq */); 
+flang.add_line(0 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  8::ms /* dur base */, 5::ms /* dur range */, 2 /* freq */); 
+flang.add_line(1 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  7::ms /* dur base */, 4::ms /* dur range */, 2.2 /* freq */); 
+
+//:2
+//1_1_1_1_
+//*2
+//11__1_1___1_1_1_
+
+STCUTTER stcutter;
+"*8 
+1_1_1_1_1_1_1_1_
+" => stcutter.t.seq;
+stcutter.connect(last, 1::ms /* attack */, 1::ms /* release */ );   stcutter $ ST @=> last; 
 
 STECHO ech;
-ech.connect(gainc $ ST , data.tick * 6 / 4 , .8);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 6 / 4 , .8);  ech $ ST @=>  last; 
 
 <<<"****************************">>>;
 <<<"**        SIREN          ***">>>;
