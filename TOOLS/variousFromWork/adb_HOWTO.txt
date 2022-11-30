@@ -1,0 +1,57 @@
+https://developer.android.com/studio/command-line/adb
+
+Activate ADB over usb on the phone:
+"On Android 4.2 and higher, the Developer options screen is hidden by default. To make it visible, go to Settings > About phone and tap Build number seven times. Return to the previous screen to find Developer options at the bottom."
+
+https://developer.android.com/studio/releases/platform-tools
+Download platform-tools_r31.0.3-linux.zip
+
+unzip it, adb is in platform-tools directory
+
+List connected device
+./adb devices
+
+Open terminal on the phone:
+./adb shell
+
+Reboot 
+./adb reboot
+	or
+reboot in adb shell
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!
+TROUBLESHOUT
+!!!!!!!!!!!!!!!!!!!!!!!!!
+
+In case the following error occurs:
+""
+adb: insufficient permissions for device: missing udev rules? user is in the plugdev group
+See [http://developer.android.com/tools/device.html] for more information
+""
+
+apt-get install android-sdk-platform-tools-common
+
+AND
+
+
+Use lsusb to find Vendor and Device Serial number:
+Bus 004 Device 005: ID 22d9:276c OnePlus LAHAINA-MTP _SN:1C5BC4FF
+                       ---- ----
+                       
+If not exist create 
+ /etc/udev/rules.d/51-android.rules
+
+Write into it the following lines with Vendor and Device Serial Number:
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="22d9", ATTRS{idProduct}=="276c", MODE="0666", GROUP="androiddev", SYMLINK+="android%n"
+
+Restart udev:
+sudo service udev restart
+
+UnPlug and Plug usb/device.
+adb shell
+
+Detailed explanation here:
+https://android.stackexchange.com/questions/144966/how-do-i-get-my-device-detected-by-adb-on-linux
+
+

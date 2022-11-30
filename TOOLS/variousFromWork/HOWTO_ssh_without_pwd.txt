@@ -1,0 +1,24 @@
+here we want to ssh connect to a sever without password
+Warning this method is not persistent after reboot. on the client ssh-add key_pair_name must be done again. ssh-add command can be added in .bashrc to automate the process
+
+
+1) Generate ssh keys pair on the client
+cd .ssh
+ssh-keygen
+# Enter the name of the key pair, On pwd request type ENTER twice if you don't want password
+
+2) Check ssh-agent is running
+pgrep ssh-agent
+
+3) Register the private key on the client
+ssh-add key_pair_name
+
+4) Copy the public key to the server
+ssh-copy-id -i key_pair_name.pub user@host
+# Enter user password
+
+5) You can now connect withour password
+ssh user@host
+
+
+

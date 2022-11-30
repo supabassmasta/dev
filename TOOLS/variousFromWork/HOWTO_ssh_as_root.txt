@@ -1,0 +1,11 @@
+On Ubuntu 20 ssh as root is not allowed on the server
+
+To allow it edit
+/etc/ssh/sshd_config
+And change:
+PermitRootLogin without-password
+to
+PermitRootLogin yes
+
+then 
+sudo service ssh restart

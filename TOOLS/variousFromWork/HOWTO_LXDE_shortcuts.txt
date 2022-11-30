@@ -1,0 +1,3 @@
+vi ~/.config/openbox/lxde-rc.xml
+
+openbox-lxde --reconfigure
