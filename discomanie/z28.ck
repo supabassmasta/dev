@@ -64,7 +64,7 @@ s0.config(2330 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright
 t.lyd();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 //_3_2_1 _0
-"{c *2
+"{c 
 _1_1_1 _*2!1!1:2
 _1_1_1 _*2!1!1:2
 _1_1_1 _*2!1!1:2
