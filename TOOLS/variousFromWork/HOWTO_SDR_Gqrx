@@ -1,0 +1,11 @@
+sudo ./Gqrx-2.15.8-x86_64.AppImage
+
+with my DVB key:
+Select: Realtek RTL2838UHID
+
+
+For BladeRF:
+sudo apt install bladerf
+sudo bladeRF-install-firmware
+sudo ./Gqrx-2.15.8-x86_64.AppImage
+

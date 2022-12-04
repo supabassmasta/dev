@@ -1,0 +1,43 @@
+#install ansible on the control machine
+
+ sudo apt-get update 
+ sudo apt-get install software-properties-common 
+ sudo apt-add-repository ppa:ansible/ansible
+ sudo apt-get update 
+ sudo apt-get install ansible
+
+# Configure target hosts to be accessed via SSH whitout password (view HOWTO_ssh_without_pwd.txt)
+
+# on control machine Add target host in (for non grouped host add IP address in like in Ex1):
+/etc/ansible/hosts
+
+# To set default remote user (useful for ansible_runner python plugin) add in /etc/ansible/ansible.cfg
+[defaults]
+remote_user=root
+
+# Nothing to install on hosts exept ssh public key
+
+# Ansible Ad hoc commands can be sent to host:
+ansible 2001:660:7301:51:801a:fb04:fbdc:891d -a "touch /tmp/test_file"
+
+# Execute Ad hoc command requiring sudo password
+ansible 2001:660:7301:51:801a:fb04:fbdc:891d   -a 'ls /root' -u jsm --become -K
+
+# Copy a file to target host
+ansible all -m copy -a 'src=/tmp/ansible.cfg dest=/tmp'
+
+# Download a file from target host
+ansible all -m fetch -a 'src=/tmp/ans.cfg dest=/tmp/ans2.cfg flat=yes'
+
+# apt install on target host
+ansible 2001:660:7301:51:801a:fb04:fbdc:891d  -m apt -a 'name=cowsay state=latest'  --become -K
+
+# apt uninstall on target host
+ansible 2001:660:7301:51:801a:fb04:fbdc:891d  -m apt -a 'name=cowsay state=absent'  --become -K
+
+
+# To execute root commands on the target without password, one solution is to allow ssh connection as root (view HOWTO_ssh_as_root) and copy the ssh public key(ssh-copy ...)  in /root/.ssh on the target
+Then you can execute commands as root from the control machine in a user terminal (not root):
+jsm@jsm-Latitude-E6530:~$ ansible 2001:660:7301:51:801a:fb04:fbdc:891d  -m apt -a 'name=cowsay state=absent' -u root
+
+

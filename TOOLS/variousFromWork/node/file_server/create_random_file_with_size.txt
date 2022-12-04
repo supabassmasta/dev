@@ -1,0 +1,1 @@
+dd if=/dev/urandom of=2MB.gif  bs=1M count=2

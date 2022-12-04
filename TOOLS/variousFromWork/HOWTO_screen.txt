@@ -1,0 +1,44 @@
+screen command allow to multiplex several screen on the same terminal.
+You can execute parallel command with it.
+
+Launch screen withour command:
+screen
+
+To check if you are in a sub screen terminal
+echo $TERM
+==>  $ screen.xterm-256color
+
+Launch screen with a command in it
+screen vim test.txt
+
+
+Inside screen, launch screen's command with Ctrl-a
+C-a ? : help
+C-a c : Create a new screen instance
+C-a n : switch to next screen instance
+C-a k : kill current screen instance
+
+C-a S : split screen horizontaly
+C-a | : split screen verticaly
+Note: C-a c is needed to create a new instance after splitting
+C-a <TAB> : switch between screens splitted
+
+To Create named session an send them command proceed like this:
+1) Start a new screen session with a name
+screeen -S session1
+2) in another terminal Send it comands to exectute like this:
+screen -S session1 -X stuff "ls\n"
+
+To start a program in screen and feed it from another place:
+1) Create a named session
+screen -S s1 vim
+2) Feed it from another place with commands
+screen -S s1 -X stuff "iAHAHAH\n"
+3) Send and ESC to exit edit mode in vim
+screen -S s1 -X stuff "^["
+screen -S s1 -X stuff ":sav test\n"
+screen -S s1 -X stuff ":q\n"
+
+
+
+

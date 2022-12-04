@@ -1,0 +1,495 @@
+To explore a sqlite3 db:
+sudo apt install sqlite3
+Gui:
+sudo apt install sqlitebrowser
+
+
+chinook.db used from https://www.sqlitetutorial.net
+
+
+
+sqlite3 chinook.db 
+
+.help
+
+.exit
+
+
+Print tables:
+.tables
+
+Print tables schema:
+.schema albums
+
+Print all schemas
+.fullschema
+
+
+
+Set result display as column
+.mode column
+
+Print header in result
+.header on
+
+
+Show indexs of a table
+.indexes albums
+
+Print all queries results in a file
+.output albums.txt
+To stop record:
+.output
+
+Print only next query result in a file:
+.once album.txt
+
+Execute a query saved in a file:
+.read commands.txt
+
+
+Operators :
+= != < > <= >=
+ALL	returns 1 if all expressions are 1.
+AND	returns 1 if both expressions are 1, and 0 if one of the expressions is 0.
+ANY	returns 1 if any one of a set of comparisons is 1.
+BETWEEN	returns 1 if a value is within a range.
+EXISTS	returns 1 if a subquery contains any rows.
+IN	returns 1 if a value is in a list of values.
+LIKE	returns 1 if a value matches a pattern
+NOT	reverses the value of other operators such as NOT EXISTS, NOT IN, NOT BETWEEN, etc.
+OR	returns true if either expression is 1
+
+Wildcards:
+% : 0 to any char
+_ : only one char
+To use an % or _ as a real char in a LIKE command for example, need to escape it with:
+LIKE '%10\%%' ESCAPE '\';
+
+or use GLOB (instead of LIKE) that use unix wild card * and ?,list of chars [a-zA-Z0-9] exclude char GLOB '*[^1-9]*'
+
+
+LEFT JOIN:
+- The LEFT JOIN clause selects data starting from the left table (artists) and matching rows in the right table (albums) based on the join condition (artists.ArtistId = albums.ArtistId) .
+- The left join returns all rows from the artists table (or left table) and the matching rows from the albums table (or right table).
+- If a row from the left table doesn’t have a matching row in the right table, SQLite includes columns of the rows in the left table and NULL for the columns of the right table.
+
+
+CROSS JOIN :
+The CROSS JOIN clause creates a Cartesian product of rows from the joined tables.
+
+
+Warning:
+ val = NULL always return false; use IS NULL or IS NOT NULL instead
+
+
+EXAMPLE QUERIES:
+****************
+
+SELECT  DISTINCT
+	city,
+	country
+FROM
+	customers
+ORDER BY
+	country;
+
+
+
+SELECT
+	name,
+	albumid,
+	composer
+FROM
+	tracks
+WHERE
+	composer LIKE '%Smith%'
+ORDER BY
+	albumid;
+
+
+
+SELECT
+	trackId,
+	name
+FROM
+	tracks
+LIMIT 10;
+
+
+SELECT
+    InvoiceId,
+    BillingAddress,
+    InvoiceDate,
+    Total
+FROM
+    invoices
+WHERE
+    InvoiceDate BETWEEN '2010-01-01' AND '2010-01-31'
+ORDER BY
+    InvoiceDate; 
+    
+    
+SELECT 
+    TrackId,
+    Name,
+    AlbumId
+FROM
+    Tracks
+WHERE  
+  AlbumId IN  ( 
+    SELECT 
+        AlbumId
+    FROM
+        Albums
+    WHERE
+      ArtistId = 12 ) ;
+
+
+SELECT
+    Name, 
+    Composer
+FROM
+    tracks
+WHERE
+    Composer IS NULL
+ORDER BY 
+    Name;
+
+
+SELECT 
+    Title,
+    Name
+FROM 
+    albums
+INNER JOIN artists 
+    ON artists.ArtistId = albums.ArtistId;
+
+similar to:
+
+SELECT
+   Title, 
+   Name
+FROM
+   albums
+INNER JOIN artists USING(ArtistId);    
+
+
+
+SELECT
+	trackid,
+	tracks.name AS Track,
+	albums.title AS Album,
+	artists.name AS Artist
+FROM
+	tracks
+INNER JOIN albums ON albums.albumid = tracks.albumid
+INNER JOIN artists ON artists.artistid = albums.artistid
+WHERE
+	artists.artistid = 10;
+
+
+Include ARtists with no Album (AlbumId will be NULL):
+----------------------------------------------------
+SELECT
+   artists.ArtistId, 
+   AlbumId
+FROM
+   artists
+LEFT JOIN albums ON
+   albums.ArtistId = artists.ArtistId
+ORDER BY
+   AlbumId;  
+
+
+
+SELECT m.firstname || ' ' || m.lastname AS 'Manager',
+       e.firstname || ' ' || e.lastname AS 'Direct report' 
+FROM employees e
+INNER JOIN employees m ON m.employeeid = e.reportsto
+ORDER BY manager;
+
+
+SELECT
+	albumid,
+	COUNT(trackid)
+FROM
+	tracks
+GROUP BY
+	albumid;
+
+
+
+SELECT
+	tracks.albumid,
+	title,
+	COUNT(trackid)
+FROM
+	tracks
+INNER JOIN albums ON albums.albumid = tracks.albumid
+GROUP BY
+	tracks.albumid
+HAVING COUNT(trackid) > 15;
+
+
+SELECT
+   MediaTypeId, 
+   GenreId, 
+   COUNT(TrackId)
+FROM
+   tracks
+GROUP BY
+   MediaTypeId, 
+   GenreId;
+
+
+
+SELECT
+   STRFTIME('%Y', InvoiceDate) InvoiceYear, 
+   COUNT(InvoiceId) InvoiceCount
+FROM
+   invoices
+GROUP BY
+   STRFTIME('%Y', InvoiceDate)
+ORDER BY
+   InvoiceYear;
+
+SELECT
+   STRFTIME('%Y-%m', InvoiceDate) InvoiceYear, 
+   COUNT(InvoiceId) InvoiceCount
+FROM
+   invoices
+GROUP BY
+   STRFTIME('%Y-%m', InvoiceDate)
+ORDER BY
+   InvoiceYear;
+
+
+SELECT
+	tracks.AlbumId,
+	title,
+	SUM(Milliseconds) AS length
+FROM
+	tracks
+INNER JOIN albums ON albums.AlbumId = tracks.AlbumId
+GROUP BY
+	tracks.AlbumId 
+HAVING
+	length > 60000000;
+
+
+UNION, EXCEPT, INTERSECT rules:
+*******************
+First, the number of columns in the select lists of both queries must be the same.
+Second, the order of the columns and their types must be comparable.
+
+
+
+SELECT FirstName, LastName, 'Employee' AS Type
+FROM employees
+UNION
+SELECT FirstName, LastName, 'Customer'
+FROM customers
+ORDER BY FirstName, LastName;
+
+/* Find artists Id with no Albums */
+SELECT ArtistId
+FROM artists
+EXCEPT
+SELECT ArtistId
+FROM albums;
+
+
+SELECT CustomerId
+FROM customers
+INTERSECT
+SELECT CustomerId
+FROM invoices
+ORDER BY CustomerId;
+
+
+
+SELECT trackid,
+       name,
+       albumid
+FROM tracks
+WHERE albumid = (
+   SELECT albumid
+   FROM albums
+   WHERE title = 'Let There Be Rock'
+);
+
+
+SELECT customerid,
+       firstname,
+       lastname
+FROM customers
+WHERE supportrepid IN (
+           SELECT employeeid
+             FROM employees
+            WHERE country = 'Canada'
+       );
+
+
+SELECT
+ AVG(album.size)
+FROM  ( SELECT
+   SUM(bytes) AS size
+  FROM
+   tracks
+  GROUP BY
+   albumid
+) AS album;
+
+/* Correlated Sub querry: warning this kind of querries are ineficient */
+SELECT albumid,
+       title
+FROM albums
+WHERE 10000000 > (
+                      SELECT sum(bytes) 
+                        FROM tracks
+                       WHERE tracks.AlbumId = albums.AlbumId
+                  )
+ORDER BY title;
+
+
+SELECT albumid,
+       title,
+       (
+           SELECT count(trackid) 
+             FROM tracks
+            WHERE tracks.AlbumId = albums.AlbumId
+       )
+       tracks_count
+FROM albums
+ORDER BY tracks_count DESC;
+
+
+SELECT
+    CustomerId,
+    FirstName,
+    LastName,
+    Company
+FROM
+    Customers c
+WHERE
+    EXISTS (
+        SELECT 
+            1 
+        FROM 
+            Invoices
+        WHERE 
+            CustomerId = c.CustomerId
+    )
+ORDER BY
+    FirstName,
+    LastName; 
+
+
+SELECT
+   *
+FROM
+   Artists a
+WHERE
+   NOT EXISTS(
+      SELECT
+         1
+      FROM
+         Albums
+      WHERE
+         ArtistId = a.ArtistId
+   )
+ORDER BY Name;
+
+SELECT customerid,
+       firstname,
+       lastname,
+       CASE country 
+           WHEN 'USA' 
+               THEN 'Domestic' 
+           ELSE 'Foreign' 
+       END CustomerGroup
+FROM 
+    customers
+ORDER BY 
+    LastName,
+    FirstName;
+
+
+SELECT
+ trackid,
+ name,
+ CASE
+  WHEN milliseconds < 60000 THEN
+   'short'
+  WHEN milliseconds > 60000 AND milliseconds < 300000 THEN 'medium'
+  ELSE
+   'long'
+  END category
+FROM
+ tracks;
+
+
+INSERT INTO artists (name)
+VALUES('Bud Powell');
+
+INSERT INTO artists (name)
+VALUES
+  ("Buddy Rich"),
+  ("Candido"),
+  ("Charlie Byrd");
+
+
+CREATE TABLE artists_backup(
+   ArtistId INTEGER PRIMARY KEY AUTOINCREMENT,
+   Name NVARCHAR
+);
+
+
+INSERT INTO artists_backup 
+SELECT ArtistId, Name
+FROM artists;
+
+UPDATE employees
+SET lastname = 'Smith'
+WHERE employeeid = 3;
+
+UPDATE employees
+SET city = 'Toronto',
+    state = 'ON',
+    postalcode = 'M5P 2N7'
+WHERE
+    employeeid = 4;
+
+
+DELETE FROM artists_backup
+WHERE artistid = 1;
+
+DELETE FROM artists_backup
+WHERE name LIKE '%Santana%';
+
+
+CREATE TABLE IF NOT EXISTS positions (
+ id INTEGER PRIMARY KEY,
+ title TEXT NOT NULL,
+ min_salary NUMERIC
+);
+
+INSERT INTO positions (title, min_salary)
+VALUES ('DBA', 120000),
+       ('Developer', 100000),
+       ('Architect', 150000);
+
+CREATE UNIQUE INDEX idx_positions_title 
+ON positions (title);
+
+REPLACE INTO positions (title, min_salary)
+VALUES('Full Stack Developer', 140000);
+
+
+BEGIN TRANSACTION;
+.
+.
+.
+COMMIT; /* or */ ROLLBACK; /* if failed */
+

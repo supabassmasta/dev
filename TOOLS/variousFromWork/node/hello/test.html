@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>TITLE</h2>
+
+<p>Paragraph.</p>
+
+<input type="text" id="in" value=0><br>
+
+<button type="button" onclick="myFunction()">Button Name</button>
+
+<p id="demo"></p>
+
+<script>
+let myPromise = new Promise(function(myResolve, myReject) {
+  let x = 1;
+
+  // some code (try to change x to 5)
+  // Take some times
+  // x is just an example condition
+
+  if (x == 0) {
+    myResolve("OK");
+  } else {
+    myReject("Error");
+  }
+});
+
+function myCallback (i) {
+  document.getElementById("demo").innerHTML = i;
+  return ;
+}
+myPromise.then(
+  function(value) {myCallback(value);}, // called in case of success
+    function(error) {myCallback(error);}  // failure
+    ); 
+
+
+</script>
+
+</body>
+</html> 

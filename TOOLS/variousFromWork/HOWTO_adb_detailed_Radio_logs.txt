@@ -1,0 +1,3 @@
+
+adb shell
+dumpsys telephony.registry

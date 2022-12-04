@@ -1,0 +1,5 @@
+# on this machine start VNC server, pwd is the one of linux
+x11vnc -rfbauth .vnc/passwd 
+
+# Client VNC Viewer (Real VNC) at home works
+

@@ -1,0 +1,6 @@
+
+
+Dump Iperf trafic, on server machine:
+Beware of first TCP frame (probably used for control, setting up the connection).
+sudo tcpdump tcp port 5201 and  host 10.51.0.173 -w tcpout
+
