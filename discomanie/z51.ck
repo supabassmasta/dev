@@ -19,6 +19,9 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 t.go();   t $ ST @=> ST @ last; 
 
+STADSRC stadsrc3;
+stadsrc3.connect(t, HW.launchpad.keys[16*4 + 1] /* pad 4:2 */ /* controler */, 3::ms /* attack */, 3::ms /* release */, 1 /* default_on */, 0  /* toggle */);  stadsrc3 $ ST @=> last;
+
 STREV1 rev;
 rev.connect(last $ ST, .2 /* mix */);     rev  $ ST @=>  last; 
 
