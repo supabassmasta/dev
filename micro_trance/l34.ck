@@ -660,7 +660,7 @@ fun void ACID2 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .21 * data.master_gain => t.gain;
+  .19 * data.master_gain => t.gain;
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   t.set_adsrs(6::ms, 10::ms, .6, 400::ms);
@@ -695,7 +695,7 @@ fun void ACID3 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .21 * data.master_gain => t.gain;
+  .19 * data.master_gain => t.gain;
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
   t.set_adsrs(6::ms, 10::ms, .6, 400::ms);
@@ -730,10 +730,10 @@ fun void ACID3 (string seq, string fseq, string gseq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .24 * data.master_gain => t.gain;
+  .21 * data.master_gain => t.gain;
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-  t.set_adsrs(6::ms, 10::ms, .6, 400::ms);
+  t.set_adsrs(6::ms, 10::ms, .6, 9 * 10::ms);
   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   1 => t.set_disconnect_mode;
   t.go();   t $ ST @=> ST @ last; 
@@ -744,6 +744,12 @@ stsynclpfx0.adsr_set(.1 /* Relative Attack */, .6/* Relative Decay */, 0.1 /* Su
 stsynclpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
+
+STFILTERX stbrfx0; BRF_XFACTORY stbrfx0_fact;
+stbrfx0.connect(last $ ST ,  stbrfx0_fact, 3* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stbrfx0 $ ST @=>  last;  
+
+//STBELL stbell0; 
+//stbell0.connect(last $ ST , 30 * 10 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, -.8 /* Gain */ );       stbell0 $ ST @=>  last;   
 
 STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
 stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1.2 /* Q */, 2 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
@@ -757,7 +763,7 @@ AUTO.gain(gseq) => stfreegain.g; // connect this
 
 
 STREVAUX strevaux;
-strevaux.connect(last $ ST, .07 /* mix */); strevaux $ ST @=>  last;  
+strevaux.connect(last $ ST, .08 /* mix */); strevaux $ ST @=>  last;  
 
 1::samp => now; // let seq() be sporked to compute length
   t.s.duration  => now;
@@ -903,8 +909,8 @@ fun void  ACIDLOOP  (){
      spork ~ ACID3 ("_*4  " + RAND.seq("1_,*21_1_:2,+41_-4,!1!1,!3!1,1!5,!5_", 1)); 
      2 * data.tick => w.wait;
    } else {
-     spork ~ ACID2 ("_*4  " + RAND.seq("1_,*21_1_:2,+41_-4,!1!1,!3!1,1!5,!5_", 1)); 
-     spork ~ ACID3 ("*4  " + RAND.seq("1_,*21_1_:2,+41_-4,!1!1,!3!1,1!5,!5_", 1)); 
+     spork ~ ACID2 ("_*4  " + RAND.seq("*21!1!1_:2,+41_-4,!1!1,!3!1,1!5,!5_", 1)); 
+     spork ~ ACID3 ("*4  " + RAND.seq("*21__1:2,+41_-4,!1!1,!3!1,1!5,!5_", 1)); 
      2 * data.tick => w.wait;
    }
 
@@ -915,7 +921,7 @@ fun void  LOOPLAB  (){
   while(1) {
    //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
     //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
-     if (1) {
+     if (0) {
      
     spork ~ ACID3 ("*4 1__1 _1__ 1_1_ 1!1__ 1__1 _1__ 1_1_ 1!1__", ":8 m/o", "9" ); 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
@@ -933,8 +939,6 @@ fun void  LOOPLAB  (){
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1      "); 
     8 * data.tick => w.wait;
-  }
-     while(1) {
     spork ~   ONEP0 ("*4*2 }c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 8), 2.6); 
     
     spork ~ ACID3 ("*4 1__1 _1__ 1_1_ 1!1__ 1__1 _1__ 1_1_ 1!1__", "}c :8 t/z", "9" ); 
@@ -947,9 +951,11 @@ fun void  LOOPLAB  (){
     spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
     8 * data.tick => w.wait;
  spork ~   SIN ("}c}c  *8__" + RAND.char("87654321__",4) + "____:8 __ *8 " + RAND.char("87654321__",8) , .4 ); 
+  }
+     while(1) {
     spork ~ ACID3 ("*4 1__1 _1__ 1_1_ 1!1__ 1__1 _1__ 1_1!1 !1!1!1_", "}c :8 m/t", "9" ); 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-    spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
+//    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+//    spork ~  BASS0 ("*4   __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1  __!1!1 __!1!1    "); 
     8 * data.tick => w.wait;
     }
 
@@ -1079,6 +1085,8 @@ spork ~ ACID ("*8 5_5_ 5_5_ 5_5_ 5_5_ 4_4_4_4_4_4_4_4_ 3_3_ 3_3_ 3_3_ 3_3_ 1_1_ 
   spork ~  BASS0_HPF ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ", ":8M/f"); 
 
  8 * data.tick =>  w.wait;   
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
