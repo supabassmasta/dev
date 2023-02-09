@@ -35,7 +35,7 @@ STCOMPRESSOR stcomp;
 stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.3 /* thresh */, 3::ms /* attackTime */ , 23::ms /* releaseTime */);   stcomp $ ST @=>  last;   
 
 STBELL stbell0; 
-stbell0.connect(last $ ST , 50 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, 0.8 /* Gain */ );       stbell0 $ ST @=>  last;   
+stbell0.connect(last $ ST , 95 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */, -0.35 /* Gain */ );       stbell0 $ ST @=>  last;   
 
 
 while(1) {

@@ -1,15 +1,19 @@
+class synt0 extends SYNT{
+
+    inlet => SinOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+} 
 TONE t;
 t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-s0.config(0 /* synt nb */ ); 
+s0.config(16 /* synt nb */ ); 
+
+//s0.config(1 /* synt nb */ ); 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-"____ *81_1___1_1___1_1_:8 __
- ____ *85_5_5_5_5_5_5_5_:8 __
- ____ *88/11/88/11/88/11/88/11/88////55////1:8 __
- ____ *8*25_5_5_5_B_B_B_B_5_5_5_5_B_B_B_B_:8:2 __
- ____ *8F/gg/FF/gg/FF/gg/FF/gg/FF////11////8:8 __
-" => t.seq;
-.4 * data.master_gain => t.gain;
+"   *8__8 530 1_2 81_532_1:8 __ ____ " => t.seq;
+.33 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
@@ -18,20 +22,25 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 
-SinOsc sin0 =>  s0.inlet;
-107.0 => sin0.freq;
-24.0 => sin0.gain;
+//SinOsc sin0 =>  s0.inlet;
+//94.0 => sin0.freq;
+//24.0 => sin0.gain;
 
+//ARP arp;
+//arp.t.dor();
+//12::ms => arp.t.glide;
+////"*4 185B8  " => arp.t.seq;
+//arp.t.go();   
+
+// CONNECT SYNT HERE
+//3 => s0.inlet.op;
+//arp.t.raw() => s0.inlet; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 40* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 40* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
-
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
