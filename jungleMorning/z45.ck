@@ -7,14 +7,14 @@ class synt0 extends SYNT{
 } 
 TONE t;
 t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-s0.config(16 /* synt nb */ ); 
+s0.config(29 /* synt nb */ ); 
 
 //s0.config(1 /* synt nb */ ); 
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 //"   *8__8 530 1_2 81_532_1:8 __ ____ " => t.seq;
-"   *88_1_8_1_8_1_8_1_8_1_8_1_8_1_8_1_:8 __ ____ " => t.seq;
-.33 * data.master_gain => t.gain;
+" {c {c *8851851851851851851851851851851851851:8 __ ____ " => t.seq;
+.23 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
@@ -38,7 +38,7 @@ t.go();   t $ ST @=> ST @ last;
 //arp.t.raw() => s0.inlet; 
 
 STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 17* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 10* 100.0 /* freq */ , 1.1 /* Q */ , 4 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //STECHO ech;
 //ech.connect(last $ ST , data.tick * 3 / 4 + 10::ms, .6);  ech $ ST @=>  last; 
