@@ -180,6 +180,36 @@ fun void  SLIDESERUM1  (float fstart, float fstop, dur d, float g){
 
 //spork ~  SLIDESERUM1(2000 /* fstart */, 100 /* fstop */, 16* data.tick /* dur */,  .11 /* gain */); 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+fun void  SUPSAWSLIDE  ( string seq, float ph, float g){ 
+   
+
+TONE t;
+t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
+t.aeo(); // t.phr();// t.loc();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+//____ f/P__
+" {c{c" + seq  => t.seq;
+g => t.gain;
+t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+t.go();   t $ ST @=> ST @ last; 
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+ph => stautoresx0.sin0.phase;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 15 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 3 /* order */, 2 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+2.5 => stautoresx0.gain;
+
+STMIX stmix;
+stmix.send(last, mixer + 2);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+1::samp => now; // let seq() be sporked to compute length
+  t.s.duration  => now;
+} 
+//spork ~ SUPSAWSLIDE  ("P//ff//P", 0.0 /* filter mod phase */, .9 /* gain */);
+//////////////////////////////////////////////////////////////////////////////////////// 
+
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 fun void MOD1 () {
