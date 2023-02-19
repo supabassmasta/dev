@@ -1200,8 +1200,8 @@ spork ~    MOD2  ("*8{c  1_1_1___ffm_f___ 8_8_8___ff__mm__" /* seq */, 3 /* Synt
 
    spork ~ SUPSAWSLIDE  ("*8 1}2_ 1}2_ 1}2_ 1}2_ 1}2_ 1}2_ 1}2_ 1}2_ ", 0 /* filter mod phase */, 0.9 /* gain */);
     8 * data.tick => w.wait;
+    spork ~ SUPSAWSLIDE  ("m/MM//m*8 m_m_m_m_m_m_", Std.rand2f(0,1) /* filter mod phase */, 0.9 /* gain */);
     8 * data.tick => w.wait;
-    spork ~ SUPSAWSLIDE  ("m/MM//m*8 m_m_m_m_m_m_m_m_", Std.rand2f(0,1) /* filter mod phase */, 0.9 /* gain */);
     8 * data.tick => w.wait;
   <<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$ END SPACE LOOP $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$">>>;
  1::ms => now;
