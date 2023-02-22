@@ -1,0 +1,22 @@
+replace in several files:
+sed -i "s/toto/toto_1/g" *
+
+NOTE : -i option replace directly in the file, don't use it to test and view result is stdout
+
+several replace in several files with backup files:
+sed -i'.bk'  's/a/ZZZ/g;s/i/HHH/g' *
+
+Suppress specific line number (3):
+sed '3d' *
+
+Suppress line including a string
+sed '/ts/ d' *
+
+Append a line after line including a string
+sed '/"name":/ a\line to append ' *
+    
+Insert a line before line including a string
+sed '/"name":/ i\line to insert ' *
+
+sed  -i '/"name":/ a\    "ue_nb": "2",' */*json
+
