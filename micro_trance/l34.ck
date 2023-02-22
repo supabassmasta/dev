@@ -1454,22 +1454,14 @@ spork ~    MOD2  ("*8{c  1_1_1___ffm_f___ 8_8_8___ff__mm__" /* seq */, 3 /* Synt
 //spork ~ LOOPLAB();
 //LOOPLAB(); 
 
+/////////////////////////////////////////////////////////////::
+// INTRO
 
-/********************************************************/
-if (    0     ){
-////////////////////////////////////////////////////////////////////////////////
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
-
-//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
-//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
-//  spork ~ TRIBAL(" *4    " , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
-//  spork ~ TRIBAL(" *4  Q}3Q{6Q  b|d}2d}4d}6d}8d}2" , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
-
+ spork ~   PADS (" :8 :4 1|3_" , 13, .3 ); 
 
   spork ~  KICK3_LPF (" 
    kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  kkkk 
-   kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  
+   kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  k
   ", ":8:8T/1"); 
   spork ~  BASS0_LPF ("*4   
   __!1!1 __!1!1 __!1!1 __!1!1  
@@ -1481,11 +1473,12 @@ while(1) { /********************************************************/
   __!1!1 __!1!1 __!1!1 __!1!1  
   ", ":8:4Z/T"); 
   8 * data.tick =>  w.wait;   
-spork ~   SPACEFROGS_INTRO (); 
+  spork ~   SPACEFROGS_INTRO (); 
   24 * data.tick =>  w.wait;   
 //aaaa,bbb,cc__c,-
 //  spork ~ TRIBAL("____ ____  *4    V|d}2d}4d}6d}8d}2" , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
   spork ~ TRIBAL(" ____ ____ *4  Q}3Q{6Q  b|d}2d}4d}6d}8d}2" , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
+  spork ~ SUPSAWSLIDE  ("____ ____ ____*4 }c}c}c  8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 8351}3 ", .5 /* filter mod phase */, 0.3 /* gain */);
   spork ~  BASS0_LPF ("*4   
   __!1!1 __!1!1 __!1!1 __!1!1  
   __!1!1 __!1!1 __!1!1 __!1!1  
@@ -1498,7 +1491,20 @@ spork ~   SPACEFROGS_INTRO ();
   28 * data.tick =>  w.wait;   
 
     spork ~ SUPSAWSLIDE  ("P//ff//P", Std.rand2f(0,1) /* filter mod phase */, 0.9 /* gain */);
-  4 * data.tick =>  w.wait;   
+  4 * data.tick =>  w.wait;  
+/********************************************************/
+if (    0     ){
+////////////////////////////////////////////////////////////////////////////////
+}/***********************   MAGIC CURSOR *********************/
+while(1) { /********************************************************/
+
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+//  spork ~ TRIBAL(" *4    " , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
+//  spork ~ TRIBAL(" *4  Q}3Q{6Q  b|d}2d}4d}6d}8d}2" , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
+
+
+ 
 
  ///////////////////////////////////////////////////////////////////////////////////////
   spork ~ SPACELOOP   ();
