@@ -1175,7 +1175,7 @@ stmix.send(last, mixer + 4);
 ////////////////////////////////////////////////////////////////////////////////////////
 
 
-157 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+147 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
 SYNC sy;
