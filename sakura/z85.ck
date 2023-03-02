@@ -1,6 +1,6 @@
 LONG_WAV l;
 //"../_SAMPLES/japan_trance/japan trance drumout.wav" => l.read;
-"../_SAMPLES/sakura/verse1.wav" => l.read;
+"../_SAMPLES/sakura/verse2.wav" => l.read;
 0.8 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);

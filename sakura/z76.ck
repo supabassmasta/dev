@@ -1,5 +1,6 @@
 LONG_WAV l;
-"../_SAMPLES/japan_trance/japan trance drumout.wav" => l.read;
+//"../_SAMPLES/japan_trance/japan trance drumout.wav" => l.read;
+"../_SAMPLES/sakura/chorus.wav" => l.read;
 0.8 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 0::ms);
@@ -8,7 +9,7 @@ SYNC sy;
 sy.sync(4 * data.tick);
 //sy.sync(4 * data.tick , 0::ms /* offset */); 
 
-l.start(1::ms /* sync */ , 5 * 32 * (60::second / 126)  /* offset */ ,  1 *32 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+l.start(1::ms /* sync */ , 0 * (60::second / 126)  /* offset */ ,  1 *32 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
 
 
