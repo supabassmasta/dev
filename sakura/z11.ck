@@ -20,6 +20,9 @@ STOVERDRIVE stod;
 stod.connect(last $ ST, 2.8 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
 .6 => stod.gain;
 
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 35* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
 while(1) {

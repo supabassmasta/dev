@@ -22,6 +22,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " *4
 ____ ____ ____ __!6!6
+____ ____ ____ __!66
 
 
 " => t.seq;
@@ -33,8 +34,8 @@ ____ ____ ____ __!6!6
 t.go();   t $ ST @=> ST @ last; 
 
 STSYNCFILTERX stsynclpfx0; DL_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(100 /* Base */, 48 * 100 /* Variable */, 4. /* Q */);
-stsynclpfx0.adsr_set(.1 /* Relative Attack */, .4/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+stsynclpfx0.freq(100 /* Base */, 65 * 100 /* Variable */, 4. /* Q */);
+stsynclpfx0.adsr_set(.1 /* Relative Attack */, .5/* Relative Decay */, 0.1 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 0.9, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -43,7 +44,7 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order
 
 
 STECHO ech;
-ech.connect(last $ ST , data.tick * 1 / 4 , .4);  ech $ ST @=>  last; 
+ech.connect(last $ ST , data.tick * 1 / 4 , .5);  ech $ ST @=>  last; 
 
 
 
