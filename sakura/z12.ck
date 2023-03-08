@@ -27,7 +27,8 @@ ps.go();
  .8 * data.master_gain => ps.s[0].gain; // For individual gain
  .5 * data.master_gain => ps.s[1].gain; // For individual gain
  .4 * data.master_gain => ps.s[2].gain; // For individual gain
-// ps.s[0].gain("s", .4); // for single wav 
+ ps.s[0].gain("s", 1.4); // for single wav 
+ ps.s[0].gain("h", 1.0); // for single wav 
 
 // CONNECTIONS
 //ps.stout_connect(); ps.stout $ ST  @=> ST @ last; // comment to connect each SEQ separately

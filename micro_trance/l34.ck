@@ -1536,6 +1536,46 @@ fun void  MODLOOP  (){
    
 } 
 
+fun void  LOOP1  (){ 
+
+     
+     spork ~   ACIDLOOP_2 (); 
+      8 * data.tick => w.wait;
+      spork ~  KICK4 ("____ *4kk__ k__k__k_ kkk_   "); 
+       8 * data.tick => w.wait;
+       spork ~  KICK4 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+       8 * data.tick => w.wait;
+    spork ~  KICK4 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    8 * data.tick => w.wait;
+  
+     spork ~   MODLOOP (); 
+      spork ~  KICK4 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+      8 * data.tick => w.wait;
+      spork ~  KICK4 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+      8 * data.tick => w.wait;
+      spork ~  KICK4 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+      8 * data.tick => w.wait;
+      spork ~  KICK4 ("*4 k___ k___ k___ k___  "); 
+      8 * data.tick => w.wait;
+ 
+     spork ~   MODLOOP (); 
+   spork ~  KICK4 (" 
+    kkkk  kkkk  kkkk  kkkk  kkkk  kkkk  kkkk   
+   " ); 
+   spork ~  BASS0_LPF ("*4   
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   __!1!1 __!1!1 __!1!1 __!1!1  
+   ", ":8:4T/1"); 
+      32 * data.tick => w.wait;
+
+} 
+
+////////////////////////////////////////////////////////////////////////////////////////
 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -1587,7 +1627,7 @@ fun void  LOOPLAB  (){
 }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 /////////////////////////////////////////////////////////////::
 // INTRO
@@ -1729,6 +1769,9 @@ while(1) { /********************************************************/
   4 * data.tick =>  w.wait;   
 
 
+///////////////////////////////////////////////////////////////////////////////
+
+LOOP1();
 
 /////////////////////////////////////////////////////////////////////////////
   spork ~   MAIN_LOOP (); 

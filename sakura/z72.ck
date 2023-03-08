@@ -172,7 +172,7 @@ WAIT w;
 
 while(1) {
 
-   spork ~ PAD("}c  :4 2|9_", 1, 0, .4);
+   spork ~ PAD("}c  :4 5|7_", 1, 0, .4);
    4 * data.tick =>  w.wait; 
 
 
@@ -182,7 +182,7 @@ while(1) {
     spork ~ MOD3();
     4 * data.tick =>  w.wait; 
  
-   spork ~ PAD("}c 3|a", 1, 0, .5);
+   spork ~ PAD("}c 5|9", 1, 0, .5);
    4 * data.tick =>  w.wait; 
 
 
@@ -193,13 +193,13 @@ while(1) {
     spork ~ MOD1();
     4 * data.tick =>  w.wait; 
   
-   spork ~ PAD("}c 2|6", 1, 1, .5);
+   spork ~ PAD("}c 3|5", 1, 1, .5);
    4 * data.tick =>  w.wait; 
 
     spork ~ GLITCH("}c*2 f/G_", 34, 1 * data.tick, 0.4);
     4 * data.tick =>  w.wait; 
   
-   spork ~ PAD("}c 5|6", 1, 1, .5);
+   spork ~ PAD("}c 2|7", 1, 1, .5);
    4 * data.tick =>  w.wait; 
   
     spork ~ MOD2();

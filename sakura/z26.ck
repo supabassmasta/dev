@@ -3,10 +3,8 @@ t.reg(PSYBASS1 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd();
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "*4 
-__5!5__55__5!5__!2!2
-__5!5___5__55__66
-__5!5__55__5!5__!3!3
-__5!5___5__33__77
+!5!5!5555_2_222_866 __!55!22_2_333__77
+!2!2!2222_5_222_922 __!55!22_2_333__99
 
 " => t.seq;
 .5 * data.master_gain => t.gain;

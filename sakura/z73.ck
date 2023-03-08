@@ -18,11 +18,11 @@ fun void  RAND  (string begin, int nb){
   for (0 => int i; i <   nb    ; i++) {
     Std.randf()/2 + .5 => float p;
     if ( p > .4) {
-      ["1", "1", "3", "5", "8", "_", "_", "_" ] @=> string a1[];
+      ["5", "5", "6", "7", "a", "_", "_", "_" ] @=> string a1[];
       a1[ Std.rand2(0, a1.size() - 1) ] +=> s;
     }
     else if (  p > .2  ){
-      ["2", "4", "6", "7" ] @=> string a1[];
+      ["e", "d", "c", "7" ] @=> string a1[];
       a1[ Std.rand2(0, a1.size() - 1) ] +=> s;
     }
     else {
