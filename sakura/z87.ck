@@ -6,7 +6,7 @@ l.AttackRelease(0::ms, 0::ms);
 
 
 // BASS Start
-l.start(4 * data.tick /* sync */ , 0  * data.tick  /* offset */ ,  0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+l.start(4 * data.tick /* sync */ , 0  * data.tick  /* offset */ ,  64 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
 
 
 
