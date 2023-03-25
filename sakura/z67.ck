@@ -1,6 +1,6 @@
 LONG_WAV l;
 "../_SAMPLES/sakura/chorus.wav" => l.read;
-0.8 * data.master_gain => l.buf.gain;
+0.6 * data.master_gain => l.buf.gain;
 0 => l.update_ref_time;
 l.AttackRelease(0::ms, 30::ms);
 .5 => l.outl.gain;
@@ -18,7 +18,7 @@ l.start(4 * data.tick /* sync */ , 0  * data.tick  /* offset */ ,  64 * data.tic
 
 LONG_WAV l2;
 "../_SAMPLES/sakura/chorus.wav" => l2.read;
-0.8 * data.master_gain => l2.buf.gain;
+0.6 * data.master_gain => l2.buf.gain;
 0 => l2.update_ref_time;
 l2.AttackRelease(0::ms, 30::ms);
 1.5 => l2.outl.gain;
