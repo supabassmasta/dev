@@ -527,17 +527,18 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-//spork ~ CHORUS_DOUBLE_voice (3); 
-spork ~ CHORUS_voice (); 
-//spork ~ LOOP_CHORUS_BASS1 ();
-
+spork ~ CHORUS_DOUBLE_voice (3); 
+//spork ~ CHORUS_voice (); 
+spork ~ LOOP_CHORUS_BASS1 ();
+64 * data.tick => w.wait;
+spork ~ LOOP_CHORUS_BASS1 ();
 64 * data.tick => w.wait;
 
 } 
