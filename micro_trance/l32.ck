@@ -406,7 +406,7 @@ fun void TABLA (string seq) {
 // s3.wav["s"] => s.wav["S"];  // act @=> s.action["a"]; 
 // s3.wav["U"] => s.wav["S"];  // act @=> s.action["a"]; 
   seq => s.seq;
-  .3 * data.master_gain => s.gain; //
+  .4 * data.master_gain => s.gain; //
   s.no_sync();// s.element_sync(); //s.no_sync()
 ; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // 
   if(seq.find('S') != -1 ){
@@ -557,15 +557,22 @@ fun void  LOOP_BLIPS  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~  TABLA ("*4 __y_ _z_x __zx ___z x__y ___y  xzy _yxz   _xy_ _z_x _xzx ___z xx_y _y_y  xzy _yxz   "); 
-////    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-//    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
+//    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx_ _xzx x__zyxy  xzy _yxz  _xYz_X _x_zx x__z Xx__ zyxY  xUy _yUz   "); 
+//    spork ~  TABLA ("*4 _xy_ _z_x _xzx x__z xx__ zyxy  xzy _yxz   "); 
+//    spork ~  TABLA ("*4 _XY_ _Z_X _XZX X__Z XX__ ZYXY  XZY _YXZ   "); 
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
 
-    16 * data.tick => w.wait;
+    8 * data.tick => w.wait;
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+
+    8 * data.tick => w.wait;
     //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 /********************************************************/
@@ -574,6 +581,15 @@ if (    0     ){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
+    8 * data.tick =>  w.wait;   
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
+    8 * data.tick =>  w.wait;   
+    spork ~  KICK3_LPF ("*4 k___ k___ k___ k___ k___ k___ k___ k___  k___ k___ k___ k___ k___ k___ k___ k___ ", ":4f///AAAAA"); 
+    spork ~  BASS0_LPF ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11 ", ":4f///AAAAA"); 
+    16 * data.tick =>  w.wait;   
   spork ~   LOOP_BLIPS (); 
 
   for (0 => int i; i <  4     ; i++) {
@@ -583,6 +599,7 @@ while(1) { /********************************************************/
   }
  
   for (0 => int i; i <  2     ; i++) {
+    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
   spork ~   LOOP_BLIPS (); 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 
@@ -595,6 +612,8 @@ while(1) { /********************************************************/
     spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
     spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) + "____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",2) )  ; 
     8 * data.tick =>  w.wait;   
+
+    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 
