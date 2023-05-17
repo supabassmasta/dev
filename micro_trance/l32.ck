@@ -511,6 +511,44 @@ stmix.send(last, mixer + 0);
 1::samp => now; // let seq() be sporked to compute length
   t.s.duration  => now;
 } 
+////////////////////////////////////////////////////////////////////////////////////////
+
+
+fun void MEGAMOD (int n, int nmod, string seq, string modf, string modg, string g_curve, dur d, float g){ 
+   
+   TONE t;
+   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   s0.config(n /* synt nb */ ); 
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   g * .6 * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();// 
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   t.set_adsrs(2::ms, 30::ms, .7, 40::ms);
+   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+STFREEGAIN stfreegain;
+stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
+AUTO.gain(g_curve) => stfreegain.g; // connect this 
+
+STMIX stmix;
+stmix.send(last, mixer + 1);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+
+//s1.config(nmod /* synt nb */ ); 
+
+//AUTO.freq(modf) =>  s1 => MULT m0 => s0.inlet;
+AUTO.freq(modf) =>  SinOsc sin0 =>  MULT m0 => s0.inlet;
+AUTO.freq(modg) =>  m0; 
+
+  d => now; // let seq() be sporked to compute length
+}
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -523,6 +561,16 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 STREVAUX strevaux;
 strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last;  
 
+
+STMIX stmix2;
+stmix2.receive(mixer + 1); stmix2 $ ST @=>  last; 
+//.65 => stmix.gain;
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+STREVAUX strevaux2;
+strevaux2.connect(last $ ST, .3 /* mix */); strevaux2 $ ST @=>  last;  
 
 
 
@@ -553,23 +601,52 @@ fun void  LOOP_BLIPS  (){
   
 } 
 
+fun void  LOOP_MOD (){ 
+   spork ~ MEGAMOD (140  /*137*/ , 23 /* nmod */, "*8 }c " + RAND.seq(" 1_,1_,1_,8_,8_", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "f" /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (138  /*137*/ , 23 /* nmod */, "*2 8 " + RAND.char("18f5B3a///////", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "*2 fim" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
+
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (161  /*137*/ , 23 /* nmod */, "*8 }c  " + RAND.seq("1//8_,8//1_,F/1_,8//f_, ", 8),"*8 81/fc8c3 " /* modf */, "*4 fim" /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (160  /*137*/ , 23 /* nmod */, "*8 }c  " + RAND.seq("1_1_, 8_,1_, ", 8),"*8 81/fc8/3 " /* modf */, "*4 " + RAND.char ("fim", 5) /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (162  /*137*/ , 23 /* nmod */, "*8 }c  " + RAND.seq("1_1_, 8_,1_, ", 8),"1////f " /* modf */, "*4 " + RAND.char ("fim", 5) /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (138  /*137*/ , 23 /* nmod */, "*2 8 " + RAND.char("18f5B3a///////", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "*2 fim" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
+   spork ~ MEGAMOD (140  /*137*/ , 23 /* nmod */, "*8 }c " + RAND.seq(" 1_,1_,1_,8_,8_", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "f" /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (138  /*137*/ , 23 /* nmod */, "*2 8 " + RAND.char("18f5B3a///////", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "*2 fim" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
+    4 * data.tick => w.wait;
+   spork ~ MEGAMOD (162  /*137*/ , 23 /* nmod */, "*6*2 }c  " + RAND.seq("1_1_, 8_,1_, ", 8),"f//11//f " /* modf */, "*4 " + RAND.char ("fim", 5) /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
+    4 * data.tick => w.wait;
+
+} 
 
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
-//    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx_ _xzx x__zyxy  xzy _yxz  _xYz_X _x_zx x__z Xx__ zyxY  xUy _yUz   "); 
-//    spork ~  TABLA ("*4 _xy_ _z_x _xzx x__z xx__ zyxy  xzy _yxz   "); 
-//    spork ~  TABLA ("*4 _XY_ _Z_X _XZX X__Z XX__ ZYXY  XZY _YXZ   "); 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+ int a[0];
+ a << 137;
+// a << 138;
+// a << 141;
+// a << 170;
+// a << 208;
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+ 
 
-    8 * data.tick => w.wait;
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+//    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+//    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+//    4 * data.tick => w.wait;
+//    4 * data.tick => w.wait;
 
-    8 * data.tick => w.wait;
-    //-------------------------------------------
+
+//    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+//    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
+
+//    8 * data.tick => w.wait;
+     //-------------------------------------------
   }
 } 
 //spork ~ LOOPLAB();
@@ -581,29 +658,36 @@ if (    0     ){
 //////////////////////////////////////////////////////////////////////////////////////////////////
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+   spork ~ MEGAMOD (137  /*137*/ , 23 /* nmod */, "*4 }c 1_" ,":8 0//1 " /* modf */, "6" /*modg*/, ":8 4//8" /* g curve */, 16 * data.tick, 1.3)  ;
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
     8 * data.tick =>  w.wait;   
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
     8 * data.tick =>  w.wait;   
-//}/***********************   MAGIC CURSOR *********************/
-//while(1) { /********************************************************/
+  spork ~ MEGAMOD (137  /*137*/ , 23 /* nmod */, "*4 }c 1_" ,":8 1//8 " /* modf */, "6" /*modg*/, "8" /* arpi */, 16 * data.tick, 1.3)  ;
     ":4m//CC//Z"=> string lseq;
     spork ~  KICK3_LPF ("*4 k___ k___ k___ k___ k___ k___ k___ k___  k___ k___ k___ k___ k___ k___ k___ k___ ", lseq); 
     spork ~  BASS0_LPF ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11 ", lseq); 
     16 * data.tick =>  w.wait;   
-  spork ~   LOOP_BLIPS (); 
 
+  spork ~   LOOP_BLIPS (); 
   for (0 => int i; i <  4     ; i++) {
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!31  "); 
     8 * data.tick =>  w.wait;   
   }
- 
+
+  spork ~ MEGAMOD (137  /*137*/ , 23 /* nmod */, "*4 }c 1_" ,":8 1//8 " /* modf */, "6" /*modg*/, "8" /* arpi */, 16 * data.tick, 1.4)  ;
+  spork ~  KICK3_LPF ("*4 k___ k___ k___ k___ k___ k___ k___ k___  k___ k___ k___ k___ k___ k___ k___ k___ ", lseq); 
+  spork ~  BASS0_LPF ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11 ", lseq); 
+   16 * data.tick =>  w.wait;   
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+  
   for (0 => int i; i <  2     ; i++) {
     spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
-  spork ~   LOOP_BLIPS (); 
+  spork ~    LOOP_MOD (); 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 
     spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
@@ -630,5 +714,32 @@ while(1) { /********************************************************/
     spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) + "____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",2) )  ; 
     8 * data.tick =>  w.wait;   
   }
+    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
+  spork ~    LOOP_BLIPS (); 
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
+    spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) )  ; 
+    8 * data.tick =>  w.wait;   
+
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!31 __!21 __!11  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
+    spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) + "____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",2) )  ; 
+    8 * data.tick =>  w.wait;   
+
+    spork ~  TABLA ("*4_xY_ _z_X _xzx x__z Xx__ zyxy  xzy _yxz  _xY_ _z_X _xzx x__z Xx__ zyxY  xUy _yUz   "); 
+
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
+    spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) )  ; 
+    8 * data.tick =>  w.wait;   
+
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k__k  "); 
+    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!31 __!21 __!11  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
+    spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) + "____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",2) )  ; 
+    8 * data.tick =>  w.wait;   
 
 }
