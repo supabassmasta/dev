@@ -34,6 +34,7 @@ HW.launchpad.virtual_key_on_only(52);
 HW.launchpad.virtual_key_on_only(61); 
 //HW.launchpad.virtual_key_on_only(62); 
 
+HW.launchpad.virtual_key_on_only(78); // ECHO FLUTE
 
 .45 * data.tick => now;
 
@@ -61,6 +62,8 @@ HW.launchpad.virtual_key_on_only(27); // Break
 HW.launchpad.virtual_key_on_only(75); // Slide up 
 
 4 * data.tick => now;
+
+HW.launchpad.virtual_key_off_only(78); // ECHO FLUTE
 
 
 HW.launchpad.virtual_key_on_only(11); 
