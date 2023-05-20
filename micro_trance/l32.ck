@@ -696,6 +696,54 @@ stmix.send(last, mixer + 2);
    
 } 
 
+////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  ARP  (string seq, string arpi, int n, float lpf, int out, dur d, float g){ 
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  s0.config(n /* synt nb */ ); 
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  g * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+  //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+  STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
+  stsynclpfx0.freq(10 /* Base */, 26 * 100 /* Variable */, 1.1 /* Q */);
+  stsynclpfx0.adsr_set(.1 /* Relative Attack */, .3/* Relative Decay */, 0.8 /* Sustain */, .4 /* Relative Sustain dur */, 0.2 /* Relative release */);
+  stsynclpfx0.nio.padsr.setCurves(0.8, 1.2, 0.8); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
+  // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+
+  STMIX stmix;
+  stmix.send(last, mixer + out);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  ARP arp;
+  arp.t.dor();
+  3::ms => arp.t.glide;
+  arpi => arp.t.seq;
+  arp.t.no_sync();
+  arp.t.go();   
+
+  // CONNECT SYNT HERE
+  3 => s0.inlet.op;
+  arp.t.raw() => s0.inlet; 
+
+ d => now;
+
+} 
+
 
 ////////////////////////////////////////////////////////////////////////////////////////
 // OUTPUT
@@ -864,10 +912,12 @@ fun void  LOOP_MOD_SLIDES (){
 fun void  LOOPLAB  (){ 
   while(1) {
 
-spork ~   BEAT83 (8); 
-spork ~   LOOP_MOD_SLIDES (); 
+//spork ~   BEAT82 (9); 
+//spork ~   LOOP_MOD_SLIDES (); 
 
-
+    spork ~   ARP  ("*4  !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 1 /* mixer */, 64*data.tick /*dur*/, .6 /*g*/); 
+    spork ~   ARP  ("*4 }c !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, 1.7 /*g*/); 
+//
     64 * data.tick => w.wait;
 
 
@@ -875,7 +925,7 @@ spork ~   LOOP_MOD_SLIDES ();
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 /********************************************************/
 // INTRO
