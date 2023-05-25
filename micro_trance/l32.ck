@@ -912,11 +912,11 @@ fun void  LOOP_MOD_SLIDES (){
 fun void  LOOPLAB  (){ 
   while(1) {
 
-//spork ~   BEAT82 (9); 
+spork ~   BEAT82 (9); 
 //spork ~   LOOP_MOD_SLIDES (); 
 
-    spork ~   ARP  ("*4  !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 1 /* mixer */, 64*data.tick /*dur*/, .6 /*g*/); 
-    spork ~   ARP  ("*4 }c !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, 1.7 /*g*/); 
+    spork ~   ARP  ("*4  !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 1 /* mixer */, 64*data.tick /*dur*/, .3 /*g*/); 
+    spork ~   ARP  ("*4 }c !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, 0.6 /*g*/); 
 //
     64 * data.tick => w.wait;
 
@@ -925,7 +925,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 /********************************************************/
 // INTRO
