@@ -911,14 +911,14 @@ fun void  LOOP_MOD_SLIDES (){
 fun void  LOOPARP1  (){ 
 
   spork ~   BEAT82 (9); 
-  spork ~ MEGAMOD (133  /*137*/ , 23 /* nmod */, "*8  1_1_ 1___ 1___ 1_1_ __5_ __1_ 1___ 1___ 1_1_ 1___  1_1_ __1_ __1_ 8___" ,":8}c 3//55//3 " /* modf */, "n" /*modg*/, ":8 8" /* g curve */, 64 * data.tick, 1.1)  ;
+  spork ~ MEGAMOD (133  /*137*/ , 23 /* nmod */, "*8  1_1_ 1___ 1___ 1_1_ __5_ __1_ 1___ 1___ 1_1_ 1___  1_1_ __1_ __1_ 8___" ,":8}c 3//55//3 " /* modf */, "n" /*modg*/, ":8 8" /* g curve */, 64 * data.tick, 0.9)  ;
 
-  spork ~   ARP  ("}c *4  !5!3!1"/* seq */,":8 1185"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, .3 /*g*/); 
+  spork ~   ARP  ("}c *4  !5!3!1"/* seq */,":8 1185"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, .25 /*g*/); 
 
   32 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE  ("}c :8 G////8  ", .4 /* filter mod phase */, 2.3 /* gain */);
   16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE  ("}c}c :8 G//8  ", .2 /* filter mod phase */, 2.3 /* gain */);
+  spork ~ SUPSAWSLIDE  ("}c}c :8 G//8  ", .2 /* filter mod phase */, 2.0 /* gain */);
   16 * data.tick => w.wait;
 
 
@@ -1122,6 +1122,9 @@ while(1) { /********************************************************/
     spork ~  TRANCEHH ("*4 -2 __h_ -4 s_h_ __h_ s_h_ __h_ s_h_ __h_ s_h_ "); 
     spork ~  TRANCEHH ("*4 -6 ____ ____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",1) + "____ ____  " + RAND.seq("___i, _h__ , _i_-6h ",2) )  ; 
     8 * data.tick =>  w.wait;   
+
+    spork ~ SUPSAWSLIDE  ("}c :8 L//f  ", .4 /* filter mod phase */, 1.6 /* gain */);
+    spork ~ SUPSAWSLIDE  ("}c}c :8 G//8  ", .2 /* filter mod phase */, 1.6 /* gain */);
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!3_   __!11 __!11 __!11 __!21  "); 

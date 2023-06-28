@@ -6,7 +6,7 @@ Std.mtof(53 ) / Std.mtof(48) => float rate => s.rate;
 
 
 "../_SAMPLES/tanpura/LoopCplusG 3.wav" => s.read;
-0.1 * data.master_gain  => s.gain;
+0.2 * data.master_gain  => s.gain;
 
 fun void f1 (){ 
   while(1) {
