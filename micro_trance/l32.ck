@@ -908,17 +908,37 @@ fun void  LOOP_MOD_SLIDES (){
 
 }
 
+fun void  LOOPARP1  (){ 
+
+  spork ~   BEAT82 (9); 
+  spork ~ MEGAMOD (133  /*137*/ , 23 /* nmod */, "*8  1_1_ 1___ 1___ 1_1_ __5_ __1_ 1___ 1___ 1_1_ 1___  1_1_ __1_ __1_ 8___" ,":8}c 3//55//3 " /* modf */, "n" /*modg*/, ":8 8" /* g curve */, 64 * data.tick, 1.1)  ;
+
+  spork ~   ARP  ("}c *4  !5!3!1"/* seq */,":8 1185"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, .3 /*g*/); 
+
+  32 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE  ("}c :8 G////8  ", .4 /* filter mod phase */, 2.3 /* gain */);
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE  ("}c}c :8 G//8  ", .2 /* filter mod phase */, 2.3 /* gain */);
+  16 * data.tick => w.wait;
+
+
+} 
 
 fun void  LOOPLAB  (){ 
   while(1) {
 
 spork ~   BEAT82 (9); 
 //spork ~   LOOP_MOD_SLIDES (); 
+   spork ~ MEGAMOD (133  /*137*/ , 23 /* nmod */, "*8  1_1_ 1___ 1___ 1_1_ __5_ __1_ 1___ 1___ 1_1_ 1___  1_1_ __1_ __1_ 8___" ,":8}c 3//55//3 " /* modf */, "n" /*modg*/, ":8 8" /* g curve */, 64 * data.tick, 1.1)  ;
 
-    spork ~   ARP  ("*4  !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 1 /* mixer */, 64*data.tick /*dur*/, .3 /*g*/); 
-    spork ~   ARP  ("*4 }c !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, 0.6 /*g*/); 
+    spork ~   ARP  ("}c *4  !5!3!1"/* seq */,":8 1185"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, .3 /*g*/); 
+//    spork ~   ARP  ("*4 }c !4!3!2!1!3!2!5!8"/* seq */,"8518 c185 1305 f21"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, 0.6 /*g*/); 
 //
-    64 * data.tick => w.wait;
+    32 * data.tick => w.wait;
+    spork ~ SUPSAWSLIDE  ("}c :8 G////8  ", .4 /* filter mod phase */, 2.3 /* gain */);
+    16 * data.tick => w.wait;
+    spork ~ SUPSAWSLIDE  ("}c}c :8 G//8  ", .7 /* filter mod phase */, 2.3 /* gain */);
+    16 * data.tick => w.wait;
 
 
      //-------------------------------------------
@@ -937,6 +957,7 @@ if ( 1  ){
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
     8 * data.tick =>  w.wait;   
+  spork ~   SUPSAW (" A/c", .3, "1/8" ,1.9); 
   spork ~ MEGAMOD (137  /*137*/ , 23 /* nmod */, "*4 }c 1_" ,":8 1//8 " /* modf */, "6" /*modg*/, "8" /* arpi */, 16 * data.tick, 1.3)  ;
     ":4m//CC//Z"=> string lseq;
     spork ~  KICK3_LPF ("*4 k___ k___ k___ k___ k___ k___ k___ k___  k___ k___ k___ k___ k___ k___ k___ k___ ", lseq); 
@@ -1109,6 +1130,9 @@ while(1) { /********************************************************/
     8 * data.tick =>  w.wait;   
     spork ~  KICK3 ("*4 k___ ____ k_k_ k___ k___ k___ k_k_ k_k_   "); 
     8 * data.tick =>  w.wait;   
+
+//////////////////////////////////////////////////////////
+   LOOPARP1  (); 
 
 
 }
