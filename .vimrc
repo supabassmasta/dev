@@ -104,6 +104,17 @@ vnoremap ;r c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 ab headerY #! /usr/bin/env python
 \<CR># -*- coding: UTF-8 -*-
 
+" C++ ab
+ab maincpp #include <iostream>
+\<CR>
+\<CR>using namespace std;
+\<CR>
+\<CR>int main(int argc, char* argv[]) {
+\<CR>
+\<CR>cout << "hello";
+\<CR>
+\<CR>}
+
 " ab ChucK
 ab  forK          for (0 => int i; i <       ; i++) {
 \<CR>}
