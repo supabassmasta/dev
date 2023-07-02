@@ -910,7 +910,7 @@ fun void  LOOP_MOD_SLIDES (){
 
 fun void  LOOPARP1  (){ 
 
-  spork ~   BEAT82 (9); 
+  spork ~   BEAT8 (8); 
   spork ~ MEGAMOD (133  /*137*/ , 23 /* nmod */, "*8  1_1_ 1___ 1___ 1_1_ __5_ __1_ 1___ 1___ 1_1_ 1___  1_1_ __1_ __1_ 8___" ,":8}c 3//55//3 " /* modf */, "n" /*modg*/, ":8 8" /* g curve */, 64 * data.tick, 0.9)  ;
 
   spork ~   ARP  ("}c *4  !5!3!1"/* seq */,":8 1185"/*arp*/,2050/*synt*/ , 4*1000 /*lpf*/, 2 /* mixer */, 64*data.tick /*dur*/, .25 /*g*/); 
