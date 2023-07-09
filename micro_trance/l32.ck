@@ -209,7 +209,7 @@ class SERUM00X extends SYNT{
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-fun void BASS0 (string seq) {
+fun void BASS0_ (string seq) {
 TONE t;
 t.reg(SERUM00X s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 s0.config(2212 /* synt nb */ ); // 2209: sawXbit, 2310: bw_saw, 2360: saw_bright 2370 : saw_gap 
@@ -390,9 +390,9 @@ fun void  REC_BASS_WAVTABLE(){
 
 
       1 => int i;
-      add_sin(1::second*i/T, 0.50, .6 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, 1.4 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+      add_sin(1::second*i/T, 0.50, 0.7 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, 1.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+      add_sin(1::second*i/T, 0.5, 1.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
@@ -423,7 +423,7 @@ out =< out2;
 //me.yield();   
 } 
 
-//if (! MISC.file_exist(saw_wt_name + ".wav"))
+if (! MISC.file_exist(saw_wt_name + ".wav"))
   REC_BASS_WAVTABLE();
 
  
@@ -468,7 +468,7 @@ class SERUM_WT extends SYNT{
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-fun void BASS_WT (string seq) {
+fun void BASS0 (string seq) {
 TONE t;
 t.reg(SERUM_WT s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 
@@ -476,7 +476,7 @@ t.reg(SERUM_WT s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd();
 t.lyd();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c" + seq => t.seq;
-0.73 * data.master_gain => t.gain;
+0.84 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -487,8 +487,8 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(14 * 10 /* Base */, 26 * 10 /* Variable */, 1.2 /* Q */);
-stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 27*  .01/* Relative Decay */, 0.65 /* Sustain */, .4 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.freq(14 * 10 /* Base */, 26 * 10 /* Variable */, 1.0 /* Q */);
+stsynclpfx0.adsr_set(.0002 /* Relative Attack */, 26*  .01/* Relative Decay */, 0.65 /* Sustain */, .4 /* Relative Sustain dur */, 0.4 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -1087,7 +1087,7 @@ fun void  LOOPARP1  (){
 fun void  LOOPLAB  (){ 
   while(1) {
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-    spork ~  BASS_WT ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
+//    spork ~  BASS_WT ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
 //    spork ~  BASS0 ("*4  __!11 __!11 __!11 __!11   __!11 __!11 __!11 __!11  "); 
 //    spork ~  BASS_WT ("*2  _!1_!1_!1_!1_!1_!1_!1_!1  "); 
 
@@ -1098,7 +1098,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 /********************************************************/
 // INTRO
