@@ -31,6 +31,8 @@ public class REC extends ST{
     
 		w =< blackhole;
     dac =< w;
+
+    1::ms => now;
   }
 
   fun void rec_no_sync (dur d, string name) {
@@ -56,5 +58,6 @@ public class REC extends ST{
     
 		w =< blackhole;
     dac =< w;
+    1::ms => now;
   }
 }
