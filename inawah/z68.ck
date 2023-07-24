@@ -3,10 +3,10 @@
 adc => Gain in => Delay d0  => Gain out;
 2.2 => in.gain;
 fact * data.tick - 186::ms * 2 => d0.max => d0.delay;
-.7 => d0.gain;
+.5 => d0.gain;
 d0 => Delay d1 => out;
 fact * data.tick  => d1.max => d1.delay;
-.7 => d1.gain;
+.5 => d1.gain;
 d1 => Gain fb => d1;
 
 out => dac;
