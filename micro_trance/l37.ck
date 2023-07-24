@@ -466,7 +466,7 @@ class SERUM_WT extends SYNT{
 
     w.setTable (myTable);
 
-  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.49 =>p.phase; } 1 => own_adsr;
+  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.39 =>p.phase; } 1 => own_adsr;
 } 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -983,7 +983,7 @@ stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain +.1 /* out gain */,
 .4 => stcomp.gain;
 
 
-150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+146 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 50 => data.ref_note;
 
 SYNC sy;
@@ -1137,15 +1137,19 @@ fun void  LOOPLAB  (){
 //    32 * data.tick => w.wait;
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
     8 * data.tick => w.wait;
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
     8 * data.tick => w.wait;
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
     8 * data.tick => w.wait;
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
     8 * data.tick => w.wait;
 
 
