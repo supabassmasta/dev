@@ -396,9 +396,12 @@ fun void  REC_BASS_WAVTABLE(){
       1 => int i;
       add_sin(1::second*i/T, 0.0, 0.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0.50, 0.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0.75, 1.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+//      add_sin(1::second*i/T, 1.25, 1.0 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+      add_sin(1::second*i/T, .75, 1.3 * Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0.25, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0.75, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+      add_sin(1::second*i/T, 0.5, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+      add_sin(1::second*i/T, 0.25, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0.5, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0.25, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
@@ -407,11 +410,9 @@ fun void  REC_BASS_WAVTABLE(){
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
       add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
-      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+//      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+////      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
+//      add_sin(1::second*i/T, 0, Math.pow(-1, i) / i $ float) => out; 1 +=> i;
 
 STREC strec;
 strec.connect(st, T, saw_wt_name + ".wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 1 /* no sync */ ); 
@@ -466,7 +467,7 @@ class SERUM_WT extends SYNT{
 
     w.setTable (myTable);
 
-  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.39 =>p.phase; } 1 => own_adsr;
+  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.79 =>p.phase; } 1 => own_adsr;
 } 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,7 +481,7 @@ t.reg(SERUM_WT s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd();
 t.lyd();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c" + seq => t.seq;
-0.85 * data.master_gain => t.gain;
+0.93 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();// 
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -491,8 +492,8 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(19 * 10 /* Base */, 88 * 10 /* Variable */, 1.02 /* Q */);
-stsynclpfx0.adsr_set(.010 /* Relative Attack */, 13*  .01/* Relative Decay */, 0.50 /* Sustain */, .55 /* Relative Sustain dur */, 0.3 /* Relative release */);
+stsynclpfx0.freq(19 * 10 /* Base */, 68 * 10 /* Variable */, 1.2 /* Q */);
+stsynclpfx0.adsr_set(.015 /* Relative Attack */, 15*  .01/* Relative Decay */, 0.45 /* Sustain */, .55 /* Relative Sustain dur */, 0.3 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -502,13 +503,13 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order
 //1.4 => stod.gain;
 
 STADSR stadsr;
-stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.33/* Sustain dur of Relative release pos (float) */,  15::ms /* release */);
+stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.23/* Sustain dur of Relative release pos (float) */,  15::ms /* release */);
 stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 // stadsr.keyOn(); stadsr.keyOff();
 
-//STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-//stlpfx0.connect(last $ ST ,  stlpfx0_fact, 9* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 5* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -984,7 +985,7 @@ stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain +.1 /* out gain */,
 
 
 146 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-50 => data.ref_note;
+52 => data.ref_note;
 
 SYNC sy;
 sy.sync(1 * data.tick);
@@ -1128,13 +1129,42 @@ fun void  LOOPLAB  (){
 //    spork ~  BASS0 ("*4  __!3!2 __!1!1 __!3!2 __!1!1   __!3!2 __!1!1 __!5!3 __!2!1  "); 
 //    spork ~  BASS0 ("*4  !3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1  "); 
 //      spork ~   BEAT82 (4); 
+       
+       
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    8 * data.tick => w.wait;
 
-      
-      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.7 ); 
-      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.7 ); 
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k_k_ __kkk__  "); 
+    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1   "); 
+    8 * data.tick => w.wait;
+       
+      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
+      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
 
 
-//    32 * data.tick => w.wait;
+//    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+//    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+//    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    8 * data.tick => w.wait;
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    8 * data.tick => w.wait;
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    8 * data.tick => w.wait;
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k__k  "); 
+    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
+    spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    8 * data.tick => w.wait;
+
+for (0 => int i; i < 4      ; i++) {
+      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
+      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
+
+
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
     spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
@@ -1152,6 +1182,8 @@ fun void  LOOPLAB  (){
     spork ~  TRANCEHH ("*4 -2 __h_ -2 {8}5t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
     8 * data.tick => w.wait;
 
+}
+ 
 
      //-------------------------------------------
   }
