@@ -5,7 +5,7 @@ fact * data.tick - 186::ms * 2 => d0.max => d0.delay;
 .6 => d0.gain;
 d0 => Delay d1 => out;
 fact * data.tick  => d1.max => d1.delay;
-.6 => d1.gain;
+.3 => d1.gain;
 d1 => Gain fb => d1;
 
 out => /* BRF brf => */ /* LPF lpf=> */ dac;
