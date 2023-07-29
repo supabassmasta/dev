@@ -17,5 +17,13 @@ public class STDIGIT extends ST{
     
 
   }
+  fun void set( dur ech, float quant) {
+
+    quant => digl.quant;
+    ech   => digl.ech;
+    quant => digr.quant;
+    ech   => digr.ech;
+
+  }
 
 }

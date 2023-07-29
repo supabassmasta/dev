@@ -946,8 +946,7 @@ AUTO.freq(modg) =>  m0;
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
-
-fun void MEGADIG (int n,  string seq, string g_curve, dur d, float g){ 
+fun void MEGADIG (int n,  string seq, string ech_curve, string g_curve, dur d, float g){ 
    
    TONE t;
    t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -964,16 +963,47 @@ fun void MEGADIG (int n,  string seq, string g_curve, dur d, float g){
    1 => t.set_disconnect_mode;
    t.go();   t $ ST @=> ST @ last; 
 
+STDIGIT dig;
+dig.connect(last $ ST , 1::samp /* sub sample period */ , .0 /* quantization */);      dig $ ST @=>  last; 
+
+AUTO.freq(ech_curve) => Gain f => blackhole; // CONNECT THIS 
+
+
+
 STFREEGAIN stfreegain;
 stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
 AUTO.gain(g_curve) => stfreegain.g; // connect this 
 
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+3 => stautoresx0.gain;
 STMIX stmix;
-stmix.send(last, mixer + 0);
+stmix.send(last, mixer + 1);
 //stmix.receive(11); stmix $ ST @=> ST @ last; 
+//d => now;
+
+now + d => time end;
+while(end > now) {
+//47 => int di;
+(2000 / f.last()) $ int => int  di;
+if ( di < 1  ){
+    1 => di;
+}
+// ((100::ms / f.last() / 1::samp) $ int)::samp => dur e;
+// if (! now%1::secongd)
+// <<<"_-'-__-'-__-'-__-'-__-'-__-'-__-'-_  " + di + "   _-'-__-'-__-'-__-'-__-'-__-'-_">>>;
+//<<<e>>>;
 
 
-  d => now; // let seq() be sporked to compute length
+di * 1::samp => dur e;
+   dig.set( e , 0.);
+//   dig.set( 47::samp, 0.);
+
+    1::samp=> now;
+//    2 * data.tick=> now;
+}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1254,23 +1284,51 @@ fun void  LOOPLAB  (){
 //    spork ~  BASS0 ("*4  __!3!2 __!1!5 __!3!2 __!1!0   __!1!2 __!1!1 __!3!2 __!1!1  "); 
 //    spork ~  BASS0 ("*4  __!3!2 __!1!1 __!3!2 __!1!1   __!3!2 __!1!1 __!5!3 __!2!1  "); 
 //    spork ~  BASS0 ("*4  !3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1!3!2!1  "); 
-//      spork ~   BEAT82 (4); 
-       
-       
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
-    spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
-    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa ", 0.4 /* rate */, .20 /* g */); 
+
+//    spork ~   MEGADIG (258, "1_ 1_ 55 *2F_F_:2", "*4ZZF1"/*ech_curve*/, "8"/*g*/, 32 * data.tick, 2.4 /*g*/); 
+//    spork ~   MEGADIG (258, "*8 851 ", ":2 Z////C"/*ech_curve*/, "8"/*g*/, 8 * data.tick, 2.4 /*g*/); 
+    spork ~   MEGADIG (2, "*8 851 ", ":2 Z////C"/*ech_curve*/, "8"/*g*/, 8 * data.tick, 1.4 /*g*/); 
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k_k_k___   "); 
+    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    spork ~  BASS0 ("*4          _!1!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __!1!1  "); 
+    spork ~  BASS0_ATTACK ("*4   _aaa     __aa   ___a  _aaa     __aa  ___a __aa    ", 0.4 /* rate */, .20 /* g */); 
     8 * data.tick => w.wait;
 
   } if(0){
+
+      
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    spork ~  BASS0 ("*4          _!1!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __!2!3 _!3!2  "); 
+    spork ~  BASS0_ATTACK ("*4   _aaa     __aa   ___a  _aaa     __aa  ___a __aa    __aa ", 0.4 /* rate */, .20 /* g */); 
+    8 * data.tick => w.wait;
+
+      
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k__k k_k_k___   "); 
+    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    spork ~  BASS0 ("*4          _!1!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __!1!1  "); 
+    spork ~  BASS0_ATTACK ("*4   _aaa     __aa   ___a  _aaa     __aa  ___a __aa    ", 0.4 /* rate */, .20 /* g */); 
+    8 * data.tick => w.wait;
+
+      
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
+    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
+    spork ~  BASS0 ("*4          _!1!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __!3!2 _!2!3  "); 
+    spork ~  BASS0_ATTACK ("*4   _aaa     __aa   ___a  _aaa     __aa  ___a __aa    __aa ", 0.4 /* rate */, .20 /* g */); 
+    8 * data.tick => w.wait;
+
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k_k_ __kkk__  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1   "); 
     spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __ ", 1. /* rate */, .28 /* g */); 
     8 * data.tick => w.wait;
        
-      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
-      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
+//      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
+//      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
 
 
 //    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
@@ -1294,8 +1352,8 @@ fun void  LOOPLAB  (){
     8 * data.tick => w.wait;
 
 for (0 => int i; i < 4      ; i++) {
-      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
-      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
+//      spork ~   MEGADIG (258, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 8//11//6", 32 * data.tick, 1.4 ); 
+//      spork ~   MEGADIG (259, "*4 3__2 _1__    3__2 _1 3__2  3__2 _1__    3__2 _1 3__2  3__2 __5_", ":8 1//88/55/8", 32 * data.tick, 1.4 ); 
 
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
