@@ -5,7 +5,7 @@
 5::ms =>  dur la;
 
 KIK kik;
-kik.config(0.00 /* init Sin Phase */, 24 * 100 /* init freq env */, 0.6 /* init gain env */);
+kik.config(0.00 /* init Sin Phase */, 44 * 100 /* init freq env */, 0.6 /* init gain env */);
 kik.addFreqPoint (233.0, 3::ms);
 kik.addFreqPoint (90.0, la + 50::ms);
 kik.addFreqPoint (31.0, 14 * 10::ms);
@@ -557,7 +557,7 @@ class SERUM_WT0 extends SYNT{
 
     w.setTable (myTable);
 
-  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.7 =>p.phase; } 1 => own_adsr;
+  fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.2 =>p.phase; } 1 => own_adsr;
 } 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,15 +582,15 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-stsynclpfx0.freq(25 * 10 /* Base */, 59 * 10 /* Variable */, 1.0 /* Q */);
-stsynclpfx0.adsr_set(.015 /* Relative Attack */, 38*  .01/* Relative Decay */, 0.38 /* Sustain */, .2 /* Relative Sustain dur */, 0.7 /* Relative release */);
-stsynclpfx0.nio.padsr.setCurves(1.0,47 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+stsynclpfx0.freq(26 * 10 /* Base */, 68 * 10 /* Variable */, 1.0 /* Q */);
+stsynclpfx0.adsr_set(.015 /* Relative Attack */, 9*  .01/* Relative Decay */, 0.38 /* Sustain */, .57 /* Relative Sustain dur */, 0.3 /* Relative release */);
+stsynclpfx0.nio.padsr.setCurves(1.0,75 * 0.001, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
-//STOVERDRIVE stod;
-//stod.connect(last $ ST, 70 * 0.010 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
-//1.4 => stod.gain;
+STOVERDRIVE stod;
+stod.connect(last $ ST, 70 * 0.010 /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
+1.4 => stod.gain;
 
 STADSR stadsr;
 stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.3/* Sustain dur of Relative release pos (float) */,  24::ms /* release */);
@@ -1259,7 +1259,7 @@ fun void  LOOPLAB  (){
        
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
     spork ~  BASS0 ("*4  __!1!1 __!1!1 __!1!1 __!1!1   __!1!1 __!1!1 __!1!1 __!1!1  "); 
-    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa ", 0.4 /* rate */, .20 /* g */); 
+    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa ", 0.7 /* rate */, .29 /* g */); 
     8 * data.tick => w.wait;
 
   } if(0){
