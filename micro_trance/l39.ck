@@ -1313,12 +1313,13 @@ fun void  LOOPLAB  (){
 //   spork ~ MEGAMOD (239  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.char("fc54188bcf3", 8) ,"*8 1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
 //   spork ~ MEGAMOD (240  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.char("fc54188bcf3", 8) ," 1//ff/BB/1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
    spork ~ MEGAMOD (Std.rand2(237,240)  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.char("fc54188bcf3__", 8) ," 1//ff/BB/1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
-    spork ~   MEGADIG0 (Std.rand2(261,262)," ____ *4 " + RAND.char("fc54188bcf3__", 16), "*8" + RAND.seq("aaaaNaNa, EF, a,aa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 1.0 /*g*/); 
+    spork ~   MEGADIG0 (Std.rand2(261,262)," ____ *4 " + RAND.char("fc54188bcf3__", 16), "*8" + RAND.seq("aaaaNaNa, EF, a,aa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.8 /*g*/); 
+//    spork ~   MEGADIG0 (1369," ____  *4 " + RAND.char("51387_", 16), "*8" + RAND.seq("a,E,CaCa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.8 /*g*/); 
 
     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_kk   "); 
-    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
     spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
-    spork ~  BASS0 ("*4          __!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __2//1  "); 
+    spork ~  BASS0 ("*4          __!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __2//1_  "); 
     spork ~  BASS0_ATTACK ("*4   __aa     __aa   ___a  _aaa     __aa  ___a __a_    ", 0.4 /* rate */, .20 /* g */); 
     8 * data.tick => w.wait;
 //    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_kk   "); 
