@@ -1179,85 +1179,33 @@ fun void  LOOP_CRAZY_SYNT8  (){
 8 *data.tick => now;
 
    } 
+fun void  LOOP_CRAZY_SYNT8_2  (){ 
+   if(maybe) 
+     spork ~ MEGAMOD2 (Std.rand2(2,4) /*137*/ , 23 /* nmod */, " } " + RAND.char("158fFB", 1) + RAND.seq("_i/B,B///g, f/R__, 8,f",2) + "_" , RAND.char(" ZXYW", 1)  /* modf */, RAND.char("}5 18af", 1) /*modg*/, "8" /* g curve */, 4 * data.tick, 0.7)  ;
+   else
+     spork ~ MEGAMOD (Std.rand2(2650, 2652)  /*137*/ , 23 /* nmod */, "*8 }c 8 " + RAND.seq("f_,c_,5_,4_,1_,8_,8_,b_,c_,f_,3_", 16)  + "_", "*8" + RAND.char("{c ZXYW", 16 ) /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, 1.1)  ;
+   
+   if(maybe) 
+     spork ~ MEGAMOD (Std.rand2(2650, 2652)  /*137*/ , 23 /* nmod */, "____*4 }c 8 " + RAND.char("fc54188bcf3____///", 12)  + "_"," 1//ff/BB/1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 8 * data.tick, 1.1)  ;
+   else  
+     spork ~ MEGAMOD (Std.rand2(2650, 2652)  /*137*/ , 23 /* nmod */, "____*8 }c 8 " + RAND.seq("f_,c_,5_,4_,1_,8_,8_,b_,c_,f_,3_", 16)  + "_", "*8" + RAND.char("fB18", 16 ) /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 8 * data.tick, 1.1)  ;
+8 *data.tick => now;
+   } 
 
 fun void  LOOPLAB  (){ 
   while(1) {
-//    spork ~  BASS0_LPF ("*4_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1   _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1 ",":4m//CC//Z" ); 
-//    spork ~  BASS0_HPF ("*4_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1   _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1 ",":4m//CC//Z" ); 
-//    16 * data.tick =>  w.wait;   
-//  spork ~ MEGAMOD (140  /*137*/ , 23 /* nmod */, "*8 }c " + RAND.seq(" 1_,1_,1_,8_,8_", 8) ,"*8 8cf " + RAND.char(" 8cf", 8) /* modf */, "f" /*modg*/, "8" /* g curve */, 4 * data.tick, .7)  ;
-//    4 * data.tick => w.wait;
-//   spork ~ MEGAMOD (239  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.char("fc54188bcf3", 8) ,"*8 1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
-//   spork ~ MEGAMOD (240  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.char("fc54188bcf3", 8) ," 1//ff/BB/1 "  /* modf */, "*2 a" /*modg*/, "8" /* g curve */, 4 * data.tick, .6)  ;
-//    spork ~   MEGADIG0 (1369," ____  *4 " + RAND.char("51387_", 16), "*8" + RAND.seq("a,E,CaCa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.8 /*g*/); 
-
-
+     // ArrayOutofBounds: in shred[id=1645:spork~exp], PC=[226], index=[0]
+//     spork ~ MEGAMOD2 (Std.rand2(2,4) /*137*/ , 23 /* nmod */, " } " + RAND.char("158fFB", 1) + RAND.seq("_i/B,B///g, f/R__, 8,f",2) + "_" , RAND.char(" ZXYW", 1)  /* modf */, RAND.char("}5 18af", 1) /*modg*/, "8" /* g curve */, 4 * data.tick, 0.7)  ;
+    spork ~   LOOP_CRAZY_SYNT8_2 (); 
+     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
+     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
+     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+     8 * data.tick => w.wait;
 //    spork ~   LOOP_CRAZY_SYNT8 (); 
-
-//    spork ~   MEGADIG0 (838,"  *4 " + RAND.char("51387_", 16), "*8" + RAND.seq("a,E,CaCa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.8 /*g*/); 
-// 
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
-     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-     8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-//  }if (0) {
-     spork ~   SUPSAW ("____ " + RAND.seq("A/c,-4 g/H", 1), .3, RAND.seq("1/8,8/1",2) ,1.5); 
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k__k   ");
-     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-     8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-     spork ~ MEGAMOD (Std.rand2(237,241)  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.seq("1_1_,8_,1__1,1_,5_", 12) ," :4 1//B "  /* modf */, ":4 Z//B " /*modg*/, ":4 5//8" /* g curve */, 8 * data.tick, 1.7)  ;
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
-     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-     8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___   ");
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa    ", 0.4 /* rate */, .20 /* g */); 
-     spork ~   MEGADIG0 (62," ____ ___*8 8574 635241 "  , "*8*2aaaaa"/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.3 /*g*/); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
- 
- for (0 => int i; i <  4     ; i++) {
-  
-   spork ~ MEGAMOD (Std.rand2(237,241)  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.seq("1_1_,8_,1__1,1_,5_", 12) ," :4 1//B "  /* modf */, ":4 Z//B " /*modg*/, ":4 5//8" /* g curve */, 8 * data.tick, 1.7)  ;
-  spork ~   SUPSAW ("____ " + RAND.seq("A/c,-4 g/H", 1), .3, RAND.seq("1/8,8/1",2) ,1.5); 
-
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k__k   ");
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-    spork ~   LOOP_CRAZY_SYNT8 (); 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_k_   "); 
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!3!1!2_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ thhh __h_ t_h_ "); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-    spork ~   SUPSAW ("____ " + RAND.seq("A//c,-4 g//H", 1), .3, RAND.seq("1/88/1,1/88/1",1) ,1.3); 
-    spork ~   LOOP_CRAZY_SYNT8 (); 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_kk   "); 
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!5!3!1_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-    spork ~   LOOP_CRAZY_SYNT8 (); 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k_k_kkkk   "); 
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!5!8_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ jjhj t_h_ __h_ thhh __h_ t_h_ "); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
- }
-
-//    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
-//    spork ~  BASS0 ("*4          __!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __2//1_  "); 
-
-
-//    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_kk   "); 
-//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
-//    spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
-//    spork ~  BASS0 ("*4          _!1!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __!1!1  "); 
-//    spork ~  BASS0_ATTACK ("*4   _aaa     __aa   ___a  _aaa     __aa  ___a __aa    ", 0.4 /* rate */, .20 /* g */); 
-//    8 * data.tick => w.wait;
+//     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
+//     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
+//     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+//     8 * data.tick => w.wait;
 
 } if (0) {
     spork ~   MEGADIG (262, "*4 8765438765487654321842875432187654386548776531424321475342432142321534421", "*4 GHO"/*ech_curve*/, ":8:2 1/8"/*g*/, 16 * data.tick, 1.0 /*g*/); 
@@ -1274,7 +1222,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 /********************************************************/
 // INTRO
