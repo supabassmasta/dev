@@ -1529,8 +1529,8 @@ while (!data.next) {
 //////////////////////////////////////////////////
 
 
-spork ~   RANDPADS (128 * data.tick);
- for (0 => int i; i <  8     ; i++) {
+spork ~   RANDPADS (128 * 2 * data.tick);
+ for (0 => int i; i <  8 *2    ; i++) {
     spork ~   LOOP_CRAZY_SYNT8_2 (); 
      spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
      spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
