@@ -1285,8 +1285,9 @@ while(t > now) {
   if (maybe) {
   spork ~   PADS (" :8 :4 " + RAND.seq("1|3_,5|7_,1|0_",1) , Std.rand2(13,15), .3 ); 
        
-       if (maybe) 16 * data.tick => w.wait;
-       else 32 * data.tick => w.wait;
+//       if (maybe) 16 * data.tick => w.wait;
+//       else 32 * data.tick => w.wait;
+32 * data.tick => w.wait;
 
   }
 }
@@ -1295,22 +1296,25 @@ while(t > now) {
 
 //spork ~   RANDPADS (64 * data.tick); 
 
+//spork ~   RANDPADS (128 * 2 * data.tick);
 fun void  LOOPLAB  (){ 
   while(1) {
 // spork ~   SINGLEWAV("../_SAMPLES/willow/tuasa_etc.wav", 1.2); 
 //battleMagic.wav                          Magic.wav           tuasa_etc.wav
 //CharmsPotionConcentrationDivination.wav  Shehastomaster.wav  VantaAboTuma.wav
 
-
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k__k   ");
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-      spork ~   SINGLEWAVECH("../_SAMPLES/willow/VantaAboTuma.wav", 1.2); 
-      8 * data.tick => w.wait;
- 
-//      spork ~   SINGLEWAV("../_SAMPLES/willow/VantaAboTuma.wav", 1.2); 
-      8 * data.tick => w.wait;
-
+    spork ~   LOOP_CRAZY_SYNT8_2 (); 
+     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
+     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
+     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
+     8 * data.tick => w.wait;
+    spork ~   LOOP_CRAZY_SYNT8 (); 
+     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
+     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
+     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
+     8 * data.tick => w.wait;
 
      //-------------------------------------------
   }
@@ -1321,7 +1325,7 @@ fun void  LOOPLAB  (){
 ///////////////////// PLAYBACK/REC /////////////////////////
 
 1 => int compute_mode; // play song with real computing
-0 => int rec_mode; // While playing song in compute mode, rec it
+1 => int rec_mode; // While playing song in compute mode, rec it
 
 "l39_main.wav" => string name_main;
 "l39_aux.wav" => string name_aux;
@@ -1482,7 +1486,7 @@ else {
 //while(1) { /********************************************************/
  
  
- for (0 => int i; i <  1     ; i++) {
+ for (0 => int i; i <  4     ; i++) {
   
    spork ~ MEGAMOD (Std.rand2(237,241)  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.seq("1_1_,8_,1__1,1_,5_", 12) ," :4 1//B "  /* modf */, ":4 Z//B " /*modg*/, ":4 5//8" /* g curve */, 8 * data.tick, 1.7)  ;
   spork ~   SUPSAW ("____ " + RAND.seq("A/c,-4 g/H", 1), .3, RAND.seq("1/8,8/1",2) ,1.5); 
