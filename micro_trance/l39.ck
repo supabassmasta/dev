@@ -1036,6 +1036,50 @@ stmix.send(last, mixer +6 );
 
 
 }
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  SINGLEWAV  (string file, float g){ 
+   ST st; st $ ST @=> ST @ last;
+   SndBuf s => st.mono_in;
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   
+   g => s.gain;
+
+   file => s.read;
+
+   s.length() => now;
+} 
+
+//   spork ~   SINGLEWAV("../_SAMPLES/", .4); 
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+
+fun void  SINGLEWAVECH  (string file, float g){ 
+   ST st; st $ ST @=> ST @ last;
+   SndBuf s => st.mono_in;
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   
+   g => s.gain;
+
+   file => s.read;
+
+//   s.length() => now;
+3 * data.tick => now;
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+16 * data.tick => now;
+
+} 
+
+//   spork ~   SINGLEWAV("../_SAMPLES/", .4); 
+
+////////////////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -1253,42 +1297,30 @@ while(t > now) {
 
 fun void  LOOPLAB  (){ 
   while(1) {
-     // ArrayOutofBounds: in shred[id=1645:spork~exp], PC=[226], index=[0]
-//     spork ~ MEGAMOD2 (Std.rand2(2,4) /*137*/ , 23 /* nmod */, " } " + RAND.char("158fFB", 1) + RAND.seq("_i/B,B///g, f/R__, 8,f",2) + "_" , RAND.char(" ZXYW", 1)  /* modf */, RAND.char("}5 18af", 1) /*modg*/, "8" /* g curve */, 4 * data.tick, 0.7)  ;
+// spork ~   SINGLEWAV("../_SAMPLES/willow/tuasa_etc.wav", 1.2); 
+//battleMagic.wav                          Magic.wav           tuasa_etc.wav
+//CharmsPotionConcentrationDivination.wav  Shehastomaster.wav  VantaAboTuma.wav
 
-    spork ~   LOOP_CRAZY_SYNT8_2 (); 
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
-     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-     8 * data.tick => w.wait;
-    spork ~   LOOP_CRAZY_SYNT8 (); 
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
-     spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
-     spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-     8 * data.tick => w.wait;
 
-} if (0) {
-    spork ~   MEGADIG (262, "*4 8765438765487654321842875432187654386548776531424321475342432142321534421", "*4 GHO"/*ech_curve*/, ":8:2 1/8"/*g*/, 16 * data.tick, 1.0 /*g*/); 
-  spork ~ SUPSAWSLIDE  ("}c :8 G////8  ", .4 /* filter mod phase */, ":8 1/55//88", "A///nn///A", 1.3 /* gain */);
-     spork ~  KICK3 ("  kkkk kkkk kkkk kkkk   "); 
-    16 * data.tick => w.wait;
-    spork ~   MEGADIG (262, "*4 8765438765487654321842875432187654386548776531424321475342432142321534421", "*4 GHO"/*ech_curve*/, ":8:2 8/b"/*g*/, 16 * data.tick, 1.0 /*g*/); 
-     spork ~  KICK3 (" kkkk kkkk kkkk kkkk     "); 
-    16 * data.tick => w.wait;
-
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k__k   ");
+    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
+    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+      spork ~   SINGLEWAVECH("../_SAMPLES/willow/VantaAboTuma.wav", 1.2); 
+      8 * data.tick => w.wait;
  
+//      spork ~   SINGLEWAV("../_SAMPLES/willow/VantaAboTuma.wav", 1.2); 
+      8 * data.tick => w.wait;
+
 
      //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+////spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
-0 => int compute_mode; // play song with real computing
+1 => int compute_mode; // play song with real computing
 0 => int rec_mode; // While playing song in compute mode, rec it
 
 "l39_main.wav" => string name_main;
@@ -1415,6 +1447,7 @@ else {
   }
 //////////////////////////////////////////////////
 
+ spork ~   SINGLEWAV("../_SAMPLES/willow/tuasa_etc.wav", 1.2); 
 
      spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   ");
      spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
@@ -1430,18 +1463,26 @@ else {
      spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ "); 
      spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
      8 * data.tick => w.wait;
-     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___   ");
-    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_ "); 
-    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa    ", 0.4 /* rate */, .20 /* g */); 
+//     spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___   ");
+//    spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_ "); 
+//    spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa    ", 0.4 /* rate */, .20 /* g */); 
      spork ~   MEGADIG0 (62," ____ ___*8 8574 635241 "  , "*8*2aaaaa"/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.5 /*g*/); 
-    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+//    8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+
+      spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___   ");
+      spork ~  BASS0 ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_ "); 
+      spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa    ", 0.4 /* rate */, .20 /* g */); 
+      6 * data.tick => w.wait;
+ 
+      spork ~   SINGLEWAV("../_SAMPLES/willow/battleMagic.wav", 1.2); 
+      2 * data.tick => w.wait;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //}/***********************   MAGIC CURSOR *********************/
 //while(1) { /********************************************************/
  
  
- for (0 => int i; i <  4     ; i++) {
+ for (0 => int i; i <  1     ; i++) {
   
    spork ~ MEGAMOD (Std.rand2(237,241)  /*137*/ , 23 /* nmod */, "*4 }c 8 " + RAND.seq("1_1_,8_,1__1,1_,5_", 12) ," :4 1//B "  /* modf */, ":4 Z//B " /*modg*/, ":4 5//8" /* g curve */, 8 * data.tick, 1.7)  ;
   spork ~   SUPSAW ("____ " + RAND.seq("A/c,-4 g/H", 1), .3, RAND.seq("1/8,8/1",2) ,1.5); 
@@ -1471,6 +1512,25 @@ else {
     spork ~  TRANCEHH ("*4 +3 __h_  3 }4t_h_ jjhj t_h_ __h_ thhh __h_ t_h_ "); 
     8 * data.tick => w.wait;//    spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
  }
+
+     spork ~ MEGAMOD2 (237  /*137*/ , 23 /* nmod */, " }f _M///88//11/////ff/ZZ//m" ,"M////gg////M"  /* modf */, "8" /*modg*/, "8" /* g curve */, 16 * data.tick, .7)  ;
+
+      spork ~  KICK3_HPF ("*4 k___ k___ k___ k___ k___ k___ k___k___   ", ":8Z/p");
+      spork ~  BASS0_HPF ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ ", ":8Z/pp"); 
+      spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+      2 * data.tick => w.wait;
+ 
+      spork ~   SINGLEWAV("../_SAMPLES/willow/Shehastomaster.wav", 1.2); 
+      6 * data.tick => w.wait;
+ 
+      spork ~   SINGLEWAV("../_SAMPLES/willow/CharmsPotionConcentrationDivination.wav", 1.2); 
+ 
+      spork ~  KICK3_HPF  ("*4 k___ k___ k___ k___ k___ k___ k___k___   ", ":8p/MM");
+      spork ~  BASS0_HPF  ("*4      -6    _!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!1!1!1_!2!3!1_ ", ":8p/MM"); 
+      spork ~  BASS0_ATTACK ("*4    _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .20 /* g */); 
+      8 * data.tick => w.wait;
+
+      spork ~   SINGLEWAVECH("../_SAMPLES/willow/VantaAboTuma.wav", 1.2); 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
   //// STOP REC ///////////////////////////////
