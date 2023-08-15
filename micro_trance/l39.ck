@@ -1281,15 +1281,16 @@ fun void  LOOP_CRAZY_SYNT8_2  (){
 
 fun void RANDPADS   (dur d){ 
   now + d => time t; 
+32 * data.tick => w.wait;
 while(t > now) {
-  if (maybe) {
+  if (maybe)
   spork ~   PADS (" :8 :4 " + RAND.seq("1|3_,5|7_,1|0_",1) , Std.rand2(13,15), .3 ); 
        
 //       if (maybe) 16 * data.tick => w.wait;
 //       else 32 * data.tick => w.wait;
 32 * data.tick => w.wait;
 
-  }
+//  }
 }
 
 } 
