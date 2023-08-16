@@ -10,7 +10,7 @@ public class STREVAUX extends ST{
     }
     else {
       <<<"STREVAUX: Not enough output, use STREV1 instead">>>;
-
+      mix * 1.5 => mix; // BOOST MIX with this REV
       rev1.connect(tone, mix);
       rev1.left() => outl;
       rev1.right() => outr;
