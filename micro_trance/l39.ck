@@ -1363,8 +1363,8 @@ fun void  LOOPLAB  (){
 
 ///////////////////// PLAYBACK/REC /////////////////////////
 
-1 => int compute_mode; // play song with real computing
-1 => int rec_mode; // While playing song in compute mode, rec it
+0 => int compute_mode; // play song with real computing
+0 => int rec_mode; // While playing song in compute mode, rec it
 
 "l39_main.wav" => string name_main;
 "l39_aux.wav" => string name_aux;
