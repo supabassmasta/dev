@@ -4,7 +4,7 @@
 
 LOOP_DOUBLE_WAV l;
 "../_SAMPLES/dhoomtala_chill/StDr theme.wav" => l.read;
-0.2 * data.master_gain => l.buf.gain => l.buf2.gain;
+0.25 * data.master_gain => l.buf.gain => l.buf2.gain;
 l.AttackRelease(1::ms,  100::ms);
 l.start(4 * data.tick /* sync */ ,   2 * data.tick /* END sync */ ,  16 * data.tick /* loop */); l $ ST @=> ST @ last;   
 

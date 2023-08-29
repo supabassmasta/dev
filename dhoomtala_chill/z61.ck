@@ -18,8 +18,8 @@ k__k__k_ x_k_____
 
 " => s.seq;
 .9 * data.master_gain => s.gain; //
-s.gain("k", 1.5); // for single wav 
-s.gain("x", .8); // for single wav 
+s.gain("k", 2.3); // for single wav 
+s.gain("x", .9); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
