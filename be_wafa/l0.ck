@@ -5,12 +5,12 @@ KIK kik;
 kik.config(0.1 /* init Sin Phase */, 18 * 100 /* init freq env */, 0.5 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
 kik.addFreqPoint (90.0, 50::ms);
-kik.addFreqPoint (31.0, 13 * 10::ms);
+kik.addFreqPoint (31.0, 6 * 10::ms);
 
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.4, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 13 * 10::ms);
+kik.addGainPoint (1.0, 6 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 fun void KICK(string seq) {
@@ -195,7 +195,7 @@ WAIT w;
 
 // OUTPUT
 
-8. => float CHASS_GAIN;
+7. => float CHASS_GAIN;
 
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
@@ -212,7 +212,9 @@ while(1) { /********************************************************/
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
 
    for (0 => int i; i < 13      ; i++) {
-    
+   spork ~ KICK("*4   k___ _k__ k___ _k__ k___ _k__ k___ _k__ "); 
+spork ~ SEQ0("*4 +9+9 __T_ __T_ __T_ __T_ __T_ __T_ __T_ __T_  ");
+spork ~ SEQ0("*8 +7 h_h_ h_h +7s hsh_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs hsh_h_h_h_h_ h_hs hsh_ ");
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/bass.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
