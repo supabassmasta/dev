@@ -7,7 +7,7 @@ ___s _s__ __ss
 __s_ ____ s__s
 
  " => s.seq;
-.5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.7 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); //
 1.2 => s.wav_o["s"].wav0.rate; // s.out("k") /* return ST */
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
