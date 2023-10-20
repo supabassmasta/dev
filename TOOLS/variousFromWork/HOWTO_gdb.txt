@@ -1,0 +1,36 @@
+gdb program_to_test
+or
+gdb --args program_to_test opt1 opt2...
+
+(gdb) h(elp) symbol
+
+Breakpoint:
+b function_name
+b filename:line_nb
+
+i(nfo) b : show breakpoints
+d(elete) brkpnt_nb : delete breakpoint
+
+en brkpnt_nb : enable b
+dis brkpnt_nb : disable b
+
+
+RUN:
+r
+
+s : step
+n : next without stepping in functions
+
+l : show line around the current point
+
+backtrace
+
+c : continue
+k : kill the program execution
+
+VARIABLE:
+p var : print var content
+p * var: print what's pointed by var (not teste)
+
+QUIT GDB:
+q
