@@ -97,7 +97,7 @@ public class SEQ3 {
         // compute ref time as there is no offset
         compute_ref_time();
         // As we want to start now, compute relative offset
-        ( now + 1::ms - ref_time ) / duration => ref_time_offset_relative;
+        ( now + 1::samp - ref_time ) / duration => ref_time_offset_relative;
         // Recompute ref time including the offset
         compute_ref_time();
     }
