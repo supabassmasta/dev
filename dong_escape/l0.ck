@@ -148,12 +148,12 @@ fun void SYNT0 (string seq, int mix, float g) {
   g * data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-  t.adsr[0].set(2::ms, 32::ms, .6, 40::ms);
+  t.adsr[0].set(1::ms, 26::ms, .4, 40::ms);
   //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   t.go();   t $ ST @=> ST @ last; 
 
 STADSR stadsr;
-stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 14 *10::ms /* Sustain dur of Relative release pos (float) */,  10::ms /* release */);
+stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, 8 *10::ms /* Sustain dur of Relative release pos (float) */,  10::ms /* release */);
 stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 // stadsr.keyOn(); stadsr.keyOff(); 
@@ -470,13 +470,13 @@ fun void  LOOP_TEK1  (){
      spork ~ MEGAMOD (129  /*137*/ ,  "*4 }c}c 8 " + RAND.char("3333111188aa////____", 8)  + "_"," 1//ff/BB/1 "  /* modf */, "*2 aag" /*modg*/, "8" /* g curve */, 3 * data.tick, mixer + 1, 2.1)  ;
     spork ~ SYNT0("}c  ____   ___*2_3:2", mixer, 3.0);
     8 * data.tick => w.wait;
-    spork ~ SYNTGLIDE("*4  " +  RAND.seq("321,a01,345,321,51,58,_,_,__,1,3",8) /* seq */, 6 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, 7 * data.tick, mixer + 2, 1.10 );
+    spork ~ SYNTGLIDE("*4  " +  RAND.seq("321,a01,345,321,51,58,_,_,__,1,3",8) /* seq */, 6 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, 7 * data.tick, mixer + 2, 0.80 );
     spork ~ SYNT0("}c  ____   ___*2_3:2", mixer, 3.0);
     8 * data.tick => w.wait;
      spork ~ MEGAMOD (129  /*137*/ ,  "*4 }c}c 8 " + RAND.char("3333111188aa////____", 8)  + "_"," 1//ff/BB/1 "  /* modf */, "*2 aag" /*modg*/, "8" /* g curve */, 3 * data.tick, mixer + 1, 2.1)  ;
     spork ~ SYNT0("}c  ____   ___*2_3:2", mixer, 3.0);
     8 * data.tick => w.wait;
-    spork ~ SYNTGLIDE("*4  " +  RAND.seq("321,a01,345,321,51,58,_,_,__,1,3",8) /* seq */, 6 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, 7 * data.tick, mixer + 2, 1.10 );
+    spork ~ SYNTGLIDE("*4  " +  RAND.seq("321,a01,345,321,51,58,_,_,__,1,3",8) /* seq */, 6 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, 7 * data.tick, mixer + 2, 0.80 );
     spork ~ SYNT0("}c  ____   ___*2_3:2", mixer, 3.0);
     8 * data.tick => w.wait;
     spork ~ SYNT0("}c  ____   ___*2_3:2", mixer, 3.0);
