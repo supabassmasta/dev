@@ -1768,6 +1768,12 @@ ab SONGK 1 => int mixer;
 \<CR>STMIX stmix;
 \<CR>stmix.receive(mixer); stmix $ ST @=> ST @ last; 
 \<CR>
+\<CR>fun void EFFECT1   (){ 
+\<CR>STMIX stmix;
+\<CR>stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
+\<CR>} 
+\<CR>EFFECT1();
+\<CR>
 \<CR>// LOOP
 \<CR>/********************************************************/
 \<CR>if (    0     ){
