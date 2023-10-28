@@ -423,6 +423,67 @@ stmix.send(last, mix);
 
 ////////////////////////////////////////////////////////////////////////////////////////
 
+fun void MEGADIG (int n,  string seq, string ech_curve, string g_curve, dur d, int mix, float g){ 
+   
+   TONE t;
+   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   s0.config(n /* synt nb */ ); 
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   g * .6 * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();// 
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   t.set_adsrs(2::ms, 30::ms, .7, 40::ms);
+   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+STDIGIT dig;
+dig.connect(last $ ST , 1::samp /* sub sample period */ , .0 /* quantization */);      dig $ ST @=>  last; 
+
+AUTO.freq(ech_curve) => Gain f => blackhole; // CONNECT THIS 
+
+
+
+STFREEGAIN stfreegain;
+stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
+AUTO.gain(g_curve) => stfreegain.g; // connect this 
+
+//STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+//stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 1 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+//3 => stautoresx0.gain;
+
+STMIX stmix;
+stmix.send(last, mix);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+//d => now;
+
+now + d => time end;
+while(end > now) {
+//47 => int di;
+(2000 / f.last()) $ int => int  di;
+if ( di < 1  ){
+    1 => di;
+}
+// ((100::ms / f.last() / 1::samp) $ int)::samp => dur e;
+// if (! now%1::secongd)
+// <<<"_-'-__-'-__-'-__-'-__-'-__-'-__-'-_  " + di + "   _-'-__-'-__-'-__-'-__-'-__-'-_">>>;
+//<<<e>>>;
+
+
+di * 1::samp => dur e;
+   dig.set( e , 0.);
+//   dig.set( 47::samp, 0.);
+
+    1::samp=> now;
+//    2 * data.tick=> now;
+}
+
+}
+
 /////////////////////////////////////////////////////////////////////////////////
 
 fun void  PART_DISPLAY  (){ 
@@ -522,6 +583,16 @@ fun void EFFECT3   (){
 } 
 EFFECT3();
 
+fun void EFFECT4   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+  
+  STGVERB stgverb;
+  stgverb.connect(last $ ST, .005 /* mix */, 4 * 10. /* room size */, 1::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+} 
+EFFECT4();
+
+
 /////////////////////////////////////////////////////////////////////////
 fun void  LOOP_TEK1  (){ 
     spork ~   SUPSAW (" *8 h_h_h_h_h_h_h_h_", .6, "3/6" ,mixer + 3,1.0); 
@@ -590,8 +661,8 @@ fun void  LOOP_TEK1  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav",(8 + 128) * data.tick/* d */, 8  * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer  /* mix */, 1. * CHASS_GAIN);
-    spork ~ LOOP_TEK1  ();
+//    spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav",(8 + 128) * data.tick/* d */, 8  * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer  /* mix */, 1. * CHASS_GAIN);
+//    spork ~ LOOP_TEK1  ();
 //    spork ~ SYNTGLIDE("*4 {c  3455158b " /* seq */, 21 /* Serum00 synt */,  5 * 1000 /* lpf_f */, 34::ms /* glide dur */, 4 * data.tick, mixer + 2, 0.65 );
 
 //   spork ~  SLIDENOISE(200 /* fstart */, 3000 /* fstop */, 14* data.tick /* dur */, .1 /* width */, 3, .7 /* gain */); 
@@ -603,12 +674,26 @@ fun void  LOOPLAB  (){
 //    spork ~   SUPSAW (" *8 h_h_h_h_h_h_h_h_", .9, "6/3" ,mixer + 3,1.2); 
 //    spork ~   SUPSAW (" *8 h_f_h_f_h_f_h_f_", .7, "3/6" ,mixer + 3,1.2); 
 
-    136 * data.tick => w.wait;
+   // HIP HOP
+   spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav", 32  * data.tick /* d */, (32 +136) * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+ 
+
+    spork ~   MEGADIG (4, "__ }c  *8 D_D_D___ D_D_D___ b_3_D___ ", "DDD"/*ech_curve*/, "8"/*g*/, 6 * data.tick, mixer + 4, 1.0 /*g*/); 
+    8 * data.tick => w.wait;
+    spork ~   MEGADIG (258, "__ }c  *8 DCBA 01234 5678 9abb:4 3d_", "888//DDD"/*ech_curve*/, "8"/*g*/, 6 * data.tick, mixer + 4, 2.0 /*g*/); 
+    8 * data.tick => w.wait;
+    spork ~   MEGADIG (258, "__ }c  *8 b__b__b_3__b__b_b_ DDDD:8", "8"/*ech_curve*/, "8"/*g*/, 6 * data.tick, mixer + 4, 2.0 /*g*/); 
+    8 * data.tick => w.wait;
+    spork ~   MEGADIG (258, "__ }c  *8 8181 8187 6543 2111 :8", "11 1//F"/*ech_curve*/, "8"/*g*/, 6 * data.tick, mixer + 4, 2.0 /*g*/); 
+    8 * data.tick => w.wait;
+
     //-------------------------------------------
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 // LOOP
 /********************************************************/
