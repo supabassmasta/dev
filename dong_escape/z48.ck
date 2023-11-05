@@ -521,9 +521,9 @@ fun void  PART_DISPLAY  (){
 
 //data.bpm => data.bpm;   (60.0/data.bpm)::second => data.tick;
 //data.ref_note => data.ref_note;
-
+//.6 => data.master_gain;
 SYNC sy;
-sy.sync(4 * data.tick);
+sy.sync(8 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
@@ -748,16 +748,6 @@ if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
 
-   spork ~  PART_DISPLAY  (); 
-   spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav", 0::ms /* d */, 0 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
-    8 * data.tick => w.wait;
-   spork ~   LOOP_TEK1 (); 
-   64 * data.tick => w.wait;
-   48 * data.tick => w.wait;
-   spork ~  SLIDENOISE(200 /* fstart */, 3000 /* fstop */, 16* data.tick /* dur */, .1 /* width */, 3, .8 /* gain */); 
-   16 * data.tick => w.wait;
-   // PONT CHANT
-   32 * data.tick => w.wait;
    spork ~   HIPHOP_LOOP (); 
 
 // TEK 
