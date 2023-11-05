@@ -1461,6 +1461,9 @@ while(1) { /********************************************************/
      spork ~  KICK3 (" kkkk kkkk kkkk kkkk     "); 
     16 * data.tick => w.wait;
 
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+ 
 /// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 for (0 => int i; i <  8     ; i++) {
  
@@ -1473,11 +1476,13 @@ for (0 => int i; i <  8     ; i++) {
    else
      spork ~   MEGADIG0 (Std.rand2(261,262)," ____ *4 " + RAND.char("fc54188bcf3____", 16), "*8" + RAND.seq("aaaaNaNa, EF, a,aa,Z", 16)/*ech_curve*/, ":8:2 8"/*g*/, 8 * data.tick, 0.8 /*g*/); 
 
-    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k_kk   "); 
+    spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___k___   "); 
     spork ~  TRANCEHH ("*4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
     spork ~  TRANCEHH ("*4 +3 __h_  {3t_h_ __h_ t_h_ __h_ t_h_ __h_ t_h_ "); 
-    spork ~  BASS0 ("*4          __!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __2//1_  "); 
-    spork ~  BASS0_ATTACK ("*4   __aa     __aa   ___a  _aaa     __aa  ___a __a_    ", 0.4 /* rate */, .20 /* g */); 
+//    spork ~  BASS0 ("*4          __!1!1 __!1!1 ___!1  _!1!1!1 __!1!1 ___!1 __2//1_  "); 
+//    spork ~  BASS0_ATTACK ("*4   __aa     __aa   ___a  _aaa     __aa  ___a __a_    ", 0.4 /* rate */, .20 /* g */); 
+    spork ~  BASS0 ("*4          __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!3!1  "); 
+    spork ~  BASS0_ATTACK ("*4   __aa     __aa __aa     __aa __aa     __aa __aa     __aa       ", 0.4 /* rate */, .20 /* g */); 
     8 * data.tick => w.wait;
 }
 }
