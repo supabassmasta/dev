@@ -726,7 +726,7 @@ fun void  LOOPLAB  (){
 
 //   if (0) {
    // HIP HOP
-   spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav", 32  * data.tick /* d */, (4 * 32 +136) * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/Chassin/Dong escape.wav", 32  * data.tick /* d */, (7 * 32 +136)  * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
 
