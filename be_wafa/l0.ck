@@ -142,7 +142,7 @@ fun void SEQ0(string seq, dur cut, dur r, int mix, float g) {
   SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+   0.8 * g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
   //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -154,6 +154,9 @@ fun void SEQ0(string seq, dur cut, dur r, int mix, float g) {
   stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
   //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
   // stadsr.keyOn(); stadsr.keyOff(); 
+
+STBELL stbell0; 
+stbell0.connect(last $ ST , 161 * 100 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */, 0.6 /* Gain */ );       stbell0 $ ST @=>  last;   
 
     STMIX stmix;
     stmix.send(last, mix);
@@ -212,32 +215,52 @@ fun void SEQ1RATE(string seq, string c, float r, int mix, float g) {
 //////////////////////////////////////////////////////////////////////////////////////////////
 class synt0 extends SYNT{
   inlet => SinOsc s =>  outlet; 
-  .5 => s.gain;
+  .4 => s.gain;
   fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
 } 
 
 
-fun void SYNT0 (string seq) {
+fun void SYNT0 (string seq, int mix, float g) {
   TONE t;
   t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .3 * data.master_gain => t.gain;
+  g* data.master_gain => t.gain;
   t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
-  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.adsr[0].set(9::ms, 44::ms, .2, 400::ms);
+  t.adsr[0].setCurves(0.5, 2.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   t.go();   t $ ST @=> ST @ last; 
 
-  //  STMIX stmix;
-  //  stmix.send(last, mixer);
+    STMIX stmix;
+    stmix.send(last, mix);
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
 }
 
-//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+//spork ~ SYNT0("}c " , mixer +1, .7);
+fun void SYNT1 (string seq, dur d, int mix, float g) {
+  TONE t;
+  t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  g* data.master_gain => t.gain;
+  t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  t.adsr[0].set(9::ms, 44::ms, .2, 400::ms);
+  t.adsr[0].setCurves(0.5, 2.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+    STMIX stmix;
+    stmix.send(last, mix);
+
+  d => now; // let seq() be sporked to compute length
+}
+//spork ~ SYNT1(" *1 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -539,6 +562,74 @@ stmix.send(last, mix);
 } 
 //spork ~ SUPSAWSLIDE  ("P//ff//P", 0.0 /* filter mod phase */, .9 /* gain */);
 //////////////////////////////////////////////////////////////////////////////////////// 
+fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int mix, float g){ 
+  3::ms => dur attackRelease;
+
+   
+   ST st; st $ ST @=> ST @ last;
+
+   STMIX stmix;
+   stmix.send(last, mix);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+    
+   Step stp0 => Envelope e0 =>  NOISE3 s => ADSR a => st.mono_in;
+   fstart => e0.value;
+   fstop => e0.target;
+   d => e0.duration ;// => now;
+   
+   1.0 => stp0.next;
+   
+   g => s.gain;
+//   width => s.width;
+
+   a.set(attackRelease, 0::ms, 1., attackRelease);
+
+   a.keyOn();
+
+   d => now;
+
+   a.keyOff();
+   attackRelease => now;
+    
+} 
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////// 
+fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, float g){ 
+  3::ms => dur attackRelease;
+
+   
+   ST st; st $ ST @=> ST @ last;
+
+   STMIX stmix;
+   stmix.send(last, mixer);
+    //stmix.receive(11); stmix $ ST @=> ST @ last; 
+    
+   Step stp0 => Envelope e0 =>  NOISE3 s => ADSR a => st.mono_in;
+   fstart => e0.value;
+   fstop => e0.target;
+   d => e0.duration ;// => now;
+   
+   1.0 => stp0.next;
+   
+   g => s.gain;
+//   width => s.width;
+
+   a.set(attackRelease, 0::ms, 1., attackRelease);
+
+   a.keyOn();
+
+   d => now;
+
+   a.keyOff();
+   attackRelease => now;
+    
+} 
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,6 +689,26 @@ fun void EFFECT2   (){
 } 
 EFFECT2();
 
+fun void EFFECT3   (){ 
+
+  STMIX stmix;
+  stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
+  STGVERB stgverb;
+  stgverb.connect(last $ ST, .07 /* mix */, 7 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+} 
+EFFECT3();
+fun void EFFECT4   (){ 
+
+  STMIX stmix;
+  stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+  STGVERB stgverb;
+  stgverb.connect(last $ ST, .07 /* mix */, 7 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+} 
+EFFECT4();
+
+
 //////////////////////////////////////////////////////////////////////////////////
 fun void  SCAT0   (){ 
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", .75 * data.tick/* d */, 8 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
@@ -631,9 +742,11 @@ fun void  SCAT0   (){
 
 
 fun void  LOOPLAB  (){ 
-  while(1) {
- if ( 1  ){
-     
+ while(1) {
+//spork ~ SYNT1(" *4 }c }c 1__5 __3_ _B__ ", 32 * data.tick , mixer +3, 1.7);
+
+spork ~ SYNT1(" *1 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+  
  spork ~   BASS (); 
 
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
@@ -642,27 +755,31 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
  
    
     8 * data.tick => w.wait;
+spork ~ SYNT1(" *2 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
 spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
  
    
     8 * data.tick => w.wait;
+spork ~ SYNT1(" *4 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
 spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
  
    
     8 * data.tick => w.wait;
- }
+spork ~ SYNT1(" *8 }c }c 1__5 __3_ _B__ ", 4 * data.tick , mixer +3, 1.7);
 //spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ S___ K___ S_K_ K___ S_K_ K___ S_K_ KKK_    ", mixer, 3.3);
 spork ~ CYMBALS("*8 ____ ____ ____ ____ ____ ____ ____ ____  c___ ____ k|q___ ____ e___ q|k___ c|e___ ____ ");
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ S_K_ S_K_ S_K_ S_K_ S_K_ S_KS KSKS KKKK     ", mixer, 3.3);
 spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
- 
-    8 * data.tick => w.wait;
-    //-------------------------------------------
+    4 * data.tick => w.wait;
+spork ~ SYNT1(" *8*2 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
+spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
   }
 } 
 //spork ~ LOOPLAB();
@@ -670,9 +787,9 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
 
 // LOOP
 /********************************************************/
-if (    0     ){
-}/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
+//if (    0     ){
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
   //spork ~ KICK("*4 k___ k___ k___ k___");
   //spork ~ SEQ0("____ *4s__s _ab_ ");
   //spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
@@ -692,7 +809,7 @@ while(1) { /********************************************************/
   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
   8 * data.tick =>  w.wait; 
 spork ~ SEQDNB("*4  K___ S___ __K_ S___  K___ S___ __K_ S___ ", mixer, 3.3);
-spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 1.3);
+spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 0.7);
 //spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ jih_ h__h h_j_ ", 45::ms, 3::ms, mixer, 1.3);
 
 //spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
@@ -703,9 +820,10 @@ spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h__
 
 //   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
    8 * data.tick =>  w.wait; 
-spork ~ SUPSAWSLIDE  ("M////////m", 0.0 /* filter mod phase */, mixer,  .5 );
-spork ~ SUPSAWSLIDE  ("F////////m", 0.0 /* filter mod phase */, mixer,  .5 );
-spork ~ SUPSAWSLIDE  ("1////////m", 0.0 /* filter mod phase */, mixer,  .5 );
+ spork ~  SLIDENOISE(200 /* fstart */, 7000 /* fstop */, 8* data.tick /* dur */, .5 /* width */, .17 /* gain */); 
+ spork ~ SUPSAWSLIDE  ("M////////m", 0.0 /* filter mod phase */, mixer,  .8 );
+ spork ~ SUPSAWSLIDE  ("F////////m", 0.4 /* filter mod phase */, mixer,  .8 );
+ spork ~ SUPSAWSLIDE  ("1////////m", 0.7 /* filter mod phase */, mixer,  .8 );
  spork ~ SEQDNB("*4  K___ K___ K___ K___  K_K_ K_K_ KKKK*2  KKKK KKKK", mixer, 3.3);
 //spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 1.3);
 //spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ jih_ h__h h_j_ ", 45::ms, 3::ms, mixer, 1.3);
@@ -720,9 +838,6 @@ spork ~ SUPSAWSLIDE  ("1////////m", 0.0 /* filter mod phase */, mixer,  .5 );
 
 
    //////+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//}/***********************   MAGIC CURSOR *********************/
-//while(1) { /********************************************************/
-
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 0 * data.tick /* d */, 40 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
 
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
@@ -756,7 +871,7 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
 
 // HIPHOP
 spork ~ SEQDNB("*4  K___ S___ __K_ S___  K___ S___ __K_ S___ ", mixer, 3.3);
-spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 1.3);
+spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 0.7);
 //spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ jih_ h__h h_j_ ", 45::ms, 3::ms, mixer, 1.3);
 
 //spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
@@ -766,8 +881,9 @@ spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h__
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
 //   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
    8 * data.tick =>  w.wait; 
+spork ~ CYMBALS("*8 c|e___ ____ ");
 spork ~ SEQDNB("*4  K___ S___ __K_ S___  K___ S___ __K_ S___ ", mixer, 3.3);
-spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 1.3);
+spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ j_h_ h___ h_j_ ", 45::ms, 3::ms, mixer, 0.7);
 //spork ~ SEQ0("*8  __h_ i_h _ ____ h___ __h_ i_h_ h_i_ h___ h___ h_i_ h_j_h_i_h___ jih_ h__h h_j_ ", 45::ms, 3::ms, mixer, 1.3);
 
 //spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
@@ -793,9 +909,12 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
 //   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
    8 * data.tick =>  w.wait; 
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+
     
 //////////////////////////////////////////////////////////////////////////
- for (0 => int i; i <   4    ; i++) {
+ for (0 => int i; i <   2    ; i++) {
   
  spork ~   BASS (); 
 
@@ -827,8 +946,12 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
  }
 
 ///////////////////////////////////////////////////////////////////////////////
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
 
-   for (0 => int i; i < 4      ; i++) {
+spork ~ CYMBALS("*8  k|q___ ___ ______ ");
+
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 18 * data.tick /* d */, 56 * data.tick /* offset */, 1::ms /* a */, 100::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
 spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
 spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
@@ -858,12 +981,136 @@ spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_h
 //   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
    8 * data.tick =>  w.wait; 
 
-   }
+////////////////////////////////////////////////////////////////////////
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 0::ms /* d */, 88 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/bass.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+//   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   8 * data.tick =>  w.wait; 
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/bass.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+//   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   8 * data.tick =>  w.wait; 
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/bass.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+//   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   8 * data.tick =>  w.wait; 
+//spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+//spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+  spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  ____ ____ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_h_hs h_h_h_", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/bass.wav", 5 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/sub.wav", 5 * data.tick/* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+//   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/violon ensemble.wav", 0::ms /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */,  1. * CHASS_GAIN); 
+   4 * data.tick =>  w.wait; 
+ spork ~  SLIDENOISE(7000 /* fstart */, 200 /* fstop */, 2* data.tick /* dur */, .5 /* width */, mixer +4, .25 /* gain */); 
+   2 * data.tick =>  w.wait; 
+
+ spork ~  SLIDENOISE(200 /* fstart */, 7000 /* fstop */, 2* data.tick /* dur */, .5 /* width */, mixer +4,.25 /* gain */); 
+   2 * data.tick =>  w.wait; 
 
 
 
-  // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
-}  
+////////////////////////////////////////////////////////////////////////
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+
+spork ~ CYMBALS("*8  k|q___ ___ ______ ");
+
+
+spork ~ SYNT1(" *1 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+  
+ spork ~   BASS (); 
+
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+spork ~ SYNT1(" *2 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+spork ~ SYNT1(" *4 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+spork ~ SYNT1(" *8 }c }c 1__5 __3_ _B__ ", 4 * data.tick , mixer +3, 1.7);
+//spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ S___ K___ S_K_ K___ S_K_ K___ S_K_ KKK_    ", mixer, 3.3);
+//  spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  ____ ____ __K_ S___", mixer, 3.3);
+//spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_h_hs h_h_h_", 45::ms, 3::ms, mixer, .5);
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+    4 * data.tick => w.wait;
+spork ~ SYNT1(" *8*2 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
+spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+spork ~ SYNT1(" *1 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+  
+ spork ~   BASS (); 
+
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+spork ~ SYNT1(" *2 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+spork ~ SYNT1(" *4 }c }c 1__5 __3_ _B__ ", 8 * data.tick , mixer +3, 1.7);
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ K___ S___ __K_ S___  K_K_ S___ __K_ S___", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+ 
+   
+    8 * data.tick => w.wait;
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+spork ~ SYNT1(" *8 }c }c 1__5 __3_ _B__ ", 4 * data.tick , mixer +3, 1.7);
+//spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ S___ K___ S_K_ K___ S_K_ K___ S_K_ KKK_    ", mixer, 3.3);
+spork ~ CYMBALS("*8 ____ ____ ____ ____ ____ ____ ____ ____  c___ ____ k|q___ ____ e___ q|k___ c|e___ ____ ");
+spork ~ SEQDNB("*8  K___ S___ __K_ S___  K___ S___ __K_ S___ S_K_ S_K_ S_K_ S_K_ S_K_ S_KS KSKS KKKK     ", mixer, 3.3);
+spork ~ SEQ0("*8 +7 h_h_ h_h +9s h_h_ h_h_ h_h_ h_hs hsh_h_h_h_h_ h_hs h_h_h_h_hsh_ h_hs hsh_ h_h_ ", 45::ms, 3::ms, mixer, .5);
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/dohl.wav", 8 * data.tick /* d */, 0::ms /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1. * CHASS_GAIN); 
+    4 * data.tick => w.wait;
+spork ~ SYNT1(" *8*2 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
+spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 1.5 * data.tick , mixer +3, 1.7);
+    2 * data.tick => w.wait;
+
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 2* data.tick /* d */, 20 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer + 0 /* mix */, 1. * CHASS_GAIN); 
+   2 * data.tick =>  w.wait;   
+   spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 2* data.tick /* d */, 22 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer + 4 /* mix */, 1. * CHASS_GAIN); 
+   8 * data.tick =>  w.wait; 
+   
+//   }  
 
 
 //SndBuf s;
