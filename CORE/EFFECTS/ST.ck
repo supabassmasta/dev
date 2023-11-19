@@ -16,7 +16,7 @@ public class ST {
       outl =< dac.left;
       outl => left_out;
       1 => left_out_active;
-    }
+    } 
     return left_out;
   }
   
