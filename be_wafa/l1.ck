@@ -5,11 +5,24 @@
 
 
 
-"bewafa_mrec_" => string mrpath;
-MULTIREC mrec;  30::second => mrec.rec_dur; // 1 => mrec.disable;
+"./REC/" => string mrpath;
+MULTIREC mrec;  3::minute + 20::second => mrec.rec_dur; // 1 => mrec.disable;
 mrec.add_track(mrpath + "drum");
 mrec.add_track(mrpath + "voix");
 mrec.add_track(mrpath + "dohl");
+mrec.add_track(mrpath + "violon");
+mrec.add_track(mrpath + "bass");
+mrec.add_track(mrpath + "sub");
+mrec.add_track(mrpath + "hh");
+mrec.add_track(mrpath + "synt1_no_effect_OFF");
+mrec.add_track(mrpath + "grain");
+mrec.add_track(mrpath + "cymbals");
+mrec.add_track(mrpath + "slides");
+mrec.add_track(mrpath + "no_effect_OFF");
+mrec.add_track(mrpath + "effect1");
+mrec.add_track(mrpath + "effect2");
+mrec.add_track(mrpath + "effect3");
+mrec.add_track(mrpath + "effect4");
 
 mrec.rec();
 // PROBE to insert in ST paths
@@ -179,6 +192,8 @@ fun void SEQ0(string seq, dur cut, dur r, int mix, float g) {
 STBELL stbell0; 
 stbell0.connect(last $ ST , 161 * 100 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */, 0.6 /* Gain */ );       stbell0 $ ST @=>  last;   
 
+    mrec.rec_on_track( last, mrpath + "hh") @=> last;
+
     STMIX stmix;
     stmix.send(last, mix);
 
@@ -275,6 +290,8 @@ fun void SYNT1 (string seq, dur d, int mix, float g) {
   t.adsr[0].setCurves(0.5, 2.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   t.go();   t $ ST @=> ST @ last; 
 
+mrec.rec_on_track( last, mrpath + "synt1_no_effect_OFF") @=> last;
+
     STMIX stmix;
     stmix.send(last, mix);
 
@@ -315,10 +332,17 @@ fun void  SINGLEWAV  (string file, dur d, dur offset, dur a, dur r, int mix, flo
   //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
   stadsr.keyOn(); 
 
-  if (file == "../_SAMPLES/be_wafa/voix.wav")
+  if (file == "../_SAMPLES/be_wafa/voix.wav" || file == "../_SAMPLES/be_wafa/one234.wav" )
     mrec.rec_on_track( last, mrpath + "voix") @=> last;
   else if (file == "../_SAMPLES/be_wafa/dohl.wav")
     mrec.rec_on_track( last, mrpath + "dohl") @=> last;
+  else if (file == "../_SAMPLES/be_wafa/violon ensemble.wav")
+    mrec.rec_on_track( last, mrpath + "violon") @=> last;
+  else if (file == "../_SAMPLES/be_wafa/bass.wav")
+    mrec.rec_on_track( last, mrpath + "bass") @=> last;
+  else if (file == "../_SAMPLES/be_wafa/sub.wav")
+    mrec.rec_on_track( last, mrpath + "sub") @=> last;
+     
     
 
   STMIX stmix;
@@ -497,6 +521,10 @@ t.go();   t $ ST @=> ST @ last;
 STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
 stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1.3 /* Q */, 2 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
 AUTO.freq("}c}c}c}c}7" + part) => stfreelpfx0.freq; // CONNECT THIS 
+
+mrec.rec_on_track( last, mrpath + "grain") @=> last;
+  
+
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
  
@@ -515,6 +543,8 @@ SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_V
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
   s.go();     s $ ST @=> ST @ last; 
+
+mrec.rec_on_track( last, mrpath + "cymbals") @=> last;
 
   STMIX stmix;
   stmix.send(last, mixer);
@@ -581,6 +611,7 @@ t.go();   t $ ST @=> ST @ last;
 //stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 15 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 3 /* order */, 2 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
 
 //2.5 => stautoresx0.gain;
+mrec.rec_on_track( last, mrpath + "slides") @=> last;
 
 STMIX stmix;
 stmix.send(last, mix);
@@ -596,6 +627,8 @@ fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int mix, f
 
    
    ST st; st $ ST @=> ST @ last;
+
+   mrec.rec_on_track( last, mrpath + "slides") @=> last;
 
    STMIX stmix;
    stmix.send(last, mix);
@@ -632,6 +665,8 @@ fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, float g){
 
    
    ST st; st $ ST @=> ST @ last;
+
+   mrec.rec_on_track( last, mrpath + "slides") @=> last;
 
    STMIX stmix;
    stmix.send(last, mixer);
@@ -683,7 +718,7 @@ fun void  BEAT_COUNTER  (){
 
 spork ~   BEAT_COUNTER (); 
 
-
+now => time start_song;
 
 WAIT w;
 //8 *data.tick => w.fixed_end_dur;
@@ -696,6 +731,7 @@ WAIT w;
 
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
+mrec.rec_on_track( last, mrpath + "no_effect_OFF") @=> last;
 
 fun void EFFECT1   (){ 
 
@@ -705,6 +741,7 @@ fun void EFFECT1   (){
   stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 0.6 /* Q */, 1 * 100 /* freq base */, 12 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
   STGVERB stgverb;
   stgverb.connect(last $ ST, .01 /* mix */, 11 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+mrec.rec_on_track( last, mrpath + "effect1") @=> last;
 } 
 EFFECT1();
 
@@ -713,6 +750,7 @@ fun void EFFECT2   (){
   stmix.receive(mixer + 2); stmix $ ST @=> ST @ last; 
   STECHO ech;
   ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+  mrec.rec_on_track( last, mrpath + "effect2") @=> last;
   STMIX stmix2;
   stmix2.send(last, mixer + 1);
 } 
@@ -724,6 +762,7 @@ fun void EFFECT3   (){
   stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
   STGVERB stgverb;
   stgverb.connect(last $ ST, .07 /* mix */, 7 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+mrec.rec_on_track( last, mrpath + "effect3") @=> last;
 } 
 EFFECT3();
 fun void EFFECT4   (){ 
@@ -734,6 +773,7 @@ fun void EFFECT4   (){
   stgverb.connect(last $ ST, .07 /* mix */, 7 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
   STECHO ech;
   ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+mrec.rec_on_track( last, mrpath + "effect4") @=> last;
 } 
 EFFECT4();
 
@@ -1129,6 +1169,10 @@ spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 1.5 * data.tick , mixer +3, 1.7);
    spork ~   SINGLEWAV("../_SAMPLES/be_wafa/voix.wav", 2* data.tick /* d */, 22 * data.tick /* offset */, 50::ms /* a */, 1::ms /* r */, mixer + 4 /* mix */, 1. * CHASS_GAIN); 
    16 * data.tick =>  w.wait; 
    
+  <<<"SONG DUR ", (now - start_song)/second >>>;
+
+10::second => now;
+
 //   }  
 
 
