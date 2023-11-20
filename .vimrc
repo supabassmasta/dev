@@ -1787,4 +1787,13 @@ ab SONGK 1 => int mixer;
 \<CR>// 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 \<CR>} 
 
+ab MULTIRECK "song_mrec_" => string mrpath;
+\<CR>MULTIREC mrec;  30::second => mrec.rec_dur; // 1 => mrec.disable;
+\<CR>mrec.add_track(mrpath + "drum");
+\<CR>mrec.add_track(mrpath + "voix");
+\<CR>mrec.add_track(mrpath + "dohl");
+\<CR>
+\<CR>mrec.rec();
+\<CR>// PROBE to insert in ST paths
+\<CR>//mrec.rec_on_track( last, mrpath + "kick") @=> last;
 

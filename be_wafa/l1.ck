@@ -4,42 +4,17 @@
 <<<"MULTIPISTE REC TEST">>>;
 
 
-class MULTIREC {
-  ST probe[0]; // will be inserted in the code
-  ST in[0];
-  STREC strec[0];
-  string track_name[0];
-  1::second => rec_dur;
 
-  fun void  add_track (string name){ 
-     track_name << name;
-     new STREC @=> strec[name];
-     new ST @=> in[name];
-  } 
-
-  fun void  _rec  (){ 
-    for (0 => int i; i < track_name.size()  ; i++) {
-      strec[track_name[i]].connect(in[track_name[i]], rec_dur, track_name[i], 0 * data.tick /* sync_dur, 0 == sync on full dur */, 1 /* no sync */ );
-    }
-     
-  } 
-
-  
-  fun void  rec (){ 
-     spork ~   _rec (); 
-
-  } 
-
-
-
-}
-
-
-MULTIREC mrec;  4 * data.tick => mrec.rec_dur;
-mrec.add_track("rec_track_kick");
-mrec.add_track("rec_track_snr");
+"bewafa_mrec_" => string mrpath;
+MULTIREC mrec;  30::second => mrec.rec_dur; // 1 => mrec.disable;
+mrec.add_track(mrpath + "drum");
+mrec.add_track(mrpath + "voix");
+mrec.add_track(mrpath + "dohl");
 
 mrec.rec();
+// PROBE to insert in ST paths
+//mrec.rec_on_track( last, mrpath + "kick") @=> last;
+
 
 
 //::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -72,6 +47,7 @@ fun void KICK(string seq) {
   //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   1 => t.set_disconnect_mode;
   t.go();   t $ ST @=> ST @ last; 
+
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration - 1::samp => now;
@@ -339,6 +315,12 @@ fun void  SINGLEWAV  (string file, dur d, dur offset, dur a, dur r, int mix, flo
   //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
   stadsr.keyOn(); 
 
+  if (file == "../_SAMPLES/be_wafa/voix.wav")
+    mrec.rec_on_track( last, mrpath + "voix") @=> last;
+  else if (file == "../_SAMPLES/be_wafa/dohl.wav")
+    mrec.rec_on_track( last, mrpath + "dohl") @=> last;
+    
+
   STMIX stmix;
   stmix.send(last, mix);
 
@@ -479,6 +461,8 @@ fun void SEQDNB(string seq, int mix, float g) {
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
   //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
   s.go();     s $ ST @=> ST @ last; 
+
+  mrec.rec_on_track( last, mrpath + "drum") @=> last;
 
   STMIX stmix;
   stmix.send(last, mix);
@@ -1153,4 +1137,3 @@ spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 1.5 * data.tick , mixer +3, 1.7);
 
 // <<<"bpm ",8 * 60::second / (  s.length() )>>>;
 // <<<"bpm ",8 * 60::second / (  5.106::second )>>>;
-/

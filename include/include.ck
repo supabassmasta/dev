@@ -285,6 +285,7 @@ Machine.add( rt + "CORE/EFFECTS/STBELL.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSOVER.ck");
 
 Machine.add( rt + "CORE/EFFECTS/MASTER_STADSR.ck");
+Machine.add( rt + "CORE/EFFECTS/MULTIREC.ck");
 
 Machine.add( rt + "CORE/LONG_WAV/LONG_WAV.ck");
 Machine.add( rt + "CORE/LONG_WAV/LOOP_WAV.ck");
