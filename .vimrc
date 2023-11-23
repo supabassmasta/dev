@@ -1327,6 +1327,16 @@ ab STLPFXCK STFILTERXC stlpfxc_0; LPF_XFACTORY stlpfxc_0fact;
 ab STLPFXC2K STFILTERXC2 stlpfxc2_0; LPF_XFACTORY stlpfxc2_0fact;
 \<CR>stlpfxc2_0.connect(last $ ST ,  stlpfxc2_0fact, HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */, 1 /* order */, 1 /* channels */, 10::ms /* ramp dur */, 1::ms /* update period */ );       stlpfxc2_0 $ ST @=>  last; 
 
+ab STQSYNCLPFXK STQSYNCFILTERX stqsynclpfx0; LPF_XFACTORY stqsynclpfx0_fact;
+\<CR>stqsynclpfx0.freq(25 * 10 /* Base */, 15 * 100 /* Variable */);
+\<CR>stqsynclpfx0.q(1 /* Base */, 8 /* Variable */);
+\<CR>stqsynclpfx0.adsr_set(.02 /* Relative Attack */, .3/* Relative Decay */, 0.8 /* Sustain */, .4 /* Relative Sustain dur */, 0.2 /* Relative release */);
+\<CR>stqsynclpfx0.q_adsr_set(.1 /* Relative Attack */, 0.8/* Relative Decay */, 0.0 /* Sustain */, .1 /* Relative Sustain dur */, 0.1 /* Relative release */);
+\<CR>stqsynclpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>stqsynclpfx0.connect(last $ ST ,  stqsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stqsynclpfx0 $ ST @=>  last; 
+\<CR>// CONNECT THIS to play on targets //     => stqsynclpfx0.nio.padsr; // =>  stqsynclpfx0.nio.filter_freq //  =>  stqsynclpfx0.nio.q_padsr;
+
+
 
 """ BPF
 ab STBPFXK STFILTERX stbpfx0; BPF_XFACTORY stbpfx0_fact;
