@@ -11,7 +11,10 @@ fact * data.tick  => d2.max => d2.delay;
 .35 => d2.gain;
 d2 => Gain fb => d2;
 
-out => dac;
+out => HPF hpf => dac;
+
+200 => hpf.freq;
+
 
 while(1) {
        100::ms => now;

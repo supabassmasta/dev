@@ -139,10 +139,12 @@ fun void SEQ0(string seq) {
 ///////////////////////////////////////////////////////////////////////////////////////////////
 fun void SEQ0(string seq, dur cut, dur r, int mix, float g) {
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
-  SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+  "../_SAMPLES/be_wafa/snrAux.wav" => s.wav["s"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
-   0.8 * g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+   0.8 * g * data.master_gain => s.gain; //
+  s.gain("s", 0.7); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()
   //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
   // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -451,7 +453,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "{c 1111 5555 3333 2228 1111 5555 3333  *2 8181 8181 :2 " => string part;
 part => t.seq;
-1.7 * data.master_gain => t.gain;
+1.9 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//
 t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -793,7 +795,7 @@ spork ~ SYNT1(" *8*4 }c }c 1__5 __3_ _B__ ", 2 * data.tick , mixer +3, 1.7);
 
 
 
-spork ~   SINGLEWAV("../_SAMPLES/be_wafa/one234.wav", 6 * data.tick /* d */, 0 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 1.2 ); 
+spork ~   SINGLEWAV("../_SAMPLES/be_wafa/one234.wav", 6 * data.tick /* d */, 0 * data.tick /* offset */, 1::ms /* a */, 1::ms /* r */, mixer /* mix */, 0.35 ); 
 3 * data.tick + 320::ms =>  w.wait; 
 
 ////////////////////////////////////////////////////////////////////////////////////
