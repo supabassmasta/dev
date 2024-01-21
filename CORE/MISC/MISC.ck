@@ -25,4 +25,17 @@ public class MISC {
      return outnb;
 
   } 
+
+
+// Get file number of z type file (z11.ck)
+// Call:  MISC.file_nb(me.path());
+fun static int file_nb (string path){ 
+
+    // <<<me.path()>>>;
+    path => string num;
+    num.erase(num.find('.'), 3);
+    num.erase(0, num.rfind('z')+1);
+    return num.toInt();
+  } 
+
 }
