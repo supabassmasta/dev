@@ -6,7 +6,7 @@
 
 
 "./REC/" => string mrpath;
-MULTIREC mrec;  3::minute + 20::second => mrec.rec_dur; // 1 => mrec.disable;
+MULTIREC mrec;  3::minute + 20::second => mrec.rec_dur;  //1 => mrec.disable;
 mrec.add_track(mrpath + "drum");
 mrec.add_track(mrpath + "voix");
 mrec.add_track(mrpath + "dohl");
