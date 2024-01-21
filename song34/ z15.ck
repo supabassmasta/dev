@@ -1,4 +1,4 @@
-10 => int mixer;
+1 => int mixer;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 KIK kik;
@@ -63,11 +63,9 @@ class synt0 extends SYNT{
 } 
 
 
-fun void SYNT0 (string seq, int n, int mix, float g) {
+fun void SYNT0 (string seq, int mix, float g) {
   TONE t;
-  t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-  s0.config(.5 /* G */, 1::second /* ATTACK */, 1::second /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */);
-  // s0.pos s0.rate s0.lastbuf 
+  t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
@@ -80,6 +78,39 @@ fun void SYNT0 (string seq, int n, int mix, float g) {
 
     STMIX stmix;
     stmix.send(last, mix);
+
+<<<seq>>>;
+
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+fun void SYNT1 (string seq, int n, float mf, float mg, int mix, float g) {
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  s0.config(n /* synt nb */ ); 
+  t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  g * data.master_gain => t.gain;
+  t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+SinOsc sin0 =>  s0.inlet;
+mf => sin0.freq;
+mg => sin0.gain;
+
+    STMIX stmix;
+    stmix.send(last, mix);
+
+<<<seq>>>;
+
+
+
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
@@ -109,50 +140,35 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 fun void EFFECT1   (){ 
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
+  
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+} 
+EFFECT1();
 
-  STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
-  stautoresx0.connect(last $ ST ,  stautoresx0_fact, 2.0 /* Q */, 2 * 100 /* freq base */, 10 * 100 /* freq var */, data.tick * 13 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
-
+fun void EFFECT2   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 2); stmix $ ST @=> ST @ last; 
+  
   STECHO ech;
   ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
-  STGAIN stgain;
-  stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
-  stgain.connect(stmix $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
-
-  STGVERB stgverb;
-  stgverb.connect(last $ ST, .20 /* mix */, 6 * 10. /* room size */, 4::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .8 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 } 
-EFFECT1();
+EFFECT2();
 
 // LOOP
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-  //spork ~ KICK("*4 k___ k___ k___ k___");
+  spork ~ KICK("*4 k___ k___ k___ k___");
   //spork ~ SEQ0("____ *4s__s _ab_ ");
-  spork ~ SYNT0("{c{c :8 3//3__", 33, mixer + 1, .8);
+  8 * data.tick =>  w.wait; 
 
-  spork ~ SYNT0(" :4 5//5__", 34, mixer + 1, .8);
-  spork ~ SYNT0(" :4 3//3__", 35, mixer + 1, 1.2);
-  16 * data.tick =>  w.wait; 
-  spork ~ SYNT0("{c{c :8 2//2__", 33, mixer + 1, .8);
-  spork ~ SYNT0(" :4 4///4__", 34, mixer + 1, .8);
-  spork ~ SYNT0(" :4 2///2__", 35, mixer + 1, 1.2);
-  16 * data.tick =>  w.wait; 
-  
-  spork ~ SYNT0("{c{c :8 0////0__", 33, mixer + 1, .8);
 
-  spork ~ SYNT0(" :4 0//0__", 34, mixer + 1, .8);
-  spork ~ SYNT0(" :4 B//B__", 35, mixer + 1, 1.2);
-  16 * data.tick =>  w.wait; 
-  spork ~ SYNT0("{c{c :8 1////1__", 33, mixer + 1, .8);
-  spork ~ SYNT0("{c{c :8 1////1__", 32, mixer + 1, .8);
-  spork ~ SYNT0(" :4 1///1__", 34, mixer + 1, .8);
-  spork ~ SYNT0(" :4 1///1__", 35, mixer + 1, 1.2);
-  16 * data.tick =>  w.wait; 
+  // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 }  
+
+
