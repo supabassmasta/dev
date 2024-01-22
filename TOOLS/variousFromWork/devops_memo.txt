@@ -141,6 +141,20 @@ Astuce git pour ne pas avoir a retaper le password:
 git config --global credential.helper cache
 git config --global credential.helper 'cache --timeout=3600'
 
+Create an agent configuration file:
+mkdir -p .gitlab/agents/k8s-agent/
+touch .gitlab/agents/k8s-agent/config.yaml
+git add .gitlab/
+git commit -m "gitlab agent"
+git push
+
+Create a clusterrolebinding:
+kubectl create clusterrolebinding serviceaccounts-cluster-admin --clusterrole=cluster-admin --group=system:serviceaccounts
+
+helm install gitlab-runner -f values.yml gitlab/gitlab-runner
+
+
+
 ---------------------------------------
 DOCKER:
 docker run -d mongo  (random name is given)
@@ -335,3 +349,8 @@ docker run --env MONGO_HOST=mongo_ip -v $(pwd):/app -w /app photoapptest pytest
 
 cd location_of_your_git_repo/app/photographer-service
 docker run -p 8000:80 --env MONGO_HOST=mongo_ip -v $(pwd):/code --name photographer-service photographer
+
+docker build -t photo .
+docker run --env MONGO_HOST=mongo_ip --env TAGS_HOST=tasg_ip --env PHOTOGRAPHER_HOST=photo
+
+
