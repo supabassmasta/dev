@@ -1,0 +1,321 @@
+Le TP:
+https://devops.gitlab-pages.imt-atlantique.fr/devops-texts-dev/
+
+--------------------------------
+VDI:
+Machine VDI utilisé comme machine local pour lancer les commandes
+http://vdi.imt-atlantique.fr   TP-DevOps-U22-17
+user:usr
+sudo apt update
+sudo apt -y upgrade
+
+--------------------------------
+OPENSTACK:
+Platform IaaS (Infrastructure as a service)
+Pour créer des réseaux virtuel, router, server etc...
+
+source devops-s24-17-openrc.sh  (dans le dossier devops_memo)
+openstack network list
+openstack server list
+openstack  => to get a prompt
+
+Le dashboard openstack est très utile pour voire le réseau, les IPs etc
+
+Creation d'une paire de clé pour la platforme:
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/osvm
+Deployement de la clé publique, elle va se retrouver dans toute les VM qui pourront ainsi être accédée par le PC de contrôle:
+openstack keypair create --public-key ~/.ssh/osvm.pub mykey
+
+Create security groupe (sorte de règle Firewall pour openstack)
+Ici on autorise le ping et TCP port 22 (ssh)
+  openstack security group create MYSECGRP
+  openstack security group rule create --ingress --protocol icmp MYSECGRP
+  openstack security group rule create --ingress --protocol tcp --dst-port 22 MYSECGRP
+
+Create a network and its associated subnet using the following OpenStack commands:
+  openstack network create MYNET
+  openstack subnet create MYSUBNET --network MYNET --subnet-range 192.168.2.0/2 4 --dns-nameserver 192.44.75.10
+
+Create a router and configure it using the following OpenStack commands:
+openstack router create MYROUTER
+openstack router set MYROUTER --external-gateway external
+openstack router add subnet MYROUTER MYSUBNET
+
+
+Affiche les type de VM dispo (RAM Size, CPU...)
+openstack flavor list
+
+Image OS dispo:
+openstack image list
+
+Creationr d'un serveur utilisant les ressource ci dessus:
+openstack server create --image ubuntu20 --flavor s10.small --security-group  MYSECGRP --key-name .ssh/osvm.pub --network  MYNET   MYSERVER
+
+Creation d'une IP flottante (IP statique publique) permettant d'accéder l'infra créé depuis l'éxterieur:
+openstack floating ip create external
+
+Associer l'ip au serveur créé plus haut:
+openstack server add floating ip MYSERVER   10.37.0.79
+openstack floating ip list
+
+Accés SSH:
+chmod 700 ~/.ssh/osvm
+ssh -i ~/.ssh/osvm ubuntu@10.37.0.79
+
+JUMP HOST (to jump from bastion to other machine inside the network)
+Edit or create: 
+~/.ssh/config
+And write:
+''''
+Host bastion
+  Hostname 10.29.244.83
+  User ubuntu
+
+Host mongo
+  Hostname 192.168.2.2
+  ProxyJump bastion
+  User ubuntu
+'''''
+Il est possible d'accéder avec les nom maintenant:
+ssh mongo
+
+
+Cleanup openstack infra:
+openstack floating ip delete 10.37.0.79
+openstack server delete MYSERVER
+openstack router unset --external-gateway MYROUTER
+openstack router remove subnet MYROUTER MYSUBNET
+openstack router delete MYROUTER
+openstack network delete MYNET
+openstack security group delete MYSECGRP
+
+OPENSTACK HEAT
+Heat is a service to orchestrate composite cloud applications using a declarative template format through an OpenStack-native REST API
+
+check devops_memo/heat_template for tempate files
+
+Add key to file:
+{ (echo -n "    - " && cat ~/.ssh/osvm.pub) > /tmp/o; (mv vm-keys.yml /tmp/k); (cat /tmp/k /tmp/o > vm-keys.yml) }
+
+Create stack from template:
+openstack stack create -t mongo-bastion-stack.yml -e vm-keys.yml singlemongo
+
+-------------------------------------
+Mongo DB:
+Base de donnée noSQL, basé sur des schéma json si j'ai bien compris
+
+Accés à la base peu se faire par:
+mongosh --port 27017 --host 10.37.0.79
+
+Exemple de commande mongosh pour créer une db:
+use photos
+alice = {"name": "alice", "interest": ["landscape"]}
+db.photographers.insert( alice )
+bob = {"name": "bob", "interest": ["landscape", "street"]}
+db.photographers.insert( bob )
+charlie = {"name": "charlie", "interest": ["street", "portrait"]}
+db.photographers.insert( charlie )
+
+db.photographers.find()
+db.photographers.find( {"interest": "street"} )
+
+Check mongo linux logs:
+less /var/log/mongodb
+
+------------------------------------
+ANSIBLE:
+Create a file named inventory with all hosts(IP on name from /etc/hosts)
+
+direct command
+ansible all -i inventory -u ubuntu --private-key ~/.ssh/osvm -a "/bin/echo hello"
+
+or use a playbook (in the following mongo is installed on remote server):
+ansible-playbook -i inventory -u ubuntu --private-key ~/.ssh/osvm mongo-playbook.yml
+
+
+------------------------------------
+Gitlab:
+On utilise la même paire de clé pour se connecter
+
+Astuce git pour ne pas avoir a retaper le password:
+git config --global credential.helper cache
+git config --global credential.helper 'cache --timeout=3600'
+
+---------------------------------------
+DOCKER:
+docker run -d mongo  (random name is given)
+docker ps (started containers)
+docker ps -a (all)
+docker run -d --name mymongo mongo
+
+remove a container:
+docker rm mymongo
+
+A name is unique, it (or ID) can be used to identify a container
+For clarity use names!
+
+docker inspect mymongo (useful to retreive ip of a container)
+docker logs mymongo
+
+docker pull mysql (just pull the image of mysql)
+
+Two following == docker run 
+docker create --name mymongo mongo
+docker start mymongo
+
+docker stop mymongo
+
+docker run python:3 python3 -m http.server 8080
+
+To copy files from/to a running container:
+docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+
+Execute command inside a container
+docker exec -it mymongo rm /data/svn/path/to/file
+
+Create an image from a running container:
+docker commit mymongo
+docker images -a
+Tag it 
+docker tag ImageID hello_world_nginx
+
+Build image from a Dockerfile (name it Dockerfile):
+Check in folder devops_memo/dockerwebserver
+
+docker build -t ws:latest .
+docker run ws:latest
+
+
+Push image to registry:
+Follow these instructions to obtain the credentials:
+
+    Log in to GitLab.
+    In the upper-right corner, click your avatar and select Settings.
+    On the User Settings menu, select Access Tokens.
+    Choose a name and optional expiry date for the token.
+    Choose the following desired scope: api
+    Click the Create personal access token button.
+    Save the personal access token somewhere safe. Once you leave or refresh the page, you won’t be able to access it again.
+
+Use your usual school username when prompted and then your personal access token as the password:
+docker login gitlab-df-registry.imt-atlantique.fr
+
+docker tag [Image ID] gitlab-df-registry.imt-atlantique.fr/devops-s24/devops-app-s24-xy/somename
+docker push gitlab-df-registry.imt-atlantique.fr/devops-s24/devops-app-s24-xy/somename
+
+Pour exposer le port d'un container vers l'exterieur utiliser (verifier l'ordre de ports...)
+docker run -p 80:8080 ...
+
+----------------------------------------------
+KUBERNETES 
+
+configure .ssh/config, like described above, to access each member of the cluster.
+And then apply k8s command to them from a control PC
+
+Get nodes (K8S machine: controller workers):
+kubectl get nodes
+
+HAProxy conf:
+HAProxy server has been installed on your bastion to redirect K8S requests (on port 6443) to your controller
+conf in /etc/haproxy
+file stored in devops_memo/k8s/haproxy.cfg
+
+Copy the Kubernetes config file in the appropriate directory on your local VM and change the IP address in the config K8S file so that you can interact with your cluster using kubectl.
+config -> ~/.kube
+
+K8S secret:
+Create a secret based on docker credentials
+kubectl create secret generic regcred \
+--from-file=.dockerconfigjson=/home/user/.docker/config.json \
+--type=kubernetes.io/dockerconfigjson
+
+Build a simple docker webserver and push it:
+files are in devops_memo/k8s/kwebsever/
+
+docker build -t test-webserver .
+docker tag [ImageID] gitlab-df-registry.imt-atlantique.fr/devops-s24/devops-app-s24-xy/k8s_test
+docker push gitlab-df-registry.imt-atlantique.fr/devops-s24/devops-app-s24-xy/k8s_test
+
+Deploy the server with yml config file:
+kubectl apply -f test-webserver-pod.yml 
+kubectl get pods
+
+Get info on the pod (Warning the comand is describe and not inspect like with docker):
+kubectl describe pod test-webserver
+
+Start an alpine pod on the cluster to check de web server is ok:
+kubectl run -i --tty alpine --image=gitlab-registry.imt-atlantique.fr/devops-lab/shared/alpine-curl -- sh curl [IP address of the test-webserver pod]:8000
+
+In case you want to connect again to the alpine container you can get its name with kubectl get pods and then reopen a shell with:
+
+kubectl attach container_name -c alpine -i -t
+
+Delete a pod:
+kubectl delete pod test-webserver
+
+
+Deploy a cluster:
+kubectl apply -f test-webserver-deployment.yml
+
+kubectl get deployments
+
+kubectl delete deployment test-webserver-deployment
+
+Services are abstraction in K8S to deliver app from several pods.
+Create a service, and get its description:
+
+kubectl apply -f test-webserver-service.yml 
+kubectl describe service webserver
+
+kubectl apply -f test-webserver-deployement.yml
+kubectl describe service webserver
+
+Expose port of the service
+kubectl apply -f test-webserver-service-nodeport.yml
+
+
+----------------------------------------------------------
+gRPC:
+
+Installing the gRPC framework:
+pyenv update
+pyenv install 3.11.7
+pyenv global 3.11.7
+pyenv virtualenv 3.11.7 devops.env
+pyenv activate devops.env
+pip install grpcio
+pip install grpcio-tools
+
+files are in devops_memo/rpc
+
+Generate the stubs:
+cd grpc-hello-service
+python3 -m grpc_tools.protoc -Iproto --python_out=. --grpc_python_out=. proto/hello.proto
+
+Run the server in a shell Terminal and the client in another shell Terminal. The client should normally call the RPC procedure of the contract implemented by the server.
+
+----------------------------------------------------------
+FastAPI:
+
+files are in devops_memo/rpc
+
+pip install fastapi[all]
+
+mkdir fastapi-hello-service
+cd fastapi-hello-service
+mv /path/to/your/fastapi_hello_service.py .
+chmod 744 fastapi_hello_service.py
+
+./fastapi_hello_service.py
+
+-----------------------------------------------------------
+CURL:
+
+By default curl use GET method
+curl www.site.fr
+
+To execute another method:
+curl -X PUT  www.site.fr -d '{"body":"value"}'
+
+
