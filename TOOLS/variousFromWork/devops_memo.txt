@@ -318,4 +318,20 @@ curl www.site.fr
 To execute another method:
 curl -X PUT  www.site.fr -d '{"body":"value"}'
 
+-------------------------------------------------------
+Photographer service;
+in tar file devops_git
 
+Here are various command to launch the service (not so much details)
+
+docker run --name mongo-service -d mongo
+
+docker build -t photographer .
+docker run -p 8000:80 --env MONGO_HOST=mongo_ip --name photographer-service photographer
+
+Sevice test avec le module pytest:
+docker run --name mongo-service-test -d mongo
+docker run --env MONGO_HOST=mongo_ip -v $(pwd):/app -w /app photoapptest pytest
+
+cd location_of_your_git_repo/app/photographer-service
+docker run -p 8000:80 --env MONGO_HOST=mongo_ip -v $(pwd):/code --name photographer-service photographer
