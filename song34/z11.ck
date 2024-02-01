@@ -1,4 +1,4 @@
-1 => int mixer;
+10 => int mixer;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 KIK kik;
@@ -120,8 +120,8 @@ mg => sin0.gain;
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-55 => data.ref_note;
+//149 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+//55 => data.ref_note;
 
 SYNC sy;
 sy.sync(4 * data.tick);
@@ -166,18 +166,18 @@ while(1) { /********************************************************/
   //spork ~ KICK("*4 k___ k___ k___ k___");
   //spork ~ SEQ0("____ *4s__s _ab_ ");
 
-  spork ~ SYNT1("8_", 31, 41, 50,  mixer + 1, 0.4);
+  spork ~ SYNT1("8_", 31, 41, 50,  mixer + 1, 0.3);
   8 * data.tick =>  w.wait; 
-  spork ~ SYNT0("}c *4 " + RAND.char("135278",1) + "/" + RAND.char("1352///////78",5)  + " :8 ____ ____", mixer + 1, .6);
-  spork ~ SYNT1("1_", 123, 76, 50,  mixer + 2, 1.1);
+  spork ~ SYNT0("}c *4 " + RAND.char("135278",1) + "/" + RAND.char("1352///////78",5)  + " :8 ____ ____", mixer + 1, .4);
+  spork ~ SYNT1("1_", 123, 76, 50,  mixer + 2, 0.6);
   8 * data.tick =>  w.wait; 
-  spork ~ SYNT0("}c}c *8 " + RAND.char("1352678",7)  + " :8 ____ ____", mixer + 1, .4);
+  spork ~ SYNT0("}c}c *8 " + RAND.char("1352678",7)  + " :8 ____ ____", mixer + 1, .3);
   8 * data.tick =>  w.wait; 
-    spork ~ SYNT1("8//G_", 124, 76, 50,  mixer + 1, 1.1);
+    spork ~ SYNT1("8//G_", 124, 76, 50,  mixer + 1, 0.6);
   8 * data.tick =>  w.wait; 
- spork ~ SYNT0("}c *4 " + RAND.char("135278",1) + "/" + RAND.char("1352///////78",5)  + " :8 ____ ____", mixer + 2, .6);
+ spork ~ SYNT0("}c *4 " + RAND.char("135278",1) + "/" + RAND.char("1352///////78",5)  + " :8 ____ ____", mixer + 2, .4);
   8 * data.tick =>  w.wait; 
-  spork ~ SYNT0("}c *8 " + RAND.char("1352678",7)  + " :8 ____ ____", mixer + 1, .6);
+  spork ~ SYNT0("}c *8 " + RAND.char("1352678",7)  + " :8 ____ ____", mixer + 1, .5);
   8 * data.tick =>  w.wait; 
   spork ~ SYNT1("8_", 123, 76, 50,  mixer + 2, 1.1);
   8 * data.tick =>  w.wait; 

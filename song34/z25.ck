@@ -181,6 +181,39 @@ fun void SEQ0(string seq) {
 }
 
 //spork ~ SEQ0("*4 sss___");
+fun void SEQ0(string seq, dur cut, dur r, int mix, float g) {
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);//
+  "../_SAMPLES/be_wafa/snrAux.wav" => s.wav["s"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+   0.8 * g * data.master_gain => s.gain; //
+//  s.gain("s", 0.7); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+  //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  STADSR stadsr;
+  stadsr.set(0::ms /* Attack */, 0::ms /* Decay */, 1.0 /* Sustain */, cut /* Sustain dur of Relative release pos (float) */,  r /* release */);
+  stadsr.connect(last $ ST, s.note_info_tx_o);  stadsr  $ ST @=>  last;
+  //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+  // stadsr.keyOn(); stadsr.keyOff(); 
+
+STBELL stbell0; 
+stbell0.connect(last $ ST , 161 * 100 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */, 0.6 /* Gain */ );       stbell0 $ ST @=>  last;   
+
+    STMIX stmix;
+    stmix.send(last, mix);
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+//spork ~ SEQ0("*4 sss___");
+
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 class synt0 extends SYNT{
@@ -285,30 +318,36 @@ fun void EFFECT2   (){
 } 
 EFFECT2();
 
+
+
+fun void EFFECT4   (){ 
+
+  STMIX stmix;
+  stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+  STGVERB stgverb;
+  stgverb.connect(last $ ST, .07 /* mix */, 7 * 10. /* room size */, 2::second /* rev time */, 0.2 /* early */ , 0.6 /* tail */ ); stgverb $ ST @=>  last; 
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+} 
+EFFECT4();
+
+
 // LOOP
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-  spork ~ KICK("*2 k___ ___k k___ ____");
-  spork ~ SEQ0("*2 ____ s___ ____ s__s   ");
-//  spork ~ BASS0("*2___1 __1!1 ___1 __!1!1");
-  8 * data.tick =>  w.wait; 
-  spork ~ KICK("*2 k__k ____ kk__ _k__");
-  spork ~ SEQ0("*2 ____ s__b ___a s__s   ");
-//  spork ~ BASS0("*2__1!1 __1!1 __1!1 _!1!1!1");
-  8 * data.tick =>  w.wait; 
-  spork ~ KICK("*2 k___ ___k k__k ____");
-  spork ~ SEQ0("*2 __k_ s___ __b_ sa_s   ");
-//  spork ~ BASS0("*2__1!1 __1!1 ___1 __!1!1");
-  8 * data.tick =>  w.wait; 
-  spork ~ KICK("*2 k___ k___ k_k_ k_k_ ");
-  spork ~ SEQ0("*2 ____ s__b ___a s__s   ");
-//  spork ~ BASS0("*2__1!1 __1!1 __1!1 _!1!1!1");
-//  8 * data.tick =>  w.wait; 
-
-
-   7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
+  spork ~ KICK("*2 k_k_ k_k_ k_k_ k_kk");
+  spork ~ SEQ0("*2+8 ____ s___ ___s __s_   ");
+  spork ~ SEQ0("*2 ____ ____ ____ a___   ", 192::ms, 7::ms, mixer + 4, 4.0);
+  spork ~ SEQ0("*4 +7 h_h_ haha  h_h_ h_bb h_hb h_h_ hah|a_ha|ha|h_", 40::ms, 1::ms, mixer, .5);
+  7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
+  
+  spork ~ KICK("*2 k_k_ k_k_ k_k_ k__k");
+  spork ~ SEQ0("*2+8 ____ s___ ____ ____   ");
+  spork ~ SEQ0("*2 ____ ____ ____ s___   ", 192::ms, 7::ms, mixer + 4, 3.0);
+  spork ~ SEQ0("*4 +7 h_h_ haha  h_h_ h_bb h_hb h_h_ hah|a_ha|ha|h_", 40::ms, 1::ms, mixer, .5);
+  7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 }  
 
 
