@@ -353,4 +353,24 @@ docker run -p 8000:80 --env MONGO_HOST=mongo_ip -v $(pwd):/code --name photograp
 docker build -t photo .
 docker run --env MONGO_HOST=mongo_ip --env TAGS_HOST=tasg_ip --env PHOTOGRAPHER_HOST=photo
 
+-------------------------------------------------------------
+API security:
+
+Ingress controller: Load Balancer for K8S
+Idéalement c'est un service deployé sur la plateforme (exp open stack)
+Ici on utilise HAProxy, un reverse proxy, hébergé sur le bastion, bien que ça ne soit pas idéal car hébergé dans une seul VM (contrairement à un service qui pourrait être relancé par K8S en cas de crash)
+
+NGinx est un ingress controller payant pour K8S
+
+Keycloak:
+Open Source Identity and Access Management
+Add authentication to applications and secure services with minimum effort.
+No need to deal with storing users or authenticating users.
+Keycloak provides user federation, strong authentication, user management, fine-grained authorization, and more. 
+
+Gravitee:
+API Gateway for security
+Govern, Secure & Manage
+APIs and Event Streams
+Try the first-ever event-native API Management solution that natively supports synchronous REST APIs, asynchronous APIs, and event brokers like Kafka and MQTT.
 
