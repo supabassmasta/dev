@@ -19,10 +19,10 @@ t.dor();// t.aeo(); // t.phr();// t.loc();
 t.go();   t $ ST @=> ST @ last; 
 
 STFILTERMOD fmod;
-fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 8 /* Q */, 260 /* f_base */ , 4400  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
+fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 8 /* Q */, 260 /* f_base */ , 92*100  /* f_var */, 1::second / (2 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STFILTERMOD fmod2;
-fmod2.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 4 /* Q */, 600 /* f_base */ , 3400  /* f_var */, 1::second / (5 * data.tick) /* f_mod */);     fmod2  $ ST @=>  last; 
+fmod2.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 4 /* Q */, 600 /* f_base */ , 16400  /* f_var */, 1::second / (5 * data.tick) /* f_mod */);     fmod2  $ ST @=>  last; 
 
 
 STLHPFC lhpfc;
@@ -34,6 +34,9 @@ hpf.connect(last $ ST , 300 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  la
 //STCOMPRESSOR stcomp;
 //7. => float in_gain;
 //stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 30::ms /* releaseTime */);   stcomp $ ST @=>  last;   
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .8 /* span 0..1 */, data.tick * 1 / 4 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 STLIMITER stlimiter;
 4. => float in_gainl;
