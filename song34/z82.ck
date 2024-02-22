@@ -1,4 +1,5 @@
 ST st;
+.3 => st.gain;
 
 STEPC stepc; stepc.init(HW.lpd8.potar[1][8], 1 /* min */, 30 /* max */, 50::ms /* transition_dur */);
 stepc.out =>  SqrOsc sqr0 => OFFSET ofs0 => MULT m => SERUM2 s0 => st.mono_in;
@@ -45,12 +46,12 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last;
 STEPC stepc1; stepc1.init(HW.lpd8.potar[1][7], 0 /* min */, 3000 /* max */, 50::ms /* transition_dur */);
 stepc1.out => m; 
 
-STGAINC gainc;
-gainc.connect(last $ ST , HW.lpd8.potar[1][6] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
-
+//STGAINC gainc;
+//gainc.connect(last $ ST , HW.lpd8.potar[1][6] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+//
 <<<"************************">>>;
 <<<"* tri Mod echo      ****">>>;
-<<<"* lpd 1.6 Gain        **">>>;
+//<<<"* lpd 1.6 Gain        **">>>;
 <<<"* lpd 1.7 Gain Pitch    **">>>;
 <<<"* lpd 1.8 Mod     **">>>;
 <<<"************************">>>;

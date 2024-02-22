@@ -284,7 +284,7 @@ mg => sin0.gain;
 //55 => data.ref_note;
 
 SYNC sy;
-sy.sync(4 * data.tick);
+sy.sync(8 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
