@@ -429,6 +429,8 @@ fun void SEQDNB(string seq, int mix, float g) {
   "kick_be_wafa.wav" => s.wav["K"];  // act @=> s.action["a"]; 
   "snare_be_wafa.wav" => s.wav["S"];  // act @=> s.action["a"]; 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+HW.ledstrip.set_tx('k') @=> s.action["K"];
+HW.ledstrip.set_tx('m') @=> s.action["S"];
   seq => s.seq;
   g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
   s.no_sync();// s.element_sync(); //s.no_sync()

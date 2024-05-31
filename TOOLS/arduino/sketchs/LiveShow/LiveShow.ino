@@ -400,21 +400,21 @@ void setup() {
 
 
  // Kaleido at boot     
-      fade_in_out.cnt_num = 12;
-      fade_in_out.cnt_den = 1;
-      fade_in_out.start_in();
-      
-      init_colorRamps();
-      init_kaleidoscope();
-
-      preset = 11;
-
-// Indian kid at boot for Test ////////////////////////
-//      config_indian_kid();
 //      fade_in_out.cnt_num = 12;
 //      fade_in_out.cnt_den = 1;
 //      fade_in_out.start_in();
-//      preset = 3;
+//      
+////      init_colorRamps();
+//      init_kaleidoscope();
+
+//      preset = 11;
+
+// Indian kid at boot for Test ////////////////////////
+      config_indian_kid();
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      preset = 3;
 //////////////////////////////////////
       
   pinMode(LED_BUILTIN, OUTPUT);
@@ -507,6 +507,19 @@ void loop() {
     // Erhansar
     case 17:
     pinkriver();
+    break;
+    // Dong Escape
+    case 18:
+    pinkriver();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
+    randwhite();
     break;
 
   }
@@ -1591,6 +1604,15 @@ void read_serial(){
       fade_in_out.start_in();
       
       preset = 17;
+      valid = 1;
+    }
+    // Dong Escape
+    else if (b == 'H') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      preset = 18;
       valid = 1;
     }
     else if (b == '!') {
