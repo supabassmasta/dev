@@ -914,14 +914,21 @@ class STCONVREV extends ST{
 
   fun void connect(ST @ tone, int ir_index, dur pre_delay, float rev_g, float dry_g) {
     ROOTPATH.str.my_string + "/_SAMPLES/ConvolutionImpulseResponse" +  wl.a[ir_index] => string ir_path;
-   <<<"STCONVREV Loading: ",  wl.a[ir_index]>>>;
-   ir_path => ir.read;
+    <<<"STCONVREV Loading: ",  wl.a[ir_index]>>>;
+    
+    ir_path => ir.read;
+    0 => int start_sample;
+    if (pre_delay < 0::ms) {
+      1::second / 1::samp => float srate;
+      (srate * (( -1 * pre_delay)/ 1::second)) $ int => start_sample;
+      <<<"start_sample: ", start_sample>>>;
 
-    ir.samples() => cr.order;
+    }
+    ir.samples() - start_sample => cr.order;
     cr.order() => int order;
     for (0 => int i; i < order; i++) {
       /* cr.coeff(i, ir.valueAt(i*2));  // do this if the IR is stereo */
-      cr.coeff(i, ir.valueAt(i));  // do this if IR is mono
+      cr.coeff(i, ir.valueAt(i + start_sample));  // do this if IR is mono
     }
 
     256 => cr.blocksize; // set to any power of 2
@@ -934,14 +941,23 @@ class STCONVREV extends ST{
 
     rev_g => cr.gain;
 
-    pre_delay => dl.max => dl.delay;
-    pre_delay => dr.max => dr.delay;
+    if (pre_delay < 0::ms) {
+      // CR is mono
+      tone.left() => cr => gainl;
+      tone.right() =>  cr => gainr;
+  //    tone.right() => cr.right() => gainr;
 
-    // CR is mono
-    tone.left() => dl => cr => gainl;
-    tone.right() => dr =>  cr => gainr;
-//    tone.right() => cr.right() => gainr;
+    }
+    else {
 
+      pre_delay => dl.max => dl.delay;
+      pre_delay => dr.max => dr.delay;
+
+      // CR is mono
+      tone.left() => dl => cr => gainl;
+      tone.right() => dr =>  cr => gainr;
+  //    tone.right() => cr.right() => gainr;
+    }
   }
 
 }
@@ -961,7 +977,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 5 /* ir index */, 6 * 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
+stconvrev.connect(last $ ST , 571/* ir index */,   10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
