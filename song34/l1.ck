@@ -890,6 +890,7 @@ string a[0];
 /* 886 */ a << "/London City 50W SNB/LC50 CMV3-M7 stalevel_dc.wav";
 /* 887 */ a << "/London City 50W SNB/LC50 CMV3-M9 stalevel_dc.wav";
 /* 888 */ a << "/London City 50W SNB/LC50 KM53 stalevel_dc.wav";
+/* 889 */ a << "/test.wav";
 }
 
 
@@ -912,20 +913,23 @@ class STCONVREV extends ST{
   1. => gainl.gain => gainr.gain;
 
 
-  fun void connect(ST @ tone, int ir_index, dur pre_delay, float rev_g, float dry_g) {
+  fun void connect(ST @ tone, int ir_index, int chans, dur pre_delay, float rev_g, float dry_g) {
     ROOTPATH.str.my_string + "/_SAMPLES/ConvolutionImpulseResponse" +  wl.a[ir_index] => string ir_path;
-    <<<"STCONVREV Loading: ",  wl.a[ir_index]>>>;
+    if (chans != 1) 2 => chans;
+    <<<"STCONVREV " + chans + " channels, Loading: ",  wl.a[ir_index]>>>;
     
     ir_path => ir.read;
     0 => int start_sample;
     if (pre_delay < 0::ms) {
       1::second / 1::samp => float srate;
       (srate * (( -1 * pre_delay)/ 1::second)) $ int => start_sample;
-      <<<"start_sample: ", start_sample>>>;
+      // <<<"start_sample: ", start_sample>>>;
 
     }
     ir.samples() - start_sample => cr.order;
     cr.order() => int order;
+    <<<"ir nb channels", ir.channels()>>>;
+    ir.channel(1);
     for (0 => int i; i < order; i++) {
       /* cr.coeff(i, ir.valueAt(i*2));  // do this if the IR is stereo */
       cr.coeff(i, ir.valueAt(i + start_sample));  // do this if IR is mono
@@ -977,7 +981,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 571/* ir index */,   10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
+stconvrev.connect(last $ ST , 889/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
 
 while(1) {
        100::ms => now;
