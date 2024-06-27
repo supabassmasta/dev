@@ -1807,3 +1807,7 @@ ab MULTIRECK "song_mrec_" => string mrpath;
 \<CR>// PROBE to insert in ST paths
 \<CR>//mrec.rec_on_track( last, mrpath + "kick") @=> last;
 
+ab STCONVREVK STCONVREV stconvrev;
+\<CR>stconvrev.connect(last $ ST , 889/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
+
+

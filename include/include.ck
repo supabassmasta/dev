@@ -274,6 +274,7 @@ Machine.add( rt + "CORE/EFFECTS/STROTATE.ck");
 Machine.add( rt + "CORE/EFFECTS/STECHOV.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSOUT.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSIN.ck");
+Machine.add( rt + "CORE/EFFECTS/STCONVREV.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
