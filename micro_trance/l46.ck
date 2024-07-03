@@ -33,6 +33,8 @@ t.go();   t $ ST @=> ST @ last;
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 7. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 4::ms /* Release */ );      duckm $ ST @=>  last; 
 
+STCONVREV stconvrev;
+stconvrev.connect(last $ ST , 8/* ir index */, 1 /* chans */, 43::ms /* pre delay*/, .015 /* rev gain */  , 1.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 
 
@@ -194,6 +196,11 @@ stadsr.set(4::ms /* Attack */, 0::ms /* Decay */, 1. /* Sustain */, -0.4 /* Sust
 stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 // stadsr.keyOn(); stadsr.keyOff();
+
+STCONVREV stconvrev;
+//stconvrev.connect(last $ ST , 172/* ir index */, 1 /* chans */, 5::ms /* pre delay*/, 0.1/* rev gain */  , 1.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
+stconvrev.connect(last $ ST , 149/* ir index */, 1 /* chans */, 3::ms + 22::samp /* pre delay*/,  0.1/* rev gain */  , 1.2 /* dry gain */  );       stconvrev $ ST @=>  last;  
+
 
 //STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //stlpfx0.connect(last $ ST ,  stlpfx0_fact, 9* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
@@ -536,16 +543,22 @@ autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 5 / 1 /* period */, 0
 STREVAUX strevaux;
 strevaux.connect(last $ ST, .2 /* mix */); strevaux $ ST @=>  last;  
 
-
 STMIX stmix1;
 stmix1.receive(mixer + 1); stmix1 $ ST @=>last; 
 //
+
+STAUTOFILTERX stautolpfx0; LPF_XFACTORY stautolpfx0_fact;
+stautolpfx0.connect(last $ ST ,  stautolpfx0_fact, 2.0 /* Q */, 4 * 100 /* freq base */, 12 * 100 /* freq var */, data.tick * 33 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautolpfx0 $ ST @=>  last;  
+
 STAUTOPAN autopan1;
-autopan1.connect(last $ ST, .2 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan1 $ ST @=>  last; 
+autopan1.connect(last $ ST, .8 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan1 $ ST @=>  last; 
 
 
-STREVAUX strevaux1;
-strevaux1.connect(last $ ST, .15 /* mix */); strevaux1 $ ST @=>  last;  
+//STREVAUX strevaux1;
+//strevaux1.connect(last $ ST, .15 /* mix */); strevaux1 $ ST @=>  last;  
+STCONVREV stconvrev;
+stconvrev.connect(last $ ST , 63/* ir index */, 1 /* chans */, 1::ms /* pre delay*/, .07 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+
 
 
 
@@ -564,8 +577,9 @@ WAIT w;
 
 fun void  LOOP_LAB  (){ 
 while(1) {
+    spork ~   MODU6 (274, "*8  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_  f_m_f_f_f_ f_m_ ", " M", "f", 144 *100, .11); 
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k_____  "); 
-  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   "); 
+  spork ~  BASS0 ("*4   __1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!8!1 __!5!1 __!3!1   "); 
   8 * data.tick =>  w.wait;   
      
 }
