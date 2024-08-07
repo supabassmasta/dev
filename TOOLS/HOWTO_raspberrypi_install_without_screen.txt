@@ -1,0 +1,30 @@
+On RPi 4B:
+
+Download OS:
+https://www.raspberrypi.com/software/operating-systems/
+
+Raspberry Pi OS Lite
+
+    Release date: July 4th 2024
+    System: 64-bit
+    Kernel version: 6.6
+    Debian version: 12 (bookworm)
+    Size: 432MB
+
+flash:
+ sudo dd if=2024-07-04-raspios-bookworm-arm64-lite.img of=/dev/mmcblk0 status=progress
+
+Once flashed, enable ssh by creating a file 'ssh' on bootfs partition:
+touch ssh
+
+
+Prepare an encrypted password:
+
+echo 'mypassword' | openssl passwd -6 -stdin
+
+Create a default user in a file on bootfs:
+echo "username:encrypted-password" > userconf
+
+Connect Rpi on local network and connect:
+ssh username@raspberrypi.local
+
