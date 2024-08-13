@@ -1021,8 +1021,22 @@ class STCONVREV_T extends ST{
 
 ///////////////////////////////////////////////////////////////////////
 
+class synt0 extends SYNT{
+
+    Step s =>  outlet; 
+        0 => s.next;
+
+      1. => s.gain;
+      fun void trig() {
+        1 => s.next;
+        1::samp => now;
+        0 => s.next;
+      }
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { spork ~ trig(); } 1 => own_adsr;
+} 
+
 TONE t;
-t.reg(PLOC0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c 1" => t.seq;
@@ -1036,8 +1050,10 @@ t.go();   t $ ST @=> ST @ last;
 
 
 STCONVREV_T stconvrev;
-stconvrev.connect(last $ ST , 9/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .2 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+stconvrev.connect(last $ ST , 889/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .2 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
+STREC strec;
+strec.connect(last $ ST, 32*data.tick, "test.wav", 0 * data.tick /* sync_dur, 0 == sync on full dur */, 1 /* no sync */ ); strec $ ST @=>  last;  
 
 while(1) {
        100::ms => now;

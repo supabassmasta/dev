@@ -897,6 +897,7 @@ string a[0];
 public class STCONVREV extends ST{
   wav_list wl; 
   ConvRev cr;
+  ConvRev cr2; // for Stereo
   SndBuf2 ir => blackhole;
 
   Gain gainl => outl;
@@ -912,14 +913,47 @@ public class STCONVREV extends ST{
 
   1. => gainl.gain => gainr.gain;
 
+  0 => int start_sample;
+
+  fun void read_stereo_ir(ST @ tone, float rev_g, dur pre_delay) {
+    // Start playing ir to blackhole
+    start_sample => ir.pos;
+    // Split two chans in two Gain
+	  ir.chan(0) => Gain gl => blackhole ;
+	  ir.chan(1) => Gain gr => blackhole;
+
+    // Record samples one by one
+    for (0 => int i; i <  ir.samples() - start_sample; i++) {
+      1::samp => now;
+      cr.coeff(i, gl.last()); 
+      cr2.coeff(i, gr.last()); 
+    }
+
+    256 => cr.blocksize => cr2.blocksize; // set to any power of 2
+    cr.init();  // initialize the conv rev engine
+    cr2.init();  // initialize the conv rev engine
+     
+    rev_g => cr.gain => cr2.gain;
+    if (pre_delay < 0::ms) {
+      tone.left() => cr => gainl;
+      tone.right() =>  cr2 => gainr;
+    }
+    else {
+
+      pre_delay => dl.max => dl.delay;
+      pre_delay => dr.max => dr.delay;
+
+      tone.left() => dl => cr => gainl;
+      tone.right() => dr =>  cr2 => gainr;
+    }
+
+  }
 
   fun void connect(ST @ tone, int ir_index, int chans, dur pre_delay, float rev_g, float dry_g) {
     ROOTPATH.str.my_string + "/_SAMPLES/ConvolutionImpulseResponse" +  wl.a[ir_index] => string ir_path;
-    if (chans != 1) 2 => chans;
     <<<"STCONVREV " + chans + " channels, Loading: ",  wl.a[ir_index]>>>;
-    
+
     ir_path => ir.read;
-    0 => int start_sample;
     if (pre_delay < 0::ms) {
       1::second / 1::samp => float srate;
       (srate * (( -1 * pre_delay)/ 1::second)) $ int => start_sample;
@@ -929,38 +963,55 @@ public class STCONVREV extends ST{
     ir.samples() - start_sample => cr.order;
     cr.order() => int order;
     <<<"ir nb channels", ir.channels()>>>;
-    ir.channel(1);
-    for (0 => int i; i < order; i++) {
-      /* cr.coeff(i, ir.valueAt(i*2));  // do this if the IR is stereo */
-      cr.coeff(i, ir.valueAt(i + start_sample));  // do this if IR is mono
-    }
+    // ir.channel(1);
 
-    256 => cr.blocksize; // set to any power of 2
-    cr.init();  // initialize the conv rev engine
+    /// ONE CHANNEL
+    if (chans == 1) {
+      for (0 => int i; i < order; i++) {
+        cr.coeff(i, ir.valueAt(i + start_sample));  // do this if IR is mono
+      }
 
-    dry_g => dryl.gain => dryr.gain;
+      256 => cr.blocksize; // set to any power of 2
+      cr.init();  // initialize the conv rev engine
 
-    tone.left() => dryl;
-    tone.right() => dryr;
+      dry_g => dryl.gain => dryr.gain;
 
-    rev_g => cr.gain;
+      tone.left() => dryl;
+      tone.right() => dryr;
 
-    if (pre_delay < 0::ms) {
-      // CR is mono
-      tone.left() => cr => gainl;
-      tone.right() =>  cr => gainr;
-  //    tone.right() => cr.right() => gainr;
+      rev_g => cr.gain;
 
+      if (pre_delay < 0::ms) {
+        // CR is mono
+        tone.left() => cr => gainl;
+        tone.right() =>  cr => gainr;
+        //    tone.right() => cr.right() => gainr;
+
+      }
+      else {
+
+        pre_delay => dl.max => dl.delay;
+        pre_delay => dr.max => dr.delay;
+
+        // CR is mono
+        tone.left() => dl => cr => gainl;
+        tone.right() => dr =>  cr => gainr;
+        //    tone.right() => cr.right() => gainr;
+      }
     }
     else {
+      // TWO CHAN MODE
+      order => cr2.order;
+      
+      spork ~ read_stereo_ir(tone,rev_g, pre_delay);
 
-      pre_delay => dl.max => dl.delay;
-      pre_delay => dr.max => dr.delay;
+      // Dry will be alone during the ir loading
+      dry_g => dryl.gain => dryr.gain;
 
-      // CR is mono
-      tone.left() => dl => cr => gainl;
-      tone.right() => dr =>  cr => gainr;
-  //    tone.right() => cr.right() => gainr;
+      tone.left() => dryl;
+      tone.right() => dryr;
+
+
     }
   }
 
