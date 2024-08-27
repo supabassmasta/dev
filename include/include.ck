@@ -230,6 +230,7 @@ Machine.add( rt + "CORE/EFFECTS/STBRF.ck");
 Machine.add( rt + "CORE/EFFECTS/STRES.ck");
 Machine.add( rt + "CORE/EFFECTS/STWPDiodeLadder.ck");
 Machine.add( rt + "CORE/EFFECTS/STWPKorg35.ck");
+Machine.add( rt + "CORE/EFFECTS/STADC1.ck");
 Machine.add( rt + "CORE/EFFECTS/STGAINC.ck");
 Machine.add( rt + "CORE/EFFECTS/STGAIN.ck");
 Machine.add( rt + "CORE/EFFECTS/STDIGITC.ck");

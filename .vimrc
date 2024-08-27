@@ -1810,4 +1810,5 @@ ab MULTIRECK "song_mrec_" => string mrpath;
 ab STCONVREVK STCONVREV stconvrev;
 \<CR>stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
 
+ab STADC1K STADC1 stadc1; stadc1 $ ST @=>  ST @ last; 
 
