@@ -1,0 +1,30 @@
+# from https://superuser.com/questions/1474125/how-to-use-jupyter-lab-with-ipv6-on-ubuntu
+# but not only
+
+On the server machine:
+
+pip install jupyterlab
+
+jupyter-lab  --generate-config
+vim .jupyter/jupyter_lab_config.py
+
+Add the following at the end of above config file:
+
+c.NotebookApp.ip = '::'
+c.NotebookApp.allow_origin = '*'
+c.NotebookApp.disable_check_xsrf = True
+
+
+Create a password for remote access:
+jupyter lab password
+
+Launch the server:
+jupyter lab --no-browser
+
+
+On the client browser:
+[IPV6 of server]:8888
+
+
+
+

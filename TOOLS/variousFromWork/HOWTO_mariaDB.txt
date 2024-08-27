@@ -1,0 +1,28 @@
+ ssh projet3ats@2001:660:7301:51:77e2:409d:3c82:6fcc
+
+
+
+On host connect:
+mysql -u user -p
+
+SHOW DATABASES;
+USE Pandore;
+
+SHOW TABLES;
+DESCRIBE table_name;
+
+
+
+
+BACKUP Method:
+https://mariadb.com/kb/en/full-backup-and-restore-with-mariabackup/
+
+cd ~/analyse-du-trafic-sournois/Database/BACKUPDB
+mkdir __Date__
+
+sudo mariabackup --backup    --target-dir=/home/projet3ats/analyse-du-trafic-sournois/Database/BACKUPDB/__Date__ --user=user  --password=user
+
+sudo tar -cvf PandoreBackup__Date__.tar __Date__/
+
+Get it back on remote:
+scp projet3ats@[2001:660:7301:51:77e2:409d:3c82:6fcc]:/home/projet3ats/analyse-du-trafic-sournois/Database/BACKUPDB/PandoreBackup__Date__.tar .

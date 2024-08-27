@@ -1,0 +1,19 @@
+
+Create ssh key
+cd .ssh/
+ssh-keygen -t ed25519 -C "emailusedforgithubaccount"
+	Enter an name name_of_the_key
+	Eventulay a passphrase (enter for no passphrase)
+ssh-add  name_of_the_key
+
+Login to github account:
+Clic on top right user avatar
+Select settings
+On the left select SSH and GPG keys
+	> New SSH key
+		Copy the content of the name_of_the_key.pub
+
+Clone the project with git clone and the SSH clone option (Code button) on the repo page
+
+You should then be able to pull and push.
+

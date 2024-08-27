@@ -1,0 +1,19 @@
+Method tested on oai2 remote host.
+It is almost live caputre, as you have to reload the log in wireshark to display new message.
+It should be possible to do full live remote logging with sshdump interface in wireshark. But can't get it to work now.
+
+On remote host:
+Allow tcpdump to access network interface withoout sudo:
+
+sudo setcap  cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
+You can verify capabilities with:
+getcap /usr/bin/tcpdump
+
+On local hosti Terminal 1:
+ssh jsm@oai2 "tcpdump -U -i br-d7464ce119cd -w -" > CAPTURE_FILE
+
+Terminal 2:
+wireshark CAPTURE_FILE
+
+Note: use relaod button to update capture
+
