@@ -8,7 +8,7 @@ class cont extends CONTROL {
      // 0 =>  update_on_reg ;
         fun void set(float in) {
           1+=> states.test;
-          <<<in, states.test>>>;
+          <<<"State", in, states.test>>>;
           HW.launchpad.color(16*5 + 0,states.test%128); // pad 61 (z61.ck)
 
         }
