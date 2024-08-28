@@ -37,10 +37,12 @@ class STSAMPLERC extends ST {
     "." => sav.dir; // save index in current directory
     "sampler_index_" + name => string fname;
     
-    while(1) {
+//    while(1) {
 
       // Wait event to start
       rec_e => now;     
+
+      HW.launchpad.color(16*(file_x+1) + file_y ,53);
 
       sav.readi(fname) => int findex;
       findex + 1 => findex;
@@ -57,6 +59,8 @@ class STSAMPLERC extends ST {
           sync_dur  - ((now - data.wait_before_start)%sync_dur) => now;
         }
       }
+
+      HW.launchpad.red(16*(file_x+1) + file_y);
 
       now => time start_rec_t;
 
@@ -104,10 +108,11 @@ class STSAMPLERC extends ST {
       <<<"***  END  REC   ****">>>; 
       <<<"********************">>>; 
       <<<"********************">>>; 
+      HW.launchpad.color(16*(file_x+1) + file_y ,52);
 
 
       1::ms => now;
-    }
+//    }
 
   } 
 
