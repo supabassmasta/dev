@@ -15,6 +15,8 @@ class STSAMPLERC extends ST {
   out[0] => outl;
   out[1] => outr;
 
+  186::ms => dur latency;
+
   string path;
   string name;
   
@@ -63,7 +65,6 @@ class STSAMPLERC extends ST {
 
       HW.launchpad.red(16*(file_x+1) + file_y);
 
-      now => time start_rec_t;
 
       <<<"********************">>>; 
       <<<"********************">>>; 
@@ -133,7 +134,7 @@ class STSAMPLERC extends ST {
       1.0 * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 0::ms);
-      l.start(sync_dur /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
+      l.start(sync_dur /* sync */ , latency  /* offset */ , l.buf.length() /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
 
       play_e => now;     
     }
