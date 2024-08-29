@@ -30,15 +30,13 @@ class STSAMPLERC extends ST {
   cont cont_play;
   play_e @=> cont_play.e;
 
-//  in => out;
-
 
   fun void f1 ( dur sync_dur, int no_sync ){ 
 
     // get file index
     SAVE sav;
     "." => sav.dir; // save index in current directory
-    "sampler_index_" + name => string fname;
+    "sampler_index_" + name + "_z" + file_nb => string fname;
     
 //    while(1) {
 
@@ -50,7 +48,6 @@ class STSAMPLERC extends ST {
       sav.readi(fname) => int findex;
       findex + 1 => findex;
       sav.savei(fname, findex);
-
 
       // sync
       if ( !no_sync ){
@@ -73,7 +70,7 @@ class STSAMPLERC extends ST {
       <<<"********************">>>; 
 
       in =>  WvOut2 w => blackhole;
-      path + name + findex + ".wav" => w.wavFilename;
+      path + name + "_z" + file_nb + "_" + findex + ".wav" => w.wavFilename;
 
       // Wait event to stop
       rec_e => now;     
@@ -96,8 +93,6 @@ class STSAMPLERC extends ST {
 
       w =< blackhole;
 
-//      in[0] =< out[0];
-//      in[1] =< out[1];
       <<<"********************">>>; 
       <<<"********************">>>; 
       <<<"***  END  REC   ****">>>; 
@@ -125,9 +120,9 @@ class STSAMPLERC extends ST {
       // get file index
       SAVE sav;
       "." => sav.dir; // save index in current directory
-      "sampler_index_" + name => string fname;
+      "sampler_index_" + name  + "_z" + file_nb => string fname;
       sav.readi(fname) => int findex;
-      path + name + findex + ".wav" => fname;
+      path + name + "_z" + file_nb + "_" + findex  + ".wav" => fname;
       
       <<<"STSAMPLREC: playing:", fname>>>;
 
@@ -135,7 +130,7 @@ class STSAMPLERC extends ST {
       1.0 * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 0::ms);
-      l.start(sync_dur /* sync */ , latency  /* offset */ , l.buf.length() /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
+      spork ~ l._start(sync_dur /* sync */ , latency  /* offset */ , l.buf.length() /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
       
 
       play_e => now;     

@@ -31,6 +31,7 @@ public class LONG_WAV extends ST {
   10::ms => dur rDur;
 
   1. => buf.gain;
+  0=> int stop_counter;
 
 	buf.chan(0) => ADSR al => outl;
 	buf.chan(1)=> ADSR ar => outr;
@@ -66,12 +67,15 @@ public class LONG_WAV extends ST {
 		if (update_ref_time){
 		  MASTER_SEQ3.update_ref_times(now, data.tick * 16 * 128 );
 		}
-
-		if (loop != 0::ms) {
-			while(1) {
+    
+    stop_counter => int local_stop_counter;
+		
+    if (loop != 0::ms) {
+			while(stop_counter == local_stop_counter) {
 				loop => now;
 				// restart to offset
-				(offset/1::samp) $ int => buf.pos;
+        if (stop_counter == local_stop_counter)
+          (offset/1::samp) $ int => buf.pos;
 			}
  
 		}
@@ -91,6 +95,7 @@ public class LONG_WAV extends ST {
 				al.keyOff(); ar.keyOff();  
 				rDur => now;
      		buf.samples() => buf.pos;
+        1 +=> stop_counter;
 }
  fun void stop () {
     spork ~ _stop();
