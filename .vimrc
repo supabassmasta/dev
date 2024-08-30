@@ -1812,3 +1812,8 @@ ab STCONVREVK STCONVREV stconvrev;
 
 ab STADC1K STADC1 stadc1; stadc1 $ ST @=>  ST @ last; 
 
+ab RangeK  Range range0 => 
+\<CR>range0.range(-1, 1, 430, 450);
+\<CR>//1 => range0.clip; 
+\<CR><Up><Up><Up><End>
+

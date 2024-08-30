@@ -187,7 +187,7 @@ STSAMPLERC stsamplerc;
 stsamplerc.connect(last $ ST,  "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 4 * data.tick /* sync_dur, 0 == sync on full dur */, 0 /* no sync */ ); stsamplerc $ ST @=>  last;  
 
 STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 9/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+stconvrev.connect(last $ ST , 9/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .08 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 while(1) {
        100::ms => now;
