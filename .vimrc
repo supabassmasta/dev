@@ -1813,7 +1813,12 @@ ab STCONVREVK STCONVREV stconvrev;
 ab STADC1K STADC1 stadc1; stadc1 $ ST @=>  ST @ last; 
 
 ab RangeK  Range range0 => 
-\<CR>range0.range(-1, 1, 430, 450);
+\<CR>range0.range(-1, 1, -0.5, 0.5);
 \<CR>//1 => range0.clip; 
+\<CR><Up><Up><Up><End>
+
+ab GainK Gain g0 =>
+\<CR>1.0 => g0.gain;
+\<CR>// 3 => g0.op; //1+ 2- 3* 4/ 0 off -1 passthrough
 \<CR><Up><Up><Up><End>
 
