@@ -332,6 +332,7 @@ Machine.add(rt + "CORE/EFFECTS/STREVAUX.ck");
 Machine.add("page_manager_nb_page_config.ck"); // PAGE MANAGER : NUMBER OF PAGES
 Machine.add(rt + "CORE/SYNT/AUTO.ck");
 me.yield();
+Machine.add( rt + "CORE/EFFECTS/STSAMPLERC.ck");
 Machine.add( rt + "CORE/launchpad/script_launcher.ck");
 Machine.add("config.ck");
 me.yield();

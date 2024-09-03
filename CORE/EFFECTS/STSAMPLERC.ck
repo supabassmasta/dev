@@ -9,7 +9,7 @@ class cont extends CONTROL {
         }
 } 
 
-class STSAMPLERC extends ST {
+public class STSAMPLERC extends ST {
   Gain in[2];
   Gain out[2];
   out[0] => outl;
@@ -144,8 +144,8 @@ class STSAMPLERC extends ST {
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 0::ms);
       
-      if (loop_playback) l.buf.length() => dur loopd;
-      else 0::ms => dur loopd;
+      0::ms => dur loopd;
+      if (loop_playback) l.buf.length() => loopd;
 
       spork ~ l._start(sync_dur /* sync */ , latency  /* offset */ , loopd /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
       
@@ -187,28 +187,3 @@ class STSAMPLERC extends ST {
 
   }
 }
-
-class STADC1 extends ST{
-  Gain gainl => outl;
-  Gain gainr => outr;
-
-  1. => gainl.gain => gainr.gain;
-
-  adc => gainl;
-  adc => gainr;
-
-}
-
-STADC1 stadc1; stadc1 $ ST @=>  ST @ last; 
-
-
-STSAMPLERC stsamplerc;
-stsamplerc.connect(last $ ST,  "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 4 * data.tick /* sync_dur, 0 == sync on full dur */, 0*data.tick /*if 0, end with rec button*/, 1 /*loop playback*/ 0 /* no sync */ ); stsamplerc $ ST @=>  last;  
-
-STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 9/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .08 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
-
-while(1) {
-       100::ms => now;
-}
- 
