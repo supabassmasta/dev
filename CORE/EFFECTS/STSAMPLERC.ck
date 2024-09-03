@@ -176,7 +176,7 @@ public class STSAMPLERC extends ST {
 
   }
 
-  fun void connect(ST @ tone,  string p, string n,  dur sync_dur, dur d, int loop, int no_sync) {
+  fun void connect(ST @ tone,  string p, string n,  dur sync_dur, dur d, int loop, int no_sync, string script_path) {
     // sync_dur is used to sync: start rec, stop rec, start play, stop play
     tone.left() => in[0];
     tone.right() => in[1];
@@ -185,8 +185,9 @@ public class STSAMPLERC extends ST {
     n => name;
     d => rec_dur;
     loop => loop_playback;
-
-    MISC.file_nb(me.path()) => file_nb;
+    
+    //<<<"PATH:: ", me.path()>>>;
+    MISC.file_nb(script_path) => file_nb;
 
     // Compute coordinate on launchpad
     file_nb/ 10 -1 => file_x;
