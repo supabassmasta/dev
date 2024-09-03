@@ -9,6 +9,19 @@ class cont extends CONTROL {
         }
 } 
 
+
+// Used to load previous sample. On Sampler start the last one is loaded.
+class cont_retro_index extends CONTROL {
+     0 => int retro_index_offset;
+
+     // 0 =>  update_on_reg ;
+        fun void set(float in) {
+          if ( in !=0  ){
+            1 -=> retro_index_offset;
+          }
+        }
+} 
+
 public class STSAMPLERC extends ST {
   Gain in[2];
   Gain out[2];
@@ -32,6 +45,7 @@ public class STSAMPLERC extends ST {
   cont cont_play;
   play_e @=> cont_play.e;
 
+  cont_retro_index cont_retro_index_o;
 
   fun void f1 ( dur sync_dur, int no_sync ){ 
 
@@ -135,6 +149,11 @@ public class STSAMPLERC extends ST {
       "." => sav.dir; // save index in current directory
       "sampler_index_" + name  + "_z" + file_nb => string fname;
       sav.readi(fname) => int findex;
+
+      // Manage retro index
+      findex + cont_retro_index_o.retro_index_offset => findex;
+      if (findex < 0) 0 => findex;
+
       path + name + "_z" + file_nb + "_" + findex  + ".wav" => fname;
       
       <<<"STSAMPLREC: playing:", fname>>>;
@@ -143,9 +162,9 @@ public class STSAMPLERC extends ST {
       1.0 * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 0::ms);
-      
+
       0::ms => dur loopd;
-      if (loop_playback) l.buf.length() => loopd;
+      if (loop_playback) l.buf.length() =>  loopd;
 
       spork ~ l._start(sync_dur /* sync */ , latency  /* offset */ , loopd /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
       
@@ -180,6 +199,11 @@ public class STSAMPLERC extends ST {
     // play button
     HW.launchpad.color(16*(file_x+2) + file_y ,44);
     HW.launchpad.keys[ 16*(file_x+2) + file_y].reg(cont_play);
+
+    // Retro index
+    // Used to load previous sample. On Sampler start the last one is loaded.
+    HW.launchpad.color(16*(file_x+3) + file_y ,44);
+    HW.launchpad.keys[ 16*(file_x+3) + file_y].reg(cont_retro_index_o);
 
 
     spork ~ f1 (sync_dur, no_sync );

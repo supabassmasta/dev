@@ -1823,6 +1823,6 @@ ab GainK Gain g0 =>
 \<CR><Up><Up><Up><End>
 
 ab STSAMPLERCK STSAMPLERC stsamplerc;
-\<CR>stsamplerc.connect(last $ ST,  "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 4 * data.tick /* sync_dur, 0 == sync on full dur */, 0*data.tick /*if 0, end with rec button*/, 1 /*loop playback*/ 0 /* no sync */ ); stsamplerc $ ST @=>  last;  
+\<CR>stsamplerc.connect(last $ ST,  "./" /* path for wav */,  "sample" /* wav name, /!\ NO EXTENSION */, 4 * data.tick /* sync_dur, 0 == sync on full dur */, 0*data.tick /*if 0, end with rec button*/, 1 /*loop playback*/, 0 /* no sync */ ); stsamplerc $ ST @=>  last;  
 
 
