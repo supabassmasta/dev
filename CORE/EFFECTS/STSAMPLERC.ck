@@ -164,7 +164,7 @@ public class STSAMPLERC extends ST {
       l.AttackRelease(0::ms, 0::ms);
 
       0::ms => dur loopd;
-      if (loop_playback) l.buf.length() =>  loopd;
+      if (loop_playback) l.buf.length() - latency =>  loopd;
 
       spork ~ l._start(sync_dur /* sync */ , latency  /* offset */ , loopd /* loop (0::ms == disable) */ , sync_dur/* END sync */); l $ ST @=> ST @ last;  
       
@@ -176,7 +176,7 @@ public class STSAMPLERC extends ST {
 
   }
 
-  fun void connect(ST @ tone,  string p, string n,  dur sync_dur, dur d, int loop, int no_sync, string script_path) {
+  fun void connect(ST @ tone,  string p, string n,  dur sync_dur, dur d, int loop, int no_sync, dur lat, string script_path) {
     // sync_dur is used to sync: start rec, stop rec, start play, stop play
     tone.left() => in[0];
     tone.right() => in[1];
@@ -185,6 +185,7 @@ public class STSAMPLERC extends ST {
     n => name;
     d => rec_dur;
     loop => loop_playback;
+    lat => latency;
     
     //<<<"PATH:: ", me.path()>>>;
     MISC.file_nb(script_path) => file_nb;
