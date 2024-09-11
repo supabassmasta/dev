@@ -65,6 +65,9 @@ public class STSAMPLERC extends ST {
       findex + 1 => findex;
       sav.savei(fname, findex);
 
+      COUNTDOWN countdown;
+      countdown.start(sync_dur, 1*data.tick); 
+
       // sync
       if ( !no_sync ){
         if (sync_dur == 0::ms)  {
@@ -92,6 +95,9 @@ public class STSAMPLERC extends ST {
         // Wait event to stop
         rec_e => now;     
         HW.launchpad.color(16*(file_x+1) + file_y ,53);
+
+        COUNTDOWN countdown;
+        countdown.start(sync_dur, 1*data.tick); 
 
         // sync
         if ( !no_sync ){

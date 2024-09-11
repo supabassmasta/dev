@@ -66,6 +66,7 @@ Machine.add( rt + "include/NOREPLACE.ck");
 
 Machine.add( rt + "include/WAIT.ck");
 
+Machine.add( rt + "CORE/MISC/COUNTDOWN.ck" );
 
 
 me.yield();

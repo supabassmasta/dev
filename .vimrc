@@ -1826,3 +1826,6 @@ ab STSAMPLERCK STSAMPLERC stsamplerc;
 \<CR>stsamplerc.connect(last $ ST,  "./" /*wav path*/, "sample" /*name NoEXT°*/, 4 * data.tick /* sync_dur,0==full dur */, 0*data.tick /*0=end with rec button*/, 1/*loop playback*/, 0/*nosync*/, 186::ms /*latency*/, me.path()); stsamplerc $ ST @=>  last;  
 
 
+ab COUNTDOWNK COUNTDOWN countdown;
+\<CR>countdown.start(4*data.tick, 1*data.tick);
+ 
