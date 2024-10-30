@@ -9,7 +9,7 @@ LAUNCHPAD_VIRTUAL.off.set(13);
 LAUNCHPAD_VIRTUAL.off.set(14);
 
 // On flute effects
-LAUNCHPAD_VIRTUAL.on.set(58); // echo
+LAUNCHPAD_VIRTUAL.on.set(68); // echo
 //LAUNCHPAD_VIRTUAL.on.set(68); // Rev
 
 LAUNCHPAD_VIRTUAL.on.set(34); // break

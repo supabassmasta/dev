@@ -5,4 +5,4 @@ stconvrev.connect(last $ ST , 24/* ir index */, 2 /* chans */, 0::ms /* pre dela
 while(1) {
        100::ms => now;
 }
- 
+
