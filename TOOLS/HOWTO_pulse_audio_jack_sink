@@ -1,0 +1,19 @@
+Not so clear, but it finaly works on XPS PC:
+
+sudo apt install pulseaudio-module-jack
+
+Load the modules on pulseaudio startup:
+vim /etc/pulse/default.pa
+Add at the end:
+load-module module-jack-sink
+load-module module-jack-source
+
+sudo killall pulseaudio
+
+In qjackctl:
+Options/Execute script after startup: pacmd set-default-sink jack_out
+Misc: Enable D-Bus interface, Enable JACK D-Bus interface
+
+Maybe play a little bit with audio interface in sound settings panel to get it work...
+
+
