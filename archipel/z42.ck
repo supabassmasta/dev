@@ -31,6 +31,12 @@ SinOsc sin0 =>  s0.inlet;
 30 * 10.0 => sin0.freq;
 93.0 => sin0.gain;
 
+MGAINC mgainc0; mgainc0.config( HW.lpd8.potar[1][1] /* gain */, 1.0 /* Static gain */ ); 
+SinOsc sin1 =>  mgainc0 => s0.inlet;
+3.5 => sin1.freq;
+100.0 => sin1.gain;
+   
+
 
 //STFLANGER flang;
 //flang.connect(last $ ST); flang $ ST @=>  last; 

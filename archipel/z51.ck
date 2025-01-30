@@ -41,7 +41,7 @@ hpf.connect(last $ ST , 300 /* freq */  , 1.0 /* Q */  );       hpf $ ST @=>  la
 STLIMITER stlimiter;
 3. => float in_gainl;
 stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl  + 0.10/* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
-2.1 => stlimiter.gain;
+1.5 => stlimiter.gain;
 STECHO ech;
 ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
