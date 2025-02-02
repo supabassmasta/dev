@@ -1,0 +1,39 @@
+On ubuntu 24 LTS
+https://gitlab.freedesktop.org/pipewire/pipewire
+
+
+Confs in : 
+/usr/share/pipewire/
+Do not edit this dir above, copy files to and modify them:
+~/.config/pipewire
+
+
+JACK:
+
+To connect Jack app on pipewire
+sudo apt install pipewire-jack 
+
+use  pw-jack to call app and route it to pipewire:
+Works with timing problems:
+~/chuck/dev/be_wafa$ pw-jack chuckj song_top.ck 
+
+
+
+
+PULSEAUDIO:
+ sudo apt install pulseaudio-utils
+pactl info
+=> shows that pulseaudio is handled bu pipewire "Server Name: PulseAudio (on PipeWire 1.0.5)"
+
+
+PIPWIRE GRAPH
+helvum
+Can be used to record firefox with audacity (Host: Alsa, playback device: pipewire, recording device: pipewire)
+
+PIPEWIRE state:
+pw-mon
+
+pw-top : shows real time status of the graph with stats for each apps
+Note: Shows a quantum of 88200 for RtAudio, probably the input of chuck...
+
+
