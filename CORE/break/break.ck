@@ -5,7 +5,8 @@ class STBREAK_SET extends ACTION {
          Break.set(nb*2 + 1);
 
          <<<"STBREAK_SET">>>; 
-            }
+         return 0;
+    }
 }
 
 class STBREAK_RELEASE extends ACTION {
@@ -15,10 +16,11 @@ class STBREAK_RELEASE extends ACTION {
          Break.release(nb*2 + 1);
 
          <<<"STBREAK_RELEASE">>>; 
-            }
+         return 0;
+    }
 }
 
-public class Break extends Chubgraph{
+public class Break extends Chugraph{
 
 	inlet => ADSR a => outlet;
 

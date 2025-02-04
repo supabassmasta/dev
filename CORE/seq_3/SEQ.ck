@@ -4,6 +4,7 @@ class note_info_act extends ACTION {
 
     fun int on_time() {
       note_info_tx_p.push_to_all( e.note_info_s );
+      return 0;
     }
 
   }

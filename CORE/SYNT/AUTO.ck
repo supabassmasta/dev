@@ -38,7 +38,7 @@ class panSYNT extends SYNT{
 } 
 
 
-class autofreq extends Chubgraph {
+class autofreq extends Chugraph {
   string seq;
 
   TONE t;
@@ -57,7 +57,7 @@ class autofreq extends Chubgraph {
 
 }
 
-class autogain extends Chubgraph {
+class autogain extends Chugraph {
   string seq;
 
   TONE t;
@@ -76,7 +76,7 @@ class autogain extends Chubgraph {
 
 }
 
-class autopan extends Chubgraph {
+class autopan extends Chugraph {
   string seq;
 
   TONE t;

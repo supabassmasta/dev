@@ -2,7 +2,7 @@ public class SAVE {
 
   string dir;
 
-  fun string init(string path) {
+  fun void init(string path) {
     
     path.rfind('/') => int pos;
     path.erase(0, pos+1);

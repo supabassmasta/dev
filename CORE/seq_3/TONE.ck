@@ -4,6 +4,7 @@
 
     fun int on_time() {
       f => e.value;
+      return 0;
     }
   }
 
@@ -34,7 +35,7 @@
       if ( c.disconnect_mode_on ){
         spork ~  release_disconnect ( c.off_nb, c, a ); 
       }
-
+      return 0;
     }
   }
 
@@ -49,6 +50,7 @@
           a => c.output;
       }
       a.keyOn();
+      return 0;
     }
   }
 
@@ -58,6 +60,7 @@
 
     fun int on_time() {
       g => a.gain;
+      return 0;
     }
   }
 
@@ -66,6 +69,7 @@
     float v;
     fun int on_time() {
       v => p.pan;
+      return 0;
     }
   }
 
@@ -73,6 +77,7 @@
     SYNT @ s;
     fun int on_time() {
       s.on();
+      return 0;
     }
   }
 
@@ -81,6 +86,7 @@
     fun int on_time() {
       s.off();
       //            <<<"synt_off">>>; 
+      return 0;
     }
   }
 
@@ -89,6 +95,7 @@
     int index;
     fun int on_time() {
       s.new_note(index);
+      return 0;
     }
   }
 
@@ -100,6 +107,7 @@
     fun int on_time() {
       f => e.target;
       s_dur => e.duration;
+      return 0;
     }
   }
 
@@ -109,6 +117,7 @@
 
     fun int on_time() {
       note_info_tx_p.push_to_all( e.note_info_s );
+      return 0;
     }
 
   }
@@ -1063,10 +1072,6 @@ public class TONE extends ST {
 
     s.go();
   }
-
-  fun void on(int in) {
-		in => s.on;
-	}
 
   fun void print() {
     s.print();

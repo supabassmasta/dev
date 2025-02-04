@@ -1,4 +1,4 @@
-public class FILTERX extends Chubgraph {
+public class FILTERX extends Chugraph {
   fun void freq(float i) {}
   fun void Q(float i) {}
 

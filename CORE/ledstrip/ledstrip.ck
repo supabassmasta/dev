@@ -12,6 +12,8 @@
       else {
 //        <<<"Warning cannot execute action, serial not openned">>>;
       }
+
+      return 0;
     }
 
   }

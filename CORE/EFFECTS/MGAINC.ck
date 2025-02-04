@@ -14,7 +14,7 @@ class control_gain extends CONTROL {
   }
 
 
-public class MGAINC extends Chubgraph {
+public class MGAINC extends Chugraph {
 
   inlet => Gain G => outlet;
 

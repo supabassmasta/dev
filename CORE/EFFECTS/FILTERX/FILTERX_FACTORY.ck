@@ -1,5 +1,5 @@
 public class FILTERX_FACTORY {
 
-  fun FILTERX @ create() {}
+  fun FILTERX @ create() {return NULL;}
 
 }

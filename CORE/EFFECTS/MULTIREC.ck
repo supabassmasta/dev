@@ -1,4 +1,4 @@
-<<<"WARNING: MULTIREC ERROR 'illegal token' above not problematic...">>>;
+//<<<"WARNING: MULTIREC ERROR 'illegal token' above not problematic...">>>;
 
 public class MULTIREC {
   ST probe[0]; // will be inserted in the code
@@ -34,7 +34,7 @@ public class MULTIREC {
     }
   } 
 
-  fun ST @ rec_on_track (ST @ inpt, string n) {
+  fun ST @ rec_on_track(ST @ inpt, string n) {
      if ( ! disable  ){
        1 => int not_exist;
        for (0 => int i; i <  track_name.size() &&  not_exist    ; i++) {

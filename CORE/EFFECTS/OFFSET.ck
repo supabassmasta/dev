@@ -1,4 +1,4 @@
-public class OFFSET extends Chubgraph{
+public class OFFSET extends Chugraph{
   inlet => Gain add => outlet;
   Step s => add ;
 

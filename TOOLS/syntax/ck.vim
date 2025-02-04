@@ -107,7 +107,7 @@ syn keyword ckConditional       if else switch
 syn keyword ckLoop		while for do until
 syn keyword ckNow               now 
 syn keyword ckType              dur time Shred UGen Event Object samp ms second minute hour day week
-syn keyword cType               int float string void Chubgraph
+syn keyword cType               int float string void Chubgraph Chugraph
 syn keyword ckAccess		public protected private
 syn keyword ckOperator		and bitor or xor compl bitand and_eq or_eq xor_eq not not_eq
 syn match ckCast               "\s*\$\s*\(int\|float\)\s"

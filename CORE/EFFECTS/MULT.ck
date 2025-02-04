@@ -1,4 +1,4 @@
-public class MULT extends Chubgraph {
+public class MULT extends Chugraph {
   inlet => outlet;
   3 => inlet.op;
 }

@@ -1,4 +1,4 @@
-public class DUCK extends Chubgraph {
+public class DUCK extends Chugraph {
 
 		inlet => Envelope e => outlet;
 		1. => e.value;

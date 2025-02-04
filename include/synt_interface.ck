@@ -1,4 +1,4 @@
-public class SYNT extends Chubgraph{
+public class SYNT extends Chugraph{
 
 	// ****  SYNT *****
 //	inlet => SinOsc s => outlet;	
