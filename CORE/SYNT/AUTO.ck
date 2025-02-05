@@ -96,29 +96,37 @@ class autopan extends Chugraph {
 }
 
 public class AUTO {
+  // Use Arrays to store created autofreq etc
+  // Elsewhere they are destroyed by version 1.5 on function exit
+  static autofreq   af[0];
+  static autogain   ag[0];
+  static autopan   ap[0];
 
   fun static UGen freq (string s){
-    new autofreq @=> autofreq  @ a;
-    s => a.seq;
-    a.go();
+    af << new autofreq ;
+    af[af.size()-1] @=> autofreq @ laf; // Last autofreq added
+    s => laf.seq;
+    laf.go();
 
-    return a.outlet;
+    return laf.outlet;
   } 
 
   fun static UGen gain (string s){
-    new autogain @=> autogain  @ a;
-    s => a.seq;
-    a.go();
+    ag << new autogain ;
+    ag[ag.size()-1] @=> autogain @ lag; // Last autogain added
+    s => lag.seq;
+    lag.go();
 
-    return a.outlet;
+    return lag.outlet;
   } 
 
   fun static UGen pan (string s){
-    new autopan @=> autopan  @ a;
-    s => a.seq;
-    a.go();
+    ap << new autopan ;
+    ap[ap.size()-1] @=> autopan @ lap; // Last autopan added
+    s => lap.seq;
+    lap.go();
 
-    return a.outlet;
+    return lap.outlet;
   } 
 
 }
