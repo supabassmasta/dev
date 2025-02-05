@@ -2132,7 +2132,7 @@ if ( 1  ){
 LOOP1();
 /////////////////////////////////////////////////////////////////////////////
 
-spork ~ LOOPSCRATCH_LIGHT();
+spork ~ LOOPSCRATCH_LIGHT();
 //  spork ~ TRIBAL("*4    "+ RAND.seq("aaaa,bbb,cc__c,-5d}2d}4d}6d}8d}2",1) , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
  
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
@@ -2201,7 +2201,7 @@ spork ~   SIN ("}c}c  *8" + RAND.seq("(4}31,)2}11,(6-31,)81",48) , .4 );
   4 * data.tick => w.wait;
 
 ////////////////////////////////////////////////////////////////////////////////////
-spork ~ LOOPSCRATCH();
+spork ~ LOOPSCRATCH();
 //  spork ~ TRIBAL("*4    "+ RAND.seq("aaaa,bbb,cc__c,-5d}2d}4d}6d}8d}2",1) , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
  
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
@@ -2228,7 +2228,7 @@ spork ~ LOOPSCRATCH();
 //while(1) { /********************************************************/
 
  spork ~   PADS (" :8 :4 1|3_" , 13, .3 ); 
-spork ~ LOOPSCRATCH();
+spork ~ LOOPSCRATCH();
   spork ~ TRIBAL("*4    "+ RAND.seq("aaaa,bbb,cc__c,-5d}2d}4d}6d}8d}2",1) , 1 /* bank */, 1 /* tomix */, 0.27 /* gain */);
  
   spork ~  KICK3 ("*4 k___ k___ k___ k___ k___ k___ k___ k___  "); 
