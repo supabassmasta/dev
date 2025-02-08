@@ -1618,7 +1618,7 @@ ab STTOAUXK STTOAUX sttoaux0;
 \<CR> // WARNING use it with option :   --out4 or more, else make the script crash
 \<CR>sttoaux0.connect(last $ ST ,  1.0 /* gain to main */, 0.1  /* gain  to aux */, 1 /* st pair number */ ); sttoaux0 $ ST @=>  last;
 
-ab STREVAUXK STREVAUX strevaux;
+ab STREVAUXK STREVAUX strevaux; // Warning: output cannot be connected, Deprecated use STCONVREV instead
 \<CR>strevaux.connect(last $ ST, .3 /* mix */); strevaux $ ST @=>  last; 
 
 ab STFREEPANK STFREEPAN stfreepan0;
