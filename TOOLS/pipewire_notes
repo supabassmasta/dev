@@ -18,6 +18,10 @@ Works with timing problems:
 ~/chuck/dev/be_wafa$ pw-jack chuckj song_top.ck 
 
 
+Change latency
+export PIPEWIRE_LATENCY="128/48000"
+echo $PIPEWIRE_LATENCY
+
 
 
 PULSEAUDIO:
@@ -36,4 +40,26 @@ pw-mon
 pw-top : shows real time status of the graph with stats for each apps
 Note: Shows a quantum of 88200 for RtAudio, probably the input of chuck...
 
+--------------------------------------------
+Try to disable pipewire:
+ systemctl --user status pipewire
+  systemctl --user disable pipewire
+Need to disable it in global scope:
+systemctl --global  disable pipewire
+sudo systemctl --global  disable pipewire.socket
+Remove pulse conf dir (used by pipewire)
+sudo rm -r .config/pulse/
+
+=> Does not seems to work, pipewire stil launch
+
+INSTALL PULSE:
+sudo apt install pulseaudio pulseaudio-utils
+
+sudo apt autoremove pipewire
+==> WARNING: uninstall ubuntu-desktop
+REisntall it with:
+sudo apt install --reinstall ubuntu-desktop
+
+After that pipewire seems to is reinstalled but inactive
+pulseaudio is running...
 
