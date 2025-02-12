@@ -21,7 +21,7 @@ STGAIN stgain;
 stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
 
 STGAINC gainc;
-gainc.connect(s $ ST , HW.lpd8.potar[1][1] /* gain */  , 2. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(s $ ST , HW.lpd8.potar[1][1] /* gain */  , 1.5 /* static gain */  );       gainc $ ST @=>  last; 
 
 STCONVREV stconvrev;
 stconvrev.connect(last $ ST , 75 /* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .5 /* rev gain */  , 0.0 /* dry gain */  );       stconvrev $ ST @=>  last;  

@@ -29,8 +29,11 @@ t.reg(synt0 s1);
 t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 "}c  *4
-____ ____ 3_2 _1___
-____ ____ 3_2 _1_8_
+____ ____ 3_2_ __1_
+____ ____ 3_2_ __1!8
+
+____ ____ 3_2_ __1_
+____ __3_ 3_2_ __8_
 
 " => t.seq;
 3.2 * data.master_gain => t.gain;
