@@ -343,12 +343,14 @@ spork ~   EFFECT3();
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-  spork ~   BASS ("{c{c 4444454__", 6, 19 *10, 0, 2.8); 
-//  spork ~   BASS ("{c{c 444//555//4__", 6, 19 *10, 0, 2.8); 
-
+  spork ~   BASS ("{c 41_4454__", 6, 19 *10, 0, 2.8); 
   spork ~   KICK ("kkkkkkkk"); 
   spork ~ SEQ0(RAND.char("FEDCBA__", Std.rand2(1,3)),Std.rand2(2,3), 0.6);
-
+ 8 * data.tick => w.wait;
+ 
+  spork ~   BASS ("{c{c 88//4444!8__", 6, 19 *10, 0, 2.8); 
+  spork ~   KICK ("kkkkkkkk"); 
+  spork ~ SEQ0(RAND.char("FEDCBA__", Std.rand2(1,3)),Std.rand2(2,3), 0.6);
  8 * data.tick => w.wait;
  
 }  
