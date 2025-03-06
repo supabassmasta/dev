@@ -62,7 +62,7 @@ class tick_adjust {
 					ref_sync - in * 16 * data.tick => ref_sync;
 
 
-					MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
+//					MASTER_SEQ3.update_ref_times(ref_sync, data.tick * 16 * 128 );
 					<<<"UPDATE midi counter: ", in, "ref_sync ", ref_sync, " delta_mean: ", delta_mean/1::ms ," refresh rate: ", refresh_rate[refresh_index] >>>;
 
 					
