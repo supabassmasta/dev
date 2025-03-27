@@ -9,8 +9,8 @@ LAUNCHPAD_VIRTUAL.off.set(13);
 LAUNCHPAD_VIRTUAL.off.set(14);
 
 // On flute effects
-LAUNCHPAD_VIRTUAL.on.set(68); // echo
-//LAUNCHPAD_VIRTUAL.on.set(68); // Rev
+LAUNCHPAD_VIRTUAL.on.set(68); // Rev
+//LAUNCHPAD_VIRTUAL.on.set(58); // echo
 
 LAUNCHPAD_VIRTUAL.on.set(34); // break
 
@@ -38,8 +38,8 @@ LAUNCHPAD_VIRTUAL.on.set(44); // slide
 LAUNCHPAD_VIRTUAL.on.set(51); // High beat
 
 // Off flute effects
-LAUNCHPAD_VIRTUAL.off.set(58);
-//LAUNCHPAD_VIRTUAL.off.set(68); // rev
+LAUNCHPAD_VIRTUAL.off.set(68); // rev
+//LAUNCHPAD_VIRTUAL.off.set(58);
 
 2 * data.tick => now;
 LAUNCHPAD_VIRTUAL.off.set(34); // break
