@@ -7,10 +7,10 @@ sy.sync(4 * data.tick , - 0.5 * data.tick /* offset */);
 // Off dub
 LAUNCHPAD_VIRTUAL.off.set(13);
 LAUNCHPAD_VIRTUAL.off.set(14);
+LAUNCHPAD_VIRTUAL.off.set(58); // echo
 
 // On flute effects
 LAUNCHPAD_VIRTUAL.on.set(68); // Rev
-//LAUNCHPAD_VIRTUAL.on.set(58); // echo
 
 LAUNCHPAD_VIRTUAL.on.set(34); // break
 
