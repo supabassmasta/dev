@@ -6,6 +6,10 @@ st  @=> ST @ last;
 STCONVREV stconvrev;
 stconvrev.connect(last $ ST , 8/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .1 /* rev gain */  , 0.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
+STGAINC gainc;
+gainc.connect(last $ ST , HW.lpd8.potar[1][1] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+
+<<<"CONV REV GAIN potar 1.1">>>;
 
 while(1) {
        100::ms => now;
