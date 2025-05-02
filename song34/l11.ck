@@ -10,11 +10,14 @@ TONE t;
 t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+
+// Ending
+//__1!1 __1!1 __1_ __1_ 
+//__1!1 __3!3 __2!2 __0!0 
+
 "{c{2 *4
-__1!1 __1!1 __1//1 __1_ 
-__1!1 __1!1 __5//1 __1_ 
-__1!1 __1!1 __1//1 __1_ 
-__1!1 __1!1 __8//1 __1_ 
+__1!1 __1!1 __1_ __1_ 
+__1!1 __1!1 __1_ __3_ 
 
 " => string seq;
 seq => t.seq;
@@ -41,7 +44,7 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order
 
 STCUTTER stcutter;
 seq => stcutter.t.seq;
-stcutter.connect(last, 1::ms /* attack */, 126::ms /* release */ );   stcutter $ ST @=> last; 
+stcutter.connect(last, 1::ms /* attack */, 74::ms /* release */ );   stcutter $ ST @=> last; 
 
 STDUCK duck;
 duck.connect(last $ ST);      duck $ ST @=>  last; 
