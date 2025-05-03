@@ -24,7 +24,7 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 t.go();   t $ ST @=> ST @ last; 
 
 STDUCKMASTER duckm;
-duckm.connect(last $ ST, 9. /* In Gain */, 48 * .01 /* Tresh */, .2 /* Slope */, 15::ms /* Attack */, 15::ms /* Release */ );      duckm $ ST @=>  last; 
+duckm.connect(last $ ST, 9. /* In Gain */, 7 * .01 /* Tresh */, .2 /* Slope */, 15::ms /* Attack */, 15::ms /* Release */ );      duckm $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

@@ -20,11 +20,6 @@ NOTE: in order to obtain syntax highlighting in Chuck programs just follow the
 
 
 
+sudo cp ck.vim /usr/share/vim/vim91/syntax/
 
-
-
-
-sudo cp ck.vim /usr/share/vim/vim74/syntax/
-
-
-sudo vi /usr/share/vim/vim74/filetype.vim
+sudo vi /usr/share/vim/vim91/filetype.vim
