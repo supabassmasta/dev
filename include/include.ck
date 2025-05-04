@@ -277,6 +277,7 @@ Machine.add( rt + "CORE/EFFECTS/STECHOV.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSOUT.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSIN.ck");
 Machine.add( rt + "CORE/EFFECTS/STCONVREV.ck");
+Machine.add( rt + "CORE/EFFECTS/STCONVREVIN.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");

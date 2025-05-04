@@ -53,7 +53,7 @@ class synt0 extends SYNT{
     inlet => SawOsc s =>  outlet; 
       .5 => s.gain;
 
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0. => s.phase; } 0 => own_adsr;
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.0 => s.phase; } 0 => own_adsr;
 } 
 
 
@@ -64,9 +64,10 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 //"{c {c *8 ___ :8  *2
 //3//3 !3/////3
 //:2*8 _ :8 "
-"{c {c *2 !5_  "
+//"{c {c *2 !2//22_ 322_ !2//22_ 55_5 "
+"{c {c *4 !4!4__ "
 => t.seq;
-.7 * data.master_gain => t.gain;
+.5 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 //t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
@@ -78,7 +79,7 @@ t.go();   t $ ST @=> ST @ last;
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
 stsynclpfx0.freq(15 * 10 /* Base */, 12 * 100 /* Variable */, 1.0 /* Q */);
-stsynclpfx0.adsr_set(.01 /* Relative Attack */, .24/* Relative Decay */, 0.3 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.adsr_set(.01 /* Relative Attack */, .24/* Relative Decay */, 0.3 /* Sustain */, .2 /* Relative Sustain dur */, 0.3 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0, 0.6, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -90,21 +91,38 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order
 // STGAIN stgain;
 // stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
 // stgain.connect(stsynclpfx0 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
-39::ms => dur rev_dur;
-Noise n => LPF lpf => Envelope e0 =>  Gain ir;
-700 => lpf.freq;
-0.6 => e0.value;
-0.0 => e0.target;
-rev_dur => e0.duration ;// => now;
+33::ms => dur rev_dur;
+//Noise n => LPF lpf => Envelope e0 =>  Gain ir;
+//700 => lpf.freq;
+//0.6 => e0.value;
+//0.0 => e0.target;
+//rev_dur => e0.duration ;// => now;
+
+KIK kik;
+kik.config(0.4 /* init Sin Phase */, 76 * 100 /* init freq env */, 0.4 /* init gain env */);
+kik.addFreqPoint (188, 1 * 10::ms);
+kik.addFreqPoint (.0, rev_dur);
+
+kik.addGainPoint (0.2, 1 * 10::ms); 
+kik.addGainPoint (0.0, rev_dur -10::ms); 
+
+kik.outlet => Gain ir;
+kik.new_note(0);
+
+//Noise n => LPF lpf => Envelope e0 =>   ir;
+//821 => lpf.freq;
+//8 * 0.01 => e0.value;
+//0.0 => e0.target;
+//rev_dur => e0.duration ;// => now;
 
 STCONVREVt stconvrev;
-stconvrev.connect(last $ ST , ir , rev_dur /*rev_dur*/, .2 /* rev gain */  , 0.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
+stconvrev.connect(last $ ST , ir/*UGen Input Reponse*/ , rev_dur /*rev_dur*/, .2 /* rev gain */  , 0.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 //STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //stlpfx0.connect(last $ ST ,  stlpfx0_fact, 5* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 STDELAY stdelay;
-stdelay.connect(last $ ST , 166::ms /* static delay */ );       stdelay $ ST @=>  last;  
+stdelay.connect(last $ ST , 144::ms /* static delay */ );       stdelay $ ST @=>  last;  
 
 //STDUCK duck;
 //duck.connect(last $ ST);      duck $ ST @=>  last; 
