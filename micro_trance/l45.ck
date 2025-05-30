@@ -247,9 +247,13 @@ fun void EFFECT1   (){
 //  STECHO ech;
 //  ech.connect(last $ ST , data.tick * 3 / 4 , .5);  ech $ ST @=>  last; 
 
+while(1) {
+       100::ms => now;
+}
+ 
 
 } 
-EFFECT1();
+spork ~ EFFECT1();
 
 
 
