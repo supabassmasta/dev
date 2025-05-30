@@ -90,7 +90,7 @@ class synt1 extends SYNT{
     inlet => SawOsc s =>  outlet; 
       .5 => s.gain;
 
-        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0. => s.phase; } 0 => own_adsr;
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 0.3 => s.phase; } 0 => own_adsr;
 } 
 fun void  BASS0 (string seq) {
 
@@ -99,7 +99,7 @@ fun void  BASS0 (string seq) {
   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
           // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
-  .5 * data.master_gain => t.gain;
+  .7 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();//
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
               // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -111,8 +111,8 @@ fun void  BASS0 (string seq) {
 
 
   STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-  stsynclpfx0.freq(15 * 10 /* Base */, 12 * 100 /* Variable */, 1.0 /* Q */);
-  stsynclpfx0.adsr_set(.01 /* Relative Attack */, .24/* Relative Decay */, 0.3 /* Sustain */, .3 /* Relative Sustain dur */, 0.4 /* Relative release */);
+  stsynclpfx0.freq(13 * 10 /* Base */, 55 * 10 /* Variable */, 1.0 /* Q */);
+  stsynclpfx0.adsr_set(.01 /* Relative Attack */, .30/* Relative Decay */, 0.2 /* Sustain */, .2 /* Relative Sustain dur */, 0.1 /* Relative release */);
   stsynclpfx0.nio.padsr.setCurves(1.0, 0.6, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 3 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -123,7 +123,13 @@ fun void  BASS0 (string seq) {
   stconvrev.connect(last $ ST , 895 /* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.0 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
   STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 450.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 560.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+STADSR stadsr;
+stadsr.set(2::ms /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */, .9 /* Sustain dur of Relative release pos (float) */,  10::ms /* release */);
+stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
+//stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+// stadsr.keyOn(); stadsr.keyOff(); 
 
   STDELAY stdelay;
   stdelay.connect(last $ ST , 108::ms /* static delay */ );       stdelay $ ST @=>  last;  
@@ -311,16 +317,17 @@ spork ~  EFFECT2();
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__");
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 //spork ~ BASS0("{c {c *2 !1_!1_!1_!1_!1_!1_!1_!1___ ");
-  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
-    spork ~  BASS0_ATTACK ("*4   __a_ ____ __a_ ___a __a_ __a_ __a_ __aa     ", 0.4 /* rate */, .14 /* g */); 
+//  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
+  spork ~ BASS0("{c {c *4  5!5__ 5!5__ 5!5__ 5!5__ 5!5__ 5!5__ 5!5__ 5!5__   ");
+    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.4 /* rate */, .14 /* g */); 
 //    spork ~  TRANCEHH ("*4 +3 __h_   __h_ __h_ __h_ __h_ __hh __h_ __h_ "); 
-    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
-  spork ~ SYNT0("*4 ____ __31 _  ", 2, 2.1);
+//    spork ~  TRANCEHH ("*4 +3 __h_   }4t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
+//  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
+//  spork ~ SYNT0("*4 ____ __31 _  ", 2, 2.1);
 
-  spork ~   ACID ("*8 }c   1_1_1_3_ __1_1_5_  1_1_1_3_ __1_1_5_ 1_1_1_1_ 5_1_ __1_ __1_ 1_1_", 1232, ":2 F/ff///F" /*target_f*/, ":2 1//88//1" /*base_f*/, ":2 1" /*target_q*/, 1, .1);  
+//  spork ~   ACID ("*8 }c   1_1_1_3_ __1_1_5_  1_1_1_3_ __1_1_5_ 1_1_1_1_ 5_1_ __1_ __1_ 1_1_", 1232, ":2 F/ff///F" /*target_f*/, ":2 1//88//1" /*base_f*/, ":2 1" /*target_q*/, 1, .1);  
 //
   8 * data.tick =>  w.wait; 
   // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
