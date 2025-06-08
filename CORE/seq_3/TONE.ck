@@ -275,7 +275,7 @@ public class TONE extends ST {
 
     new PowerADSR @=> a;
     adsr << a;
-    a.set(3::ms, 0::ms, 1., 3::ms);
+    a.set(3::ms, 1::ms, 1., 3::ms);
     a.setCurves(1.0, 1.0, 1.0);
     init_gain => a.gain;
 
