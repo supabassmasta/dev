@@ -10,6 +10,9 @@
 // Start synchro
 HW.launchpad.virtual_key_on(7);
 
+// REv
+HW.launchpad.virtual_key_on(68);
+
 // LED STRIP
 //HW.ledstrip.open();
 //HW.ledstrip._load_preset('0');
@@ -20,6 +23,17 @@ HW.launchpad.virtual_key_on(7);
 // SOL FA
 
 // g a b c d c b a   ggggfffffggg
-//                   olibaba
+//                   udibaba
 
+// Trumpet
 // gg__ ____ ff__ ____ ff__ gg__ ff__ ____
+
+// Mucha kantula
+// g__g __d_dd  (a peu près suivre le chant)
+// d db d c d c bb a g
+
+
+
+// Break : Bb
+
+
