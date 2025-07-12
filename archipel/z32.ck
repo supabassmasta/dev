@@ -36,6 +36,9 @@ SinOsc sin0 =>  s0.inlet;
 //flang.connect(last $ ST); flang $ ST @=>  last; 
 //flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */); 
 
+STECHO ech;
+ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+
 while(1) {
        100::ms => now;
 }

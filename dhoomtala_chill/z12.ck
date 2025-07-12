@@ -7,7 +7,7 @@ __lkl_k_
 _kl_kll_
 _sksllkk
 " => s.seq;
-.11 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+.29 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 //s.sync(4*data.tick);// s.element_sync(); //s.no_sync(); //s.full_sync();  // 16 * data.tick => s.extra_end;   //s.print();
 // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
 s.go();     s $ ST @=> ST @ last; 
@@ -19,7 +19,7 @@ STFILTERMOD fmod;
 fmod.connect( last , "LPF" /* "HPF" "BPF" BRF" "ResonZ" */, 5 /* Q */, 2 * 100 /* f_base */ , 4 * 100  /* f_var */, 1::second / (7 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 STAUTOPAN autopan;
-autopan.connect(last $ ST, .7 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+autopan.connect(last $ ST, .3 /* span 0..1 */, 5*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

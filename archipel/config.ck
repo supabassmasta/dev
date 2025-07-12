@@ -8,11 +8,17 @@
 48 => data.ref_note;
 
 // Start synchro
-//HW.launchpad.virtual_key_on(7);
+HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
 //HW.ledstrip.open();
 //HW.ledstrip._load_preset('0');
 
 //1::ms => now;
+
+
+
+
+// Dub F harmonic minor   F   G Ab   B C Db   E F
+// Trance C Minor Aeolian C D Eb, Pont G F D
 

@@ -20,17 +20,17 @@ class synt0 extends SYNT{
     //---------------------
     opin[i] => osc[i] => adsrop[i] => opout[i];
     1./5. + 0.03 => opin[i].gain;
-    adsrop[i].set(100::ms, 1.5*data.tick, .00001 , 200::ms);
+    adsrop[i].set(100::ms, 3.5*data.tick, .00001 , 200::ms);
     adsrop[i].setCurves(.2, .2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    100 * 3 => adsrop[i].gain;
+    100 * 6 => adsrop[i].gain;
     i++;
 
     //---------------------
     opin[i] => TriOsc tri=> adsrop[i] => opout[i];
     1./8. +0.0 => opin[i].gain;
-    adsrop[i].set(2000::ms, 186::ms, .5 , 1800::ms);
+    adsrop[i].set(2000::ms, 1186::ms, .5 , 1800::ms);
     adsrop[i].setCurves(5.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-    15 * 10 => adsrop[i].gain;
+    11 * 10 => adsrop[i].gain;
     .8 => tri.width;
     i++;
 

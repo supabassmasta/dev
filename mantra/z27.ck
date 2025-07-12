@@ -23,10 +23,10 @@ t.go();   t $ ST @=> ST @ last;
 
 class SINMODONE {
 
-STEPC stepc; stepc.init(HW.lpd8.potar[1][8], .2 /* min */, 10 /* max */, 10::ms /* transition_dur */);
+STEPC stepc; stepc.init(HW.lpd8.potar[1][6], .2 /* min */, 10 /* max */, 10::ms /* transition_dur */);
 stepc.out =>  SinOsc s => Gain gsin=> Gain out;
 3 => gsin.op;
-STEPC stepc2; stepc2.init(HW.lpd8.potar[1][7], 0 /* min */, 30 /* max */, 10::ms /* transition_dur */);
+STEPC stepc2; stepc2.init(HW.lpd8.potar[1][5], 0 /* min */, 30 /* max */, 10::ms /* transition_dur */);
 stepc2.out => gsin;  
 
 Step one => out;
@@ -54,8 +54,8 @@ stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */
 //fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 6 /* Q */, 600 /* f_base */ , 3400  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 
 
 <<<"------------- FM MOD  --------------">>>;
-<<<"---------  LPD8 1.7 Gain, Gain Mod -">>>;
-<<<"---------  LPD8 1.8 Freq Mod  ------">>>;
+<<<"---------  LPD8 1.5 Gain, Gain Mod -">>>;
+<<<"---------  LPD8 1.6 Freq Mod  ------">>>;
 <<<"------------------------------------">>>;
 
 
