@@ -125,9 +125,9 @@ fun void BASS0 (string seq) {
 KIK kik;
 kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
 kik.addFreqPoint (188, 20::samp);
-kik.addFreqPoint (.0, convrevin_dur -20::samp );
+kik.addFreqPoint (.0, convrevin_dur -25::samp );
 kik.addGainPoint (0.2, 20::samp); 
-kik.addGainPoint (0.0, convrevin_dur -20::samp ); 
+kik.addGainPoint (0.0, convrevin_dur -25::samp ); 
 kik.outlet => Gain ir;
 kik.new_note(0);
 
@@ -138,7 +138,7 @@ kik.new_note(0);
 //convrevin_dur => e0.duration ;// => now;
 
 STCONVREVIN stconvrevin;
-stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, .7 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
+stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, 1.2 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
 
 
   STADSR stadsr;
@@ -299,8 +299,8 @@ convrevin_dur + 10::ms => now;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-149 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-55 => data.ref_note;
+138 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+53 => data.ref_note;
 
 SYNC sy;
 sy.sync(8 * data.tick);
@@ -316,8 +316,9 @@ WAIT w;
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
 
+
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 29/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 4 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 29/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 6 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 
 fun void EFFECT1   (){ 
@@ -375,16 +376,18 @@ while(1) { /********************************************************/
   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 //spork ~ BASS0("{c {c *2 !1_!1_!1_!1_!1_!1_!1_!1___ ");
 //  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
-  spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
-    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.4 /* rate */, .11 /* g */); 
+//  spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
+//    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.6 /* rate */, .11 /* g */); 
 
-//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __hh __h_ __h_ "); 
+  spork ~ BASS0(" *2 _1 __  _1 __ _1 __ _1 __   ");
+//    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.6 /* rate */, .11 /* g */); 
+
+//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
     spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+//    spork ~  TRANCEHH ("*4 -2   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
 //  spork ~ SYNT0("*4 ____ __ " + RAND.char("351_", 3) +RAND.seq("-5f,1,8,1", 1)  +"_  ", 2, 1.5);
 
-//  spork ~   ACID ("*8 }c  1_1_1_1_ 5_1_ __1_ __1_ 1_1_  1_1_1_1_ 5_1_ __1_ __1_ 1_1_1_1_1_1_", 1232, ":2 8/ff///8" /*target_f*/, ":2 1//55//1" /*base_f*/, " 1///FF///1" /*target_q*/, 2, .15);  
 //
   8 * data.tick =>  w.wait; 
   // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
