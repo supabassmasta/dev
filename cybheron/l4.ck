@@ -152,7 +152,7 @@ t.go();   t $ ST @=> ST @ last;
 
 STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
 stsynclpfx0.freq(25 * 10 /* Base */, 59 * 10 /* Variable */, 1.0 /* Q */);
-stsynclpfx0.adsr_set(.015 /* Relative Attack */, 38*  .01/* Relative Decay */, 0.38 /* Sustain */, .2 /* Relative Sustain dur */, 0.7 /* Relative release */);
+stsynclpfx0.adsr_set(.015 /* Relative Attack */, 38*  .01/* Relative Decay */, 0.38 /* Sustain */, .2 /* Relative Sustain dur */, 0.5 /* Relative release */);
 stsynclpfx0.nio.padsr.setCurves(1.0,47 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
 stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
 // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -162,7 +162,7 @@ stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order
 //1.4 => stod.gain;
 
 STADSR stadsr;
-stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.3/* Sustain dur of Relative release pos (float) */,  24::ms /* release */);
+stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.4/* Sustain dur of Relative release pos (float) */,  21::ms /* release */);
 stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 // stadsr.keyOn(); stadsr.keyOff();
@@ -321,8 +321,8 @@ WAIT w;
 STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
 
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 23/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 4 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  STCONVREV stconvrev;
+//  stconvrev.connect(last $ ST , 23/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 6 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 
 fun void EFFECT1   (){ 
@@ -383,11 +383,11 @@ while(1) { /********************************************************/
 //  spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
 //    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.4 /* rate */, .11 /* g */); 
   spork ~ BASS0(" *4  _-41 +4!1!1  _-41 +4!1!1 _-41 +4!1!1 _-41 +4!1!1 _-41 +4!1!1 _-41 +4!1!1 _-41 +4!1!1 _-41 +4!1!1   ");
-    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.4 /* rate */, .11 /* g */); 
+    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa   ", 0.6 /* rate */, .29 /* g */); 
 
-    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __hh __h_ __h_ "); 
-//    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
-//    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __hh __h_ __h_ "); 
+    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
+    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
 //  spork ~ SYNT0("*4 ____ __ " + RAND.char("351_", 3) +RAND.seq("-5f,1,8,1", 1)  +"_  ", 2, 1.5);
 
