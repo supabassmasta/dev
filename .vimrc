@@ -1828,4 +1828,25 @@ ab STSAMPLERCK STSAMPLERC stsamplerc;
 
 ab COUNTDOWNK COUNTDOWN countdown;
 \<CR>countdown.start(4*data.tick, 1*data.tick);
- 
+
+
+ab STCONVREVINK 133::ms => dur convrevin_dur;
+\<CR>// IR generation examples:
+\<CR>KIK kik;
+\<CR>kik.config(0.4 /* init Sin Phase */, 76 * 100 /* init freq env */, 0.4 /* init gain env */);
+\<CR>kik.addFreqPoint (188, 1 * 10::ms);
+\<CR>kik.addFreqPoint (.0, convrevin_dur -10::ms);
+\<CR>kik.addGainPoint (0.2, 1 * 10::ms); 
+\<CR>kik.addGainPoint (0.0, convrevin_dur -10::ms); 
+\<CR>kik.outlet => Gain ir;
+\<CR>kik.new_note(0);
+\<CR>
+\<CR>//Noise n => LPF lpf => Envelope e0 => Gain  ir;
+\<CR>//821 => lpf.freq;
+\<CR>//8 * 0.01 => e0.value;
+\<CR>//0.0 => e0.target;
+\<CR>//convrevin_dur => e0.duration ;// => now;
+\<CR>
+\<CR>STCONVREVIN stconvrevin;
+\<CR>stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, .1 /* rev gain */  , 0.0 /* dry gain */  );       stconvrevin $ ST @=>  last;   
+
