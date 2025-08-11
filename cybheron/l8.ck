@@ -91,7 +91,7 @@ fun void BASS0 (string seq) {
   t.lyd();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
           // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  0.37 * data.master_gain => t.gain;
+  0.70 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
               // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -120,29 +120,35 @@ fun void BASS0 (string seq) {
 
   //STDUCK duck;
   //duck.connect(last $ ST);      duck $ ST @=>  last; 
-1::ms => dur convrevin_dur;
+49::samp => dur convrevin_dur;
 // IR generation examples:
-KIK kik;
-kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
-kik.addFreqPoint (188, 20::samp);
-kik.addFreqPoint (.0, convrevin_dur -25::samp );
-kik.addGainPoint (0.2, 20::samp); 
-kik.addGainPoint (0.0, convrevin_dur -25::samp ); 
-kik.outlet => Gain ir;
-kik.new_note(0);
+//KIK kik;
+//kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
+//kik.addFreqPoint (188, 20::samp);
+//kik.addFreqPoint (.0, convrevin_dur -25::samp );
+//kik.addGainPoint (0.2, 20::samp); 
+//kik.addGainPoint (0.0, convrevin_dur -25::samp ); 
+//kik.outlet => Gain ir;
+//kik.new_note(0);
 
-//Noise n => LPF lpf => Envelope e0 => Gain  ir;
-//821 => lpf.freq;
-//8 * 0.01 => e0.value;
-//0.0 => e0.target;
-//convrevin_dur => e0.duration ;// => now;
+SndBuf n => LPF lpf => Envelope e0 => Gain  ir;
+"../_SAMPLES/noise_ref.wav" => n.read;
+//41 => n.pos;
+140 => n.pos;
+//4543 => n.pos;
+<<<"N SAMPLES:", n.samples()>>>;
+
+821 => lpf.freq;
+19 * 0.01 => e0.value;
+0.0 => e0.target;
+convrevin_dur => e0.duration ;// => now;
 
 STCONVREVIN stconvrevin;
 stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, 1.2 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
 
 
   STADSR stadsr;
-  stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.3/* Sustain dur of Relative release pos (float) */,  24::ms /* release */);
+  stadsr.set(3::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.24/* Sustain dur of Relative release pos (float) */,  24::ms /* release */);
   stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 
   STMIX stmix;
@@ -299,8 +305,8 @@ convrevin_dur + 10::ms => now;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-154 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-53 => data.ref_note;
+140 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+55 => data.ref_note;
 
 SYNC sy;
 sy.sync(8 * data.tick);
@@ -379,7 +385,7 @@ while(1) { /********************************************************/
   spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
     spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.6 /* rate */, .11 /* g */); 
 
-    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
