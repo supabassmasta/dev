@@ -120,7 +120,7 @@ fun void BASS0 (string seq) {
 
   //STDUCK duck;
   //duck.connect(last $ ST);      duck $ ST @=>  last; 
-40::samp => dur convrevin_dur;
+35::samp => dur convrevin_dur;
 // IR generation examples:
 //KIK kik;
 //kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
@@ -133,20 +133,20 @@ fun void BASS0 (string seq) {
 
 SndBuf n => LPF lpf =>  PowerADSR padsr => Gain  ir;
 padsr.set(1::samp, convrevin_dur, .000007 , 2::ms);
-padsr.setCurves(.6, .7, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
+padsr.setCurves(.6, .1, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
 
 "../_SAMPLES/noise_ref.wav" => n.read;
 //41 => n.pos;
-142 => n.pos;
+144 => n.pos;
 //4543 => n.pos;
 //<<<"N SAMPLES:", n.samples()>>>;
 
-69 *10 => lpf.freq;
-0.20 => padsr.gain;
+95 *10 => lpf.freq;
+0.14 => padsr.gain;
 padsr.keyOn();
 
 STCONVREVIN stconvrevin;
-stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, 1.2 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
+stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, 1.0 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
 
 
   STADSR stadsr;
@@ -308,7 +308,7 @@ convrevin_dur + 10::ms => now;
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 154 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-52 => data.ref_note;
+53 => data.ref_note;
 
 SYNC sy;
 sy.sync(8 * data.tick);

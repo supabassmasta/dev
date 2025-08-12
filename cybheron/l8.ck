@@ -120,7 +120,7 @@ fun void BASS0 (string seq) {
 
   //STDUCK duck;
   //duck.connect(last $ ST);      duck $ ST @=>  last; 
-49::samp => dur convrevin_dur;
+32::samp => dur convrevin_dur;
 // IR generation examples:
 //KIK kik;
 //kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
@@ -138,7 +138,7 @@ SndBuf n => LPF lpf => Envelope e0 => Gain  ir;
 //4543 => n.pos;
 <<<"N SAMPLES:", n.samples()>>>;
 
-821 => lpf.freq;
+20 *100 => lpf.freq;
 19 * 0.01 => e0.value;
 0.0 => e0.target;
 convrevin_dur => e0.duration ;// => now;
@@ -305,7 +305,7 @@ convrevin_dur + 10::ms => now;
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
-140 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+149 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
 
 SYNC sy;
