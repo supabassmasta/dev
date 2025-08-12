@@ -120,7 +120,7 @@ fun void BASS0 (string seq) {
 
   //STDUCK duck;
   //duck.connect(last $ ST);      duck $ ST @=>  last; 
-35::samp => dur convrevin_dur;
+29::samp => dur convrevin_dur;
 // IR generation examples:
 //KIK kik;
 //kik.config(0.4 /* init Sin Phase */,76 * 100 /* init freq env */, 0.4 /* init gain env */);
@@ -385,7 +385,7 @@ while(1) { /********************************************************/
 //spork ~ BASS0(" *2 _!1_!1_!1_!1_!1_!1_!1_!1___ ");
 //  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
   spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
-    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.6 /* rate */, .11 /* g */); 
+    spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.7 /* rate */, .16 /* g */); 
 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 

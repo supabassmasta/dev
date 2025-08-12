@@ -385,7 +385,7 @@ while(1) { /********************************************************/
   spork ~ BASS0(" *4 __ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__ 1!1__   ");
     spork ~  BASS0_ATTACK ("*4   __aa __aa __aa __aa __aa __aa __aa __aa      ", 0.6 /* rate */, .11 /* g */); 
 
-//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_hh __h_ t_h_ "); 
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
