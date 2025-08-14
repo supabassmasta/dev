@@ -12,7 +12,7 @@ kik.addFreqPoint (31.0, 13 * 10::ms);
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.4, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 3 * 10::ms);
+kik.addGainPoint (1.0, 4 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 fun void KICK(string seq) {
@@ -84,7 +84,7 @@ class SERUM_WT0 extends SYNT{
 
 fun void BASS0 (string seq) {
 //  local_delay - 15::ms => now;
-  local_delay - 8::ms => now;
+  local_delay  => now;
   TONE t;
   t.reg(SERUM_WT0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 
@@ -92,7 +92,7 @@ fun void BASS0 (string seq) {
   t.lyd();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
           // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  0.90 * data.master_gain => t.gain;
+  0.65 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
               // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -151,11 +151,11 @@ padsr.keyOn();
 
 
   STADSR stadsr;
-  stadsr.set(1::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.24/* Sustain dur of Relative release pos (float) */,  20::ms /* release */);
+  stadsr.set(1::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.35/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
   stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 
-  STMIX stmix;
-  stmix.send(last, mixer);
+//  STMIX stmix;
+//  stmix.send(last, mixer);
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
