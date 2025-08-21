@@ -12,7 +12,7 @@ kik.addFreqPoint (31.0, 13 * 10::ms);
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.4, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 4 * 10::ms);
+kik.addGainPoint (1.0, 11 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 fun void KICK(string seq) {
@@ -170,12 +170,12 @@ fun void  prepare_WT  (){
     1.0 => sin0.gain;
 
     1.0 => stp0.next;
-    124.0 => e0.value;
-    6.0 => e0.target;
-    wt_dur / 4 => e0.duration ;// => now;
-    6.0 => e0.value;
-    0.0 => e0.target;
-    wt_dur * 3  / 4 => e0.duration ;// => now;
+    110.0 => e0.value;
+    6.7 => e0.target;
+    wt_dur * 2 / 8 => e0.duration ;// => now;
+    6.7 => e0.value;
+    1.5 => e0.target;
+    wt_dur * 6  / 8 => e0.duration ;// => now;
 
     now => time start;
     while (now < start + wt_dur) {
@@ -241,8 +241,8 @@ fun void BASS0 (string seq) {
   //stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
   // stadsr.keyOn(); stadsr.keyOff();
 
-  //STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-  //stlpfx0.connect(last $ ST ,  stlpfx0_fact, 5* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+//  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+//  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 2* 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
   //STDUCK duck;
   //duck.connect(last $ ST);      duck $ ST @=>  last; 
@@ -432,7 +432,7 @@ convrevin_dur + 10::ms => now;
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-53 => data.ref_note;
+51 => data.ref_note;
 
 SYNC sy;
 sy.sync(8 * data.tick);
@@ -510,6 +510,7 @@ while(1) { /********************************************************/
 //  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
 //  spork ~ BASS0(" *2   _1 _1 _1 _1 _1 _1 _1 _1   ");
   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+    spork ~  BASS0_ATTACK ("*4    __aa __aa __aa __aa __aa __aa __aa __aa  ", 0.7 /* rate */, .16 /* g */); 
 //  spork ~ BASS0(" *4  _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1   ");
 //    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa       ", 0.7 /* rate */, .16 /* g */); 
 
