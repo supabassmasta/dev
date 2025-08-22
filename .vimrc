@@ -1708,12 +1708,12 @@ ab SONGK 1 => int mixer;
 \<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
 \<CR>
 \<CR>///////////////////////////////////////////////////////////////////////////////////////////////
-\<CR>fun void SEQ0(string seq) {
+\<CR>fun void SEQ0(string seq, int mix, float g) {
 \<CR>SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
 \<CR>SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>seq => s.seq;
-\<CR>.5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+\<CR>g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 \<CR>s.no_sync();// s.element_sync(); //s.no_sync()
 \<CR>//s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -1721,13 +1721,13 @@ ab SONGK 1 => int mixer;
 \<CR>s.go();     s $ ST @=> ST @ last; 
 \<CR>
 \<CR>//  STMIX stmix;
-\<CR>//  stmix.send(last, mixer);
+\<CR>//  stmix.send(last, mixer + mix);
 \<CR>
 \<CR>1::samp => now; // let seq() be sporked to compute length
 \<CR>s.s.duration => now;
 \<CR>}
 \<CR>
-\<CR>//spork ~ SEQ0("*4 sss___");
+\<CR>//spork ~ SEQ0("*4 sss___", 0, .5);
 \<CR>
 \<CR>//////////////////////////////////////////////////////////////////////////////////////////////
 \<CR>class synt0 extends SYNT{
@@ -1737,13 +1737,13 @@ ab SONGK 1 => int mixer;
 \<CR>} 
 \<CR>
 \<CR>
-\<CR>fun void SYNT0 (string seq) {
+\<CR>fun void SYNT0 (string seq, int mix, float g) {
 \<CR>TONE t;
 \<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 \<CR>t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>seq => t.seq;
-\<CR>.3 * data.master_gain => t.gain;
+\<CR>g * data.master_gain => t.gain;
 \<CR>t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -1751,15 +1751,19 @@ ab SONGK 1 => int mixer;
 \<CR>t.go();   t $ ST @=> ST @ last; 
 \<CR>
 \<CR>//  STMIX stmix;
-\<CR>//  stmix.send(last, mixer);
+\<CR>//  stmix.send(last, mixer + mix);
 \<CR>
 \<CR>1::samp => now; // let seq() be sporked to compute length
 \<CR>t.s.duration => now;
 \<CR>}
 \<CR>
-\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____", 0, .5);
 \<CR>////////////////////////////////////////////////////////////////////////////////////////////
 \<CR>////////////////////////////////////////////////////////////////////////////////////////////
+\<CR>
+\<CR>//******************************************
+\<CR>//****       BPM  REF_NOTE   ***************
+\<CR>//******************************************
 \<CR>
 \<CR>148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 \<CR>55 => data.ref_note;
@@ -1790,8 +1794,8 @@ ab SONGK 1 => int mixer;
 \<CR>}/***********************   MAGIC CURSOR *********************/
 \<CR>while(1) { /********************************************************/
 \<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
-\<CR>//spork ~ SEQ0("____ *4s__s _ab_ ");
-\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+\<CR>//spork ~ SEQ0("____ *4s__s _ab_ ", 0, .5);
+\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____", 0, .5);
 \<CR>
 \<CR>8 * data.tick =>  w.wait; 
 \<CR>// 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
