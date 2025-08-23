@@ -522,12 +522,12 @@ if ( !compute_mode && MISC.file_exist(name_main) ){
 else {
 // REC  MAIN /////////////////////////////////////////     
   STREC strec;
+  ST stmain; stmain $ ST @=>   last;
+  dac.left => stmain.outl;
+  dac.right => stmain.outr;
   if (rec_mode) {     
-    ST stmain; stmain $ ST @=>   last;
-    dac.left => stmain.outl;
-    dac.right => stmain.outr;
 
-    strec.connect(last $ ST); strec $ ST @=>  last;  
+    strec.connect(stmain $ ST); strec $ ST @=>  last;  
     0 => strec.gain;
     strec.rec_start(name_main, 0::ms, 1);
   }
@@ -574,12 +574,12 @@ while (!data.next) {
 
 // REC END LOOP /////////////////////////////////////////     
   STREC strecendloop;
+  ST stmain; stmain $ ST @=>   last;
+  dac.left => stmain.outl;
+  dac.right => stmain.outr;
   if (rec_mode) {     
-    ST stmain; stmain $ ST @=>   last;
-    dac.left => stmain.outl;
-    dac.right => stmain.outr;
 
-    strecendloop.connect(last $ ST); strecendloop $ ST @=>  last;  
+    strecendloop.connect(stmain $ ST); strecendloop $ ST @=>  last;  
     0 => strecendloop.gain;
     strecendloop.rec_start(name_main +"_end_loop", 0::ms, 1);
 
@@ -611,11 +611,8 @@ while (!data.next) {
 // REC  END  /////////////////////////////////////////     
   STREC strecend;
   if (rec_mode) {
-    ST stmain; stmain $ ST @=>   last;
-    dac.left => stmain.outl;
-    dac.right => stmain.outr;
 
-    strecend.connect(last $ ST); strecend $ ST @=>  last;  
+    strecend.connect(stmain $ ST); strecend $ ST @=>  last;  
     0 => strecend.gain;
     strecend.rec_start(name_main +"_end", 0::ms, 1);
   }
