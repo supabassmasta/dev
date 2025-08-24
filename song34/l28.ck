@@ -472,8 +472,8 @@ fun void LOOP_MOD   (){
 
 class RECTRACK {
   // Public
-  1 => int compute_mode; // play song with real computing
-  1 => int rec_mode; // While playing song in compute mode, rec it
+  0 => int compute_mode; // play song with real computing
+  0 => int rec_mode; // While playing song in compute mode, rec it
 
   "l35_main.wav" => string name_main;
   8 * data.tick => dur main_extra_time;
@@ -488,11 +488,9 @@ class RECTRACK {
   STREC strecend;
 
   ST stmain;
-  dac.left => stmain.outl;
-  dac.right => stmain.outr;
 
 
-  fun void play_or_rec () {
+  fun int play_or_rec () {
     if ( !compute_mode && MISC.file_exist(name_main) ){
       LONG_WAV l;
       name_main => l.read;
@@ -531,14 +529,20 @@ class RECTRACK {
       SndBuf2 buf_end_0; name_main+"_end" => buf_end_0.read; buf_end_0.samples() => buf_end_0.pos; buf_end_0.chan(0) => stout.outl; buf_end_0.chan(1) => stout.outr;
       0 => buf_end_0.pos;
       buf_end_0.length() =>  w.wait;
+
+      return 0;
     }
     else {
-      // REC  MAIN /////////////////////////////////////////     
+      // REC  MAIN OR PURE COMPUTE /////////////////////////////////////////     
       if (rec_mode) {     
+        // Connect Main out for rec
+        dac.left => stmain.outl;
+        dac.right => stmain.outr;
         strec.connect(stmain $ ST);
         0 => strec.gain; // Avoid infinite sound loop on main out
         strec.rec_start(name_main, 0::ms, 1);
       }
+      return 1;
     }
 
   }
@@ -589,8 +593,11 @@ class RECTRACK {
 
 }
 
+/// PLAY OR REC /////////////////
 RECTRACK rectrack;
-rectrack.play_or_rec();
+if (rectrack.play_or_rec() ) {
+//////////////////////////////////
+
 
 //////////////////////////////////////////////////
 // MAIN 
@@ -658,5 +665,5 @@ spork ~  SLIDENOISE(4000 /* fstart */, 200 /* fstop */, 8* data.tick /* dur */, 
 rectrack.stop_rec_end(); 
 /////////////////////////
 
- 
+} 
 
