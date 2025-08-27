@@ -1793,13 +1793,14 @@ ab SONGK 1 => int mixer;
 \<CR>if (    0     ){
 \<CR>}/***********************   MAGIC CURSOR *********************/
 \<CR>while(1) { /********************************************************/
-\<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
+\<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
 \<CR>//spork ~ SEQ0("____ *4s__s _ab_ ", 0, .5);
 \<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____", 0, .5);
 \<CR>
 \<CR>8 * data.tick =>  w.wait; 
 \<CR>// 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 \<CR>} 
+
 
 ab MULTIRECK "song_mrec_" => string mrpath;
 \<CR>MULTIREC mrec;  30::second => mrec.rec_dur; // 1 => mrec.disable;
@@ -1853,4 +1854,52 @@ ab STCONVREVINK 133::ms => dur convrevin_dur;
 \<CR>
 \<CR>STCONVREVIN stconvrevin;
 \<CR>stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, .1 /* rev gain */  , 0.0 /* dry gain */  );       stconvrevin $ ST @=>  last;   
+
+
+ab RECTRACKK /// PLAY OR REC /////////////////
+\<CR>RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+\<CR>if (rectrack.play_or_rec() ) {
+\<CR>//////////////////////////////////
+\<CR>
+\<CR>//////////////////////////////////////////////////
+\<CR>// MAIN 
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>//  !!!!!!  Put main code here  !!!!!
+\<CR>
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>rectrack.rec_stop();
+\<CR>//////////////////////////////////////////////////
+\<CR>  
+\<CR>///////////////////////// END LOOP ///////////////////////////////////::
+\<CR>0 => data.next;
+\<CR>while (!data.next) {
+\<CR><<<"**********">>>;
+\<CR><<<" END LOOP ">>>;
+\<CR><<<"**********">>>;
+\<CR>// REC END LOOP //////////////////////////////////
+\<CR>rectrack.rec_end_loop();
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>// !!!!!! Put end loop here  !!!!!!
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>rectrack.stop_rec_end_loop();
+\<CR>/////////////////////////////////////////////
+\<CR>}
+\<CR>
+\<CR>///////////////////
+\<CR>//      END      //
+\<CR>///////////////////
+\<CR>// REC  END  //////
+\<CR>rectrack.rec_end();
+\<CR>///////////////////
+\<CR>
+\<CR>//  !!!!!! put end here  !!!!!!
+\<CR>
+\<CR>//// STOP REC ///////////
+\<CR>rectrack.stop_rec_end(); 
+\<CR>/////////////////////////
+\<CR>} 
 
