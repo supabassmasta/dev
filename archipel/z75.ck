@@ -48,6 +48,12 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 STCONVREV stconvrev;
 stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
+<<<" --- SPACE FROGS ---- ">>>;
+<<<" --- pot 1.3 freq ---- ">>>;
+<<<" --- pot 1.4 Q  ---- ">>>;
+<<<" -------------------- ">>>;
+
+
 
 while(1) {
        100::ms => now;
