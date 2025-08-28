@@ -3,7 +3,7 @@ public class RECTRACK {
   0 => int compute_mode; // play song with real computing
   0 => int rec_mode; // While playing song in compute mode, rec it
 
-  "l35_main.wav" => string name_main;
+  "rec_default_name.wav" => string name_main;
   8 * data.tick => dur main_extra_time;
   8 * data.tick => dur end_loop_extra_time;
 

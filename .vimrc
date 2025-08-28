@@ -898,9 +898,13 @@ ab CONTROLK class cont extends CONTROL {
 \<CR>   }
 \<CR>}
 
-ab PowerADSRK PowerADSR padsr
+ab PowerADSRK PowerADSR padsr =>
 \<CR>padsr.set(1::ms, 20::ms, .7 , 200::ms);
-\<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave padsr.keyOn(); padsr.keyOff(); 
+
+ab ADSRK ADSR adsr =>
+\<CR>adsr.set(1::ms, 20::ms, .7 , 200::ms); // padsr.keyOn(); padsr.keyOff(); 
+
 
 ab STBREAKK STBREAK stbreak;
 \<CR>stbreak.connect(last $ ST, 0 /* break_number, max 3 */);   stbreak $ ST @=>last; 
@@ -1857,7 +1861,7 @@ ab STCONVREVINK 133::ms => dur convrevin_dur;
 
 
 ab RECTRACKK /// PLAY OR REC /////////////////
-\<CR>RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+\<CR>RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
 \<CR>if (rectrack.play_or_rec() ) {
 \<CR>//////////////////////////////////
 \<CR>
@@ -1871,7 +1875,7 @@ ab RECTRACKK /// PLAY OR REC /////////////////
 \<CR>//// STOP REC ///////////////////////////////
 \<CR>rectrack.rec_stop();
 \<CR>//////////////////////////////////////////////////
-\<CR>  
+\<CR>
 \<CR>///////////////////////// END LOOP ///////////////////////////////////::
 \<CR>0 => data.next;
 \<CR>while (!data.next) {
@@ -1902,4 +1906,22 @@ ab RECTRACKK /// PLAY OR REC /////////////////
 \<CR>rectrack.stop_rec_end(); 
 \<CR>/////////////////////////
 \<CR>} 
+
+ab RECSEQK /// PLAY OR REC /////////////////
+\<CR>RECSEQ recseq; "seqname0.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;
+\<CR>if (recseq.play_or_rec() ) {
+\<CR>//////////////////////////////////
+\<CR>
+\<CR>//////////////////////////////////////////////////
+\<CR>// MAIN 
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>//  !!!!!!  Put main code here  !!!!!
+\<CR>// Call this with file and fun name to record all seq on fresh cloned project
+\<CR>// if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>recseq.rec_stop();
+\<CR>//////////////////////////////////////////////////
+\<CR>}
 
