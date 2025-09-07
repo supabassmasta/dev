@@ -187,7 +187,9 @@ fun void  prepare_WT  (){
     }
 
 } 
-prepare_WT();
+<<<"WARNING: BASS0 prepare_WT disabled">>>;
+
+//prepare_WT();
 
 
 class SERUM_WT1 extends SYNT{
@@ -429,18 +431,130 @@ convrevin_dur + 10::ms => now;
 } 
 //test_convrev_delay_2 ();
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+fun void  MOD0  (string seq, int mix, float g){ 
+  local_delay => now;
+  TONE t;
+t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(1 /* synt nb */ ); 
+
+
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+// 2_1_5_3_ 2_1_5_3_ 2_1_5_3_ 2_1_5_3_ 2_1_
+//8_8_ 8_8_ 8_8_ 8_8_ ____ ____ ____ ____ 
+//5_3_ 2_1_ 5_3_ 2_1_ 5_3_ 2_1_ 5_3_ ____
+seq => t.seq;
+g * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); //
+//16 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 4 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 6 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+//STAUTOFILTERX stautolpfx0; LPF_XFACTORY stautolpfx0_fact;
+//stautolpfx0.connect(last $ ST ,  stautolpfx0_fact, 2.0 /* Q */, 5 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 6 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautolpfx0 $ ST @=>  last;  
+
+
+SinOsc sin0 =>  s0.inlet;
+30.0 => sin0.freq;
+300.0 => sin0.gain;
+
+  
+
+STMIX stmix;
+stmix.send(last, mixer + mix);
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+ 
+} 
+
+///////////////////////////////////////////////////////////////////////
+fun void TRIBAL(string seq, int nb, int mix, float g) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  
+  if ( nb == 0  ){
+    SET_WAV.TRIBAL0(s);
+  }
+  else if (  nb == 1  ){
+    SET_WAV.TRIBAL1(s);
+  }
+  else {
+    SET_WAV.TRIBAL(s);
+  }
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  if ( mix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + mix);
+  }
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+// spork ~ TRIBAL("*4 __a_", 0 /* bank */, 0 /* mix */, .5 /* gain */);
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  CELLO0  (string seq, int mix, float g){ 
+  local_delay - 15::ms => now;
+  TONE t;
+  t.reg(SUPERSAW0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+
+  t.aeo();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+          // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  "{c" + seq => t.seq;
+  g * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+              // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+              //t.set_adsrs(2::ms, 10::ms, .8, 40::ms);
+              //t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
+stsynclpfx0.freq(100 /* Base */, 27 * 100 /* Variable */, 2. /* Q */);
+stsynclpfx0.adsr_set(.3 /* Relative Attack */, .1/* Relative Decay */, 0.6 /* Sustain */, .2 /* Relative Sustain dur */, 0.4 /* Relative release */);
+stsynclpfx0.nio.padsr.setCurves(1.0, 1.2, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::ms /* period */ );       stsynclpfx0 $ ST @=>  last; 
+// CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
+
+STMIX stmix;
+stmix.send(last, mixer + mix);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 143 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 53 => data.ref_note;
 
 SYNC sy;
-//sy.sync(8 * data.tick);
+sy.sync(8 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
-1::ms => w.fixed_end_dur;
-//8*data.tick => w.sync_end_dur;
+//1::ms => w.fixed_end_dur;
+8*data.tick => w.sync_end_dur;
 //2 * data.tick =>  w.wait; 
 
 // OUTPUT
@@ -449,16 +563,16 @@ STMIX stmix;
 stmix.receive(mixer); stmix $ ST @=> ST @ last; 
 
 
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 29/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 6 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  STCONVREV stconvrev;
+//  stconvrev.connect(last $ ST , 29/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 6 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 
 fun void EFFECT1   (){ 
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 12/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
-  while(1) {
+STCONVREV stconvrev;
+stconvrev.connect(last $ ST , 119/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .05 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last; 
+while(1) {
          100::ms => now;
   }
    
@@ -486,9 +600,9 @@ fun void EFFECT3   (){
   STMIX stmix;
   stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
 
-STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
-stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 5 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
-4 => stautobpfx0.gain;
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .7 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
   STMIX stmix2;
   stmix2.send(last, mixer + 2);
   //stmix.receive(11); stmix $ ST @=> ST @ last; 
@@ -499,6 +613,82 @@ stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq 
    
 } 
 spork ~  EFFECT3();
+
+fun void EFFECT4   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+
+  1000::ms => dur convrevin_dur;
+  SndBuf s;
+ "../_SAMPLES/ConvolutionImpulseResponse/696509__pe_mace__cello3_eqed_dc.wav" => s.read; 
+  s => Gain ir;
+  
+
+  STCONVREVIN stconvrevin;
+  stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, .3 /* rev gain */  , 0.0 /* dry gain */  );       stconvrevin $ ST @=>  last;    
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 13* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+
+  STMIX stmix2;
+  stmix2.send(last, mixer + 1);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  while(1) {
+         100::ms => now;
+  }
+   
+} 
+spork ~  EFFECT4();
+
+fun void  LOOPPROG  (){ 
+  while(1) {
+    spork ~   MOD0 ("*8 }c {3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_ ", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 aaa", 0 /* bank */, 3 /* mix */, .5 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*2 }c FFF/11/F", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __g_", 0 /* bank */, 2 /* mix */, 1.6 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*4 }c 5_5_", 1, .7); 
+    8 * data.tick => w.wait;
+
+    spork ~ TRIBAL("*4 F_", 0 /* bank */, 2 /* mix */, 1.2 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*2 }c f/F____ f8_", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __Z_ __}8Z", 1 /* bank */, 1 /* mix */, .4 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*8 }c 8_8_8_8_", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
+    8 * data.tick => w.wait;
+    //-------------------------------------------
+  }
+} 
+spork ~ LOOPPROG();
+
+fun void  LOOPLAB  (){ 
+  while(1) {
+    24 * data.tick => w.wait;
+    spork ~   CELLO0 (":4 B///B_", 4, 1.4); 
+    32 * data.tick => w.wait;
+    spork ~   CELLO0 (":4 3//3_", 4, 1.4); 
+    32 * data.tick => w.wait;
+    spork ~   CELLO0 (":4 1///1_", 4, 1.4); 
+    24 * data.tick => w.wait;
+    spork ~   CELLO0 (":4 A____", 4,  1.4); 
+    spork ~   CELLO0 (":4 _0___", 4,  1.4); 
+    spork ~   CELLO0 (":4 __1//1_", 4,1.4); 
+    16 * data.tick => w.wait;
+    //-------------------------------------------
+  }
+} 
+spork ~ LOOPLAB();
+//LOOPLAB(); 
+
 
 // LOOP
 /********************************************************/
