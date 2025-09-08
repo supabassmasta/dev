@@ -476,6 +476,37 @@ stmix.send(last, mixer + mix);
  
 } 
 
+///////////////////////////////////////////////////////////////////::
+
+fun void PLOC (string seq, int n, float lpf_f, int mix,  float v) {
+
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+  s0.config(n /* synt nb */ ); 
+//  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+t.set_adsrs(2::ms, 50::ms, .00002, 400::ms);
+t.set_adsrs_curves(0.6, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  STMIX stmix;
+  stmix.send(last, mixer + mix);
+
+  1::samp => now; // let seq() be sporked to compute duration
+  t.s.duration => now;
+
+}
 ///////////////////////////////////////////////////////////////////////
 fun void TRIBAL(string seq, int nb, int mix, float g) {
 
@@ -670,25 +701,65 @@ fun void  LOOPPROG  (){
 } 
 spork ~ LOOPPROG();
 
-fun void  LOOPLAB  (){ 
+fun void  LOOPSAW  (){ 
   while(1) {
     24 * data.tick => w.wait;
-    spork ~   CELLO0 (":4 B///B_", 4, 1.4); 
+    spork ~   CELLO0 (":4 B///B_", 4, 1.6); 
     32 * data.tick => w.wait;
-    spork ~   CELLO0 (":4 3//3_", 4, 1.4); 
+    spork ~   CELLO0 (":4 3//3_", 4, 1.6); 
     32 * data.tick => w.wait;
-    spork ~   CELLO0 (":4 1///1_", 4, 1.4); 
+    spork ~   CELLO0 (":4 1///1_", 4, 1.6); 
     24 * data.tick => w.wait;
-    spork ~   CELLO0 (":4 A____", 4,  1.4); 
-    spork ~   CELLO0 (":4 _0___", 4,  1.4); 
-    spork ~   CELLO0 (":4 __1//1_", 4,1.4); 
+    spork ~   CELLO0 (":4 A____", 4,  1.6); 
+    spork ~   CELLO0 (":4 _0___", 4,  1.6); 
+    spork ~   CELLO0 (":4 __1//1_", 4,1.6); 
     16 * data.tick => w.wait;
+    //-------------------------------------------
+  }
+} 
+spork ~ LOOPSAW();
+
+fun void  LOOPLAB  (){ 
+  while(1) {
+  spork ~   PLOC ("  {c ____ *4 __1_  ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __8_  ", 17, 29 * 100, 3,  1.0 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __5_ __8!1 ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f   ", 17, 29 * 100, 1,  1.0 ); 
+    8 * data.tick => w.wait;
+
+  spork ~   PLOC ("  {c ____ *4 __F!F!F  ", 17, 29 * 100, 3,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __1_  ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __1_ 1_1_8 ", 17, 29 * 100, 3,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *6  }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D }1!F!E!D ", 17, 29 * 100, 3,  1.2 ); 
+    8 * data.tick => w.wait;
+
+  spork ~   PLOC ("  {c ____ *4 __1_  ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __1_ __5!8 ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __1_  ", 17, 29 * 100, 2,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4  }2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F}2!F", 17, 29 * 100, 3,  1.0 ); 
+
+  spork ~   PLOC ("  {c ____ *4 __F_  ", 17, 29 * 100, 2,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 _!1!1_ __5!8 ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 __5_ __8!1 ", 17, 29 * 100, 1,  1.2 ); 
+    8 * data.tick => w.wait;
+  spork ~   PLOC ("  {c ____ *4 {1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f ", 17, 29 * 100, 3,  1.0 ); 
+    8 * data.tick => w.wait;
     //-------------------------------------------
   }
 } 
 spork ~ LOOPLAB();
 //LOOPLAB(); 
-
 
 // LOOP
 /********************************************************/
