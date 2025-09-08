@@ -429,7 +429,54 @@ convrevin_dur + 10::ms => now;
 } 
 //test_convrev_delay_2 ();
 
+////////////////////////////////////////////////////////////////////////////
+
+fun void LEAD (string seq, int n, float lpf_f, int mix,  float v) {
+  local_delay => now;
+
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+  s0.config(n /* synt nb */ ); 
+//  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 50::ms, 0.01 , 1::ms);
+//t.set_adsrs_curves(.6, 0.4, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  STPADSR stpadsr;
+  stpadsr.set(3::ms /* Attack */, 40::ms /* Decay */, 0.4 /* Sustain */, -.2 /* Sustain dur of Relative release pos (float)*/,  10::ms /* release */);
+  stpadsr.setCurves(0.5, 2.0, 2.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stpadsr.connect(last $ ST, t.note_info_tx_o); stpadsr $ ST @=>  last;
+  //stpadsr.connect(s $ ST);  stpadsr  $ ST @=>  last; 
+  // stpadsr.keyOn(); stpadsr.keyOff(); 
+
+  STMIX stmix;
+  stmix.send(last, mixer + mix);
+
+  1::samp => now; // let seq() be sporked to compute duration
+  t.s.duration => now;
+
+}
+///////////////////////////////////////////////////////////////////////
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////////////////
+// BPM
 
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 55 => data.ref_note;
@@ -457,7 +504,7 @@ fun void EFFECT1   (){
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 12/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 12/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .15 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
   while(1) {
          100::ms => now;
   }
@@ -505,16 +552,20 @@ spork ~  EFFECT3();
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+//  spork ~   LEAD (" }c *4 !1!1!8!1!1!9!1!7 !1!1!8!1!1!7!1!9  !1!1!8!1!1!9!1!a !1!1!8!1!1!9!1!5 ", 94, 58 * 100, 0, 1.9 ); 
+  spork ~   LEAD (" }c *4 !1!1!8!1!1!9!1!8 !1!1!8!1!1!9!1!8  !1!1!8!1!1!9!1!8 !1!1!8!1!1!7!1!5 ", 96, 58 * 100, 1, 1.7 ); 
+//  spork ~   LEAD (" }c *4 11811918 11811918  11811918 11811715 ", 94, 58 * 100, 1, 1.9 ); 
+//  spork ~   LEAD (" }c *4 !1!1!1!1!1!1!1!1!1!1!1!1!1!1!1!1  ", 94, 58 * 100, 1, 1.9 ); 
+
+
   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
-//spork ~ BASS0(" *2 _!1_!1_!1_!1_!1_!1_!1_!1___ ");
-//  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
-//  spork ~ BASS0(" *2   _1 _1 _1 _1 _1 _1 _1 _1   ");
   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
-    spork ~  BASS0_ATTACK ("*4    __aa __aa __aa __aa __aa __aa __aa __aa  ", 0.7 /* rate */, .16 /* g */); 
+  spork ~  BASS0_ATTACK ("*4    __aa __aa __aa __aa __aa __aa __aa __aa  ", 0.7 /* rate */, .16 /* g */); 
+
 //  spork ~ BASS0(" *4  _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1   ");
 //    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa       ", 0.7 /* rate */, .16 /* g */); 
 
-//    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);

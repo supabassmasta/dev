@@ -479,6 +479,7 @@ stmix.send(last, mixer + mix);
 ///////////////////////////////////////////////////////////////////::
 
 fun void PLOC (string seq, int n, float lpf_f, int mix,  float v) {
+  local_delay => now;
 
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
