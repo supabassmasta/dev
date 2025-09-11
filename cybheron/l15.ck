@@ -163,10 +163,12 @@ padsr.keyOn();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 float wt_table[0];
+"wt_bass1.wav" => string wt_name;
 fun void  prepare_WT  (){ 
+    <<<"!!! prepare_WT() !!!">>>;
     1::second => dur wt_dur;
 
-    Step stp0 =>  Envelope e0 =>  SinOsc sin0 => blackhole; 
+    Step stp0 =>  Envelope e0 =>  SinOsc sin0 => dac; 
     1.0 => sin0.gain;
 
     1.0 => stp0.next;
@@ -177,14 +179,13 @@ fun void  prepare_WT  (){
     1.5 => e0.target;
     wt_dur * 6  / 8 => e0.duration ;// => now;
 
-    now => time start;
-    while (now < start + wt_dur) {
-      wt_table << sin0.last();
-      1::samp => now;
-    }
+  REC rec;
+  rec.rec_no_sync(wt_dur, wt_name); 
 
 } 
-prepare_WT();
+if ( ! MISC.file_exist(wt_name)){
+  prepare_WT();
+}
 
 
 class SERUM_WT1 extends SYNT{
@@ -197,9 +198,12 @@ class SERUM_WT1 extends SYNT{
 
   1 => w.sync;
   1 => w.interpolate;
-  //[-1.0, -0.5, 0, 0.5, 1, 0.5, 0, -0.5] @=> float myTable[];
-  //[-1.0,  1] @=> float myTable[];
-
+  SndBuf s => blackhole;
+  wt_name => s.read;
+  float wt_table[0];
+  for (0 => int i; i < s.samples() ; i++) {
+     wt_table << s.valueAt(i);
+  }
     w.setTable (wt_table);
 
   fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { 1 * 0.01 =>p.phase; } 1 => own_adsr;
@@ -257,19 +261,19 @@ fun void BASS0 (string seq) {
 //kik.outlet => Gain ir;
 //kik.new_note(0);
 
-SndBuf n => LPF lpf =>  PowerADSR padsr => Gain  ir;
-padsr.set(1::samp, convrevin_dur, .000007 , 2::ms);
-padsr.setCurves(.6, .1, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
+//SndBuf n => LPF lpf =>  PowerADSR padsr => Gain  ir;
+//padsr.set(1::samp, convrevin_dur, .000007 , 2::ms);
+//padsr.setCurves(.6, .1, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave 
 
-"../_SAMPLES/noise_ref.wav" => n.read;
+//"../_SAMPLES/noise_ref.wav" => n.read;
 //41 => n.pos;
-144 => n.pos;
+//144 => n.pos;
 //4543 => n.pos;
 //<<<"N SAMPLES:", n.samples()>>>;
 
-95 *10 => lpf.freq;
-0.14 => padsr.gain;
-padsr.keyOn();
+//95 *10 => lpf.freq;
+//0.14 => padsr.gain;
+//padsr.keyOn();
 
 //STCONVREVIN stconvrevin;
 //stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, 1.0 /* rev gain */  , 0.0 /* dry gain */  );  stconvrevin   $ ST @=>  last;
@@ -279,8 +283,8 @@ padsr.keyOn();
   stadsr.set(1::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.35/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
   stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 
-//  STMIX stmix;
-//  stmix.send(last, mixer);
+  STMIX stmix;
+  stmix.send(last, mixer);
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
@@ -430,9 +434,9 @@ convrevin_dur + 10::ms => now;
 //test_convrev_delay_2 ();
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-
+// BPM
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-51 => data.ref_note;
+53 => data.ref_note;
 
 SYNC sy;
 sy.sync(8 * data.tick);
@@ -515,7 +519,7 @@ while(1) { /********************************************************/
 //    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa       ", 0.7 /* rate */, .16 /* g */); 
 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
-//    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 //  spork ~ SEQ0( "*4 ____ ____ ____ _ab_ ____ ____ ___b ____  ", 0, .3);
 //  spork ~ SYNT0("*4 ____ __ " + RAND.char("351_", 3) +RAND.seq("-5f,1,8,1", 1)  +"_  ", 2, 1.5);
