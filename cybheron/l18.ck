@@ -583,7 +583,7 @@ fun void  LOOPPROG  (){
     //-------------------------------------------
   }
 } 
-spork ~ LOOPPROG();
+//spork ~ LOOPPROG();
 
 fun void  LOOPSAW  (){ 
   while(1) {
@@ -601,7 +601,7 @@ fun void  LOOPSAW  (){
     //-------------------------------------------
   }
 } 
-spork ~ LOOPSAW();
+//spork ~ LOOPSAW();
 
 fun void  LOOPPLOC  (){ 
   while(1) {
@@ -642,53 +642,21 @@ fun void  LOOPPLOC  (){
     //-------------------------------------------
   }
 } 
-spork ~ LOOPPLOC();
+//spork ~ LOOPPLOC();
 
 fun void  LOOPLAB  (){ 
   while(1) {
 
-  spork ~KICK_LPF("*4 k___ k___ k___ k___k___ k___ k___ k___    k___ k___ k___ k___k___ k___ k___ k___ k___ k___ k___ k___k___ k___ k___ k___    k___ k___ k___ k___k___ k___ ", ":8:4M/1");
-  spork ~ BASS0_LPF(" *4 1111  __11 1111 1111 __11 1111 _111 __11   1111  __11 1111 1111 __11 1111 _111 __11    1111  __11 1111 1111 __11 1111 _111 __11   1111  __11 1111 1111 __11 1111   ", ":8:4M/1");
-    32 * data.tick => w.wait;
-
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__k");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ ___k");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k_k_");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ _k_k");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __81     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  spork ~KICK_HPF("*4k___ k___ k___ k___k___ k___ k___ k___ " , ":4 M/ff/v");
+  spork ~ BASS0_HPF(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ", ":4 M/ff/v");
   8 * data.tick =>  w.wait; 
 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__k");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ ___k");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k_k_");
-  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-  8 * data.tick =>  w.wait; 
-  spork ~KICK("*4 k___ ____ ____ ____ ____ ____ ____ ____ ");
-  spork ~ BASS0(" *4  1111  1111 1111 1111 __1_ 1_11 _111 __11     ");
-  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ }3+4t_h_ __h_ }2+5t_h_ {1+6t_h_ {3+6t_h_   "); 
-  8 * data.tick =>  w.wait; 
+
     //-------------------------------------------
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 // LOOP
 /********************************************************/
@@ -742,6 +710,22 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
   // MAIN 
   //////////////////////////////////////////////////
+  spork ~KICK_LPF("*4 k___ k___ k___ k___k___ k___ k___ k___    k___ k___ k___ k___k___ k___ k___ k___ k___ k___ k___ k___k___ k___ k___ k___    k___ k___ k___ k___k___ k___ ", ":8:4M/1");
+  spork ~ BASS0_LPF(" *4 1111  __11 1111 1111 __11 1111 _111 __11   1111  __11 1111 1111 __11 1111 _111 __11    1111  __11 1111 1111 __11 1111 _111 __11   1111  __11 1111 1111 __11 1111   ", ":8:4M/1");
+
+  8 * data.tick =>  w.wait; 
+  spork ~ TRIBAL("____ *4 abab", 0 /* bank */, 3 /* mix */, .7 /* gain */);
+  spork ~   PLOC ("  {c *4 {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f
+                                {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f {1*7:8!f  ", 17, 29 * 100, 1,  1.0 ); 
+  8 * data.tick =>  w.wait; 
+  spork ~   CELLO0 (":4 F////f_", 2, 0.2); 
+  spork ~   CELLO0 (":4 B////f_", 3, 0.2); 
+  spork ~   CELLO0 (":4 1////f_", 2, 0.2); 
+   14 * data.tick => w.wait;
+  spork ~KICK(" *4 ___k k_k_ ");
+  spork ~  TRANCEHH ("*4 +3   }5+3  ____ ___t "); 
+
+   2 * data.tick => w.wait;
 
 
   //// STOP REC ///////////////////////////////
@@ -757,6 +741,9 @@ if (rectrack.play_or_rec() ) {
       // REC END LOOP //////////////////////////////////
       rectrack.rec_end_loop();
       //////////////////////////////////////////////////
+  spork ~ LOOPPROG();
+  spork ~ LOOPPLOC();
+  spork ~ LOOPSAW();
 
   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__k");
   spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
@@ -790,6 +777,40 @@ if (rectrack.play_or_rec() ) {
   spork ~KICK("*4 k___ ____ ____ ____ ____ ____ ____ ____ ");
   spork ~ BASS0(" *4  1111  1111 1111 1111 __1_ 1_11 _111 __11     ");
   spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ }3+4t_h_ __h_ }2+5t_h_ {1+6t_h_ {3+6t_h_   "); 
+  8 * data.tick =>  w.wait; 
+
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__k");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ ___k");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k_k_");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ _k_k");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __81     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k__k");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ ___k");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k_k_");
+  spork ~ BASS0(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ");
+  spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+  8 * data.tick =>  w.wait; 
+
+  spork ~KICK_HPF("*4k___ k___ k___ k___k___ k___ k___ k___ " , ":4 M/ff/v");
+  spork ~ BASS0_HPF(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ", ":4 M/ff/v");
   8 * data.tick =>  w.wait; 
 
       //// STOP REC ///////////////////////////////
