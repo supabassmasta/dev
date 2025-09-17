@@ -36,6 +36,9 @@ fun void KICK(string seq) {
 //  stmix.send(last, mixer);
   //stmix.receive(11); stmix $ ST @=> ST @ last; 
 
+//STDUCKMASTER duckm;
+//duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 9::ms /* Release */ );      duckm $ ST @=>  last; 
+
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration - 1::samp => now;
 }
@@ -62,10 +65,10 @@ fun void  prepare_WT  (){
     1.0 => sin0.gain;
 
     1.0 => stp0.next;
-    2.0 => e0.value;
+    1.8 => e0.value;
     2.2 => e0.target;
     wt_dur * 6 / 8 => e0.duration  => now;
-    8 => e0.target;
+    11 => e0.target;
     wt_dur * 2  / 8 => e0.duration  => now;
 
 
@@ -121,9 +124,9 @@ fun void BASS0 (string seq) {
 
 
   STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-  stsynclpfx0.freq(25 * 10 /* Base */, 59 * 10 /* Variable */, 1.0 /* Q */);
-  stsynclpfx0.adsr_set(.015 /* Relative Attack */, 38*  .01/* Relative Decay */, 0.38 /* Sustain */, .2 /* Relative Sustain dur */, 0.7 /* Relative release */);
-  stsynclpfx0.nio.padsr.setCurves(1.0,47 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  stsynclpfx0.freq(25 * 10 /* Base */, 35 * 10 /* Variable */, 1.0 /* Q */);
+  stsynclpfx0.adsr_set(.0015 /* Relative Attack */, 27*  .01/* Relative Decay */, 0.29 /* Sustain */, .2 /* Relative Sustain dur */, 0.7 /* Relative release */);
+  stsynclpfx0.nio.padsr.setCurves(1.0,39 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
@@ -169,8 +172,11 @@ fun void BASS0 (string seq) {
 
 
   STADSR stadsr;
-  stadsr.set(1::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.35/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
+  stadsr.set(.6::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.35/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
   stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
+
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
   STMIX stmix;
   stmix.send(last, mixer);
@@ -343,7 +349,7 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 
 
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 29/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 3 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 32/* ir index */, 1 /* chans */, 0::ms /* pre delay*/, .001 * 5 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 
 fun void EFFECT1   (){ 
@@ -398,14 +404,17 @@ spork ~  EFFECT3();
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 //spork ~ BASS0(" *2 _!1_!1_!1_!1_!1_!1_!1_!1___ ");
 //  spork ~ BASS0("{c {c *4  1//1__ ____  1//1__ _1__  1//1__ 1//1__  1//1__ 5!5__  ");
 //  spork ~ BASS0(" *2   _1 _1 _1 _1 _1 _1 _1 _1   ");
   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
    spork ~  BASS0_ATTACK ("*4    __aa __aa __aa __aa __aa __aa __aa __aa  ", 0.7 /* rate */, .16 /* g */); 
 //  spork ~ BASS0(" *4  _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1 _!1!1!1   ");
-//    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa       ", 0.7 /* rate */, .16 /* g */); 
+//    spork ~  BASS0_ATTACK ("*4   _aaa _aaa _aaa _aaa _aaa _aaa _aaa _aaa       ", 0.8 /* rate */, .25 /* g */); 
+
+//  spork ~ BASS0(" *4  !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1 !1!1!1!1    ");
+//    spork ~  BASS0_ATTACK ("*4   aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa       ", 0.8 /* rate */, .25 /* g */); 
 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 

@@ -334,12 +334,12 @@ convrevin_dur + 10::ms => now;
 53 => data.ref_note;
 
 SYNC sy;
-//sy.sync(8 * data.tick);
+sy.sync(8 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;
-0::ms => w.fixed_end_dur;
-//8*data.tick => w.sync_end_dur;
+//0::ms => w.fixed_end_dur;
+8*data.tick => w.sync_end_dur;
 //2 * data.tick =>  w.wait; 
 
 // OUTPUT
