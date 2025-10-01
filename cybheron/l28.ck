@@ -327,7 +327,7 @@ fun void EFFECT1   (){
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 12/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 13/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .01 * 3 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
   while(1) {
          100::ms => now;
   }
@@ -387,6 +387,8 @@ fun void EFFECT4   (){
   STLIMITER stlimiter;
   3. => float in_gainl;
   stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+  STMIX stmix2;
+  stmix2.send(last, mixer + 1);
   while(1) {
          100::ms => now;
   }
@@ -396,17 +398,29 @@ spork ~  EFFECT4();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ RING("  F////1", ":4 H/G"/*fmod*/, ":2 4/2"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    spork ~ RING(" F////1", "  G//HH/GG/H"/*fmod*/, ":2 F/6"/*gmod*/,64/*k*/,2*data.tick, 4,.2);
     8 * data.tick => w.wait;
+    spork ~ RING("  F////1", ":4 {5 H/G"/*fmod*/, ":2 F/6"/*gmod*/,65/*k*/,2*data.tick, 4,.2);
+    spork ~ RING(" {c F////1", ":4 {5 G/H"/*fmod*/, ":2 F/6"/*gmod*/,64/*k*/,2*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+    spork ~ RING("1111 1111 1////F F////1", ":4 I/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+    spork ~ RING("1111 1111 1////F F////1", ":4 H/F"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+//  if ( 0  ){
+      
+    spork ~ RING("  F////1", ":4 H/G"/*fmod*/, ":2 F/2"/*gmod*/,65/*k*/,2*data.tick, 4,.2);
     spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":2 4/2"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
     8 * data.tick => w.wait;
+    spork ~ RING(" ____ F////1", ":4 H/G"/*fmod*/, ":2 H/2"/*gmod*/,65/*k*/,7*data.tick, 4,.2);
     spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
     8 * data.tick => w.wait;
+//  }
     //-------------------------------------------
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 
 // LOOP

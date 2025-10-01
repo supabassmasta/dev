@@ -6,6 +6,8 @@ public class RECTRACK {
   "rec_default_name.wav" => string name_main;
   8 * data.tick => dur main_extra_time;
   8 * data.tick => dur end_loop_extra_time;
+  1 * data.tick => dur main_play_end_sync;
+//  1 * data.tick => dur end_loop_play_end_sync;
 
   WAIT w; // To be configured on instance, if sync end is required when playback
   1::samp => w.fixed_end_dur;
@@ -24,7 +26,7 @@ public class RECTRACK {
       1.0 * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 10::ms);
-      l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+      l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , main_play_end_sync /* END sync */); l $ ST @=> ST @ last;  
 
       // WAIT Main to finish
       l.buf.length() - main_extra_time  =>  w.wait;
