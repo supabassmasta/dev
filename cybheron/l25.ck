@@ -371,22 +371,22 @@ stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq 
 spork ~  EFFECT3();
 
 fun void EFFECT4   (){ 
-  STMIX stmix;
-  stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
-
-  STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
-  stautoresx0.connect(last $ ST ,  stautoresx0_fact, 3.0 /* Q */, 25 * 10 /* freq base */, 75 * 10 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
-  8 => stautoresx0.gain;
-  //
-  STECHO ech;
-  ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
-
-  STAUTOPAN autopan;
-  autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
-
-  STLIMITER stlimiter;
-  3. => float in_gainl;
-  stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+//   STMIX stmix;
+//   stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+// 
+//   STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+//   stautoresx0.connect(last $ ST ,  stautoresx0_fact, 3.0 /* Q */, 25 * 10 /* freq base */, 75 * 10 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+//   8 => stautoresx0.gain;
+//   //
+//   STECHO ech;
+//   ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+// 
+//   STAUTOPAN autopan;
+//   autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+// 
+//   STLIMITER stlimiter;
+//   3. => float in_gainl;
+//   stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
   while(1) {
          100::ms => now;
   }
@@ -439,7 +439,8 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+ w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
 

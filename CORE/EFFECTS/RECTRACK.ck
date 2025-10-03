@@ -6,11 +6,8 @@ public class RECTRACK {
   "rec_default_name.wav" => string name_main;
   8 * data.tick => dur main_extra_time;
   8 * data.tick => dur end_loop_extra_time;
-  1 * data.tick => dur main_play_end_sync;
+  1 * data.tick => dur play_end_sync;
 //  1 * data.tick => dur end_loop_play_end_sync;
-
-  WAIT w; // To be configured on instance, if sync end is required when playback
-  1::samp => w.fixed_end_dur;
 
   // Private
   STREC strec;
@@ -20,13 +17,16 @@ public class RECTRACK {
   ST stmain;
 
   fun int play_or_rec () {
+    WAIT w; 
+    play_end_sync => w.sync_end_dur;
+
     if ( !compute_mode && MISC.file_exist(name_main) ){
       LONG_WAV l;
       name_main => l.read;
       1.0 * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 10::ms);
-      l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , main_play_end_sync /* END sync */); l $ ST @=> ST @ last;  
+      l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , play_end_sync /* END sync */); l $ ST @=> ST @ last;  
 
       // WAIT Main to finish
       l.buf.length() - main_extra_time  =>  w.wait;
@@ -78,7 +78,7 @@ public class RECTRACK {
 
   fun void rec_stop (){ 
     if (rec_mode) {     
-      main_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+      main_extra_time =>  now;  // Wait for Echoes REV to complete
       strec.rec_stop( 0::ms, 1);
       2::ms => now;
     }
@@ -97,7 +97,7 @@ public class RECTRACK {
 
   fun void  stop_rec_end_loop(){ 
     if (rec_mode ) {     
-      end_loop_extra_time =>  w.wait;  // Wait for Echoes REV to complete
+      end_loop_extra_time =>  now;  // Wait for Echoes REV to complete
       strecendloop.rec_stop( 0::ms, 1);
       2::ms => now;
     }

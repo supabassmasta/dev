@@ -1862,6 +1862,7 @@ ab STCONVREVINK 133::ms => dur convrevin_dur;
 
 ab RECTRACKK /// PLAY OR REC /////////////////
 \<CR>RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+\<CR>// w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
 \<CR>if (rectrack.play_or_rec() ) {
 \<CR>//////////////////////////////////
 \<CR>
