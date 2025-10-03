@@ -371,22 +371,22 @@ stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq 
 spork ~  EFFECT3();
 
 fun void EFFECT4   (){ 
-//   STMIX stmix;
-//   stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
-// 
-//   STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
-//   stautoresx0.connect(last $ ST ,  stautoresx0_fact, 3.0 /* Q */, 25 * 10 /* freq base */, 75 * 10 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
-//   8 => stautoresx0.gain;
-//   //
-//   STECHO ech;
-//   ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
-// 
-//   STAUTOPAN autopan;
-//   autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
-// 
-//   STLIMITER stlimiter;
-//   3. => float in_gainl;
-//   stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+   STMIX stmix;
+   stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
+ 
+   STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+   stautoresx0.connect(last $ ST ,  stautoresx0_fact, 3.0 /* Q */, 25 * 10 /* freq base */, 75 * 10 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+   8 => stautoresx0.gain;
+   //
+   STECHO ech;
+   ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+ 
+   STAUTOPAN autopan;
+   autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+ 
+   STLIMITER stlimiter;
+   3. => float in_gainl;
+   stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
   while(1) {
          100::ms => now;
   }
@@ -396,16 +396,28 @@ spork ~  EFFECT4();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ RING("  F////1", ":4 H/G"/*fmod*/, ":2 4/2"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    spork ~ RING(" F////1", "  G//HH/GG/H"/*fmod*/, ":2 F/6"/*gmod*/,64/*k*/,2*data.tick, 4,.2);
     8 * data.tick => w.wait;
+    spork ~ RING("  F////1", ":4 {5 H/G"/*fmod*/, ":2 F/6"/*gmod*/,65/*k*/,2*data.tick, 4,.2);
+    spork ~ RING(" {c F////1", ":4 {5 G/H"/*fmod*/, ":2 F/6"/*gmod*/,64/*k*/,2*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+    spork ~ RING("1111 1111 1////F F////1", ":4 I/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+    spork ~ RING("1111 1111 1////F F////1", ":4 H/F"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
+    8 * data.tick => w.wait;
+//  if ( 0  ){
+      
+    spork ~ RING("  F////1", ":4 H/G"/*fmod*/, ":2 F/2"/*gmod*/,65/*k*/,2*data.tick, 4,.2);
     spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":2 4/2"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
     8 * data.tick => w.wait;
+    spork ~ RING(" ____ F////1", ":4 H/G"/*fmod*/, ":2 H/2"/*gmod*/,65/*k*/,7*data.tick, 4,.2);
     spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,3*data.tick, 4,.2);
     8 * data.tick => w.wait;
+//  }
     //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 
