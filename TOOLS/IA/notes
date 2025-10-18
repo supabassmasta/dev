@@ -1,0 +1,21 @@
+2025
+image editing
+Qwen: https://huggingface.co/Qwen/Qwen-Image-Edit-2509
+Flux: https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev
+
+
+
+Image upscaling:
+https://huggingface.co/fal/AuraSR-v2
+https://huggingface.co/qualcomm/Real-ESRGAN-x4plus
+
+Text to Image with face preservation
+https://huggingface.co/ByteDance/FaceCLIP
+
+
+Text to image:
+https://huggingface.co/Qwen/Qwen-Image
+https://huggingface.co/black-forest-labs/FLUX.1-dev
+https://huggingface.co/stabilityai/stable-diffusion-3.5-large
+https://huggingface.co/stabilityai/stable-diffusion-2
+

@@ -1,0 +1,4 @@
+Note: Answered by Claude
+      Use the real chuck path, no symlink
+
+sudo setcap cap_dac_override=ep /usr/bin/chuckp1544
