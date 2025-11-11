@@ -1,4 +1,11 @@
 Note: Answered by Claude
       Use the real chuck path, no symlink
 
+- Add capabilities (kb)
 sudo setcap cap_dac_override=ep /usr/bin/chuckp1544
+
+- get cap
+getcap /usr/bin/chuckp1544
+
+- remove
+sudo setcap  -r /usr/bin/chuckp1544
