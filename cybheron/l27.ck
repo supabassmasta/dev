@@ -408,6 +408,43 @@ t.set_adsrs_curves(0.6, 1.3, 0.5); // curves: > 1 = Attack concave, other convex
 }
 ///////////////////////////////////////////////////////////////////::
 
+fun void GLIDE2 (string seq, int n, float lpf_f, int mix,  float v) {
+  local_delay => now;
+
+  TONE t;
+  t.reg(synt0 s0);  //data.tick * 8 => t.max; 
+  40::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+t.set_adsrs(15::ms, 20::ms, .8, 40::ms);
+t.set_adsrs_curves(0.6, 1.3, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+  t.go();   t $ ST @=> ST @ last; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  STMIX stmix;
+  stmix.send(last, mixer + mix);
+
+  STEPC stepc; stepc.init(HW.lpd8.potar[1][2], .1 /* min */, 300 /* max */, 50::ms /* transition_dur */);
+  MGAINC mgainc0; mgainc0.config( HW.lpd8.potar[1][1] /* gain */, 300.0 /* Static gain */ ); 
+  stepc.out =>  SinOsc sin0 => mgainc0 =>  s0.inlet;  
+  10.0 => sin0.freq;
+  1.0 => sin0.gain;
+
+  1::samp => now; // let seq() be sporked to compute duration
+  t.s.duration => now;
+
+}
+///////////////////////////////////////////////////////////////////::
+
 fun void PLOC (string seq, int n, float lpf_f, int mix,  float v) {
   local_delay => now;
 
@@ -725,7 +762,27 @@ fun void  LOOPGLIDE  (){
   16 * data.tick => w.wait;
 //  }
 } 
-//spork ~ LOOPGLIDE();
+fun void  LOOPGLIDE2  (){ 
+//  while(1) {
+
+  <<<"----------------------------">>>;
+  <<<"------ LOOP GLIDE FM -------">>>;
+  <<<"------ potar 1.1 mod Gain --">>>;
+  <<<"------ potar 1.2 mod freq --">>>;
+  <<<"----------------------------">>>;
+
+
+  spork ~   GLIDE2 ("*2 }c  3153153153153153153153153FB31c38   ", 17, 56 * 100, 5,  0.3 ); 
+  16 * data.tick => w.wait;
+  spork ~   GLIDE2 ("*2 }c  31531531531531531531531531B3f5D8   ", 17, 56 * 100, 5,  0.3 ); 
+  16 * data.tick => w.wait;
+  spork ~   GLIDE2 ("*2 }c  31531531531531531531531B315D1531   ", 17, 56 * 100, 5,  0.3 ); 
+  16 * data.tick => w.wait;
+  spork ~   GLIDE2 ("*2 }c  3153153153153153153153153853f531   ", 17, 56 * 100, 5,  0.3 ); 
+  16 * data.tick => w.wait;
+//  }
+} 
+//spork ~ LOOPGLIDE2();
  
 fun void  LOOPPLOC  (){ 
 //  while(1) {
@@ -751,10 +808,14 @@ fun void  LOOPPLOC  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+spork ~ LOOPGLIDE2();
 
+  for (0 => int i; i <   8    ; i++) {
+   
   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
   spork ~ BASS0(" *4  __11  __11  __1_  ___1  __11  __1_  ___1  _111      ");
   8 * data.tick =>  w.wait; 
+  }
 
     //-------------------------------------------
   }
