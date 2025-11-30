@@ -501,7 +501,8 @@ spork ~  EFFECT3();
 fun void  LOOPLAB  (){ 
   while(1) {
  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
- spork ~ BASS0_hf("*4 _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__    ");
+//spork ~ BASS0_hf("*4 _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__    ");
+ spork ~ BASS0_hf("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
  spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
  spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
 
