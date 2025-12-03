@@ -455,7 +455,7 @@ s_wt1.inlet => stfreebrfx1.freq; // CONNECT THIS
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
 }
-spork ~ BASS0HF_LPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ", ":4 M/ff/v"    );
+// spork ~ BASS0HF_LPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ", ":4 M/ff/v"    );
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -498,6 +498,136 @@ fun void TRANCEHH(string seq) {
   1::samp => now; // let seq() be sporked to compute length
   s.s.duration => now;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  
+  SET_WAV.TRIBAL(s);
+  s.wav["M"] => s.wav["a"];  // act @=> s.action["a"]; 
+  s.wav["M"] => s.wav["b"];  // act @=> s.action["a"]; 
+
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+  //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  1.2=> s.wav_o["a"].wav0.rate;
+  1.4=> s.wav_o["b"].wav0.rate;
+  s.go();     s $ ST @=> ST @ last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+
+//  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+   
+fun void ACOUSTICTOM(string seq, int tomix, float g) {
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+  SET_WAV.ACOUSTICTOM(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+; //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+  // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+  //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+  s.go();     s $ ST @=> ST @ last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+//   spork ~ ACOUSTICTOM("*6 AAABBB CCCDDD UKKUUK SABCDU ",0,.7);
+
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+fun void  MODU (int nb, string seq, string modf, string modg, float cut, int tomix, float g){ 
+   
+TONE t;
+t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(nb /* synt nb */ ); 
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+seq => t.seq;
+g * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();// 
+t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//t.set_adsrs(2::ms, 10::ms, .2, 400::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+
+AUTO.freq(modf) =>  SinOsc sin0 => MULT m => s0.inlet;
+AUTO.freq(modg) =>  m;
+
+
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, cut /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration => now;
+}
+
+//  spork ~   MODU (22, "*4 {c  1__1 _1_1 __1_ 1_1__1","1"/*modf*/,"f"/*modg*/,2*1000/*cut*/,0,.26); 
+
+fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float v) {
+
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+  s0.config(n /* synt nb */ ); 
+  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  1::samp => now; // let seq() be sporked to compute duration
+  t.s.duration => now;
+
+}
+
+
+//  spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,0,.25);
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -572,17 +702,19 @@ spork ~  EFFECT3();
 
 fun void  LOOPLAB  (){ 
   while(1) {
+spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,2,.25);
 
+ spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+    8 * data.tick => w.wait;
 
-  spork ~KICK_HPF("*4k___ k___ k___ k___k___ k___ k___ ____ " , ":4 M/ff/v");
-  spork ~ BASS0_HPF(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ", ":4 M/ff/v"    );
-  spork ~ BASS0HF_HPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ", ":4 M/ff/v"    );
+  spork ~KICK_LPF("*4k___ k___ k___ k___k___ k___ k___ ____ " , ":4 M/ff/v");
+  spork ~ BASS0_LPF(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ", ":4 M/ff/v"    );
+  spork ~ BASS0HF_LPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ", ":4 M/ff/v"    );
   7 * data.tick => w.wait;
   spork ~  TRANCEHH ("*4    }5+3ht_+3{2h  ");
   1 * data.tick => w.wait;
 
  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
-//spork ~ BASS0HF("*4 _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__ _!1__    ");
  spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
  spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
  spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
@@ -592,7 +724,17 @@ fun void  LOOPLAB  (){
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 
     8 * data.tick => w.wait;
-    //-------------------------------------------
+spork ~   MODU (22, "*4 {c  1__1 _1_1 __1_ 1_1__1" , "1", "f", 2 *1000, 2, .38); 
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+    8 * data.tick => w.wait;
+    4 * data.tick => w.wait;
+  spork ~ ACOUSTICTOM("*6 AAABBB CCCDDD UKKUUK SABCDU ",0,.7);
+    4 * data.tick => w.wait;
+  //-------------------------------------------
   }
 } 
 //spork ~ LOOPLAB();
