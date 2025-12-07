@@ -5,7 +5,11 @@ public class SERUM1 extends SYNT{
   SYNT @ syntl[0]; // to access synt after, to hack it
 
   fun void  add(int n, int k, float g, float ifg, dur  at, dur d, float su, dur r ){ 
-    inlet => Gain i => SERUM0 s => ADSR a  => outlet; 
+
+    new  Gain   @=> Gain @ i ;
+    new  SERUM0 @=>SERUM0 @ s; 
+    new  ADSR  @=> ADSR @ a ; 
+    inlet =>  i =>  s =>  a  => outlet; 
     g => s.outlet.gain;
     ifg => i.gain;
     s.config(n, k);
@@ -15,7 +19,9 @@ public class SERUM1 extends SYNT{
   } 
 
   fun void  add(SYNT @ in, float g, float ifg, dur  at, dur d, float su, dur r ){ 
-    inlet => Gain i => in => ADSR a  => outlet; 
+    new  Gain   @=> Gain @ i ;
+    new  ADSR  @=> ADSR @ a ; 
+    inlet =>  i => in=>  a  => outlet; 
     g => in.outlet.gain;
     ifg => i.gain;
     a.set(at, d, su, r);
