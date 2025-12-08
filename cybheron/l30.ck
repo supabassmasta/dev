@@ -1200,11 +1200,12 @@ fun void  LOOPLAB  (){
 1::second / Std.mtof(data.ref_note) => dur comb_dur;
 <<<"comb_dur",comb_dur/1::ms>>>;
 
-spork ~   COMB ("*8 1_1_ 1_1_ __1_ 1_1_ 1___ 1_1_ 1___ 1_1_1_1_ 1___ 1___ 1_1___1_ 1_1_ 1___ 1_1_",3*comb_dur/*comb_dur*/,.85/*comb_res*/,1,1.6); 
+spork ~   COMB ("*8 1_1_ 1_1_ __1_ 1_1_ 1___ 1_1_ 1___ 1_1_1_1_ 1___ 1___ 1_1___1_ 1_1_ 1___ 1_1_",3*comb_dur/*comb_dur*/,.85/*comb_res*/,1,1.1); 
  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 // spork ~ BASS0(" *4   __!1_ ___1 __1_ ___1 __1_ ___1 __1_ ___1    ");
- spork ~ BASS0(" *4 {c  __5_ ___5 __5_ ___5 __5_ ___5 __5_ ___5    ");
+ spork ~ BASS0(" *4 {c  __5_ __5_ __5_ ___5 __5_ ___5 __5_ ___5    ");
     spork ~  TRANCEHH ("*4 +1 {3  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
 // spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
 // spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
 // spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
