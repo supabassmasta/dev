@@ -1632,6 +1632,8 @@ ab STFREEPANK STFREEPAN stfreepan0;
 " AUTO freq: dorian scale based on ref note , gain 1 : 0.0, 8 : 1.0 and pan 1 : -1.0, 5 ~ 0.0, 8 : 1.0
 ab AUTOK AUTO.freq("") => 
 
+ab AUTOGLIDEK AUTO.freqglide("",30::ms/*glide_dur*/) => 
+
 ab STFREEGAINK STFREEGAIN stfreegain;
 \<CR>stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
 \<CR>AUTO.gain("") => stfreegain.g; // connect this
