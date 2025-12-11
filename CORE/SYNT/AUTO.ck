@@ -110,6 +110,16 @@ public class AUTO {
 
     return laf.outlet;
   } 
+  fun static UGen freqglide (string s, dur glide){
+    af << new autofreq ;
+    af[af.size()-1] @=> autofreq @ laf; // Last autofreq added
+    s => laf.seq;
+    glide => laf.t.glide;
+    laf.go();
+
+    return laf.outlet;
+  } 
+
 
   fun static UGen gain (string s){
     ag << new autogain ;
