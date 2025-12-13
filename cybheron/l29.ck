@@ -1031,6 +1031,127 @@ fun void  ONEP0  (string s, int tomix,  float g){
 //  spork ~   ONEP0 (" *4*2 }c}c}c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 32),0, 4.1); 
 
 
+class syntcomb extends SYNT{
+
+    inlet => SawOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { .4 => s.phase;} 0 => own_adsr;
+} 
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+//"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+ 
+fun void  COMB  (string seq, dur comb_dur, float comb_res, int tomix,  float g){ 
+   
+   TONE t;
+   t.reg(syntcomb s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+   t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+   // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+   seq => t.seq;
+   .9 * data.master_gain => t.gain;
+   //t.sync(4*data.tick);// t.element_sync();//
+   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+   // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   t.set_adsrs(3::ms, 3::ms, .0002, 4::ms);
+   t.set_adsrs_curves(0.8, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   1 => t.set_disconnect_mode;
+   t.go();   t $ ST @=> ST @ last; 
+
+STECHO ech;
+ech.connect(last $ ST , comb_dur , comb_res);  ech $ ST @=>  last; 
+
+//STFLANGER ech;
+//ech.connect(last $ ST); ech $ ST @=>  last; 
+//ech.add_line(0 /* 0 : left, 1: right 2: both */, comb_res /* delay line gain */,  comb_dur /* dur base */, 1::ms /* dur range */, 1 /* freq */); 
+
+//"FEDCBA0 1234567 89abcde fghijkl mnop"=> string filternotes;
+//" MLKJIHGFEDCBA0123456789a "=> string notes;
+"MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnop "=> string notes;
+//" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnop"=> string notes;
+
+ 
+//"6"=> string notes;
+RAND.char(notes, 16)=> string filternotes;
+//"M" + filternotes => filternotes;
+//"}c}c M/NN/OO/PP/aa/BB/CC/ff/M" => filternotes;
+
+
+10::ms => dur gl;
+
+
+  STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
+  stfreeresx0.connect(ech $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::samp /* period */ ); stfreeresx0 $ ST @=>  last; 
+  AUTO.freqglide("*4 " + filternotes, gl) => stfreeresx0.freq; // CONNECT THIS 8
+  
+  STFREEFILTERX stfreeresx1;
+  stfreeresx1.connect(ech $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::samp /* period */ ); stfreeresx1 $ ST @=>  last; 
+  AUTO.freqglide("*4}c" + filternotes, gl) => stfreeresx1.freq; // CONNECT THIS 8
+  
+  STFREEFILTERX stfreeresx2;
+  stfreeresx2.connect(ech $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::samp /* period */ ); stfreeresx2 $ ST @=>  last; 
+  AUTO.freqglide("*4}c}c" + filternotes, gl)  => stfreeresx2.freq; // CONNECT THIS 8
+  
+  STGAIN stgain;
+  stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+  stgain.connect(stfreeresx0 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+  stgain.connect(stfreeresx1 $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
+
+STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+stlpfx0.connect(last $ ST ,  stlpfx0_fact, 153 * 100.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+STLIMITER stlimiter;
+1. => float in_gainl;
+stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+
+g => stlimiter.gain;
+
+
+//STLHPFC lhpfc;
+//lhpfc.connect(last $ ST , HW.lpd8.potar[1][1] /* freq */  , HW.lpd8.potar[1][2] /* Q */  );       lhpfc $ ST @=>  last; 
+
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  1::samp => now;
+  t.s.duration => now;
+
+} 
+
+//1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
+//spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+
+
+fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
+  STMIX stmix;
+  stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
+
+  STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+  stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, lpforder /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+  AUTO.freq(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
+
+  STFREEGAIN stfreegain;
+  stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
+  AUTO.gain(gseq) => stfreegain.g; // connect this 
+
+  g => stfreegain.gain;
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  d => now;
+} 
+
+//spork ~ ERAMP (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,2/*lpforder*/,1,1.0);
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -1358,19 +1479,29 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ");
     //////////////////////////////////////////////////
 
     
-
+1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
 
 
 for (0 => int i; i <  16     ; i++) {
 if ( maybe  )
-  spork ~   MODU (23, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 9),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.67); 
+  if ( maybe  )
+    spork ~   MODU (23, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 9),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.67);  else
+    spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
 else
-  spork ~   MODU (2, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 7),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.21); 
+  if ( maybe  )
+    spork ~   MODU (2, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 7),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.21); 
+  else
+     spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
 if ( maybe  )
-  spork ~   MODU (22, "____ :1 {c " + RAND.char("1F8M", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.60); 
+  if ( maybe  )
+    spork ~   MODU (22, "____ :1 {c " + RAND.char("F8M1", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.60); 
+  else
+   spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
 else
-  spork ~   MODU (2, ":1 {c____ " + RAND.char("1F8M", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.34); 
-
+  if ( maybe  )
+     spork ~   MODU (2, ":1 {c____ " + RAND.char("1MF8", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.34); 
+  else
+    spork ~   COMB ("____*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2);
 spork ~ PLOC("{c*2 ___1  ___8 ___1___8  ", 19, 29 * 100,1,1.0);
 
 spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");

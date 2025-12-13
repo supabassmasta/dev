@@ -625,7 +625,9 @@ fun void MOD1(string seq, int n, float modf, float modg, float modp, int tomix, 
   1::samp => now; // let seq() be sporked to compute length
     t.s.duration  => now;
 } 
+
 // spork ~ MOD1("*8{c  1_1_1_1_1_1_1_1_ 8_8_8_8_8_8_8_8_",11/*n*/,3.1/*modf*/,21*11/*modg*/,.3/*modp*/,0,.2) ; 
+
 fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float v) {
 
   TONE t;
@@ -658,6 +660,40 @@ fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float 
 
 
 //  spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,0,.25);
+
+
+fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, dur d, int tomix, float v) {
+
+  TONE t;
+  t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
+  s0.config(n /* synt nb */ ); 
+  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  d => now;
+
+}
+
+
+//  spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,16*data.tick,0,.25);
+
 
 fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix, float g){ 
   3::ms => dur attackRelease;
@@ -1119,6 +1155,69 @@ g => stlimiter.gain;
 
 } 
 
+//1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
+//spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+
+
+fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
+  STMIX stmix;
+  stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
+
+  STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
+  stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, lpforder /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+  AUTO.freq(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
+
+  STFREEGAIN stfreegain;
+  stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
+  AUTO.gain(gseq) => stfreegain.g; // connect this 
+
+  g => stfreegain.gain;
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  d => now;
+} 
+
+//spork ~ ERAMP (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,2/*lpforder*/,1,1.0);
+
+
+fun void  ERAMPOD (int mixin, dur d, string gseq, string odseq,float drive,int tomix, float g){ 
+  STMIX stmix;
+  stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
+
+  STFREEGAIN stfreegain2;
+  stfreegain2.connect(last $ ST);       stfreegain2 $ ST @=>  last; 
+  AUTO.gain(odseq) => stfreegain2.g; // connect this 
+
+  STOVERDRIVE stod;
+  stod.connect(last $ ST, drive /* drive 1 == no drive, > 1 == drive */ ); stod $ ST @=> last; 
+
+  STFREEGAIN stfreegain;
+  stfreegain.connect(stmix);       stfreegain $ ST @=>  last; 
+  AUTO.gain(gseq) => stfreegain.g; // connect this 
+
+  STGAIN stgain;
+  stgain.connect(last $ ST , g /* static gain */  );       stgain $ ST @=>  last; 
+  stgain.connect(stod , g /* static gain */  );       stgain $ ST @=>  last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  d => now;
+} 
+
+
+//spork ~ ERAMPOD (4/*mixin*/,32*data.tick,":8:21//1"/*gseq*/,":81////4"/*odseq*/,4.8/*drive*/,0,0.3);
+
+
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -1210,23 +1309,35 @@ fun void  LOOPLAB  (){
 // spork ~ SERUM00SEQ (" *4 53_1",30/*n*/,"}c:81//f"/*seqcut*/,":86//8"/*seq_g*/,16*data.tick/*d*/,1,.5);
 //spork ~   MODU (22, "*4 {c  1__1 _1_1 __1_ 1_1__1" , "1", "f", 2 *1000, 2, .38); 
 
+spork ~ SYNTGLIDE("*4 5231" /* seq */, 4 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,32*data.tick,4,1.19);
+spork ~ ERAMP (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,1/*lpforder*/,1,1.0);
+//spork ~ ERAMPOD (4/*mixin*/,32*data.tick,":8:21//1"/*gseq*/,":81////4"/*odseq*/,4.8/*drive*/,0,0.3);
+
+    32 * data.tick => w.wait;
+
+
 //  16 * data.tick => w.wait;
 1::second / Std.mtof(data.ref_note) => dur comb_dur;
-<<<"comb_dur",comb_dur/1::ms>>>;
+//<<<"comb_dur",comb_dur/1::ms>>>;
+//spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//    4 * data.tick => w.wait;
 
-//spork ~   COMB ("*8 1_1_ 1_1_ __1_ 1_1_ 1___ 1_1_ 1___ 1_1_1_1_ 1___ 1___ 1_1_ 1___ 1_1_1_1_ 1___  ",2*comb_dur/*comb_dur*/,.92/*comb_res*/,1,1.0); 
+//    32 * data.tick => w.wait;
 
-//spork ~   COMB ("*8  8___ " ,2*comb_dur/*comb_dur*/,.92/*comb_res*/,2,1.0); 
-//spork ~   COMB ("*8   " + RAND.seq("1_1_, 1___, 1_, 1!1__, 3_1_, 5___, 2_, 4!1__",4) ,2*comb_dur/*comb_dur*/,.92/*comb_res*/,2,1.0); 
-spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
-    4 * data.tick => w.wait;
-spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
-    4 * data.tick => w.wait;
-
-spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
-    4 * data.tick => w.wait;
-spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
-    4 * data.tick => w.wait;
+//spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+//    4 * data.tick => w.wait;
+//spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
+//    4 * data.tick => w.wait;
 // spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 // spork ~ BASS0(" *4   __!1_ ___1 __1_ ___1 __1_ ___1 __1_ ___1    ");
 // spork ~ BASS0(" *4 {c  __5_ ___5 __5_ ___5 __5_ ___5 __5_ ___5    ");
