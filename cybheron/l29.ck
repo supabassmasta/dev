@@ -1224,9 +1224,509 @@ stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq 
    
 } 
 spork ~  EFFECT3();
+
+///////////////////////////////////////////////////////////////
+
+
+fun void  BEAT16x32  (){ 
+   
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~ SLIDENOISE(200/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,1.8/*width*/,2,.11); 
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ 8 * data.tick => w.wait;
+
+
+////////
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~ SLIDENOISE(1300/*fstart*/,200/*fstop*/,14*data.tick/*dur*/,0.3/*width*/,2,.11); 
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
+
+
+////
+////
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~ SLIDENOISE(200/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,1.8/*width*/,2,.12); 
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+////
+////
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!2!2__ !2!2__ !2!2__ !2!2__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!2!2 __!2!2 __!2!2 __!2!2   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__!3!3__ !3!3__ !3!3__ !3!3__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!3!3 __!3!3 __!3!3 __!3!3   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~ SLIDENOISE(1300/*fstart*/,200/*fstop*/,14*data.tick/*dur*/,0.3/*width*/,2,.13); 
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ____ ____");
+ spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ____    ");
+ spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ____   ");
+ spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa   ", 0.7 /* rate */, .16 /* g */); 
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+ 8 * data.tick => w.wait;
+
+
+} 
+
+fun void  BEAT16x32  (dur d){ 
+  spork ~   BEAT16x32 (); 
+  d => now;
+}
 //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
- 
 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -1252,7 +1752,13 @@ fun void  LOOPLAB  (){
 // spork ~ SERUM00SEQ ("*2 _1__",31/*n*/,"}c:81//l"/*seqcut*/,":86//9"/*seq_g*/,16*data.tick/*d*/,1,.8);
 //  spork ~   ONEP0 (" *4*2 }c}c}c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 32),0, 4.1); 
 
-if ( 1  ){
+
+
+spork ~ BEAT16x32  (4 * 32*data.tick);
+    5 *  32 * data.tick => w.wait;
+
+
+if ( 0  ){
     
 
   spork ~   MODU (22, ":8 {c  F////f",":8 Z/88/Z"/*modf*/,":2 1/FFF/1"/*modg*/,13*1000/*cut*/,1,.29); 
@@ -1296,8 +1802,8 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
  spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
  spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
  spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
-    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
-    8 * data.tick => w.wait;
+ spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+ 8 * data.tick => w.wait;
 
 spork ~ PLOC("{c*2 ___1  ___8 ___1___8  ", 19, 29 * 100,1,1.0);
 spork ~KICK("*4 k___ k___ k___ k___k___ k___ ");
@@ -1323,7 +1829,6 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ");
   spork ~  TRANCEHH ("*4    }5+3ht_+3{2h  ");
   1 * data.tick => w.wait;
 
-}
 
 for (0 => int i; i <  16     ; i++) {
 if ( maybe  )
@@ -1347,6 +1852,7 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
 //    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
 
     8 * data.tick => w.wait;
+}
 }
  if ( 0  ){
      
@@ -1455,7 +1961,7 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ");
     2 * data.tick => w.wait;
 
   spork ~   MODU (22, ":2 {c  F////f",":8 Z/1"/*modf*/,":4f/FF/1"/*modg*/,13*1000/*cut*/,1,.52); 
-  spork ~  SLIDENOISE(200 /* fstart */, 1000 /* fstop */, 8* data.tick /* dur */, 1.8 /* width */,1,.11); 
+  spork ~  SLIDENOISE(200 /* fstart */, 1000 /* fstop */, 8* data.tick /* dur */, 1.8 /* width */,1,.14); 
   spork ~KICK_LPF("*4k___ k___ k___ k___k___ k___ k___ ____ " , ":4 M/ff/v");
   spork ~ BASS0_LPF(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ", ":4 M/ff/v"    );
   spork ~ BASS0HF_LPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ", ":4 M/ff/v"    );
@@ -1478,42 +1984,50 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ ");
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
 
+spork ~   BEAT16x32 (); 
     
-1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
-
-
-for (0 => int i; i <  16     ; i++) {
-if ( maybe  )
+  1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
+  0 => int inibiter_comb;
+  for (0 => int i; i <  16 * 4     ; i++) {
   if ( maybe  )
-    spork ~   MODU (23, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 9),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.67);  else
-    spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
-else
-  if ( maybe  )
-    spork ~   MODU (2, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 7),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.21); 
+    if ( maybe || inibiter_comb ){
+
+      spork ~   MODU (23, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 9),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.67);  
+      0 => inibiter_comb;
+  }
+    else {
+      spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+    }
   else
-     spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
-if ( maybe  )
+    if ( maybe  || inibiter_comb){
+      spork ~   MODU (2, "*8 {c " + RAND.seq("1_1_,1_1_,1___,81__,F/f_1_,F/f_8_,__1_", 7),"{c{c " + RAND.char("ZWM8",5) /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,6*1000/*cut*/,3,.21); 
+      0 => inibiter_comb;
+  }
+   else
+       spork ~   COMB ("*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
   if ( maybe  )
-    spork ~   MODU (22, "____ :1 {c " + RAND.char("F8M1", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.60); 
+    if ( maybe || inibiter_comb ) {
+      spork ~   MODU (22, "____ :1 {c " + RAND.char("F8M1", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.60); 
+      0 =>  inibiter_comb;
+    }
+    else {
+     spork ~   COMB ("____ *8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
+      1 =>  inibiter_comb;
+    }
   else
-   spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.0); 
-else
-  if ( maybe  )
-     spork ~   MODU (2, ":1 {c____ " + RAND.char("1MF8", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.34); 
-  else
-    spork ~   COMB ("____*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2);
-spork ~ PLOC("{c*2 ___1  ___8 ___1___8  ", 19, 29 * 100,1,1.0);
+    if ( maybe || inibiter_comb ) {
+      0 =>  inibiter_comb;
+       spork ~   MODU (2, ":1 {c____ " + RAND.char("1MF8", 1) +"///" + RAND.char("4B5X", 1) ," "+ RAND.char("ZWM8",1) + RAND.char("ZWM8///",4)+ RAND.char("ZWM8",1)  /*modf*/,"*2 "+ RAND.char("fm8", 5) /*modg*/,15*1000/*cut*/,1,.34); 
+    }
+    else {
+      spork ~   COMB ("____*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2);
+      1 =>  inibiter_comb;
+    }
 
-spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
- spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
- spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
- spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
 
-    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
-// spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
-//    spork ~  TRANCEHH ("*4 -4   jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  jjjj  "); 
+  spork ~ PLOC("{c*2 ___1  ___8 ___1___8  ", 19, 29 * 100,1,1.0);
 
-    8 * data.tick => w.wait;
+  8 * data.tick => w.wait;
 }
 
 
