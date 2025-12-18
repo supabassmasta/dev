@@ -8,6 +8,11 @@ import wave
 import struct
 from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
+from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib.units import inch
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image as RLImage
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.lib.enums import TA_LEFT
 
 
 def wav_to_image(wav_path, output_path=None, width=1200, height=400, bg_color=(255, 255, 255),
@@ -123,11 +128,16 @@ def main():
     parser.add_argument(
         'input',
         nargs='*',
-        help='Input WAV file(s). If not specified, processes all .wav files in current directory'
+        help='Input WAV file(s) or directories. If not specified, processes all .wav files in current directory and subdirectories'
     )
     parser.add_argument(
         '-o', '--output',
         help='Output image path (only valid for single input file)'
+    )
+    parser.add_argument(
+        '--output-dir',
+        default='waveforms',
+        help='Output directory for generated images (default: waveforms)'
     )
     parser.add_argument(
         '--width',
@@ -141,17 +151,31 @@ def main():
         default=400,
         help='Image height in pixels (default: 400)'
     )
+    parser.add_argument(
+        '--pdf',
+        default='waveforms.pdf',
+        help='Generate PDF file with all images (default: waveforms.pdf)'
+    )
 
     args = parser.parse_args()
 
     # Determine input files
     if args.input:
-        wav_files = [Path(f) for f in args.input]
+        wav_files = []
+        for input_path in args.input:
+            path = Path(input_path)
+            if path.is_file():
+                wav_files.append(path)
+            elif path.is_dir():
+                # Recursively find WAV files in directory
+                wav_files.extend(sorted(path.rglob('*.wav')))
+            else:
+                print(f"Warning: {input_path} is not a valid file or directory")
     else:
-        # Process all WAV files in current directory
-        wav_files = sorted(Path('.').glob('*.wav'))
+        # Process all WAV files in current directory and subdirectories
+        wav_files = sorted(Path('.').rglob('*.wav'))
         if not wav_files:
-            print("No WAV files found in current directory")
+            print("No WAV files found in current directory or subdirectories")
             return
 
     # Validate input files
@@ -163,20 +187,76 @@ def main():
             print(f"Error: Not a WAV file: {wav_file}")
             return
 
-    # Check output argument
+    # Check output argument conflicts
     if args.output and len(wav_files) > 1:
         print("Error: --output can only be used with a single input file")
         return
 
-    # Process files
+    # Create output directory if using it
+    if not args.output and len(wav_files) > 0:
+        output_dir = Path(args.output_dir)
+        output_dir.mkdir(exist_ok=True)
+        print(f"Saving images to: {output_dir.absolute()}\n")
+
+    # Process files and track output paths
+    wav_image_pairs = []
     for wav_file in wav_files:
-        output = args.output if args.output and len(wav_files) == 1 else None
+        if args.output and len(wav_files) == 1:
+            output = args.output
+        else:
+            # Save to output directory with same filename
+            output_dir = Path(args.output_dir)
+            output = output_dir / wav_file.with_suffix('.png').name
+
         try:
             wav_to_image(wav_file, output, width=args.width, height=args.height)
+            wav_image_pairs.append((wav_file, output))
         except Exception as e:
             print(f"Error processing {wav_file}: {e}")
             import traceback
             traceback.print_exc()
+
+    # Generate PDF file
+    if wav_image_pairs and args.pdf:
+        pdf_path = Path(args.pdf)
+        doc = SimpleDocTemplate(str(pdf_path), pagesize=A4)
+        story = []
+        styles = getSampleStyleSheet()
+
+        # Title
+        title_style = ParagraphStyle(
+            'CustomTitle',
+            parent=styles['Heading1'],
+            fontSize=24,
+            spaceAfter=30,
+        )
+        story.append(Paragraph("WAV Waveform Images", title_style))
+        story.append(Spacer(1, 0.2*inch))
+
+        # Path style
+        path_style = ParagraphStyle(
+            'PathStyle',
+            parent=styles['Normal'],
+            fontSize=10,
+            textColor='blue',
+            spaceAfter=6,
+        )
+
+        # Add each WAV path and corresponding image
+        for wav_path, img_path in wav_image_pairs:
+            # Add WAV file path
+            story.append(Paragraph(str(wav_path), path_style))
+
+            # Add waveform image
+            # Scale image to fit page width (with margins)
+            img_width = 6.5 * inch
+            img_height = (img_width / 1200) * 400  # Maintain aspect ratio
+            story.append(RLImage(str(img_path), width=img_width, height=img_height))
+            story.append(Spacer(1, 0.3*inch))
+
+        # Build PDF
+        doc.build(story)
+        print(f"\nPDF file created: {pdf_path}")
 
 
 if __name__ == '__main__':
