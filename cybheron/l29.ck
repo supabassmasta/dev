@@ -561,6 +561,7 @@ fun void ACOUSTICTOM(string seq, int tomix, float g) {
 
 fun void  MODU (int nb, string seq, string modf, string modg, float cut, int tomix, float g){ 
 //   <<<"MODU modf", modf>>>;
+  local_delay  => now;
 
 TONE t;
 t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -628,6 +629,7 @@ fun void MOD1(string seq, int n, float modf, float modg, float modp, int tomix, 
 } 
 // spork ~ MOD1("*8{c  1_1_1_1_1_1_1_1_ 8_8_8_8_8_8_8_8_",11/*n*/,3.1/*modf*/,21*11/*modg*/,.3/*modp*/,0,.2) ; 
 fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float v) {
+  local_delay  => now;
 
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
@@ -659,6 +661,54 @@ fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float 
 
 
 //  spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,0,.25);
+
+class synt0 extends SYNT{
+
+    inlet => SinOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 1 => own_adsr;
+} 
+
+fun void SYNTDUR (string seq, int n, float lpf_f, dur gldur, dur d, int tomix, float v) {
+  local_delay  => now;
+
+  TONE t;
+  t.reg(synt0 s0);  //data.tick * 8 => t.max; 
+//  s0.config(n /* synt nb */ ); 
+  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+  //t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.dor();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+//  t.adsr[0].set(5::ms, 10::ms, 1., 4::ms);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+//  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+//  stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+STADSR stadsr;
+stadsr.set(3::ms /* Attack */, 3::ms /* Decay */, 0.9 /* Sustain */, -.1,  10::ms /* release */);
+stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
+stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+// stadsr.keyOn(); stadsr.keyOff(); 
+
+.2 => stadsr.gain;
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  d => now; 
+
+}
+
+
+//  spork ~ SYNTGLIDE("*4 5231__" /* seq */, 2 /* Serum00 synt */, 9 * 100 /* lpf_f */, 5::ms /* glide dur */,8*data.tick,0,.25);
+
 
 fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix, float g){ 
   3::ms => dur attackRelease;
@@ -1042,6 +1092,7 @@ class syntcomb extends SYNT{
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
  
 fun void  COMB  (string seq, dur comb_dur, float comb_res, int tomix,  float g){ 
+  local_delay  => now;
    
    TONE t;
    t.reg(syntcomb s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -1841,15 +1892,18 @@ spork ~ BEAT16x32  (16 * 32*data.tick);
 1::second / Std.mtof(data.ref_note) => dur comb_dur; //<<<"comb_dur",comb_dur/1::ms>>>;
 for (0 => int i; i <  16     ; i++) {
 
-spork ~   MODU (86, "*8 }c }c " + RAND.seq("1_1_, B___,8___, 8_,  3_1_, 5___ ",10) ,RAND.seq("1,8", 8)/*modf*/,RAND.seq("1,8", 8)/*modg*/,4*1000/*cut*/,2,1.1); 
-    8 * data.tick => w.wait;
-spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,"MLKJIHGFEDCBA0123456789abcdefghijklmnop",4*comb_dur/*comb_dur*/,.91/*comb_res*/,2,1.8); 
-    8 * data.tick => w.wait;
- 
-spork ~   MODU (84, "*8 }c  " + RAND.seq("1_1_, B_,8_, 8_,  3_1_, 5_, f_, b_ ",16) ,RAND.seq("1,8", 8)/*modf*/,RAND.seq("1,8", 8)/*modg*/,4*1000/*cut*/,3,0.8); 
-    8 * data.tick => w.wait;
+  spork ~ SYNTDUR(" }c}c*4" + RAND.seq("1_,1__,1_,1_1_,1__1", 32) /* seq */, 2 /* Serum00 synt */, 53 * 100 /* lpf_f */, 5::ms /* glide dur */,16*data.tick,1,.61);
 spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,"MLKJIHGFEDCBA0123456789abcdefghijklmnop",2*comb_dur/*comb_dur*/,.91/*comb_res*/,2,1.4); 
     8 * data.tick => w.wait;
+spork ~   MODU (84, "*8 }c  " + RAND.seq("1_1_, B_,8_, 8_,  3_1_, 5_, f_, b_ ",16) ,RAND.seq("1,8", 8)/*modf*/,RAND.seq("1,8", 8)/*modg*/,4*1000/*cut*/,3,0.8); 
+    8 * data.tick => w.wait;
+
+  spork ~ SYNTDUR(" }c}c*4" + RAND.seq("1_,1__,1!,1_1_,1__1", 32) /* seq */, 2 /* Serum00 synt */, 53 * 100 /* lpf_f */, 5::ms /* glide dur */,16*data.tick,1,.61);
+spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,"MLKJIHGFEDCBA0123456789abcdefghijklmnop",4*comb_dur/*comb_dur*/,.91/*comb_res*/,2,1.8); 
+    8 * data.tick => w.wait;
+spork ~   MODU (86, "*8 }c }c " + RAND.seq("1_1_, B___,8___, 8_,  3_1_, 5___ ",10) ,RAND.seq("1,8", 8)/*modf*/,RAND.seq("1,8", 8)/*modg*/,4*1000/*cut*/,2,1.1); 
+    8 * data.tick => w.wait;
+ 
 
 }
 
@@ -1860,7 +1914,7 @@ spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,"M
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 
 // LOOP
