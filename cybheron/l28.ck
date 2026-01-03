@@ -1349,10 +1349,10 @@ spork ~ PADS2(" :8:2 " + part ,14/*n*/,4,.15);
 spork ~ PADS2(" :8:2 " + part ,15/*n*/,4,.15); 
 //    16 * data.tick => w.wait;
 
-  spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .46); 
+  spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .66); 
   spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 15) /* seq */, 7 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
       8 * data.tick => w.wait;
- spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .46); 
+ spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .66); 
   spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 16) /* seq */, 1111 /* Serum00 synt */,24*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
       8 * data.tick => w.wait;
 
