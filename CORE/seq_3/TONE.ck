@@ -204,6 +204,7 @@ public class TONE extends ST {
   }
 
   data.ref_note => int base_note;
+  0 => int note_offset_in_scale;
   data.tick =>  dur base_dur;
   0.05 => float groove_ratio;
   0.3 => float init_gain;
@@ -612,7 +613,7 @@ public class TONE extends ST {
 
 
         /////////// NOTE ////////////
-        convert_note(c) => int rel_note;
+        convert_note(c) + note_offset_in_scale => int rel_note;
 
         // SET NOTE
         conv_to_freq(rel_note, scale, base_note, note_offset) => temp_freq;
@@ -966,6 +967,34 @@ public class TONE extends ST {
       else if (in.charAt(i) == '^') {
         // bemol implemenation
         note_offset --;
+      }
+      else if (in.charAt(i) == '[') {
+        i++;
+        in.charAt(i)=> c;
+        if ('0' <= c && c <= '9') {
+          note_offset_in_scale - (c -'0') => note_offset_in_scale;
+        }
+        else if	 ((c >= 'a') && (c <= 'z')) {
+          note_offset_in_scale - (c -'a') + 10 => note_offset_in_scale;
+        }
+        else {
+          note_offset_in_scale - 1 => note_offset_in_scale;
+          i--;
+        }
+      }
+      else if (in.charAt(i) == ']') {
+        i++;
+        in.charAt(i)=> c;
+        if ('0' <= c && c <= '9') {
+          note_offset_in_scale + (c -'0') => note_offset_in_scale;
+        }
+        else if	 ((c >= 'a') && (c <= 'z')) {
+          note_offset_in_scale + (c -'a') + 10 => note_offset_in_scale;
+        }
+        else {
+          note_offset_in_scale + 1 => note_offset_in_scale;
+          i--;
+        }
       }
 
 
