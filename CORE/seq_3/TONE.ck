@@ -1124,13 +1124,36 @@ public class TONE extends ST {
     scale << 2 << 1 << 3 << 1 << 1 << 3 << 1 ;
   }
 
+  fun void set_scale(string name) {
+    if ( name == "lyd"  ){
+      lyd(); 
+    }
+    else if ( name == "ion"  ){
+      ion(); 
+    }
+    else if ( name == "dor"  ){
+      dor(); 
+    }
+    else if ( name == "aeo"  ){
+      aeo(); 
+    }
+    else if ( name == "phr"  ){
+      phr(); 
+    }
+    else if ( name == "loc"  ){
+      loc(); 
+    }
+    else if ( name == "double_harmonic"  ){
+      double_harmonic(); 
+    }
+    else if ( name == "gypsy_minor"  ){
+      gypsy_minor(); 
+    }
+    else {
+      <<<"ERROR, TONE, Scale name:" + name + " does not exist">>>;
 
-
-
-
-
-
-
+    }
+   }
 
 }
 /*
