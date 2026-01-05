@@ -1316,7 +1316,75 @@ fun void EFFECT4   (){
   }
    
 } 
+
 spork ~  EFFECT4();
+
+
+fun void  ENS1  (){ 
+
+
+  /// PLAY OR REC /////////////////
+  RECSEQ recseq; "ENS1.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;
+  if (recseq.play_or_rec() ) {
+    //////////////////////////////////
+
+    //////////////////////////////////////////////////
+    // MAIN 
+    //////////////////////////////////////////////////
+
+    //  !!!!!!  Put main code here  !!!!!
+    // Call this with file and fun name to record all seq on fresh cloned project
+    // if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+    //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+    //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+     
+    spork ~   ENSEMBLE (":8 2|4_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 E|6_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 9_",18*data.tick,4,1. );
+    16*data.tick => w.wait;
+
+    spork ~   ENSEMBLE (":8 5|7_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 B|4_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 2_",18*data.tick,4,1. );
+    16*data.tick => w.wait;
+
+    spork ~   ENSEMBLE (":8 2|3_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 8|4_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8 7_",18*data.tick,4,1. );
+    16*data.tick => w.wait;
+
+    spork ~   ENSEMBLE (":8:2 1|3_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8:2 9|5_",18*data.tick,4,1. );
+    spork ~   ENSEMBLE (":8:2 7_",18*data.tick,4,1. );
+    16*data.tick => w.wait;
+
+    //// STOP REC ///////////////////////////////
+    recseq.rec_stop();
+    //////////////////////////////////////////////////
+  } 
+
+} 
+if (! MISC.file_exist( "ENS1.wav")) {
+  // wait Stereo conv rev to load
+  2::second => now;
+  ENS1();
+}
+fun void SONATA   (){ 
+     
+  spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .38); 
+  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 15) /* seq */, 7 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.66);
+  8 * data.tick => w.wait;
+  spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .38); 
+  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 16) /* seq */, 1111 /* Serum00 synt */,24*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.66);
+  8 * data.tick => w.wait;
+
+  spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .66); 
+  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 15) /* seq */, 7 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
+  8 * data.tick => w.wait;
+  spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .66); 
+  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 16) /* seq */, 1111 /* Serum00 synt */,24*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
+  8 * data.tick => w.wait;
+ } 
 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -1342,25 +1410,19 @@ fun void  LOOPLAB  (){
 
 //spork ~   ENSEMBLE (":8 8|a 5|7",16*data.tick,4,1.);
 
+  
+  16 * data.tick => w.wait;
 
-  spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .38); 
-  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 15) /* seq */, 7 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.66);
-      8 * data.tick => w.wait;
- spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .38); 
-  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 16) /* seq */, 1111 /* Serum00 synt */,24*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.66);
-      8 * data.tick => w.wait;
-//    16 * data.tick => w.wait;
-spork ~   ENSEMBLE (":8:2 1|3_",18*data.tick,4,1. );
-spork ~   ENSEMBLE (":8:2 9|5_",18*data.tick,4,1. );
-//spork ~   ENSEMBLE (":8:2 7_",18*data.tick,4,1. );
+  SONATA();
+  SONATA();
 
-spork ~   MODU (31, "*8  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "6", 12 *1000, 3, .66); 
-//spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 15) /* seq */, 7 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
-      8 * data.tick => w.wait;
-spork ~   MODU (25, "*8  "+ RAND.seq("1_,1_,__", 17) , "f", "4", 8 *1000, 3, .66); 
-//  spork ~ SYNTGLIDE("*4 }c "+ RAND.seq("]1,]1,[1,[1", 8) + RAND.seq("]1 1,]1 1,[1 1,[1 1, _", 16) /* seq */, 1111 /* Serum00 synt */,24*100/* lpf_f */, 5::ms /* glide dur */,2*data.tick,2,.76);
-      8 * data.tick => w.wait;
+  spork ~   ENS1 (); 
 
+
+  SONATA();
+  SONATA();
+  SONATA();
+  SONATA();
 
 //  16 * data.tick => w.wait;
 1::second / Std.mtof(data.ref_note) => dur comb_dur;
