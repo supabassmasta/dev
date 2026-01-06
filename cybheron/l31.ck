@@ -1491,7 +1491,9 @@ fun void  LOOPLAB  (){
   spork ~ BEAT1_64(1); 
   32 * data.tick => w.wait;
   spork ~   TRANCEHHx8 (4); 
-  32 * data.tick => w.wait;
+  16 * data.tick => w.wait;
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
 
 
   spork ~ BEAT1_64(1); 
@@ -1499,6 +1501,7 @@ fun void  LOOPLAB  (){
   spork ~ SONATA();
   32 * data.tick => w.wait;
   spork ~ SONATA();
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
   32 * data.tick => w.wait;
 
   spork ~ BEAT1_64(1); 
@@ -1507,6 +1510,7 @@ fun void  LOOPLAB  (){
   spork ~ SONATA();
   32 * data.tick => w.wait;
   spork ~ SONATA();
+  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
   32 * data.tick => w.wait;
 
   spork ~ BEAT1_64(1); 
@@ -1515,6 +1519,7 @@ fun void  LOOPLAB  (){
   spork ~ SONATA();
   32 * data.tick => w.wait;
   spork ~ SONATA();
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
   32 * data.tick => w.wait;
 
 //  16 * data.tick => w.wait;
