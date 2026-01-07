@@ -1387,16 +1387,44 @@ fun void SONATA   (){
  } 
 
 
-fun void  TRANCEHHx8  (int n){ 
+fun void  TRANCEHHx8  (int n, int remove_last_beats){ 
+  if ( remove_last_beats  ){
+      n - 1 => n;
+  }
   for (0 => int i; i <  n     ; i++) {
     spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
     8 * data.tick => w.wait;
   }
+  if ( remove_last_beats  ){
+    string seq;
+    for (0 => int i; i <  8 - remove_last_beats ; i++) {
+      seq + "__h_ " => seq;
+    }
+    spork ~  TRANCEHH ("*4 +3 {2 " + seq); 
+    (8 - remove_last_beats)  * data.tick => w.wait;
+  }
 } 
-fun void  TRANCESNRHHx8  (int n){ 
+fun void  TRANCESNRHHx8  (int n, int remove_last_beats){ 
+  if ( remove_last_beats  ){
+      n - 1 => n;
+  }
   for (0 => int i; i <  n     ; i++) {
    spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
     8 * data.tick => w.wait;
+  }
+  if ( remove_last_beats  ){
+    "*4 +3 {2 __h_   }5+3t_h_" => string seq;
+    for (0 => int i; i <  6 - remove_last_beats ; i++) {
+      if ( i % 2 == 0  ){
+      seq + "__h_ " => seq;
+      }
+      else {
+      seq + "t_h_ " => seq;
+           
+      }
+    }
+    spork ~  TRANCEHH ( seq); 
+    (8 - remove_last_beats)  * data.tick => w.wait;
   }
 } 
 
@@ -1487,17 +1515,18 @@ fun void  LOOPLAB  (){
 
 //spork ~   ENSEMBLE (":8 8|a 5|7",16*data.tick,4,1.);
 
+  spork ~   TRANCESNRHHx8 (4, 2); 
   
   spork ~ BEAT1_64(1); 
   32 * data.tick => w.wait;
-  spork ~   TRANCEHHx8 (4); 
+  spork ~   TRANCEHHx8 (4, 1); 
   16 * data.tick => w.wait;
   spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
   16 * data.tick => w.wait;
 
 
   spork ~ BEAT1_64(1); 
-  spork ~   TRANCEHHx8 (8); 
+  spork ~   TRANCEHHx8 (8, 2); 
   spork ~ SONATA();
   32 * data.tick => w.wait;
   spork ~ SONATA();
@@ -1505,7 +1534,7 @@ fun void  LOOPLAB  (){
   32 * data.tick => w.wait;
 
   spork ~ BEAT1_64(1); 
-  spork ~   TRANCEHHx8 (8); 
+  spork ~   TRANCEHHx8 (8, 2); 
   spork ~   ENS1 (); 
   spork ~ SONATA();
   32 * data.tick => w.wait;
@@ -1514,7 +1543,7 @@ fun void  LOOPLAB  (){
   32 * data.tick => w.wait;
 
   spork ~ BEAT1_64(1); 
-  spork ~   TRANCESNRHHx8 (8); 
+  spork ~   TRANCESNRHHx8 (8, 2); 
   spork ~   ENS1 (); 
   spork ~ SONATA();
   32 * data.tick => w.wait;
