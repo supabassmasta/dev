@@ -1515,7 +1515,6 @@ fun void  LOOPLAB  (){
 
 //spork ~   ENSEMBLE (":8 8|a 5|7",16*data.tick,4,1.);
 
-  spork ~   TRANCESNRHHx8 (4, 2); 
   
   spork ~ BEAT1_64(1); 
   32 * data.tick => w.wait;
@@ -1617,7 +1616,7 @@ spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 
 // LOOP
@@ -1658,13 +1657,39 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___");
-    spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ");
-    spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ");
-    spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */, .16 /* g */); 
+  spork ~ BEAT1_64(1); 
+  32 * data.tick => w.wait;
+  spork ~   TRANCEHHx8 (4, 1); 
+  16 * data.tick => w.wait;
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
 
 
-    8 * data.tick =>  w.wait; 
+  spork ~ BEAT1_64(1); 
+  spork ~   TRANCEHHx8 (8, 2); 
+  spork ~ SONATA();
+  32 * data.tick => w.wait;
+  spork ~ SONATA();
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  32 * data.tick => w.wait;
+
+  spork ~ BEAT1_64(1); 
+  spork ~   TRANCEHHx8 (8, 2); 
+  spork ~   ENS1 (); 
+  spork ~ SONATA();
+  32 * data.tick => w.wait;
+  spork ~ SONATA();
+  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  32 * data.tick => w.wait;
+
+  spork ~ BEAT1_64(1); 
+  spork ~   TRANCESNRHHx8 (8, 2); 
+  spork ~   ENS1 (); 
+  spork ~ SONATA();
+  32 * data.tick => w.wait;
+  spork ~ SONATA();
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  32 * data.tick => w.wait;
 
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
