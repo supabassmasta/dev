@@ -1911,7 +1911,7 @@ ab RECTRACKK /// PLAY OR REC /////////////////
 \<CR>} 
 
 ab RECSEQK /// PLAY OR REC /////////////////
-\<CR>RECSEQ recseq; "seqname0.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;
+\<CR>RECSEQ recseq; "seqname0.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;1.=>recseq.play_gain;
 \<CR>if (recseq.play_or_rec() ) {
 \<CR>//////////////////////////////////
 \<CR>

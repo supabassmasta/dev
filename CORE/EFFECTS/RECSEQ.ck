@@ -3,6 +3,7 @@ public class RECSEQ {
   0 => int compute_mode; // play song with real computing
   0 => int rec_mode; // While playing song in compute mode, rec it
 
+  1. => float play_gain;
   "rec_default_name.wav" => string name_main;
   8 * data.tick => dur main_extra_time;
 
@@ -17,7 +18,7 @@ public class RECSEQ {
     if ( !compute_mode && MISC.file_exist(name_main) ){
       LONG_WAV l;
       name_main => l.read;
-      1.0 * data.master_gain => l.buf.gain;
+      play_gain * data.master_gain => l.buf.gain;
       0 => l.update_ref_time;
       l.AttackRelease(0::ms, 10::ms);
       l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 1 * data.tick /* END sync */); l $ ST @=> ST @ last;  
