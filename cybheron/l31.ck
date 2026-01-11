@@ -502,6 +502,7 @@ fun void TRANCEHH(string seq) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
+  local_delay => now;
 
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
   
@@ -533,6 +534,7 @@ fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
 //  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
    
 fun void ACOUSTICTOM(string seq, int tomix, float g) {
+  local_delay => now;
 
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
   SET_WAV.ACOUSTICTOM(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
@@ -560,6 +562,7 @@ fun void ACOUSTICTOM(string seq, int tomix, float g) {
 ////////////////////////////////////////////////////////////////////////////////////////////
 
 fun void  MODU (int nb, string seq, string modf, string modg, float cut, int tomix, float g){ 
+  local_delay => now;
    
 TONE t;
 t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -597,6 +600,7 @@ stlpfx0.connect(last $ ST ,  stlpfx0_fact, cut /* freq */ , 1.0 /* Q */ , 2 /* o
 //  spork ~   MODU (22, "*4 {c  1__1 _1_1 __1_ 1_1__1","1"/*modf*/,"f"/*modg*/,2*1000/*cut*/,0,.26); 
 
 fun void MOD1(string seq, int n, float modf, float modg, float modp, int tomix, float g){ 
+  local_delay => now;
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   s0.config(n /* synt nb */ ); 
@@ -629,6 +633,7 @@ fun void MOD1(string seq, int n, float modf, float modg, float modp, int tomix, 
 // spork ~ MOD1("*8{c  1_1_1_1_1_1_1_1_ 8_8_8_8_8_8_8_8_",11/*n*/,3.1/*modf*/,21*11/*modg*/,.3/*modp*/,0,.2) ; 
 
 fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float v) {
+  local_delay => now;
 
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
@@ -663,6 +668,7 @@ fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, int tomix, float 
 
 
 fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, dur d, int tomix, float v) {
+  local_delay => now;
 
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
@@ -696,6 +702,7 @@ fun void SYNTGLIDE (string seq, int n, float lpf_f, dur gldur, dur d, int tomix,
 
 
 fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix, float g){ 
+  local_delay => now;
   3::ms => dur attackRelease;
 
    
@@ -732,6 +739,7 @@ fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix,
 
 
 fun void PLOC (string seq, int n, float lpf_f, int tomix, float v) {
+  local_delay => now;
 
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; 
@@ -768,6 +776,7 @@ t.set_adsrs_curves(0.6, 2.0, 0.5); // curves: > 1 = Attack concave, other convex
 
 
 fun void  SUPSAWSLIDE  ( string seq, float ph, int tomix, float g){ 
+  local_delay => now;
 
   TONE t;
   t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
@@ -797,6 +806,7 @@ fun void  SUPSAWSLIDE  ( string seq, float ph, int tomix, float g){
 //spork ~ SUPSAWSLIDE("*4 }c}c}c 1235 {21235 {21235 {21235 {21235 {21235 {21235 {21235 {2 ", .3/*autoRes phase*/,0,0.7);
 
 fun void PADS2 (string seq,int n, int tomix, float g) {
+  local_delay => now;
   TONE t;
   t.reg(SYNTWAV s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   s0.config(.2 /* G */, 200::ms /* ATTACK */, 1::second /* RELEASE */, n /* FILE */, 100::ms /* UPDATE */);
@@ -828,6 +838,7 @@ fun void PADS2 (string seq,int n, int tomix, float g) {
 // spork ~ PADS2("}c :8:2 1|3_",12/*n*/,0,.3); 
 
 fun void  RANDSERUM2  (string seq, int n, int start_chunk, int stop_chunk, int tomix, float g ){ 
+  local_delay => now;
 
   TONE t;
   t.reg(SERUM2 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -872,6 +883,7 @@ fun void  RANDSERUM2  (string seq, int n, int start_chunk, int stop_chunk, int t
 
 
 fun void  SINGLEWAV  (string file, int tomix, float g){ 
+  local_delay => now;
   ST st; st $ ST @=> ST @ last;
   SndBuf s => st.mono_in;
 
@@ -891,6 +903,7 @@ fun void  SINGLEWAV  (string file, int tomix, float g){
 //  spork ~   SINGLEWAV("../_SAMPLES/bitcoin/CPecriventDuCode.wav", 0, .3); 
 
 fun void  SERUM00SEQ (string seq, int n, string seq_cut , string seq_g , dur d, int tomix, float g){ 
+  local_delay => now;
   TONE t;
   t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
   s0.config(n /* synt nb */ ); 
@@ -1020,6 +1033,7 @@ class syntOneP extends SYNT{
 }  
 
 fun void  ONEP0  (string s, int tomix,  float g){ 
+  local_delay => now;
   TONE t;
   t.reg(syntOneP s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  //
   //t.lyd(); // t.ion(); // t.mix();// 
@@ -1077,6 +1091,7 @@ class syntcomb extends SYNT{
 //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
  
 fun void  COMB  (string seq, dur comb_dur, float comb_res, int tomix,  float g){ 
+  local_delay => now;
    
    TONE t;
    t.reg(syntcomb s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -1163,6 +1178,7 @@ g => stlimiter.gain;
 
 
 fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
+  local_delay => now;
   STMIX stmix;
   stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
 
@@ -1188,6 +1204,7 @@ fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int 
 
 
 fun void  ERAMPOD (int mixin, dur d, string gseq, string odseq,float drive,int tomix, float g){ 
+  local_delay => now;
   STMIX stmix;
   stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
 
@@ -1292,6 +1309,7 @@ class syntBW extends SYNT{
 } 
 
 fun void BW (string seq, int n, float lpf_f, int tomix, float v) {
+  local_delay => now;
 
   TONE t;
   t.reg(syntBW s0);  //data.tick * 8 => t.max; 
@@ -1327,6 +1345,7 @@ fun void BW (string seq, int n, float lpf_f, int tomix, float v) {
 
 // spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 4,.2);
 fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, float g){ 
+  local_delay => now;
   TONE t;
   t.scale.size(0);
   t.scale << 1 << 3 << 1 << 2 << 3 << 2;
