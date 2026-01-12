@@ -1196,7 +1196,7 @@ g => stlimiter.gain;
 //spork ~   COMB ("*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.2); 
 
 
-fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
+fun void  ERAMPLPF (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
   local_delay => now;
   STMIX stmix;
   stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
@@ -1219,7 +1219,32 @@ fun void  ERAMP (int mixin, dur d, string gseq, string lpfseq,int lpforder, int 
   d => now;
 } 
 
-//spork ~ ERAMP (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,2/*lpforder*/,1,1.0);
+//spork ~ ERAMPLPF (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,2/*lpforder*/,1,1.0);
+
+fun void  ERAMPHPF (int mixin, dur d, string gseq, string lpfseq,int lpforder, int tomix, float g){ 
+  local_delay => now;
+  STMIX stmix;
+  stmix.receive(mixer + mixin); stmix $ ST @=> ST @ last; 
+
+  STFREEFILTERX stfreelpfx0; HPF_XFACTORY stfreelpfx0_fact;
+  stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, lpforder /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
+  AUTO.freq(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
+
+  STFREEGAIN stfreegain;
+  stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
+  AUTO.gain(gseq) => stfreegain.g; // connect this 
+
+  g => stfreegain.gain;
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  d => now;
+} 
+
+//spork ~ ERAMPHPF (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*hpfseq*/,2/*hpforder*/,1,1.0);
 
 
 fun void  ERAMPOD (int mixin, dur d, string gseq, string odseq,float drive,int tomix, float g){ 
@@ -1577,12 +1602,22 @@ fun void  LOOPLAB  (){
   while(1) {
   //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
   //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+spork ~ ERAMPHPF (10/*mixin*/,16*data.tick,"8"/*gseq*/,":4 f////Z"/*lpfseq*/,1/*lpforder*/,0,1.0);
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",10,1.);
+   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",10,1.);
+   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",10,1.);
+   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,10, .16 /* g */); 
+        8 * data.tick => w.wait;
+  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",10,1.);
+   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",10,1.);
+   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",10,1.);
+   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,10, .16 /* g */); 
+        8 * data.tick => w.wait;
    
-  spork ~ BW("*2" + RAND.seq("]1,[1", 5) + RAND.seq("]1 1,]1 1,]1 1,[1 1 ,[1 1 ,[1 1 ,[1,]1, _", 11) + ":2 ____ " , 3/*n*/,29*100/*cut*/,0,1.0); 
+//  spork ~ BW("*2" + RAND.seq("]1,[1", 5) + RAND.seq("]1 1,]1 1,]1 1,[1 1 ,[1 1 ,[1 1 ,[1,]1, _", 11) + ":2 ____ " , 3/*n*/,29*100/*cut*/,0,1.0); 
 //  spork ~ BW(" 5___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
 //  spork ~ BW(" 2___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
 //  spork ~ BW(" B___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
-        8 * data.tick => w.wait;
 //  spork ~ BW(" 8___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
 //  spork ~ BW(" 3___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
 //  spork ~ BW(" 1___ ____ ____ ____", 1/*n*/,0*100/*cut*/,1,1.0); 
@@ -1629,7 +1664,7 @@ fun void  LOOPLAB  (){
 //spork ~   MODU (22, "*4 {c  1__1 _1_1 __1_ 1_1__1" , "1", "f", 2 *1000, 2, .38); 
 
 //spork ~ SYNTGLIDE("*4 5231" /* seq */, 4 /* Serum00 synt */,9*100/* lpf_f */, 5::ms /* glide dur */,32*data.tick,4,1.19);
-//spork ~ ERAMP (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,1/*lpforder*/,1,1.0);
+//spork ~ ERAMPLPF (4/*mixin*/,32*data.tick,":8:25//8"/*gseq*/,":81///88/m"/*lpfseq*/,1/*lpforder*/,1,1.0);
 //spork ~ ERAMPOD (4/*mixin*/,32*data.tick,":8:21//1"/*gseq*/,":81////4"/*odseq*/,4.8/*drive*/,0,0.3);
 
 
@@ -1675,10 +1710,10 @@ fun void  LOOPLAB  (){
 //   spork ~ SERUM00SEQ ("*2 _1__",31/*n*/,"}c:81//l"/*seqcut*/,":86//9"/*seq_g*/,16*data.tick/*d*/,1,.8);
 //    spork ~   ONEP0 (" *4*2 }c}c}c " + RAND.seq("1_3_,5___,8___,__B_,5___, __8_,____,B_B_,1_3_, 5___ ,8_0_, __A_", 32),0, 4.1); 
 
-  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
-   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",0,1.);
-   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",0,1.);
-   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
+//  spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+//   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",0,1.);
+//   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",0,1.);
+//   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
 //  
 //  //    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 //  // spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
