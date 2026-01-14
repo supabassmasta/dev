@@ -2124,7 +2124,7 @@ if (rectrack.play_or_rec() ) {
   16 * data.tick => w.wait;
 
   spork ~ BEAT1_64_LPF(1); 
-  spork ~   TRANCEHHx8 (7, 0); 
+  spork ~   TRANCESNRHHx8 (7, 0); 
   spork ~   ENS1 (); 
   32 * data.tick => w.wait;
   spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
