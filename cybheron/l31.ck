@@ -1846,7 +1846,7 @@ fun void  LOOPLAB  (){
   while(1) {
   spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
 //  16 * data.tick => w.wait;
-  spork ~ RING(":2 m////f f////M", ":8 H/GG/A"/*fmod*/, ":8 m//1"/*gmod*/,6/*k*/,30*data.tick, 2,.5);
+  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,30*data.tick, 2,.3);
   32 * data.tick => w.wait;
 
 //  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
@@ -2101,7 +2101,7 @@ if (rectrack.play_or_rec() ) {
   32 * data.tick => w.wait;
   spork ~ SONATA();
   spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
-  spork ~ RING(":2 m////f f////M", ":8 H/GG/A"/*fmod*/, ":8 m//1"/*gmod*/,6/*k*/,30*data.tick, 2,.5);
+  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,30*data.tick, 2,.3);
   32 * data.tick => w.wait;
 
   spork ~ BEAT1_64_HPF(1); 
