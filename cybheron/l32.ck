@@ -1330,7 +1330,7 @@ fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, flo
   local_delay => now;
   TONE t;
   t.scale.size(0);
-  t.scale << 1 << 3 << 1 << 2 << 3 << 2;
+  t.set_scale(data.scale.my_string);
   t.reg(SERUM00 s0); s0.config(k);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
                                      // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
@@ -1586,7 +1586,7 @@ if ( lpf_f != 0. ){
 // BPM
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 52 => data.ref_note;
-"ion" => data.scale.my_string;
+"aeo" => data.scale.my_string;
 <<<"SCALE: ", data.scale.my_string>>>;
 
 SYNC sy;
@@ -1700,13 +1700,32 @@ spork ~  EFFECT4();
       8*8 * data.tick => w.wait;
  } 
 
-fun void SAWx16   (int n){ 
+fun void SAWx64   (int n){ 
+1::second / Std.mtof(data.ref_note) => dur comb_dur;
 for (0 => int i; i <       n; i++) {
- 
-spork ~ SUPSAWSLIDEHACK("*4 }c  "  + RAND.seq("]1 1, [1 1,_", 18) , Std.rand2f(0,1.)/*autoRes phase*/,42.1/*modf*/,66*11/*modg*/,.3/*modp*/,3,0.7);
+  spork ~ SUPSAWSLIDEHACK("*4 }c  "  + RAND.seq("]1 1, [1 1,_", 18) , Std.rand2f(0,1.)/*autoRes phase*/,42.1/*modf*/,66*11/*modg*/,.3/*modp*/,3,0.7);
+  spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
-spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
+  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
         8 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
+  spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
+        8 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 37) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
+        8 * data.tick => w.wait;
+  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+  spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
+        8 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
+        4 * data.tick => w.wait;
+  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,63/*k*/,4*data.tick, 3,.15); 
+        4 * data.tick => w.wait;
+  spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",20) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
+        8 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
+        4 * data.tick => w.wait;
+  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+        4 * data.tick => w.wait;
 }
    
 } 
@@ -1714,20 +1733,9 @@ spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0
 
 fun void  LOOPLAB  (){ 
   while(1) {
-1::second / Std.mtof(data.ref_note) => dur comb_dur;
-<<<"comb_dur",comb_dur/1::ms>>>;
-spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
-    8 * data.tick => w.wait;
- spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.3); 
-     8 * data.tick => w.wait;
- spork ~   COMB ("____*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.5); 
-     8 * data.tick => w.wait;
- spork ~   COMB ("____*8  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.6); 
-     9 * data.tick => w.wait;
- spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.6); 
-     8 * data.tick => w.wait;
- spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.8); 
-     8 * data.tick => w.wait;
+//spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.3);
+SAWx64   (16);
+
 
 //        8 * data.tick => w.wait;
 
@@ -1971,9 +1979,10 @@ spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",10)
   //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
-spork ~ SAWx16   (16);
+//spork ~ SAWx16   (16);
+
 
 
 // LOOP
@@ -2014,7 +2023,7 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-//spork ~   SAWx16 (8*5); 
+spork ~ SAWx64   (5);
 BEAT1();
 
     //// STOP REC ///////////////////////////////
