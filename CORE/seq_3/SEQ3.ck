@@ -89,6 +89,8 @@ public class SEQ3 {
         elements[i].duration +=> duration;
     }
     
+    if (duration == 0::ms) return;
+    
     duration / data.tick => nb_tick;
     // <<<"nb_tick", nb_tick>>>; 
     // compute rel_pos
