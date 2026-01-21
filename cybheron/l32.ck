@@ -1,6 +1,7 @@
 1 => int mixer;
 
-20::ms => dur local_delay;
+//20::ms => dur local_delay;
+0::ms => dur local_delay;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 KIK kik;
@@ -1803,30 +1804,30 @@ for (0 => int i; i <       n; i++) {
   spork ~ SUPSAWSLIDEHACK("*4 }c  "  + RAND.seq("]1 1, [1 1,_", 18) , Std.rand2f(0,1.)/*autoRes phase*/,42.1/*modf*/,66*11/*modg*/,.3/*modp*/,3,0.7);
   spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
-  spork ~ RING(":3 {c" + RAND.seq("F//f,8/F,1///8,}c", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
+  spork ~ RING(":3 {c" + RAND.seq("F//f,8/F,1///8", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
   spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 37) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         8 * data.tick => w.wait;
-  spork ~ RING(":4 {c" + RAND.seq("F//f,8/F,1///8,}c", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":4 {c" + RAND.seq("F//f,8/F,1///8", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
   spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         4 * data.tick => w.wait;
-  spork ~ RING(":3 {c" + RAND.seq("F//f,8/F,1///8,}c", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,63/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":3 {c" + RAND.seq("F//f,8/F,1///8", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,63/*k*/,4*data.tick, 3,.15); 
         4 * data.tick => w.wait;
   spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",20) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         4 * data.tick => w.wait;
-  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
         4 * data.tick => w.wait;
 }
    
 } 
-
+//SAWx64 (4);
 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -1837,8 +1838,9 @@ fun void  LOOPLAB  (){
 //  spork ~ ERAMPLPF (10/*mixin*/,8*8*data.tick,":8:8 j/8"/*gseq*/,":8:8 f/s"/*lpfseq*/,3/*lpforder*/,1,1.1);
 //  spork ~   ACID ("*8 }c   5_1_3_1_ 1_0_1_1_  3_1_1_1_ -3 8_ +3 1_1_5_ ", 1233, ":2 F/ff///F" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 1/33/1" /*target_q*/, 8*8*data.tick , 10, .1);  
 //  spork ~   ACID ("*8 }c   3_1_1_1_ 1_1_1_5_  3_1_1_1_ 1_-3 8_ +3 1_5_  ", 1233, ":2 F/ff///F" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 1/33/1" /*target_q*/, 8*8*data.tick , 10, .1);  
+  spork ~ RING(":4 {c" + RAND.seq("F//f,8/F,1///8", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
 
-        8*8 * data.tick => w.wait;
+        8 * data.tick => w.wait;
 //spork ~ RING(":2 {c" + RAND.seq("F//f,8/F,1///8,}c", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.3);
 //SAWx64   (16);
 //
@@ -2084,7 +2086,7 @@ fun void  LOOPLAB  (){
   //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
 //spork ~ SAWx16   (16);
 
