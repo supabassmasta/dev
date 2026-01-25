@@ -1,0 +1,12 @@
+Enable devlopper menu:
+Parameters> About phone > Tap 7 times on Build number
+
+Go to developper option and activate:
+USB debbuging
+unlock OEM bootloader
+
+If unlock OEM bootloader option is not present: update the phone software (it was enough for me).
+    There is tricks with disabling automatic clock update to disable and setup a older date (2022) but I dont tried it.
+
+
+

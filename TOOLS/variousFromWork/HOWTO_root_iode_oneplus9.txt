@@ -1,0 +1,56 @@
+Commands used to root Iodé OnePlus9 Pro
+Check twrp and magisk tutorial again for other phones
+
+
+From power of press power button + volume down
+On buzz release
+Orwhen started:
+adb reboot bootloader
+
+
+Downlaod twrp img for twrp site:
+https://twrp.me/oneplus/oneplus9pro.html
+twrp-3.7.1_12-0-lemonadep.img
+
+cp twrp-3.7.1_12-0-lemonadep.img twrp.img
+sudo fastboot boot twrp.img
+
+
+Download Magisk App:
+https://topjohnwu.github.io/Magisk/install.html
+
+adb sideload Magisk.apk
+
+And after reboot:
+
+adb install Magisk.apk
+
+Get boot.img:
+- Load TWRP (new recovery now) to access as root to all files
+
+adb shell
+dd if=/dev/block/bootdevice/by-name/boot of=/sdcard/boot.img
+
+Save it on PC in case of failure.
+adb pull /sdcard/boot.img stock_boot.img
+
+Patch boot.img with magisk
+Boot system
+load magisk app and press install
+select previously saver boot.img
+Check where magisk save the patched image
+
+get it on the pc with 
+adb pull /storage/emulated/0/Download/magisk_patched-27000_eZfiK.img .
+
+Reboot to bootloader:
+adb reboot bootloader
+
+Flash patched image:
+sudo fastboot flash boot magisk_patched-27000_eZfiK.img
+
+
+
+
+
+
