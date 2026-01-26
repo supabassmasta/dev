@@ -1385,7 +1385,7 @@ fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, flo
   3 => gsin.op;
   AUTO.gain(gmod) => gsin; // Simple gain with mod
 
-  out => s0.inlet;
+  out => s0.outlet;
 
   STMIX stmix;
   stmix.send(last, mixer + mix);
@@ -1837,25 +1837,25 @@ for (0 => int i; i <       n; i++) {
   spork ~ SUPSAWSLIDEHACK("*4 }c  "  + RAND.seq("]1 1, [1 1,_", 18) , Std.rand2f(0,1.)/*autoRes phase*/,42.1/*modf*/,66*11/*modg*/,.3/*modp*/,3,0.7);
   spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
-  spork ~ RING(":3 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
+  spork ~ RING(":3 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/,  ":8"+ RAND.seq("8/b,b/7,8/a,a/9", 1)/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
   spork ~   COMB ("____*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 37) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         8 * data.tick => w.wait;
-  spork ~ RING(":4 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":4 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":8"+ RAND.seq("8/b,b/7,8/a,a/9", 1)/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
   spork ~   COMB ("____*8 }c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",10) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         4 * data.tick => w.wait;
-  spork ~ RING(":3 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,63/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":3 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":8"+ RAND.seq("8/b,b/7,8/a,a/9", 1)/*gmod*/,63/*k*/,4*data.tick, 3,.15); 
         4 * data.tick => w.wait;
   spork ~   COMB ("*8 {c  " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_ ",20) ,2*comb_dur/*comb_dur*/,.91/*comb_res*/,1,1.7); 
         8 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("*4 }c}c}c  "  + RAND.seq("]1 1, [1 1,_", 20) , Std.rand2f(0,1.)/*autoRes phase*/,3,0.7);
         4 * data.tick => w.wait;
-  spork ~ RING(":2 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
+  spork ~ RING(":2 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 2) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":8"+ RAND.seq("8/b,b/7,8/a,a/9", 1)/*gmod*/,64/*k*/,4*data.tick, 3,.15); 
         4 * data.tick => w.wait;
 }
    
@@ -2118,7 +2118,7 @@ for (0 => int i; i <       n; i++) {
 
 fun void  LOOPLAB  (){ 
   while(1) {
-  spork ~ RING(":4 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":4 8"/*gmod*/,64/*k*/,8*data.tick, 3,.15); 
+  spork ~ RING(":4 {c" + RAND.seq("f/FF/f,8/FF/1,1/ff/8,*2 F/11/FF/11/F,*2f/1_F/8_,*21/f___", 1) , ":4 "+ RAND.seq("H/G, M/L, N/P", 2)/*fmod*/, ":8"+ RAND.seq("8/f,f/7,8/a,a/9", 1)/*gmod*/,64/*k*/,8*data.tick, 2,.15); 
 
         16 * data.tick => w.wait;
   //-------------------------------------------
@@ -2143,7 +2143,7 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l32.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l32.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
