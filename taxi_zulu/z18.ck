@@ -595,7 +595,7 @@ fun void  ZULU  (dur offset, dur d, int tomix, float g){
    g * data.master_gain => l.buf.gain;
    0 => l.update_ref_time;
    l.AttackRelease(0::ms, 0::ms);
-   l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+   l.start(0 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
   
     if ( tomix  ){
        STMIX stmix;
@@ -607,7 +607,21 @@ fun void  ZULU  (dur offset, dur d, int tomix, float g){
 }
 
 
+fun void  BEAT_INTRO_8  (int n){ 
+   for (0 => int i; i <  n     ; i++) {
+     spork ~KICK("*4 k___ ____ k___ ____k___ ____ k___ k___");
+     8 *data.tick => w.wait;
+}
+    
+} 
 
+fun void  BEAT_SOLO_8  (int n){ 
+   for (0 => int i; i <  n     ; i++) {
+     spork ~KICK("*4 k___ k___ k___ k___ k___ k___ k___ k___");
+     8 *data.tick => w.wait;
+}
+    
+} 
     
 
 
@@ -637,7 +651,25 @@ while(1) { /********************************************************/
  
 //BEAT1_64(1);
 
-ZULU(0*8*data.tick, 128*8*data.tick,0,1.0);
+spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
+4 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_8(12);
+12 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(4);
+6 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_8(26);
+30 * 8 * data.tick => now;
+spork ~ BEAT1_64(3);
+// Add 1/2 BEAT1
+28 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(4);
+4 * 8 * data.tick => now;
+2 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(1);
+2 * 8 * data.tick => now;
+spork ~ BEAT1_64(8);
+
+128 * 8 * data.tick => now;
 
 }  
 
