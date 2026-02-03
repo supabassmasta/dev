@@ -588,13 +588,58 @@ fun void  TRANCESNRHHx8  (int n, int remove_last_beats){
 // spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
 // spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
 
+
+fun void  ZULU  (dur offset, dur d, int tomix, float g){ 
+   LONG_WAV l;
+   "../_SAMPLES/Chassin/Taxi Zulu.wav" => l.read;
+   g * data.master_gain => l.buf.gain;
+   0 => l.update_ref_time;
+   l.AttackRelease(0::ms, 0::ms);
+   l.start(4 * data.tick /* sync */ , 0 * data.tick  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+  
+    if ( tomix  ){
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
+    }
+
+    d => now;
+
+}
+
+
+
+    
+
+
+
+
+fun void  BEAT_COUNTER  (){ 
+  0 => int i;
+    while(1) {
+      <<<"-------------------">>>;
+      <<<"-        " + i + " *8*data.tick -">>>;
+      <<<"-------------------">>>;
+      1 +=> i;
+      8 * data.tick => now;
+    }
+} 
+
+spork ~   BEAT_COUNTER (); 
+
+
 // LOOP
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
-spork ~   TRANCEHHx8 (8, 0);
+//spork ~   TRANCEHHx8 (8, 0);
 //spork ~   TRANCESNRHHx8 (8*8, 0);
  
-BEAT1_64(1);
+//BEAT1_64(1);
+
+ZULU(0*8*data.tick, 128*8*data.tick,0,1.0);
+
 }  
+
+
+
