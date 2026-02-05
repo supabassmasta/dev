@@ -883,7 +883,92 @@ spork ~ BEAT_INTRO_9(3);
 3 * 8 * data.tick => now;
   spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
   16 * data.tick => w.wait;
-  spork ~ RING(":4 1////F F////1", ":8:2 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.13);
+  spork ~ RING(":4 1////F F////1", ":8:2 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.17);
+  16 * data.tick => w.wait;
+
+// Drop
+
+spork ~ BEAT1_64(3);
+12 * 8 * data.tick => w.wait;
+spork ~   TRANCEHHx8 (16, 0);
+12 * 8 * data.tick => w.wait;
+spork ~ BEAT1_32();
+2 * 8 * data.tick => w.wait;
+  spork ~ RING(":2 1////F F////1", ":8 G//H"/*fmod*/, ":8 1//f"/*gmod*/,65/*k*/,14*data.tick, 2,.25);
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+// BK ZULU
+
+// TOREMOVE
+//spork ~ ZULU(80*8*data.tick, 128*8*data.tick,0,2.0);
+
+
+spork ~ BEAT_SOLO_8(4);
+  4 * 8 * data.tick => w.wait;
+2 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(1);
+1 * 8 * data.tick => now;
+  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.2);
+  spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+  8 * data.tick => w.wait;
+spork ~ BEAT1_64(3);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCEHHx8 (8, 2);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCESNRHHx8 (8, 2);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCESNRHHx8 (4, 2);
+spork ~ BEAT1_32();
+8 * 8 * data.tick => now;
+}  
+
+
+/// PLAY OR REC /////////////////
+RECTRACK rectrack; "taxi_zulu.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+// w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
+if (rectrack.play_or_rec() ) {
+  //////////////////////////////////
+
+  //////////////////////////////////////////////////
+  // MAIN 
+  //////////////////////////////////////////////////
+
+spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
+4 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_8(12);
+10 * 8 * data.tick => now;
+  spork ~ RING(":2 1////F F////1", ":8 G//H"/*fmod*/, ":8 1//f"/*gmod*/,65/*k*/,14*data.tick, 2,.20);
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+
+spork ~ BEAT_SOLO_8(4);
+6 * 8 * data.tick => now;
+
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+////  BRK ???
+//spork ~ ZULU(22*8*data.tick, 128*8*data.tick,0,2.0);
+
+spork ~ BEAT_INTRO_9(9);
+10 * 8 * data.tick => w.wait;
+spork ~ BEAT_INTRO_8(2);
+1 * 8 * data.tick => w.wait;
+  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.3);
+  spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.21); 
+  8 * data.tick => w.wait;
+
+spork ~ BEAT_SOLO_8(4);
+6 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(4);
+5 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_9(3);
+3 * 8 * data.tick => now;
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+  spork ~ RING(":4 1////F F////1", ":8:2 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.17);
   16 * data.tick => w.wait;
 
 // Drop
@@ -904,75 +989,16 @@ spork ~ BEAT_SOLO_8(4);
 2 * 8 * data.tick => now;
 spork ~ BEAT_SOLO_8(1);
 1 * 8 * data.tick => now;
-  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.3);
+  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.2);
   spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
   8 * data.tick => w.wait;
-spork ~ BEAT1_64(8);
+spork ~ BEAT1_64(2);
     8 * 8 * data.tick => w.wait;
 spork ~   TRANCEHHx8 (8, 2);
     8 * 8 * data.tick => w.wait;
-spork ~   TRANCESNRHHx8 (8, 2);
-
-128 * 8 * data.tick => now;
-}  
-
-
-/// PLAY OR REC /////////////////
-RECTRACK rectrack; "taxi_zulu.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
-// w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
-if (rectrack.play_or_rec() ) {
-  //////////////////////////////////
-
-  //////////////////////////////////////////////////
-  // MAIN 
-  //////////////////////////////////////////////////
-
-spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
-4 * 8 * data.tick => now;
-spork ~ BEAT_INTRO_8(12);
-12 * 8 * data.tick => now;
-spork ~ BEAT_SOLO_8(4);
-6 * 8 * data.tick => now;
-
-//}/***********************   MAGIC CURSOR *********************/
-//while(1) { /********************************************************/
-////  BRK ???
-//spork ~ ZULU(22*8*data.tick, 128*8*data.tick,0,2.0);
-
-spork ~ BEAT_INTRO_9(9);
-10 * 8 * data.tick => w.wait;
-spork ~ BEAT_INTRO_8(2);
-2 * 8 * data.tick => w.wait;
-spork ~ BEAT_SOLO_8(4);
-6 * 8 * data.tick => now;
-spork ~ BEAT_SOLO_8(4);
-5 * 8 * data.tick => now;
-spork ~ BEAT_INTRO_9(3);
-7 * 8 * data.tick => now;
-
-// Drop
-
-spork ~ BEAT1_64(3);
-12 * 8 * data.tick => w.wait;
-spork ~   TRANCEHHx8 (16, 0);
-12 * 8 * data.tick => w.wait;
+spork ~   TRANCESNRHHx8 (4, 2);
 spork ~ BEAT1_32();
-4 * 8 * data.tick => w.wait;
-
-// BK ZULU
-spork ~ BEAT_SOLO_8(4);
-  4 * 8 * data.tick => w.wait;
-2 * 8 * data.tick => now;
-spork ~ BEAT_SOLO_8(1);
-2 * 8 * data.tick => now;
-spork ~ BEAT1_64(8);
-    8 * 8 * data.tick => w.wait;
-spork ~   TRANCEHHx8 (8, 2);
-    8 * 8 * data.tick => w.wait;
-spork ~   TRANCESNRHHx8 (8, 2);
-
-128 * 8 * data.tick => now;
-
+8 * 8 * data.tick => now;
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();
   //////////////////////////////////////////////////
