@@ -452,6 +452,74 @@ fun void SYNT0 (string seq) {
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
 }
+fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix, float g){ 
+  local_delay => now;
+  3::ms => dur attackRelease;
+
+   
+   ST st; st $ ST @=> ST @ last;
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+    
+   Step stp0 => Envelope e0 =>  NOISE3 s => ADSR a => st.mono_in;
+   fstart => e0.value;
+   fstop => e0.target;
+   d => e0.duration ;// => now;
+   
+   1.0 => stp0.next;
+   
+   g => s.gain;
+//   width => s.width;
+
+   a.set(attackRelease, 0::ms, 1., attackRelease);
+
+   a.keyOn();
+
+   d => now;
+
+   a.keyOff();
+   attackRelease => now;
+    
+} 
+
+
+//     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,8*data.tick/*dur*/,.8/*width*/,0,.14); 
+// spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 4,.2);
+fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, float g){ 
+  local_delay => now;
+  TONE t;
+  t.scale.size(0);
+  t.scale << 1 << 3 << 1 << 2 << 3 << 2;
+  t.reg(SERUM00 s0); s0.config(k);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+                                     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+
+  g * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();//
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+  // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+  t.adsr[0].set(3::samp , 10::ms, 1., 3::samp);
+  //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+  // Ring mod
+  3 => s0.inlet.op;
+  
+  // MOD
+  AUTO.freq(fmod) =>  SqrOsc s => Gain gsin=> Gain out;
+  3 => gsin.op;
+  AUTO.gain(gmod) => gsin; // Simple gain with mod
+
+  out => s0.inlet;
+
+  STMIX stmix;
+  stmix.send(last, mixer + mix);
+
+  d => now; 
+} 
 
 //spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
 ////////////////////////////////////////////////////////////////////////////////////////////
@@ -479,8 +547,32 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 fun void EFFECT1   (){ 
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
+  STCONVREV stconvrev;
+  stconvrev.connect(last $ ST , 12/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .06 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  while(1) {
+         100::ms => now;
+  }
+   
 } 
-EFFECT1();
+spork ~  EFFECT1();
+
+fun void EFFECT2   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 2); stmix $ ST @=> ST @ last; 
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+  STMIX stmix2;
+  stmix2.send(last, mixer + 1);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  while(1) {
+         100::ms => now;
+  }
+   
+} 
+spork ~  EFFECT2();
 
 
 fun void  BEAT1_32  (){ 
@@ -583,7 +675,7 @@ fun void  TRANCEHHx8  (int n, int remove_last_beats){
       n - 1 => n;
   }
   for (0 => int i; i <  n     ; i++) {
-    spork ~  TRANCEHH ("*4 +3 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
+    spork ~  TRANCEHH ("*4 +2 {2 __h_   __h_ __h_ __h_ __h_ __h_ __h_ __h_ "); 
     8 * data.tick => w.wait;
   }
   if ( remove_last_beats  ){
@@ -591,7 +683,7 @@ fun void  TRANCEHHx8  (int n, int remove_last_beats){
     for (0 => int i; i <  8 - remove_last_beats ; i++) {
       seq + "__h_ " => seq;
     }
-    spork ~  TRANCEHH ("*4 +3 {2 " + seq); 
+    spork ~  TRANCEHH ("*4 +2 {2 " + seq); 
     (8 - remove_last_beats)  * data.tick => w.wait;
   }
 } 
@@ -600,11 +692,11 @@ fun void  TRANCESNRHHx8  (int n, int remove_last_beats){
       n - 1 => n;
   }
   for (0 => int i; i <  n     ; i++) {
-   spork ~  TRANCEHH ("*4 +3 {2 __h_   }5+3t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
+   spork ~  TRANCEHH ("*4 +2 {2 __h_   }5+5t_h_ __h_ t_h_ __h_ t_h ___h_ t_h_ "); 
     8 * data.tick => w.wait;
   }
   if ( remove_last_beats  ){
-    "*4 +3 {2 __h_   }5+3t_h_" => string seq;
+    "*4 +2 {2 __h_   }5+3t_h_" => string seq;
     for (0 => int i; i <  6 - remove_last_beats ; i++) {
       if ( i % 2 == 0  ){
       seq + "__h_ " => seq;
@@ -625,7 +717,8 @@ fun void  TRANCESNRHHx8  (int n, int remove_last_beats){
 
 fun void  ZULU  (dur offset, dur d, int tomix, float g){ 
    LONG_WAV l;
-   "../_SAMPLES/Chassin/Taxi Zulu.wav" => l.read;
+//   "../_SAMPLES/Chassin/Taxi Zulu.wav" => l.read;
+   "../_SAMPLES/Chassin/Taxi Zulu 2.wav" => l.read;
    g * data.master_gain => l.buf.gain;
    0 => l.update_ref_time;
    l.AttackRelease(0::ms, 0::ms);
@@ -761,7 +854,11 @@ while(1) { /********************************************************/
 spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
 4 * 8 * data.tick => now;
 spork ~ BEAT_INTRO_8(12);
-12 * 8 * data.tick => now;
+10 * 8 * data.tick => now;
+  spork ~ RING(":2 1////F F////1", ":8 G//H"/*fmod*/, ":8 1//f"/*gmod*/,65/*k*/,14*data.tick, 2,.20);
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+
 spork ~ BEAT_SOLO_8(4);
 6 * 8 * data.tick => now;
 
@@ -773,13 +870,21 @@ spork ~ BEAT_SOLO_8(4);
 spork ~ BEAT_INTRO_9(9);
 10 * 8 * data.tick => w.wait;
 spork ~ BEAT_INTRO_8(2);
-2 * 8 * data.tick => w.wait;
+1 * 8 * data.tick => w.wait;
+  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.3);
+  spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.21); 
+  8 * data.tick => w.wait;
+
 spork ~ BEAT_SOLO_8(4);
 6 * 8 * data.tick => now;
 spork ~ BEAT_SOLO_8(4);
 5 * 8 * data.tick => now;
 spork ~ BEAT_INTRO_9(3);
-7 * 8 * data.tick => now;
+3 * 8 * data.tick => now;
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+  spork ~ RING(":4 1////F F////1", ":8:2 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.13);
+  16 * data.tick => w.wait;
 
 // Drop
 
@@ -788,14 +893,20 @@ spork ~ BEAT1_64(3);
 spork ~   TRANCEHHx8 (16, 0);
 12 * 8 * data.tick => w.wait;
 spork ~ BEAT1_32();
-4 * 8 * data.tick => w.wait;
+2 * 8 * data.tick => w.wait;
+  spork ~ RING(":2 1////F F////1", ":8 G//H"/*fmod*/, ":8 1//f"/*gmod*/,65/*k*/,14*data.tick, 2,.25);
+  spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
 
 // BK ZULU
 spork ~ BEAT_SOLO_8(4);
   4 * 8 * data.tick => w.wait;
 2 * 8 * data.tick => now;
 spork ~ BEAT_SOLO_8(1);
-2 * 8 * data.tick => now;
+1 * 8 * data.tick => now;
+  spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.3);
+  spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+  8 * data.tick => w.wait;
 spork ~ BEAT1_64(8);
     8 * 8 * data.tick => w.wait;
 spork ~   TRANCEHHx8 (8, 2);
