@@ -848,7 +848,7 @@ spork ~ BEAT_SOLO_8(4);
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
-while(1) { /********************************************************/
+while(0) { /********************************************************/
  
 
 spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
@@ -900,6 +900,7 @@ spork ~ BEAT1_32();
 
 //}/***********************   MAGIC CURSOR *********************/
 //while(1) { /********************************************************/
+
 // BK ZULU
 
 // TOREMOVE
@@ -935,6 +936,8 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
   // MAIN 
   //////////////////////////////////////////////////
+
+ 
 
 spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
 4 * 8 * data.tick => now;
@@ -983,7 +986,15 @@ spork ~ BEAT1_32();
   spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
   16 * data.tick => w.wait;
 
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+
 // BK ZULU
+
+// TOREMOVE
+//spork ~ ZULU(80*8*data.tick, 128*8*data.tick,0,2.0);
+
+
 spork ~ BEAT_SOLO_8(4);
   4 * 8 * data.tick => w.wait;
 2 * 8 * data.tick => now;
@@ -992,9 +1003,11 @@ spork ~ BEAT_SOLO_8(1);
   spork ~ RING("1111 1111 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/8"/*gmod*/,64/*k*/,8*data.tick, 2,.2);
   spork ~  SLIDENOISE(200 /* fstart */, 2000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
   8 * data.tick => w.wait;
-spork ~ BEAT1_64(2);
+spork ~ BEAT1_64(3);
     8 * 8 * data.tick => w.wait;
 spork ~   TRANCEHHx8 (8, 2);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCESNRHHx8 (8, 2);
     8 * 8 * data.tick => w.wait;
 spork ~   TRANCESNRHHx8 (4, 2);
 spork ~ BEAT1_32();
