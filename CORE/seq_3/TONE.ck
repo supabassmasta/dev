@@ -4,6 +4,7 @@
 
     fun int on_time() {
       f => e.value;
+      return 0;
     }
   }
 
@@ -34,7 +35,7 @@
       if ( c.disconnect_mode_on ){
         spork ~  release_disconnect ( c.off_nb, c, a ); 
       }
-
+      return 0;
     }
   }
 
@@ -49,6 +50,7 @@
           a => c.output;
       }
       a.keyOn();
+      return 0;
     }
   }
 
@@ -58,6 +60,7 @@
 
     fun int on_time() {
       g => a.gain;
+      return 0;
     }
   }
 
@@ -66,6 +69,7 @@
     float v;
     fun int on_time() {
       v => p.pan;
+      return 0;
     }
   }
 
@@ -73,6 +77,7 @@
     SYNT @ s;
     fun int on_time() {
       s.on();
+      return 0;
     }
   }
 
@@ -81,6 +86,7 @@
     fun int on_time() {
       s.off();
       //            <<<"synt_off">>>; 
+      return 0;
     }
   }
 
@@ -89,6 +95,7 @@
     int index;
     fun int on_time() {
       s.new_note(index);
+      return 0;
     }
   }
 
@@ -100,6 +107,7 @@
     fun int on_time() {
       f => e.target;
       s_dur => e.duration;
+      return 0;
     }
   }
 
@@ -109,6 +117,7 @@
 
     fun int on_time() {
       note_info_tx_p.push_to_all( e.note_info_s );
+      return 0;
     }
 
   }
@@ -195,6 +204,7 @@ public class TONE extends ST {
   }
 
   data.ref_note => int base_note;
+  0 => int note_offset_in_scale;
   data.tick =>  dur base_dur;
   0.05 => float groove_ratio;
   0.3 => float init_gain;
@@ -603,7 +613,7 @@ public class TONE extends ST {
 
 
         /////////// NOTE ////////////
-        convert_note(c) => int rel_note;
+        convert_note(c) + note_offset_in_scale => int rel_note;
 
         // SET NOTE
         conv_to_freq(rel_note, scale, base_note, note_offset) => temp_freq;
@@ -958,6 +968,34 @@ public class TONE extends ST {
         // bemol implemenation
         note_offset --;
       }
+      else if (in.charAt(i) == '[') {
+        i++;
+        in.charAt(i)=> c;
+        if ('0' <= c && c <= '9') {
+          note_offset_in_scale - (c -'0') => note_offset_in_scale;
+        }
+        else if	 ((c >= 'a') && (c <= 'z')) {
+          note_offset_in_scale - (c -'a') + 10 => note_offset_in_scale;
+        }
+        else {
+          note_offset_in_scale - 1 => note_offset_in_scale;
+          i--;
+        }
+      }
+      else if (in.charAt(i) == ']') {
+        i++;
+        in.charAt(i)=> c;
+        if ('0' <= c && c <= '9') {
+          note_offset_in_scale + (c -'0') => note_offset_in_scale;
+        }
+        else if	 ((c >= 'a') && (c <= 'z')) {
+          note_offset_in_scale + (c -'a') + 10 => note_offset_in_scale;
+        }
+        else {
+          note_offset_in_scale + 1 => note_offset_in_scale;
+          i--;
+        }
+      }
 
 
 
@@ -1064,10 +1102,6 @@ public class TONE extends ST {
     s.go();
   }
 
-  fun void on(int in) {
-		in => s.on;
-	}
-
   fun void print() {
     s.print();
   }
@@ -1119,13 +1153,36 @@ public class TONE extends ST {
     scale << 2 << 1 << 3 << 1 << 1 << 3 << 1 ;
   }
 
+  fun void set_scale(string name) {
+    if ( name == "lyd"  ){
+      lyd(); 
+    }
+    else if ( name == "ion"  ){
+      ion(); 
+    }
+    else if ( name == "dor"  ){
+      dor(); 
+    }
+    else if ( name == "aeo"  ){
+      aeo(); 
+    }
+    else if ( name == "phr"  ){
+      phr(); 
+    }
+    else if ( name == "loc"  ){
+      loc(); 
+    }
+    else if ( name == "double_harmonic"  ){
+      double_harmonic(); 
+    }
+    else if ( name == "gypsy_minor"  ){
+      gypsy_minor(); 
+    }
+    else {
+      <<<"ERROR, TONE, Scale name:" + name + " does not exist">>>;
 
-
-
-
-
-
-
+    }
+   }
 
 }
 /*

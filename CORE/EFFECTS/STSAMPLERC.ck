@@ -196,6 +196,9 @@ public class STSAMPLERC extends ST {
     //<<<"PATH:: ", me.path()>>>;
     MISC.file_nb(script_path) => file_nb;
 
+    // Make it work on pages > 0. Will not work properly on page change (control still active on next page)
+    file_nb % 100 => file_nb;
+
     // Compute coordinate on launchpad
     file_nb/ 10 -1 => file_x;
     file_nb%10 -1 =>  file_y;

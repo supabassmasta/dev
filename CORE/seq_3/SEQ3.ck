@@ -29,7 +29,12 @@ public class SEQ3 {
   }
 
   fun void compute_ref_time() {
-    now - ((now - data.wait_before_start - (duration * ref_time_offset_relative) )%duration)  => ref_time;
+//    if (duration == 0::ms) { 
+//      <<<"WARNING SEQ3 Duration == 0::ms">>>;
+//    }
+//    else {
+      now - ((now - data.wait_before_start - (duration * ref_time_offset_relative) )%duration)  => ref_time;
+//      }
   }
 
   fun time set_element_next_time(int i) {
@@ -83,6 +88,8 @@ public class SEQ3 {
         duration => elements[i].rel_time;
         elements[i].duration +=> duration;
     }
+    
+    if (duration == 0::ms) return;
     
     duration / data.tick => nb_tick;
     // <<<"nb_tick", nb_tick>>>; 

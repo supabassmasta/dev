@@ -806,4 +806,93 @@ spork ~   TRANCESNRHHx8 (8, 2);
 }  
 
 
+/// PLAY OR REC /////////////////
+RECTRACK rectrack; "taxi_zulu.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+// w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
+if (rectrack.play_or_rec() ) {
+  //////////////////////////////////
 
+  //////////////////////////////////////////////////
+  // MAIN 
+  //////////////////////////////////////////////////
+
+spork ~ ZULU(0*8*data.tick, 128*8*data.tick,0,2.0);
+4 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_8(12);
+12 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(4);
+6 * 8 * data.tick => now;
+
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+////  BRK ???
+//spork ~ ZULU(22*8*data.tick, 128*8*data.tick,0,2.0);
+
+spork ~ BEAT_INTRO_9(9);
+10 * 8 * data.tick => w.wait;
+spork ~ BEAT_INTRO_8(2);
+2 * 8 * data.tick => w.wait;
+spork ~ BEAT_SOLO_8(4);
+6 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(4);
+5 * 8 * data.tick => now;
+spork ~ BEAT_INTRO_9(3);
+7 * 8 * data.tick => now;
+
+// Drop
+
+spork ~ BEAT1_64(3);
+12 * 8 * data.tick => w.wait;
+spork ~   TRANCEHHx8 (16, 0);
+12 * 8 * data.tick => w.wait;
+spork ~ BEAT1_32();
+4 * 8 * data.tick => w.wait;
+
+// BK ZULU
+spork ~ BEAT_SOLO_8(4);
+  4 * 8 * data.tick => w.wait;
+2 * 8 * data.tick => now;
+spork ~ BEAT_SOLO_8(1);
+2 * 8 * data.tick => now;
+spork ~ BEAT1_64(8);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCEHHx8 (8, 2);
+    8 * 8 * data.tick => w.wait;
+spork ~   TRANCESNRHHx8 (8, 2);
+
+128 * 8 * data.tick => now;
+
+  //// STOP REC ///////////////////////////////
+  rectrack.rec_stop();
+  //////////////////////////////////////////////////
+
+  ///////////////////////// END LOOP ///////////////////////////////////::
+  0 => data.next;
+  while (!data.next) {
+    <<<"**********">>>;
+    <<<" END LOOP ">>>;
+    <<<"**********">>>;
+    // REC END LOOP //////////////////////////////////
+    rectrack.rec_end_loop();
+    //////////////////////////////////////////////////
+
+    // !!!!!! Put end loop here  !!!!!!
+
+    //// STOP REC ///////////////////////////////
+    rectrack.stop_rec_end_loop();
+    /////////////////////////////////////////////
+  }
+
+  ///////////////////
+  //      END      //
+  ///////////////////
+  // REC  END  //////
+  rectrack.rec_end();
+  ///////////////////
+
+  //  !!!!!! put end here  !!!!!!
+
+  //// STOP REC ///////////
+  rectrack.stop_rec_end(); 
+  /////////////////////////
+}  

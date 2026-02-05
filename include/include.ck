@@ -277,6 +277,7 @@ Machine.add( rt + "CORE/EFFECTS/STECHOV.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSOUT.ck");
 Machine.add( rt + "CORE/EFFECTS/STCROSSIN.ck");
 Machine.add( rt + "CORE/EFFECTS/STCONVREV.ck");
+Machine.add( rt + "CORE/EFFECTS/STCONVREVIN.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STLPFC2.ck");
 Machine.add( rt + "CORE/EFFECTS/STHPFC2.ck");
@@ -332,6 +333,8 @@ Machine.add(rt + "CORE/EFFECTS/STCUTTER.ck");
 Machine.add(rt + "CORE/EFFECTS/STREVAUX.ck");
 Machine.add("page_manager_nb_page_config.ck"); // PAGE MANAGER : NUMBER OF PAGES
 Machine.add(rt + "CORE/SYNT/AUTO.ck");
+Machine.add( rt + "CORE/EFFECTS/RECTRACK.ck");
+Machine.add( rt + "CORE/EFFECTS/RECSEQ.ck");
 me.yield();
 Machine.add( rt + "CORE/EFFECTS/STSAMPLERC.ck");
 Machine.add( rt + "CORE/launchpad/script_launcher.ck");

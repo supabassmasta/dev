@@ -436,8 +436,8 @@ ab gverbK GVerb gverb0  =>
 
 ab TONEK TONE t;
 \<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-\<CR>t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
-\<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+\<CR>t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor(); t.set_scale("dor");
+\<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note, [] = note_offset_in_scale, ! = force new note , # = sharp , ^ = bemol  
 \<CR>"1" => t.seq;
 \<CR>.9 * data.master_gain => t.gain;
 \<CR>//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
@@ -898,9 +898,13 @@ ab CONTROLK class cont extends CONTROL {
 \<CR>   }
 \<CR>}
 
-ab PowerADSRK PowerADSR padsr
+ab PowerADSRK PowerADSR padsr =>
 \<CR>padsr.set(1::ms, 20::ms, .7 , 200::ms);
-\<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+\<CR>padsr.setCurves(.6, .4, .3); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave padsr.keyOn(); padsr.keyOff(); 
+
+ab ADSRK ADSR adsr =>
+\<CR>adsr.set(1::ms, 20::ms, .7 , 200::ms); // padsr.keyOn(); padsr.keyOff(); 
+
 
 ab STBREAKK STBREAK stbreak;
 \<CR>stbreak.connect(last $ ST, 0 /* break_number, max 3 */);   stbreak $ ST @=>last; 
@@ -1628,6 +1632,8 @@ ab STFREEPANK STFREEPAN stfreepan0;
 " AUTO freq: dorian scale based on ref note , gain 1 : 0.0, 8 : 1.0 and pan 1 : -1.0, 5 ~ 0.0, 8 : 1.0
 ab AUTOK AUTO.freq("") => 
 
+ab AUTOGLIDEK AUTO.freqglide("",30::ms/*glide_dur*/) => 
+
 ab STFREEGAINK STFREEGAIN stfreegain;
 \<CR>stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
 \<CR>AUTO.gain("") => stfreegain.g; // connect this
@@ -1708,12 +1714,12 @@ ab SONGK 1 => int mixer;
 \<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
 \<CR>
 \<CR>///////////////////////////////////////////////////////////////////////////////////////////////
-\<CR>fun void SEQ0(string seq) {
+\<CR>fun void SEQ0(string seq, int mix, float g) {
 \<CR>SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
 \<CR>SET_WAV.ACOUSTIC(s); // SET_WAV.TABLA(s);// SET_WAV.CYMBALS(s); // SET_WAV.DUB(s); // SET_WAV.TRANCE(s); // SET_WAV.TRANCE_VARIOUS(s);// SET_WAV.TEK_VARIOUS(s);// SET_WAV.TEK_VARIOUS2(s);// SET_WAV2.__SAMPLES_KICKS(s); // SET_WAV2.__SAMPLES_KICKS_1(s); // SET_WAV.BLIPS(s);  // SET_WAV.TRIBAL(s);// "test.wav" => s.wav["a"];  // act @=> s.action["a"]; 
 \<CR>// _ = pause , ~ = special pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
 \<CR>seq => s.seq;
-\<CR>.5 * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+\<CR>g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
 \<CR>s.no_sync();// s.element_sync(); //s.no_sync()
 \<CR>//s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
 \<CR>// s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
@@ -1721,13 +1727,13 @@ ab SONGK 1 => int mixer;
 \<CR>s.go();     s $ ST @=> ST @ last; 
 \<CR>
 \<CR>//  STMIX stmix;
-\<CR>//  stmix.send(last, mixer);
+\<CR>//  stmix.send(last, mixer + mix);
 \<CR>
 \<CR>1::samp => now; // let seq() be sporked to compute length
 \<CR>s.s.duration => now;
 \<CR>}
 \<CR>
-\<CR>//spork ~ SEQ0("*4 sss___");
+\<CR>//spork ~ SEQ0("*4 sss___", 0, .5);
 \<CR>
 \<CR>//////////////////////////////////////////////////////////////////////////////////////////////
 \<CR>class synt0 extends SYNT{
@@ -1737,13 +1743,13 @@ ab SONGK 1 => int mixer;
 \<CR>} 
 \<CR>
 \<CR>
-\<CR>fun void SYNT0 (string seq) {
+\<CR>fun void SYNT0 (string seq, int mix, float g) {
 \<CR>TONE t;
 \<CR>t.reg(synt0 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 \<CR>t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 \<CR>// _ = pause , \| = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 \<CR>seq => t.seq;
-\<CR>.3 * data.master_gain => t.gain;
+\<CR>g * data.master_gain => t.gain;
 \<CR>t.no_sync();// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 \<CR>// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
 \<CR>//t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
@@ -1751,15 +1757,19 @@ ab SONGK 1 => int mixer;
 \<CR>t.go();   t $ ST @=> ST @ last; 
 \<CR>
 \<CR>//  STMIX stmix;
-\<CR>//  stmix.send(last, mixer);
+\<CR>//  stmix.send(last, mixer + mix);
 \<CR>
 \<CR>1::samp => now; // let seq() be sporked to compute length
 \<CR>t.s.duration => now;
 \<CR>}
 \<CR>
-\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____", 0, .5);
 \<CR>////////////////////////////////////////////////////////////////////////////////////////////
 \<CR>////////////////////////////////////////////////////////////////////////////////////////////
+\<CR>
+\<CR>//******************************************
+\<CR>//****       BPM  REF_NOTE   ***************
+\<CR>//******************************************
 \<CR>
 \<CR>148 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 \<CR>55 => data.ref_note;
@@ -1789,13 +1799,14 @@ ab SONGK 1 => int mixer;
 \<CR>if (    0     ){
 \<CR>}/***********************   MAGIC CURSOR *********************/
 \<CR>while(1) { /********************************************************/
-\<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
-\<CR>//spork ~ SEQ0("____ *4s__s _ab_ ");
-\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+\<CR>//spork ~ KICK("*4 k___ k___ k___ k___");
+\<CR>//spork ~ SEQ0("____ *4s__s _ab_ ", 0, .5);
+\<CR>//spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____", 0, .5);
 \<CR>
 \<CR>8 * data.tick =>  w.wait; 
 \<CR>// 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 \<CR>} 
+
 
 ab MULTIRECK "song_mrec_" => string mrpath;
 \<CR>MULTIREC mrec;  30::second => mrec.rec_dur; // 1 => mrec.disable;
@@ -1828,4 +1839,92 @@ ab STSAMPLERCK STSAMPLERC stsamplerc;
 
 ab COUNTDOWNK COUNTDOWN countdown;
 \<CR>countdown.start(4*data.tick, 1*data.tick);
- 
+
+
+ab STCONVREVINK 133::ms => dur convrevin_dur;
+\<CR>// IR generation examples:
+\<CR>KIK kik;
+\<CR>kik.config(0.4 /* init Sin Phase */, 76 * 100 /* init freq env */, 0.4 /* init gain env */);
+\<CR>kik.addFreqPoint (188, 1 * 10::ms);
+\<CR>kik.addFreqPoint (.0, convrevin_dur -10::ms);
+\<CR>kik.addGainPoint (0.2, 1 * 10::ms); 
+\<CR>kik.addGainPoint (0.0, convrevin_dur -10::ms); 
+\<CR>kik.outlet => Gain ir;
+\<CR>kik.new_note(0);
+\<CR>
+\<CR>//Noise n => LPF lpf => Envelope e0 => Gain  ir;
+\<CR>//821 => lpf.freq;
+\<CR>//8 * 0.01 => e0.value;
+\<CR>//0.0 => e0.target;
+\<CR>//convrevin_dur => e0.duration ;// => now;
+\<CR>
+\<CR>STCONVREVIN stconvrevin;
+\<CR>stconvrevin.connect(last $ ST , ir/*UGen Input Reponse*/ , convrevin_dur /*rev_dur*/, .1 /* rev gain */  , 0.0 /* dry gain */  );       stconvrevin $ ST @=>  last;   
+
+
+ab RECTRACKK /// PLAY OR REC /////////////////
+\<CR>RECTRACK rectrack; "trackname.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+\<CR>// w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
+\<CR>if (rectrack.play_or_rec() ) {
+\<CR>//////////////////////////////////
+\<CR>
+\<CR>//////////////////////////////////////////////////
+\<CR>// MAIN 
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>//  !!!!!!  Put main code here  !!!!!
+\<CR>
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>rectrack.rec_stop();
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>///////////////////////// END LOOP ///////////////////////////////////::
+\<CR>0 => data.next;
+\<CR>while (!data.next) {
+\<CR><<<"**********">>>;
+\<CR><<<" END LOOP ">>>;
+\<CR><<<"**********">>>;
+\<CR>// REC END LOOP //////////////////////////////////
+\<CR>rectrack.rec_end_loop();
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>// !!!!!! Put end loop here  !!!!!!
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>rectrack.stop_rec_end_loop();
+\<CR>/////////////////////////////////////////////
+\<CR>}
+\<CR>
+\<CR>///////////////////
+\<CR>//      END      //
+\<CR>///////////////////
+\<CR>// REC  END  //////
+\<CR>rectrack.rec_end();
+\<CR>///////////////////
+\<CR>
+\<CR>//  !!!!!! put end here  !!!!!!
+\<CR>
+\<CR>//// STOP REC ///////////
+\<CR>rectrack.stop_rec_end(); 
+\<CR>/////////////////////////
+\<CR>} 
+
+ab RECSEQK /// PLAY OR REC /////////////////
+\<CR>RECSEQ recseq; "seqname0.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;1.=>recseq.play_gain;
+\<CR>if (recseq.play_or_rec() ) {
+\<CR>//////////////////////////////////
+\<CR>
+\<CR>//////////////////////////////////////////////////
+\<CR>// MAIN 
+\<CR>//////////////////////////////////////////////////
+\<CR>
+\<CR>//  !!!!!!  Put main code here  !!!!!
+\<CR>// Call this with file and fun name to record all seq on fresh cloned project
+\<CR>// if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+\<CR>
+\<CR>//// STOP REC ///////////////////////////////
+\<CR>recseq.rec_stop();
+\<CR>//////////////////////////////////////////////////
+\<CR>}
+

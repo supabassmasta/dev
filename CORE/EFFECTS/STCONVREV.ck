@@ -891,6 +891,24 @@ string a[0];
 /* 887 */ a << "/London City 50W SNB/LC50 CMV3-M9 stalevel_dc.wav";
 /* 888 */ a << "/London City 50W SNB/LC50 KM53 stalevel_dc.wav";
 /* 889 */ a << "/test.wav";
+
+/* 889 */ a << "/N_IRIS/n_iris_1.wav";
+/* 890 */ a << "/N_IRIS/n_iris_2.wav";
+/* 891 */ a << "/N_IRIS/n_iris_3.wav";
+/* 892 */ a << "/N_IRIS/n_iris_4.wav";
+/* 893 */ a << "/N_IRIS/n_iris_5.wav";
+/* 894 */ a << "/N_IRIS/n_iris_6.wav";
+/* 895 */ a << "/N_IRIS/n_iris_7.wav";
+/* 896 */ a << "/N_IRIS/n_iris_8.wav";
+
+/* 897 */ a << "/N_IRIS/n_iris_0_aligned_1.wav";
+/* 898 */ a << "/N_IRIS/n_iris_0_aligned_2.wav";
+/* 899 */ a << "/N_IRIS/n_iris_0_aligned_3.wav";
+/* 900 */ a << "/N_IRIS/n_iris_0_aligned_4.wav";
+/* 901 */ a << "/N_IRIS/n_iris_0_aligned_5.wav";
+/* 902 */ a << "/N_IRIS/n_iris_0_aligned_6.wav";
+/* 903 */ a << "/N_IRIS/n_iris_0_aligned_7.wav";
+/* 904 */ a << "/N_IRIS/n_iris_0_aligned_8.wav";
 }
 
 
