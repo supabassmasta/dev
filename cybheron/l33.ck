@@ -196,11 +196,21 @@ fun void BASS0 (string seq, int tomix, float g) {
 
 
   STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-  stsynclpfx0.freq(17 * 10 /* Base */, 30 * 10 /* Variable */, 1.2 /* Q */);
+  stsynclpfx0.freq(20 * 10 /* Base */, 30 * 10 /* Variable */, 1.2 /* Q */);
   stsynclpfx0.adsr_set(.0015 /* Relative Attack */, 27*  .01/* Relative Decay */, 0.47 /* Sustain */, .4 /* Relative Sustain dur */, 0.5 /* Relative release */);
   stsynclpfx0.nio.padsr.setCurves(1.0,39 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
+
+  STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 350.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+//STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
+//stfreeresx0.connect(last $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
+//s_wt0.inlet => Gain g0  => stfreeresx0.freq; // CONNECT THIS 
+//0.5 => g0.gain;
+//2. => stfreeresx0.gain;
+
 
   if ( tomix  ){
     STMIX stmix;
