@@ -191,13 +191,13 @@ fun void BASS0 (string seq, int tomix, float g) {
   t.go();   t $ ST @=> ST @ last; 
 
   STADSR stadsr;
-  stadsr.set(.0::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.35/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
+  stadsr.set(.0::ms /* Attack */, 6::ms /* Decay */, 1. /* Sustain */, -0.15/* Sustain dur of Relative release pos (float) */,  30::ms /* release */);
   stadsr.connect(last $ ST, t.note_info_tx_o);  stadsr  $ ST @=>  last;
 
 
   STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
-  stsynclpfx0.freq(25 * 10 /* Base */, 30 * 10 /* Variable */, 1.0 /* Q */);
-  stsynclpfx0.adsr_set(.0015 /* Relative Attack */, 27*  .01/* Relative Decay */, 0.29 /* Sustain */, .2 /* Relative Sustain dur */, 0.7 /* Relative release */);
+  stsynclpfx0.freq(17 * 10 /* Base */, 30 * 10 /* Variable */, 1.2 /* Q */);
+  stsynclpfx0.adsr_set(.0015 /* Relative Attack */, 27*  .01/* Relative Decay */, 0.47 /* Sustain */, .4 /* Relative Sustain dur */, 0.5 /* Relative release */);
   stsynclpfx0.nio.padsr.setCurves(1.0,39 * 0.01, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
   stsynclpfx0.connect(last $ ST ,  stsynclpfx0_fact, t.note_info_tx_o , 2 /* order */, 1 /* channels */ , 1::samp /* period */ );       stsynclpfx0 $ ST @=>  last; 
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
@@ -553,8 +553,41 @@ fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
   s.s.duration => now;
 }
 
+fun void TRIBAL0(string seq, int tomix, float g) {
+  local_delay => now;
 
-//  spork ~ TRIBAL_CUSTOM("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+
+  SET_WAV.TRIBALR0(s);
+//  s.wav["M"] => s.wav["a"];  // act @=> s.action["a"]; 
+//  s.wav["M"] => s.wav["b"];  // act @=> s.action["a"]; 
+
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+              //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+              // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+              //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+//  if(seq.find('a') != -1 ){
+//    1.2=> s.wav_o["a"].wav0.rate;
+//  }
+//  if(seq.find('b') != -1 ){
+//    1.4=> s.wav_o["b"].wav0.rate;
+//  }
+  s.go();     s $ ST @=> ST @ last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+
+//  spork ~ TRIBAL("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
    
 fun void ACOUSTICTOM(string seq, int tomix, float g) {
   local_delay => now;
@@ -1382,9 +1415,9 @@ fun void  BEAT0x8  (int n, int add_a_last_Kick, int remove_last_beats){
   }
   for (0 => int i; i <  n     ; i++) {
    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
-   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",0,1.);
-   spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",0,1.);
-   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
+//   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",0,1.);
+   spork ~ BASS0(" *2 _1 _1 _1 _1 _1 _1 _1 _1   ",0,1.);
+   spork ~ BASS0_ATTACK ("*4  __a_ __a_ __a_ __a_ __a_ __a_ __a_ __a_   ", 0.7 /* rate */,0, .16 /* g */); 
    8 * data.tick => w.wait;
   }
   if ( remove_last_beats  ){
@@ -1394,17 +1427,17 @@ fun void  BEAT0x8  (int n, int add_a_last_Kick, int remove_last_beats){
     string bassatk;
     for (0 => int i; i <  8 - remove_last_beats ; i++) {
       seq + "k___ " => seq;
-      basshf + "!1!1__ " => basshf;
-      bass + "__!1!1 " => bass;
-      bassatk + "aaaa " => bassatk;
+//      basshf + "!1!1__ " => basshf;
+      bass + "_1 " => bass;
+      bassatk + "__a_ " => bassatk;
     }
     if(add_a_last_Kick){
       seq + "k_  " => seq;
     }
 
    spork ~KICK("*4 " + seq,0,1.);
-   spork ~ BASS0HF("*4 " + basshf,0,1.);
-   spork ~ BASS0(" *4  " + bass,0,1.);
+//   spork ~ BASS0HF("*4 " + basshf,0,1.);
+   spork ~ BASS0(" *2  " + bass,0,1.);
    spork ~  BASS0_ATTACK ("*4  " + bassatk, 0.7 /* rate */,0, .16 /* g */); 
    
     if(add_a_last_Kick){
@@ -1557,8 +1590,8 @@ if ( lpf_f != 0. ){
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
-150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-52 => data.ref_note;
+145 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+53 => data.ref_note;
 "aeo" => data.scale.my_string;
 <<<"SCALE: ", data.scale.my_string>>>;
 
@@ -1649,7 +1682,28 @@ fun void  LOOPLAB  (){
 //   spork ~   TRANCEHHx8 (4, 4); 
    spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
    spork ~   TRANCESNRHHx8 (8, 4); 
-   8 * 8 * data.tick => w.wait;
+   
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
+   8  * data.tick => w.wait;
+//   8 * 8 * data.tick => w.wait;
 //    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
 //    spork ~ BASS0HF("*3 !1__ !1__ !1__ !1__ !1__ !1__ !1__ !1__    ",0,1.);
 //    spork ~ BASS0(" *3   _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1   ",0,1.);
