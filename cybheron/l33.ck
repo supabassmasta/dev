@@ -1689,9 +1689,9 @@ spork ~  EFFECT4();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-//   spork ~   TRANCEHHx8 (4, 4); 
    spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
    spork ~   TRANCESNRHHx8 (8, 4); 
+//   spork ~   TRANCEHHx8 (8, 4); 
 
 
   
