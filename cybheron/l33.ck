@@ -181,7 +181,7 @@ fun void BASS0 (string seq, int tomix, float g) {
   t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
           // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  g * 0.65 * data.master_gain => t.gain;
+  g * 0.55 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
               // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -203,7 +203,7 @@ fun void BASS0 (string seq, int tomix, float g) {
   // CONNECT THIS to play on freq target //     => stsynclpfx0.nio.padsr; 
 
   STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 350.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+  stlpfx0.connect(last $ ST ,  stlpfx0_fact, 299.0 /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
 //STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
 //stfreeresx0.connect(last $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
@@ -1706,7 +1706,7 @@ fun void  LOOPLAB  (){
    spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
    8  * data.tick => w.wait;
 
-spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,2.7);
+spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.7);
    spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
    spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
    8  * data.tick => w.wait;
@@ -1718,7 +1718,7 @@ spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,2.
    8  * data.tick => w.wait;
    spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
    4  * data.tick => w.wait;
-   spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .3/*autoRes phase*/,2,2.7);
+   spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .3/*autoRes phase*/,2,3.7);
    2  * data.tick => w.wait;
    spork ~KICK("*4        ____ k_k_",0,1.);
    spork ~ TRIBAL0(" *4   ____ _Y_ ____   ", 1 /* tomix */, 2.8 /* gain */);
@@ -1741,7 +1741,7 @@ spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,2.
    spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
    8  * data.tick => w.wait;
 
-   spork ~ SUPSAWSLIDE("*2 {c{c FBIF ____", .1/*autoRes phase*/,2,4.7);
+   spork ~ SUPSAWSLIDE("*2 {c{c FBIF ____", .1/*autoRes phase*/,2,5.7);
    spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
    spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
    8  * data.tick => w.wait;
@@ -1753,7 +1753,7 @@ spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,2.
    8  * data.tick => w.wait;
    spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
    4  * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .6/*autoRes phase*/,2,2.7);
+  spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .6/*autoRes phase*/,2,3.7);
   2  * data.tick => w.wait;
    spork ~KICK("*4        ____ kk_k",0,1.);
    spork ~ TRIBAL0(" *4   ____ __I_ ____   ", 1 /* tomix */, 1.8 /* gain */);
