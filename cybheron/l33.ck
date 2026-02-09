@@ -563,6 +563,7 @@ fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
   s.s.duration => now;
 }
 
+//  spork ~ TRIBAL0("*4   ____ __c_ ____ ___b  ____ __a_ ____ ___b ", 0 /* tomix */, 2.0 /* gain */);
 fun void TRIBAL0(string seq, int tomix, float g) {
   local_delay => now;
 
@@ -597,7 +598,41 @@ fun void TRIBAL0(string seq, int tomix, float g) {
 }
 
 
-//  spork ~ TRIBAL("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+//  spork ~ TRIBAL1("*3 )2M__ ___ ___ ___ ___   _MM ___ (3a__ M__ ___ ___ ___ __a   _MM ___ (1b_a ", 0 /* tomix */, 2.0 /* gain */);
+fun void TRIBAL1(string seq, int tomix, float g) {
+  local_delay => now;
+
+  SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
+
+  SET_WAV.TRIBALR1(s);
+//  s.wav["M"] => s.wav["a"];  // act @=> s.action["a"]; 
+//  s.wav["M"] => s.wav["b"];  // act @=> s.action["a"]; 
+
+  // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
+  seq => s.seq;
+  g * data.master_gain => s.gain; // s.gain("s", .2); // for single wav 
+  s.no_sync();// s.element_sync(); //s.no_sync()
+              //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
+              // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
+              //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
+//  if(seq.find('a') != -1 ){
+//    1.2=> s.wav_o["a"].wav0.rate;
+//  }
+//  if(seq.find('b') != -1 ){
+//    1.4=> s.wav_o["b"].wav0.rate;
+//  }
+  s.go();     s $ ST @=> ST @ last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  1::samp => now; // let seq() be sporked to compute length
+  s.s.duration => now;
+}
+
+
    
 fun void ACOUSTICTOM(string seq, int tomix, float g) {
   local_delay => now;
@@ -1459,6 +1494,47 @@ fun void  BEAT0x8  (int n, int add_a_last_Kick, int remove_last_beats){
   }
 } 
 
+//  spork ~ KIK0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+fun void  KIK0x8  (int n, int add_a_last_Kick, int remove_last_beats){ 
+  if ( remove_last_beats  ){
+      n - 1 => n;
+  }
+  for (0 => int i; i <  n     ; i++) {
+   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+//   spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",0,1.);
+//   spork ~ BASS0(" *2 _1 _1 _1 _1 _1 _1 _1 _1   ",0,1.);
+//   spork ~ BASS0_ATTACK ("*4  __a_ __a_ __a_ __a_ __a_ __a_ __a_ __a_   ", 0.7 /* rate */,0, .16 /* g */); 
+   8 * data.tick => w.wait;
+  }
+  if ( remove_last_beats  ){
+    string seq;
+    string basshf;
+    string bass;
+    string bassatk;
+    for (0 => int i; i <  8 - remove_last_beats ; i++) {
+      seq + "k___ " => seq;
+//      basshf + "!1!1__ " => basshf;
+//      bass + "_1 " => bass;
+//      bassatk + "__a_ " => bassatk;
+    }
+    if(add_a_last_Kick){
+      seq + "k_  " => seq;
+    }
+
+   spork ~KICK("*4 " + seq,0,1.);
+//   spork ~ BASS0HF("*4 " + basshf,0,1.);
+//   spork ~ BASS0(" *2  " + bass,0,1.);
+//   spork ~  BASS0_ATTACK ("*4  " + bassatk, 0.7 /* rate */,0, .16 /* g */); 
+   
+    if(add_a_last_Kick){
+      (8 - remove_last_beats + 1)  * data.tick => w.wait;
+    }
+    else {
+      (8 - remove_last_beats)  * data.tick => w.wait;
+    }
+  }
+} 
+
 
 /////////////////////////
 
@@ -1687,79 +1763,128 @@ fun void EFFECT4   (){
 } 
 spork ~  EFFECT4();
 
+fun void GARG (){ 
+   
+
+//   spork ~ SUPSAWSLIDE("*2 {c{c____  FBIF ____", .1/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____  1328 ____", .8/*autoRes phase*/,2,3.7);
+   3 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____  F////1 ____", .8/*autoRes phase*/,2,3.7);
+   1 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____ ____  1 [11 [11 [11 [11 [11 [11 [11 [1____", .8/*autoRes phase*/,2,3.7);
+   3 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____  8//1 ____", .8/*autoRes phase*/,2,3.7);
+   1 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____  58B1 ____", .1/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .3/*autoRes phase*/,2,3.7);
+   1 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____   ____ 1 [11 [11 [11 [11 [11 [11 [11 [1____", .1/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+} 
+fun void GARG_64 (){ 
+   spork ~ SUPSAWSLIDE("*2 {c{c____   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____  58B1 ____", .1/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .3/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c____    1 [11 [11 [11 [11 [11 [11 [11 [1____", .1/*autoRes phase*/,2,3.7);
+   2 * 8 * data.tick => w.wait;
+} 
+
+fun void  LOOP_PREC_INTRO_64(){ 
+      spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ ____ __C_ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ___c abab a___  ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ __C_ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____ ZZ__ Z___ ____ ____ ________ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+
+} 
+
+
 fun void  LOOPLAB  (){ 
   while(1) {
 
-   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
-   spork ~   TRANCESNRHHx8 (8, 4); 
+//   spork ~ KIK0x8  (16, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+//   spork ~   TRANCESNRHHx8 (8, 4); 
 //   spork ~   TRANCEHHx8 (8, 4); 
+    spork ~   GARG (); 
+
+
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ____ ____ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ZZZ_ ____  ____ ____ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ___B A___ ____ ____ __cb ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
  
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
-  spork ~ BW("*4 8_5_1_  ", 0/*n*/,129*100/*cut*/,2,0.4); 
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
-   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ __C_ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____ _________  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ ZZ__ Z___ ____ ____ ________ ____ ____ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+ 
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ ____ __C_ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ___c abab a___  ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
 
-spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.7);
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   8  * data.tick => w.wait;
-  spork ~ BW("*4 1_1_f_8 ", 0/*n*/,129*100/*cut*/,2,0.4); 
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
-   4  * data.tick => w.wait;
-   spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .3/*autoRes phase*/,2,3.7);
-   2  * data.tick => w.wait;
-   spork ~KICK("*4        ____ k_k_",0,1.);
-   spork ~ TRIBAL0(" *4   ____ _Y_ ____   ", 1 /* tomix */, 2.8 /* gain */);
-   2  * data.tick => w.wait;
+   spork ~ KICK("*4 k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ ____ ____ ____
+   ",10,1.); 
+  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":8:4 3//8"/*gseq*/,":81///88/z"/*lpfseq*/,2/*lpforder*/,1,1.0);
 
+
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ __C_ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____ ZZ__ Z___ ____ ____ ________ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
 
    spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
-   spork ~   TRANCESNRHHx8 (8, 4); 
-//   spork ~   TRANCEHHx8 (8, 4); 
- 
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
-  spork ~ BW("*4 3__2__1_ 3__2__1_ 3__2__1_ 8_1_f___ ", 0/*n*/,129*100/*cut*/,1,0.4); 
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
-   8  * data.tick => w.wait;
+   spork ~ LOOP_PREC_INTRO_64();
+    8 * 8 * data.tick => w.wait;
 
-   spork ~ SUPSAWSLIDE("*2 {c{c FBIF ____", .1/*autoRes phase*/,2,5.7);
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
-   8  * data.tick => w.wait;
-  spork ~ BW("*4 f_f_8_1 ", 0/*n*/,129*100/*cut*/,2,0.4); 
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
-   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
-   8  * data.tick => w.wait;
-   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
-   4  * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .6/*autoRes phase*/,2,3.7);
-  2  * data.tick => w.wait;
-   spork ~KICK("*4        ____ kk_k",0,1.);
-   spork ~ TRIBAL0(" *4   ____ __I_ ____   ", 1 /* tomix */, 1.8 /* gain */);
-   2  * data.tick => w.wait;
+   spork ~   TRANCEHHx8 (8, 4); 
+   spork ~ GARG_64();
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~ LOOP_PREC_INTRO_64();
+    8 * 8 * data.tick => w.wait;
 
-//   8 * 8 * data.tick => w.wait;
 //    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
 //    spork ~ BASS0HF("*3 !1__ !1__ !1__ !1__ !1__ !1__ !1__ !1__    ",0,1.);
 //    spork ~ BASS0(" *3   _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1 _!1!1   ",0,1.);
@@ -2000,8 +2125,76 @@ LOOPLAB();
 /********************************************************/
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
-while(0) { /********************************************************/
+while(1) { /********************************************************/
 
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~   TRANCESNRHHx8 (8, 4); 
+//   spork ~   TRANCEHHx8 (8, 4); 
+ 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+  spork ~ BW("*4 8_5_1_  ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
+   8  * data.tick => w.wait;
+
+spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.7);
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+  spork ~ BW("*4 1_1_f_8 ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
+   4  * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .3/*autoRes phase*/,2,3.7);
+   2  * data.tick => w.wait;
+   spork ~KICK("*4        ____ k_k_",0,1.);
+   spork ~ TRIBAL0(" *4   ____ _Y_ ____   ", 1 /* tomix */, 2.8 /* gain */);
+   2  * data.tick => w.wait;
+
+
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~   TRANCESNRHHx8 (8, 4); 
+//   spork ~   TRANCEHHx8 (8, 4); 
+ 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+  spork ~ BW("*4 3__2__1_ 3__2__1_ 3__2__1_ 8_1_f___ ", 0/*n*/,129*100/*cut*/,1,0.4); 
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
+   8  * data.tick => w.wait;
+
+   spork ~ SUPSAWSLIDE("*2 {c{c FBIF ____", .1/*autoRes phase*/,2,5.7);
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+  spork ~ BW("*4 f_f_8_1 ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
+   4  * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .6/*autoRes phase*/,2,4.2);
+  2  * data.tick => w.wait;
+   spork ~KICK("*4        ____ kk_k",0,1.);
+   spork ~ TRIBAL0(" *4   ____ __I_ ____   ", 1 /* tomix */, 1.8 /* gain */);
+   2  * data.tick => w.wait;
 
 
   8 * data.tick =>  w.wait; 
