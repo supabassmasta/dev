@@ -181,7 +181,7 @@ fun void BASS0 (string seq, int tomix, float g) {
   t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
           // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   "{c" + seq => t.seq;
-  g * 0.55 * data.master_gain => t.gain;
+  g * 0.48 * data.master_gain => t.gain;
   //t.sync(4*data.tick);// t.element_sync();// 
   t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
               // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -2118,7 +2118,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 
 // LOOP
@@ -2126,6 +2126,72 @@ LOOPLAB();
 if (    0     ){
 }/***********************   MAGIC CURSOR *********************/
 while(1) { /********************************************************/
+    spork ~   GARG (); 
+
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ____ ____ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ZZZ_ ____  ____ ____ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ___B A___ ____ ____ __cb ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ ____ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+ 
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ __C_ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____ _________  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ ZZ__ Z___ ____ ____ ________ ____ ____ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+ 
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ ____ __C_ ", 2 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ___c abab a___  ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+
+   spork ~ KICK("*4 k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ k___ k___ k___
+                    k___ k___ k___ k___ k___ ____ ____ ____
+   ",10,1.); 
+  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":8:4 3//8"/*gseq*/,":81///88/z"/*lpfseq*/,2/*lpforder*/,1,1.0);
+
+
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____  ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ __C_ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ____ E___ ____ A___ ____ ZZ__ Z___ ____ ____ ________ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4  A___ ___u C___ ___B A___ ____ ____ ____ ", 1 /* tomix */, 1.5 /* gain */);
+   8 * data.tick => w.wait;
+
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~ LOOP_PREC_INTRO_64();
+    8 * 8 * data.tick => w.wait;
+
+//}/***********************   MAGIC CURSOR *********************/
+//while(1) { /********************************************************/
+
+   spork ~   TRANCEHHx8 (8, 4); 
+   spork ~ GARG_64();
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~ LOOP_PREC_INTRO_64();
+   7 * 8 * data.tick => w.wait;
+   spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.8/*width*/,2,.14); 
+   1 * 8 * data.tick => w.wait;
+
+/////////////////////////////////////////////////////////////////////////////////
+
 
    spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
    spork ~   TRANCESNRHHx8 (8, 4); 
@@ -2197,7 +2263,7 @@ spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.
    2  * data.tick => w.wait;
 
 
-  8 * data.tick =>  w.wait; 
+//  8 * data.tick =>  w.wait; 
   // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 }  
 
