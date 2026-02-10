@@ -1,0 +1,14 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=JAMin
+Name[ru]=JAMin
+GenericName=
+Comment=JACK Audio Mastering interface
+Comment[ru]=JAMin -- приложение для мастеринга звука
+Categories=Application;AudioVideo;
+Exec=jamin
+Icon=jamin.svg
+MimeType=application/x-jamin;
+StartupNotify=true
+Terminal=false
+Type=Application
