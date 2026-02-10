@@ -4,7 +4,7 @@ CHUGIN_NAME=SpectralSynth
 
 # all of the c/cpp files that compose this chugin
 C_MODULES=
-CXX_MODULES=SpectralSynth.cpp
+CXX_MODULES=SpectralSynth.cpp AudioFFT.cpp
 
 # where to find chugin.h
 CK_SRC_PATH?=../chuck/include/
