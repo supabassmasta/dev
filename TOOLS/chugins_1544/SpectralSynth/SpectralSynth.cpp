@@ -44,6 +44,8 @@ CK_DLL_MFUN( spectralsynth_setPos );
 CK_DLL_MFUN( spectralsynth_getPos );
 CK_DLL_MFUN( spectralsynth_setGain );
 CK_DLL_MFUN( spectralsynth_getGain );
+CK_DLL_MFUN( spectralsynth_setCrossfade );
+CK_DLL_MFUN( spectralsynth_getCrossfade );
 
 // spectral effects setters/getters
 CK_DLL_MFUN( spectralsynth_setFreeze );
@@ -92,6 +94,7 @@ public:
     , m_spectralGate( 0.0 )
     , m_formantShift( 0.0 )
     , m_readPos( 0 )
+    , m_crossfadeLen( 1024 )
     , m_dirty( false )
     {
         updateParams();
@@ -128,13 +131,41 @@ public:
         if( !m_playing || m_outputBuf.empty() )
             return 0.0;
 
-        SAMPLE out = (SAMPLE)m_outputBuf[m_readPos] * (SAMPLE)m_gain;
+        t_CKINT bufLen = (t_CKINT)m_outputBuf.size();
+        SAMPLE out = (SAMPLE)m_outputBuf[m_readPos];
+
+        // crossfade for seamless looping
+        if( m_loop && m_crossfadeLen > 0 )
+        {
+            t_CKINT fadeStart = bufLen - m_crossfadeLen;
+            if( fadeStart < 0 ) fadeStart = 0;
+
+            if( m_readPos >= fadeStart )
+            {
+                // how far into the crossfade region (0.0 to 1.0)
+                float fadePos = (float)(m_readPos - fadeStart) / (float)m_crossfadeLen;
+                // equal-power crossfade
+                float fadeOut = cosf( fadePos * 0.5f * (float)M_PI );
+                float fadeIn  = sinf( fadePos * 0.5f * (float)M_PI );
+                // corresponding position at the start of the buffer
+                t_CKINT headPos = m_readPos - fadeStart;
+                if( headPos < bufLen )
+                    out = out * fadeOut + m_outputBuf[headPos] * fadeIn;
+            }
+        }
+
+        out *= (SAMPLE)m_gain;
         m_readPos++;
 
-        if( m_readPos >= (t_CKINT)m_outputBuf.size() )
+        if( m_readPos >= bufLen )
         {
             if( m_loop )
-                m_readPos = 0;
+            {
+                // jump past the crossfade region we already blended in
+                t_CKINT fadeLen = m_crossfadeLen;
+                if( fadeLen > bufLen ) fadeLen = bufLen;
+                m_readPos = fadeLen;
+            }
             else
                 m_playing = false;
         }
@@ -188,6 +219,13 @@ public:
 
     t_CKFLOAT setGain( t_CKFLOAT g ) { m_gain = g; return m_gain; }
     t_CKFLOAT getGain() { return m_gain; }
+
+    t_CKINT setCrossfade( t_CKINT samples )
+    {
+        if( samples >= 0 ) m_crossfadeLen = samples;
+        return m_crossfadeLen;
+    }
+    t_CKINT getCrossfade() { return m_crossfadeLen; }
 
     //--- spectral effects ---
     t_CKINT setFreeze( t_CKINT v )
@@ -267,6 +305,7 @@ private:
     std::vector<float> m_outputBuf;
     std::vector<float> m_window;
     t_CKINT m_readPos;
+    t_CKINT m_crossfadeLen;
     bool m_dirty;
 
     // FFT engine
@@ -607,6 +646,11 @@ CK_DLL_QUERY( SpectralSynth )
     QUERY->add_arg( QUERY, "float", "val" );
     QUERY->add_mfun( QUERY, spectralsynth_getGain, "float", "gain" );
 
+    // --- crossfade ---
+    QUERY->add_mfun( QUERY, spectralsynth_setCrossfade, "int", "crossfade" );
+    QUERY->add_arg( QUERY, "int", "samples" );
+    QUERY->add_mfun( QUERY, spectralsynth_getCrossfade, "int", "crossfade" );
+
     // --- freeze ---
     QUERY->add_mfun( QUERY, spectralsynth_setFreeze, "int", "freeze" );
     QUERY->add_arg( QUERY, "int", "val" );
@@ -780,6 +824,17 @@ CK_DLL_MFUN( spectralsynth_getGain )
 {
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     RETURN->v_float = obj->getGain();
+}
+
+CK_DLL_MFUN( spectralsynth_setCrossfade )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj->setCrossfade( GET_NEXT_INT( ARGS ) );
+}
+CK_DLL_MFUN( spectralsynth_getCrossfade )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj->getCrossfade();
 }
 
 
