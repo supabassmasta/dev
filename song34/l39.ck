@@ -1,3 +1,5 @@
+ 0 =>int mixer;
+
 fun string syntwavs_files (int i) {
 string str[0];    
 /* 0 */    str << "../_SAMPLES/SYNTWAVS/MULTI2SIN0";
@@ -62,8 +64,10 @@ string str[0];
     return str[i]; 
 }
 
-fun void  SPECTR (int note, int nfile, dur d, int tomix, float v){ 
+fun void  SPECTR (int note, int nfile, dur att, dur rel, dur d, int tomix, float v){ 
   SndBuf buf => blackhole;
+
+
 
   syntwavs_files(nfile) + note + ".wav" => buf.read;
 
@@ -72,7 +76,16 @@ fun void  SPECTR (int note, int nfile, dur d, int tomix, float v){
   for( 0 => int i; i < buf.samples(); i++ )
     buf.valueAt(i) => samples[i];
 
-  SpectralSynth ss => dac;
+ST stmonoin; stmonoin $ ST @=> ST @ last;
+// => stmonoin.mono_in ;
+
+
+  STADSR stadsr;
+  stadsr.set(att /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */,0.0/* Sustain dur of Relative release pos (float) */,  rel /* release */);
+  stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
+
+
+  SpectralSynth ss => stmonoin.mono_in ;
   //4096 => ss.fftSize;
   //8 => ss.overlap;
   // load the audio buffer
@@ -82,20 +95,40 @@ fun void  SPECTR (int note, int nfile, dur d, int tomix, float v){
   ss.loop( 1 );
   ss.crossfade( 32 * 2048 );
   ss.play();
-
+stadsr.keyOn(); 
   v * data.master_gain => ss.gain;
 
   if ( tomix  ){
-    //    STMIX stmix;
-    ////    stmix.send(last, mixer + tomix);
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
   }
 
   d => now;
-  ss.stop();
+stadsr.keyOff(); 
+ rel => now;
+ss.stop();
 } 
 
 
-spork ~   SPECTR (56, 14, 41::second, 0, 1.0); 
+///////////////////////////////
+
+STMIX stmix;
+//stmix.send(last, 11);
+stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
+
+//STFLANGER flang;
+//flang.connect(last $ ST); flang $ ST @=>  last; 
+//flang.add_line(2 /* 0 : left, 1: right 2: both */, .8 /* delay line gain */,  3::ms /* dur base */, 1::ms /* dur range */, 2 /* freq */); 
+
+STCONVREV stconvrev;
+stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+
+
+
+
+
+spork ~ SPECTR (18/*note*/,17/*file*/,10000::ms/*att*/,20000::ms/*rel*/, 30::second, 0, 1.0); 
+//spork ~ SPECTR (25/*note*/,17/*file*/,41::second, 0, 1.0); 
 
 while(1) {
        100::ms => now;

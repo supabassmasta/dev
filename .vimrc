@@ -1928,3 +1928,5 @@ ab RECSEQK /// PLAY OR REC /////////////////
 \<CR>//////////////////////////////////////////////////
 \<CR>}
 
+ab STMONOINK ST stmonoin; stmonoin $ ST @=> ST @ last;
+\<CR>// => stmonoin.mono_in ;
