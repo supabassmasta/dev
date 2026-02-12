@@ -58,9 +58,6 @@ CK_DLL_MFUN( spectralsynth_setSpectralBlur );
 CK_DLL_MFUN( spectralsynth_getSpectralBlur );
 CK_DLL_MFUN( spectralsynth_setSpectralGate );
 CK_DLL_MFUN( spectralsynth_getSpectralGate );
-CK_DLL_MFUN( spectralsynth_setFormantShift );
-CK_DLL_MFUN( spectralsynth_getFormantShift );
-
 t_CKINT spectralsynth_data_offset = 0;
 
 
@@ -92,7 +89,6 @@ public:
     , m_whisperize( false )
     , m_spectralBlur( 0.0 )
     , m_spectralGate( 0.0 )
-    , m_formantShift( 0.0 )
     , m_readPos( 0 )
     , m_crossfadeLen( 1024 )
     , m_dirty( false )
@@ -268,14 +264,6 @@ public:
     }
     t_CKFLOAT getSpectralGate() { return m_spectralGate; }
 
-    t_CKFLOAT setFormantShift( t_CKFLOAT v )
-    {
-        m_formantShift = v;
-        m_dirty = true;
-        return m_formantShift;
-    }
-    t_CKFLOAT getFormantShift() { return m_formantShift; }
-
 private:
     // sample rate
     t_CKFLOAT m_srate;
@@ -298,7 +286,6 @@ private:
     bool m_whisperize;
     t_CKFLOAT m_spectralBlur;
     t_CKFLOAT m_spectralGate;
-    t_CKFLOAT m_formantShift;
 
     // buffers
     std::vector<float> m_inputBuf;
@@ -382,7 +369,6 @@ private:
 
         // --- apply spectral effects to each frame ---
         double pitchRatio = pow( 2.0, m_pitchShift / 12.0 );
-        double formantRatio = pow( 2.0, m_formantShift / 12.0 );
 
         // phase accumulator for pitch shifting
         std::vector<float> phaseAccum( m_complexSize, 0.0f );
@@ -453,7 +439,7 @@ private:
             memset( shiftedMag.data(), 0, m_complexSize * sizeof(float) );
             memset( shiftedPhase.data(), 0, m_complexSize * sizeof(float) );
 
-            if( fabs( pitchRatio - 1.0 ) < 0.001 && fabs( formantRatio - 1.0 ) < 0.001 )
+            if( fabs( pitchRatio - 1.0 ) < 0.001 )
             {
                 // no shift — copy directly
                 memcpy( shiftedMag.data(), mag.data(), m_complexSize * sizeof(float) );
@@ -477,7 +463,7 @@ private:
             }
             else
             {
-                // pitch shift with optional formant preservation
+                // pitch shift
                 for( int k = 0; k < m_complexSize; k++ )
                 {
                     // source bin for this output bin
@@ -491,24 +477,6 @@ private:
                         interpMag = mag[srcBinInt] * (1.0f - frac) + mag[srcBinInt + 1] * frac;
                     else if( srcBinInt == m_complexSize - 1 )
                         interpMag = mag[srcBinInt];
-
-                    // formant shift: scale the magnitude envelope
-                    if( fabs( formantRatio - 1.0 ) > 0.001 )
-                    {
-                        double envBin = (double)k / formantRatio;
-                        int envBinInt = (int)envBin;
-                        float envFrac = (float)( envBin - envBinInt );
-
-                        float envMag = 0.0f;
-                        if( envBinInt >= 0 && envBinInt < m_complexSize - 1 )
-                            envMag = mag[envBinInt] * (1.0f - envFrac) + mag[envBinInt + 1] * envFrac;
-                        else if( envBinInt == m_complexSize - 1 )
-                            envMag = mag[envBinInt];
-
-                        // preserve formant: use original envelope ratio
-                        if( interpMag > 1e-10f )
-                            interpMag = envMag;
-                    }
 
                     shiftedMag[k] = interpMag;
 
@@ -675,11 +643,6 @@ CK_DLL_QUERY( SpectralSynth )
     QUERY->add_mfun( QUERY, spectralsynth_setSpectralGate, "float", "spectralGate" );
     QUERY->add_arg( QUERY, "float", "val" );
     QUERY->add_mfun( QUERY, spectralsynth_getSpectralGate, "float", "spectralGate" );
-
-    // --- formantShift ---
-    QUERY->add_mfun( QUERY, spectralsynth_setFormantShift, "float", "formantShift" );
-    QUERY->add_arg( QUERY, "float", "semitones" );
-    QUERY->add_mfun( QUERY, spectralsynth_getFormantShift, "float", "formantShift" );
 
     // internal data offset
     spectralsynth_data_offset = QUERY->add_mvar( QUERY, "int", "@ss_data", false );
@@ -896,13 +859,3 @@ CK_DLL_MFUN( spectralsynth_getSpectralGate )
     RETURN->v_float = obj->getSpectralGate();
 }
 
-CK_DLL_MFUN( spectralsynth_setFormantShift )
-{
-    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
-    RETURN->v_float = obj->setFormantShift( GET_NEXT_FLOAT( ARGS ) );
-}
-CK_DLL_MFUN( spectralsynth_getFormantShift )
-{
-    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
-    RETURN->v_float = obj->getFormantShift();
-}
