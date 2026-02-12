@@ -64,49 +64,46 @@ string str[0];
     return str[i]; 
 }
 
-fun void  SPECTR (int note, int nfile, dur att, dur rel, dur d, int tomix, float v){ 
+fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisperize,float spectralBlur,float spectralGate,dur att, dur rel, dur d, int tomix, float v){ 
   SndBuf buf => blackhole;
-
-
-
   syntwavs_files(nfile) + note + ".wav" => buf.read;
-
   // extract samples into a float array
   float samples[buf.samples()];
   for( 0 => int i; i < buf.samples(); i++ )
     buf.valueAt(i) => samples[i];
 
-ST stmonoin; stmonoin $ ST @=> ST @ last;
-// => stmonoin.mono_in ;
-
+  ST stmonoin; stmonoin $ ST @=> ST @ last;
 
   STADSR stadsr;
   stadsr.set(att /* Attack */, 6::ms /* Decay */, 1.0 /* Sustain */,0.0/* Sustain dur of Relative release pos (float) */,  rel /* release */);
   stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
-
 
   SpectralSynth ss => stmonoin.mono_in ;
   //4096 => ss.fftSize;
   //8 => ss.overlap;
   // load the audio buffer
   ss.input( samples );
-
-  ss.pitchShift( 0.0 );
+  ss.pitchShift( pitchShift );
+  ss.robotize( robotize );
+  ss.whisperize( whisperize );
+  ss.spectralBlur( spectralBlur );
+  ss.spectralGate( spectralGate );
   ss.loop( 1 );
   ss.crossfade( 32 * 2048 );
-  ss.play();
-stadsr.keyOn(); 
   v * data.master_gain => ss.gain;
 
+  ss.play();
+  stadsr.keyOn(); 
+
   if ( tomix  ){
-       STMIX stmix;
-       stmix.send(last, mixer + tomix);
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
   }
 
   d => now;
-stadsr.keyOff(); 
- rel => now;
-ss.stop();
+  stadsr.keyOff(); 
+  rel => now;
+  ss.stop();
 } 
 
 
@@ -127,8 +124,16 @@ stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre del
 
 
 
-spork ~ SPECTR (18/*note*/,17/*file*/,10000::ms/*att*/,20000::ms/*rel*/, 30::second, 0, 1.0); 
-//spork ~ SPECTR (25/*note*/,17/*file*/,41::second, 0, 1.0); 
+spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 0.3); 
+10::second => now;
+spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
+10::second => now;
+spork ~ SPECTR (23/*note*/,17/*file*/,-2./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 2.0); 
+20::second => now;
+spork ~ SPECTR (25/*note*/,18/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.1/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 20::second, 1, 1.0); 
+30::second => now;
+
+//spork ~ SPECTR (18/*note*/,17/*file*/,10000::ms/*att*/,20000::ms/*rel*/, 30::second, 0, 1.0); 
 
 while(1) {
        100::ms => now;
