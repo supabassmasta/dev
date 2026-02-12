@@ -71,6 +71,10 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
   // extract samples into a float array
   float samples[buf.samples()];
   for( 0 => int i; i < buf.samples(); i++ ){
+//  100 * 4096 => int max_samples;//
+//  0 => int len;
+//  if (buf.samples() > max_samples) max_samples => len; else buf.samples() > len;
+//  for( 0 => int i; i < len; i++ ){
     buf.valueAt(i) => samples[i];
     me.yield();
   }
@@ -131,7 +135,18 @@ stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre del
 
 
 
-while(1) {
+fun void seq0   (){ 
+   
+
+/// PLAY OR REC /////////////////
+RECSEQ recseq; "seqname0.wav"=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;0::second=>recseq.main_extra_time;1.=>recseq.play_gain;
+if (recseq.play_or_rec() ) {
+  //////////////////////////////////
+
+  //////////////////////////////////////////////////
+  // MAIN 
+  //////////////////////////////////////////////////
+
 spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 0.3); 
 10::second => now;
 spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
@@ -141,5 +156,20 @@ spork ~ SPECTR (23/*note*/,17/*file*/,-2./*semiToneShift*/,0/*robotize*/,0/*whis
 spork ~ SPECTR (25/*note*/,18/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.1/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 20::second, 1, 1.0); 
 30::second => now;
 
+  //// STOP REC ///////////////////////////////
+  recseq.rec_stop();
+  //////////////////////////////////////////////////
+} 
+}
+    if (! MISC.file_exist( "seqname0.wav")) seq0();
+ 
+LOOP_DOUBLE_WAV l;
+"seqname0.wav" => l.read;
+1.0 * data.master_gain => l.buf.gain => l.buf2.gain;
+l.AttackRelease(1::ms, 15 * 100::ms);
+l.start(1 * data.tick /* sync */ ,   1 * data.tick /* END sync */ , l.buf.length() - 20::second /* loop */); // l $ ST @=> ST @ last;   
+
+while(1) {
+       100::ms => now;
 }
  
