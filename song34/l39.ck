@@ -66,11 +66,17 @@ string str[0];
 
 fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisperize,float spectralBlur,float spectralGate,dur att, dur rel, dur d, int tomix, float v){ 
   SndBuf buf => blackhole;
+  buf.samples() => buf.pos;
   syntwavs_files(nfile) + note + ".wav" => buf.read;
   // extract samples into a float array
   float samples[buf.samples()];
-  for( 0 => int i; i < buf.samples(); i++ )
+  for( 0 => int i; i < buf.samples(); i++ ){
     buf.valueAt(i) => samples[i];
+    me.yield();
+  }
+
+  // TOREMOVE
+  1::second => now;
 
   ST stmonoin; stmonoin $ ST @=> ST @ last;
 
@@ -124,6 +130,8 @@ stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre del
 
 
 
+
+while(1) {
 spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 0.3); 
 10::second => now;
 spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
@@ -133,9 +141,5 @@ spork ~ SPECTR (23/*note*/,17/*file*/,-2./*semiToneShift*/,0/*robotize*/,0/*whis
 spork ~ SPECTR (25/*note*/,18/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.1/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 20::second, 1, 1.0); 
 30::second => now;
 
-//spork ~ SPECTR (18/*note*/,17/*file*/,10000::ms/*att*/,20000::ms/*rel*/, 30::second, 0, 1.0); 
-
-while(1) {
-       100::ms => now;
 }
  
