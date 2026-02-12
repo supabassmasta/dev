@@ -58,6 +58,9 @@ CK_DLL_MFUN( spectralsynth_setSpectralBlur );
 CK_DLL_MFUN( spectralsynth_getSpectralBlur );
 CK_DLL_MFUN( spectralsynth_setSpectralGate );
 CK_DLL_MFUN( spectralsynth_getSpectralGate );
+CK_DLL_MFUN( spectralsynth_setPhaseMode );
+CK_DLL_MFUN( spectralsynth_getPhaseMode );
+
 t_CKINT spectralsynth_data_offset = 0;
 
 
@@ -89,6 +92,7 @@ public:
     , m_whisperize( false )
     , m_spectralBlur( 0.0 )
     , m_spectralGate( 0.0 )
+    , m_phaseMode( true )
     , m_readPos( 0 )
     , m_crossfadeLen( 1024 )
     , m_dirty( false )
@@ -264,6 +268,14 @@ public:
     }
     t_CKFLOAT getSpectralGate() { return m_spectralGate; }
 
+    t_CKINT setPhaseMode( t_CKINT v )
+    {
+        m_phaseMode = (v != 0);
+        m_dirty = true;
+        return m_phaseMode ? 1 : 0;
+    }
+    t_CKINT getPhaseMode() { return m_phaseMode ? 1 : 0; }
+
 private:
     // sample rate
     t_CKFLOAT m_srate;
@@ -286,6 +298,7 @@ private:
     bool m_whisperize;
     t_CKFLOAT m_spectralBlur;
     t_CKFLOAT m_spectralGate;
+    bool m_phaseMode;
 
     // buffers
     std::vector<float> m_inputBuf;
@@ -444,21 +457,29 @@ private:
                 // no shift — copy directly
                 memcpy( shiftedMag.data(), mag.data(), m_complexSize * sizeof(float) );
 
-                // phase propagation (identity)
-                for( int k = 0; k < m_complexSize; k++ )
+                if( m_phaseMode )
                 {
-                    float phaseDiff = phase[k] - prevPhase[k];
-                    float expected = (float)k * expectedPhaseAdv;
-                    float deviation = phaseDiff - expected;
+                    // phase propagation (identity)
+                    for( int k = 0; k < m_complexSize; k++ )
+                    {
+                        float phaseDiff = phase[k] - prevPhase[k];
+                        float expected = (float)k * expectedPhaseAdv;
+                        float deviation = phaseDiff - expected;
 
-                    // wrap to [-pi, pi]
-                    deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
-                    if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
-                    deviation -= (float)M_PI;
+                        // wrap to [-pi, pi]
+                        deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
+                        if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
+                        deviation -= (float)M_PI;
 
-                    float trueFreq = (float)k * expectedPhaseAdv + deviation;
-                    phaseAccum[k] += trueFreq;
-                    shiftedPhase[k] = phaseAccum[k];
+                        float trueFreq = (float)k * expectedPhaseAdv + deviation;
+                        phaseAccum[k] += trueFreq;
+                        shiftedPhase[k] = phaseAccum[k];
+                    }
+                }
+                else
+                {
+                    // raw analysis phases
+                    memcpy( shiftedPhase.data(), phase.data(), m_complexSize * sizeof(float) );
                 }
             }
             else
@@ -480,22 +501,31 @@ private:
 
                     shiftedMag[k] = interpMag;
 
-                    // phase: accumulate with shifted frequency
+                    // phase
                     if( srcBinInt >= 0 && srcBinInt < m_complexSize )
                     {
-                        float phaseDiff = phase[srcBinInt] - prevPhase[srcBinInt];
-                        float expected = (float)srcBinInt * expectedPhaseAdv;
-                        float deviation = phaseDiff - expected;
+                        if( m_phaseMode )
+                        {
+                            // phase vocoder: accumulate with shifted frequency
+                            float phaseDiff = phase[srcBinInt] - prevPhase[srcBinInt];
+                            float expected = (float)srcBinInt * expectedPhaseAdv;
+                            float deviation = phaseDiff - expected;
 
-                        deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
-                        if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
-                        deviation -= (float)M_PI;
+                            deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
+                            if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
+                            deviation -= (float)M_PI;
 
-                        float trueFreq = (float)srcBinInt * expectedPhaseAdv + deviation;
-                        float shiftedFreq = trueFreq * (float)pitchRatio;
+                            float trueFreq = (float)srcBinInt * expectedPhaseAdv + deviation;
+                            float shiftedFreq = trueFreq * (float)pitchRatio;
 
-                        phaseAccum[k] += shiftedFreq;
-                        shiftedPhase[k] = phaseAccum[k];
+                            phaseAccum[k] += shiftedFreq;
+                            shiftedPhase[k] = phaseAccum[k];
+                        }
+                        else
+                        {
+                            // raw: use source bin's analysis phase directly
+                            shiftedPhase[k] = phase[srcBinInt];
+                        }
                     }
                 }
             }
@@ -643,6 +673,11 @@ CK_DLL_QUERY( SpectralSynth )
     QUERY->add_mfun( QUERY, spectralsynth_setSpectralGate, "float", "spectralGate" );
     QUERY->add_arg( QUERY, "float", "val" );
     QUERY->add_mfun( QUERY, spectralsynth_getSpectralGate, "float", "spectralGate" );
+
+    // --- phaseMode ---
+    QUERY->add_mfun( QUERY, spectralsynth_setPhaseMode, "int", "phaseMode" );
+    QUERY->add_arg( QUERY, "int", "val" );
+    QUERY->add_mfun( QUERY, spectralsynth_getPhaseMode, "int", "phaseMode" );
 
     // internal data offset
     spectralsynth_data_offset = QUERY->add_mvar( QUERY, "int", "@ss_data", false );
@@ -857,5 +892,16 @@ CK_DLL_MFUN( spectralsynth_getSpectralGate )
 {
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     RETURN->v_float = obj->getSpectralGate();
+}
+
+CK_DLL_MFUN( spectralsynth_setPhaseMode )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj->setPhaseMode( GET_NEXT_INT( ARGS ) );
+}
+CK_DLL_MFUN( spectralsynth_getPhaseMode )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj->getPhaseMode();
 }
 
