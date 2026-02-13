@@ -65,23 +65,6 @@ string str[0];
 }
 
 fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisperize,float spectralBlur,float spectralGate,dur att, dur rel, dur d, int tomix, float v){ 
-  SndBuf buf => blackhole;
-  syntwavs_files(nfile) + note + ".wav" => buf.read;
-  buf.samples() => buf.pos;
-  // extract samples into a float array
-  float samples[buf.samples()];
-  for( 0 => int i; i < buf.samples(); i++ ){
-    //  100 * 4096 => int max_samples;//
-    //  0 => int len;
-    //  if (buf.samples() > max_samples) max_samples => len; else buf.samples() => len;
-    //  float samples[len];
-    //  for( 0 => int i; i < len; i++ ){
-    buf.valueAt(i) => samples[i];
-    me.yield();
-  }
-
-  // TOREMOVE
-  //  1::second => now;
 
   ST stmonoin; stmonoin $ ST @=> ST @ last;
 
@@ -90,10 +73,14 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
   stadsr.connect(last $ ST);  stadsr  $ ST @=>  last; 
 
   SpectralSynth ss => stmonoin.mono_in ;
+  ss.open(syntwavs_files(nfile) + note + ".wav");
+  while( ss.loaded() == 0 )
+  {   ss.loadSamples(44100);    // ~1s of audio per batch
+      1::samp => now;
+  }
   //4096 => ss.fftSize;
   //8 => ss.overlap;
   // load the audio buffer
-  ss.input( samples );
   ss.pitchShift( pitchShift );
   ss.robotize( robotize );
   ss.whisperize( whisperize );
@@ -102,11 +89,19 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
 
   ss.prepare();
   <<< "  numFrames:", ss.numFrames() >>>;
+  while( ss.analyzed() == 0 )       // analyze in batches
+  {   ss.analyzeFrames(25);
+//      1::samp => now;
+//    me.yield();
+    10::ms =>now;
+  }
   // process in batches of 50 frames, yielding between each
   while( ss.ready() == 0 )
   {
-    ss.processFrames( 50 );
-    1::samp => now;
+    ss.processFrames( 25 );
+//    1::samp => now;
+//    me.yield();
+    10::ms =>now;
   }
   <<< "  ready:", ss.ready() >>>;
 

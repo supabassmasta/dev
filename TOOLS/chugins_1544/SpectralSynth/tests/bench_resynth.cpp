@@ -153,6 +153,7 @@ static void benchIncremental( const char * label, SpectralSynth & ss,
     ss.setInput( audio );
 
     double totalPrepareMs = 0.0;
+    double totalAnalyzeMs = 0.0;
     double totalProcessMs = 0.0;
 
     for( int r = 0; r < runs; r++ )
@@ -164,21 +165,30 @@ static void benchIncremental( const char * label, SpectralSynth & ss,
 
         totalPrepareMs += std::chrono::duration<double, std::milli>( t1 - t0 ).count();
 
-        // time processFrames() in batches
+        // time analyzeFrames() in batches
         auto t2 = std::chrono::high_resolution_clock::now();
-        while( ss.ready() == 0 )
-            ss.processFrames( batchSize );
+        while( ss.analyzed() == 0 )
+            ss.analyzeFrames( batchSize );
         auto t3 = std::chrono::high_resolution_clock::now();
 
-        totalProcessMs += std::chrono::duration<double, std::milli>( t3 - t2 ).count();
+        totalAnalyzeMs += std::chrono::duration<double, std::milli>( t3 - t2 ).count();
+
+        // time processFrames() in batches
+        auto t4 = std::chrono::high_resolution_clock::now();
+        while( ss.ready() == 0 )
+            ss.processFrames( batchSize );
+        auto t5 = std::chrono::high_resolution_clock::now();
+
+        totalProcessMs += std::chrono::duration<double, std::milli>( t5 - t4 ).count();
     }
 
     double avgPrepare = totalPrepareMs / (double)runs;
+    double avgAnalyze = totalAnalyzeMs / (double)runs;
     double avgProcess = totalProcessMs / (double)runs;
-    double avgTotal = avgPrepare + avgProcess;
+    double avgTotal = avgPrepare + avgAnalyze + avgProcess;
 
-    printf( "  %-40s  prepare: %6.2f ms  process: %6.2f ms  total: %6.2f ms  (batch=%d, avg of %d)\n",
-            label, avgPrepare, avgProcess, avgTotal, batchSize, runs );
+    printf( "  %-35s  prep: %5.2f ms  analyze: %6.2f ms  process: %6.2f ms  total: %6.2f ms  (batch=%d, avg of %d)\n",
+            label, avgPrepare, avgAnalyze, avgProcess, avgTotal, batchSize, runs );
 }
 
 
@@ -309,6 +319,36 @@ int main()
     {
         SpectralSynth ss( srate );
         benchIncremental( "default, batch 50", ss, audio, 50, RUNS );
+    }
+
+    // --- chunked file loading benchmark ---
+    printf( "\nbenchmarking chunked file loading (open + loadSamples):\n\n" );
+
+    {
+        SpectralSynth ss( srate );
+        ss.setPitchShift( 5.0 );
+
+        // time chunked load with batch of 44100 samples
+        double totalOpenMs = 0.0;
+        double totalLoadMs = 0.0;
+        for( int r = 0; r < RUNS; r++ )
+        {
+            auto t0 = std::chrono::high_resolution_clock::now();
+            ss.openFile( wavPath );
+            auto t1 = std::chrono::high_resolution_clock::now();
+
+            totalOpenMs += std::chrono::duration<double, std::milli>( t1 - t0 ).count();
+
+            auto t2 = std::chrono::high_resolution_clock::now();
+            while( ss.loaded() == 0 )
+                ss.loadSamples( 44100 );
+            auto t3 = std::chrono::high_resolution_clock::now();
+
+            totalLoadMs += std::chrono::duration<double, std::milli>( t3 - t2 ).count();
+        }
+        printf( "  %-35s  open: %5.2f ms  load: %6.2f ms  total: %6.2f ms  (batch=44100, avg of %d)\n",
+                "load 16-bit mono", totalOpenMs / RUNS, totalLoadMs / RUNS,
+                (totalOpenMs + totalLoadMs) / RUNS, RUNS );
     }
 
     printf( "\ndone.\n" );

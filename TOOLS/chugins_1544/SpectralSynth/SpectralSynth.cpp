@@ -9,6 +9,7 @@
 #include <cmath>
 #include <cstring>
 #include <cstdlib>
+#include <cstdio>
 #include <vector>
 #include <algorithm>
 
@@ -27,12 +28,20 @@ CK_DLL_TICK( spectralsynth_tick );
 // input
 CK_DLL_MFUN( spectralsynth_input );
 
+// chunked file loading
+CK_DLL_MFUN( spectralsynth_open );
+CK_DLL_MFUN( spectralsynth_loadSamples );
+CK_DLL_MFUN( spectralsynth_loaded );
+CK_DLL_MFUN( spectralsynth_numSamples );
+
 // transport
 CK_DLL_MFUN( spectralsynth_play );
 CK_DLL_MFUN( spectralsynth_stop );
 
 // incremental processing
 CK_DLL_MFUN( spectralsynth_prepare );
+CK_DLL_MFUN( spectralsynth_analyzeFrames );
+CK_DLL_MFUN( spectralsynth_analyzed );
 CK_DLL_MFUN( spectralsynth_processFrames );
 CK_DLL_MFUN( spectralsynth_ready );
 CK_DLL_MFUN( spectralsynth_numFrames );
@@ -103,14 +112,25 @@ public:
     , m_crossfadeLen( 1024 )
     , m_dirty( false )
     , m_numFrames( 0 )
+    , m_analyzedFrames( 0 )
+    , m_analyzed( false )
     , m_processedFrames( 0 )
     , m_ready( false )
+    , m_file( NULL )
+    , m_fileChannels( 0 )
+    , m_fileBytesPerSample( 0 )
+    , m_fileBlockAlign( 0 )
+    , m_fileAudioFormat( 0 )
+    , m_fileTotalSamples( 0 )
+    , m_fileLoadedSamples( 0 )
+    , m_fileLoaded( false )
     {
         updateParams();
     }
 
     ~SpectralSynth()
     {
+        if( m_file ) { fclose( m_file ); m_file = NULL; }
     }
 
     //--- input ---
@@ -119,8 +139,197 @@ public:
         m_inputBuf = audio;
         m_dirty = true;
         m_ready = false;
+        m_analyzed = false;
         resynthesize();
     }
+
+    //--- chunked file loading ---
+    t_CKINT openFile( const char * path )
+    {
+        // close any previously open file
+        if( m_file ) { fclose( m_file ); m_file = NULL; }
+        m_fileLoaded = false;
+        m_fileLoadedSamples = 0;
+        m_fileTotalSamples = 0;
+
+        m_file = fopen( path, "rb" );
+        if( !m_file ) return 0;
+
+        // read RIFF header
+        char riff[4];
+        if( fread( riff, 1, 4, m_file ) != 4 ||
+            riff[0] != 'R' || riff[1] != 'I' || riff[2] != 'F' || riff[3] != 'F' )
+        { fclose( m_file ); m_file = NULL; return 0; }
+
+        uint32_t fileSize;
+        fread( &fileSize, 4, 1, m_file );
+
+        char wave[4];
+        if( fread( wave, 1, 4, m_file ) != 4 ||
+            wave[0] != 'W' || wave[1] != 'A' || wave[2] != 'V' || wave[3] != 'E' )
+        { fclose( m_file ); m_file = NULL; return 0; }
+
+        // find fmt and data chunks
+        int16_t numChannels = 0, bitsPerSample = 0;
+        int16_t audioFormat = 0;
+        int16_t blockAlign = 0;
+        uint32_t dataSize = 0;
+        bool foundFmt = false, foundData = false;
+
+        while( !foundData && !feof( m_file ) )
+        {
+            char chunkId[4];
+            uint32_t chunkSize;
+            if( fread( chunkId, 1, 4, m_file ) != 4 ) break;
+            if( fread( &chunkSize, 4, 1, m_file ) != 1 ) break;
+
+            if( chunkId[0] == 'f' && chunkId[1] == 'm' &&
+                chunkId[2] == 't' && chunkId[3] == ' ' )
+            {
+                fread( &audioFormat, 2, 1, m_file );
+                fread( &numChannels, 2, 1, m_file );
+                int32_t sampleRate;
+                fread( &sampleRate, 4, 1, m_file );
+                int32_t byteRate;
+                fread( &byteRate, 4, 1, m_file );
+                fread( &blockAlign, 2, 1, m_file );
+                fread( &bitsPerSample, 2, 1, m_file );
+                long remaining = (long)chunkSize - 16;
+                if( remaining > 0 ) fseek( m_file, remaining, SEEK_CUR );
+                foundFmt = true;
+            }
+            else if( chunkId[0] == 'd' && chunkId[1] == 'a' &&
+                     chunkId[2] == 't' && chunkId[3] == 'a' )
+            {
+                dataSize = chunkSize;
+                foundData = true;
+                // file position is now at the start of audio data
+            }
+            else
+            {
+                fseek( m_file, chunkSize, SEEK_CUR );
+            }
+        }
+
+        if( !foundFmt || !foundData || numChannels < 1 )
+        { fclose( m_file ); m_file = NULL; return 0; }
+
+        // validate format: PCM (1) or IEEE float (3)
+        if( audioFormat != 1 && audioFormat != 3 )
+        { fclose( m_file ); m_file = NULL; return 0; }
+
+        // validate bit depth
+        if( audioFormat == 1 && bitsPerSample != 8 && bitsPerSample != 16 &&
+            bitsPerSample != 24 && bitsPerSample != 32 )
+        { fclose( m_file ); m_file = NULL; return 0; }
+        if( audioFormat == 3 && bitsPerSample != 32 )
+        { fclose( m_file ); m_file = NULL; return 0; }
+
+        m_fileAudioFormat = audioFormat;
+        m_fileChannels = numChannels;
+        m_fileBytesPerSample = bitsPerSample / 8;
+        m_fileBlockAlign = blockAlign;
+
+        // total mono samples
+        int totalInterleavedSamples = dataSize / (m_fileBytesPerSample * m_fileChannels);
+        m_fileTotalSamples = totalInterleavedSamples;
+
+        // prepare input buffer
+        m_inputBuf.clear();
+        m_inputBuf.reserve( m_fileTotalSamples );
+        m_fileLoadedSamples = 0;
+        m_fileLoaded = false;
+
+        // reset output state
+        m_dirty = true;
+        m_ready = false;
+        m_analyzed = false;
+
+        return (t_CKINT)m_fileTotalSamples;
+    }
+
+    t_CKINT loadSamples( int n )
+    {
+        if( !m_file || m_fileLoaded ) return 0;
+
+        int remaining = m_fileTotalSamples - m_fileLoadedSamples;
+        if( n > remaining ) n = remaining;
+        if( n <= 0 ) return 0;
+
+        // read interleaved frames from disk
+        int frameBytes = m_fileBlockAlign;  // bytes per interleaved frame
+        int bytesPerChan = m_fileBytesPerSample;
+
+        // read buffer: n interleaved frames
+        std::vector<uint8_t> rawBuf( n * frameBytes );
+        int framesRead = (int)fread( rawBuf.data(), frameBytes, n, m_file );
+        if( framesRead <= 0 )
+        {
+            // premature end of file — mark as loaded
+            fclose( m_file ); m_file = NULL;
+            m_fileLoaded = true;
+            return 0;
+        }
+
+        // extract first channel, convert to float
+        for( int i = 0; i < framesRead; i++ )
+        {
+            const uint8_t * frame = rawBuf.data() + i * frameBytes;
+            float sample = 0.0f;
+
+            if( m_fileAudioFormat == 3 ) // IEEE float 32-bit
+            {
+                float v;
+                memcpy( &v, frame, 4 );
+                sample = v;
+            }
+            else // PCM
+            {
+                switch( bytesPerChan )
+                {
+                case 1: // 8-bit unsigned
+                    sample = ((float)frame[0] - 128.0f) / 128.0f;
+                    break;
+                case 2: // 16-bit signed
+                {
+                    int16_t v;
+                    memcpy( &v, frame, 2 );
+                    sample = (float)v / 32768.0f;
+                    break;
+                }
+                case 3: // 24-bit signed
+                {
+                    int32_t v = (int32_t)frame[0] | ((int32_t)frame[1] << 8) | ((int32_t)frame[2] << 16);
+                    if( v & 0x800000 ) v |= 0xFF000000; // sign extend
+                    sample = (float)v / 8388608.0f;
+                    break;
+                }
+                case 4: // 32-bit signed
+                {
+                    int32_t v;
+                    memcpy( &v, frame, 4 );
+                    sample = (float)((double)v / 2147483648.0);
+                    break;
+                }
+                }
+            }
+
+            m_inputBuf.push_back( sample );
+        }
+
+        m_fileLoadedSamples += framesRead;
+
+        if( m_fileLoadedSamples >= m_fileTotalSamples )
+        {
+            fclose( m_file ); m_file = NULL;
+            m_fileLoaded = true;
+        }
+
+        return m_fileTotalSamples - m_fileLoadedSamples;
+    }
+
+    t_CKINT loaded() { return m_fileLoaded ? 1 : 0; }
+    t_CKINT getNumSamples() { return (t_CKINT)m_fileTotalSamples; }
 
     //--- transport ---
     void play()
@@ -143,7 +352,9 @@ public:
             m_outputBuf.clear();
             m_dirty = false;
             m_ready = false;
+            m_analyzed = false;
             m_numFrames = 0;
+            m_analyzedFrames = 0;
             m_processedFrames = 0;
             return;
         }
@@ -160,15 +371,38 @@ public:
         memcpy( m_padded.data(), m_inputBuf.data(),
                 std::min( inputLen, paddedLen ) * sizeof(float) );
 
-        // analysis: extract magnitude and phase for each frame
+        // allocate analysis arrays
         m_frameMags.resize( m_numFrames );
         m_framePhases.resize( m_numFrames );
+
+        // allocate output and normalization buffers
+        int outputLen = paddedLen;
+        m_outputBuf.assign( outputLen, 0.0f );
+        m_normBuf.assign( outputLen, 0.0f );
+
+        // reset phase accumulators
+        m_phaseAccum.assign( m_complexSize, 0.0f );
+        m_prevPhase.assign( m_complexSize, 0.0f );
+
+        // reset cursors
+        m_analyzedFrames = 0;
+        m_analyzed = false;
+        m_processedFrames = 0;
+        m_ready = false;
+    }
+
+    t_CKINT analyzeFrames( int n )
+    {
+        if( m_numFrames == 0 ) return 0;
+
+        int endFrame = m_analyzedFrames + n;
+        if( endFrame > m_numFrames ) endFrame = m_numFrames;
 
         std::vector<float> frameBuf( m_fftSize );
         std::vector<float> re( m_complexSize );
         std::vector<float> im( m_complexSize );
 
-        for( int f = 0; f < m_numFrames; f++ )
+        for( int f = m_analyzedFrames; f < endFrame; f++ )
         {
             int offset = f * m_hopSize;
 
@@ -190,19 +424,15 @@ public:
             }
         }
 
-        // allocate output and normalization buffers
-        int outputLen = paddedLen;
-        m_outputBuf.assign( outputLen, 0.0f );
-        m_normBuf.assign( outputLen, 0.0f );
+        m_analyzedFrames = endFrame;
 
-        // reset phase accumulators
-        m_phaseAccum.assign( m_complexSize, 0.0f );
-        m_prevPhase.assign( m_complexSize, 0.0f );
+        if( m_analyzedFrames >= m_numFrames )
+            m_analyzed = true;
 
-        // reset cursor
-        m_processedFrames = 0;
-        m_ready = false;
+        return m_numFrames - m_analyzedFrames;
     }
+
+    t_CKINT analyzed() { return m_analyzed ? 1 : 0; }
 
     t_CKINT processFrames( int n )
     {
@@ -602,8 +832,20 @@ private:
     std::vector<float> m_phaseAccum;
     std::vector<float> m_prevPhase;
     int m_numFrames;
+    int m_analyzedFrames;
+    bool m_analyzed;
     int m_processedFrames;
     bool m_ready;
+
+    // chunked file loading state
+    FILE * m_file;
+    int m_fileChannels;
+    int m_fileBytesPerSample;
+    int m_fileBlockAlign;
+    int m_fileAudioFormat;   // 1=PCM, 3=IEEE float
+    int m_fileTotalSamples;  // mono sample count
+    int m_fileLoadedSamples;
+    bool m_fileLoaded;
 
     //--- update derived params ---
     void updateParams()
@@ -626,6 +868,7 @@ private:
     void resynthesize()
     {
         prepare();
+        analyzeFrames( m_numFrames );
         processFrames( m_numFrames );
     }
 };
@@ -660,12 +903,23 @@ CK_DLL_QUERY( SpectralSynth )
     QUERY->add_mfun( QUERY, spectralsynth_input, "void", "input" );
     QUERY->add_arg( QUERY, "float[]", "audio" );
 
+    // --- chunked file loading ---
+    QUERY->add_mfun( QUERY, spectralsynth_open, "int", "open" );
+    QUERY->add_arg( QUERY, "string", "path" );
+    QUERY->add_mfun( QUERY, spectralsynth_loadSamples, "int", "loadSamples" );
+    QUERY->add_arg( QUERY, "int", "n" );
+    QUERY->add_mfun( QUERY, spectralsynth_loaded, "int", "loaded" );
+    QUERY->add_mfun( QUERY, spectralsynth_numSamples, "int", "numSamples" );
+
     // --- transport ---
     QUERY->add_mfun( QUERY, spectralsynth_play, "void", "play" );
     QUERY->add_mfun( QUERY, spectralsynth_stop, "void", "stop" );
 
     // --- incremental processing ---
     QUERY->add_mfun( QUERY, spectralsynth_prepare, "void", "prepare" );
+    QUERY->add_mfun( QUERY, spectralsynth_analyzeFrames, "int", "analyzeFrames" );
+    QUERY->add_arg( QUERY, "int", "n" );
+    QUERY->add_mfun( QUERY, spectralsynth_analyzed, "int", "analyzed" );
     QUERY->add_mfun( QUERY, spectralsynth_processFrames, "int", "processFrames" );
     QUERY->add_arg( QUERY, "int", "n" );
     QUERY->add_mfun( QUERY, spectralsynth_ready, "int", "ready" );
@@ -797,6 +1051,36 @@ CK_DLL_MFUN( spectralsynth_input )
 
 
 //-----------------------------------------------------------------------------
+// chunked file loading
+//-----------------------------------------------------------------------------
+CK_DLL_MFUN( spectralsynth_open )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    Chuck_String * str = GET_NEXT_STRING( ARGS );
+    RETURN->v_int = ( obj && str ) ? obj->openFile( API->object->str( str ) ) : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_loadSamples )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    t_CKINT n = GET_NEXT_INT( ARGS );
+    RETURN->v_int = obj ? obj->loadSamples( (int)n ) : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_loaded )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj ? obj->loaded() : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_numSamples )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj ? obj->getNumSamples() : 0;
+}
+
+
+//-----------------------------------------------------------------------------
 // transport
 //-----------------------------------------------------------------------------
 CK_DLL_MFUN( spectralsynth_play )
@@ -819,6 +1103,19 @@ CK_DLL_MFUN( spectralsynth_prepare )
 {
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     if( obj ) obj->prepare();
+}
+
+CK_DLL_MFUN( spectralsynth_analyzeFrames )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    t_CKINT n = GET_NEXT_INT( ARGS );
+    RETURN->v_int = obj ? obj->analyzeFrames( (int)n ) : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_analyzed )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj ? obj->analyzed() : 0;
 }
 
 CK_DLL_MFUN( spectralsynth_processFrames )

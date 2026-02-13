@@ -74,6 +74,14 @@ ss.pitchShift( 5.0 );
 ss.prepare();
 <<< "  numFrames:", ss.numFrames() >>>;
 
+// analyze in batches of 50 frames, yielding between each
+while( ss.analyzed() == 0 )
+{
+    ss.analyzeFrames( 50 );
+    1::samp => now;
+}
+<<< "  analyzed:", ss.analyzed() >>>;
+
 // process in batches of 50 frames, yielding between each
 while( ss.ready() == 0 )
 {
@@ -84,5 +92,44 @@ while( ss.ready() == 0 )
 
 ss.play();
 (buf.samples()::samp) => now;
+
+// --- test 9: chunked file loading + full incremental pipeline ---
+<<< "test 9: chunked file loading (pitch +5)" >>>;
+SpectralSynth ss2 => dac;
+ss2.pitchShift( 5.0 );
+
+// open WAV file
+ss2.open( "Breathchoir18.wav" ) => int totalSamples;
+<<< "  numSamples:", totalSamples >>>;
+
+// load in chunks of 44100 samples, yielding between each
+while( ss2.loaded() == 0 )
+{
+    ss2.loadSamples( 44100 );
+    1::samp => now;
+}
+<<< "  loaded:", ss2.loaded() >>>;
+
+// prepare (fast — just buffer allocation)
+ss2.prepare();
+<<< "  numFrames:", ss2.numFrames() >>>;
+
+// analyze in batches
+while( ss2.analyzed() == 0 )
+{
+    ss2.analyzeFrames( 50 );
+    1::samp => now;
+}
+
+// process in batches
+while( ss2.ready() == 0 )
+{
+    ss2.processFrames( 50 );
+    1::samp => now;
+}
+<<< "  ready:", ss2.ready() >>>;
+
+ss2.play();
+(totalSamples::samp) => now;
 
 <<< "done." >>>;
