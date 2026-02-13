@@ -38,7 +38,7 @@ AUTO.pan("*8 42531638") => stfreepan0.pan; // CONNECT THIS, normal range: -1.0 t
 //8 * data.tick =>stfreepan0.t.the_end.fixed_end_dur;
 
 STCUTTER stcutter;
-"*2
+"*2 {1
 __ __ __ _1
 __ __ __ _1
 __ __ 11 11
@@ -52,5 +52,4 @@ ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last;
 while(1) {
        100::ms => now;
 }
-
 

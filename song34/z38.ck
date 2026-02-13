@@ -1,4 +1,4 @@
-1 => float fact;
+2 => float fact;
 
 adc => Delay d0 => Gain out;
 fact * data.tick - 186::ms * 2 => d0.max => d0.delay;

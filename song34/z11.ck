@@ -143,8 +143,12 @@ fun void EFFECT1   (){
   
   STECHO ech;
   ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+  while(1) {
+         100::ms => now;
+  }
+   
 } 
-EFFECT1();
+spork ~ EFFECT1();
 
 fun void EFFECT2   (){ 
   STMIX stmix;
@@ -155,8 +159,11 @@ fun void EFFECT2   (){
 
   STAUTOPAN autopan;
   autopan.connect(last $ ST, .8 /* span 0..1 */, data.tick * 3 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+  while(1) {
+         100::ms => now;
+  }
 } 
-EFFECT2();
+spork ~ EFFECT2();
 
 // LOOP
 /********************************************************/
