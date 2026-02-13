@@ -64,7 +64,7 @@ string str[0];
     return str[i]; 
 }
 
-fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisperize,float spectralBlur,float spectralGate,dur att, dur rel, dur d, int tomix, float v){ 
+fun void  SPECTR (int note, int nfile, float loopStart, float loopEnd, float pitchShift, int robotize, int whisperize,float spectralBlur,float spectralGate,dur att, dur rel, dur d, int tomix, float v){ 
 
   ST stmonoin; stmonoin $ ST @=> ST @ last;
 
@@ -86,6 +86,8 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
   ss.whisperize( whisperize );
   ss.spectralBlur( spectralBlur );
   ss.spectralGate( spectralGate );
+  ss.loopStart(loopStart);
+  ss.loopEnd(loopEnd);
 
   ss.prepare();
   <<< "  numFrames:", ss.numFrames() >>>;
@@ -140,17 +142,19 @@ stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre del
 while(1) {
 //spork ~ SPECTR (36/*note*/,Std.rand2(1,27)/*file*/,0./*semiToneShift*/,maybe*maybe/*robotize*/,maybe*maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(12,27) * 1::second, 0, 1.7); 
 //Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,31/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
+//spork ~ SPECTR (24/*note*/,17/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, 180::second, 0, 0.3); 
+//180::second => now;
+spork ~ SPECTR (24/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
 Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,32/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
+spork ~ SPECTR (24/*note*/,32/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
 Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,31/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
+spork ~ SPECTR (24/*note*/,31/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
 Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,17/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
+spork ~ SPECTR (24/*note*/,17/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
 Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,30/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
+spork ~ SPECTR (24/*note*/,30/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe&&maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.3); 
 Std.rand2(8,13) * 1::second => now;
-spork ~ SPECTR (24/*note*/,26/*file*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.4); 
+spork ~ SPECTR (24/*note*/,26/*file*/,0.2/*loopStart*/,0.8/*loopEnd*/,0./*semiToneShift*/,maybe&&maybe/*robotize*/,maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(8,13) * 1::second, 1, 0.4); 
 Std.rand2(8,13) * 1::second => now;
 }
  
@@ -169,13 +173,13 @@ if (recseq.play_or_rec() ) {
   // MAIN 
   //////////////////////////////////////////////////
 
-spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 0.3); 
+spork ~ SPECTR (18/*note*/,17/*file*/,0.0/*loopStart*/,1.0/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 60::second, 0, 0.3); 
+60::second => now;
+spork ~ SPECTR (18/*note*/,17/*file*/,0.0/*loopStart*/,1.0/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
 10::second => now;
-spork ~ SPECTR (18/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
-10::second => now;
-spork ~ SPECTR (23/*note*/,17/*file*/,-2./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
+spork ~ SPECTR (23/*note*/,17/*file*/,0.0/*loopStart*/,1.0/*loopEnd*/,-2./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.2/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 1.0); 
 20::second => now;
-spork ~ SPECTR (25/*note*/,19/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 20::second, 0, 1.0); 
+spork ~ SPECTR (25/*note*/,19/*file*/,0.0/*loopStart*/,1.0/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,10000::ms/*att*/,20000::ms/*rel*/, 20::second, 0, 1.0); 
 40::second => now;
 
 

@@ -61,6 +61,10 @@ CK_DLL_MFUN( spectralsynth_setGain );
 CK_DLL_MFUN( spectralsynth_getGain );
 CK_DLL_MFUN( spectralsynth_setCrossfade );
 CK_DLL_MFUN( spectralsynth_getCrossfade );
+CK_DLL_MFUN( spectralsynth_setLoopStart );
+CK_DLL_MFUN( spectralsynth_getLoopStart );
+CK_DLL_MFUN( spectralsynth_setLoopEnd );
+CK_DLL_MFUN( spectralsynth_getLoopEnd );
 
 // spectral effects setters/getters
 CK_DLL_MFUN( spectralsynth_setFreeze );
@@ -110,6 +114,8 @@ public:
     , m_phaseMode( true )
     , m_readPos( 0 )
     , m_crossfadeLen( 1024 )
+    , m_loopStart( 0.0 )
+    , m_loopEnd( 1.0 )
     , m_dirty( false )
     , m_numFrames( 0 )
     , m_analyzedFrames( 0 )
@@ -647,39 +653,49 @@ public:
         t_CKINT bufLen = (t_CKINT)m_outputBuf.size();
         SAMPLE out = (SAMPLE)m_outputBuf[m_readPos];
 
-        // crossfade for seamless looping
-        if( m_loop && m_crossfadeLen > 0 )
+        if( m_loop )
         {
-            t_CKINT fadeStart = bufLen - m_crossfadeLen;
-            if( fadeStart < 0 ) fadeStart = 0;
+            // compute loop region in samples
+            t_CKINT loopStartSamp = (t_CKINT)( m_loopStart * bufLen );
+            t_CKINT loopEndSamp = (t_CKINT)( m_loopEnd * bufLen );
+            if( loopStartSamp < 0 ) loopStartSamp = 0;
+            if( loopEndSamp > bufLen ) loopEndSamp = bufLen;
+            t_CKINT loopLen = loopEndSamp - loopStartSamp;
 
-            if( m_readPos >= fadeStart )
+            // crossfade at end of loop region
+            if( m_crossfadeLen > 0 && loopLen > m_crossfadeLen )
             {
-                // how far into the crossfade region (0.0 to 1.0)
-                float fadePos = (float)(m_readPos - fadeStart) / (float)m_crossfadeLen;
-                // equal-power crossfade
-                float fadeOut = cosf( fadePos * 0.5f * (float)M_PI );
-                float fadeIn  = sinf( fadePos * 0.5f * (float)M_PI );
-                // corresponding position at the start of the buffer
-                t_CKINT headPos = m_readPos - fadeStart;
-                if( headPos < bufLen )
-                    out = out * fadeOut + m_outputBuf[headPos] * fadeIn;
+                t_CKINT fadeStart = loopEndSamp - m_crossfadeLen;
+
+                if( m_readPos >= fadeStart && m_readPos < loopEndSamp )
+                {
+                    float fadePos = (float)(m_readPos - fadeStart) / (float)m_crossfadeLen;
+                    float fadeOut = cosf( fadePos * 0.5f * (float)M_PI );
+                    float fadeIn  = sinf( fadePos * 0.5f * (float)M_PI );
+                    // blend with corresponding position at the start of loop
+                    t_CKINT headPos = loopStartSamp + (m_readPos - fadeStart);
+                    if( headPos < loopEndSamp )
+                        out = out * fadeOut + m_outputBuf[headPos] * fadeIn;
+                }
+            }
+
+            out *= (SAMPLE)m_gain;
+            m_readPos++;
+
+            // wrap at loop end
+            if( m_readPos >= loopEndSamp )
+            {
+                t_CKINT fadeLen = m_crossfadeLen;
+                if( fadeLen > loopLen ) fadeLen = loopLen;
+                m_readPos = loopStartSamp + fadeLen;
             }
         }
-
-        out *= (SAMPLE)m_gain;
-        m_readPos++;
-
-        if( m_readPos >= bufLen )
+        else
         {
-            if( m_loop )
-            {
-                // jump past the crossfade region we already blended in
-                t_CKINT fadeLen = m_crossfadeLen;
-                if( fadeLen > bufLen ) fadeLen = bufLen;
-                m_readPos = fadeLen;
-            }
-            else
+            out *= (SAMPLE)m_gain;
+            m_readPos++;
+
+            if( m_readPos >= bufLen )
                 m_playing = false;
         }
 
@@ -739,6 +755,22 @@ public:
         return m_crossfadeLen;
     }
     t_CKINT getCrossfade() { return m_crossfadeLen; }
+
+    t_CKFLOAT setLoopStart( t_CKFLOAT v )
+    {
+        m_loopStart = std::max( 0.0, std::min( 1.0, v ) );
+        if( m_loopStart >= m_loopEnd ) m_loopStart = m_loopEnd;
+        return m_loopStart;
+    }
+    t_CKFLOAT getLoopStart() { return m_loopStart; }
+
+    t_CKFLOAT setLoopEnd( t_CKFLOAT v )
+    {
+        m_loopEnd = std::max( 0.0, std::min( 1.0, v ) );
+        if( m_loopEnd <= m_loopStart ) m_loopEnd = m_loopStart;
+        return m_loopEnd;
+    }
+    t_CKFLOAT getLoopEnd() { return m_loopEnd; }
 
     //--- spectral effects ---
     t_CKINT setFreeze( t_CKINT v )
@@ -819,6 +851,8 @@ private:
     std::vector<float> m_window;
     t_CKINT m_readPos;
     t_CKINT m_crossfadeLen;
+    t_CKFLOAT m_loopStart;
+    t_CKFLOAT m_loopEnd;
     bool m_dirty;
 
     // FFT engine
@@ -959,6 +993,16 @@ CK_DLL_QUERY( SpectralSynth )
     QUERY->add_mfun( QUERY, spectralsynth_setCrossfade, "int", "crossfade" );
     QUERY->add_arg( QUERY, "int", "samples" );
     QUERY->add_mfun( QUERY, spectralsynth_getCrossfade, "int", "crossfade" );
+
+    // --- loopStart ---
+    QUERY->add_mfun( QUERY, spectralsynth_setLoopStart, "float", "loopStart" );
+    QUERY->add_arg( QUERY, "float", "val" );
+    QUERY->add_mfun( QUERY, spectralsynth_getLoopStart, "float", "loopStart" );
+
+    // --- loopEnd ---
+    QUERY->add_mfun( QUERY, spectralsynth_setLoopEnd, "float", "loopEnd" );
+    QUERY->add_arg( QUERY, "float", "val" );
+    QUERY->add_mfun( QUERY, spectralsynth_getLoopEnd, "float", "loopEnd" );
 
     // --- freeze ---
     QUERY->add_mfun( QUERY, spectralsynth_setFreeze, "int", "freeze" );
@@ -1216,6 +1260,28 @@ CK_DLL_MFUN( spectralsynth_getCrossfade )
 {
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     RETURN->v_int = obj->getCrossfade();
+}
+
+CK_DLL_MFUN( spectralsynth_setLoopStart )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_float = obj->setLoopStart( GET_NEXT_FLOAT( ARGS ) );
+}
+CK_DLL_MFUN( spectralsynth_getLoopStart )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_float = obj->getLoopStart();
+}
+
+CK_DLL_MFUN( spectralsynth_setLoopEnd )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_float = obj->setLoopEnd( GET_NEXT_FLOAT( ARGS ) );
+}
+CK_DLL_MFUN( spectralsynth_getLoopEnd )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_float = obj->getLoopEnd();
 }
 
 
