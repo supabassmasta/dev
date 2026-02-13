@@ -144,6 +144,45 @@ static BenchResult bench( const char * label, SpectralSynth & ss,
 
 
 //-----------------------------------------------------------------------------
+// incremental benchmark helper
+//-----------------------------------------------------------------------------
+static void benchIncremental( const char * label, SpectralSynth & ss,
+                              const std::vector<float> & audio, int batchSize, int runs )
+{
+    // warmup
+    ss.setInput( audio );
+
+    double totalPrepareMs = 0.0;
+    double totalProcessMs = 0.0;
+
+    for( int r = 0; r < runs; r++ )
+    {
+        // time prepare()
+        auto t0 = std::chrono::high_resolution_clock::now();
+        ss.prepare();
+        auto t1 = std::chrono::high_resolution_clock::now();
+
+        totalPrepareMs += std::chrono::duration<double, std::milli>( t1 - t0 ).count();
+
+        // time processFrames() in batches
+        auto t2 = std::chrono::high_resolution_clock::now();
+        while( ss.ready() == 0 )
+            ss.processFrames( batchSize );
+        auto t3 = std::chrono::high_resolution_clock::now();
+
+        totalProcessMs += std::chrono::duration<double, std::milli>( t3 - t2 ).count();
+    }
+
+    double avgPrepare = totalPrepareMs / (double)runs;
+    double avgProcess = totalProcessMs / (double)runs;
+    double avgTotal = avgPrepare + avgProcess;
+
+    printf( "  %-40s  prepare: %6.2f ms  process: %6.2f ms  total: %6.2f ms  (batch=%d, avg of %d)\n",
+            label, avgPrepare, avgProcess, avgTotal, batchSize, runs );
+}
+
+
+//-----------------------------------------------------------------------------
 // main
 //-----------------------------------------------------------------------------
 int main()
@@ -244,6 +283,32 @@ int main()
         ss.setPitchShift( 5.0 );
         ss.setPhaseMode( 0 );
         bench( "pitch +5, phaseMode off (2048)", ss, audio, RUNS );
+    }
+
+    // --- incremental processing benchmarks ---
+    printf( "\nbenchmarking incremental prepare()+processFrames():\n\n" );
+
+    {
+        SpectralSynth ss( srate );
+        ss.setPitchShift( 5.0 );
+        benchIncremental( "pitch +5, batch 50", ss, audio, 50, RUNS );
+    }
+
+    {
+        SpectralSynth ss( srate );
+        ss.setPitchShift( 5.0 );
+        benchIncremental( "pitch +5, batch 100", ss, audio, 100, RUNS );
+    }
+
+    {
+        SpectralSynth ss( srate );
+        ss.setPitchShift( 5.0 );
+        benchIncremental( "pitch +5, batch all", ss, audio, 100000, RUNS );
+    }
+
+    {
+        SpectralSynth ss( srate );
+        benchIncremental( "default, batch 50", ss, audio, 50, RUNS );
     }
 
     printf( "\ndone.\n" );

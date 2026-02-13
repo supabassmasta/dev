@@ -31,6 +31,12 @@ CK_DLL_MFUN( spectralsynth_input );
 CK_DLL_MFUN( spectralsynth_play );
 CK_DLL_MFUN( spectralsynth_stop );
 
+// incremental processing
+CK_DLL_MFUN( spectralsynth_prepare );
+CK_DLL_MFUN( spectralsynth_processFrames );
+CK_DLL_MFUN( spectralsynth_ready );
+CK_DLL_MFUN( spectralsynth_numFrames );
+
 // parameter setters/getters
 CK_DLL_MFUN( spectralsynth_setPitchShift );
 CK_DLL_MFUN( spectralsynth_getPitchShift );
@@ -96,6 +102,9 @@ public:
     , m_readPos( 0 )
     , m_crossfadeLen( 1024 )
     , m_dirty( false )
+    , m_numFrames( 0 )
+    , m_processedFrames( 0 )
+    , m_ready( false )
     {
         updateParams();
     }
@@ -109,13 +118,14 @@ public:
     {
         m_inputBuf = audio;
         m_dirty = true;
+        m_ready = false;
         resynthesize();
     }
 
     //--- transport ---
     void play()
     {
-        if( m_dirty ) resynthesize();
+        if( m_dirty && !m_ready ) resynthesize();
         m_readPos = 0;
         m_playing = true;
     }
@@ -124,6 +134,279 @@ public:
     {
         m_playing = false;
     }
+
+    //--- incremental processing ---
+    void prepare()
+    {
+        if( m_inputBuf.empty() )
+        {
+            m_outputBuf.clear();
+            m_dirty = false;
+            m_ready = false;
+            m_numFrames = 0;
+            m_processedFrames = 0;
+            return;
+        }
+
+        int inputLen = (int)m_inputBuf.size();
+
+        // number of analysis frames
+        m_numFrames = (inputLen - m_fftSize) / m_hopSize + 1;
+        if( m_numFrames < 1 ) m_numFrames = 1;
+
+        // pad input if needed
+        int paddedLen = (m_numFrames - 1) * m_hopSize + m_fftSize;
+        m_padded.assign( paddedLen, 0.0f );
+        memcpy( m_padded.data(), m_inputBuf.data(),
+                std::min( inputLen, paddedLen ) * sizeof(float) );
+
+        // analysis: extract magnitude and phase for each frame
+        m_frameMags.resize( m_numFrames );
+        m_framePhases.resize( m_numFrames );
+
+        std::vector<float> frameBuf( m_fftSize );
+        std::vector<float> re( m_complexSize );
+        std::vector<float> im( m_complexSize );
+
+        for( int f = 0; f < m_numFrames; f++ )
+        {
+            int offset = f * m_hopSize;
+
+            // window the frame
+            for( int i = 0; i < m_fftSize; i++ )
+                frameBuf[i] = m_padded[offset + i] * m_window[i];
+
+            // FFT
+            m_fft.fft( frameBuf.data(), re.data(), im.data() );
+
+            // convert to magnitude/phase
+            m_frameMags[f].resize( m_complexSize );
+            m_framePhases[f].resize( m_complexSize );
+
+            for( int k = 0; k < m_complexSize; k++ )
+            {
+                m_frameMags[f][k] = sqrtf( re[k] * re[k] + im[k] * im[k] );
+                m_framePhases[f][k] = atan2f( im[k], re[k] );
+            }
+        }
+
+        // allocate output and normalization buffers
+        int outputLen = paddedLen;
+        m_outputBuf.assign( outputLen, 0.0f );
+        m_normBuf.assign( outputLen, 0.0f );
+
+        // reset phase accumulators
+        m_phaseAccum.assign( m_complexSize, 0.0f );
+        m_prevPhase.assign( m_complexSize, 0.0f );
+
+        // reset cursor
+        m_processedFrames = 0;
+        m_ready = false;
+    }
+
+    t_CKINT processFrames( int n )
+    {
+        if( m_numFrames == 0 ) return 0;
+
+        int endFrame = m_processedFrames + n;
+        if( endFrame > m_numFrames ) endFrame = m_numFrames;
+
+        double pitchRatio = pow( 2.0, m_pitchShift / 12.0 );
+        float expectedPhaseAdv = 2.0f * (float)M_PI * (float)m_hopSize / (float)m_fftSize;
+        int outputLen = (int)m_outputBuf.size();
+        int freezeFrame = m_numFrames / 2;
+
+        std::vector<float> shiftedMag( m_complexSize );
+        std::vector<float> shiftedPhase( m_complexSize );
+        std::vector<float> frameBuf( m_fftSize );
+        std::vector<float> re( m_complexSize );
+        std::vector<float> im( m_complexSize );
+
+        for( int f = m_processedFrames; f < endFrame; f++ )
+        {
+            int srcFrame = f;
+            if( m_freeze ) srcFrame = freezeFrame;
+
+            std::vector<float> & mag = m_frameMags[srcFrame];
+            std::vector<float> & phase = m_framePhases[srcFrame];
+
+            // --- spectral gate: zero bins below threshold ---
+            if( m_spectralGate > 0.0 )
+            {
+                float maxMag = 0.0f;
+                for( int k = 0; k < m_complexSize; k++ )
+                    if( mag[k] > maxMag ) maxMag = mag[k];
+
+                float threshold = maxMag * (float)m_spectralGate;
+                for( int k = 0; k < m_complexSize; k++ )
+                    if( mag[k] < threshold ) mag[k] = 0.0f;
+            }
+
+            // --- spectral blur: smooth magnitudes ---
+            if( m_spectralBlur > 0.0 )
+            {
+                int radius = (int)( m_spectralBlur * 10.0 );
+                if( radius < 1 ) radius = 1;
+                if( radius > m_complexSize / 2 ) radius = m_complexSize / 2;
+
+                std::vector<float> smoothed( m_complexSize );
+                for( int k = 0; k < m_complexSize; k++ )
+                {
+                    float sum = 0.0f;
+                    int count = 0;
+                    for( int j = k - radius; j <= k + radius; j++ )
+                    {
+                        if( j >= 0 && j < m_complexSize )
+                        {
+                            sum += mag[j];
+                            count++;
+                        }
+                    }
+                    smoothed[k] = sum / (float)count;
+                }
+                mag = smoothed;
+            }
+
+            // --- pitch shifting: remap bins ---
+            memset( shiftedMag.data(), 0, m_complexSize * sizeof(float) );
+            memset( shiftedPhase.data(), 0, m_complexSize * sizeof(float) );
+
+            if( fabs( pitchRatio - 1.0 ) < 0.001 )
+            {
+                // no shift — copy directly
+                memcpy( shiftedMag.data(), mag.data(), m_complexSize * sizeof(float) );
+
+                if( m_phaseMode )
+                {
+                    // phase propagation (identity)
+                    for( int k = 0; k < m_complexSize; k++ )
+                    {
+                        float phaseDiff = phase[k] - m_prevPhase[k];
+                        float expected = (float)k * expectedPhaseAdv;
+                        float deviation = phaseDiff - expected;
+
+                        // wrap to [-pi, pi]
+                        deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
+                        if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
+                        deviation -= (float)M_PI;
+
+                        float trueFreq = (float)k * expectedPhaseAdv + deviation;
+                        m_phaseAccum[k] += trueFreq;
+                        shiftedPhase[k] = m_phaseAccum[k];
+                    }
+                }
+                else
+                {
+                    // raw analysis phases
+                    memcpy( shiftedPhase.data(), phase.data(), m_complexSize * sizeof(float) );
+                }
+            }
+            else
+            {
+                // pitch shift
+                for( int k = 0; k < m_complexSize; k++ )
+                {
+                    // source bin for this output bin
+                    double srcBin = (double)k / pitchRatio;
+                    int srcBinInt = (int)srcBin;
+                    float frac = (float)( srcBin - srcBinInt );
+
+                    // magnitude: interpolate from source bins
+                    float interpMag = 0.0f;
+                    if( srcBinInt >= 0 && srcBinInt < m_complexSize - 1 )
+                        interpMag = mag[srcBinInt] * (1.0f - frac) + mag[srcBinInt + 1] * frac;
+                    else if( srcBinInt == m_complexSize - 1 )
+                        interpMag = mag[srcBinInt];
+
+                    shiftedMag[k] = interpMag;
+
+                    // phase
+                    if( srcBinInt >= 0 && srcBinInt < m_complexSize )
+                    {
+                        if( m_phaseMode )
+                        {
+                            // phase vocoder: accumulate with shifted frequency
+                            float phaseDiff = phase[srcBinInt] - m_prevPhase[srcBinInt];
+                            float expected = (float)srcBinInt * expectedPhaseAdv;
+                            float deviation = phaseDiff - expected;
+
+                            deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
+                            if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
+                            deviation -= (float)M_PI;
+
+                            float trueFreq = (float)srcBinInt * expectedPhaseAdv + deviation;
+                            float shiftedFreq = trueFreq * (float)pitchRatio;
+
+                            m_phaseAccum[k] += shiftedFreq;
+                            shiftedPhase[k] = m_phaseAccum[k];
+                        }
+                        else
+                        {
+                            // raw: use source bin's analysis phase directly
+                            shiftedPhase[k] = phase[srcBinInt];
+                        }
+                    }
+                }
+            }
+
+            // --- robotize: zero all phases ---
+            if( m_robotize )
+            {
+                for( int k = 0; k < m_complexSize; k++ )
+                    shiftedPhase[k] = 0.0f;
+            }
+
+            // --- whisperize: randomize phases ---
+            if( m_whisperize )
+            {
+                for( int k = 0; k < m_complexSize; k++ )
+                    shiftedPhase[k] = ((float)rand() / (float)RAND_MAX) * 2.0f * (float)M_PI - (float)M_PI;
+            }
+
+            // save phase for next frame
+            memcpy( m_prevPhase.data(), phase.data(), m_complexSize * sizeof(float) );
+
+            // convert back to real/imag
+            for( int k = 0; k < m_complexSize; k++ )
+            {
+                re[k] = shiftedMag[k] * cosf( shiftedPhase[k] );
+                im[k] = shiftedMag[k] * sinf( shiftedPhase[k] );
+            }
+
+            // IFFT
+            m_fft.ifft( frameBuf.data(), re.data(), im.data() );
+
+            // window and overlap-add
+            int offset = f * m_hopSize;
+            for( int i = 0; i < m_fftSize; i++ )
+            {
+                if( offset + i < outputLen )
+                {
+                    m_outputBuf[offset + i] += frameBuf[i] * m_window[i];
+                    m_normBuf[offset + i] += m_window[i] * m_window[i];
+                }
+            }
+        }
+
+        m_processedFrames = endFrame;
+
+        // if all frames processed, run normalization
+        if( m_processedFrames >= m_numFrames )
+        {
+            for( int i = 0; i < outputLen; i++ )
+            {
+                if( m_normBuf[i] > 1e-6f )
+                    m_outputBuf[i] /= m_normBuf[i];
+            }
+            m_dirty = false;
+            m_ready = true;
+        }
+
+        return m_numFrames - m_processedFrames;
+    }
+
+    t_CKINT ready() { return m_ready ? 1 : 0; }
+    t_CKINT getNumFrames() { return m_numFrames; }
 
     //--- tick ---
     SAMPLE tick( SAMPLE in )
@@ -311,6 +594,17 @@ private:
     // FFT engine
     audiofft::AudioFFT m_fft;
 
+    // incremental processing state
+    std::vector< std::vector<float> > m_frameMags;
+    std::vector< std::vector<float> > m_framePhases;
+    std::vector<float> m_padded;
+    std::vector<float> m_normBuf;
+    std::vector<float> m_phaseAccum;
+    std::vector<float> m_prevPhase;
+    int m_numFrames;
+    int m_processedFrames;
+    bool m_ready;
+
     //--- update derived params ---
     void updateParams()
     {
@@ -328,255 +622,11 @@ private:
         m_fft.init( m_fftSize );
     }
 
-    //--- core resynthesis ---
+    //--- core resynthesis (convenience: runs prepare + processFrames all at once) ---
     void resynthesize()
     {
-        if( m_inputBuf.empty() )
-        {
-            m_outputBuf.clear();
-            m_dirty = false;
-            return;
-        }
-
-        int inputLen = (int)m_inputBuf.size();
-
-        // number of analysis frames
-        int numFrames = (inputLen - m_fftSize) / m_hopSize + 1;
-        if( numFrames < 1 ) numFrames = 1;
-
-        // pad input if needed
-        int paddedLen = (numFrames - 1) * m_hopSize + m_fftSize;
-        std::vector<float> padded( paddedLen, 0.0f );
-        memcpy( padded.data(), m_inputBuf.data(),
-                std::min( inputLen, paddedLen ) * sizeof(float) );
-
-        // analysis: extract magnitude and phase for each frame
-        std::vector< std::vector<float> > frameMags( numFrames );
-        std::vector< std::vector<float> > framePhases( numFrames );
-
-        std::vector<float> frameBuf( m_fftSize );
-        std::vector<float> re( m_complexSize );
-        std::vector<float> im( m_complexSize );
-
-        for( int f = 0; f < numFrames; f++ )
-        {
-            int offset = f * m_hopSize;
-
-            // window the frame
-            for( int i = 0; i < m_fftSize; i++ )
-                frameBuf[i] = padded[offset + i] * m_window[i];
-
-            // FFT
-            m_fft.fft( frameBuf.data(), re.data(), im.data() );
-
-            // convert to magnitude/phase
-            frameMags[f].resize( m_complexSize );
-            framePhases[f].resize( m_complexSize );
-
-            for( int k = 0; k < m_complexSize; k++ )
-            {
-                frameMags[f][k] = sqrtf( re[k] * re[k] + im[k] * im[k] );
-                framePhases[f][k] = atan2f( im[k], re[k] );
-            }
-        }
-
-        // --- apply spectral effects to each frame ---
-        double pitchRatio = pow( 2.0, m_pitchShift / 12.0 );
-
-        // phase accumulator for pitch shifting
-        std::vector<float> phaseAccum( m_complexSize, 0.0f );
-        std::vector<float> prevPhase( m_complexSize, 0.0f );
-
-        // expected phase advance per hop for each bin
-        float freqPerBin = (float)m_srate / (float)m_fftSize;
-        float expectedPhaseAdv = 2.0f * (float)M_PI * (float)m_hopSize / (float)m_fftSize;
-
-        // output accumulator
-        int outputLen = paddedLen;
-        m_outputBuf.assign( outputLen, 0.0f );
-
-        // normalization buffer for overlap-add
-        std::vector<float> normBuf( outputLen, 0.0f );
-
-        std::vector<float> shiftedMag( m_complexSize );
-        std::vector<float> shiftedPhase( m_complexSize );
-
-        int freezeFrame = numFrames / 2; // freeze at midpoint
-
-        for( int f = 0; f < numFrames; f++ )
-        {
-            int srcFrame = f;
-            if( m_freeze ) srcFrame = freezeFrame;
-
-            std::vector<float> & mag = frameMags[srcFrame];
-            std::vector<float> & phase = framePhases[srcFrame];
-
-            // --- spectral gate: zero bins below threshold ---
-            if( m_spectralGate > 0.0 )
-            {
-                float maxMag = 0.0f;
-                for( int k = 0; k < m_complexSize; k++ )
-                    if( mag[k] > maxMag ) maxMag = mag[k];
-
-                float threshold = maxMag * (float)m_spectralGate;
-                for( int k = 0; k < m_complexSize; k++ )
-                    if( mag[k] < threshold ) mag[k] = 0.0f;
-            }
-
-            // --- spectral blur: smooth magnitudes ---
-            if( m_spectralBlur > 0.0 )
-            {
-                int radius = (int)( m_spectralBlur * 10.0 );
-                if( radius < 1 ) radius = 1;
-                if( radius > m_complexSize / 2 ) radius = m_complexSize / 2;
-
-                std::vector<float> smoothed( m_complexSize );
-                for( int k = 0; k < m_complexSize; k++ )
-                {
-                    float sum = 0.0f;
-                    int count = 0;
-                    for( int j = k - radius; j <= k + radius; j++ )
-                    {
-                        if( j >= 0 && j < m_complexSize )
-                        {
-                            sum += mag[j];
-                            count++;
-                        }
-                    }
-                    smoothed[k] = sum / (float)count;
-                }
-                mag = smoothed;
-            }
-
-            // --- pitch shifting: remap bins ---
-            memset( shiftedMag.data(), 0, m_complexSize * sizeof(float) );
-            memset( shiftedPhase.data(), 0, m_complexSize * sizeof(float) );
-
-            if( fabs( pitchRatio - 1.0 ) < 0.001 )
-            {
-                // no shift — copy directly
-                memcpy( shiftedMag.data(), mag.data(), m_complexSize * sizeof(float) );
-
-                if( m_phaseMode )
-                {
-                    // phase propagation (identity)
-                    for( int k = 0; k < m_complexSize; k++ )
-                    {
-                        float phaseDiff = phase[k] - prevPhase[k];
-                        float expected = (float)k * expectedPhaseAdv;
-                        float deviation = phaseDiff - expected;
-
-                        // wrap to [-pi, pi]
-                        deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
-                        if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
-                        deviation -= (float)M_PI;
-
-                        float trueFreq = (float)k * expectedPhaseAdv + deviation;
-                        phaseAccum[k] += trueFreq;
-                        shiftedPhase[k] = phaseAccum[k];
-                    }
-                }
-                else
-                {
-                    // raw analysis phases
-                    memcpy( shiftedPhase.data(), phase.data(), m_complexSize * sizeof(float) );
-                }
-            }
-            else
-            {
-                // pitch shift
-                for( int k = 0; k < m_complexSize; k++ )
-                {
-                    // source bin for this output bin
-                    double srcBin = (double)k / pitchRatio;
-                    int srcBinInt = (int)srcBin;
-                    float frac = (float)( srcBin - srcBinInt );
-
-                    // magnitude: interpolate from source bins
-                    float interpMag = 0.0f;
-                    if( srcBinInt >= 0 && srcBinInt < m_complexSize - 1 )
-                        interpMag = mag[srcBinInt] * (1.0f - frac) + mag[srcBinInt + 1] * frac;
-                    else if( srcBinInt == m_complexSize - 1 )
-                        interpMag = mag[srcBinInt];
-
-                    shiftedMag[k] = interpMag;
-
-                    // phase
-                    if( srcBinInt >= 0 && srcBinInt < m_complexSize )
-                    {
-                        if( m_phaseMode )
-                        {
-                            // phase vocoder: accumulate with shifted frequency
-                            float phaseDiff = phase[srcBinInt] - prevPhase[srcBinInt];
-                            float expected = (float)srcBinInt * expectedPhaseAdv;
-                            float deviation = phaseDiff - expected;
-
-                            deviation = fmodf( deviation + (float)M_PI, 2.0f * (float)M_PI );
-                            if( deviation < 0 ) deviation += 2.0f * (float)M_PI;
-                            deviation -= (float)M_PI;
-
-                            float trueFreq = (float)srcBinInt * expectedPhaseAdv + deviation;
-                            float shiftedFreq = trueFreq * (float)pitchRatio;
-
-                            phaseAccum[k] += shiftedFreq;
-                            shiftedPhase[k] = phaseAccum[k];
-                        }
-                        else
-                        {
-                            // raw: use source bin's analysis phase directly
-                            shiftedPhase[k] = phase[srcBinInt];
-                        }
-                    }
-                }
-            }
-
-            // --- robotize: zero all phases ---
-            if( m_robotize )
-            {
-                for( int k = 0; k < m_complexSize; k++ )
-                    shiftedPhase[k] = 0.0f;
-            }
-
-            // --- whisperize: randomize phases ---
-            if( m_whisperize )
-            {
-                for( int k = 0; k < m_complexSize; k++ )
-                    shiftedPhase[k] = ((float)rand() / (float)RAND_MAX) * 2.0f * (float)M_PI - (float)M_PI;
-            }
-
-            // save phase for next frame
-            memcpy( prevPhase.data(), phase.data(), m_complexSize * sizeof(float) );
-
-            // convert back to real/imag
-            for( int k = 0; k < m_complexSize; k++ )
-            {
-                re[k] = shiftedMag[k] * cosf( shiftedPhase[k] );
-                im[k] = shiftedMag[k] * sinf( shiftedPhase[k] );
-            }
-
-            // IFFT
-            m_fft.ifft( frameBuf.data(), re.data(), im.data() );
-
-            // window and overlap-add
-            int offset = f * m_hopSize;
-            for( int i = 0; i < m_fftSize; i++ )
-            {
-                if( offset + i < outputLen )
-                {
-                    m_outputBuf[offset + i] += frameBuf[i] * m_window[i];
-                    normBuf[offset + i] += m_window[i] * m_window[i];
-                }
-            }
-        }
-
-        // normalize by overlap-add window sum
-        for( int i = 0; i < outputLen; i++ )
-        {
-            if( normBuf[i] > 1e-6f )
-                m_outputBuf[i] /= normBuf[i];
-        }
-
-        m_dirty = false;
+        prepare();
+        processFrames( m_numFrames );
     }
 };
 
@@ -613,6 +663,13 @@ CK_DLL_QUERY( SpectralSynth )
     // --- transport ---
     QUERY->add_mfun( QUERY, spectralsynth_play, "void", "play" );
     QUERY->add_mfun( QUERY, spectralsynth_stop, "void", "stop" );
+
+    // --- incremental processing ---
+    QUERY->add_mfun( QUERY, spectralsynth_prepare, "void", "prepare" );
+    QUERY->add_mfun( QUERY, spectralsynth_processFrames, "int", "processFrames" );
+    QUERY->add_arg( QUERY, "int", "n" );
+    QUERY->add_mfun( QUERY, spectralsynth_ready, "int", "ready" );
+    QUERY->add_mfun( QUERY, spectralsynth_numFrames, "int", "numFrames" );
 
     // --- pitchShift ---
     QUERY->add_mfun( QUERY, spectralsynth_setPitchShift, "float", "pitchShift" );
@@ -752,6 +809,35 @@ CK_DLL_MFUN( spectralsynth_stop )
 {
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     if( obj ) obj->stop();
+}
+
+
+//-----------------------------------------------------------------------------
+// incremental processing
+//-----------------------------------------------------------------------------
+CK_DLL_MFUN( spectralsynth_prepare )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    if( obj ) obj->prepare();
+}
+
+CK_DLL_MFUN( spectralsynth_processFrames )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    t_CKINT n = GET_NEXT_INT( ARGS );
+    RETURN->v_int = obj ? obj->processFrames( (int)n ) : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_ready )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj ? obj->ready() : 0;
+}
+
+CK_DLL_MFUN( spectralsynth_numFrames )
+{
+    SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
+    RETURN->v_int = obj ? obj->getNumFrames() : 0;
 }
 
 
@@ -904,4 +990,3 @@ CK_DLL_MFUN( spectralsynth_getPhaseMode )
     SpectralSynth * obj = (SpectralSynth *)OBJ_MEMBER_INT( SELF, spectralsynth_data_offset );
     RETURN->v_int = obj->getPhaseMode();
 }
-

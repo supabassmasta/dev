@@ -71,17 +71,17 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
   // extract samples into a float array
   float samples[buf.samples()];
   for( 0 => int i; i < buf.samples(); i++ ){
-//  100 * 4096 => int max_samples;//
-//  0 => int len;
-//  if (buf.samples() > max_samples) max_samples => len; else buf.samples() => len;
-//  float samples[len];
-//  for( 0 => int i; i < len; i++ ){
+    //  100 * 4096 => int max_samples;//
+    //  0 => int len;
+    //  if (buf.samples() > max_samples) max_samples => len; else buf.samples() => len;
+    //  float samples[len];
+    //  for( 0 => int i; i < len; i++ ){
     buf.valueAt(i) => samples[i];
     me.yield();
   }
 
   // TOREMOVE
-//  1::second => now;
+  //  1::second => now;
 
   ST stmonoin; stmonoin $ ST @=> ST @ last;
 
@@ -99,6 +99,17 @@ fun void  SPECTR (int note, int nfile, float pitchShift, int robotize, int whisp
   ss.whisperize( whisperize );
   ss.spectralBlur( spectralBlur );
   ss.spectralGate( spectralGate );
+
+  ss.prepare();
+  <<< "  numFrames:", ss.numFrames() >>>;
+  // process in batches of 50 frames, yielding between each
+  while( ss.ready() == 0 )
+  {
+    ss.processFrames( 50 );
+    1::samp => now;
+  }
+  <<< "  ready:", ss.ready() >>>;
+
   ss.loop( 1 );
   ss.crossfade(4 * 2048 );
   v * data.master_gain => ss.gain;
@@ -132,10 +143,10 @@ STCONVREV stconvrev;
 stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
 while(1) {
-spork ~ SPECTR (24/*note*/,19/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, 20::second, 0, 1.7); 
-23::second => now;
-spork ~ SPECTR (24/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1000::ms/*att*/,20000::ms/*rel*/, 40::second, 0, 0.3); 
-23::second => now;
+//spork ~ SPECTR (36/*note*/,Std.rand2(1,27)/*file*/,0./*semiToneShift*/,maybe*maybe/*robotize*/,maybe*maybe/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2000::ms/*att*/,20000::ms/*rel*/, Std.rand2(12,27) * 1::second, 0, 1.7); 
+//Std.rand2(8,13) * 1::second => now;
+spork ~ SPECTR (24/*note*/,17/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1000::ms/*att*/,20000::ms/*rel*/, 10::second, 0, 0.3); 
+10::second => now;
 spork ~ SPECTR (24/*note*/,30/*file*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1000::ms/*att*/,20000::ms/*rel*/, 20::second, 0, 0.3); 
 11::second => now;
 spork ~ SPECTR (24/*note*/,26/*file*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1000::ms/*att*/,20000::ms/*rel*/, 13::second, 0, 0.4); 

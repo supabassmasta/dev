@@ -64,5 +64,25 @@ ss.freeze( 1 );
 ss.loop( 1 );
 ss.play();
 3::second => now;
+ss.stop();
+ss.freeze( 0 );
+ss.loop( 0 );
+
+// --- test 8: incremental processing ---
+<<< "test 8: incremental processing (pitch +5)" >>>;
+ss.pitchShift( 5.0 );
+ss.prepare();
+<<< "  numFrames:", ss.numFrames() >>>;
+
+// process in batches of 50 frames, yielding between each
+while( ss.ready() == 0 )
+{
+    ss.processFrames( 50 );
+    1::samp => now;
+}
+<<< "  ready:", ss.ready() >>>;
+
+ss.play();
+(buf.samples()::samp) => now;
 
 <<< "done." >>>;
