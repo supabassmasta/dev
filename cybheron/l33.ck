@@ -1993,6 +1993,40 @@ fun void  THEME0  (){
 
 } 
 
+fun void  SECLAC  (){ 
+  spork ~ ERAMPLPF (10/*mixin*/,16*8*data.tick,":8:8:2 3/8"/*gseq*/,":8:4 z"/*lpfseq*/,2/*lpforder*/,1,0.4);
+
+  spork ~ TRIBAL0(" *4  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II", 10 /* tomix */, 1.5 /* gain */);
+  8 * 8 * data.tick => w.wait;
+  spork ~ TRIBAL0(" *4  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II _III __II _I__ I_II  _III __II _I_I I_II", 10 /* tomix */, 1.5 /* gain */);
+  8 * 8 * data.tick => w.wait;
+   
+} 
+
+
+fun void  THEME0BIS  (){ 
+  spork ~   SECLAC (); 
+
+  spork ~   TRANCEHHx8 (8, 4); 
+  spork ~ GARG_64();
+  spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+  spork ~ LOOP_PREC_INTRO_64();
+  7 * 8 * data.tick => w.wait;
+  spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.8/*width*/,2,.14); 
+  1 * 8 * data.tick => w.wait;
+
+  spork ~   TRANCESNRHHx8 (8, 4); 
+  spork ~ GARG_64();
+  spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+  spork ~ LOOP_PREC_INTRO_64();
+  7 * 8 * data.tick => w.wait;
+  spork ~ SLIDENOISE(2000/*fstart*/,200/*fstop*/,7*data.tick/*dur*/,.8/*width*/,2,.14); 
+  1 * 8 * data.tick => w.wait;
+
+
+} 
+
+
 fun void  THEME1  (){ 
    spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
    spork ~   TRANCESNRHHx8 (8, 4); 
@@ -2063,6 +2097,107 @@ spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.
    2  * data.tick => w.wait;
 
 } 
+fun void  BW_T1BIS  (){ 
+   8  * data.tick => w.wait;
+     spork ~ BW("*4 ]11]11[11]11]11[11]11]11[11]11]11[11]11]11[11 ]21 ", 0/*n*/,129*100/*cut*/,1,0.4); 
+   3*8  * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c 51831____ ____", .0/*autoRes phase*/,2,4.2);
+   1*8  * data.tick => w.wait;
+  spork ~ BW("*4 }c ]11]11]11]11]11]11]11]11__ B_ {c 1__1 __8_  ", 0/*n*/,129*100/*cut*/,1,0.4); 
+   2*8  * data.tick => w.wait;
+   1*4  * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c f/1_F/1_f/1_F/1____ ____", .9/*autoRes phase*/,2,4.2);
+   1*4  * data.tick => w.wait;
+
+   1*8  * data.tick => w.wait;
+  spork ~ BW("*4 1__2__3_ 2__3__4_ 3__4__5_ 8_B_f___ ", 0/*n*/,129*100/*cut*/,1,0.4); 
+   3*8  * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*1 {c{c F/1_f/1_F/1_f/1____ ____", .3/*autoRes phase*/,2,3.7);
+   1*8  * data.tick => w.wait;
+  spork ~ BW("*4 }c}c [11 *7:8 [11 *7:8 [11 *7:8 [11 *7:8 [11 *7:8 [11 *7:8 [11 *7:8 [11 *7:8 __    ", 0/*n*/,129*100/*cut*/,1,0.3); 
+  spork ~ BW(" }c}c [11 *7:8  ___*2_1 __  ", 0/*n*/,129*100/*cut*/,1,0.4); 
+  spork ~ BW(" }c}c [11 *7:8  ___*2__ 8_  ", 0/*n*/,129*100/*cut*/,2,0.6); 
+   2*8  * data.tick => w.wait;
+   1*4  * data.tick => w.wait;
+   spork ~ SUPSAWSLIDE("*2 {c{c 83_511____ ____", .2/*autoRes phase*/,2,3.7);
+   1*4  * data.tick => w.wait;
+  
+
+} 
+
+fun void  THEME1BIS  (){ 
+  
+   spork ~   BW_T1BIS (); 
+
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~   TRANCESNRHHx8 (8, 4); 
+ 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+//  spork ~ BW("*4 8_5_1_  ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
+   8  * data.tick => w.wait;
+
+//spork ~ SUPSAWSLIDE("*4 {c{c8_8_8_8_ 8_8_8_8____ ____", .6/*autoRes phase*/,2,3.7);
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+//  spork ~ BW("*4 1_1_f_8 ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
+   4  * data.tick => w.wait;
+//   spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .3/*autoRes phase*/,2,3.7);
+   2  * data.tick => w.wait;
+   spork ~KICK("*4        ____ k_k_",0,1.);
+   spork ~ TRIBAL0(" *4   ____ _Y_ ____   ", 1 /* tomix */, 2.8 /* gain */);
+   2  * data.tick => w.wait;
+
+
+   spork ~ BEAT0x8  (8, 1/*add_a_last_Kick*/, 4 /*remove_last_beats*/);
+   spork ~   TRANCESNRHHx8 (8, 4); 
+//   spork ~   TRANCEHHx8 (8, 4); 
+ 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __Y_ ____   ", 2 /* tomix */, 1.8 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+//  spork ~ BW("*4 3__2__1_ 3__2__1_ 3__2__1_ 8_1_f___ ", 0/*n*/,129*100/*cut*/,1,0.4); 
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _M_b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __hg ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  Z___ ____ ____ ____ ____ ____ ____ ____   ", 2 /* tomix */, 2.3 /* gain */);
+   8  * data.tick => w.wait;
+
+//   spork ~ SUPSAWSLIDE("*2 {c{c FBIF ____", .1/*autoRes phase*/,2,5.7);
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ _WW_ ____   ", 2 /* tomix */, 2.2 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ __gh ___b  ", 1 /* tomix */, 1.5 /* gain */);
+   8  * data.tick => w.wait;
+//  spork ~ BW("*4 f_f_8_1 ", 0/*n*/,129*100/*cut*/,2,0.4); 
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b  ____ __a_ ____ _LMb  ", 1 /* tomix */, 1.5 /* gain */);
+   spork ~ TRIBAL0(" *4  ____ ____ ____ ____ ____ ____ __HI ____   ", 2 /* tomix */, 1.0 /* gain */);
+   8  * data.tick => w.wait;
+   spork ~ TRIBAL0(" *4   ____ __c_ ____ ___b   ", 0 /* tomix */, 2.0 /* gain */);
+   4  * data.tick => w.wait;
+//  spork ~ SUPSAWSLIDE("*2 {c{c 8351____ ____", .6/*autoRes phase*/,2,4.2);
+  2  * data.tick => w.wait;
+   spork ~KICK("*4        ____ kk_k",0,1.);
+   spork ~ TRIBAL0(" *4   ____ __I_ ____   ", 1 /* tomix */, 1.8 /* gain */);
+   2  * data.tick => w.wait;
+
+} 
 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -2072,11 +2207,11 @@ fun void  LOOPLAB  (){
 //    8 * 8 * data.tick => w.wait;
 //spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2*1000::ms/*att*/,4 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 0, 0.5); 
 //    8 * 8 * data.tick => w.wait;
-spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 0, 0.13); 
-spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
+//spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 0, 0.13); 
+//spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
 //    8 * 8 * data.tick => w.wait;
 
-    spork ~   THEME0 (); 
+    spork ~   THEME0BIS (); 
     16 * 8  * data.tick => w.wait;
 
 //   spork ~ KIK0x8  (1, 0/*add_a_last_Kick*/, 0 /*remove_last_beats*/);
@@ -2639,7 +2774,7 @@ if (rectrack.play_or_rec() ) {
     //////////////////////////////////////////////////
     spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 0, 0.13); 
     spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
-    spork ~   THEME0 (); 
+    spork ~   THEME0BIS (); 
     16 * 8  * data.tick => w.wait;
     
     spork ~ BEAT0x8  (4, 1/*add_a_last_Kick*/, 2 /*remove_last_beats*/);
@@ -2650,7 +2785,7 @@ if (rectrack.play_or_rec() ) {
 
     spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,13 * 8 * data.tick/*att*/,1 * data.tick/*rel*/,( 15 * 8 + 4) * data.tick, 0, 0.4); 
     spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,14 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, ( 15 * 8 + 4) * data.tick, 5, 0.2); 
-    spork ~   THEME1 (); 
+    spork ~   THEME1BIS (); 
     15 * 8  * data.tick => w.wait;
     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.8/*width*/,2,.14); 
     1 * 8  * data.tick => w.wait;
