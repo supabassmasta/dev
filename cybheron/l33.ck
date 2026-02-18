@@ -2772,16 +2772,11 @@ if (rectrack.play_or_rec() ) {
     16 * 8  * data.tick => w.wait;
 
     //////////////////////////////////////////////////
-    spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 0, 0.13); 
-    spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
-    spork ~   THEME0BIS (); 
-    16 * 8  * data.tick => w.wait;
-    
+    spork ~   TRANCESNRHHx8 (4, 2); 
     spork ~ BEAT0x8  (4, 1/*add_a_last_Kick*/, 2 /*remove_last_beats*/);
     3 * 8 * data.tick => w.wait;
     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.2/*width*/,2,.14); 
     1 * 8 * data.tick => w.wait;
-
 
     spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,13 * 8 * data.tick/*att*/,1 * data.tick/*rel*/,( 15 * 8 + 4) * data.tick, 0, 0.4); 
     spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,14 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, ( 15 * 8 + 4) * data.tick, 5, 0.2); 
@@ -2789,6 +2784,12 @@ if (rectrack.play_or_rec() ) {
     15 * 8  * data.tick => w.wait;
     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.8/*width*/,2,.14); 
     1 * 8  * data.tick => w.wait;
+
+    spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 0, 0.13); 
+    spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
+    spork ~   THEME0BIS (); 
+    16 * 8  * data.tick => w.wait;
+    
 
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
