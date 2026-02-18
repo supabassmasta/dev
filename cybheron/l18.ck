@@ -458,8 +458,57 @@ stmix.send(last, mixer + mix);
   t.s.duration => now;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////// BPM
+fun void  SINGLEWAV  (string file, int tomix, float g){ 
+  local_delay => now;
+  ST st; st $ ST @=> ST @ last;
+  SndBuf s => st.mono_in;
 
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+  g => s.gain;
+
+  file => s.read;
+
+  s.length() => now;
+}
+
+
+//  spork ~   SINGLEWAV("../_SAMPLES/bitcoin/CPecriventDuCode.wav", 0, .3); 
+fun void  SUPSAWSLIDE  ( string seq, float ph, int tomix, float g){ 
+  local_delay => now;
+
+  TONE t;
+  t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
+  t.set_scale(data.scale.my_string); // t.phr();// t.loc();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  //____ f/P__
+  " {c{c" + seq  => t.seq;
+  g => t.gain;
+  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+  t.go();   t $ ST @=> ST @ last; 
+  
+  STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+  ph => stautoresx0.sin0.phase;
+  stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 15 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 3 /* order */, 2 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+  
+  2.5 => stautoresx0.gain;
+  
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration  => now;
+} 
+
+//spork ~ SUPSAWSLIDE("*4 }c}c}c 1235 {21235 {21235 {21235 {21235 {21235 {21235 {21235 {2 ", .3/*autoRes phase*/,0,0.7);
+
+//////////////////////////////////////////////////////////////////////////////////////////// BPM
+//BPM
 143 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 53 => data.ref_note;
 
@@ -558,7 +607,6 @@ fun void EFFECT4   (){
 spork ~  EFFECT4();
 
 fun void  LOOPPROG  (){ 
-  while(1) {
     spork ~   MOD0 ("*8 }c {3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_ ", 1, .7); 
     8 * data.tick => w.wait;
     spork ~ TRIBAL("*4 aaa", 0 /* bank */, 3 /* mix */, .5 /* gain */);
@@ -581,12 +629,35 @@ fun void  LOOPPROG  (){
     spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
     8 * data.tick => w.wait;
     //-------------------------------------------
-  }
 } 
 //spork ~ LOOPPROG();
 
+fun void  LOOPPROG2  (){ 
+    spork ~   MOD0 ("*8 }c {3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_{3f_ ", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 aaa", 0 /* bank */, 3 /* mix */, .5 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*2 }c FFF/11/F", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __g_", 0 /* bank */, 2 /* mix */, 1.6 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*4 }c 5_5_", 1, .7); 
+    8 * data.tick => w.wait;
+
+    spork ~ TRIBAL("*4 F_", 0 /* bank */, 2 /* mix */, 1.2 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*2 }c f/F____ f8_", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __Z_ __}8Z", 1 /* bank */, 1 /* mix */, .4 /* gain */);
+    8 * data.tick => w.wait;
+    spork ~   MOD0 ("*8 }c 8_8_8_8_", 1, .7); 
+    8 * data.tick => w.wait;
+    spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
+    8 * data.tick => w.wait;
+    //-------------------------------------------
+} 
+
 fun void  LOOPSAW  (){ 
-  while(1) {
     24 * data.tick => w.wait;
     spork ~   CELLO0 (":4 B///B_", 4, 1.6); 
     32 * data.tick => w.wait;
@@ -599,12 +670,10 @@ fun void  LOOPSAW  (){
     spork ~   CELLO0 (":4 __1//1_", 4,1.6); 
     16 * data.tick => w.wait;
     //-------------------------------------------
-  }
 } 
 //spork ~ LOOPSAW();
 
 fun void  LOOPPLOC  (){ 
-  while(1) {
   spork ~   PLOC ("  {c ____ *4 __1_  ", 17, 29 * 100, 1,  1.2 ); 
     8 * data.tick => w.wait;
   spork ~   PLOC ("  {c ____ *4 __8_  ", 17, 29 * 100, 3,  1.0 ); 
@@ -640,23 +709,35 @@ fun void  LOOPPLOC  (){
   spork ~   PLOC ("  {c ____ *4 {1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f{1!f ", 17, 29 * 100, 3,  1.0 ); 
     8 * data.tick => w.wait;
     //-------------------------------------------
-  }
 } 
 //spork ~ LOOPPLOC();
 
 fun void  LOOPLAB  (){ 
   while(1) {
+  1* 4 * data.tick =>  w.wait; 
+spork ~ SUPSAWSLIDE("*1 {c {c f/1", .8/*autoRes phase*/,2,3.7);
+  2* 8 * data.tick =>  w.wait; 
+spork ~ SUPSAWSLIDE("*1 {c {c 851", .7/*autoRes phase*/,2,3.7);
+  1* 8 * data.tick =>  w.wait; 
+spork ~ SUPSAWSLIDE("*1 {c {c FfF__FfF", .7/*autoRes phase*/,2,3.7);
+  2* 8 * data.tick =>  w.wait; 
+spork ~ SUPSAWSLIDE("*1 {c {c ]11]11[11       ", .7/*autoRes phase*/,1,3.7);
+spork ~ SUPSAWSLIDE("*1 {c {c ___  ]11]11[11 ", .7/*autoRes phase*/,2,3.7);
+  2* 8 * data.tick =>  w.wait; 
+  1* 4 * data.tick =>  w.wait; 
 
-  spork ~KICK_HPF("*4k___ k___ k___ k___k___ k___ k___ k___ " , ":4 M/ff/v");
-  spork ~ BASS0_HPF(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ", ":4 M/ff/v");
-  8 * data.tick =>  w.wait; 
+//  spork ~KICK_HPF("*4k___ k___ k___ k___k___ k___ k___ k___ " , ":4 M/ff/v");
+//  spork ~ BASS0_HPF(" *4  1111  __11 1111 1111 __11 1111 _111 __11     ", ":4 M/ff/v");
 
 
     //-------------------------------------------
   }
 } 
+spork ~ LOOPPROG2();
+  spork ~   SINGLEWAV("l18.wav_end_loop", 0, 1.0); 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
+
 
 // LOOP
 /********************************************************/
@@ -703,7 +784,7 @@ while(0) { /********************************************************/
 }
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l18.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l18.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
 

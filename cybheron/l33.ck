@@ -2772,7 +2772,7 @@ if (rectrack.play_or_rec() ) {
     16 * 8  * data.tick => w.wait;
 
     //////////////////////////////////////////////////
-    spork ~   TRANCESNRHHx8 (4, 2); 
+//    spork ~   TRANCESNRHHx8 (4, 2); 
     spork ~ BEAT0x8  (4, 1/*add_a_last_Kick*/, 2 /*remove_last_beats*/);
     3 * 8 * data.tick => w.wait;
     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,7*data.tick/*dur*/,.2/*width*/,2,.14); 
