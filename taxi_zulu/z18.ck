@@ -522,6 +522,20 @@ fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, flo
 } 
 
 //spork ~ SYNT0("}c *8 4103124801234 :8 ____ ____");
+
+fun void  SINGLEWAV  (string file, float g){ 
+   ST st; st $ ST @=> ST @ last;
+   SndBuf s => st.mono_in;
+
+//   STMIX stmix;
+//   stmix.send(last, mixer);
+   
+   g => s.gain;
+
+   file => s.read;
+
+   s.length() => now;
+} 
 ////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -733,6 +747,24 @@ fun void  ZULU  (dur offset, dur d, int tomix, float g){
 
 }
 
+fun void  TRACK  (dur offset, dur d, int tomix, float g){ 
+   LONG_WAV l;
+//   "../_SAMPLES/Chassin/Taxi Zulu.wav" => l.read;
+   "taxi_zulu.wav" => l.read;
+   g * data.master_gain => l.buf.gain;
+   0 => l.update_ref_time;
+   l.AttackRelease(0::ms, 0::ms);
+   l.start(0 * data.tick /* sync */ , offset  /* offset */ , 0 * data.tick /* loop (0::ms == disable) */ , 0 * data.tick /* END sync */); l $ ST @=> ST @ last;  
+  
+    if ( tomix  ){
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
+    }
+
+    d => now;
+
+}
+
 
 fun void  BEAT_INTRO_8  (int n){ 
    for (0 => int i; i <  n     ; i++) {
@@ -844,6 +876,9 @@ spork ~ BEAT_SOLO_8(4);
 //spork ~ LOOPLAB();
 //LOOPLAB(); 
 
+//TRACK(0*8*data.tick/*offset*/, 260*8*data.tick/*d*/,0,1.3);
+TRACK(48*8*data.tick/*offset*/, 260*8*data.tick/*d*/,0,1.3);
+
 // LOOP
 /********************************************************/
 if (    0     ){
@@ -926,6 +961,8 @@ spork ~ BEAT1_32();
 8 * 8 * data.tick => now;
 }  
 
+// SKIP END LOOP 
+1 => data.next;
 
 /// PLAY OR REC /////////////////
 RECTRACK rectrack; "taxi_zulu.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
@@ -1016,33 +1053,4 @@ spork ~ BEAT1_32();
   rectrack.rec_stop();
   //////////////////////////////////////////////////
 
-  ///////////////////////// END LOOP ///////////////////////////////////::
-  0 => data.next;
-  while (!data.next) {
-    <<<"**********">>>;
-    <<<" END LOOP ">>>;
-    <<<"**********">>>;
-    // REC END LOOP //////////////////////////////////
-    rectrack.rec_end_loop();
-    //////////////////////////////////////////////////
-
-    // !!!!!! Put end loop here  !!!!!!
-
-    //// STOP REC ///////////////////////////////
-    rectrack.stop_rec_end_loop();
-    /////////////////////////////////////////////
-  }
-
-  ///////////////////
-  //      END      //
-  ///////////////////
-  // REC  END  //////
-  rectrack.rec_end();
-  ///////////////////
-
-  //  !!!!!! put end here  !!!!!!
-
-  //// STOP REC ///////////
-  rectrack.stop_rec_end(); 
-  /////////////////////////
 }  
