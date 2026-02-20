@@ -1,5 +1,4 @@
 TONE t;
-
 t.reg(SERUM2 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 s0.config(0 /* synt nb */ );
 // s0.set_chunk(0); 
@@ -11,9 +10,9 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 //8_8_ 8_8_ 8_8_ 8_8_ ____ ____ ____ ____ 
 //5_3_ 2_1_ 5_3_ 2_1_ 5_3_ 2_1_ 5_3_ ____
 "*4*2 }c   
-
-8_8_ 8_ __F_ F___ f_f_ f//F__  ____ 8___ 
-8_8_ 8_ ____ ____ F/f___ ____ ____ __8_ 
+8_8_ 8_ 1_2_ 3_4_ F/f___ ____ F//// ////8 
+8_8_ 8_ __F_ F_1_ f_f_ f//F__  ____ 8___ 
+8_8_ 8_ 7_5_ 6_5_ F/f___ 1__1 __1_ __8_ 
 8_8_ 8_ __f_ f___ f_f_ f//F__  f_f_ ____ 
 " => t.seq;
 .7 * data.master_gain => t.gain;
@@ -33,9 +32,8 @@ stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 4 * 100 /* freq 
 
 
 SinOsc sin0 =>  s0.inlet;
-30.0 => sin0.freq;
-300.0 => sin0.gain;
-
+//31.0 => sin0.freq;
+//62 *10.0 => sin0.gain;
 
 STCONVREV stconvrev;
 stconvrev.connect(last $ ST , 119/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .05 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
@@ -52,6 +50,7 @@ gainc.connect(stconvrev $ ST , HW.lpd8.potar[1][2] /* gain */  , 1. /* static ga
 
 STECHO ech;
 ech.connect(last $ ST , data.tick * 2 / 4 , .7);  ech $ ST @=>  last; 
+
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
@@ -59,7 +58,6 @@ autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0
 <<<" oooooo PSY FM oooooo">>>;
 <<<" ooo 1.2 ECHO gain oo">>>;
 <<<" oooooooooooooooooooo">>>;
-
 
 while(1) {
 
@@ -71,6 +69,7 @@ while(1) {
   data.tick * 2./1. => now;
 }
  
+
 while(1) {
        100::ms => now;
 }
