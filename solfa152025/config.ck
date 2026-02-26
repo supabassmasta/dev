@@ -16,3 +16,15 @@
 
 //1::ms => now;
 
+
+
+//
+//  C Dorian with F# instead
+//
+//  Bridge: DCBbA DCBb F#AG
+//
+//
+//
+//
+//
+

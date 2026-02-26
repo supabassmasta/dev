@@ -8,13 +8,13 @@ k_____k_ x_____k_
 ______k_ x_______
 
 k_____k_ x_______
-k__k__k_ x_k___kk
+k__k__k_ x_k____k
 
-k_____k_ x_____k_
-______k_ x__kk___
+$k_____k_ x_____k_
+______k_ x__k$k___
 
 k_k___k_ x_______
-k__k__k_ x_k__k_k
+k__k__k_ x_k__k_$k
 
 " => s.seq;
 .9 * data.master_gain => s.gain; //
