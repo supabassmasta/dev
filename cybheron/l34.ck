@@ -1925,23 +1925,45 @@ fun void  PLOC  (){
 
   spork ~ PLOC("}c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 5/*n*/,29*100/*cut*/,1,1.4); 
   16 * data.tick => w.wait;
-  spork ~ PLOC("{c{c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 19/*n*/,29*100/*cut*/,1,1.4); 
-  16 * data.tick => w.wait;
-  spork ~ PLOC("{c{c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 20/*n*/,29*100/*cut*/,1,1.4); 
+  spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 0/*n*/,29*100/*cut*/,1,0.4); 
   16 * data.tick => w.wait;
   spork ~ PLOC("{c{c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 27/*n*/,29*100/*cut*/,1,2.4); 
   16 * data.tick => w.wait;
   spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 3/*n*/,29*100/*cut*/,1,0.4); 
+  16 * data.tick => w.wait;
+  spork ~ PLOC("{c{c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 20/*n*/,29*100/*cut*/,1,1.4); 
+  16 * data.tick => w.wait;
   spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 2/*n*/,29*100/*cut*/,1,0.4); 
+  16 * data.tick => w.wait;
+  spork ~ PLOC("{c{c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 19/*n*/,29*100/*cut*/,1,1.4); 
   16 * data.tick => w.wait;
   spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 1/*n*/,29*100/*cut*/,1,0.4); 
   16 * data.tick => w.wait;
-  spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 0/*n*/,29*100/*cut*/,1,0.4); 
+} 
+
+fun void  PLOC2  (){ 
+  8 * data.tick => w.wait;
+  "!1,!1,!1,_,__,]1!1,[1!1,]2!1,[2!1," => string seq;
+  24 => int n;
+
+  spork ~ PLOC("}c *4 " + RAND.seq(seq,n)+ RAND.char("185f",1) , 5/*n*/,29*100/*cut*/,1,1.4); 
+  16 * data.tick => w.wait;
+  spork ~ PLOC("{c{c *4 " + RAND.seq(seq,n)+ RAND.char("185f",1) , 19/*n*/,29*100/*cut*/,1,1.4); 
+  16 * data.tick => w.wait;
+  spork ~ PLOC("{c{c *4 " + RAND.seq(seq,n)+ RAND.char("185f",1) , 20/*n*/,29*100/*cut*/,1,1.4); 
+  16 * data.tick => w.wait;
+  spork ~ PLOC("{c{c *4 " + RAND.seq(seq,n)+ RAND.char("185f",1) , 27/*n*/,29*100/*cut*/,1,2.4); 
+  16 * data.tick => w.wait;
+  spork ~ BW("*4 " + RAND.seq(seq,n)+ RAND.char("185f",1), 3/*n*/,29*100/*cut*/,1,0.4); 
+  spork ~ BW("*4 " + RAND.seq(seq,n)+ RAND.char("185f",1), 2/*n*/,29*100/*cut*/,1,0.4); 
+  16 * data.tick => w.wait;
+  spork ~ BW("*4 " + RAND.seq(seq,n)+ RAND.char("185f",1), 1/*n*/,29*100/*cut*/,1,0.4); 
+  16 * data.tick => w.wait;
+  spork ~ BW("*4 " + RAND.seq(seq,n)+ RAND.char("185f",1), 0/*n*/,29*100/*cut*/,1,0.4); 
   16 * data.tick => w.wait;
 } 
 
 spork ~   PLOC (); 
-
 spork ~   SUP (); 
 fun void  LOOPLAB  (){ 
   while(1) {
@@ -1958,19 +1980,20 @@ fun void  LOOPLAB  (){
 //  spork ~ BW("*4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1), 0/*n*/,29*100/*cut*/,1,0.4); 
 
    spork ~   TRANCESNRHHx8 (1, 0); 
+
    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
    spork ~ BASS0HF("*4 !3!2__ !1!1__!5!5__ !1!1__ !3!2__ !4!4__ !3!2__ !1!1__     ",0,1.);
    spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",0,1.);
    spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
         8 * data.tick => w.wait;
 //   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
-//   spork ~ BASS0HF("*4 !3!2__ !1!1__!5!5__ !1!1__ !3!2__ !4!4__ !3!2__ !1!1__     ",0,1.);
-//   spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",0,1.);
+//   spork ~ BASS0HF("*4 !2!2__ !3!3__ !1!1__ !1!1__ !3!3__ !1!1__ !3!2__ !1!1__    ",0,1.);
+//   spork ~ BASS0(" *4   __!2!2 __!3!3 __!1!1 __!1!1 __!2!2 __!1!1 __!1!1 __!1!1   ",0,1.);
 //   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
 //        8 * data.tick => w.wait;
 //   spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
-//   spork ~ BASS0HF("*4 !2!2__ !3!3__ !1!1__ !1!1__ !3!3__ !1!1__ !3!2__ !1!1__    ",0,1.);
-//   spork ~ BASS0(" *4   __!2!2 __!3!3 __!1!1 __!1!1 __!2!2 __!1!1 __!1!1 __!1!1   ",0,1.);
+//   spork ~ BASS0HF("*4 !3!2__ !1!1__!5!5__ !1!1__ !3!2__ !4!4__ !3!2__ !1!1__     ",0,1.);
+//   spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",0,1.);
 //   spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
 //        8 * data.tick => w.wait;
 
