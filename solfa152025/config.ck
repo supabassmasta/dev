@@ -8,7 +8,7 @@
 48 => data.ref_note;
 
 // Start synchro
-//HW.launchpad.virtual_key_on(7);
+HW.launchpad.virtual_key_on(7);
 
 // LED STRIP
 //HW.ledstrip.open();
@@ -23,8 +23,9 @@
 //
 //  Bridge: DCBbA DCBb F#AG
 //
+//  Pizicato
+//   D }Bb G Eb
 //
-//
-//
-//
+//  Refrain: G ABb CD     F# GA Bb C
+
 
