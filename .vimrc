@@ -1930,3 +1930,5 @@ ab RECSEQK /// PLAY OR REC /////////////////
 
 ab STMONOINK ST stmonoin; stmonoin $ ST @=> ST @ last;
 \<CR>// => stmonoin.mono_in ;
+
+ab LPD8POTARK LPD8.pot[0][0] // int ([0][0] is bank 1 K1)
