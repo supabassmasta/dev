@@ -1901,26 +1901,43 @@ autopan.connect(last $ ST, .8 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0
 } 
 spork ~  EFFECT4();
 
-fun void  SUP  (){ 
-  spork ~ SUPSAWSLIDE(" 8//1 ", .3/*autoRes phase*/,1,2.7);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE("  FFFF ", .3/*autoRes phase*/,1,3.3);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE(" *4 F818 ", .7/*autoRes phase*/,2,2.7);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE("  FF8811 ", .0/*autoRes phase*/,1,2.7);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE(" *4 f1f1 ", .3/*autoRes phase*/,2,2.7);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE(" 1//8 ", .8/*autoRes phase*/,2,2.7);
-  16 * data.tick => w.wait;
-  spork ~ SUPSAWSLIDE("  111 ", .5/*autoRes phase*/,2,2.7);
+fun void  SUP32x8  (){ 
+  spork ~   MODU (129, "*8  1_8_f_]4 1_8_f_]4 1_8_f_]4 1_8_f_]2 ","F//mm/F"/*modf*/,"}c}c}cm"/*modg*/,2*1000/*cut*/,4,.44); 
   16 * data.tick => w.wait;
   spork ~ SUPSAWSLIDE("  88FF11 ", .4/*autoRes phase*/,1,2.7);
   16 * data.tick => w.wait;
+  spork ~   MODU (127, "   FFFF/8 ","F//mm/F"/*modf*/,"}c}c}cm"/*modg*/,2*1000/*cut*/,4,.44); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE(" 8//1 ", .3/*autoRes phase*/,1,2.7);
+  16 * data.tick => w.wait;
+  spork ~   MODU (127, "*8  f_f_f_f_f_f_f_f_","F//mm/F"/*modf*/,"}c}c}cm"/*modg*/,2*1000/*cut*/,4,.44); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("  FFFF ", .3/*autoRes phase*/,1,3.3);
+  16 * data.tick => w.wait;
+  spork ~   MODU (127, " {c  1111 ","f////F"/*modf*/,"m"/*modg*/,2*1000/*cut*/,4,.26); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE(" *4 F818 ", .7/*autoRes phase*/,2,2.7);
+  16 * data.tick => w.wait;
+
+  spork ~   MODU (129, "*8  1_8_f_]4 1_8_f_]4 1_8_f_]4 1_8_f_]2 ","F//mm/F"/*modf*/,"}c}c}cm"/*modg*/,2*1000/*cut*/,4,.44); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("  FF8811 ", .0/*autoRes phase*/,1,2.7);
+  16 * data.tick => w.wait;
+  spork ~   MODU (127, " {c  1111 ","F/ff///F"/*modf*/,"m"/*modg*/,2*1000/*cut*/,4,.26); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE(" *4 f1f1 ", .3/*autoRes phase*/,2,2.7);
+  16 * data.tick => w.wait;
+  spork ~   MODU (129, "*8  f_8_1_f_8_1_f_8_1_f_8_1_","F//mm/F"/*modf*/,"}c}c}cm"/*modg*/,2*1000/*cut*/,4,.44); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE(" 1//8 ", .8/*autoRes phase*/,2,2.7);
+  16 * data.tick => w.wait;
+  spork ~   MODU (123, " {c  1111 ","F////f"/*modf*/,"m"/*modg*/,2*1000/*cut*/,4,.33); 
+  16 * data.tick => w.wait;
+  spork ~ SUPSAWSLIDE("  111 ", .5/*autoRes phase*/,2,2.7);
+  16 * data.tick => w.wait;
 } 
 
-fun void  PLOC  (){ 
+fun void  PLOC16x8  (){ 
   8 * data.tick => w.wait;
 
   spork ~ PLOC("}c *4 " + RAND.seq("_,_,__,!1,!5,!7,!8,!3!2!1,!0!2!1,!5!6!7!8",8)+ RAND.char("185f",1) , 5/*n*/,29*100/*cut*/,4,1.4); 
@@ -1982,13 +1999,14 @@ fun void  PLOC2  (){
 } 
 //
 //spork ~   PLOC2 (); 
-//spork ~   SUP (); 
+//spork ~   SUP32x8 (); 
 fun void  LOOPLAB  (){ 
   while(1) {
 //        <<<"pot", LPD8.pot[0][0]>>>;
-spork ~   PLOC (); 
+//spork ~   PLOC16x8 (); 
+spork ~   SUP32x8 (); 
 
-       8* 8 * data.tick => w.wait;
+       32* 8 * data.tick => w.wait;
 
 // spork ~   CRAZYMOD ("____  *4 " + RAND.seq("!3!2!1_,!1!2!3_,!8!5!3!1,!4!3!2!1,!1!3!7!8", 4), 20/*n*/,300*100/*cut*/,2,0.3); 
 
@@ -2254,7 +2272,7 @@ spork ~   PLOC ();
   //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 
@@ -2306,7 +2324,23 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-  spork ~   SUP (); 
+  spork ~   SUP32x8 (); 
+  spork ~   PLOC16x8 (); 
+
+  for (0 => int i; i <   16    ; i++) {
+      spork ~   CRAZYMOD ("____  *4 " + RAND.seq("!3!2!1_,!1!2!3_,!8!5!3!1,!4!3!2!1,!1!3!7!8", 4), 20/*n*/,300*100/*cut*/,2,0.3); 
+
+      spork ~   TRANCESNRHHx8 (1, 0); 
+
+      spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+      spork ~ BASS0HF("*4 !3!2__ !1!1__!5!5__ !1!1__ !3!2__ !4!4__ !3!2__ !1!1__     ",0,1.);
+      spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",0,1.);
+      spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
+      8 * data.tick => w.wait;
+    }
+  
+  spork ~   PLOC16x8 (); 
+
   for (0 => int i; i <   16    ; i++) {
       spork ~   CRAZYMOD ("____  *4 " + RAND.seq("!3!2!1_,!1!2!3_,!8!5!3!1,!4!3!2!1,!1!3!7!8", 4), 20/*n*/,300*100/*cut*/,2,0.3); 
 
