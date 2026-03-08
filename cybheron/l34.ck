@@ -2094,14 +2094,54 @@ fun void  BEAT1_16x8  (){
       spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",10,1.);
       spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,10, .16 /* g */);    
       8 * data.tick => w.wait;
+}
+fun void  SLIDES_LIGHT (){ 
+ 3 * 8 * data.tick => w.wait;
+// spork ~  SLIDENOISE(200 /* fstart */, 3000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+
+ 3 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(3000 /* fstart */, 200 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+   
+ 3 * 8 * data.tick => w.wait;
+// spork ~  SLIDENOISE(100 /* fstart */, 4000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+   
+ 2 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(100 /* fstart */, 4000 /* fstop */, 2* 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 2 * 8 * data.tick => w.wait;
+   
 } 
+fun void  SLIDES  (){ 
+ 3 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(200 /* fstart */, 3000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+
+ 3 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(3000 /* fstart */, 200 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+   
+ 3 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(100 /* fstart */, 4000 /* fstop */, 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 1 * 8 * data.tick => w.wait;
+   
+ 2 * 8 * data.tick => w.wait;
+ spork ~  SLIDENOISE(100 /* fstart */, 4000 /* fstop */, 2* 8* data.tick /* dur */, .8 /* width */,2,.14); 
+ 2 * 8 * data.tick => w.wait;
+   
+} 
+
 
 //
 //spork ~   PLOC2 (); 
 //spork ~   SUP32x8 (); 
-fun void  LOOPLAB  (){ 
+fun void LOOPLAB  (){ 
   while(1) {
-BEAT1_16x8();
+     2 *  8 * data.tick => w.wait;
+SLIDES();
+
+//BEAT1_16x8();
 //      spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
 //      spork ~ BASS0HF("*4 !3!2__ !1!1__!5!5__ !1!1__ !3!2__ !4!4__ !3!2__ !1!1__     ",0,1.);
 //      spork ~ BASS0(" *4  __!1!1 __!1!1__!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1    ",0,1.);
@@ -2432,6 +2472,7 @@ if (rectrack.play_or_rec() ) {
     spork ~   SUP32x8 (); 
     spork ~   PLOC16x8 (); 
     spork ~ BEAT1_16x8();
+    spork ~   SLIDES_LIGHT (); 
 
     for (0 => int i; i <   16    ; i++) {
       spork ~   CRAZYMOD ("____  *4 " + RAND.seq("!3!2!1_,!1!2!3_,!8!5!3!1,!4!3!2!1,!1!3!7!8", 4), 20/*n*/,300*100/*cut*/,2,0.3); 
@@ -2445,6 +2486,7 @@ if (rectrack.play_or_rec() ) {
       8 * data.tick => w.wait;
     }
   
+    spork ~   SLIDES (); 
     spork ~   PLOC16x8 (); 
     spork ~ BEAT1_16x8();
     spork ~   TRANCESNRHHx8 (15, 0); 
