@@ -880,7 +880,7 @@ spork ~ BEAT_SOLO_8(4);
 
 TRACK(0*8*data.tick/*offset*/, 260*8*data.tick/*d*/,0,1.3);
 // TRACK(48*8*data.tick/*offset*/,260*8*data.tick/*d*/,0,1.3);
-while(1) {
+while(0) {
   8*8*data.tick=> dur d;
   spork ~ TRACK(52*8*data.tick/*offset*/, d/*d*/,0,1.3);
   d => now;
