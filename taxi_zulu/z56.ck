@@ -34,42 +34,18 @@ SinOsc sin0 =>  s0.inlet;
 37.0 => sin0.freq;
 300.0 => sin0.gain;
 
-STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 119/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .05 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+STMIX stmix2;
+stmix2.send(last, 12); // TO EFFECT1 in config.ck
 
 //STECHOC ech;
 //ech.connect(last $ ST , HW.lpd8.potar[1][1] /* Period */ , HW.lpd8.potar[1][2] /* Gain */ );      ech $ ST @=>  last;  
 
-STGAIN stgain;
-stgain.connect(last $ ST , 1. /* static gain */  );       stgain $ ST @=>  last; 
-
 STGAINC gainc;
-gainc.connect(stconvrev $ ST , HW.lpd8.potar[1][2] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
+gainc.connect(stautoresx0 $ ST , HW.lpd8.potar[1][2] /* gain */  , 1. /* static gain */  );       gainc $ ST @=>  last; 
 
-class STECHOONLY extends ST{
 
- Gain fbl => outl;
- fbl => Delay dl => fbl;
-
- Gain fbr => outr;
- fbr => Delay dr => fbr;
-
-  fun void connect(ST @ tone, dur d, float g) {
-    tone.left() => dl;
-    tone.right() => dr;
-
-    g =>  dl.gain => dr.gain;
-    d => dl.max => dl.delay => dr.max => dr.delay;
-
-  }
-
-}
-
-STECHOONLY ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
-
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+STMIX stmix;
+stmix.send(last, 11); // TO EFFECT1 in config.ck
 
 <<<" oooooooooooooooooooo">>>;
 <<<" oooooo PSY FM oooooo">>>;
