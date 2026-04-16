@@ -16,3 +16,24 @@ HW.launchpad.virtual_key_on(7);
 
 //1::ms => now;
 
+// C dorian scale: D to Eb
+//
+// intro solo: Ju en principal sat rempli les trous
+//       solo 2 : Sat en principal ju rempli les trous
+//
+//  Couplet (4 boucle):
+// A: d_d_ d__g a_a_
+// B: e_e_ e__a b_b_
+//  
+// Sat A, Ju Freestyle sur les meme notes
+// Ju B,  Sat Freestyle
+// x2
+// Sat+Ju A, Ju Freestyle sur les meme notes
+// Ju+Sat B,  Sat Freestyle
+// x2
+// 
+// Refrain
+// FFFF EEEE DDDD DDDD
+//
+//
+////
