@@ -1980,7 +1980,7 @@ fun void EFFECT1   (){
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .04 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .17 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
   while(1) {
          100::ms => now;
   }
@@ -2151,6 +2151,8 @@ fun void  CRAZ2  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+   spork ~   AMB1 (); 
+   12 * 8 * data.tick => w.wait;
    spork ~ ERAMPLPF (11/*mixin*/,2*8*data.tick,":4 1//33//8"/*gseq*/,":4 M////z"/*lpfseq*/,1/*lpforder*/,1,2.3);
    spork ~  SLIDENOISE(400 /* fstart */, 1200 /* fstop */, 2*8* data.tick /* dur */, .8 /* width */,11,.08); 
    2 * 8 * data.tick => w.wait;
@@ -2477,6 +2479,10 @@ while(0) { /********************************************************/
   8 * data.tick =>  w.wait; 
   // 7 * data.tick =>  w.wait; sy.sync(4 * data.tick);
 }  
+
+<<<"LET REv LOAD ... ...">>>;
+
+4::second => now;
 
 /// PLAY OR REC /////////////////
 RECTRACK rectrack; "l35.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
