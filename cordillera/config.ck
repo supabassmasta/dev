@@ -18,7 +18,7 @@ HW.launchpad.virtual_key_on(7);
 
 // C dorian scale: D to Eb
 //
-// intro solo: Ju en principal sat rempli les trous
+// intro solo:  Re Re# Ju en principal sat rempli les trous
 //       solo 2 : Sat en principal ju rempli les trous
 //
 //  Couplet (4 boucle):
@@ -32,8 +32,10 @@ HW.launchpad.virtual_key_on(7);
 // Ju+Sat B,  Sat Freestyle
 // x2
 // 
+// Montée R# avant refrain
 // Refrain
 // FFFF EEEE DDDD DDDD
 //
-//
+// Fin
+// Alternance Ré Ré#
 ////
