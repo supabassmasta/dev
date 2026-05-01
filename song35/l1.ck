@@ -94,6 +94,9 @@ stdisto.connect(last $ ST,3/*mode*/,5.0/*gain in*/,1/*dc blcok*/, 2,0.1/*gain*/)
 //STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 //stlpfx0.connect(last $ ST ,  stlpfx0_fact, 11* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
 
+STCONVREV stconvrev;
+stconvrev.connect(last $ ST , 13/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .2 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+
 SinOsc sin0 => OFFSET ofs0 => blackhole;
 1. => ofs0.offset;
 4. => ofs0.gain;
