@@ -120,6 +120,10 @@ CK_DLL_MFUN( dist_getPresence );
 CK_DLL_MFUN( dist_setAsymmetry );
 CK_DLL_MFUN( dist_getAsymmetry );
 
+// dcBlock — global DC offset remover (all modes)
+CK_DLL_MFUN( dist_setDcBlock );
+CK_DLL_MFUN( dist_getDcBlock );
+
 t_CKINT dist_data_offset = 0;
 
 // static mode constants (exposed to ChucK)
@@ -181,6 +185,10 @@ public:
     , m_tone( 0.5 )
     , m_presence( 0.5 )
     , m_asymmetry( 0.3 )
+    // dc blocker
+    , m_dcBlock( false )
+    , m_dcX1( 0.0 )
+    , m_dcY1( 0.0 )
     // state
     , m_decHoldCount( 0 )
     , m_decHoldLen( 2 )
@@ -216,7 +224,18 @@ public:
             default:         y = x;                  break;
         }
 
-        return (t_CKFLOAT)(y * m_gain);
+        y *= m_gain;
+
+        // optional DC blocker: y[n] = x[n] - x[n-1] + R*y[n-1]
+        if( m_dcBlock )
+        {
+            double filtered = y - m_dcX1 + 0.9995 * m_dcY1;
+            m_dcX1 = y;
+            m_dcY1 = filtered;
+            y = filtered;
+        }
+
+        return (t_CKFLOAT)y;
     }
 
     //--- setters / getters ---
@@ -353,6 +372,16 @@ public:
     }
     t_CKFLOAT getAsymmetry() { return (t_CKFLOAT)m_asymmetry; }
 
+    // DC blocker — 1-pole high-pass filter, ~3.5 Hz cutoff at 44100 Hz
+    // Removes any DC offset introduced by asymmetric algorithms (TUBE, OVERDRIVE, DIODE…)
+    t_CKINT setDcBlock( t_CKINT v )
+    {
+        m_dcBlock = (v != 0);
+        if( !m_dcBlock ) { m_dcX1 = 0.0; m_dcY1 = 0.0; }
+        return m_dcBlock ? 1 : 0;
+    }
+    t_CKINT getDcBlock() { return m_dcBlock ? 1 : 0; }
+
 private:
     Mode   m_mode;
 
@@ -375,6 +404,11 @@ private:
     double m_tone;           // FUZZ, AMPSIM: tone LP blend [0..1]
     double m_presence;       // AMPSIM: high-mid presence boost [0..1]
     double m_asymmetry;      // DIODE: positive half asymmetry [0..1]
+
+    // dc blocker
+    bool   m_dcBlock;
+    double m_dcX1;           // previous input sample
+    double m_dcY1;           // previous output sample
 
     // state
     int    m_decHoldCount;
@@ -753,6 +787,11 @@ CK_DLL_QUERY( Distortion )
     QUERY->add_arg( QUERY, "float", "val" );
     QUERY->add_mfun( QUERY, dist_getAsymmetry, "float", "asymmetry" );
 
+    // --- dcBlock (all modes) ---
+    QUERY->add_mfun( QUERY, dist_setDcBlock, "int", "dcBlock" );
+    QUERY->add_arg( QUERY, "int", "val" );
+    QUERY->add_mfun( QUERY, dist_getDcBlock, "int", "dcBlock" );
+
     // internal data offset
     dist_data_offset = QUERY->add_mvar( QUERY, "int", "@dist_data", false );
 
@@ -1046,4 +1085,19 @@ CK_DLL_MFUN( dist_getAsymmetry )
 {
     Distortion * obj = (Distortion *)OBJ_MEMBER_INT( SELF, dist_data_offset );
     RETURN->v_float = obj ? obj->getAsymmetry() : 0.0;
+}
+
+
+//-----------------------------------------------------------------------------
+// dcBlock
+//-----------------------------------------------------------------------------
+CK_DLL_MFUN( dist_setDcBlock )
+{
+    Distortion * obj = (Distortion *)OBJ_MEMBER_INT( SELF, dist_data_offset );
+    RETURN->v_int = obj ? obj->setDcBlock( GET_NEXT_INT( ARGS ) ) : 0;
+}
+CK_DLL_MFUN( dist_getDcBlock )
+{
+    Distortion * obj = (Distortion *)OBJ_MEMBER_INT( SELF, dist_data_offset );
+    RETURN->v_int = obj ? obj->getDcBlock() : 0;
 }

@@ -44,6 +44,9 @@ let mapleader = ","
 " Copy current line and increment first number
 :nnoremap <leader>a Yp0<C-a>
 
+" Keep initial y (to test, can interfer with d)
+:xnoremap p "0p 
+
 
 " For command example:
 ":for i in range(1, 255) | put=i.' text  '.i*i | endfor 
@@ -1939,3 +1942,7 @@ ab ifmaybeK if(maybe) {
 \<CR>} else {
 \<CR>  
 \<CR>}
+
+ab STDISTOK STDISTO stdisto;
+\<CR>stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,0.1/*gain*/);       stdisto $ ST @=>  last; 
+
