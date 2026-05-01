@@ -74,7 +74,7 @@ t.reg(synt0 s0);  //data.tick * 8 => t.max;
 19::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor(); t.set_scale("dor");
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note, [] = note_offset_in_scale, ! = force new note , # = sharp , ^ = bemol  
-"{c{3 *4 12345432" => t.seq;
+"{c{3 *4 12345432 123456787654321" => t.seq;
 2.9 * data.master_gain => t.gain;
 //t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
@@ -83,14 +83,29 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
 
-STDISTO stdisto;
-stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,0.1/*gain*/);       stdisto $ ST @=>  last;  
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
-STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-stlpfx0.connect(last $ ST ,  stlpfx0_fact, 11* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+STDISTO stdisto;
+stdisto.connect(last $ ST,3/*mode*/,5.0/*gain in*/,1/*dc blcok*/, 2,0.1/*gain*/);       stdisto $ ST @=>  last;  
+
+.81 => stdisto.distl.bias=> stdisto.distr.bias;
+1.9 =>  stdisto.distl.warmth=>  stdisto.distr.warmth;  
+//STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+//stlpfx0.connect(last $ ST ,  stlpfx0_fact, 11* 100.0 /* freq */ , 1.0 /* Q */ , 1 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+
+SinOsc sin0 => OFFSET ofs0 => blackhole;
+1. => ofs0.offset;
+4. => ofs0.gain;
+
+0.05 => sin0.freq;
+1.0 => sin0.gain;
 
 while(1) {
-       100::ms => now;
+      ofs0.last() => stdisto.distl.bias=> stdisto.distr.bias;
+
+
+      1::ms => now;
 }
  
 

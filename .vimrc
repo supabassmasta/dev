@@ -1944,5 +1944,5 @@ ab ifmaybeK if(maybe) {
 \<CR>}
 
 ab STDISTOK STDISTO stdisto;
-\<CR>stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,0.1/*gain*/);       stdisto $ ST @=>  last; 
+\<CR>stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,1/*chan*/,0.1/*gain*/);       stdisto $ ST @=>  last; 
 

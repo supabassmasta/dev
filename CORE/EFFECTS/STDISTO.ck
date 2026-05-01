@@ -1,10 +1,8 @@
 public class STDISTO extends ST{
-  Distortion distl  => outl;
-  Distortion distr => outr;
+  Distortion distl ;
+  Distortion distr ;
 
-
-
-  fun void connect(ST @ tone, int mode, float gain_in, int dc_block, float g) {
+  fun void connect(ST @ tone, int mode, float gain_in, int dc_block, int chan, float g) {
     if ( mode == -1  ){
        <<<"DISTO BYPASS">>>;
       tone.left() => outl;
@@ -12,8 +10,18 @@ public class STDISTO extends ST{
 
     }
     else {
-      tone.left() => distl;
-      tone.right() => distr;
+      if ( chan == 1  ){
+        tone.left() => distl;
+        tone.right() => blackhole;
+        distl  => outl;
+        distl => outr;
+      }
+      else {
+        tone.left() => distl;
+        tone.right() => distr;
+        distl  => outl;
+        distr => outr;
+      }
 
       dc_block => distl.dcBlock => distr.dcBlock;
       

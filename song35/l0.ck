@@ -83,13 +83,13 @@ t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
 1 => t.set_disconnect_mode;
 t.go();   t $ ST @=> ST @ last; 
 
-class STDISTO extends ST{
-  Distortion distl  => outl;
-  Distortion distr => outr;
+class STDISTOt extends ST{
+  Distortion distl ;
+  Distortion distr ;
 
 
 
-  fun void connect(ST @ tone, int mode, float gain_in, int dc_block, float g) {
+  fun void connect(ST @ tone, int mode, float gain_in, int dc_block, int chan, float g) {
     if ( mode == -1  ){
        <<<"DISTO BYPASS">>>;
       tone.left() => outl;
@@ -97,8 +97,18 @@ class STDISTO extends ST{
 
     }
     else {
-      tone.left() => distl;
-      tone.right() => distr;
+      if ( chan == 1  ){
+        tone.left() => distl;
+        tone.right() => blackhole;
+        distl  => outl;
+        distl => outr;
+      }
+      else {
+        tone.left() => distl;
+        tone.right() => distr;
+        distl  => outl;
+        distr => outr;
+      }
 
       dc_block => distl.dcBlock => distr.dcBlock;
       
@@ -187,8 +197,8 @@ class STDISTO extends ST{
 
 }
 
-STDISTO stdisto;
-stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,0.1/*gain*/);       stdisto $ ST @=>  last; 
+STDISTOt stdisto;
+stdisto.connect(last $ ST,3/*mode*/,3.0/*gain in*/,0/*dc blcok*/,2/*chan*/,0.1/*gain*/);       stdisto $ ST @=>  last; 
 //0.0 => stdisto.distl.asymmetry=> stdisto.distr.asymmetry;
 
 //7.5 => stdisto.distl.shape=> stdisto.distr.shape;
