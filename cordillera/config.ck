@@ -25,8 +25,8 @@ HW.launchpad.virtual_key_on(7);
 // A: d_d_ d__g a_a_
 // B: e_e_ e__a b_b_
 //  
-// Sat A, Ju Freestyle sur les meme notes
-// Ju B,  Sat Freestyle
+// Sat A puis Ju Freestyle sur les meme notes
+// Ju B puis  Sat Freestyle
 // x2
 // Sat+Ju A, Ju Freestyle sur les meme notes
 // Ju+Sat B,  Sat Freestyle
