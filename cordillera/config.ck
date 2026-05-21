@@ -15,7 +15,7 @@ HW.launchpad.virtual_key_on(7);
 //HW.ledstrip._load_preset('0');
 
 HW.ledstrip.open();
-HW.ledstrip._load_preset('4');
+HW.ledstrip._load_preset('I');
 
 //1::ms => now;
 
