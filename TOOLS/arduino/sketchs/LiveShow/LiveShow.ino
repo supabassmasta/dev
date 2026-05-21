@@ -521,6 +521,10 @@ void loop() {
     randwhite();
     randwhite();
     break;
+    case 19:
+      randpink();
+      moon();
+    break;
 
   }
 
@@ -1615,6 +1619,15 @@ void read_serial(){
       preset = 18;
       valid = 1;
     }
+    // Cordillera
+    else if (b == 'I') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      preset = 19;
+      valid = 1;
+    }
     else if (b == '!') {
       fade_in_out.cnt_num = 8;
       fade_in_out.cnt_den = 1;
@@ -1975,6 +1988,38 @@ void randyellow() {
     }
    b = b & 0x1FF;
     strip.setPixelColor(b, strip.Color(c, c,white ));
+  }
+//  for (int i=0; i< 150 ; i++){
+//    a = a*413 + 497; 
+//    b = a & 0x1FF;
+//    strip.setPixelColor(b, strip.Color(0,0, 0));
+//  }
+
+
+}
+void randpink() {
+  int b;
+  int c;
+  int white;
+  int pink;
+  for (int i=0; i< 5 ; i++){
+    b = msws();
+    c = b >> 9;
+    if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
+      white = b >> 15;    
+      if (b & 0x1){
+        pink =  white >> 2;
+      }
+      else {
+        pink =  0;
+      }
+    }
+    else {
+      white = 0;
+      pink =  0;
+    }
+    b = b & 0x1FF;
+    strip.setPixelColor(b, strip.Color(pink, pink ? 0 : white, c));
   }
 //  for (int i=0; i< 150 ; i++){
 //    a = a*413 + 497; 
