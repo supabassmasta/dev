@@ -525,6 +525,7 @@ void loop() {
       randpink();
       moon();
     break;
+    // Archipel
     case 20:
       randblue();
     break;
@@ -1438,6 +1439,29 @@ void config_erhansar() {
 
 }
 
+void config_archipel() {
+
+  train1.pos = strip.numPixels() / 2;
+  train1.color = 0x001F1F1F;
+  train1.train_size = 80;
+  train1.train_mask = 0x2A6; // lower pixel density with simple mask
+  train1.target = 120;
+  train1.cnt_num = 1;
+  train1.cnt_den = 2;
+  train1.cnt_den_tmp = 0;
+
+  train2.pos =strip.numPixels() / 2;
+  train2.color = 0x001F1F1F;
+  train2.train_size = 80;
+  train2.train_mask = 0x2A6; // lower pixel density with simple mask
+  train2.target = strip.numPixels() - 120;
+  train2.cnt_num = 1;
+  train2.cnt_den = 2;
+  train2.cnt_den_tmp = 0;
+
+}
+
+
 
 int kick_cnt;
 int snare_cnt;
@@ -1636,6 +1660,7 @@ void read_serial(){
       fade_in_out.cnt_num = 12;
       fade_in_out.cnt_den = 1;
       fade_in_out.start_in();
+      config_archipel();
       
       preset = 20;
       valid = 1;
@@ -1867,6 +1892,17 @@ void read_serial(){
         else if ( b == 'm' ){
           perc2.reload();
           perc3.reload();
+          valid = 1;
+        }
+        else if ( b == 'n' ){
+          train2.reload();
+          valid = 1;
+        }
+        break;
+       /////////// Archipel ////////////////////////
+      case 20:
+        if ( b == 'l' ){
+          train1.reload();
           valid = 1;
         }
         else if ( b == 'n' ){
