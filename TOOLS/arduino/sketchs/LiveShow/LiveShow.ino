@@ -525,6 +525,9 @@ void loop() {
       randpink();
       moon();
     break;
+    case 20:
+      randblue();
+    break;
 
   }
 
@@ -1628,6 +1631,15 @@ void read_serial(){
       preset = 19;
       valid = 1;
     }
+    // Archipel
+    else if (b == 'J') {
+      fade_in_out.cnt_num = 12;
+      fade_in_out.cnt_den = 1;
+      fade_in_out.start_in();
+      
+      preset = 20;
+      valid = 1;
+    }
     else if (b == '!') {
       fade_in_out.cnt_num = 8;
       fade_in_out.cnt_den = 1;
@@ -1932,19 +1944,20 @@ void snare() {
 
 void randblue() {
   int b;
-
+  int c;
+  int white;
   for (int i=0; i< 10 ; i++){
-    a = a*413 + 537- a>>2; 
-    b = a & 0x1FF;
-    strip.setPixelColor(b, strip.Color( 128, 0, 0));
+    b = msws();
+    c = b >> 9;
+    if ( (b & 0x10) && (c & 0x08) && (c & 0x01)){
+      white = b >> 15;    
+    }
+    else {
+      white = 0;
+    }
+    b = b & 0x1FF;
+    strip.setPixelColor(b, strip.Color(0, white, c));
   }
-  for (int i=0; i< 150 ; i++){
-    a = a*413 + 497; 
-    b = a & 0x1FF;
-    strip.setPixelColor(b, strip.Color(0,0, 0));
-  }
-
-
 }
 
 
