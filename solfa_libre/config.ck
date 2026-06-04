@@ -31,4 +31,4 @@ HW.launchpad.virtual_key_on(48);
 //
 //  Refrain: G ABb CD     F# GA Bb C
 
-
+// led : jaune orange blanc
