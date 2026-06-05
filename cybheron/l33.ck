@@ -2201,6 +2201,24 @@ fun void  THEME1BIS  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+  spork ~ BEAT0x8  (1, 0/*add_a_last_Kick*/, 0 /*remove_last_beats*/);
+    1 * 8  * data.tick => w.wait;
+
+   spork ~ KICK("*4 k___ *7:8 k___  *7:8 k___  *7:8 k___  *7:8 k___   k___ *7:8 k___  *7:8 k___  *7:8 k___  
+                   ",0,1.); 
+   spork ~ BASS0(" *2 _1 *7:8  _1 *7:8  _1 *7:8  _1   _1 *7:8  _1 *7:8  _1 *7:8  _1   ",0,1.);
+   spork ~ BASS0_ATTACK ("*4  __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_ __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_  ", 0.7 /* rate */,0, .16 /* g */); 
+
+//  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":4 8//3"/*gseq*/,":4z//1"/*lpfseq*/,2/*lpforder*/,1,1.0);
+    spork ~ SLIDENOISE(4000/*fstart*/,100/*fstop*/,12*data.tick/*dur*/,.8/*width*/,2,.14); 
+
+   spork ~ SUPSAWSLIDE("*2 {c{c  1 [11 [11 [11 [11 [11 [11 [11 [1____", .8/*autoRes phase*/,2,3.7);
+  
+   spork ~ SUPSAWSLIDE("____ *2 {c{c   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
+
+    3 * 8  * data.tick => w.wait;
+
+
 //spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 4 * data.tick/*att*/,4 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 0, 0.8); 
 ////    8 * 8 * data.tick => w.wait;
 //spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,4 * 8 * data.tick/*rel*/, 6 * 8 * data.tick, 5, 0.4); 
@@ -2211,8 +2229,8 @@ fun void  LOOPLAB  (){
 //spork ~ SPECTR (29/*note*/,31/*file*/,0.5/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,15 * 8 * data.tick/*att*/,1 * 1 * data.tick/*rel*/, (15 * 8 + 4) * data.tick, 5, 0.4); 
 //    8 * 8 * data.tick => w.wait;
 
-    spork ~   THEME0BIS (); 
-    16 * 8  * data.tick => w.wait;
+//    spork ~   THEME0BIS (); 
+//    16 * 8  * data.tick => w.wait;
 
 //   spork ~ KIK0x8  (1, 0/*add_a_last_Kick*/, 0 /*remove_last_beats*/);
 //   spork ~   TRANCESNRHHx8 (8, 4); 
@@ -2803,7 +2821,21 @@ if (rectrack.play_or_rec() ) {
   rectrack.rec_end();
   ///////////////////
 
-  //  !!!!!! put end here  !!!!!!
+   spork ~ KICK("*4 k___ *7:8 k___  *7:8 k___  *7:8 k___  *7:8 k___   k___ *7:8 k___  *7:8 k___  *7:8 k___  
+                   ",0,1.); 
+   spork ~ BASS0(" *2 _1 *7:8  _1 *7:8  _1 *7:8  _1   _1 *7:8  _1 *7:8  _1 *7:8  _1   ",0,1.);
+   spork ~ BASS0_ATTACK ("*4  __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_ __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_  ", 0.7 /* rate */,0, .16 /* g */); 
+
+//  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":4 8//3"/*gseq*/,":4z//1"/*lpfseq*/,2/*lpforder*/,1,1.0);
+    spork ~ SLIDENOISE(4000/*fstart*/,100/*fstop*/,12*data.tick/*dur*/,.8/*width*/,2,.14); 
+
+   spork ~ SUPSAWSLIDE("*2 {c{c  1 [11 [11 [11 [11 [11 [11 [11 [1____", .8/*autoRes phase*/,2,3.7);
+  
+   spork ~ SUPSAWSLIDE("____ *2 {c{c   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
+
+    3 * 8  * data.tick => w.wait;
+
+ //  !!!!!! put end here  !!!!!!
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 

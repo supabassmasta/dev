@@ -709,7 +709,7 @@ fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix,
 53 => data.ref_note;
 
 SYNC sy;
-sy.sync(8 * data.tick);
+sy.sync(1 * data.tick);
 //sy.sync(16 * data.tick , -8 * data.tick /* offset */); 
 
 WAIT w;

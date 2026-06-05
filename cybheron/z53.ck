@@ -1,0 +1,80 @@
+TONE t;
+t.reg(SERUM2 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+s0.config(0 /* synt nb */ );
+// s0.set_chunk(0); 
+
+
+t.dor();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor();
+// _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+// 2_1_5_3_ 2_1_5_3_ 2_1_5_3_ 2_1_5_3_ 2_1_
+//8_8_ 8_8_ 8_8_ 8_8_ ____ ____ ____ ____ 
+//5_3_ 2_1_ 5_3_ 2_1_ 5_3_ 2_1_ 5_3_ ____
+"*4*2 }c   
+8_8_ 8_ 2_ 3_4_ F/f___ ____ F//// ////8 
+8_8_ 8_ F_ F_1_ f_f_ f//F__  ____ 8___ 
+8_8_ 8_ 5_ 6_5_ F/f___ 1__1 __1_ __8_ 
+8_8_ 8_ f_ f___ f_f_ f//F__  f_f_  
+" => t.seq;
+.8 * data.master_gain => t.gain;
+//t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); //
+2 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+// t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+t.set_adsrs(2::ms, 10::ms, 1. , 7::ms);
+//t.set_adsrs_curves(2.0, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+1 => t.set_disconnect_mode;
+t.go();   t $ ST @=> ST @ last; 
+
+STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 4 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 6 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+//STAUTOFILTERX stautolpfx0; LPF_XFACTORY stautolpfx0_fact;
+//stautolpfx0.connect(last $ ST ,  stautolpfx0_fact, 2.0 /* Q */, 5 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 6 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautolpfx0 $ ST @=>  last;  
+
+
+SinOsc sin0 =>  s0.inlet;
+//31.0 => sin0.freq;
+//62 *10.0 => sin0.gain;
+
+
+STMIX stmix2;
+stmix2.send(last, 2); // TO EFFECT1 in config.ck
+
+
+//STECHOC ech;
+//ech.connect(last $ ST , HW.lpd8.potar[1][1] /* Period */ , HW.lpd8.potar[1][2] /* Gain */ );      ech $ ST @=>  last;  
+
+
+STGAINC gainc;
+gainc.connect(stautoresx0 $ ST , HW.lpd8.potar[1][2] /* gain */  , 1.3 /* static gain */  );       gainc $ ST @=>  last; 
+
+
+STMIX stmix;
+stmix.send(last, 1); // TO EFFECT1 in config.ck
+
+//STDELAY stdelay;
+//stdelay.connect(stconvrev $ ST , data.tick * (3 + 1. / 4. ) /* static delay */ );       stdelay $ ST @=>  last;  
+
+
+<<<" oooooooooooooooooooo">>>;
+<<<" oooooo PSY FM oooooo">>>;
+<<<" ooo 1.2 ECHO gain oo">>>;
+<<<" oooooooooooooooooooo">>>;
+
+while(1) {
+
+  s0.set_chunk(24); 75.0 => sin0.freq; 79 *10.0 => sin0.gain; 2.2 => s0.gain;
+  data.tick * 1./1. => now;
+  s0.set_chunk(12); 1::second * 1 /( 4 * data.tick )=> sin0.freq; 162 *10.0 => sin0.gain; 1.1 => s0.gain;
+  data.tick * 2./1. => now;
+  s0.set_chunk(4); 50.0 => sin0.freq; 220 *10.0 => sin0.gain; 1.5 => s0.gain;
+  data.tick * 2./1. => now;
+  s0.set_chunk(13); 1::second * 1 /( 2 * data.tick )=> sin0.freq; 205 *10.0 => sin0.gain; 1.5 => s0.gain;
+  data.tick * 2./1. => now;
+//  data.tick * 1./8. => now;
+}
+ 
+
+while(1) {
+       100::ms => now;
+}
+ 
