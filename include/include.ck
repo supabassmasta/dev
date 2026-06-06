@@ -55,6 +55,7 @@ Machine.add( rt + "CORE/EFFECTS/FILTERX/KGX.ck");
 Machine.add( rt + "CORE/EFFECTS/STFREEPAN.ck");
 Machine.add( rt + "CORE/EFFECTS/STFREEGAIN.ck");
 Machine.add( rt + "CORE/EFFECTS/STDISTO.ck");
+Machine.add( rt + "CORE/EFFECTS/STECHOONLY.ck");
 
 Machine.add( rt + "CORE/NANOKONTROL/NANO.ck");
 
