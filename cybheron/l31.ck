@@ -2043,7 +2043,7 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l31.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l31.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;16*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2131,6 +2131,7 @@ if (rectrack.play_or_rec() ) {
   16 * data.tick => w.wait;
   spork ~ RING(":2 1////F F////1", ":8 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.3);
   16 * data.tick => w.wait;
+
 
    //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();

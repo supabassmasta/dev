@@ -2821,19 +2821,6 @@ if (rectrack.play_or_rec() ) {
   rectrack.rec_end();
   ///////////////////
 
-   spork ~ KICK("*4 k___ *7:8 k___  *7:8 k___  *7:8 k___  *7:8 k___   k___ *7:8 k___  *7:8 k___  *7:8 k___  
-                   ",0,1.); 
-   spork ~ BASS0(" *2 _1 *7:8  _1 *7:8  _1 *7:8  _1   _1 *7:8  _1 *7:8  _1 *7:8  _1   ",0,1.);
-   spork ~ BASS0_ATTACK ("*4  __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_ __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_  ", 0.7 /* rate */,0, .16 /* g */); 
-
-//  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":4 8//3"/*gseq*/,":4z//1"/*lpfseq*/,2/*lpforder*/,1,1.0);
-    spork ~ SLIDENOISE(4000/*fstart*/,100/*fstop*/,12*data.tick/*dur*/,.8/*width*/,2,.14); 
-
-   spork ~ SUPSAWSLIDE("*2 {c{c  1 [11 [11 [11 [11 [11 [11 [11 [1____", .8/*autoRes phase*/,2,3.7);
-  
-   spork ~ SUPSAWSLIDE("____ *2 {c{c   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
-
-    3 * 8  * data.tick => w.wait;
 
  //  !!!!!! put end here  !!!!!!
 

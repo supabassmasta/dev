@@ -574,6 +574,72 @@ fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, flo
 
   d => now; 
 } 
+fun void  SLIDENOISE  (float fstart, float fstop, dur d, float width, int tomix, float g){ 
+  local_delay => now;
+  3::ms => dur attackRelease;
+
+   
+   ST st; st $ ST @=> ST @ last;
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+    
+   Step stp0 => Envelope e0 =>  NOISE3 s => ADSR a => st.mono_in;
+   fstart => e0.value;
+   fstop => e0.target;
+   d => e0.duration ;// => now;
+   
+   1.0 => stp0.next;
+   
+   g => s.gain;
+//   width => s.width;
+
+   a.set(attackRelease, 0::ms, 1., attackRelease);
+
+   a.keyOn();
+
+   d => now;
+
+   a.keyOff();
+   attackRelease => now;
+    
+} 
+
+
+//     spork ~ SLIDENOISE(200/*fstart*/,2000/*fstop*/,8*data.tick/*dur*/,.8/*width*/,0,.14); 
+
+fun void  SUPSAWSLIDE  ( string seq, float ph, int tomix, float g){ 
+  local_delay => now;
+
+  TONE t;
+  t.reg(SUPERSAW0 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();//
+  t.set_scale(data.scale.my_string); // t.phr();// t.loc();
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  //____ f/P__
+  " {c{c" + seq  => t.seq;
+  g => t.gain;
+  t.no_sync();//  t.full_sync();  // 16 * data.tick => t.extra_end;   //t.print();
+  t.go();   t $ ST @=> ST @ last; 
+  
+  STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+  ph => stautoresx0.sin0.phase;
+  stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 15 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 3 /* order */, 2 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+  
+  2.5 => stautoresx0.gain;
+  
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  
+  1::samp => now; // let seq() be sporked to compute length
+  t.s.duration  => now;
+} 
+
+//spork ~ SUPSAWSLIDE("*4 }c}c}c 1235 {21235 {21235 {21235 {21235 {21235 {21235 {21235 {2 ", .3/*autoRes phase*/,0,0.7);
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1300,6 +1366,19 @@ BEAT1(1);
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+   spork ~ KICK("*4 k___ *7:8 k___  *7:8 k___  *7:8 k___  *7:8 k___   k___ *7:8 k___  *7:8 k___  *7:8 k___  
+                   "); 
+//   spork ~ BASS0(" *2 _1 *7:8  _1 *7:8  _1 *7:8  _1   _1 *7:8  _1 *7:8  _1 *7:8  _1   ",0,1.);
+//   spork ~ BASS0_ATTACK ("*4  __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_ __a_ *7:8  __a_ *7:8  __a_ *7:8  __a_  ", 0.7 /* rate */,0, .16 /* g */); 
+
+//  spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":4 8//3"/*gseq*/,":4z//1"/*lpfseq*/,2/*lpforder*/,1,1.0);
+    spork ~ SLIDENOISE(4000/*fstart*/,100/*fstop*/,12*data.tick/*dur*/,.8/*width*/,2,.14); 
+
+   spork ~ SUPSAWSLIDE("*2 {c{c  1 [11 [11 [11 [11 [11 [11 [11 [1____", .8/*autoRes phase*/,2,3.7);
+  
+   spork ~ SUPSAWSLIDE("____ *2 {c{c   1 ]11 ]11 ]11 ]11 ]11 ]11 ]11 ]1____", .8/*autoRes phase*/,2,3.7);
+
+    3 * 8  * data.tick => w.wait;
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
