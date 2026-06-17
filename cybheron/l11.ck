@@ -1,4 +1,4 @@
-1 => int mixer;
+10 => int mixer;
 
 20::ms => dur local_delay;
 

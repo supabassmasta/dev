@@ -1,4 +1,4 @@
-1 => int mixer;
+10 => int mixer;
 
 20::ms => dur local_delay;
 
@@ -2216,7 +2216,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 
 // LOOP
