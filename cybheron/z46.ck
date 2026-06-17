@@ -138,8 +138,8 @@ stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain /* out gain */, 0.3
 //STAUTOPAN autopan;
 //autopan.connect(last $ ST, .3 /* span 0..1 */, 3*data.tick /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

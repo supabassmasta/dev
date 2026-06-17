@@ -38,8 +38,8 @@ STECHO ech2;
 ech2.connect(last $ ST , data.tick * 3 / 4 , .6);  ech2 $ ST @=>  last; 
 
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 <<<"---------------------">>>;
 <<<"-     SAW COMPRESS --">>>;

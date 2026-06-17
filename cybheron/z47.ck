@@ -43,8 +43,8 @@ STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
 stautoresx0.connect(last $ ST ,  stautoresx0_fact, 3.0 /* Q */, 25 * 10 /* freq base */, 75 * 10 /* freq var */, data.tick * 16 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
 8 => stautoresx0.gain;
 //
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+//STECHO ech;
+//ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
 STAUTOPAN autopan;
 autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
@@ -53,6 +53,8 @@ STLIMITER stlimiter;
 3. => float in_gainl;
 stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
 
+STMIX stmix;
+stmix.send(last, 2);
 
 //STFILTERMOD fmod;
 //fmod.connect( last , "ResonZ" /* "HPF" "BPF" BRF" "ResonZ" */, 6 /* Q */, 600 /* f_base */ , 3400  /* f_var */, 1::second / (3 * data.tick) /* f_mod */);     fmod  $ ST @=>  last; 

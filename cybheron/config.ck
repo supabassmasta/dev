@@ -16,3 +16,55 @@
 
 //1::ms => now;
 
+fun void EFFECT1   (){ 
+  STMIX stmix;
+  stmix.receive(1); stmix $ ST @=> ST @ last; 
+  STCONVREV stconvrev;
+  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  while(1) {
+         100::ms => now;
+  }
+   
+} 
+spork ~  EFFECT1();
+
+fun void EFFECT2   (){ 
+  STMIX stmix;
+  stmix.receive(2); stmix $ ST @=> ST @ last; 
+
+  STECHO ech;
+  ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+
+  STMIX stmix2;
+  stmix2.send(last, 1);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  while(1) {
+         100::ms => now;
+  }
+   
+} 
+spork ~  EFFECT2();
+
+fun void EFFECT3   (){ 
+  STMIX stmix;
+  stmix.receive( 3); stmix $ ST @=> ST @ last; 
+STECHOONLY ech;
+ech.connect(last $ ST , data.tick * 2 / 4 + 5::ms , .7);  ech $ ST @=>  last; 
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .3 /* span 0..1 */, data.tick * 2 / 3 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+  STMIX stmix2;
+  stmix2.send(last, 1);
+
+  while(1) {
+         100::ms => now;
+  }
+} 
+spork ~  EFFECT3();
+
+while(1) {
+       100::ms => now;
+}
+ 

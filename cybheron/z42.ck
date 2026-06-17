@@ -30,8 +30,8 @@ STCOMPRESSOR stcomp;
 7. => float in_gain;
 stcomp.connect(last $ ST , in_gain /* in gain */, 1./in_gain +.1 /* out gain */, 0.3 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stcomp $ ST @=>  last;   
 
-STDUCK duck;
-duck.connect(last $ ST);      duck $ ST @=>  last; 
+//STDUCK duck;
+//duck.connect(last $ ST);      duck $ ST @=>  last; 
 
 while(1) {
        100::ms => now;

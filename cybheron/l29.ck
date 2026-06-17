@@ -1,4 +1,4 @@
-1 => int mixer;
+10 => int mixer;
 
 20::ms => dur local_delay;
 
@@ -1314,7 +1314,7 @@ fun void EFFECT1   (){
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 8/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .15 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 8/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
   while(1) {
          100::ms => now;
   }
@@ -1914,7 +1914,7 @@ spork ~   MODU (86, "*8 }c }c " + RAND.seq("1_1_, B___,8___, 8_,  3_1_, 5___ ",1
   }
 } 
 //spork ~ LOOPLAB();
-LOOPLAB(); 
+//LOOPLAB(); 
 
 
 // LOOP
@@ -1939,6 +1939,17 @@ if (rectrack.play_or_rec() ) {
   // MAIN 
   //////////////////////////////////////////////////
 
+spork ~ BEAT16x32  (16 * 32*data.tick);
+  16 * 32 * data.tick => w.wait;
+
+  spork ~   MODU (22, ":2 {c  F////f",":8 Z/1"/*modf*/,":4f/FF/1"/*modg*/,13*1000/*cut*/,1,.52); 
+  spork ~  SLIDENOISE(200 /* fstart */, 1000 /* fstop */, 8* data.tick /* dur */, 1.8 /* width */,1,.14); 
+  spork ~KICK_LPF("*4k___ k___ k___ k___k___ k___ k___ ____ " , ":4 M/ff/v");
+  spork ~ BASS0_LPF(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 ____ ", ":4 M/ff/v"    );
+  spork ~ BASS0HF_LPF(" *4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ ____ ", ":4 M/ff/v"    );
+  7 * data.tick => w.wait;
+  spork ~  TRANCEHH ("*4    }5+3ht_+3{2h  ");
+  1 * data.tick => w.wait;
 
 
 spork ~ BEAT16x32  (16 * 32*data.tick);

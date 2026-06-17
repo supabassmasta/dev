@@ -37,7 +37,7 @@ SinOsc sin0 =>  s0.inlet;
 
 
 STMIX stmix2;
-stmix2.send(last, 2); // TO EFFECT1 in config.ck
+stmix2.send(last, 1); // TO EFFECT1 in config.ck
 
 
 //STECHOC ech;
@@ -49,7 +49,7 @@ gainc.connect(stautoresx0 $ ST , HW.lpd8.potar[1][2] /* gain */  , 1.3 /* static
 
 
 STMIX stmix;
-stmix.send(last, 1); // TO EFFECT1 in config.ck
+stmix.send(last, 3); // TO EFFECT1 in config.ck
 
 //STDELAY stdelay;
 //stdelay.connect(stconvrev $ ST , data.tick * (3 + 1. / 4. ) /* static delay */ );       stdelay $ ST @=>  last;  

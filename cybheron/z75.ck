@@ -43,11 +43,15 @@ STLIMITER stlimiter;
 3. => float in_gainl;
 stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl  + 0.10/* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
 1.5 => stlimiter.gain;
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
+//STECHO ech;
+//ech.connect(last $ ST , data.tick * 3 / 4 , .6);  ech $ ST @=>  last; 
 
 //STCONVREV stconvrev;
 //stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+
+STMIX stmix;
+stmix.send(last, 2);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
 <<<" --- SPACE FROGS ---- ">>>;
 <<<" --- pot 1.3 freq ---- ">>>;

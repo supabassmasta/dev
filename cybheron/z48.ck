@@ -37,15 +37,18 @@ SINMODONE sin;
 sin.out => s0.inlet;
 
 //
-STECHO ech;
-ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
+//STECHO ech;
+//ech.connect(last $ ST , data.tick * 3 / 4 , .8);  ech $ ST @=>  last; 
 
-STAUTOPAN autopan;
-autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+//STAUTOPAN autopan;
+//autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 3 / 2 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
 
-STCONVREV stconvrev;
-stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .3 /* rev gain */  , 0.7 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//STCONVREV stconvrev;
+//stconvrev.connect(last $ ST , 14/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .3 /* rev gain */  , 0.7 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
+STMIX stmix;
+stmix.send(last, 2);
+//stmix.receive(11); stmix $ ST @=> ST @ last; 
 
 //STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
 //stautoresx0.connect(last $ ST ,  stautoresx0_fact, 1.0 /* Q */, 7 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 1 / 5 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
