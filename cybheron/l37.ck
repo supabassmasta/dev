@@ -2000,10 +2000,14 @@ fun void EFFECT3   (){
   stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
 
 STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
-stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 5 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
+stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq base */, 16 * 100 /* freq var */, data.tick * 19  /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
 4 => stautobpfx0.gain;
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .6 /* span 0..1 */, data.tick * 23 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
   STMIX stmix2;
-  stmix2.send(last, mixer + 2);
+  stmix2.send(last, mixer + 1);
   //stmix.receive(11); stmix $ ST @=> ST @ last; 
 
   while(1) {
@@ -2031,17 +2035,34 @@ spork ~  EFFECT4();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-// spork ~ PLOC(" }c}c *4__ " + RAND.seq("!3!2!1!0,!4!3!2!1,!5!3!2!1,!6!4!2!1,!8!5!3!1",8) , 1322/*n*/,35*100/*cut*/,1,0.6); 
-RAND.seq("!3!2!1!0,!4!3!2!1,!5!3!2!1,!6!4!2!1,!8!5!3!1",8) => string melody;
- spork ~ PLOC(" }c *4__ " + melody , 1322/*n*/,35*100/*cut*/,1,1.8); 
- spork ~ PLOCCUT("}c }c *4__ " + melody, "*4 " + RAND.seq("____ ____ ____ __11, ____ ____ ____ 111_, ____ __11 ____  __11 , ____ ____ ____ 11_1 , ____ ____ ____ 1111 ",2) , 1322/*n*/,35*100/*cut*/,2,1.7); 
-// spork ~ PLOC(" }c *4__ " + RAND.seq("!1_8_,!f!f!1_,!1!8!8_,!1!1!1_,!8!8__,!F!F__,!F!B!__,*21_1_1_1_1_1_1_1_:2,*28_8_8_8_ ____ ____:2",12) , 1322/*n*/,35*100/*cut*/,1,1.7); 
-  spork ~   CRAZYMOD (" *4 " + RAND.seq("!1_8_,!f!f!1_,!1!8!8_,!1!1!1_,!8!8__,!8!5!1_,!FF__,!F!B!__,*21_1_1_1_1_1_1_1_:2,*28_8_8_8_ ____ ____:2", 12), 20/*n*/,200*100/*cut*/,1,0.7); 
-     1 * 8 * data.tick => w.wait;
 
-//     spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.9); 
-//     4 * 8 * data.tick => w.wait;
-//     spork ~ SPECTR (29/*note*/,22/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.2); 
+// PLOC + SYNT GLIDE TO ADD
+
+// spork ~ PLOC(" }c}c *4__ " + RAND.seq("!3!2!1!0,!4!3!2!1,!5!3!2!1,!6!4!2!1,!8!5!3!1",8) , 1322/*n*/,35*100/*cut*/,1,0.6); 
+//RAND.seq("!3!2!1!0,!4!3!2!1,!5!3!2!1,!6!4!2!1,!8!5!3!1",8) => string melody;
+// spork ~ PLOC(" }c *4__ " + melody , 1322/*n*/,35*100/*cut*/,1,1.8); 
+// spork ~ PLOCCUT("}c }c *4__ " + melody, "*4 " + RAND.seq("____ ____ ____ __11, ____ ____ ____ 111_, ____ __11 ____  __11 , ____ ____ ____ 11_1 , ____ ____ ____ 1111 ",2) , 1322/*n*/,35*100/*cut*/,2,1.7); 
+//    spork ~ SYNTGLIDE("*4 }c " + melody /* seq */, 128 /* Serum00 synt */,9*100/* lpf_f */, 7::ms /* glide dur */,8*data.tick,3,.27);
+//  spork ~   CRAZYMOD (" *4 " + RAND.seq("!1_8_,!f!f!1_,!1!8!8_,!1!1!1_,!8!8__,!8!5!1_,!FF__,!F!B!__,*21_1_1_1_1_1_1_1_:2,*28_8_8_8_ ____ ____:2", 12), 20/*n*/,200*100/*cut*/,1,0.7); 
+//     1 * 8 * data.tick => w.wait;
+
+// SPECTR PADS TO ADD
+//   spork ~   TRANCEHHx8 (16, 1); 
+   spork ~   TRANCESNRHHx8 (16, 0); 
+
+     spork ~ SPECTR (data.ref_note+0 /*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.4); 
+     4 * 8 * data.tick => w.wait;
+     spork ~ SPECTR (data.ref_note+2/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.4); 
+     4 * 8 * data.tick => w.wait;
+     spork ~ SPECTR (data.ref_note+5/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.4); 
+     4 * 8 * data.tick => w.wait;
+     spork ~ SPECTR (data.ref_note+7/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.4); 
+     4 * 8 * data.tick => w.wait;
+
+
+
+
+     //     spork ~ SPECTR (29/*note*/,22/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.2); 
 //     2 * 8 * data.tick => w.wait;
 //     spork ~ SPECTR (29/*note*/,20/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
 //     3 * 8 * data.tick => w.wait;
@@ -2288,7 +2309,7 @@ RAND.seq("!3!2!1!0,!4!3!2!1,!5!3!2!1,!6!4!2!1,!8!5!3!1",8) => string melody;
   //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 
