@@ -75,7 +75,7 @@ fun void KICK_HPF(string seq, string hpfseq) {
 
 STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
 stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-AUTO.freq(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
+AUTO.freq2(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
 
 
   1::samp => now; // let seq() be sporked to compute length
@@ -108,7 +108,7 @@ fun void  KICK_LPF(string seq, string hpfseq) {
 //duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 9::ms /* Release */ );      duckm $ ST @=>  last; 
 STFREEFILTERX stfreehpfx0; LPF_XFACTORY stfreehpfx0_fact;
 stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-AUTO.freq(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
+AUTO.freq2(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration - 1::samp => now;
@@ -244,7 +244,7 @@ fun void BASS0_HPF (string seq, string hpfseq) {
 
   STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
   stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.0 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-  AUTO.freq(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
 
 
   1::samp => now; // let seq() be sporked to compute length
@@ -285,7 +285,7 @@ fun void  BASS0_LPF (string seq, string hpfseq) {
 
   STFREEFILTERX stfreehpfx0; LPF_XFACTORY stfreehpfx0_fact;
   stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.0 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-  AUTO.freq(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration => now;
@@ -417,7 +417,7 @@ s_wt1.inlet => stfreebrfx1.freq; // CONNECT THIS
 
   STFREEFILTERX stfreehpfx2; HPF_XFACTORY stfreehpfx2_fact;
   stfreehpfx2.connect(last $ ST , stfreehpfx2_fact, 1.0 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx2 $ ST @=>  last; 
-  AUTO.freq(hpfseq) => stfreehpfx2.freq; // CONNECT THIS 
+  AUTO.freq2(hpfseq) => stfreehpfx2.freq; // CONNECT THIS 
 
 
   1::samp => now; // let seq() be sporked to compute length
@@ -468,7 +468,7 @@ s_wt1.inlet => stfreebrfx1.freq; // CONNECT THIS
 
   STFREEFILTERX stfreehpfx0; LPF_XFACTORY stfreehpfx0_fact;
   stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1.0 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-  AUTO.freq(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(hpfseq) => stfreehpfx0.freq; // CONNECT THIS 
 
 
   1::samp => now; // let seq() be sporked to compute length
@@ -946,7 +946,7 @@ fun void  SERUM00SEQ (string seq, int n, string seq_cut , string seq_g , dur d, 
 
   STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
   stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1.3 /* Q */, 2 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
-  AUTO.freq(seq_cut) => stfreelpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(seq_cut) => stfreelpfx0.freq; // CONNECT THIS 
 
   STFREEGAIN stfreegain;
   stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
@@ -1207,7 +1207,7 @@ fun void  ERAMPLPF (int mixin, dur d, string gseq, string lpfseq,int lpforder, i
 
   STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
   stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, lpforder /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
-  AUTO.freq(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
 
   STFREEGAIN stfreegain;
   stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
@@ -1232,7 +1232,7 @@ fun void  ERAMPHPF (int mixin, dur d, string gseq, string lpfseq,int lpforder, i
 
   STFREEFILTERX stfreelpfx0; HPF_XFACTORY stfreelpfx0_fact;
   stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, lpforder /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
-  AUTO.freq(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
+  AUTO.freq2(lpfseq) => stfreelpfx0.freq; // CONNECT THIS 
 
   STFREEGAIN stfreegain;
   stfreegain.connect(last $ ST);       stfreegain $ ST @=>  last; 
