@@ -38,6 +38,16 @@ public class STFREEFILTERX extends ST{
         fpath.out[1] => outr;
      }
   }
+  
+  fun void _display() {
+    while(1) {
+      <<<"STFREEFILTERX freq: ", freq.last()>>>;
+      1000::ms => now;
+    }
+  }
+  fun void display() {
+    spork ~   _display (); 
+  }
 
 }
 

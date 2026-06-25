@@ -42,7 +42,7 @@ class autofreq extends Chugraph {
   string seq;
 
   TONE t;
-  t.raw() => outlet;
+  t.raw()   => outlet;
   fun void  go  (){ 
      t.reg(voidSYNT s0);  
 
@@ -56,6 +56,32 @@ class autofreq extends Chugraph {
   } 
 
 }
+
+// For free filtersX : almost full frequency range from 0 to 18000 Hz (Z to z)
+class autofreq2 extends Chugraph {
+  string seq;
+
+  TONE t;
+  t.raw() => Gain gf => OFFSET ofs0    => outlet;
+
+  // Get full frequency range from Z to z
+  -45 => ofs0.offset;
+  1. => ofs0.gain;
+  4 => gf.gain;
+  fun void  go  (){ 
+     t.reg(voidSYNT s0);  
+
+    t.dor();
+    seq => t.seq;
+    1. * data.master_gain => t.gain;
+    1::samp => t.the_end.fixed_end_dur; 
+    t.no_sync();
+    1 => t.set_disconnect_mode;
+    t.go();  
+  } 
+
+}
+
 
 class autogain extends Chugraph {
   string seq;
@@ -99,12 +125,21 @@ public class AUTO {
   // Use Arrays to store created autofreq etc
   // Elsewhere they are destroyed by version 1.5 on function exit
   static autofreq   af[0];
+  static autofreq2   af2[0];
   static autogain   ag[0];
   static autopan   ap[0];
 
   fun static UGen freq (string s){
     af << new autofreq ;
     af[af.size()-1] @=> autofreq @ laf; // Last autofreq added
+    s => laf.seq;
+    laf.go();
+
+    return laf.outlet;
+  } 
+  fun static UGen freq2 (string s){
+    af2 << new autofreq2 ;
+    af2[af2.size()-1] @=> autofreq2 @ laf; // Last autofreq added
     s => laf.seq;
     laf.go();
 

@@ -1,0 +1,25 @@
+Launch BT shell:
+bluetoothctl
+
+
+help
+scan on
+scan off
+
+devices
+
+connect 10:94:97:49:97:75
+
+Work sometimes with only connect, but can be useful:
+pair 10:94:97:49:97:75
+trust 10:94:97:49:97:75
+
+:w
+
+exitbluetoothctl
+
+
+
+
+
+

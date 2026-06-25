@@ -1316,7 +1316,7 @@ ab STLPFXK STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
 
 ab STFREELPFXK STFREEFILTERX stfreelpfx0; LPF_XFACTORY stfreelpfx0_fact;
 \<CR>stfreelpfx0.connect(last $ ST , stfreelpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreelpfx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreelpfx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreelpfx0.freq; // CONNECT THIS
 
 ab STSYNCLPFXK STSYNCFILTERX stsynclpfx0; LPF_XFACTORY stsynclpfx0_fact;
 \<CR>stsynclpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1351,7 +1351,7 @@ ab STBPFXK STFILTERX stbpfx0; BPF_XFACTORY stbpfx0_fact;
 
 ab STFREEBPFXK STFREEFILTERX stfreebpfx0; BPF_XFACTORY stfreebpfx0_fact;
 \<CR>stfreebpfx0.connect(last $ ST , stfreebpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreebpfx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreebpfx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreebpfx0.freq; // CONNECT THIS
 
 ab STSYNCBPFXK STSYNCFILTERX stsyncbpfx0; BPF_XFACTORY stsyncbpfx0_fact;
 \<CR>stsyncbpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1375,7 +1375,7 @@ ab STBRFXK STFILTERX stbrfx0; BRF_XFACTORY stbrfx0_fact;
 
 ab STFREEBRFXK STFREEFILTERX stfreebrfx0; BRF_XFACTORY stfreebrfx0_fact;
 \<CR>stfreebrfx0.connect(last $ ST , stfreebrfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreebrfx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreebrfx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreebrfx0.freq; // CONNECT THIS
 
 ab STSYNCBRFXK STSYNCFILTERX stsyncbrfx0; BRF_XFACTORY stsyncbrfx0_fact;
 \<CR>stsyncbrfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1399,7 +1399,7 @@ ab STHPFXK STFILTERX sthpfx0; HPF_XFACTORY sthpfx0_fact;
 
 ab STFREEHPFXK STFREEFILTERX stfreehpfx0; HPF_XFACTORY stfreehpfx0_fact;
 \<CR>stfreehpfx0.connect(last $ ST , stfreehpfx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreehpfx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreehpfx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreehpfx0.freq; // CONNECT THIS
 
 ab STSYNCHPFXK STSYNCFILTERX stsynchpfx0; HPF_XFACTORY stsynchpfx0_fact;
 \<CR>stsynchpfx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1423,7 +1423,7 @@ ab STRESXK STFILTERX stresx0; RES_XFACTORY stresx0_fact;
 
 ab STFREERESXK STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
 \<CR>stfreeresx0.connect(last $ ST , stfreeresx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreeresx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreeresx0.freq; // CONNECT THIS
 
 ab STSYNCRESXK STSYNCFILTERX stsyncresx0; RES_XFACTORY stsyncresx0_fact;
 \<CR>stsyncresx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1447,7 +1447,7 @@ ab STDLXK STFILTERX stdlx0; DL_XFACTORY stdlx0_fact;
 
 ab STFREEDLXK STFREEFILTERX stfreedlx0; DL_XFACTORY stfreedlx0_fact;
 \<CR>stfreedlx0.connect(last $ ST , stfreedlx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreedlx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreedlx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreedlx0.freq; // CONNECT THIS
 
 ab STSYNCDLXK STSYNCFILTERX stsyncdlx0; DL_XFACTORY stsyncdlx0_fact;
 \<CR>stsyncdlx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
@@ -1471,7 +1471,7 @@ ab STKGXK STFILTERX stkgx0; KG_XFACTORY stkgx0_fact;
 
 ab STFREEKGXK STFREEFILTERX stfreekgx0; KG_XFACTORY stfreekgx0_fact;
 \<CR>stfreekgx0.connect(last $ ST , stfreekgx0_fact, 1 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreekgx0 $ ST @=>  last; 
-\<CR>AUTO.freq("") => stfreekgx0.freq; // CONNECT THIS
+\<CR>AUTO.freq2("") => stfreekgx0.freq; // CONNECT THIS
 
 ab STSYNCKGXK STSYNCFILTERX stsynckgx0; KG_XFACTORY stsynckgx0_fact;
 \<CR>stsynckgx0.freq(100 /* Base */, 5 * 100 /* Variable */, 2. /* Q */);
