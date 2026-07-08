@@ -2242,7 +2242,7 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-
+  1::samp => w.wait; // DONT NOW Why this is needed, DestNegative happen sometimes if not present
 
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();

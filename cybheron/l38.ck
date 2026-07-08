@@ -2105,11 +2105,10 @@ while(0) { /********************************************************/
 }  
 
 
-<<<"YOOOOOOOOOOOO">>>;
 
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l38.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l38.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2119,6 +2118,7 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
+1::samp => w.wait;
 
 
   //// STOP REC ///////////////////////////////
@@ -2134,30 +2134,30 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-    spork ~ BEAT1_8x8();
-    6 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
-    2 * 8 * data.tick => w.wait;
-
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    4 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
-    4 * 8 * data.tick => w.wait;
-
-    spork ~   TRANCEHHx8 (8, 4); 
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    4 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
-    4 * 8 * data.tick => w.wait;
-
-    spork ~   TRANCESNRHHx8 (8, 4); 
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    6 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
-    2 * 8 * data.tick => w.wait;
+     spork ~ BEAT1_8x8();
+     6 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
+     2 * 8 * data.tick => w.wait;
+ 
+     spork ~ BEAT1_8x8();
+     spork ~   CLAPS_8x8 (); 
+     4 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
+     4 * 8 * data.tick => w.wait;
+ 
+     spork ~   TRANCEHHx8 (8, 4); 
+     spork ~ BEAT1_8x8();
+     spork ~   CLAPS_8x8 (); 
+     4 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
+     4 * 8 * data.tick => w.wait;
+ 
+     spork ~   TRANCESNRHHx8 (8, 4); 
+     spork ~ BEAT1_8x8();
+     spork ~   CLAPS_8x8 (); 
+     6 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
+     2 * 8 * data.tick => w.wait;
 
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
