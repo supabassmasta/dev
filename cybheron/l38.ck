@@ -1199,140 +1199,140 @@ spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh }7+8thh -6h+6hh thh -6h+6hh thh -6h+6hh th
 //   
 //   /////////////////////////
 //   
-//   class syntBW extends SYNT{
-//     float pluck;
-//     inlet => blackhole;
-//     BandedWG bwg => outlet;
-//   
-//   //    Math.random2f( 0, 1 ) => bwg.bowRate;
-//   //    Math.random2f( 0, 1 ) => bwg.bowPressure;
-//   //    Math.random2f( 0, 1 ) => bwg.strikePosition;
-//   //    Math.random2( 0, 3 ) => bwg.preset;
-//   
-//   // 0 => bwg.preset;
-//   
-//   //    3 => bwg.preset;
-//   //    0.246798 => bwg.bowRate;
-//   //    0.733152 => bwg.bowPressure;
-//   //    0.746624 => bwg.strikePosition;
-//   
-//   //  0 => bwg.preset;  
-//   //  0.730914 => bwg.bowRate;  
-//   //  0.510297 => bwg.bowPressure;  
-//   //  97 * 0.001 => bwg.strikePosition; 
-//   //  25 => bwg.gain;
-//   
-//   //0 => bwg.preset;  
-//   //0.754839 => bwg.bowRate;  
-//   //0.739238 => bwg.bowPressure;  
-//   //0.763381 => bwg.strikePosition;  
-//   
-//   //1 => bwg.preset;  
-//   //0.692167 => bwg.bowRate;  
-//   //0.923691 => bwg.bowPressure;  
-//   //0.321358 => bwg.strikePosition;  
-//   
-//   //2 => bwg.preset;  
-//   //0.700376 => bwg.bowRate;  
-//   //0.549689 => bwg.bowPressure;  
-//   //0.231001 => bwg.strikePosition;  
-//   
-//   //    <<< "---", "" >>>;
-//   //    <<<  bwg.preset() + " => bwg.preset;", ""  >>>;    
-//   //    <<<  bwg.bowRate()  + " => bwg.bowRate;", "" >>>;
-//   //    <<<  bwg.bowPressure()  + " => bwg.bowPressure;", "" >>>;
-//   //    <<<  bwg.strikePosition()  + " => bwg.strikePosition;", "" >>>;
-//   //    <<< "---", "" >>>;
-//   
-//       fun void f1 (){ 
-//         1::samp => now;
-//         inlet.last() => bwg.freq;
-//             pluck => bwg.pluck;
-//   //      1::samp => now;
-//          } 
-//   
-//           fun void on()  { }  fun void off() { } 
-//           fun void new_note(int idx)  { 
-//   //          1::samp => now;
-//   //          inlet.last() => bwg.freq;
-//   //          .9 => bwg.pluck;
-//             spork ~ f1 ();
-//           }
-//   
-//           1 => own_adsr;
-//   } 
-//   
-//   fun void BW (string seq, int n, float lpf_f, int tomix, float v) {
-//   
-//     local_delay => now;
-//   
-//     TONE t;
-//     t.reg(syntBW s0);  //data.tick * 8 => t.max;
-//     if (n == 0) {
-//       0 => s0.bwg.preset;  
-//       17.9 => s0.pluck;
-//   //    0.730914 => s0.bwg.bowRate;  
-//       0.0000510297 => s0.bwg.bowPressure;  
-//       97 * 0.0001 => s0.bwg.strikePosition; 
-//       14 => s0.bwg.gain;
-//     }
-//     else if (n == 1) {
-//       1 => s0.bwg.preset;  
-//       1.9 => s0.pluck;
-//   //    0.692167 => s0.bwg.bowRate;  
-//       0.00001 => s0.bwg.bowPressure;  
-//       0.01 => s0.bwg.strikePosition; 
-//       30 => s0.bwg.gain;
-//     }
-//     else if (n == 2) {
-//       2 => s0.bwg.preset;  
-//       0.9 => s0.pluck;
-//   //    0.700376 => s0.bwg.bowRate;  
-//       0.00549689 => s0.bwg.bowPressure;  
-//       0.131001 => s0.bwg.strikePosition; 
-//       15 => s0.bwg.gain;
-//     }
-//     else if (n == 3) {
-//       3 => s0.bwg.preset;  
-//       0.8 => s0.pluck;
-//   //    0.01 *24 => s0.bwg.bowRate;  
-//       0.00001 *3 => s0.bwg.bowPressure;  
-//       0.001 *7 => s0.bwg.strikePosition; 
-//       11 => s0.bwg.gain;
-//     }
-//   //  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
-//     //t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
-//     t.set_scale(data.scale.my_string);
-//     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
-//     seq => t.seq;
-//     v * data.master_gain => t.gain;
-//     //t.sync(4*data.tick);// t.element_sync();// 
-//     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
-//     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
-//   //t.set_adsrs(2::ms, 50::ms, .00002, 400::ms);
-//   //t.set_adsrs_curves(0.6, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
-//   //1 => t.set_disconnect_mode;
-//     t.go();   t $ ST @=> ST @ last; 
-//   
-//   if ( lpf_f != 0. ){
-//       
-//     STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
-//     stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
-//   }
-//   
-//   
-//     if ( tomix  ){
-//       STMIX stmix;
-//       stmix.send(last, mixer + tomix);
-//     }
-//   
-//     1::samp => now; // let seq() be sporked to compute duration
-//     t.s.duration => now;
-//   
-//   }
-//   
-//   
-//   //  spork ~ BW("1___ ", 0/*n*/,29*100/*cut*/,0,0.4); 
+   class syntBW extends SYNT{
+     float pluck;
+     inlet => blackhole;
+     BandedWG bwg => outlet;
+   
+   //    Math.random2f( 0, 1 ) => bwg.bowRate;
+   //    Math.random2f( 0, 1 ) => bwg.bowPressure;
+   //    Math.random2f( 0, 1 ) => bwg.strikePosition;
+   //    Math.random2( 0, 3 ) => bwg.preset;
+   
+   // 0 => bwg.preset;
+   
+   //    3 => bwg.preset;
+   //    0.246798 => bwg.bowRate;
+   //    0.733152 => bwg.bowPressure;
+   //    0.746624 => bwg.strikePosition;
+   
+   //  0 => bwg.preset;  
+   //  0.730914 => bwg.bowRate;  
+   //  0.510297 => bwg.bowPressure;  
+   //  97 * 0.001 => bwg.strikePosition; 
+   //  25 => bwg.gain;
+   
+   //0 => bwg.preset;  
+   //0.754839 => bwg.bowRate;  
+   //0.739238 => bwg.bowPressure;  
+   //0.763381 => bwg.strikePosition;  
+   
+   //1 => bwg.preset;  
+   //0.692167 => bwg.bowRate;  
+   //0.923691 => bwg.bowPressure;  
+   //0.321358 => bwg.strikePosition;  
+   
+   //2 => bwg.preset;  
+   //0.700376 => bwg.bowRate;  
+   //0.549689 => bwg.bowPressure;  
+   //0.231001 => bwg.strikePosition;  
+   
+   //    <<< "---", "" >>>;
+   //    <<<  bwg.preset() + " => bwg.preset;", ""  >>>;    
+   //    <<<  bwg.bowRate()  + " => bwg.bowRate;", "" >>>;
+   //    <<<  bwg.bowPressure()  + " => bwg.bowPressure;", "" >>>;
+   //    <<<  bwg.strikePosition()  + " => bwg.strikePosition;", "" >>>;
+   //    <<< "---", "" >>>;
+   
+       fun void f1 (){ 
+         1::samp => now;
+         inlet.last() => bwg.freq;
+             pluck => bwg.pluck;
+   //      1::samp => now;
+          } 
+   
+           fun void on()  { }  fun void off() { } 
+           fun void new_note(int idx)  { 
+   //          1::samp => now;
+   //          inlet.last() => bwg.freq;
+   //          .9 => bwg.pluck;
+             spork ~ f1 ();
+           }
+   
+           1 => own_adsr;
+   } 
+   
+   fun void BW (string seq, int n, float lpf_f, int tomix, float v) {
+   
+     local_delay => now;
+   
+     TONE t;
+     t.reg(syntBW s0);  //data.tick * 8 => t.max;
+     if (n == 0) {
+       0 => s0.bwg.preset;  
+       17.9 => s0.pluck;
+   //    0.730914 => s0.bwg.bowRate;  
+       0.0000510297 => s0.bwg.bowPressure;  
+       97 * 0.0001 => s0.bwg.strikePosition; 
+       14 => s0.bwg.gain;
+     }
+     else if (n == 1) {
+       1 => s0.bwg.preset;  
+       1.9 => s0.pluck;
+   //    0.692167 => s0.bwg.bowRate;  
+       0.00001 => s0.bwg.bowPressure;  
+       0.01 => s0.bwg.strikePosition; 
+       30 => s0.bwg.gain;
+     }
+     else if (n == 2) {
+       2 => s0.bwg.preset;  
+       0.9 => s0.pluck;
+   //    0.700376 => s0.bwg.bowRate;  
+       0.00549689 => s0.bwg.bowPressure;  
+       0.131001 => s0.bwg.strikePosition; 
+       15 => s0.bwg.gain;
+     }
+     else if (n == 3) {
+       3 => s0.bwg.preset;  
+       0.8 => s0.pluck;
+   //    0.01 *24 => s0.bwg.bowRate;  
+       0.00001 *3 => s0.bwg.bowPressure;  
+       0.001 *7 => s0.bwg.strikePosition; 
+       11 => s0.bwg.gain;
+     }
+   //  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+     //t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+     t.set_scale(data.scale.my_string);
+     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+     seq => t.seq;
+     v * data.master_gain => t.gain;
+     //t.sync(4*data.tick);// t.element_sync();// 
+     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+   //t.set_adsrs(2::ms, 50::ms, .00002, 400::ms);
+   //t.set_adsrs_curves(0.6, 2.0, 0.5); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+   //1 => t.set_disconnect_mode;
+     t.go();   t $ ST @=> ST @ last; 
+   
+   if ( lpf_f != 0. ){
+       
+     STFILTERX stlpfx0; LPF_XFACTORY stlpfx0_fact;
+     stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpf_f /* freq */ , 1.0 /* Q */ , 2 /* order */, 1 /* channels */ );       stlpfx0 $ ST @=>  last;  
+   }
+   
+   
+     if ( tomix  ){
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
+     }
+   
+     1::samp => now; // let seq() be sporked to compute duration
+     t.s.duration => now;
+   
+   }
+   
+   
+   //  spork ~ BW("1___ ", 0/*n*/,29*100/*cut*/,0,0.4); 
 //   
 //   /////////
 //   
@@ -1653,6 +1653,40 @@ spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh }7+8thh -6h+6hh thh -6h+6hh thh -6h+6hh th
 //     ss.stop();
 //   } 
 //   
+ class synt2 extends SYNT{
+
+    inlet => SqrOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+ } 
+
+   fun void SYNTFROG (string seq, dur gldur, dur d, int tomix, float v) {
+     local_delay => now;
+   
+     TONE t;
+     t.reg(synt2 s0);  //data.tick * 8 => t.max; 
+     gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+     //t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+     t.set_scale(data.scale.my_string);
+     // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+     seq => t.seq;
+     v * data.master_gain => t.gain;
+     //t.sync(4*data.tick);// t.element_sync();// 
+     t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+     // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+     //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+     //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+     t.go();   t $ ST @=> ST @ last; 
+   
+      if ( tomix  ){
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
+     }
+     d => now;
+   
+   }
+   
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -1697,7 +1731,7 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
     stmix.receive(mixer + 2); stmix $ ST @=> ST @ last; 
   
     STECHO ech;
-    ech.connect(last $ ST , data.tick * 3 / 4 , .7);  ech $ ST @=>  last; 
+    ech.connect(last $ ST , data.tick * 2 / 3 , .7);  ech $ ST @=>  last; 
   
     STMIX stmix2;
     stmix2.send(last, mixer + 1);
@@ -1712,10 +1746,26 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
   fun void EFFECT3   (){ 
     STMIX stmix;
     stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
-  
-  STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
-  stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 3 * 100 /* freq base */, 8 * 100 /* freq var */, data.tick * 5 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
-  4 => stautobpfx0.gain;
+
+STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
+stfreeresx0.connect(last $ ST , stfreeresx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
+SinOsc sin0 => OFFSET ofs0  => stfreeresx0.freq; // CONNECT THIS
+0.1 => sin0.freq;
+249* 10.0 => sin0.gain;
+
+444 * 10. => ofs0.offset;
+1.0 => ofs0.gain;
+ 
+
+TriOsc tri0 =>  ofs0;
+0.13 => tri0.freq;
+3333.0 => tri0.gain;
+0.5 => tri0.width;
+
+
+STAUTOPAN autopan;
+autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
     STMIX stmix2;
     stmix2.send(last, mixer + 2);
     //stmix.receive(11); stmix $ ST @=> ST @ last; 
@@ -1809,35 +1859,50 @@ fun void  CLAPS_8x8 (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
+spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+8 * data.tick => w.wait;
+spork ~ BW("*3 8__ ", 0/*n*/,29*100/*cut*/,2,1.0);
+spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+8 * data.tick => w.wait;
+
+spork ~ BW("*3 f!f_ ", 0/*n*/,29*100/*cut*/,2,0.8);
+spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+8 * data.tick => w.wait;
+
+spork ~ BW("*3 F_ ", 0/*n*/,29*100/*cut*/,1,6.0);
+spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+8 * data.tick => w.wait;
+
 // spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
 // spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
 // spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
 // spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
 
-    spork ~ BEAT1_8x8();
-    6 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
-    2 * 8 * data.tick => w.wait;
-
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    4 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
-    4 * 8 * data.tick => w.wait;
-
-    spork ~   TRANCEHHx8 (8, 4); 
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    4 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
-    4 * 8 * data.tick => w.wait;
-
-    spork ~   TRANCESNRHHx8 (8, 4); 
-    spork ~ BEAT1_8x8();
-    spork ~   CLAPS_8x8 (); 
-    6 * 8 * data.tick => w.wait;
-    spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
-    2 * 8 * data.tick => w.wait;
+//     spork ~ BEAT1_8x8();
+//     6 * 8 * data.tick => w.wait;
+//     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
+//     2 * 8 * data.tick => w.wait;
+// 
+//     spork ~ BEAT1_8x8();
+//     spork ~   CLAPS_8x8 (); 
+//     4 * 8 * data.tick => w.wait;
+//     spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
+//     4 * 8 * data.tick => w.wait;
+// 
+//     spork ~   TRANCEHHx8 (8, 4); 
+//     spork ~ BEAT1_8x8();
+//     spork ~   CLAPS_8x8 (); 
+//     4 * 8 * data.tick => w.wait;
+//     spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
+//     4 * 8 * data.tick => w.wait;
+// 
+//     spork ~   TRANCESNRHHx8 (8, 4); 
+//     spork ~ BEAT1_8x8();
+//     spork ~   CLAPS_8x8 (); 
+//     6 * 8 * data.tick => w.wait;
+//     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
+//     2 * 8 * data.tick => w.wait;
 //    for (0 => int i; i <  8     ; i++) {
 
 //    }
@@ -2088,7 +2153,7 @@ fun void  LOOPLAB  (){
   //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 
