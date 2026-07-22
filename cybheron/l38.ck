@@ -1135,12 +1135,12 @@ fun void TRANCEHH(string seq) {
          n - 1 => n;
      }
      for (0 => int i; i <  n     ; i++) {
-spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh }7+8thh -6h+6hh thh -6h+6hh thh -6h+6hh thh  "); 
+        spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh }7+8+4thh -6h+6hh thh -6h+6hh thh -6h+6hh thh  "); 
 //      spork ~  TRANCEHH ("*3 +3 {2 __h   }5+3thh __h t_h _hh t_h _hh thh"); 
        8 * data.tick => w.wait;
      }
      if ( remove_last_beats  ){
-       "*3 +3 {2 _hh   }5+3thh" => string seq;
+       "*3 +3 {2 _hh   }7+8+4thh" => string seq;
        for (0 => int i; i <  6 - remove_last_beats ; i++) {
          if ( i % 2 == 0  ){
          seq + "_hh " => seq;
@@ -1878,6 +1878,8 @@ fun void  FROGSx8(int n){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+     spork ~   TRANCESNRHHx8 (8, 4); 
+     8 * 8 * data.tick => w.wait;
 
 
 //  spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
@@ -2200,7 +2202,7 @@ while(0) { /********************************************************/
 
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l38.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l38.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2261,7 +2263,7 @@ if (rectrack.play_or_rec() ) {
      2 * 8 * data.tick => w.wait;
 
      spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
-     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 6////1"/*gseq*/,":8:2 1////4"/*odseq*/,6.8/*drive*/,0,2.4);
+     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 6////1"/*gseq*/,":8:2 1////4"/*odseq*/,6.8/*drive*/,0,1.1);
      spork ~ FROGSx8 (4); 
      spork ~   TRANCESNRHHx8 (8, 4); 
      spork ~ BEAT1_8x8();
@@ -2272,7 +2274,7 @@ if (rectrack.play_or_rec() ) {
 
      spork ~   MELO (); 
      spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
-     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 1////A"/*gseq*/,":8:2 4////6"/*odseq*/,6.8/*drive*/,0,2.4);
+     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 1////A"/*gseq*/,":8:2 4////6"/*odseq*/,6.8/*drive*/,0,1.1);
      spork ~ FROGSx8 (4); 
      spork ~   TRANCESNRHHx8 (8, 4); 
      spork ~ BEAT1_8x8();
