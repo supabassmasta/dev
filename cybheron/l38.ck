@@ -1110,9 +1110,9 @@ fun void TRANCEHH(string seq) {
          n - 1 => n;
      }
      for (0 => int i; i <  n     ; i++) {
-//      spork ~  TRANCEHH ("*3 +3 {2 __h   _hh__h   _hh__h   _hh__h _hh  "); 
-//      spork ~  TRANCEHH ("*3 +3 {2  _hh _hh _hh _hh _hh _hh _hh _hh  "); 
-      spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh  "); 
+       //      spork ~  TRANCEHH ("*3 +3 {2 __h   _hh__h   _hh__h   _hh__h _hh  "); 
+       //      spork ~  TRANCEHH ("*3 +3 {2  _hh _hh _hh _hh _hh _hh _hh _hh  "); 
+       spork ~  TRANCEHH ("*3 +1 {2  -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh -6h+6hh  "); 
        8 * data.tick => w.wait;
      }
      if ( remove_last_beats  ){
@@ -1857,26 +1857,45 @@ fun void  CLAPS_8x8 (){
       2 * 8 * data.tick => w.wait;
 } 
 
+fun void  MELO  (){ 
+  spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
+  8 * data.tick => w.wait;
+  spork ~ BW("*3 8__ ", 0/*n*/,29*100/*cut*/,2,1.0);
+  8 * data.tick => w.wait;
+  spork ~ BW("*3 }c 1!5_ ", 0/*n*/,29*100/*cut*/,1,0.8);
+  8 * data.tick => w.wait;
+  spork ~ BW("*3 f!f_ ", 0/*n*/,29*100/*cut*/,2,0.8);
+  8 * data.tick => w.wait;
+} 
+
+fun void  FROGSx8(int n){ 
+  for (0 => int i; i < n; i++) {
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+    8 * data.tick => w.wait;
+  }
+   
+} 
+
 fun void  LOOPLAB  (){ 
   while(1) {
 
 
-spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
-spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
-8 * data.tick => w.wait;
-
-spork ~ BW("*3 8__ ", 0/*n*/,29*100/*cut*/,2,1.0);
-spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
-8 * data.tick => w.wait;
-
-spork ~ BW("*3 }c 1!5_ ", 0/*n*/,29*100/*cut*/,1,0.8);
-spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
-8 * data.tick => w.wait;
-
-spork ~ BW("*3 f!f_ ", 0/*n*/,29*100/*cut*/,2,0.8);
-spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
-8 * data.tick => w.wait;
-
+//  spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
+//  spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+//  8 * data.tick => w.wait;
+//  
+//  spork ~ BW("*3 8__ ", 0/*n*/,29*100/*cut*/,2,1.0);
+//  spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+//  8 * data.tick => w.wait;
+//  
+//  spork ~ BW("*3 }c 1!5_ ", 0/*n*/,29*100/*cut*/,1,0.8);
+//  spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+//  8 * data.tick => w.wait;
+//  
+//  spork ~ BW("*3 f!f_ ", 0/*n*/,29*100/*cut*/,2,0.8);
+//  spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+//  8 * data.tick => w.wait;
+//  
 
 //spork ~ BW("*3 F_ ", 0/*n*/,29*100/*cut*/,1,6.0);
 //spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
@@ -2161,10 +2180,8 @@ spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,
   //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
-    spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
-   spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 6////1"/*gseq*/,":8:2 1////4"/*odseq*/,6.8/*drive*/,0,2.4);
 
 
 // LOOP
@@ -2209,28 +2226,60 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
+//   spork ~   MELO (); 
+     spork ~ BEAT1_8x8();
+     8 * 8 * data.tick => w.wait;
+
+     spork ~ FROGSx8 (4); 
      spork ~ BEAT1_8x8();
      6 * 8 * data.tick => w.wait;
      spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 H/G"/*fmod*/, ":8:2 1/f"/*gmod*/,65/*k*/,16*data.tick, 2,.5);
      2 * 8 * data.tick => w.wait;
  
+     spork ~ FROGSx8 (6); 
      spork ~ BEAT1_8x8();
      spork ~   CLAPS_8x8 (); 
      4 * 8 * data.tick => w.wait;
      spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
      4 * 8 * data.tick => w.wait;
  
+     spork ~   MELO (); 
      spork ~   TRANCEHHx8 (8, 4); 
      spork ~ BEAT1_8x8();
      spork ~   CLAPS_8x8 (); 
      4 * 8 * data.tick => w.wait;
+     spork ~   MELO (); 
      spork ~ RING("{c:4 1111 1111 1////F F////1", ":8:4 H/A"/*fmod*/, ":8:4 1/f"/*gmod*/,66/*k*/,2*16*data.tick, 2,.3);
      4 * 8 * data.tick => w.wait;
  
+     spork ~ FROGSx8 (8); 
      spork ~   TRANCESNRHHx8 (8, 4); 
      spork ~ BEAT1_8x8();
      spork ~   CLAPS_8x8 (); 
      6 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
+     2 * 8 * data.tick => w.wait;
+
+     spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
+     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 6////1"/*gseq*/,":8:2 1////4"/*odseq*/,6.8/*drive*/,0,2.4);
+     spork ~ FROGSx8 (4); 
+     spork ~   TRANCESNRHHx8 (8, 4); 
+     spork ~ BEAT1_8x8();
+     spork ~   CLAPS_8x8 (); 
+     6 * 8 * data.tick => w.wait;
+     spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
+     2 * 8 * data.tick => w.wait;
+
+     spork ~   MELO (); 
+     spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
+     spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 1////A"/*gseq*/,":8:2 4////6"/*odseq*/,6.8/*drive*/,0,2.4);
+     spork ~ FROGSx8 (4); 
+     spork ~   TRANCESNRHHx8 (8, 4); 
+     spork ~ BEAT1_8x8();
+     spork ~   CLAPS_8x8 (); 
+     4 * 8 * data.tick => w.wait;
+     spork ~   MELO (); 
+     2 * 8 * data.tick => w.wait;
      spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
      2 * 8 * data.tick => w.wait;
 
