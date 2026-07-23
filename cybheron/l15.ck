@@ -733,6 +733,8 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0
   spork ~  EFFECT3();
 //////////////////////////////////////////////////////////////////////////////
 fun void  LOOP_SPECTR  (){ 
+    while(1) {
+     
     8 * 8 * data.tick => w.wait;
     spork ~ SPECTR (36/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
     8 * 8 * data.tick => w.wait;
@@ -742,6 +744,7 @@ fun void  LOOP_SPECTR  (){
     8 * 8 * data.tick => w.wait;
     spork ~ SPECTR (38/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,1/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.0); 
     8 * 8 * data.tick => w.wait;
+    }
 
 
 } 
