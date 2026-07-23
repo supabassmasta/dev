@@ -7,12 +7,12 @@ KIK kik;
 kik.config(0.2 /* init Sin Phase */, 21 * 100 /* init freq env */, 0.9 /* init gain env */);
 kik.addFreqPoint (233.0, 2::ms);
 kik.addFreqPoint (90.0, 50::ms);
-kik.addFreqPoint (31.0, 13 * 10::ms);
+kik.addFreqPoint (31.0, 20 * 10::ms);
 
 kik.addGainPoint (0.6, 13::ms);
 kik.addGainPoint (0.4, 25::ms);
 kik.addGainPoint (1.0, 10::ms);
-kik.addGainPoint (1.0, 11 * 10::ms);
+kik.addGainPoint (1.0, 18 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
 fun void KICK(string seq, int tomix, float g) {
@@ -1966,8 +1966,8 @@ fun void  ACID  (string seq, int nb,string target_f, string base_f, string targe
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
-150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-53 => data.ref_note;
+104 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+48 => data.ref_note;
 "aeo" => data.scale.my_string;
 <<<"SCALE: ", data.scale.my_string>>>;
 
@@ -1995,7 +1995,7 @@ fun void EFFECT1   (){
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
 
 STDISTO stdisto;
-stdisto.connect(last $ ST,3/*mode*/,2.9/*gain in*/,1/*dc blcok*/,1/*chan*/,0.5/*gain*/);       stdisto $ ST @=>  last;  
+stdisto.connect(last $ ST,3/*mode*/,1.0/*gain in*/,1/*dc blcok*/,1/*chan*/,1.0/*gain*/);       stdisto $ ST @=>  last;  
 //4.0 => stdisto.distl.drive=> stdisto.distr.drive;
 //.7 => stdisto.distl.threshold=> stdisto.distr.threshold;  
 .12 => stdisto.distl.bias=> stdisto.distr.bias;
@@ -2070,8 +2070,8 @@ spork ~  EFFECT4();
 fun void  LOOPLAB  (){ 
   while(1) {
    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",1,1.);
-    spork ~ BASS0HF("*4 !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",1,1.);
-    spork ~ BASS0(" *4   __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",1,1.);
+    spork ~ BASS0HF("*4  !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__ !1!1__    ",1,1.);
+    spork ~ BASS0(" *4    __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1 __!1!1   ",1,1.);
     spork ~  BASS0_ATTACK ("*4     aaaa aaaa aaaa aaaa aaaa aaaa aaaa aaaa  ", 0.7 /* rate */,0, .16 /* g */); 
     1 *8 * data.tick => w.wait;
 //  spork ~   ACID ("*8    5_1_3_1_ 1_0_1_1_  3_1_1_1_ -3 8_ +3 1_1_5_  ", 1226, ":2 F/11///F" /*target_f*/, ":2 1//33///1" /*base_f*/, ":8:2 1/33/1" /*target_q*/, 8*8*data.tick , 1, .3);
