@@ -15,7 +15,7 @@ kik.addGainPoint (1.0, 10::ms);
 kik.addGainPoint (1.0, 10 * 10::ms);
 kik.addGainPoint (0.0, 15::ms); 
 
-fun void KICK(string seq) {
+fun void KICK(string seq, int tomix, float g) {
   local_delay => now;
 
   TONE t;
@@ -38,6 +38,11 @@ fun void KICK(string seq) {
 
 STDUCKMASTER duckm;
 duckm.connect(last $ ST, 9. /* In Gain */, .04 /* Tresh */, .2 /* Slope */, 2::ms /* Attack */, 30::ms /* Release */ );      duckm $ ST @=>  last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
 
   1::samp => now; // let seq() be sporked to compute length
   t.s.duration - 1::samp => now;
@@ -100,7 +105,7 @@ class SERUM_WT1 extends SYNT{
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-fun void BASS0 (string seq) {
+fun void BASS0 (string seq, int tomix, float g) {
 //  local_delay - 15::ms => now;
   local_delay  => now;
   TONE t;
@@ -139,6 +144,12 @@ fun void BASS0 (string seq) {
 
   STDUCK duck;
   duck.connect(last $ ST);      duck $ ST @=>  last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
 //28::samp => dur convrevin_dur;
 // IR generation examples:
 //KIK kik;
@@ -1741,10 +1752,8 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0
   } 
   spork ~  EFFECT3();  
 
-fun void  LOOP_SPECTR  (){ 
-    while(1) {
+fun void  LOOP_SPECTR_32x8  (){ 
      
-    8 * 8 * data.tick => w.wait;
     spork ~ SPECTR (36/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
     8 * 8 * data.tick => w.wait;
     spork ~ SPECTR (38/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
@@ -1753,9 +1762,40 @@ fun void  LOOP_SPECTR  (){
     8 * 8 * data.tick => w.wait;
     spork ~ SPECTR (38/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,1/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,2 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.0); 
     8 * 8 * data.tick => w.wait;
-    }
 
 
+} 
+
+fun void  LOOP_PERC1_4x8 (int n){ 
+  for (0 => int i; i < n; i++) {
+    spork ~ TRIBAL_CUSTOM("*4 __Z_ ____ Y_Y_ ____ __X_    ", 1 /* tomix */, 1.0 /* gain */);
+    spork ~ TRIBAL_CUSTOM("*4 ____ ____ ____ ____ ____ ____ aa__    ", 2 /* tomix */, 1.0 /* gain */);
+    2 * 8 * data.tick => w.wait;
+    spork ~ TRIBAL_CUSTOM("*4 __Z_ ____ Y_V_ ____ X___    ", 1 /* tomix */, 1.0 /* gain */);
+    spork ~ TRIBAL_CUSTOM("*4 ____ ____ ____ ____ ____ ____ fb__    ", 2 /* tomix */, 1.0 /* gain */);
+    2 * 8 * data.tick => w.wait;
+  }
+} 
+
+fun void  MARACASSE_2x8  (int n){ 
+  for (0 => int i; i < n; i++) {
+    spork ~ TRIBAL_CUSTOM("*4  __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR __RR  ", 1 /* tomix */, 0.7 /* gain */);
+    2* 8 * data.tick => w.wait;
+  }
+} 
+
+fun void  FROGSnCOMBS_4x8  (int n){ 
+  1::second / Std.mtof(data.ref_note) => dur comb_dur;
+  for (0 => int i; i < n; i++) {
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+    8 * data.tick => w.wait;
+    spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",6) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,2,1.0); 
+    8 * data.tick => w.wait;
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+    8 * data.tick => w.wait;
+    spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",6) ,2*comb_dur/*comb_dur*/,.94/*comb_res*/,2,1.0); 
+    8 * data.tick => w.wait;
+  }
 } 
 
 
@@ -1788,8 +1828,13 @@ spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",6) ,4*com
 
   }
 } 
-spork ~ LOOPLAB();
-spork ~  LOOP_SPECTR  (); 
+spork ~   LOOP_PERC1_4x8 (16); 
+spork ~   MARACASSE_2x8 (32); 
+spork ~   FROGSnCOMBS_4x8 (16); 
+spork ~  LOOP_SPECTR_32x8  (); 
+
+
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 
@@ -1836,8 +1881,8 @@ if (rectrack.play_or_rec() ) {
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
 
-  spork ~KICK("*4     k___ k___ k___ k___ k___ k___ k___ k___");
-  spork ~ BASS0(" *4 !1111 __11 ____ __11!1111 __33 __11 ____     ");
+  spork ~KICK("*4     k___ k___ k___ k___ k___ k___ k___ k___",0,1.);
+  spork ~ BASS0(" *4 !1111 __11 ____ __11!1111 __33 __11 ____     ",0,1.);
   8 * data.tick =>  w.wait; 
 
 
