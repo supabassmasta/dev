@@ -1751,15 +1751,15 @@ STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
 stfreeresx0.connect(last $ ST , stfreeresx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
 SinOsc sin0 => OFFSET ofs0  => stfreeresx0.freq; // CONNECT THIS
 0.1 => sin0.freq;
-249* 10.0 => sin0.gain;
+189* 10.0 => sin0.gain;
 
-444 * 10. => ofs0.offset;
+540 * 10. => ofs0.offset;
 1.0 => ofs0.gain;
  
 
 TriOsc tri0 =>  ofs0;
 0.13 => tri0.freq;
-3333.0 => tri0.gain;
+1733.0 => tri0.gain;
 0.5 => tri0.width;
 
 
@@ -1776,6 +1776,7 @@ autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0
      
   } 
   spork ~  EFFECT3();
+
   
   fun void EFFECT4   (){ 
     STMIX stmix;
