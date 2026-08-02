@@ -1986,11 +1986,52 @@ fun void  BEAT3_8x8  (){
   
 } 
 
+fun void BELLS_8x8 (){ 
+        1 * 12 * data.tick =>  w.wait; 
+     spork ~ BW(" *4 " + RAND.char("1358B", 2) , 2/*n*/,200*100/*cut*/,2,1.4); 
+       2 * 8 * data.tick =>  w.wait; 
+     spork ~ BW("}c *4 " + RAND.char("1358B_", 3) , 3/*n*/,200*100/*cut*/,2,1.2); 
+      2 * 8 * data.tick =>  w.wait; 
+     spork ~ BW(" *4 " + RAND.char("1358B", 2) , 3/*n*/,200*100/*cut*/,2,2.2); 
+       2 *  8 * data.tick =>  w.wait; 
+     spork ~ BW("}c *4 " + RAND.char("1358B_", 3) , 2/*n*/,200*100/*cut*/,2,0.8); 
+       2 * 8 * data.tick =>  w.wait; 
+} 
+
+fun void  RINGS_16x8  (){ 
+        spork ~ RING(" 1//F ", ":2 G/Z"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" f ", ":2 V/1"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" F ", ":2 G/Z"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" 1//F ", ":4 Z/G"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+ 
+        spork ~ RING(" F//1 ", ":4 Z/G"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" f/11/f ", ":1 V/11/Z"/*fmod*/, ":1 8/11/8"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" 1////F F////1", ":4 Z/G"/*fmod*/, ":1 8/1"/*gmod*/,65/*k*/,1*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+        spork ~ RING(" 1 ", ":2 G/Z"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
+        2 * 8 * data.tick =>  w.wait; 
+} 
+
 
 fun void  LOOPLAB  (){ 
   while(1) {
-     spork ~ BW("}c 1___ ", 3/*n*/,200*100/*cut*/,1,1.4); 
-        8 * data.tick =>  w.wait; 
+    spork ~   RINGS_16x8 (); 
+    spork ~   BELLS_8x8(); 
+    spork ~ BEAT1_8x8();
+    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
+    spork ~   BELLS_8x8(); 
+    spork ~ BEAT3_8x8();
+    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
  
 //        spork ~ RING(" 1//F ", ":2 G/Z"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
 //        8 * data.tick =>  w.wait; 
@@ -2089,7 +2130,7 @@ fun void  LOOPLAB  (){
 
 
 //spork ~ LOOPLAB();
-spork ~ BEAT3_8x8();
+//spork ~ BEAT3_8x8();
 LOOPLAB(); 
 
 
