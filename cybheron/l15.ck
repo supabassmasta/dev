@@ -1981,21 +1981,23 @@ fun void  BEAT3_8x8  (){
     spork ~KICK("*4     k___ k___ k___ k___ k___ k___ k___ k___",10,1.);
     spork ~ BASS0(" *4 !1111 __11 ____ __11!1111 __33 __11 ____     ",10,1.);
     8 * data.tick =>  w.wait; 
+    local_delay =>  w.wait; 
     
 
   
 } 
 
-fun void BELLS_8x8 (){ 
+fun void BELLS_16x8 (){ 
         1 * 12 * data.tick =>  w.wait; 
      spork ~ BW(" *4 " + RAND.char("1358B", 2) , 2/*n*/,200*100/*cut*/,2,1.4); 
-       2 * 8 * data.tick =>  w.wait; 
+       4 * 8 * data.tick =>  w.wait; 
      spork ~ BW("}c *4 " + RAND.char("1358B_", 3) , 3/*n*/,200*100/*cut*/,2,1.2); 
-      2 * 8 * data.tick =>  w.wait; 
+      4 * 8 * data.tick =>  w.wait; 
      spork ~ BW(" *4 " + RAND.char("1358B", 2) , 3/*n*/,200*100/*cut*/,2,2.2); 
-       2 *  8 * data.tick =>  w.wait; 
+       4 *  8 * data.tick =>  w.wait; 
      spork ~ BW("}c *4 " + RAND.char("1358B_", 3) , 2/*n*/,200*100/*cut*/,2,0.8); 
-       2 * 8 * data.tick =>  w.wait; 
+       4 * 8 * data.tick =>  w.wait; 
+    local_delay =>  w.wait; 
 } 
 
 fun void  RINGS_16x8  (){ 
@@ -2016,18 +2018,34 @@ fun void  RINGS_16x8  (){
         2 * 8 * data.tick =>  w.wait; 
         spork ~ RING(" 1 ", ":2 G/Z"/*fmod*/, ":2 8/1"/*gmod*/,65/*k*/,2*data.tick, 2,.4);
         2 * 8 * data.tick =>  w.wait; 
+    local_delay =>  w.wait; 
 } 
 
+fun void  FROGSnCOMBS_4x8_8DELAYED  (int n){ 
+  1::second / Std.mtof(data.ref_note) => dur comb_dur;
+     8 * data.tick => w.wait; 
+  for (0 => int i; i < n; i++) {
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+    8 * data.tick => w.wait;
+    spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",6) ,4*comb_dur/*comb_dur*/,.91/*comb_res*/,2,1.0); 
+    8 * data.tick => w.wait;
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 3, 3.8);
+    8 * data.tick => w.wait;
+    spork ~   COMB ("*8   " + RAND.seq("1_1_, B___, 8_,  3_1_, 5___, 2_, ",6) ,2*comb_dur/*comb_dur*/,.94/*comb_res*/,2,1.0); 
+    8 * data.tick => w.wait;
+  }
+    local_delay =>  w.wait; 
+} 
 
 fun void  LOOPLAB  (){ 
   while(1) {
     spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
+    spork ~   BELLS_16x8(); 
     spork ~ BEAT1_8x8();
     spork ~   FROGSnCOMBS_4x8 (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
-    spork ~   BELLS_8x8(); 
+    spork ~   BELLS_16x8(); 
     spork ~ BEAT3_8x8();
     spork ~   FROGSnCOMBS_4x8 (2);
     spork ~   LOOP_PERC1_4x8 (2); 
@@ -2150,7 +2168,7 @@ while(0) { /********************************************************/
 
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l15.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l15.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2217,7 +2235,7 @@ if (rectrack.play_or_rec() ) {
 
 ///////////////////////
     spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
+    spork ~   BELLS_16x8(); 
 
      spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,":8:28/55/8"/*gseq*/,":8m//MM//m"/*lpfseq*/,2/*lpforder*/,0,1.0);
      spork ~KICK("*4     k___ k___ k___ k___ k___ k___ k___ k___",10,1.);
@@ -2235,9 +2253,36 @@ if (rectrack.play_or_rec() ) {
 
     spork ~ BEAT1_8x8();
     4 * 8 * data.tick =>  w.wait;
-    spork ~   FROGSnCOMBS_4x8 (1);
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (1);
     4 * 8 * data.tick =>  w.wait;
 
+    //////
+
+    spork ~   RINGS_16x8 (); 
+    spork ~   BELLS_16x8(); 
+    spork ~  LOOP_SPECTR_32x8  ();
+    
+    spork ~ BEAT1_8x8();
+    spork ~   FROGSnCOMBS_4x8_8DELAYED(2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
+    spork ~ BEAT3_8x8();
+    spork ~   FROGSnCOMBS_4x8_8DELAYED  (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
+
+    spork ~   RINGS_16x8 (); 
+    spork ~   BELLS_16x8(); 
+    spork ~   MARACASSE_2x8 (8); 
+
+    spork ~ BEAT1_8x8();
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
+    spork ~ BEAT2_8x8();
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
 
 
   //// STOP REC ///////////////////////////////
@@ -2255,60 +2300,33 @@ if (rectrack.play_or_rec() ) {
     //////////////////////////////////////////////////
     //////
 
-    spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
-    spork ~  LOOP_SPECTR_32x8  ();
-    
-    spork ~ BEAT1_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
-    spork ~   LOOP_PERC1_4x8 (2); 
-    8 * 8 * data.tick =>  w.wait;
-    spork ~ BEAT3_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
-    spork ~   LOOP_PERC1_4x8 (2); 
-    8 * 8 * data.tick =>  w.wait;
-
-    spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
-    spork ~   MARACASSE_2x8 (8); 
-
-    spork ~ BEAT1_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
-    spork ~   LOOP_PERC1_4x8 (2); 
-    8 * 8 * data.tick =>  w.wait;
-    spork ~ BEAT2_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
-    spork ~   LOOP_PERC1_4x8 (2); 
-    8 * 8 * data.tick =>  w.wait;
 
 
-    //////
-
+    spork ~   MARACASSE_2x8 (16); 
     spork ~   TRANCESNRHHx8 (32, 4); 
 
     spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
+    spork ~   BELLS_16x8(); 
     spork ~  LOOP_SPECTR_32x8  ();
     
     spork ~ BEAT1_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
     spork ~ BEAT3_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
 
     spork ~   RINGS_16x8 (); 
-    spork ~   BELLS_8x8(); 
-    spork ~   MARACASSE_2x8 (8); 
+    spork ~   BELLS_16x8(); 
 
     spork ~ BEAT1_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
     spork ~ BEAT2_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   FROGSnCOMBS_4x8_8DELAYED (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
 
