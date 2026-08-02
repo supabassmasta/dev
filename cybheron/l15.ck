@@ -2150,7 +2150,7 @@ while(0) { /********************************************************/
 
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l15.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l15.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2160,23 +2160,6 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-1::samp => w.wait;
-
-
-  //// STOP REC ///////////////////////////////
-  rectrack.rec_stop();
-  //////////////////////////////////////////////////
-
-  ///////////////////////// END LOOP ///////////////////////////////////::
-  0 => data.next;
-  while (!data.next) {
-    <<<"**********">>>;
-    <<<" END LOOP ">>>;
-    <<<"**********">>>;
-    // REC END LOOP //////////////////////////////////
-    rectrack.rec_end_loop();
-    //////////////////////////////////////////////////
-if ( 0  ){
     spork ~ BEAT1_8x8();
     4 * 8 * data.tick =>  w.wait;
     spork ~   FROGSnCOMBS_4x8 (1);
@@ -2219,16 +2202,15 @@ if ( 0  ){
     spork ~   FROGSnCOMBS_4x8 (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
-    spork ~ BEAT3_8x8();
-    spork ~   FROGSnCOMBS_4x8 (2);
-    spork ~   LOOP_PERC1_4x8 (2); 
-    8 * 8 * data.tick =>  w.wait;
     spork ~ BEAT1_8x8();
     spork ~   FROGSnCOMBS_4x8 (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
-}
     spork ~ BEAT3_8x8();
+    spork ~   FROGSnCOMBS_4x8 (2);
+    spork ~   LOOP_PERC1_4x8 (2); 
+    8 * 8 * data.tick =>  w.wait;
+    spork ~ BEAT2_8x8();
     spork ~   FROGSnCOMBS_4x8 (2);
     spork ~   LOOP_PERC1_4x8 (2); 
     8 * 8 * data.tick =>  w.wait;
@@ -2256,8 +2238,22 @@ if ( 0  ){
     spork ~   FROGSnCOMBS_4x8 (1);
     4 * 8 * data.tick =>  w.wait;
 
+
+
+  //// STOP REC ///////////////////////////////
+  rectrack.rec_stop();
+  //////////////////////////////////////////////////
+
+  ///////////////////////// END LOOP ///////////////////////////////////::
+  0 => data.next;
+  while (!data.next) {
+    <<<"**********">>>;
+    <<<" END LOOP ">>>;
+    <<<"**********">>>;
+    // REC END LOOP //////////////////////////////////
+    rectrack.rec_end_loop();
+    //////////////////////////////////////////////////
     //////
-    spork ~   TRANCESNRHHx8 (32, 4); 
 
     spork ~   RINGS_16x8 (); 
     spork ~   BELLS_8x8(); 
@@ -2288,6 +2284,7 @@ if ( 0  ){
 
     //////
 
+    spork ~   TRANCESNRHHx8 (32, 4); 
 
     spork ~   RINGS_16x8 (); 
     spork ~   BELLS_8x8(); 
