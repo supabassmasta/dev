@@ -1873,6 +1873,41 @@ fun void  SPECTR (int note, int nfile, float loopStart, float loopEnd, float pit
   ss.stop();
 } 
 
+ class syntSqr extends SYNT{
+
+    inlet => SqrOsc s =>  outlet; 
+      .5 => s.gain;
+
+        fun void on()  { }  fun void off() { }  fun void new_note(int idx)  { } 0 => own_adsr;
+ } 
+
+// Warning works with EFFECT 5
+//    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
+fun void SYNTFROG (string seq, dur gldur, dur d, int tomix, float v) {
+  local_delay => now;
+
+  TONE t;
+  t.reg(syntSqr s0);  //data.tick * 8 => t.max; 
+  gldur => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
+                     //t.set_scale(data.scale.my_string);// t.aeo(); // t.phr();// t.loc(); t.double_harmonic();
+  t.set_scale(data.scale.my_string);
+  // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
+  seq => t.seq;
+  v * data.master_gain => t.gain;
+  //t.sync(4*data.tick);// t.element_sync();// 
+  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
+              // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;
+              //t.adsr[0].set(2::ms, 10::ms, .2, 400::ms);
+              //t.adsr[0].setCurves(1.0, 1.0, 1.0); // curves: > 1 = Attack concave, other convexe  < 1 Attack convexe others concave
+  t.go();   t $ ST @=> ST @ last; 
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+  d => now;
+}
+   
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -1963,18 +1998,57 @@ fun void EFFECT4   (){
 } 
 spork ~  EFFECT4();
 
+// For SYNTFROG
+fun void EFFECT5   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 5); stmix $ ST @=> ST @ last; 
+
+  STFREEFILTERX stfreeresx0; RES_XFACTORY stfreeresx0_fact;
+  stfreeresx0.connect(last $ ST , stfreeresx0_fact, 3 /* Q */, 1 /* order */, 1 /* channels */ , 1::ms /* period */ ); stfreeresx0 $ ST @=>  last; 
+  SinOsc sin0 => OFFSET ofs0  => stfreeresx0.freq; // CONNECT THIS
+  0.1 => sin0.freq;
+  189* 10.0 => sin0.gain;
+
+  540 * 10. => ofs0.offset;
+  1.0 => ofs0.gain;
+
+
+  TriOsc tri0 =>  ofs0;
+  0.13 => tri0.freq;
+  1733.0 => tri0.gain;
+  0.5 => tri0.width;
+
+  STAUTOPAN autopan;
+  autopan.connect(last $ ST, .9 /* span 0..1 */, data.tick * 8 / 1 /* period */, 0.95 /* phase 0..1 */ );       autopan $ ST @=>  last; 
+
+  STMIX stmix2;
+  stmix2.send(last, mixer + 2);
+  //stmix.receive(11); stmix $ ST @=> ST @ last; 
+
+  while(1) {
+    100::ms => now;
+  }
+     
+} 
+spork ~  EFFECT5();  
+
+
+
 fun void  LOOPLAB  (){ 
   while(1) {
-   spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.9); 
-   4 * 8 * data.tick => w.wait;
-   spork ~ SPECTR (29/*note*/,22/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.2); 
-   2 * 8 * data.tick => w.wait;
-   spork ~ SPECTR (29/*note*/,20/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
-   3 * 8 * data.tick => w.wait;
-   spork ~ SPECTR (29 + 24/*note*/,7/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.5); 
-   3 * 8 * data.tick => w.wait;
-   spork ~ SPECTR (32/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.7); 
-   2 * 8 * data.tick => w.wait;
+    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
+    1 * 8 * data.tick => w.wait;
+
+//    spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.9); 
+//    4 * 8 * data.tick => w.wait;
+//    spork ~ SPECTR (29/*note*/,22/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 1.2); 
+//    2 * 8 * data.tick => w.wait;
+//    spork ~ SPECTR (29/*note*/,20/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1, 0.6); 
+//    3 * 8 * data.tick => w.wait;
+//    spork ~ SPECTR (29 + 24/*note*/,7/*file*/,0.4/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.5); 
+//    3 * 8 * data.tick => w.wait;
+//    spork ~ SPECTR (32/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.7); 
+//    2 * 8 * data.tick => w.wait;
 //   spork ~   TRANCEHHx8 (4, 4); 
 //  spork ~   CRAZYMOD (" *4 " + RAND.seq("!1_8_,!f!f!1_,!1!8!8_,!1!1!1_,!8!8__,!8!5!1_,!FF__,!F!B!__", 12), 20/*n*/,200*100/*cut*/,1,0.5); 
 //  spork ~   CRAZYMOD (" *4 " + RAND.seq("!1_8_,!f!f!1_,!1!8!8_,!1!1!1_,!8!8__,!8!5!1_,!FF__,!F!B!__", 128), 20/*n*/,200*100/*cut*/,8*data.tick/*d*/,0,0.5); 
@@ -2216,7 +2290,7 @@ fun void  LOOPLAB  (){
   }
 } 
 //spork ~ LOOPLAB();
-//LOOPLAB(); 
+LOOPLAB(); 
 
 
 // LOOP
