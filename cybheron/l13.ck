@@ -2035,7 +2035,7 @@ fun void EFFECT4   (){
 //  STCONVREV stconvrev;
 //  stconvrev.connect(last $ ST , 17/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .16 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
   STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 74/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .2 /* rev gain */  , 0.3 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  stconvrev.connect(last $ ST , 74/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .12 /* rev gain */  , 0.10 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
   while(1) {
          100::ms => now;
@@ -2089,16 +2089,18 @@ fun void BEAT1  (int n){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ SPECTR (40/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
-    spork ~ SPECTR (62/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
-    spork ~ SPECTR (50/*note*/,7/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.1); 
+    spork ~ SPECTR (40 + Std.rand2(-1,1)*12/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
+if(maybe)2 * 8 * data.tick => w.wait;
+    spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 4, 0.1); 
 2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (62/*note*/,14/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
+    spork ~ SPECTR (50 + Std.rand2(-1,1)*12/*note*/,7/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.1); 
+if(maybe)2 * 8 * data.tick => w.wait;
+    spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,14/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
 2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (38/*note*/,30/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.5); 
-2 * 8 * data.tick => w.wait;
+    spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,30/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.2); 
+if(maybe)2 * 8 * data.tick => w.wait;
 
-    spork ~ SPECTR (38/*note*/,28/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.5); 
+    spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,28/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 6, 0.3); 
 2 * 8 * data.tick => w.wait;
 
 //  spork ~   ACID ("*8 }c   5_1_3_1_ 1_0_1_1_  3_1_1_1_ -3 8_ +3 1_1_5_  ", 1230, ":2 F/ff///F" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 1/33/1" /*target_q*/, 8*8*data.tick , 0, .1);
@@ -2373,9 +2375,9 @@ fun void  LOOPLAB  (){
   //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+spork ~ LOOPLAB();
 //    spork ~   BEAT1 (16); 
-LOOPLAB(); 
+//LOOPLAB(); 
 
 
 // LOOP
