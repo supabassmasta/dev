@@ -2079,7 +2079,16 @@ autopan.connect(last $ ST, .4 /* span 0..1 */, data.tick * 41 / 1 /* period */, 
 } 
 spork ~  EFFECT6();
 
-fun void BEAT1  (int n){ 
+fun void BEAT0_8  (int n){ 
+  for (0 => int i; i <  n     ; i++) {
+    spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+//    spork ~ BASS0("*2  _3 __ _3 _1 //1_ __ _3 _1  ",0,0.6);
+    //   spork ~ BASS0("*4  __33 __11 __33 __11 __33 __11 __33 __11    ",0,1.);
+//    spork ~  BASS0_ATTACK ("*2     _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+  }
+} 
+fun void BEAT1_8  (int n){ 
   for (0 => int i; i <  n     ; i++) {
     spork ~KICK("*4 k___ k___ k___ k___k___ k___ k___ k___",0,1.);
     spork ~ BASS0("*2  _3 __ _3 _1 //1_ __ _3 _1  ",0,0.6);
@@ -2089,23 +2098,59 @@ fun void BEAT1  (int n){
   }
 } 
 
+fun void  SPECTR_6to12x8  (int n){ 
+  for (0 => int i; i <   n    ; i++) {
+        spork ~ SPECTR (40 + Std.rand2(-1,1)*12/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
+        if(maybe)2 * 8 * data.tick => w.wait;
+            spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 4, 0.1); 
+        2 * 8 * data.tick => w.wait;
+            spork ~ SPECTR (50 + Std.rand2(-1,1)*12/*note*/,7/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.1); 
+        if(maybe)2 * 8 * data.tick => w.wait;
+            spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,14/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
+        2 * 8 * data.tick => w.wait;
+            spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,30/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.2); 
+        if(maybe)2 * 8 * data.tick => w.wait;
+
+            spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,28/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 6, 0.3); 
+        2 * 8 * data.tick => w.wait;
+   }
+} 
+
+fun void  ACIDLOOP_2x8  (int n){ 
+   for (0 => int i; i < n      ; i++) {
+
+      spork ~   ACID ("*8 {c {c 
+          ____ ____ ____ ____ ____ __1_ __3_ __1_ 
+          ____ ____ ____ ____ ____ 1___ ____ 3_3_ 
+          ____ ____ ____ ____ ____ 1___ __3_ __a_ 
+          ____ ____ ____ ____ 3_3_ ____ __3_ 8_1_ 
+          ", 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, 8*8*data.tick , 2, .27);
+
+        2 * 8 * data.tick => w.wait;
+   }
+    
+} 
+
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ SPECTR (40 + Std.rand2(-1,1)*12/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
-if(maybe)2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 4, 0.1); 
-2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (50 + Std.rand2(-1,1)*12/*note*/,7/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.1); 
-if(maybe)2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,14/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
-2 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,30/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.2); 
-if(maybe)2 * 8 * data.tick => w.wait;
+    2 * 8 * data.tick => w.wait;
 
-    spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,28/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 6, 0.3); 
-2 * 8 * data.tick => w.wait;
 
+//     spork ~ SPECTR (40 + Std.rand2(-1,1)*12/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
+// if(maybe)2 * 8 * data.tick => w.wait;
+//     spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 4, 0.1); 
+// 2 * 8 * data.tick => w.wait;
+//     spork ~ SPECTR (50 + Std.rand2(-1,1)*12/*note*/,7/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,1/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 6, 0.1); 
+// if(maybe)2 * 8 * data.tick => w.wait;
+//     spork ~ SPECTR (62 + Std.rand2(-2,0)*12/*note*/,14/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.2/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 4, 0.1); 
+// 2 * 8 * data.tick => w.wait;
+//     spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,30/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.2); 
+// if(maybe)2 * 8 * data.tick => w.wait;
+// 
+//     spork ~ SPECTR (38 + Std.rand2(-1,1)*12/*note*/,28/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,2 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 5 * 8 * data.tick, 6, 0.3); 
+// 2 * 8 * data.tick => w.wait;
+// 
 //  spork ~   ACID ("*8 }c   5_1_3_1_ 1_0_1_1_  3_1_1_1_ -3 8_ +3 1_1_5_  ", 1230, ":2 F/ff///F" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 1/33/1" /*target_q*/, 8*8*data.tick , 0, .1);
 //  spork ~   ACID ("*8 {c {c 
 //          1_1_ 1_1_ 1___ 3_2_ 3___ 1_1_ 3_3_ 3_1_ 
@@ -2378,7 +2423,7 @@ if(maybe)2 * 8 * data.tick => w.wait;
   //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //    spork ~   BEAT1 (16); 
 //LOOPLAB(); 
 
@@ -2396,7 +2441,7 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "lref.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l12.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2406,7 +2451,15 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-  4 * 8 * data.tick =>  w.wait; // DONT NOW Why this is needed, DestNegative happen sometimes if not present
+    spork ~  SPECTR_6to12x8 (145); 
+    8 * 8 * data.tick =>  w.wait; // DONT NOW Why this is needed, DestNegative happen sometimes if not present
+    spork ~   BEAT0_8 (8);
+    8 * 8 * data.tick =>  w.wait; 
+    spork ~   BEAT1_8 (8);
+    8 * 8 * data.tick =>  w.wait; 
+    spork ~ ACIDLOOP_2x8 (64); 
+    spork ~   BEAT1_8 (128);
+    128 * 8 * data.tick =>  w.wait; 
 
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();
@@ -2421,18 +2474,11 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-
-spork ~   BEAT1 (8);
-  spork ~   ACID ("*8 {c {c 
-          ____ ____ ____ ____ ____ __1_ __3_ __1_ 
-          ____ ____ ____ ____ ____ 1___ ____ 3_3_ 
-          ____ ____ ____ ____ ____ 1___ __3_ __a_ 
-          ____ ____ ____ ____ 3_3_ ____ __3_ 8_1_ 
-
-
-          ", 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, 8*8*data.tick , 2, .27);
-
+    spork ~  SPECTR_6to12x8 (1); 
+    spork ~ ACIDLOOP_2x8 (4); 
+    spork ~   BEAT1_8 (8);
     8 * 8 * data.tick =>  w.wait; 
+
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
     /////////////////////////////////////////////
