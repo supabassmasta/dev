@@ -2113,23 +2113,167 @@ fun void ACIDLOOP_4x8 () {
 2 * 8 * data.tick => w.wait;
 }
 
+fun void  BREAK1  (){ 
+       while(data.bpm < 180) {
+      data.bpm + 3.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+      <<<"data.bpm", data.bpm>>>;
+      spork ~KICK("*4 k___ k___ ",0,1.);
+      spork ~ BASS0("*2  _3  _1 ",0,1.);
+      spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+      1 * 2 * data.tick => w.wait;
+    }
+    while(data.bpm < 250) {
+      data.bpm + 9.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+      <<<"data.bpm", data.bpm>>>;
+      spork ~KICK("*4 k___ k___ ",0,1.);
+      spork ~ BASS0("*2  _3  _1 ",0,1.);
+      spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+      1 * 2 * data.tick => w.wait;
+    }
+    while(data.bpm < 1250) {
+      data.bpm + 27.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+      <<<"data.bpm", data.bpm>>>;
+      spork ~KICK("*4 k___ k___ ",0,1.);
+      spork ~ BASS0("*2  _3  _1 ",0,1.);
+      spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+      1 * 2 * data.tick => w.wait;
+    }
+    for (0 => int i; i < 10      ; i++) {
+       
+      spork ~KICK("*4 k___ k___ ",0,1.);
+      spork ~ BASS0("*2  _3  _1 ",0,1.);
+      spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+      1 * 2 * data.tick => w.wait;
+    }
+
+    150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+    1 * 4 * data.tick => w.wait;
+} 
+
+fun void  BREAK2  (){ 
+     while(data.bpm < 180) {
+        data.bpm + 4.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+        <<<"data.bpm", data.bpm>>>;
+        spork ~   ACID ("*4   1 " + RAND.seq("!3!2!1,]1,[1,!4!3!2!1,!2!1,!3,!2",12) 
+           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
+      }
+
+      while(data.bpm < 350) {
+        data.bpm + 7.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+        <<<"data.bpm", data.bpm>>>;
+        spork ~   ACID ("*4   1 " + RAND.seq("!3!2!1,]1,[1,!4!3!2!1,!2!1,!3,!2",12) 
+           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
+      }
+
+      for (0 => int i; i < 10      ; i++) {
+        spork ~   ACID ("*4  !3!2!1!4!3!2!1!2!1"           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
+
+      }
+
+      150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+      1 * 4 * data.tick => w.wait;
+} 
+
+
 
 fun void  LOOPLAB  (){ 
   while(1) {
+      while(data.bpm < 180) {
+        data.bpm + 4.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+        <<<"data.bpm", data.bpm>>>;
+        spork ~   ACID ("*4   1 " + RAND.seq("!3!2!1,]1,[1,!4!3!2!1,!2!1,!3,!2",12) 
+           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
+      }
 
-    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
-    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
+      while(data.bpm < 350) {
+        data.bpm + 7.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+        <<<"data.bpm", data.bpm>>>;
+        spork ~   ACID ("*4   1 " + RAND.seq("!3!2!1,]1,[1,!4!3!2!1,!2!1,!3,!2",12) 
+           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
+      }
 
-spork ~   PLOCLOOP_4x8 (); 
-  spork ~  ACIDLOOP_4x8();
-2 * 8 * data.tick => w.wait;
+      for (0 => int i; i < 10      ; i++) {
+        spork ~   ACID ("*4  !3!2!1!4!3!2!1!2!1"           , 1231, ":2 8///ff/8" /*target_f*/, ":2 1//88///1" /*base_f*/, ":8:2 F" /*target_q*/, (2 ) *data.tick , 3, .15);
+        1 * 2 * data.tick => w.wait;
 
-    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
-    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
+      }
 
-spork ~   PLOCLOOP_4x8 (); 
-  spork ~  ACIDLOOP_4x8();
-2 * 8 * data.tick => w.wait;
+      150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+      1 * 4 * data.tick => w.wait;
+      for (0 => int i; i < 16      ; i++) {
+         
+        spork ~KICK("*4 k___ k___ ",0,1.);
+        spork ~ BASS0("*2  _3  _1 ",0,1.);
+        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+        1 * 2 * data.tick => w.wait;
+      }
+
+
+1 * 2 * data.tick => w.wait;
+
+//      while(data.bpm < 180) {
+//        data.bpm + 3.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+//        <<<"data.bpm", data.bpm>>>;
+//        spork ~KICK("*4 k___ k___ ",0,1.);
+//        spork ~ BASS0("*2  _3  _1 ",0,1.);
+//        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+//        1 * 2 * data.tick => w.wait;
+//      }
+//      while(data.bpm < 250) {
+//        data.bpm + 9.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+//        <<<"data.bpm", data.bpm>>>;
+//        spork ~KICK("*4 k___ k___ ",0,1.);
+//        spork ~ BASS0("*2  _3  _1 ",0,1.);
+//        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+//        1 * 2 * data.tick => w.wait;
+//      }
+//      while(data.bpm < 1250) {
+//        data.bpm + 27.7 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+//        <<<"data.bpm", data.bpm>>>;
+//        spork ~KICK("*4 k___ k___ ",0,1.);
+//        spork ~ BASS0("*2  _3  _1 ",0,1.);
+//        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+//        1 * 2 * data.tick => w.wait;
+//      }
+//      for (0 => int i; i < 10      ; i++) {
+//         
+//        spork ~KICK("*4 k___ k___ ",0,1.);
+//        spork ~ BASS0("*2  _3  _1 ",0,1.);
+//        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+//        1 * 2 * data.tick => w.wait;
+//      }
+//  
+//      150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
+//      1 * 4 * data.tick => w.wait;
+//      for (0 => int i; i < 16      ; i++) {
+//         
+//        spork ~KICK("*4 k___ k___ ",0,1.);
+//        spork ~ BASS0("*2  _3  _1 ",0,1.);
+//        spork ~  BASS0_ATTACK ("*2     _1 _1   ", 0.7 /* rate */,0, .16 /* g */); 
+//        1 * 2 * data.tick => w.wait;
+//      }
+//  
+
+
+
+//      spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
+//      spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
+//  
+//  spork ~   PLOCLOOP_4x8 (); 
+//    spork ~  ACIDLOOP_4x8();
+//  2 * 8 * data.tick => w.wait;
+//  
+//      spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
+//      spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
+//  
+//  spork ~   PLOCLOOP_4x8 (); 
+//    spork ~  ACIDLOOP_4x8();
+//  2 * 8 * data.tick => w.wait;
 
 //      spork ~ SPECTR (40 + Std.rand2(-1,1)*12/*note*/,40/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 5, 0.1); 
 //  if(maybe)2 * 8 * data.tick => w.wait;
@@ -2435,7 +2579,7 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "lref.wav"=>rectrack.name_main; 1=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l13.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
@@ -2463,6 +2607,8 @@ if (rectrack.play_or_rec() ) {
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
    2 * 8 * data.tick => w.wait;
 
+   BREAK1();
+
    spork ~   TRANCEHHx8 (4, 0); 
    spork ~   BEAT1 (4);
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
@@ -2508,6 +2654,8 @@ if (rectrack.play_or_rec() ) {
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
    2 * 8 * data.tick => w.wait;
+   
+   BREAK2();
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();
   //////////////////////////////////////////////////
@@ -2521,6 +2669,8 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
+for (0 => int i; i <  64      ; i++) {
+ 
 
    spork ~   TRANCESNRHHx8 (4, 0); 
    spork ~   BEAT1 (4);
@@ -2534,6 +2684,7 @@ if (rectrack.play_or_rec() ) {
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
    2 * 8 * data.tick => w.wait;
+}
 
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
