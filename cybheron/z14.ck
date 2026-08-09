@@ -1,10 +1,11 @@
-// PLAY ONLY, REC done in l15.ck
+// PLAY ONLY, REC in l27
 
 143 => data.bpm;   (60.0/data.bpm)::second => data.tick;
-48 => data.ref_note;
+53 => data.ref_note;
+
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l15.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l27.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 0=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
 // w.the_end.sync_dur=>rectrack.play_end_sync;  // use the same end sync as in the track
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////
