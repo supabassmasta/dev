@@ -526,8 +526,8 @@ fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
   SEQ s;  //data.tick * 8 => s.max;  // SET_WAV.DUBSTEP(s);// SET_WAV.VOLCA(s); // 
 
   SET_WAV.TRIBALR(s);
-  s.wav["M"] => s.wav["a"];  // act @=> s.action["a"]; 
-  s.wav["M"] => s.wav["b"];  // act @=> s.action["a"]; 
+//  s.wav["M"] => s.wav["a"];  // act @=> s.action["a"]; 
+//  s.wav["M"] => s.wav["b"];  // act @=> s.action["a"]; 
 
   // _ = pause , ~ = special pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = rate , ? = proba , $ = autonomous  
   seq => s.seq;
@@ -536,12 +536,12 @@ fun void TRIBAL_CUSTOM(string seq, int tomix, float g) {
               //s.full_sync(); // 1 * data.tick => s.the_end.fixed_end_dur;  // 16 * data.tick => s.extra_end;   //s.print(); // => s.wav_o["a"].wav0.rate;
               // s.mono() => dac; //s.left() => dac.left; //s.right() => dac.right;
               //// SUBWAV //// SEQ s2; SET_WAV.ACOUSTIC(s2); s.add_subwav("K", s2.wav["s"]); // s.gain_subwav("K", 0, .3);
-  if(seq.find('a') != -1 ){
-    1.2=> s.wav_o["a"].wav0.rate;
-  }
-  if(seq.find('b') != -1 ){
-    1.4=> s.wav_o["b"].wav0.rate;
-  }
+//   if(seq.find('a') != -1 ){
+//     1.2=> s.wav_o["a"].wav0.rate;
+//   }
+//   if(seq.find('b') != -1 ){
+//     1.4=> s.wav_o["b"].wav0.rate;
+//   }
   s.go();     s $ ST @=> ST @ last; 
 
   if ( tomix  ){
@@ -2185,6 +2185,86 @@ fun void BEAT1  (int n){
   }
 } 
 
+fun void BEAT2_8x8  (){ 
+
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 _1  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 _8  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 _1  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ ____",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 !3!3  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 11  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+
+
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 _1  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ ____ k_k_",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 !2!3 __  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k___ k___",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 _3 _1  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 _1 _1  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+    spork ~ KICK("*4     k___ k___ k___ k___k___ k___ k_k_ __k_",0,1.);
+    spork ~ BASS0("*2         _3 _1 _3 _1 _3 _1 __ __  ",0,1.);
+    spork ~ BASS0_ATTACK ("*2 _1 _1 _1 _1  _1 _1 __ __  ", 0.7 /* rate */,0, .16 /* g */); 
+    8 * data.tick => w.wait;
+} 
+
+fun void  HH1_8x8  (){ 
+   
+  spork ~  TRIBAL_CUSTOM("*4    __h_ __hh h_h_ __hh h_h_ __hh h_h_ __hh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ ____ __j_ ____ ____ ____ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _______s _s_____s ______ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh h_h_ __hh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ __j_ __j_ ____ ____ __j_ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _s_____s _s_____s _s____ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh h_h_ __hh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ ____ __j_ ____ ____ ____ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _______s _s_____s ______ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh h_h_ ____ ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ __j_ __j_ ____ ____ __j_ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _s_____s _ss____s _s_s__ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+
+  spork ~  TRIBAL_CUSTOM("*4    __h_ __hh h_h_ __hh h_h_ __hh h_h_ __hh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ ____ __j_ ____ ____ ____ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _______s _s_____s ______ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh ____ rhhh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ __j_ __j_ ____ ____ __j_ ____ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _s_____s _s_____s _s____ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh h_h_ __hh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ ____ __j_ ____ ____ ____ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _______s _s_____s ______ss _s__ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+  spork ~  TRIBAL_CUSTOM("*4 __h_ __hh h_h_ __hh h_h_ __hh hhhh _hhh ",0,1.5); 
+  spork ~  TRIBAL_CUSTOM("*4 {6 ____ __j_ __j_ ____ ____ __j_ __j_ ____  ",0,0.5); 
+  spork ~  TRIBAL_CUSTOM("*4 }8 ___s _s_____s _sss_s_s _s_s__ss _ss_ ",0,0.5); 
+  1 * 8 * data.tick => w.wait;
+
+
+
+} 
+
+
+
 fun void  PLOCLOOP_4x8  (){ 
      spork ~ PLOC("}c}c}c  1_F_", 17/*n*/,75*100/*cut*/,2,1.4); 
 1 * 8 * data.tick => w.wait;
@@ -2276,11 +2356,15 @@ fun void  BREAK2  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-   spork ~   SUPERGLIDES  ("____ ____ 1111 ____" /*cutseq*/, 2*8 * data.tick/*d*/, 5, 1.); 
-   spork ~   SUPERGLIDES2 ("____ ____ ____11"/*cutseq*/,2*8 * data.tick/*d*/, 6, 1.); 
-   spork ~   BEAT1 (8); 
+  spork ~   HH1_8x8 (); 
+  spork ~   BEAT2_8x8(); 
+  8 * 8 * data.tick => w.wait;
 
-8 * 8 * data.tick => w.wait;
+//   spork ~   SUPERGLIDES  ("____ ____ 1111 ____" /*cutseq*/, 2*8 * data.tick/*d*/, 5, 1.); 
+//   spork ~   SUPERGLIDES2 ("____ ____ ____11"/*cutseq*/,2*8 * data.tick/*d*/, 6, 1.); 
+//   spork ~   BEAT1 (8); 
+//
+//8 * 8 * data.tick => w.wait;
 
 
 //       spork ~  SLIDENOISE(300 /* fstart */, 3000 /* fstop */, 44* data.tick /* dur */, .8 /* width */,2,.14); 
@@ -2663,13 +2747,12 @@ if (rectrack.play_or_rec() ) {
 
   //  !!!!!!  Put main code here  !!!!!
 
-   spork ~   BEAT1 (4);
+   spork ~   BEAT2_8x8 ();
    2 * 8 * data.tick => w.wait;
    spork ~   SUPERGLIDES  ("____ ____ 1111 ____" /*cutseq*/, 2*8 * data.tick/*d*/, 5, 1.); 
-   spork ~   SUPERGLIDES2 ("____ ____ ____11"/*cutseq*/,2*8 * data.tick/*d*/, 6, 1.); 
+   spork ~   SUPERGLIDES2 ("____ ____ ____11__"/*cutseq*/,2*8 * data.tick/*d*/, 6, 1.); 
    2 * 8 * data.tick => w.wait;
 
-   spork ~   BEAT1 (4);
    spork ~   PLOCLOOP_4x8 (); 
    4 * 8 * data.tick => w.wait;
 
@@ -2689,32 +2772,31 @@ if (rectrack.play_or_rec() ) {
    spork ~   SUPERGLIDES (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111,___,___,___,___,___,___",16)/*cutseq*/, 8*8 * data.tick/*d*/, 5, 1.); 
    spork ~   SUPERGLIDES2 (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111,___,___,___,___,___,___",16)/*cutseq*/,8*8 * data.tick/*d*/, 6, 1.); 
 
+   spork ~   BEAT2_8x8 ();
+   spork ~   HH1_8x8(); 
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
+   spork ~   PLOCLOOP_4x8 (); 
+   2 * 8 * data.tick => w.wait;
+
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
+   2 * 8 * data.tick => w.wait;
+
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
+   spork ~   PLOCLOOP_4x8 (); 
+   2 * 8 * data.tick => w.wait;
+
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
+   2 * 8 * data.tick => w.wait;
+
+   spork ~   BEAT2_8x8 ();
+   spork ~   HH1_8x8(); 
    spork ~   TRANCEHHx8 (4, 0); 
-   spork ~   BEAT1 (4);
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
-   spork ~   PLOCLOOP_4x8 (); 
-   2 * 8 * data.tick => w.wait;
-
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
-   2 * 8 * data.tick => w.wait;
-
-   spork ~   TRANCEHHx8 (4, 2); 
-   spork ~   BEAT1 (4);
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
-   spork ~   PLOCLOOP_4x8 (); 
-   2 * 8 * data.tick => w.wait;
-
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
-   2 * 8 * data.tick => w.wait;
-
    spork ~   SUPERGLIDES (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111,___,___",16)/*cutseq*/, 8*8 * data.tick/*d*/, 5, 1.); 
    spork ~   SUPERGLIDES2 (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111,___,___",16)/*cutseq*/,8*8 * data.tick/*d*/, 6, 1.); 
-   spork ~   TRANCEHHx8 (4, 0); 
-   spork ~   BEAT1 (4);
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
    spork ~   PLOCLOOP_4x8 (); 
@@ -2725,8 +2807,6 @@ if (rectrack.play_or_rec() ) {
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
    2 * 8 * data.tick => w.wait;
 
-   spork ~   TRANCEHHx8 (4, 2); 
-   spork ~   BEAT1 (4);
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
    spork ~   PLOCLOOP_4x8 (); 
@@ -2754,18 +2834,27 @@ if (rectrack.play_or_rec() ) {
     //////////////////////////////////////////////////
 for (0 => int i; i <  64      ; i++) {
  
-   spork ~   SUPERGLIDES (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111",16)/*cutseq*/, 4*8 * data.tick/*d*/, 5, 1.); 
-   spork ~   SUPERGLIDES2 (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111",16)/*cutseq*/,4*8 * data.tick/*d*/, 6, 1.); 
+   spork ~   SUPERGLIDES (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111",16)/*cutseq*/, 8*8 * data.tick/*d*/, 5, 1.); 
+   spork ~   SUPERGLIDES2 (RAND.seq("_1,_1,__11,___,1,_1,__11,__,1111",16)/*cutseq*/,8*8 * data.tick/*d*/, 6, 1.); 
 
-   spork ~   TRANCESNRHHx8 (4, 0); 
-   spork ~   BEAT1 (4);
+   spork ~   TRANCESNRHHx8 (8, 2); 
+   spork ~   BEAT2_8x8 ();
+   spork ~   HH1_8x8(); 
 
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
    spork ~   PLOCLOOP_4x8 (); 
    spork ~  ACIDLOOP_4x8();
    2 * 8 * data.tick => w.wait;
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
+   2 * 8 * data.tick => w.wait;
 
+   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 1,                1.10); 
+   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 2,            1.10); 
+   spork ~   PLOCLOOP_4x8 (); 
+   spork ~  ACIDLOOP_4x8();
+   2 * 8 * data.tick => w.wait;
    spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 1,  1.10); 
    spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 2, 1.10); 
    2 * 8 * data.tick => w.wait;
