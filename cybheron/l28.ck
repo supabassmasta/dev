@@ -1907,7 +1907,45 @@ fun void SYNTFROG (string seq, dur gldur, dur d, int tomix, float v) {
   }
   d => now;
 }
+
+////////////////////////////////////////////////////////////////////////
+
+//   spork ~   SUPERGLIDES  ("1111 ____" /*cutseq*/, 1*8 * data.tick/*d*/, 6, 1.); 
    
+// SUPERGLIDES Mod
+TriOsc tri_superglides_0 => OFFSET ofs_superglides_mod;
+400. => ofs_superglides_mod.offset;
+1. => ofs_superglides_mod.gain;
+
+0.38 => tri_superglides_0.freq;
+200.0 => tri_superglides_0.gain;
+0.5 => tri_superglides_0.width;
+
+TriOsc tri_superglides_1 =>  ofs_superglides_mod;
+0.55 => tri_superglides_1.freq;
+150.0 => tri_superglides_1.gain;
+0.2 => tri_superglides_1.width;
+
+fun void  SUPERGLIDES  (string cutseq,  dur d, int tomix, float g){ 
+
+  ST stmonoin; stmonoin $ ST @=> ST @ last;
+  ofs_superglides_mod => SUPERSAW0 ss  => stmonoin.mono_in ; 
+
+  STCUTTER stcutter;
+  cutseq => stcutter.t.seq;
+  stcutter.connect(last, 3::ms /* attack */, 3::ms /* release */ );   stcutter $ ST @=> last; 
+
+
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
+
+
+  d => now; // let seq() be sporked to compute length
+ 
+} 
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -2032,12 +2070,36 @@ fun void EFFECT5   (){
 } 
 spork ~  EFFECT5();  
 
+// For SUPERGLIDES
+fun void EFFECT6   (){ 
+  STMIX stmix;
+  stmix.receive(mixer + 6); stmix $ ST @=> ST @ last; 
+
+  STAUTOFILTERX stautoresx0; RES_XFACTORY stautoresx0_fact;
+  stautoresx0.connect(last $ ST ,  stautoresx0_fact, 2.0 /* Q */, 28 * 100 /* freq base */, 123 * 100 /* freq var */, data.tick * 7 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautoresx0 $ ST @=>  last;  
+
+  STLIMITER stlimiter;
+  2. => float in_gainl;
+  stlimiter.connect(last $ ST , in_gainl /* in gain */, 1./in_gainl /* out gain */, 0.0 /* slopeAbove */,  1.0 /* slopeBelow */ , 0.5 /* thresh */, 5::ms /* attackTime */ , 300::ms /* releaseTime */);   stlimiter $ ST @=>  last;   
+  .3 => stlimiter.gain;
+
+  
+  STMIX stmix2;
+  stmix2.send(last, mixer + 2);
+  while(1) {
+         100::ms => now;
+  }
+   
+} 
+spork ~  EFFECT6();
 
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
+   spork ~   SUPERGLIDES  ("1111 ____" /*cutseq*/, 1*8 * data.tick/*d*/, 6, 1.); 
     1 * 8 * data.tick => w.wait;
+//    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
+//    1 * 8 * data.tick => w.wait;
 
 //    spork ~ SPECTR (29/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,3 * 8 * data.tick/*att*/,6 * 8 * data.tick/*rel*/, 4 * 8 * data.tick, 1, 0.9); 
 //    4 * 8 * data.tick => w.wait;
