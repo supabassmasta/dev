@@ -2245,9 +2245,9 @@ fun void  SPECTR_LOOP_16x8  (){
       4 * 8 * data.tick => w.wait;
       spork ~ SPECTR (data.ref_note + 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20 ); 
       4 * 8 * data.tick => w.wait;
-      spork ~ SPECTR (data.ref_note - 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
+      spork ~ SPECTR (data.ref_note - 2/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
       4 * 8 * data.tick => w.wait;
-    spork ~ SPECTR (data.ref_note + 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
+    spork ~ SPECTR (data.ref_note + 0/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
       4 * 8 * data.tick => w.wait;
 
 } 
@@ -2580,10 +2580,10 @@ if (rectrack.play_or_rec() ) {
       spork ~ SPECTR (data.ref_note + 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20 ); 
       4 * 8 * data.tick => w.wait;
   spork ~   PONG (); 
-      spork ~ SPECTR (data.ref_note - 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
+      spork ~ SPECTR (data.ref_note - 2/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
       4 * 8 * data.tick => w.wait;
 spork ~   PONG (); 
-    spork ~ SPECTR (data.ref_note + 1/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
+    spork ~ SPECTR (data.ref_note + 0/*note*/,19/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.3/*spectralBlur*/,0.0/*spectralGate*/,1 * 8 * data.tick/*att*/,1 * 8 * data.tick/*rel*/, 2 * 8 * data.tick, 1,1.20); 
 //    2 * 8 * data.tick => w.wait;
 
    spork ~ ERAMPLPF (10/*mixin*/,32*data.tick,"8"/*gseq*/,":8 V///FF/z"/*lpfseq*/,1/*lpforder*/,0,1.0);
