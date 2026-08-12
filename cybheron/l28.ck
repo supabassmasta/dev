@@ -1297,11 +1297,11 @@ spork ~ PADS2(  part ,15/*n*/,mix,.15*g);
 
 
 // spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 4,.2);
-fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, float g){ 
+fun void  RING( string seq, string fmod, string gmod, int k, dur d, int tomix, float g){ 
   local_delay => now;
   TONE t;
   t.scale.size(0);
-  t.scale << 1 << 3 << 1 << 2 << 3 << 2;
+  t.set_scale(data.scale.my_string);
   t.reg(SERUM00 s0); s0.config(k);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
                                      // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
   seq => t.seq;
@@ -1323,9 +1323,11 @@ fun void  RING( string seq, string fmod, string gmod, int k, dur d, int mix, flo
   AUTO.gain(gmod) => gsin; // Simple gain with mod
 
   out => s0.inlet;
-
-  STMIX stmix;
-  stmix.send(last, mixer + mix);
+  
+  if ( tomix  ){
+    STMIX stmix;
+    stmix.send(last, mixer + tomix);
+  }
 
   d => now; 
 } 
@@ -2096,6 +2098,7 @@ spork ~  EFFECT6();
 
 fun void  LOOPLAB  (){ 
   while(1) {
+spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 4,.2);
    spork ~   SUPERGLIDES  ("1111 ____" /*cutseq*/, 1*8 * data.tick/*d*/, 6, 1.); 
     1 * 8 * data.tick => w.wait;
 //    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
