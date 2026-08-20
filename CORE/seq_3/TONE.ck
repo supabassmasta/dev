@@ -1160,6 +1160,9 @@ public class TONE extends ST {
     else if ( name == "ion"  ){
       ion(); 
     }
+    else if ( name == "mix"  ){
+      mix(); 
+    }
     else if ( name == "dor"  ){
       dor(); 
     }

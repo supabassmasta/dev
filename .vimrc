@@ -45,7 +45,7 @@ let mapleader = ","
 :nnoremap <leader>a Yp0<C-a>
 
 " Keep initial y (to test, can interfer with d)
-:xnoremap p "0p 
+":xnoremap p "0p 
 
 
 " For command example:
