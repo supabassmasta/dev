@@ -1,0 +1,29 @@
+physical volume extended with gparted. But new space were unallocated.
+First extend the volume group
+Then extend the logical volume.
+Then extend the file system (Ext4 here)
+
+Method used from :
+https://www.redhat.com/en/blog/resize-lvm-simple
+Works execept for the filesystem extension which is ext4 => command resize2fs
+
+
+2000  lsblk
+ 2001  vgs
+ 2002  man vgs
+ 2003  sudo vgs
+ 2004  vgdisplay
+ 2005  sudo vgdisplay
+ 2006  man lvs
+ 2007  lvs
+ 2008  sudo lvs
+ 2009  man lvextend 
+ 2010  l /dev/mint-vg/UbuntuStudio 
+ 2011  sudo lvextend -l +100%FREE /dev/mint-vg/UbuntuStudio 
+ 2012  df -h
+ 2013  sudo lvs
+ 2014  lsblk -f
+ 2015  man resize2fs 
+ 2016  sudo resize2fs /dev/mint-vg/UbuntuStudio 
+ 2017  df -h
+
