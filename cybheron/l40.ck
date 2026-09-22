@@ -2158,8 +2158,12 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 fun void EFFECT1   (){ 
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  STCONVREV stconvrev;
+//  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .1 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  // TO main rev in config
+  STMIX stmix2;
+  stmix2.send(last, 1);
+
   while(1) {
          100::ms => now;
   }
@@ -2215,8 +2219,12 @@ fun void EFFECT4   (){
 
 //  STCONVREV stconvrev;
 //  stconvrev.connect(last $ ST , 17/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .16 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 17/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .42 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  STCONVREV stconvrev;
+//  stconvrev.connect(last $ ST , 17/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .42 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  // TO main rev in config
+  STMIX stmix2;
+  stmix2.send(last, 1);
+
 
   while(1) {
          100::ms => now;
@@ -2474,17 +2482,29 @@ fun void  ONEP_PROG_8x8  (){
  
 } 
 
-TRACK("l40.wav_end_loop", 0*8*data.tick/*offset*/, 1*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
 
 //2 * data.tick => w.wait;
 
 
 fun void  LOOPLAB  (){ 
+  //" ZYXWVU TSRQPON MLKJIHG FEDCBA0 1234567 89abcde fghijkl mnopqrs tuvwxyz"
+  //"1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567 1234567"
+   
   while(1) {
-  spork ~   ONEP_PROG_8x8 (); 
+ spork ~ SYNTGLIDE(" ____ ___ *8 }c " + RAND.char("BA0 1234567 89abcde f", 7) + RAND.char(" 18 f", 1) /* seq */, 3128  + Std.rand2(0,2) /* Serum00 synt */, 43 * 100 /* lpf_f */, 16::ms /* glide dur */, 1 * 8*data.tick,2,1.3);
+  1 * 8 * data.tick => w.wait;
+ spork ~ SYNTGLIDE(" ____ ___ *8 }c}c " + RAND.char("BA0 1234567 89abcde f", 7) + RAND.char(" 18 f", 1) /* seq */, 3128  + Std.rand2(0,2) /* Serum00 synt */, 43 * 100 /* lpf_f */, 16::ms /* glide dur */, 1 * 8*data.tick,2,1.3);
+  1 * 8 * data.tick => w.wait;
+ spork ~ SYNTGLIDE(" ____ __ *8 }c " + RAND.char("BA0 1234567 89abcde f", 15) + RAND.char(" 18 f", 1) /* seq */, 3128  + Std.rand2(0,2) /* Serum00 synt */, 43 * 100 /* lpf_f */, 16::ms /* glide dur */, 1 * 8*data.tick,2,1.3);
+  1 * 8 * data.tick => w.wait;
+ spork ~ SYNTGLIDE(" ____ __ *8 }c}c " + RAND.char("BA0 1234567 89abcde f", 15) + RAND.char(" 18 f", 1) /* seq */, 3128  + Std.rand2(0,2) /* Serum00 synt */, 43 * 100 /* lpf_f */, 16::ms /* glide dur */, 1 * 8*data.tick,2,1.3);
+  1 * 8 * data.tick => w.wait;
 
+// spork ~ SYNTGLIDE("*8 }c}c " + RAND.seq("1_,__,8_", 28)+ RAND.char("BA0 1234567 89abcde f", 8) + RAND.seq("1_,__,8_", 28)+ RAND.char("BA0 1234567 89abcde f", 8) /* seq */, 3130 /* Serum00 synt */, 43 * 100 /* lpf_f */, 9::ms /* glide dur */, 2 * 8*data.tick,1,1.1);
+// spork ~ SYNTGLIDE("*4        523123131515215231531231" /* seq */, 3129 /* Serum00 synt */, 43 * 100 /* lpf_f */, 9::ms /* glide dur */,16*data.tick,0,.40);
 
-  8 * 8 * data.tick => w.wait;
+//  1 * 8 * data.tick => w.wait;
+
 
 //spork ~ RING(" 1////F F////1", ":8 H/G"/*fmod*/, ":8 1/d"/*gmod*/,12/*k*/,8*data.tick, 1,.6);
 //spork ~ RING(" 1////F F////1", ":8 J/I"/*fmod*/, ":8 1/d"/*gmod*/,13/*k*/,8*data.tick, 2,.6);
@@ -2757,9 +2777,10 @@ fun void  LOOPLAB  (){
    //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
+spork ~ LOOPLAB();
 //LOOPLAB(); 
 
+//TRACK("l40.wav_end_loop",4* 8*8*data.tick/*offset*/, 8*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
 
 // LOOP
 /********************************************************/
