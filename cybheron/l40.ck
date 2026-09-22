@@ -1,6 +1,6 @@
 10 => int mixer;
 
-20::ms => dur local_delay;
+0::ms => dur local_delay;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 KIK kik;
@@ -2105,6 +2105,29 @@ stlpfx0.connect(last $ ST ,  stlpfx0_fact, lpff /* freq */ , 1.0 /* Q */ , 1 /* 
  
 } 
 
+fun void  TRACK  (string name,  dur offset, dur d, int loop, dur es, int tomix, float g){ 
+   LONG_WAV l;
+//   "../_SAMPLES/Chassin/Taxi Zulu.wav" => l.read;
+   name => l.read;
+   g * data.master_gain => l.buf.gain;
+   0 => l.update_ref_time;
+   l.AttackRelease(0::ms, 0::ms);
+   l.start(0 * data.tick /* sync */ , offset  /* offset */ , loop ? d : 0 * data.tick /* loop (0::ms == disable) */ , es /* END sync */); l $ ST @=> ST @ last;  
+  
+    if ( tomix  ){
+       STMIX stmix;
+       stmix.send(last, mixer + tomix);
+    }
+
+    d => now;
+    if ( loop  ){
+      while(1) {
+        d => now;
+      }
+    }
+    l.stop();
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////
 // BPM
@@ -2450,6 +2473,10 @@ fun void  ONEP_PROG_8x8  (){
   1 * 8 * data.tick => w.wait;
  
 } 
+
+TRACK("l40.wav_end_loop", 0*8*data.tick/*offset*/, 1*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
+
+//2 * data.tick => w.wait;
 
 
 fun void  LOOPLAB  (){ 
