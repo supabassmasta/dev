@@ -2002,8 +2002,14 @@ stmix.receive(mixer); stmix $ ST @=> ST @ last;
 fun void EFFECT1   (){ 
   STMIX stmix;
   stmix.receive(mixer + 1); stmix $ ST @=> ST @ last; 
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .04 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  STCONVREV stconvrev;
+//  stconvrev.connect(last $ ST , 14/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .04 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+  
+  // TO main rev in config
+  STMIX stmix2;
+  stmix2.send(last, 1);
+
+
   while(1) {
          100::ms => now;
   }
@@ -2050,10 +2056,10 @@ fun void EFFECT4   (){
   STMIX stmix;
   stmix.receive(mixer + 4); stmix $ ST @=> ST @ last; 
 
+
+    // !!!!!!! BE CAREFUL STCONVREV here cause loading glitch on reload
 //  STCONVREV stconvrev;
-//  stconvrev.connect(last $ ST , 17/* ir index */, 1 /* chans */, 10::ms /* pre delay*/, .16 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
-  STCONVREV stconvrev;
-  stconvrev.connect(last $ ST , 17/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .42 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
+//  stconvrev.connect(last $ ST , 17/* ir index */, 2 /* chans */, 10::ms /* pre delay*/, .42 /* rev gain */  , 0.9 /* dry gain */  );       stconvrev $ ST @=>  last;  
 
   while(1) {
          100::ms => now;
@@ -2122,7 +2128,7 @@ spork ~  EFFECT6();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 4,.2);
+spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 1,.2);
    spork ~   SUPERGLIDES  ("1111 ____" /*cutseq*/, 1*8 * data.tick/*d*/, 6, 1.); 
     1 * 8 * data.tick => w.wait;
 //    spork ~ SYNTFROG ("{c{c{c *2 " + RAND.seq("8/1_,F/1_,__,__,__,__,f/8_,1/8_,F//1,1//F,B//8",8) , 2::ms, 8* data.tick, 5, 3.8);
@@ -2378,8 +2384,8 @@ spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*
   //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
-LOOPLAB(); 
+spork ~ LOOPLAB();
+//LOOPLAB(); 
 
 //TRACK("refsong.wav_end_loop", 0*8*data.tick/*offset*/, 1*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
 
