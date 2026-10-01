@@ -1,4 +1,4 @@
-3120 => int n;TONE t;
+3121 => int n;TONE t;
 t.reg(SERUM00 s0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
 s0.config(n /* synt nb */ ); 
 t.reg(SERUM00 s1);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();//
@@ -7,7 +7,7 @@ t.reg(SERUM00 s2);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); 
 s2.config(n /* synt nb */ ); 
 t.mix();// t.aeo(); // t.phr();// t.loc(); t.double_harmonic(); t.gypsy_minor(); t.set_scale("dor");
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note, [] = note_offset_in_scale, ! = force new note , # = sharp , ^ = bemol  
-"}c }c     *2 ____ _1|3|5  ____ ____" => t.seq;
+"}c      *2 ____ _1|3|5  ____ ____" => t.seq;
 1.6 * data.master_gain => t.gain;
 t.sync(4*data.tick);// t.element_sync();//  t.no_sync();//  t.full_sync(); // 1 * data.tick => t.the_end.fixed_end_dur;  // 16 * data.tick => t.extra_end;   //t.print(); //t.force_off_action();
 // t.mono() => dac;//  t.left() => dac.left; // t.right() => dac.right; // t.raw => dac;

@@ -1,10 +1,7 @@
 
-
-
 TONE t;
-t.scale.size(0);
-t.scale << 1 << 3 << 1 << 2 << 3 << 2;
-t.reg(SERUM0 s0); s0.config(8, 0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
+t.dor();
+t.reg(SERUM0 s0); s0.config(11, 0);  //data.tick * 8 => t.max; //60::ms => t.glide;  // t.lyd(); // t.ion(); // t.mix();// t.dor();// t.aeo(); // t.phr();// t.loc();
 // _ = pause , | = add note to current , * : = mutiply/divide bpm , <> = groove , +- = gain , () = pan , {} = shift base note , ! = force new note , # = sharp , ^ = bemol  
 " }c}c 
 1111 11__
@@ -20,7 +17,7 @@ t.go();   t $ ST @=> ST @ last;
 
 class SINMODONE {
 
-STEPC stepc; stepc.init(HW.lpd8.potar[1][8], .2 /* min */, 10 /* max */, 10::ms /* transition_dur */);
+STEPC stepc; stepc.init(HW.lpd8.potar[1][8], .2 /* min */, 5 /* max */, 10::ms /* transition_dur */);
 stepc.out =>  SinOsc s => Gain gsin=> Gain out;
 3 => gsin.op;
 STEPC stepc2; stepc2.init(HW.lpd8.potar[1][7], 0 /* min */, 30 /* max */, 10::ms /* transition_dur */);
