@@ -1879,8 +1879,10 @@ fun void  FROGSx8(int n){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-     spork ~   TRANCESNRHHx8 (8, 4); 
-     8 * 8 * data.tick => w.wait;
+    spork ~ SYNTFROG ("{c{c{c *2 1//F" , 2::ms, 8* data.tick, 3, 3.8);
+    2*8 * data.tick => w.wait;
+//     spork ~   TRANCESNRHHx8 (8, 4); 
+//     8 * 8 * data.tick => w.wait;
 
 
 //  spork ~ BW("*3 5!1__ ", 0/*n*/,29*100/*cut*/,1,1.0);
@@ -2213,23 +2215,6 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-1::samp => w.wait;
-
-
-  //// STOP REC ///////////////////////////////
-  rectrack.rec_stop();
-  //////////////////////////////////////////////////
-
-  ///////////////////////// END LOOP ///////////////////////////////////::
-  0 => data.next;
-  while (!data.next) {
-    <<<"**********">>>;
-    <<<" END LOOP ">>>;
-    <<<"**********">>>;
-    // REC END LOOP //////////////////////////////////
-    rectrack.rec_end_loop();
-    //////////////////////////////////////////////////
-//   spork ~   MELO (); 
      spork ~ BEAT1_8x8();
      8 * 8 * data.tick => w.wait;
 
@@ -2273,6 +2258,22 @@ if (rectrack.play_or_rec() ) {
      spork ~ RING("{c:2 1111 1111 1////F F////1", ":8:2 A/H"/*fmod*/, ":8:2 1/f"/*gmod*/,66/*k*/,1*16*data.tick, 2,.3);
      2 * 8 * data.tick => w.wait;
 
+
+
+  //// STOP REC ///////////////////////////////
+  rectrack.rec_stop();
+  //////////////////////////////////////////////////
+
+  ///////////////////////// END LOOP ///////////////////////////////////::
+  0 => data.next;
+  while (!data.next) {
+    <<<"**********">>>;
+    <<<" END LOOP ">>>;
+    <<<"**********">>>;
+    // REC END LOOP //////////////////////////////////
+    rectrack.rec_end_loop();
+    //////////////////////////////////////////////////
+//   spork ~   MELO (); 
      spork ~   MELO (); 
      spork ~ SYNTGLIDE("*3 }c 531 521 431 831 520 431" /* seq */, 122 /* Serum00 synt */, 59 * 100 /* lpf_f */, 12::ms /* glide dur */,64*data.tick,10,.49);
      spork ~ ERAMPOD (10/*mixin*/,64*data.tick,":8:2 1////A"/*gseq*/,":8:2 4////6"/*odseq*/,6.8/*drive*/,0,0.7);
@@ -2299,6 +2300,8 @@ if (rectrack.play_or_rec() ) {
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+    spork ~ SYNTFROG ("{c{c{c *2 1//F" , 2::ms, 8* data.tick, 3, 3.8);
+    2*8 * data.tick => w.wait;
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
