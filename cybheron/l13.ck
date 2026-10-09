@@ -2367,18 +2367,45 @@ fun void  BREAK2  (){
       1 * 4 * data.tick => w.wait;
 } 
 
+ // Work around to REC only End of song: Remove end wav file first
+ "l13.wav_end" => string end_name;
+fun void  END_SONG  (){ 
+  /// PLAY OR REC /////////////////
+  RECSEQ recseq; end_name=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;1.=>recseq.play_gain;
+  if (recseq.play_or_rec() ) {
+    //////////////////////////////////
+
+    //////////////////////////////////////////////////
+    // MAIN 
+    //////////////////////////////////////////////////
+
+    //  !!!!!!  Put main code here  !!!!!
+    // Call this with file and fun name to record all seq on fresh cloned project
+    // if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+    spork ~ KICK("*4     k___ ____",0,1.);
+   spork ~   MODU (31, "*8   FFFF____ ____   " , "f", "6", 3 *1000, 2,                2.10); 
+   2 * 8 * data.tick => w.wait;
+
+    //// STOP REC ///////////////////////////////
+    recseq.rec_stop();
+    //////////////////////////////////////////////////
+  } 
+} 
+if (! MISC.file_exist(end_name)) END_SONG();
 
 
 fun void  LOOPLAB  (){ 
   while(1) {
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF " , "f", "6", 3 *1000, 4,                1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 8,            1.10); 
+    spork ~ KICK("*4     k___ ____",0,1.);
+   spork ~   MODU (31, "*8   FFFF____ ____   " , "f", "6", 3 *1000, 2,                2.10); 
+   2 * 8 * data.tick => w.wait;
+//   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF" , "f", "6", 3 *1000, 8,            1.10); 
 //   spork ~   PLOCLOOP_4x8 (); 
 //   spork ~  ACIDLOOP_4x8();
-   2 * 8 * data.tick => w.wait;
-   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 4,  1.10); 
-   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 8, 1.10); 
-   2 * 8 * data.tick => w.wait;
+//   2 * 8 * data.tick => w.wait;
+//   spork ~   MODU (31, "*8   FFFF____ ____  FFFF____ ____ FFFF ____ ____ 1111" , "f", "6", 3 *1000, 4,  1.10); 
+//   spork ~   MODU (31, "*8   ________ ____  ________ ____ ____ FFFF ____ ____ " , "f", "6", 3 *1000, 8, 1.10); 
+//   2 * 8 * data.tick => w.wait;
 //  spork ~   HH1_8x8 (); 
 //  spork ~   BEAT2_8x8(); 
 //  8 * 8 * data.tick => w.wait;
@@ -2896,6 +2923,10 @@ for (0 => int i; i <  1      ; i++) {
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+    spork ~ KICK("*4     k___ ____",0,1.);
+   spork ~   MODU (31, "*8   FFFF____ ____   " , "f", "6", 3 *1000, 2,                2.10); 
+   2 * 8 * data.tick => w.wait;
+
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
