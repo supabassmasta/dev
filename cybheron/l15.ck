@@ -2054,17 +2054,47 @@ fun void  FROGSnCOMBS_4x8_8DELAYED  (int n){
   }
     local_delay =>  w.wait; 
 } 
+ // Work around to REC only End of song: Remove end wav file first
+ "l15.wav_end" => string end_name;
+fun void  END_SONG  (){ 
+  /// PLAY OR REC /////////////////
+  RECSEQ recseq; end_name=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;1.=>recseq.play_gain;
+  if (recseq.play_or_rec() ) {
+    //////////////////////////////////
+
+    //////////////////////////////////////////////////
+    // MAIN 
+    //////////////////////////////////////////////////
+
+    //  !!!!!!  Put main code here  !!!!!
+    // Call this with file and fun name to record all seq on fresh cloned project
+    // if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+    spork ~ KICK("*4     k___  ____",0,1.);
+    spork ~ TRIBAL_CUSTOM("*4 __ abc_    ", 2 /* tomix */, 1.0 /* gain */);
+   spork ~ SYNTFROG ("{c{c{c *2 B/8" , 2::ms, 8* data.tick, 3, 3.8);
+    2 * 8 * data.tick =>  w.wait;
+
+    //// STOP REC ///////////////////////////////
+    recseq.rec_stop();
+    //////////////////////////////////////////////////
+  } 
+} 
+if (! MISC.file_exist(end_name)) END_SONG();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~   LOOP_PERC2_8x8 (); 
+    spork ~ KICK("*4     k___  ____",0,1.);
+    spork ~ TRIBAL_CUSTOM("*4 __ abc_    ", 2 /* tomix */, 1.0 /* gain */);
+   spork ~ SYNTFROG ("{c{c{c *2 B/8" , 2::ms, 8* data.tick, 3, 3.8);
+    2 * 8 * data.tick =>  w.wait;
+//LOOP_PERC2_8x8 (); 
 
 //    spork ~   RINGS_16x8 (); 
 //    spork ~   BELLS_16x8(); 
-    spork ~ BEAT1_8x8();
+//    spork ~ BEAT1_8x8();
 //    spork ~   FROGSnCOMBS_4x8 (2);
 //    spork ~   LOOP_PERC2_8x8 (); 
-    8 * 8 * data.tick =>  w.wait;
+//    8 * 8 * data.tick =>  w.wait;
 //    spork ~   BELLS_16x8(); 
 //    spork ~ BEAT3_8x8();
 //    spork ~   FROGSnCOMBS_4x8 (2);
@@ -2365,6 +2395,10 @@ if (rectrack.play_or_rec() ) {
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+    spork ~ KICK("*4     k___  ____",0,1.);
+    spork ~ TRIBAL_CUSTOM("*4 __ abc_    ", 2 /* tomix */, 1.0 /* gain */);
+   spork ~ SYNTFROG ("{c{c{c *2 B/8" , 2::ms, 8* data.tick, 3, 3.8);
+    2 * 8 * data.tick =>  w.wait;
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 

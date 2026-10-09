@@ -1015,24 +1015,60 @@ spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiTo
 
 } 
 
+ // Work around to REC only End of song: Remove end wav file first
+ "l18.wav_end" => string end_name;
+fun void  END_SONG  (){ 
+  /// PLAY OR REC /////////////////
+  RECSEQ recseq; end_name=>recseq.name_main; 0=>recseq.compute_mode; 1=>recseq.rec_mode;8*data.tick=>recseq.main_extra_time;1.=>recseq.play_gain;
+  if (recseq.play_or_rec() ) {
+    //////////////////////////////////
+
+    //////////////////////////////////////////////////
+    // MAIN 
+    //////////////////////////////////////////////////
+
+    //  !!!!!!  Put main code here  !!!!!
+    // Call this with file and fun name to record all seq on fresh cloned project
+    // if (! MISC.file_exist( "seqname0.wav")) SEQNAME0();
+    spork ~   MOD0 ("*8 }c [4f_[4f_[4f_[4f_[4f___[4f_[4f_[4f__ _[4f_[4f_[4f_ ", 1, .7); 
+    spork ~ SUPSAWSLIDE("____ 1 {c {c 131", .6/*autoRes phase*/,2,3.7);
+    spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
+    2 * 8 * data.tick => w.wait;
+
+    //// STOP REC ///////////////////////////////
+    recseq.rec_stop();
+    //////////////////////////////////////////////////
+  } 
+} 
+if (! MISC.file_exist(end_name)) END_SONG();
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    22 * data.tick => w.wait;
-spork ~ SPECTR (24/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
-  4* 8 * data.tick =>  w.wait; 
-spork ~ SPECTR (32/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
-  4* 8 * data.tick =>  w.wait; 
-spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
-  3* 8 * data.tick =>  w.wait; 
 
-spork ~ SPECTR (25/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
-  1* 4 * data.tick =>  w.wait; 
-spork ~ SPECTR (27/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
-  1* 4 * data.tick =>  w.wait; 
-spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
-  1* 4 * data.tick =>  w.wait; 
-  1* 4 * data.tick =>  w.wait; 
+    spork ~   MOD0 ("*8 }c [4f_[4f_[4f_[4f_[4f___[4f_[4f_[4f__ _[4f_[4f_[4f_ ", 1, .7); 
+//    spork ~   MOD0 ("*8 }c 8_8_8_8_", 1, .7); 
+    spork ~ SUPSAWSLIDE("____ 1 {c {c 131", .6/*autoRes phase*/,2,3.7);
+    spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
+    2 * 8 * data.tick => w.wait;
+
+
+
+
+//      22 * data.tick => w.wait;
+//  spork ~ SPECTR (24/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
+//    4* 8 * data.tick =>  w.wait; 
+//  spork ~ SPECTR (32/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
+//    4* 8 * data.tick =>  w.wait; 
+//  spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 12 * data.tick, 1, 0.2); 
+//    3* 8 * data.tick =>  w.wait; 
+//  
+//  spork ~ SPECTR (25/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
+//    1* 4 * data.tick =>  w.wait; 
+//  spork ~ SPECTR (27/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
+//    1* 4 * data.tick =>  w.wait; 
+//  spork ~ SPECTR (29/*note*/,39/*file*/,0.3/*loopStart*/,0.9/*loopEnd*/,0./*semiToneShift*/,0/*robotize*/,0/*whisperize*/,0.0/*spectralBlur*/,0.0/*spectralGate*/,1 * 2 * data.tick/*att*/, 4 * data.tick/*rel*/, 4 * data.tick, 1, 0.2); 
+//    1* 4 * data.tick =>  w.wait; 
+//    1* 4 * data.tick =>  w.wait; 
 
 
 
@@ -1357,6 +1393,11 @@ if (rectrack.play_or_rec() ) {
     ///////////////////
 
     //  !!!!!! put end here  !!!!!!
+    spork ~   MOD0 ("*8 }c [4f_[4f_[4f_[4f_[4f___[4f_[4f_[4f__ _[4f_[4f_[4f_ ", 1, .7); 
+    spork ~ SUPSAWSLIDE("____ 1 {c {c 131", .6/*autoRes phase*/,2,3.7);
+    spork ~ TRIBAL("*4 __f_", 1 /* bank */, 2 /* mix */, 1.0 /* gain */);
+    2 * 8 * data.tick => w.wait;
+
 
     //// STOP REC ///////////
     rectrack.stop_rec_end(); 
