@@ -2357,9 +2357,9 @@ fun void  CRAZY_LOOP_1x8  (int n){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-    spork ~ RING(" 1", ":4 H/II/G"/*fmod*/, ":41//f"/*gmod*/,66/*k*/,8*data.tick, 1,.7);
-    spork ~ SLIDENOISE(300/*fstart*/,4000/*fstop*/,8*data.tick/*dur*/,.5/*width*/,2,.10);  
-    1*8 * data.tick =>  w.wait; 
+    spork ~ RING(" 1", ":4 H/II/G"/*fmod*/, ":41//f"/*gmod*/,66/*k*/,8*data.tick, 2,.8);
+    spork ~ SLIDENOISE(300/*fstart*/,4000/*fstop*/,8*data.tick/*dur*/,.5/*width*/,1,.14);  
+    2*8 * data.tick =>  w.wait; 
 //if ( maybe  ){
 //  spork ~ SYNTGLIDE("*4"+ RAND.seq("]1,[1,____",6) + RAND.seq("1234,5432, 1324, 5341,12345678,87654321",1) /* seq */,  Std.rand2(16,21) /* Serum00 synt */, 30 * 100 /* lpf_f */, 5::ms /* glide dur */,2,.25);
 //}
@@ -2737,6 +2737,27 @@ spork ~   PONG ();
     spork ~ RING(" 1", ":4 H//G"/*fmod*/, ":41//f"/*gmod*/,66/*k*/,8*data.tick, 1,.7);
     spork ~ SLIDENOISE(200/*fstart*/,4000/*fstop*/,8*data.tick/*dur*/,.5/*width*/,2,.14);  
     1*8 * data.tick =>  w.wait; 
+    
+
+
+    // DIRTY  END LOOP REPEAT FOR VARIATIONS ON GENERATION
+    spork ~   TRANCESNRHHx8 (16, 4); 
+    spork ~   SPECTR_LOOP_16x8 (); 
+    spork ~   GLIDES_16x8 ();
+    spork ~   BEAT1_16x8 ();
+    spork ~   CRAZY_LOOP_1x8 (7); 
+    7*8 * data.tick =>  w.wait; 
+    4 * data.tick =>  w.wait; 
+    spork ~ SLIDENOISE(3000/*fstart*/,100/*fstop*/,4*data.tick/*dur*/,.8/*width*/,2,.10);  
+
+    4 * data.tick =>  w.wait; 
+    spork ~   CRAZY_LOOP_1x8 (7); 
+    7*8 * data.tick =>  w.wait; 
+    spork ~ RING(" 1", ":4 H/II/G"/*fmod*/, ":41//f"/*gmod*/,66/*k*/,8*data.tick, 1,.7);
+    spork ~ SLIDENOISE(300/*fstart*/,4000/*fstop*/,8*data.tick/*dur*/,.5/*width*/,2,.10);  
+    1*8 * data.tick =>  w.wait; 
+
+
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();
   //////////////////////////////////////////////////
@@ -2780,6 +2801,10 @@ spork ~   PONG ();
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+   spork ~KICK("*4             k___    ____",0,1.);
+    spork ~ RING(" 1", ":4 H/II/G"/*fmod*/, ":41//f"/*gmod*/,66/*k*/,8*data.tick, 2,.8);
+    spork ~ SLIDENOISE(300/*fstart*/,4000/*fstop*/,8*data.tick/*dur*/,.5/*width*/,1,.14);  
+    2*8 * data.tick =>  w.wait; 
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 

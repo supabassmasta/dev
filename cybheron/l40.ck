@@ -2777,7 +2777,7 @@ fun void  LOOPLAB  (){
    //-------------------------------------------
   }
 } 
-spork ~ LOOPLAB();
+//spork ~ LOOPLAB();
 //LOOPLAB(); 
 
 //TRACK("l40.wav_end_loop",4* 8*8*data.tick/*offset*/, 8*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
@@ -2805,21 +2805,9 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-  1::samp => w.wait; // DONT NOW Why this is needed, DestNegative happen sometimes if not present
 
-  //// STOP REC ///////////////////////////////
-  rectrack.rec_stop();
-  //////////////////////////////////////////////////
 
-  ///////////////////////// END LOOP ///////////////////////////////////::
-  0 => data.next;
-  while (!data.next) {
-    <<<"**********">>>;
-    <<<" END LOOP ">>>;
-    <<<"**********">>>;
-    // REC END LOOP //////////////////////////////////
-    rectrack.rec_end_loop();
-    //////////////////////////////////////////////////
+  // WARNING END LOOP REPEAT: TO SUPPRESS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   spork ~BEAT1_16x8();
   spork ~   BELLS_8x8(); 
   8 * 8 * data.tick => w.wait;
@@ -2851,6 +2839,60 @@ if (rectrack.play_or_rec() ) {
   spork ~ RING(":2  F////1 ", ":8:2 J/F"/*fmod*/, ":8:2 1/d"/*gmod*/,14/*k*/,16*data.tick, 2,.6);
   2 * 8 * data.tick => w.wait;
 
+  // WARNING END LOOP REPEAT: TO SUPPRESS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  spork ~BEAT1_16x8();
+//  spork ~   BELLS_8x8(); 
+  8 * 8 * data.tick => w.wait;
+  spork ~   ONEP_PROG_8x8(); 
+  7 * 8 * data.tick => w.wait;
+  spork ~ RING(" 1////F F////1", ":8 J/I"/*fmod*/, ":8 1/d"/*gmod*/,13/*k*/,8*data.tick, 2,.6);
+  1 * 8 * data.tick => w.wait;
+
+  //// STOP REC ///////////////////////////////
+  rectrack.rec_stop();
+  //////////////////////////////////////////////////
+
+  ///////////////////////// END LOOP ///////////////////////////////////::
+  0 => data.next;
+  while (!data.next) {
+    <<<"**********">>>;
+    <<<" END LOOP ">>>;
+    <<<"**********">>>;
+    // REC END LOOP //////////////////////////////////
+    rectrack.rec_end_loop();
+    //////////////////////////////////////////////////
+  spork ~BEAT1_16x8();
+  spork ~   TRANCEHHx8 (8, 4);
+  spork ~   BELLS_8x8(); 
+  8 * 8 * data.tick => w.wait;
+  spork ~   ONEP_PROG_8x8(); 
+  7 * 8 * data.tick => w.wait;
+  spork ~ RING(" 1////F F////1", ":8 J/I"/*fmod*/, ":8 1/d"/*gmod*/,13/*k*/,8*data.tick, 2,.6);
+  1 * 8 * data.tick => w.wait;
+
+  spork ~BEAT1_16x8();
+  spork ~   TRANCEHHx8 (8, 4);
+  spork ~   PROGx8 (8); 
+  spork ~   BELLS_8x8(); 
+  8 * 8 * data.tick => w.wait;
+  spork ~   TRANCESNRHHx8 (8, 8);
+  spork ~   ONEP_PROG_8x8 (); 
+  7 * 8 * data.tick => w.wait;
+  spork ~ RING(" F////11////F ", ":8 J/F"/*fmod*/, ":8 1/d"/*gmod*/,13/*k*/,8*data.tick, 2,.6);
+  1 * 8 * data.tick => w.wait;
+
+  spork ~BEAT1_16x8();
+  spork ~   TRANCESNRHHx8 (8, 4);
+  spork ~   PROGx8 (8); 
+  spork ~   BELLS_8x8(); 
+  8 * 8 * data.tick => w.wait;
+  spork ~   TRANCESNRHHx8 (8, 8);
+  spork ~   PROGx8 (8); 
+  spork ~   ONEPFULL_8x8(); 
+  6 * 8 * data.tick => w.wait;
+  spork ~ RING(":2  F////1 ", ":8:2 J/F"/*fmod*/, ":8:2 1/d"/*gmod*/,14/*k*/,16*data.tick, 2,.6);
+  2 * 8 * data.tick => w.wait;
+
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
     /////////////////////////////////////////////
@@ -2864,6 +2906,8 @@ if (rectrack.play_or_rec() ) {
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+   spork ~KICK("*4 k___ ",0,1.);
+  1 * 8 * data.tick => w.wait;
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
