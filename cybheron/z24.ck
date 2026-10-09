@@ -1,5 +1,11 @@
 // PLAYONLY , REC in l35
 
+<<<" oooooooooooooooo Z24 ooooooooooooooooo  ">>>;
+
+// SYNC on previous BPM
+SYNC sy;
+sy.sync(1 * data.tick);
+
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 52 => data.ref_note;
 
