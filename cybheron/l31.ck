@@ -1844,9 +1844,14 @@ fun void  LEAD1  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,4*data.tick/*dur*/,2.8/*width*/,2,.14); 
-  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,4*data.tick, 2,.3);
- 2 * 8 * data.tick => w.wait;
+  spork ~ BEAT1_64_LPF(1); 
+  spork ~   TRANCESNRHHx8 (7, 0); 
+//  spork ~   ENS1 (); 
+  32 * data.tick => w.wait;
+  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  16 * data.tick => w.wait;
+  spork ~ RING(":2 1////F F////1", ":8 G/HH/A"/*fmod*/, ":8 1//m"/*gmod*/,69/*k*/,14*data.tick, 2,.3);
+  16 * data.tick => w.wait;
 
 //  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
 //  16 * data.tick => w.wait;
@@ -2042,7 +2047,7 @@ while(0) { /********************************************************/
 }  
 
 /// PLAY OR REC /////////////////
-RECTRACK rectrack; "l31.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;16*data.tick=>rectrack.end_loop_extra_time;
+RECTRACK rectrack; "l31.wav"=>rectrack.name_main; 0=>rectrack.compute_mode; 1=>rectrack.rec_mode;8*data.tick=>rectrack.main_extra_time;8*data.tick=>rectrack.end_loop_extra_time;
  w.the_end.sync_dur=>rectrack.play_end_sync;
 if (rectrack.play_or_rec() ) {
   //////////////////////////////////

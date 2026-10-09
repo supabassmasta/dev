@@ -1,5 +1,11 @@
 // PLAY ONLY, REC in l32.ck
 
+<<<" oooooooooooooooo Z18 ooooooooooooooooo  ">>>;
+
+// SYNC on previous BPM
+SYNC sy;
+sy.sync(1 * data.tick);
+
 150 => data.bpm;   (60.0/data.bpm)::second => data.tick;
 52 => data.ref_note;
 "aeo" => data.scale.my_string;
