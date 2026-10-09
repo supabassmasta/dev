@@ -1844,10 +1844,9 @@ fun void  LEAD1  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
-  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
-//  16 * data.tick => w.wait;
-  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,30*data.tick, 2,.3);
-  32 * data.tick => w.wait;
+  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,4*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,4*data.tick, 2,.3);
+ 2 * 8 * data.tick => w.wait;
 
 //  spork ~ SLIDENOISE(100/*fstart*/,1800/*fstop*/,30*data.tick/*dur*/,2.8/*width*/,2,.14); 
 //  16 * data.tick => w.wait;
@@ -2053,21 +2052,6 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-
-
-  //// STOP REC ///////////////////////////////
-  rectrack.rec_stop();
-  //////////////////////////////////////////////////
-
-  ///////////////////////// END LOOP ///////////////////////////////////::
-  0 => data.next;
-  while (!data.next) {
-    <<<"**********">>>;
-    <<<" END LOOP ">>>;
-    <<<"**********">>>;
-    // REC END LOOP //////////////////////////////////
-    rectrack.rec_end_loop();
-    //////////////////////////////////////////////////
   spork ~ BEAT1_64(1); 
   32 * data.tick => w.wait;
   spork ~   TRANCEHHx8 (4, 1); 
@@ -2123,6 +2107,21 @@ if (rectrack.play_or_rec() ) {
   spork ~ SLIDENOISE(100/*fstart*/,1500/*fstop*/,14*data.tick/*dur*/,2.8/*width*/,2,.14); 
   16 * data.tick => w.wait;
 
+
+
+  //// STOP REC ///////////////////////////////
+  rectrack.rec_stop();
+  //////////////////////////////////////////////////
+
+  ///////////////////////// END LOOP ///////////////////////////////////::
+  0 => data.next;
+  while (!data.next) {
+    <<<"**********">>>;
+    <<<" END LOOP ">>>;
+    <<<"**********">>>;
+    // REC END LOOP //////////////////////////////////
+    rectrack.rec_end_loop();
+    //////////////////////////////////////////////////
   spork ~ BEAT1_64_LPF(1); 
   spork ~   TRANCESNRHHx8 (7, 0); 
   spork ~   ENS1 (); 
@@ -2145,7 +2144,9 @@ if (rectrack.play_or_rec() ) {
   rectrack.rec_end();
   ///////////////////
 
-  //  !!!!!! put end here  !!!!!!
+  spork ~ SLIDENOISE(2800/*fstart*/,100/*fstop*/,4*data.tick/*dur*/,2.8/*width*/,2,.14); 
+  spork ~ RING(":4 m////f f////M", ":8:2 H/GG/A"/*fmod*/, ":8:2 m//1"/*gmod*/,6/*k*/,4*data.tick, 2,.3);
+ 2 * 8 * data.tick => w.wait;
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
