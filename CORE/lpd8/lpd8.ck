@@ -18,9 +18,8 @@ for(0 =>  int i; i < 8; i++ )
     // open the device
     if( min.open( i ) )
     {
-//				if ( min.name() == device || min.name() == device2) {
         min.name() => devname;
-        if (devname.find(device) != -1 || devname.find(device2) != -1) // To skip random numbers at the end of the string on debian
+        if (devname.find(device) != -1 || devname.find(device2) != -1){ // To skip random numbers at the end of the string on debian
         <<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
 				break;
 				}

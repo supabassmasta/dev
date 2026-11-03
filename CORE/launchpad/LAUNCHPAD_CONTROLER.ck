@@ -7,6 +7,7 @@ public class LAUNCHPAD {
   MidiIn min;
   MidiMsg msg;
   MidiOut mout;	
+  string devname;
 
   // open the device
   for(0 =>  int i; i < 8; i++ )
@@ -17,8 +18,9 @@ public class LAUNCHPAD {
     // open the device
     if( min.open( i ) )
     {
-      if ( min.name() == device || min.name() == device2) {
-        if (  min.name() == device2  ){
+      min.name() => devname;
+      if (devname.find(device) != -1 || devname.find(device2) != -1){ // To skip random numbers at the end of the string on debian
+        if (devname.find(device2) != -1 ){
           1 => MK2; 
         }
 
