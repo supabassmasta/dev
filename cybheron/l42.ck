@@ -2039,7 +2039,7 @@ fun void EFFECT3   (){
   stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
 
 STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
-stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 14 * 100 /* freq var */, data.tick * 23 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
+stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 10 * 100 /* freq var */, data.tick * 23 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
 4 => stautobpfx0.gain;
   STMIX stmix2;
   stmix2.send(last, mixer + 1);
@@ -2217,7 +2217,14 @@ fun void  LOOP_HH  (){
     } 
 fun void  LOOPLAB  (){ 
   while(1) {
-  spork ~ SYNTGLIDE("*4 }c 4321 0ABA 1232 1358  " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.25);
+//  4321 0ABA 1232 1358 [1 4321 0ABA 1232 1358
+//  [1 4321 0ABA 1232 1358 ]2 4321 0ABA 1232 1358
+//  ]2 4321 0ABA 1232 1358 ]1 4321 0ABA 1232 1358
+//  ]1 4321 0ABA 1232 1358 [1 4321 0ABA 1232 1358
+  spork ~ SYNTGLIDE("*4 }c 
+ 7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
+ 7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
+ " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.25);
     8 * 8 * data.tick => w.wait;
 
 //spork ~ RING("1111 1111 1////F F////1", ":4 H/G"/*fmod*/, ":41/8"/*gmod*/,65/*k*/,1*data.tick, 1,.2);
@@ -2476,8 +2483,8 @@ fun void  LOOPLAB  (){
   //-------------------------------------------
   }
 } 
-//spork ~ LOOPLAB();
-LOOPLAB(); 
+spork ~ LOOPLAB();
+//LOOPLAB(); 
 
 //TRACK("refsong.wav_end_loop", 0*8*data.tick/*offset*/, 1*8*data.tick/*d*/,1/*loop*/,8*data.tick/*END sync*/,0,1.3);
 
