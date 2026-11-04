@@ -1,0 +1,17 @@
+show fonts:
+ls /usr/share/consolefonts/
+
+test font : sudo setfont /usr/share/consolefonts/Uni3-Terminus24x12.psf.gz
+
+apply permanent change in:
+/etc/default/console-setup
+
+"""
+CODESET="Uni3"
+FONTFACE="Terminus"
+SIZE="12x24"             << << << << << << <<<<<<<<< <<<  TAKE CARE, INVERTED ORDER OF THE FILE
+"""
+
+
+APPLY: 
+sudo setupcon
