@@ -1,6 +1,7 @@
 public class lpk25 {
 
 	"LPK25 MIDI 1" => string device;
+  string devname;
 
 	MidiIn min;
 	MidiMsg msg;
@@ -15,7 +16,8 @@ public class lpk25 {
 		// open the device
 		if( min.open( i ) )
 		{
-			if ( min.name() == device ) {
+        min.name() => devname;
+        if (devname.find(device) != -1 ){ // To skip random numbers at the end of the string on debian
 				<<< "device", i, "->", min.name(), "->", "open: SUCCESS" >>>;
 				break;
 			}
