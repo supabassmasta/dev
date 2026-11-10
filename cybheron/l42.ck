@@ -2039,10 +2039,10 @@ fun void EFFECT3   (){
   stmix.receive(mixer + 3); stmix $ ST @=> ST @ last; 
 
 STAUTOFILTERX stautobpfx0; BPF_XFACTORY stautobpfx0_fact;
-stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 10 * 100 /* freq var */, data.tick * 23 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
-4 => stautobpfx0.gain;
+stautobpfx0.connect(last $ ST ,  stautobpfx0_fact, 1.0 /* Q */, 2 * 100 /* freq base */, 6 * 1000 /* freq var */, data.tick * 23 / 2 /* modulation period */, 1 /* order */, 1 /* channels */ , 1::ms /* update period */ );       stautobpfx0 $ ST @=>  last;  
+2 => stautobpfx0.gain;
   STMIX stmix2;
-  stmix2.send(last, mixer + 1);
+  stmix2.send(last, mixer + 2);
   //stmix.receive(11); stmix $ ST @=> ST @ last; 
 
   while(1) {
@@ -2254,24 +2254,37 @@ fun void  LOOP_ALARM  (){
 fun void  LOOP_MODU  (){ 
     spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
     2 * 8 * data.tick => w.wait;
-    spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
+    spork ~   MODU (32, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 9 *1000, 3, 0.77); 
     2 * 8 * data.tick => w.wait;
     spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
     2 * 8 * data.tick => w.wait;
-    spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
+    spork ~   MODU (32, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 9 *1000, 3, 0.77); 
     2 * 8 * data.tick => w.wait;
-   
+
 } 
 
 
 fun void  LOOPLAB  (){ 
   while(1) {
-//    spork ~ BW("*2 {c __ __  _1 __ __ __ _1   ", 0/*n*/,29*100/*cut*/,0,0.4); 
-    spork ~   MODU (1131, " *2  __ __  _1 __   __ __ _1 __    __ __  _1 __   __ __ __ __   " , "1", "1", 4 *1000, 1, 1.38); 
-    spork ~   MODU (1131, " *2  __ __  __ __   __ __ __ __    __ __  __ __   __ __ _1 __   " , "1", "1", 4 *1000, 2, 1.38); 
-    spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
+//spork ~ RING(":8 H//f", ":8 H//B"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.2);
 
-    2 * 8 * data.tick => w.wait;
+//spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
+//spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 f//1"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
+
+//spork ~ RING(":8 H//f", ":8 H//5"/*fmod*/, ":8 f//m"/*gmod*/,68/*k*/,16*data.tick, 2,.20);
+
+//spork ~ RING(":8 H//f", ":8 Z//A"/*fmod*/, ":8 f//m"/*gmod*/,69/*k*/,16*data.tick, 2,.20);
+spork ~ RING(":8 H//f", ":8 A//Z"/*fmod*/, ":8 D//f"/*gmod*/,70/*k*/,16*data.tick, 2,.20);
+
+2 * 8 * data.tick => w.wait;
+//spork ~ RING(":8 H//f", ":4 H/a"/*fmod*/, ":8 1//8"/*gmod*/,67/*k*/,16*data.tick, 1,.2);
+//    spork ~ BW("*2 {c __ __  _1 __ __ __ _1   ", 0/*n*/,29*100/*cut*/,0,0.4); 
+//    spork ~   MODU (1131, " *2  __ __  _1 __   __ __ _1 __    __ __  _1 __   __ __ __ __   " , "1", "1", 4 *1000, 1, 1.38); 
+//    spork ~   MODU (1131, " *2  __ __  __ __   __ __ __ __    __ __  __ __   __ __ _1 __   " , "1", "1", 4 *1000, 2, 1.38); 
+//    spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
+//    2 * 8 * data.tick => w.wait;
+//    spork ~   MODU (32, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 9 *1000, 3, 0.77); 
+//    2 * 8 * data.tick => w.wait;
 //  4321 0ABA 1232 1358 [1 4321 0ABA 1232 1358
 //  [1 4321 0ABA 1232 1358 ]2 4321 0ABA 1232 1358
 //  ]2 4321 0ABA 1232 1358 ]1 4321 0ABA 1232 1358
@@ -2567,7 +2580,40 @@ if (rectrack.play_or_rec() ) {
   //////////////////////////////////////////////////
 
   //  !!!!!!  Put main code here  !!!!!
-  1::samp => w.wait; // DONT NOW Why this is needed, DestNegative happen sometimes if not present
+    spork ~   LOOP_TRIBAL (); 
+    spork ~ BEAT0_8x8();
+    6*8*data.tick =>  w.wait; 
+    spork ~ RING(":8 H//f", ":8 H//B"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.2);
+    2*8*data.tick =>  w.wait; 
+
+    spork ~   LOOP_ALARM (); 
+    spork ~   LOOP_TRIBAL (); 
+    spork ~ LOOP_HH (); 
+    spork ~ BEAT0_8x8();
+    6*8*data.tick =>  w.wait; 
+    spork ~ RING(":8 H//f", ":8 A//Z"/*fmod*/, ":8 D//f"/*gmod*/,70/*k*/,16*data.tick, 2,.20);
+    2*8*data.tick =>  w.wait; 
+    
+    spork ~   LOOP_MODU (); 
+    spork ~   LOOP_ALARM (); 
+    spork ~   LOOP_TRIBAL (); 
+    spork ~ LOOP_HH (); 
+    spork ~ LOOP_SNR (); 
+    spork ~ BEAT0_8x8();
+    6*8*data.tick =>  w.wait; 
+spork ~ RING(":8 H//f", ":8 H//5"/*fmod*/, ":8 f//m"/*gmod*/,68/*k*/,16*data.tick, 2,.20);
+    2*8*data.tick =>  w.wait; 
+
+    spork ~ LOOP_HH (); 
+    spork ~ LOOP_SNR (); 
+    spork ~ BEAT0_8x8();
+    spork ~ SYNTGLIDE("*4 }c 
+       7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
+       7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
+       " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
+    2*8*data.tick =>  w.wait; 
+    spork ~ RING(":8 H//f", ":8 Z//A"/*fmod*/, ":8 f//m"/*gmod*/,69/*k*/,16*data.tick, 2,.20);
+    6 * 8 * data.tick => w.wait;
 
   //// STOP REC ///////////////////////////////
   rectrack.rec_stop();
@@ -2582,41 +2628,20 @@ if (rectrack.play_or_rec() ) {
     // REC END LOOP //////////////////////////////////
     rectrack.rec_end_loop();
     //////////////////////////////////////////////////
-    spork ~   LOOP_TRIBAL (); 
-    spork ~ BEAT0_8x8();
-    8*8*data.tick =>  w.wait; 
-    spork ~   LOOP_ALARM (); 
-    spork ~   LOOP_TRIBAL (); 
-    spork ~ LOOP_HH (); 
-    spork ~ BEAT0_8x8();
-    8*8*data.tick =>  w.wait; 
     spork ~   LOOP_MODU (); 
     spork ~   LOOP_ALARM (); 
     spork ~   LOOP_TRIBAL (); 
     spork ~ LOOP_HH (); 
     spork ~ LOOP_SNR (); 
     spork ~ BEAT0_8x8();
-    8*8*data.tick =>  w.wait; 
-//    spork ~   LOOP_TRIBAL (); 
-    spork ~ LOOP_HH (); 
-    spork ~ LOOP_SNR (); 
-    spork ~ BEAT0_8x8();
-  spork ~ SYNTGLIDE("*4 }c 
- 7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
- 7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
- " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
-    8 * 8 * data.tick => w.wait;
-    spork ~   LOOP_MODU (); 
-    spork ~   LOOP_ALARM (); 
-    spork ~   LOOP_TRIBAL (); 
-    spork ~ LOOP_HH (); 
-    spork ~ LOOP_SNR (); 
-    spork ~ BEAT0_8x8();
-  spork ~ SYNTGLIDE("*4 }c 
- 7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
- 7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
- " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
-    8*8*data.tick =>  w.wait; 
+    spork ~ SYNTGLIDE("*4 }c 
+     7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
+     7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
+     " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
+    2*8*data.tick =>  w.wait; 
+    spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
+    spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 f//1"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
+    6*8*data.tick =>  w.wait; 
 
     //// STOP REC ///////////////////////////////
     rectrack.stop_rec_end_loop();
@@ -2631,6 +2656,8 @@ if (rectrack.play_or_rec() ) {
   ///////////////////
 
   //  !!!!!! put end here  !!!!!!
+    spork ~KICK("*4      k___   ___   ___     ",0,1.);
+    spork ~   MODU (31, "*8 {c  "+ RAND.seq("1_,1_,__,8_", 17) , "f", "a", 4 *1000, 2, 1.38); 
 
   //// STOP REC ///////////
   rectrack.stop_rec_end(); 
