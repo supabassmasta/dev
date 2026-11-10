@@ -2266,6 +2266,11 @@ fun void  LOOP_MODU  (){
 
 fun void  LOOPLAB  (){ 
   while(1) {
+    spork ~ SYNTGLIDE("*4 }c 
+       7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
+       7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
+       " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,1,.17);
+    8*8*data.tick =>  w.wait; 
 //spork ~ RING(":8 H//f", ":8 H//B"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.2);
 
 //spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
@@ -2274,9 +2279,9 @@ fun void  LOOPLAB  (){
 //spork ~ RING(":8 H//f", ":8 H//5"/*fmod*/, ":8 f//m"/*gmod*/,68/*k*/,16*data.tick, 2,.20);
 
 //spork ~ RING(":8 H//f", ":8 Z//A"/*fmod*/, ":8 f//m"/*gmod*/,69/*k*/,16*data.tick, 2,.20);
-spork ~ RING(":8 H//f", ":8 A//Z"/*fmod*/, ":8 D//f"/*gmod*/,70/*k*/,16*data.tick, 2,.20);
+//spork ~ RING(":8 H//f", ":8 A//Z"/*fmod*/, ":8 D//f"/*gmod*/,70/*k*/,16*data.tick, 2,.20);
 
-2 * 8 * data.tick => w.wait;
+//2 * 8 * data.tick => w.wait;
 //spork ~ RING(":8 H//f", ":4 H/a"/*fmod*/, ":8 1//8"/*gmod*/,67/*k*/,16*data.tick, 1,.2);
 //    spork ~ BW("*2 {c __ __  _1 __ __ __ _1   ", 0/*n*/,29*100/*cut*/,0,0.4); 
 //    spork ~   MODU (1131, " *2  __ __  _1 __   __ __ _1 __    __ __  _1 __   __ __ __ __   " , "1", "1", 4 *1000, 1, 1.38); 
@@ -2610,7 +2615,7 @@ spork ~ RING(":8 H//f", ":8 H//5"/*fmod*/, ":8 f//m"/*gmod*/,68/*k*/,16*data.tic
     spork ~ SYNTGLIDE("*4 }c 
        7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
        7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
-       " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
+       " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,1,.17);
     2*8*data.tick =>  w.wait; 
     spork ~ RING(":8 H//f", ":8 Z//A"/*fmod*/, ":8 f//m"/*gmod*/,69/*k*/,16*data.tick, 2,.20);
     6 * 8 * data.tick => w.wait;
@@ -2637,7 +2642,7 @@ spork ~ RING(":8 H//f", ":8 H//5"/*fmod*/, ":8 f//m"/*gmod*/,68/*k*/,16*data.tic
     spork ~ SYNTGLIDE("*4 }c 
      7465 6543 5432 4321   4321 0ABA 5342 4312 1232 1358 7654 3201
      7468 6543 B432 43f1   4321 0A56 B342 4319 1232 1351 7654 3978
-     " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,3,.17);
+     " /* seq */, 2985 /* Serum00 synt */, 19 * 100 /* lpf_f */, 5::ms /* glide dur */,8*8*data.tick,1,.17);
     2*8*data.tick =>  w.wait; 
     spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 1//f"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
     spork ~ RING(":8 H//f", ":8 B//H"/*fmod*/, ":8 f//1"/*gmod*/,67/*k*/,16*data.tick, 2,.15);
